@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 — 캐릭터 시트</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #f4ecdd; color: #4a3626; font-family: 'Gowun Dodum', sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-family: Gaegu, sans-serif; font-size: 34px; margin: 0 0 4px; }
+  h2 { font-family: Gaegu, sans-serif; font-size: 24px; margin: 28px 0 8px; border-bottom: 2px solid #4a3626; }
+  .sub { font-size: 14px; opacity: .8; }
+  svg { display: block; width: 100%; height: auto; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lbl { font-family: Gaegu, sans-serif; font-size: 16px; fill: #4a3626; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🟦🔺⚫ 기하학 가족 — 캐릭터 시트 v5</h1>
+  <div class="sub">SVG 코드로 고정. 표정(emo)·시선(gaze)·상복(suit)만 파라미터.</div>
+
+  <h2>네모가족 — 벅참과 결핍의 대가족</h2>
+  <svg viewBox="0 0 720 300" id="sq"></svg>
+  <h2>세모부부 — 마주보면 사랑, 나란히 서면 전투</h2>
+  <svg viewBox="0 0 720 200" id="tri"></svg>
+  <h2>동그라미가족 — 완벽한데 외롭다</h2>
+  <svg viewBox="0 0 720 160" id="cir"></svg>
+
+  <h2>감정 매트릭스 — good · bad · worry · relief · sad</h2>
+  <svg viewBox="0 0 720 560" id="emo"></svg>
+
+  <h2>상복 · 시선 · 소품</h2>
+  <svg viewBox="0 0 720 200" id="suit"></svg>
+</div>
+<script src="../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+const $ = id => document.getElementById(id);
+$('sq').innerHTML = squareFamilyPortrait(200, 20);
+$('tri').innerHTML = triangleWedding(40, 20) + triangleBattle(400, 20);
+$('cir').innerHTML = circleFamilyPortrait(160, 10);
+
+let e = '';
+const cols = [150, 270, 390, 510, 630];
+EMOS.forEach((emo, i) => { e += `<text class="lbl" x="${cols[i]}" y="22" text-anchor="middle">${emo}</text>`; });
+const rows = [
+  ['네모 아빠', (x, y, emo) => nemoDad({ x: x - 50, y, w: 100, h: 88, emo })],
+  ['네모 아이', (x, y, emo) => nemoKid({ x: x - 33, y: y + 10, emo })],
+  ['세모 남편', (x, y, emo) => semoHusband({ x: x - 50, y, size: 100, emo })],
+  ['세모 아내', (x, y, emo) => semoWife({ x: x - 50, y, size: 100, emo })],
+  ['동그라미 아빠', (x, y, emo) => dongDad({ cx: x, cy: y + 46, r: 44, emo })],
+];
+rows.forEach(([name, fn], r) => {
+  const y = 40 + r * 104;
+  e += `<text class="lbl" x="8" y="${y + 56}" font-size="15">${name}</text>`;
+  EMOS.forEach((emo, i) => { e += fn(cols[i], y, emo); });
+});
+$('emo').innerHTML = e;
+
+$('suit').innerHTML =
+  nemoDad({ x: 20, y: 40, w: 110, h: 96, emo: 'sad', suit: true, gaze: 1 }) +
+  semoHusband({ x: 160, y: 30, size: 116, emo: 'sad', suit: true, gaze: 1 }) +
+  dongDad({ cx: 350, cy: 90, r: 50, emo: 'sad', suit: true, gaze: -1 }) +
+  `<text class="lbl" x="200" y="180" text-anchor="middle">상복(suit) — 얼굴 정체성 유지</text>` +
+  coffeeCup(460, 60, 1.2, true) + `<text class="lbl" x="480" y="140" text-anchor="middle">믹스</text>` +
+  coffeeCup(560, 60, 1.2, false) + `<text class="lbl" x="580" y="140" text-anchor="middle">아메리카노</text>` +
+  nemoKid({ x: 630, y: 40, w: 60, h: 60, emo: 'good', gaze: -1, color: COLORS.nemoKid3 }) + `<text class="lbl" x="660" y="140" text-anchor="middle">gaze -1</text>`;
+</script>
+</body>
+</html>

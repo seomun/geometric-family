@@ -1,0 +1,4 @@
+dist/
+node_modules/
+*.docx
+!docs/_raw_*.docx

@@ -15,7 +15,7 @@
   .gap.big { height: 90px; }
   .cta { padding: 36px 24px 60px; text-align: center; }
   .cta h2 { font-family: Gaegu, sans-serif; font-size: 32px; margin: 0 0 6px; }
-  .cta p { margin: 6px 0 18px; font-size: 15px; line-height: 1.6; }
+  .cta p { margin: 6px 0 18px; font-size: 17px; line-height: 1.6; }
   .votes { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .vote { flex: 1 1 150px; max-width: 200px; border: 3px solid var(--ink); background: #fff; border-radius: 16px; padding: 14px 10px; cursor: pointer; font-family: Gaegu, sans-serif; font-size: 22px; color: var(--ink); transition: transform .1s; }
   .vote:active { transform: scale(.97); }
@@ -24,7 +24,7 @@
   .bars { margin: 18px auto 0; max-width: 420px; text-align: left; display: none; }
   .bar { margin: 8px 0; font-size: 14px; }
   .bar i { display: block; height: 14px; border-radius: 7px; background: var(--ink); margin-top: 4px; transition: width .5s; }
-  .note { font-size: 13px; opacity: .7; margin-top: 14px; }
+  .note { font-size: 15px; opacity: .8; margin-top: 14px; }
   .next { margin-top: 36px; padding-top: 20px; border-top: 2px dashed var(--ink); font-family: Gaegu, sans-serif; font-size: 20px; }
   .foot { text-align: center; font-size: 12px; opacity: .6; padding: 20px; }
 </style>
@@ -40,14 +40,14 @@ const W = 720, F = "font-family:'Gaegu',sans-serif", FB = "font-family:'Gowun Do
 const cuts = [];
 const cut = (h, inner, bg) => cuts.push(`<svg class="cut" viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg">${bg ? `<rect width="${W}" height="${h}" fill="${bg}"/>` : ''}${inner}</svg>`);
 const gap = (big) => cuts.push(`<div class="gap${big ? ' big' : ''}"></div>`);
-const T = (x, y, t, size = 22, anchor = 'middle', font = FB, extra = '') => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" style="${font}" fill="${INK}" ${extra}>${t}</text>`;
+const T = (x, y, t, size = 26, anchor = 'middle', font = FB, extra = '') => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" style="${font}" fill="${INK}" ${extra}>${t}</text>`;
 
 // 카톡 말풍선 (채팅 UI)
 function chat(x, y, w, lines, mine = false, name = '') {
-  const lh = 24, h = lines.length * lh + 20; let g = '';
-  if (name) g += T(mine ? x + w : x, y - 6, name, 14, mine ? 'end' : 'start');
+  const lh = 32, h = lines.length * lh + 22; let g = '';
+  if (name) g += T(mine ? x + w : x, y - 8, name, 18, mine ? 'end' : 'start');
   g += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${mine ? '#ffe98a' : '#fff'}" stroke="${INK}" stroke-width="2"/>`;
-  lines.forEach((l, i) => { g += T(x + 14, y + 16 + lh * (i + 0.6), l, 19, 'start'); });
+  lines.forEach((l, i) => { g += T(x + 16, y + 16 + lh * (i + 0.62), l, 25, 'start'); });
   return g;
 }
 const phoneFrame = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="26" fill="#2b2b30" stroke="${INK}" stroke-width="3"/><rect x="${x + 12}" y="${y + 26}" width="${w - 24}" height="${h - 52}" rx="12" fill="#b7c8d6"/><circle cx="${x + w / 2}" cy="${y + 15}" r="4" fill="#666"/>`;
@@ -65,7 +65,7 @@ gap();
 // ---- 2. 문자 ----
 cut(520, `
   ${phoneFrame(200, 30, 320, 460)}
-  ${T(360, 90, '＜ 메시지', 16, 'middle', FB)}
+  ${T(360, 92, '＜ 메시지', 20, 'middle', FB)}
   ${chat(232, 110, 256, ['[부고]', '이창명 (본인상)', '상주: 이두돌, 이한돌', '장소: 구로고대병원', '　　　장례식장 203호', '발인: 5월 29일', '온라인 추모: ...'], false)}
   ${T(360, 440, '오후 2:17', 13, 'middle', FB, 'opacity=".6"')}
 `);
@@ -73,7 +73,7 @@ cut(120, narration(90, 30, 540, ['그동안 연락이 없던 세 동창에게,',
 gap();
 // ---- 3. 몇 달 전 카톡 (회상) ----
 cut(560, `
-  ${T(60, 44, '— 몇 달 전 —', 18, 'start', FM, 'opacity=".7"')}
+  ${T(60, 44, '— 몇 달 전 —', 22, 'start', FM, 'opacity=".8"')}
   ${chat(60, 70, 420, ['야 그 교련샘 기억나냐 ㅋㅋ', '이름도 기억 안 난다', '매일 술 먹고 수업 들어왔잖아'], false, '창명')}
   ${chat(400, 190, 200, ['ㅇㅇ ㅋㅋ 그랬지'], true)}
   ${chat(60, 260, 380, ['그때 우리 진짜 미쳤었는데'], false)}
@@ -84,7 +84,7 @@ cut(110, narration(90, 30, 540, ['맞장구는 쳐 줬다. 셋 다, 딱히 관�
 gap(true);
 // ---- 4. 세 창가 ----
 function windowCut(id, who, sky1, sky2, label, warm) {
-  return `<svg class="cut" viewBox="0 0 ${W} 420" xmlns="http://www.w3.org/2000/svg">${windowBg(id, sky1, sky2)}${who}${T(W / 2, 400, label, 17, 'middle', FM, 'opacity=".75"')}</svg>`;
+  return `<svg class="cut" viewBox="0 0 ${W} 420" xmlns="http://www.w3.org/2000/svg">${windowBg(id, sky1, sky2)}${who}${T(W / 2, 404, label, 22, 'middle', FM, 'opacity=".8"')}</svg>`;
 }
 cuts.push(windowCut('sky1', nemoDad({ x: 300, y: 250, w: 120, h: 106, emo: 'worry', gaze: 0 }) + coffeeCup(440, 300, 1, true) +
   `<g opacity=".35">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${110 + i * 90}" y="${60 + (i % 2) * 20}" width="40" height="120" fill="${INK}"/>`).join('')}</g>`, '#cfe3f4', '#e6eef3', '네모 — 큰 건물 회사 창가, 믹스커피', true));
@@ -96,14 +96,14 @@ cut(120, narration(90, 30, 540, ['셋은 모두 창가에 선다. 먼 곳을 본
 gap();
 // ---- 5. 단톡방에 불이 난다 ----
 cut(430, `
-  ${T(60, 44, '— 거의 울리지 않던 단체 카톡방 —', 18, 'start', FM, 'opacity=".7"')}
+  ${T(60, 44, '— 거의 울리지 않던 단체 카톡방 —', 22, 'start', FM, 'opacity=".8"')}
   ${chat(60, 70, 260, ['다들 들었냐'], false, '동창A')}
   ${chat(340, 110, 300, ['내일 7시 구로 어때'], false, '동창B')}
   ${chat(60, 170, 200, ['ㅇㅇ 갈게'], false, '동창C')}
   ${chat(300, 220, 340, ['누구누구 옴? 명단 좀'], false, '동창D')}
   ${chat(60, 280, 240, ['나 늦을 듯 8시'], false, '동창E')}
   ${chat(380, 330, 260, ['ㅇㅇ'], true)}
-  ${T(W / 2, 410, '💬 47', 16, 'middle', FB, 'opacity=".6"')}
+  ${T(W / 2, 412, '💬 47', 20, 'middle', FB, 'opacity=".7"')}
 `);
 cut(140, narration(90, 30, 540, ['사실 셋 모두 그의 결혼식엔 가지 않았다.', '둘은 연락을 못 받았고, 하나는 소식을 들었지만 그냥 넘겼다.']));
 gap(true);
@@ -118,13 +118,13 @@ cut(150, narration(90, 30, 540, ['이놈저놈이 떠오른다. 삼겹살집 동
 gap();
 // ---- 7. 전철역 ----
 cut(520, `
-  <g opacity=".35"><rect x="0" y="330" width="${W}" height="14" fill="${INK}"/><rect x="0" y="352" width="${W}" height="6" fill="${INK}"/><rect x="60" y="120" width="600" height="60" rx="6" fill="#c7b9a3"/>${T(360, 160, '구로디지털단지', 22, 'middle', F)}</g>
+  <g opacity=".35"><rect x="0" y="330" width="${W}" height="14" fill="${INK}"/><rect x="0" y="352" width="${W}" height="6" fill="${INK}"/><rect x="60" y="120" width="600" height="60" rx="6" fill="#c7b9a3"/>${T(360, 162, '구로디지털단지', 28, 'middle', FB)}</g>
   ${nemoDad({ x: 160, y: 230, w: 120, h: 106, emo: 'relief', suit: true, gaze: 1 })}
   ${semoHusband({ x: 420, y: 222, size: 122, emo: 'good', suit: true, gaze: -1 })}
   ${speech(40, 20, 330, ['어어 왔어? 우리 생각보다', '가까운 데서 근무했구나!'], { tail: 'right' })}
   ${speech(380, 20, 310, ['그러게. 이럴 줄 알았으면', '중간에 소주라도 할걸.'], { tail: 'left' })}
   ${speech(350, 380, 340, ['넌 좀 친하지 않았냐?'], { tail: 'left' })}
-  ${speech(30, 440, 400, ['나? 이놈저놈 어울린 놈이 한둘이냐…', '졸업하고는 거의 연락 없었지 뭐.'], { tail: 'right' })}
+  ${speech(20, 436, 470, ['나? 이놈저놈 어울린 놈이 한둘이냐…', '졸업하고는 거의 연락 없었지 뭐.'], { tail: 'right' })}
 `);
 cut(150, narration(90, 30, 540, ['누가 누구랑 더 친한지는 말하지 않아도 정해져 있었다.', '그럼 죽은 친구랑 제일 친한 건 누구였을까.', '셋은 아마 답을 모르고 있을 것이다.']));
 gap();
@@ -146,7 +146,7 @@ cut(420, `
   ${dongDad({ cx: 580, cy: 262, r: 50, emo: 'good', suit: true, gaze: -1 })}
   <rect x="150" y="150" width="60" height="40" fill="#fff" stroke="${INK}" stroke-width="2"/><rect x="310" y="150" width="60" height="40" fill="#fff" stroke="${INK}" stroke-width="2"/>
   ${T(180, 176, '네모', 14)}${T(340, 176, '세모', 14)}
-  ${T(580, 350, '(미리 준비해 왔다)', 15, 'middle', FB, 'opacity=".7"')}
+  ${T(580, 352, '(미리 준비해 왔다)', 20, 'middle', FB, 'opacity=".8"')}
 `);
 cut(120, narration(90, 30, 540, ['얼마나 해야 하나. 종일 고민했다.', '서로 묻진 못했다.']));
 gap();
@@ -158,7 +158,7 @@ cut(420, `
   ${speech(60, 40, 300, ['넌 얼마나 했냐?'], { tail: 'left' })}
   ${speech(380, 100, 300, ['뭐, 그런 거 알아 뭐하게.'], { tail: 'right' })}
 `);
-cut(200, narration(90, 30, 540, ['금액이 뭔 상관이냐고 묻는 듯하다.', '', '우린 상관이 좀 있단다, 친구야.'], { size: 24 }));
+cut(220, narration(70, 30, 580, ['금액이 뭔 상관이냐고 묻는 듯하다.', '', '우린 상관이 좀 있단다, 친구야.'], { size: 40 }));
 gap(true);
 // ---- 11. 엔딩 ----
 cut(360, `

@@ -18,13 +18,14 @@
       <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/>
       <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
-    <radialGradient id="gf-gloss" cx="0.32" cy="0.25" r="0.75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/></radialGradient>
+    <radialGradient id="gf-gloss" cx="0.3" cy="0.22" r="0.8"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".5" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#5a3a2a" stop-opacity=".14"/></radialGradient>
+    <radialGradient id="gf-blush" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f48c9c" stop-opacity=".55"/><stop offset="1" stop-color="#f48c9c" stop-opacity="0"/></radialGradient>
     <radialGradient id="gf-shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#4a3626" stop-opacity=".28"/><stop offset="1" stop-color="#4a3626" stop-opacity="0"/></radialGradient>
   </defs></svg>`;
   const CHAR_STYLE = `<style>
     .gf-ch { filter: url(#gf-rough); }
-    .gf-ch .ink { stroke: ${INK}; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-    .gf-ch .fill { stroke: ${INK}; stroke-width: 3; stroke-linejoin: round; }
+    .gf-ch .ink { stroke: ${INK}; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .gf-ch .fill { stroke: ${INK}; stroke-width: 3.4; stroke-linejoin: round; stroke-linecap: round; }
     .gf-ch .thin { stroke: ${INK}; stroke-width: 2; stroke-linecap: round; fill: none; }
     .gf-ch .white { fill: #fff; stroke: ${INK}; stroke-width: 2; }
   </style>`;
@@ -40,40 +41,43 @@
   /* 얼굴: cx, cy 얼굴 중심. s = 스케일(1 = 폭 100 기준). opt: emo, gaze, eyeStyle('round'|'almond'|'calm'|'big'), lashes, bags(눈밑주름), stable(동그라미: 감정에도 눈매 고정) */
   function face(cx, cy, s, opt) {
     const { emo = 'good', gaze = 0, eyeStyle = 'round', lashes = false, bags = false, stable = false } = opt;
-    const ex = 15 * s, ey = -4 * s, px = gaze * 2.4 * s;
+    s = s * 1.12; // 귀여운 비율: 얼굴을 몸보다 크게
+    const ex = 16 * s, ey = -2 * s, px = gaze * 2.6 * s;
     let out = '';
-    // 눈썹
-    const browY = cy + ey - 12 * s, bw = 8 * s;
-    let bl = 0, br = 0; // 눈썹 기울기(안쪽 끝 y 오프셋)
-    if (!stable) { if (emo === 'bad') { bl = 4 * s; br = 4 * s; } else if (emo === 'worry' || emo === 'sad') { bl = -4 * s; br = -4 * s; } }
-    out += `<path class="thin" d="M${cx - ex - bw},${browY} L${cx - ex + bw},${browY + bl}"/><path class="thin" d="M${cx + ex + bw},${browY} L${cx + ex - bw},${browY + br}"/>`;
+    // 볼터치
+    out += `<ellipse cx="${cx - ex - 9 * s}" cy="${cy + 9 * s}" rx="${8 * s}" ry="${5 * s}" fill="url(#gf-blush)"/><ellipse cx="${cx + ex + 9 * s}" cy="${cy + 9 * s}" rx="${8 * s}" ry="${5 * s}" fill="url(#gf-blush)"/>`;
+    // 눈썹 (부드러운 곡선)
+    const browY = cy + ey - 14 * s, bw = 8 * s;
+    let bl = 0, br = 0; // 안쪽 끝 y 오프셋
+    if (!stable) { if (emo === 'bad') { bl = 5 * s; br = 5 * s; } else if (emo === 'worry' || emo === 'sad') { bl = -5 * s; br = -5 * s; } }
+    out += `<path class="thin" d="M${cx - ex - bw},${browY} Q${cx - ex},${browY - 3 * s + bl / 2} ${cx - ex + bw},${browY + bl}"/><path class="thin" d="M${cx + ex + bw},${browY} Q${cx + ex},${browY - 3 * s + br / 2} ${cx + ex - bw},${browY + br}"/>`;
     // 눈
     const eye = (x) => {
-      if (emo === 'relief' && !stable) return `<path class="thin" d="M${x - 6 * s},${cy + ey + 1 * s} q${6 * s},${5 * s} ${12 * s},0"/>`; // 감은 눈(안도)
+      if (emo === 'relief' && !stable) return `<path class="ink" d="M${x - 8 * s},${cy + ey + 1 * s} q${8 * s},${7 * s} ${16 * s},0"/>`; // 감은 눈(안도)
       let shape;
-      if (eyeStyle === 'almond') shape = `<path class="white" d="M${x - 8 * s},${cy + ey} q${8 * s},${-9 * s} ${16 * s},0 q${-8 * s},${7 * s} ${-16 * s},0z"/>`;
-      else if (eyeStyle === 'calm') shape = `<path class="white" d="M${x - 8 * s},${cy + ey - 1 * s} q${8 * s},${-6 * s} ${16 * s},0 q${-8 * s},${9 * s} ${-16 * s},0z"/>`;
-      else if (eyeStyle === 'big') shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${8.5 * s}" ry="${9.5 * s}"/>`;
-      else shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${7.5 * s}" ry="${8 * s}"/>`;
-      const pr = eyeStyle === 'big' ? 4.6 * s : 3.6 * s;
+      if (eyeStyle === 'almond') shape = `<path class="white" d="M${x - 10 * s},${cy + ey} q${10 * s},${-12 * s} ${20 * s},0 q${-10 * s},${9 * s} ${-20 * s},0z"/>`;
+      else if (eyeStyle === 'calm') shape = `<path class="white" d="M${x - 10 * s},${cy + ey - 1 * s} q${10 * s},${-8 * s} ${20 * s},0 q${-10 * s},${11 * s} ${-20 * s},0z"/>`;
+      else if (eyeStyle === 'big') shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${10.5 * s}" ry="${12 * s}"/>`;
+      else shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${9.5 * s}" ry="${10.5 * s}"/>`;
+      const pr = eyeStyle === 'big' ? 6.2 * s : (eyeStyle === 'almond' || eyeStyle === 'calm') ? 4.6 * s : 5.2 * s;
       const droop = (emo === 'sad' && !stable) ? 1.5 * s : 0;
-      let g = shape + `<circle cx="${x + px}" cy="${cy + ey + droop}" r="${pr}" fill="${INK}"/><circle cx="${x + px + 1.4 * s}" cy="${cy + ey - 1.8 * s + droop}" r="${1.3 * s}" fill="#fff"/>`;
-      if (eyeStyle === 'big') g += `<circle cx="${x + px - 1.2 * s}" cy="${cy + ey + 1.6 * s}" r="${0.8 * s}" fill="#fff"/>`;
-      if (lashes) g += `<path class="thin" d="M${x + 7 * s},${cy + ey - 5 * s} l${3 * s},${-2.5 * s} M${x + 8.5 * s},${cy + ey - 2 * s} l${3.5 * s},${-1 * s}"/>`;
-      if (bags) g += `<path class="thin" d="M${x - 5 * s},${cy + ey + 10 * s} q${5 * s},${2.5 * s} ${10 * s},0"/>`;
+      let g = shape + `<circle cx="${x + px}" cy="${cy + ey + droop}" r="${pr}" fill="${INK}"/>` +
+        `<circle cx="${x + px + 2 * s}" cy="${cy + ey - 2.6 * s + droop}" r="${2.1 * s}" fill="#fff"/><circle cx="${x + px - 1.8 * s}" cy="${cy + ey + 2.2 * s + droop}" r="${1.1 * s}" fill="#fff"/>`;
+      if (lashes) g += `<path class="thin" d="M${x + 8 * s},${cy + ey - 7 * s} l${3.5 * s},${-3 * s} M${x + 10 * s},${cy + ey - 3.5 * s} l${4 * s},${-1.5 * s}"/>`;
+      if (bags) g += `<path class="thin" d="M${x - 5 * s},${cy + ey + 12.5 * s} q${5 * s},${2.5 * s} ${10 * s},0" opacity=".6"/>`;
       return g;
     };
     out += eye(cx - ex) + eye(cx + ex);
     // 입
-    const my = cy + 14 * s;
-    if (emo === 'good') out += `<path class="ink" d="M${cx - 9 * s},${my} q${9 * s},${8 * s} ${18 * s},0"/>`;
+    const my = cy + 16 * s;
+    if (emo === 'good') out += `<path class="ink" d="M${cx - 8 * s},${my} q${8 * s},${9 * s} ${16 * s},0"/>`;
     else if (emo === 'bad') out += `<path class="ink" d="M${cx - 8 * s},${my + 4 * s} q${8 * s},${-7 * s} ${16 * s},0"/>`;
     else if (emo === 'worry') out += `<path class="ink" d="M${cx - 8 * s},${my + 2 * s} q${4 * s},${-4 * s} ${8 * s},0 q${4 * s},${4 * s} ${8 * s},0"/><path class="thin" d="M${cx + 26 * s},${cy - 6 * s} q${3 * s},${6 * s} 0,${9 * s} q${-3 * s},${-3 * s} 0,${-9 * s}z" fill="#bfe0f5"/>`;
     else if (emo === 'relief') out += `<path class="ink" d="M${cx - 6 * s},${my + 1 * s} q${6 * s},${5 * s} ${12 * s},0"/><path class="thin" d="M${cx + 24 * s},${my - 2 * s} q${4 * s},${2 * s} ${8 * s},0 M${cx + 26 * s},${my + 3 * s} q${4 * s},${2 * s} ${8 * s},0" opacity=".6"/>`;
     else if (emo === 'sad') out += `<path class="ink" d="M${cx - 5 * s},${my + 3 * s} q${5 * s},${-3 * s} ${10 * s},0"/>`;
     return out;
   }
-  const mitt = (x, y, r) => `<circle class="fill" cx="${x}" cy="${y}" r="${r}" fill="#fff"/>`;
+  const mitt = (x, y, r) => `<circle class="fill" cx="${x}" cy="${y}" r="${r}" fill="#fff7ee"/>`;
   const leg = (x, y, h) => `<path class="ink" d="M${x},${y} v${h}"/><path class="ink" d="M${x - 5},${y + h} h10"/>`;
   const hair = (d) => `<path class="fill" d="${d}" fill="${INK}"/>`;
   const gloss = (shapeAttrs) => `<${shapeAttrs} fill="url(#gf-gloss)" stroke="none"/>`;
@@ -90,11 +94,11 @@
   function nemoDad({ x, y, w = 120, h = 106, emo = 'good', gaze = 0, glasses = false, suit = false }) {
     const cx = x + w / 2, s = w / 100, color = COLORS.nemoDad;
     let g = `<g class="gf-ch">${groundShadow(cx, y + h + 12, w)}`;
-    g += squareBody(x, y, w, h, color, 10);
-    if (suit) g += `<rect x="${x + 2}" y="${y + h * 0.66}" width="${w - 4}" height="${h * 0.34 - 2}" rx="8" fill="${SUIT}"/>` + suitCollar(cx, y + h * 0.66, w * 0.5);
+    g += squareBody(x, y, w, h, color, 18);
+    if (suit) g += `<rect x="${x + 2}" y="${y + h * 0.66}" width="${w - 4}" height="${h * 0.34 - 2}" rx="14" fill="${SUIT}"/>` + suitCollar(cx, y + h * 0.66, w * 0.5);
     g += `<path class="ink" d="M${cx - 26 * s},${y + 4} q4,-7 8,0 M${cx - 8 * s},${y + 3} q4,-8 8,0 M${cx + 12 * s},${y + 4} q4,-7 8,0"/>`; // 숱 적은 머리
-    g += face(cx, y + h * 0.42, s, { emo, gaze, bags: true });
-    g += `<path class="ink" d="M${cx - 10 * s},${y + h * 0.42 + 9 * s} q${5 * s},${-5 * s} ${10 * s},0 q${5 * s},${-5 * s} ${10 * s},0" stroke-width="3.5"/>`; // 콧수염
+    g += face(cx, y + h * 0.46, s, { emo, gaze, bags: true });
+    g += `<path class="ink" d="M${cx - 10 * s},${y + h * 0.46 + 11 * s} q${5 * s},${-5 * s} ${10 * s},0 q${5 * s},${-5 * s} ${10 * s},0" stroke-width="3.5"/>`; // 콧수염
     if (glasses) g += `<circle class="thin" cx="${cx - 15 * s}" cy="${y + h * 0.42 - 4 * s}" r="${11 * s}"/><circle class="thin" cx="${cx + 15 * s}" cy="${y + h * 0.42 - 4 * s}" r="${11 * s}"/><path class="thin" d="M${cx - 4 * s},${y + h * 0.42 - 4 * s} h${8 * s}"/>`;
     g += mitt(x - 6, y + h * 0.62, 9 * s) + mitt(x + w + 6, y + h * 0.62, 9 * s) + leg(cx - 18 * s, y + h, 12) + leg(cx + 18 * s, y + h, 12);
     return g + '</g>';
@@ -102,9 +106,9 @@
   function nemoMom({ x, y, w = 96, h = 92, emo = 'good', gaze = 0 }) {
     const cx = x + w / 2, s = w / 100, color = COLORS.nemoMom;
     let g = `<g class="gf-ch">${groundShadow(cx, y + h + 12, w)}`;
-    g += squareBody(x, y, w, h, color, 9);
+    g += squareBody(x, y, w, h, color, 16);
     g += `<circle class="fill" cx="${cx + 26 * s}" cy="${y - 2}" r="${9 * s}" fill="${INK}"/><path class="ink" d="M${cx - 30 * s},${y + 2} q${30 * s},${-10 * s} ${60 * s},0" stroke-width="4"/>`; // 쪽머리
-    g += face(cx, y + h * 0.42, s, { emo, gaze, lashes: true });
+    g += face(cx, y + h * 0.47, s, { emo, gaze, lashes: true });
     for (const [dx, dy] of [[-8, 0.45], [-10, 0.68], [8, 0.45], [10, 0.68]]) g += mitt(dx < 0 ? x + dx : x + w - dx, y + h * dy, 8 * s); // 손이 아주 많음
     g += leg(cx - 15 * s, y + h, 11) + leg(cx + 15 * s, y + h, 11);
     return g + '</g>';
@@ -112,16 +116,16 @@
   function nemoKid({ x, y, w = 66, h = 66, color = COLORS.nemoKid1, emo = 'good', tuft = true, gaze = 0 }) {
     const cx = x + w / 2, s = w / 100 * 1.15;
     let g = `<g class="gf-ch">${groundShadow(cx, y + h + 10, w)}`;
-    g += squareBody(x, y, w, h, color, 8);
+    g += squareBody(x, y, w, h, color, 14);
     if (tuft) g += `<path class="ink" d="M${cx - 2},${y} q-2,-12 6,-14 q-6,4 -2,14" stroke-width="2.5"/>`;
-    g += face(cx, y + h * 0.5, s * 0.72, { emo, gaze, eyeStyle: 'big' });
+    g += face(cx, y + h * 0.52, s * 0.72, { emo, gaze, eyeStyle: 'big' });
     g += mitt(x - 4, y + h * 0.6, 6 * s) + mitt(x + w + 4, y + h * 0.6, 6 * s) + leg(cx - 10, y + h, 8) + leg(cx + 10, y + h, 8);
     return g + '</g>';
   }
   function nemoGrandma({ x, y, w = 84, h = 80, emo = 'good', gaze = 0 }) {
     const cx = x + w / 2, s = w / 100;
     let g = `<g class="gf-ch">${groundShadow(cx, y + h + 10, w)}`;
-    g += squareBody(x, y, w, h, COLORS.nemoGrandma, 9);
+    g += squareBody(x, y, w, h, COLORS.nemoGrandma, 15);
     g += `<circle class="fill" cx="${cx}" cy="${y - 2}" r="${9 * s}" fill="#d9d2c8"/>`; // 흰 쪽머리
     g += face(cx, y + h * 0.44, s, { emo, gaze, bags: true });
     g += mitt(x - 5, y + h * 0.62, 8 * s) + mitt(x + w + 5, y + h * 0.62, 8 * s) + leg(cx - 14, y + h, 10) + leg(cx + 14, y + h, 10);
@@ -230,15 +234,15 @@
       `<rect x="${w * 0.1}" y="${h * 0.7}" width="${w * 0.8}" height="${h * 0.05}" fill="${sill}" stroke="${INK}" stroke-width="3"/>`;
   }
   function speech(x, y, w, text, opt = {}) { // 말풍선. text 는 배열(줄) 가능
-    const lines = Array.isArray(text) ? text : [text]; const lh = opt.size || 22; const h = lines.length * lh + 22; const tail = opt.tail || 'left';
+    const lines = Array.isArray(text) ? text : [text]; const lh = opt.size || 32; const h = lines.length * lh + 24; const tail = opt.tail || 'left';
     const tx = tail === 'left' ? x + 24 : x + w - 24;
     return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="14" fill="#fff" stroke="${INK}" stroke-width="2.5"/><path d="M${tx - 8},${y + h - 1} l8,14 l8,-14z" fill="#fff" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><rect x="${tx - 7}" y="${y + h - 3}" width="14" height="5" fill="#fff"/>` +
-      lines.map((t, i) => `<text x="${x + 16}" y="${y + 18 + lh * (i + 0.7)}" font-family="Gaegu, 'Gowun Dodum', sans-serif" font-size="${lh - 2}" fill="${INK}">${t}</text>`).join('') + '</g>';
+      lines.map((t, i) => `<text x="${x + 18}" y="${y + 16 + lh * (i + 0.72)}" font-family="'Gowun Dodum', 'Malgun Gothic', sans-serif" font-size="${lh - 6}" font-weight="700" fill="${INK}">${t}</text>`).join('') + '</g>';
   }
   function narration(x, y, w, text, opt = {}) {
-    const lines = Array.isArray(text) ? text : [text]; const lh = opt.size || 20; const h = lines.length * lh + 20;
+    const lines = Array.isArray(text) ? text : [text]; const lh = opt.size || 34; const h = lines.length * lh + 26;
     return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${PAPER}" stroke="${INK}" stroke-width="1.5" opacity=".95"/>` +
-      lines.map((t, i) => `<text x="${x + w / 2}" y="${y + 14 + lh * (i + 0.75)}" text-anchor="middle" font-family="'Nanum Myeongjo', serif" font-size="${lh - 3}" fill="${INK}">${t}</text>`).join('') + '</g>';
+      lines.map((t, i) => `<text x="${x + w / 2}" y="${y + 16 + lh * (i + 0.75)}" text-anchor="middle" font-family="'Nanum Myeongjo', serif" font-size="${lh - 8}" font-weight="700" fill="${INK}">${t}</text>`).join('') + '</g>';
   }
 
   const GF = { INK, PAPER, SUIT, COLORS, EMOS, ROUGH_DEFS, CHAR_STYLE, face, nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,

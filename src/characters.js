@@ -231,7 +231,15 @@
     return `<path d="M${cx - w / 2},${yb} L${cx},${yb + w * 0.28} L${cx + w / 2},${yb} L${cx + w * 0.3},${yb} L${cx},${yb + w * 0.18} L${cx - w * 0.3},${yb}z" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.6}" stroke-linejoin="round"/>` +
       `<path d="M${cx},${yb + w * 0.16} l${w * 0.07},${w * 0.1} l${-w * 0.07},${w * 0.34} l${-w * 0.07},${-w * 0.34}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`;
   }
-  const MODE = { mode: 'clean', seed: 0 };
+  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true };
+  /* 래스터 캐릭터(ChatGPT 정본). name = 'wife/wink'. 600×600 캔버스, 발끝이 하단 5%. x,y = 좌상단, w = 폭(높이 = w). flip 으로 좌우 반전. */
+  function sprite(name, { x, y, w, flip = false, opacity = 1 }) {
+    const href = MODE.assets + name + '.png';
+    const t = flip ? `translate(${x + w},${y}) scale(-1,1)` : `translate(${x},${y})`;
+    return `<g class="gf-sprite" transform="${t}"><image href="${href}" x="0" y="0" width="${w}" height="${w}" opacity="${opacity}" preserveAspectRatio="xMidYMax"/></g>`;
+  }
+  // 표정 → 시트 이름 매핑 (시트에 없는 표정은 가장 가까운 것으로)
+  const WIFE_MAP = { good: 'good', wink: 'wink', surprise: 'surprise', joy: 'joy', love: 'love', worry: 'worry', bad: 'worry', angry: 'worry', sad: 'worry', cry: 'worry', relief: 'joy', tired: 'worry' };
   function touch(inner) { // 칠 패스(어긋남) + 선 패스(흔들림·굵기 변화). 미세 기울기는 길이 해시로 결정(같은 입력 = 같은 결과)
     const h = inner.length % 7; const rot = ((h - 3) * 0.5).toFixed(2); // -1.5° ~ +1.5°
     const fills = inner.replace(/stroke="#[0-9a-fA-F]{6}"/g, 'stroke="none"').replace(/stroke="none" stroke-width="[^"]*"/g, 'stroke="none"');
@@ -382,7 +390,13 @@
     if (emo === 'love') out += `<path d="M${cx + ex + 18 * s},${cy - 16 * s} c${-6 * s},${-4 * s} ${-4 * s},${-10 * s} 0,${-6 * s} c${4 * s},${-4 * s} ${6 * s},${2 * s} 0,${6 * s}z" fill="#f05a7a" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
     return out;
   }
-  function semoWife({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, noLimbs = false, faceStyle = 'ref', bow = 'left', bangs = false }) {
+  function semoWife({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, noLimbs = false, faceStyle = 'ref', bow = 'left', bangs = false, raster = MODE.rasterWife, flip = false }) {
+    if (raster && !noLimbs) { // ChatGPT 정본 래스터. size 기준 캔버스 폭 = size*1.3 (몸 폭이 캔버스의 ~75%)
+      const w = size * 1.3, sx = x + size / 2 - w / 2, sy = y - size * 0.06;
+      let g = sprite('wife/' + (WIFE_MAP[emo] || 'good'), { x: sx, y: sy, w, flip: flip || gaze > 0 });
+      if (item) g += itemAt(item, x + size * (flip ? 0.2 : 0.8), y + size * 0.95, size * 0.8);
+      return `<g class="gf-ch gf-raster">${g}</g>`;
+    }
     const cx = x + size / 2, h = size * 0.9, s = size / 130, color = COLORS.semoWife, W = size / 2, rr = size * 0.11;
     const L = limbs({ sl: [cx - W * 0.66, y + h * 0.5], sr: [cx + W * 0.66, y + h * 0.5], hl: [cx - W * 0.13, y + h * 0.86], hr: [cx + W * 0.13, y + h * 0.86], u: size, color, pose, gaze, ground: y + h + size * 0.12, female: true, limbColor: COLORS.skin, heelColor: COLORS.heelPink, standHands: { L: [-0.46, 0.3, -4], R: [0.46, 0.3, 4] }, kneeBend: 0.035 });
     if (noLimbs) { L.svg = ''; L.front = ''; }
@@ -492,7 +506,7 @@
   }
 
   const GF = { VERSION: 'v7', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt, touch, paper,
-    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; },
+    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, sprite,
     nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,
     squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, wifeFace, coffeeCup, windowBg, speech, narration, suitCollar: collar };
   root.GF = GF; Object.assign(root, GF);

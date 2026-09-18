@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>세모 아내 — 래스터 정본 확인</title>
+<style>body{margin:0;background:#f4ecdd;font-family:'Gowun Dodum',sans-serif;color:#6b5443}.wrap{max-width:900px;margin:0 auto;padding:24px 16px}svg{display:block;width:100%;height:auto}.lbl{font-size:15px;fill:#6b5443;font-weight:700}</style></head>
+<body><div class="wrap"><h1>세모 아내 — ChatGPT 정본(래스터) 6표정 + 남편(코드) 나란히</h1>
+<svg viewBox="0 0 900 260" id="a"></svg><svg viewBox="0 0 900 260" id="b"></svg></div>
+<script src="../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+const L = (x, y, t) => `<text class="lbl" x="${x}" y="${y}" text-anchor="middle">${t}</text>`;
+const emos = ['good', 'wink', 'surprise', 'joy', 'love', 'worry'];
+document.getElementById('a').innerHTML = emos.map((e, i) => semoWife({ x: 20 + i * 145, y: 20, size: 122, emo: e }) + L(80 + i * 145, 250, e)).join('');
+document.getElementById('b').innerHTML = semoHusband({ x: 80, y: 40, size: 122, emo: 'good', gaze: 1 }) + semoWife({ x: 260, y: 40, size: 122, emo: 'good' }) + semoWife({ x: 440, y: 40, size: 122, emo: 'wink', flip: true }) + coupleLove(600, 40, 100).replace(/\bsemoWife\b/g, 'semoWife') + L(300, 250, '남▲ + 여(래스터)') + L(500, 250, 'flip');
+</script></body></html>

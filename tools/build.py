@@ -14,3 +14,14 @@ for fp in sorted(glob.glob(os.path.join(ROOT, "web/*.html"))):
     name = os.path.basename(fp)
     open(os.path.join(dist, name), "w", encoding="utf-8", newline="\n").write(out); print("built", name, len(out))
 shutil.copy(os.path.join(dist, "ep01.html"), os.path.join(dist, "index.html")); print("index.html = ep01")
+# 래스터 자산 복사 (시트 원본 _sheet 제외) + 배포본에서는 assets 경로가 같은 층
+src_assets = os.path.join(ROOT, "assets")
+if os.path.isdir(src_assets):
+    dst_assets = os.path.join(dist, "assets")
+    if os.path.isdir(dst_assets): shutil.rmtree(dst_assets)
+    shutil.copytree(src_assets, dst_assets, ignore=shutil.ignore_patterns("_sheet", "*.psd"))
+    for fn in os.listdir(dist):
+        if fn.endswith(".html"):
+            fp = os.path.join(dist, fn); h = open(fp, encoding="utf-8").read().replace("assets: '../assets/'", "assets: './assets/'"); open(fp, "w", encoding="utf-8", newline="
+").write(h)
+    print("assets copied")

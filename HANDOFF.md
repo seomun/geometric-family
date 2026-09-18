@@ -13,6 +13,10 @@
 - 채널별 전략: `docs/02_IP_STRATEGY.md` — 채널별 형식(쇼츠 A/B/C 고정 포맷), 주간 리듬, AI/사람 역할, 4주 KPI.
 - 스크린샷: `notes/2026-09-16_characters.png`, `notes/2026-09-16_ep01.png`.
 
+## ⚠️ 대기 중 (2026-09-18)
+- 세모 아내 ChatGPT 시트(2×3, good/wink/surprise/joy/love/worry)를 `assets/wife/sheet.png` 로 저장 → `python tools/cut_sheet.py assets/wife/sheet.png --cols 3 --rows 2 --names good,wink,surprise,joy,love,worry` → `web/wife.html` 확인 → deploy.
+- 같은 스타일로 남편 시트 생성(프롬프트 아래) → `assets/husband/`. 이후 네모·동그라미도 같은 방식 검토.
+
 ## 다음 할 일
 1. 댓글: giscus(GitHub Discussions) — 저장소 Discussions 켜고 giscus.app 에서 스크립트 받아 ep 페이지 CTA 아래에 삽입. (사람이 giscus 앱 설치 승인 1회)
 1-2. 네이버 도전만화/포스타입 계정 + 1화 컷 이미지 업로드(`tools/export_cuts.py` 예정: 컷별 PNG).

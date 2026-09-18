@@ -236,7 +236,8 @@
   function sprite(name, { x, y, w, flip = false, opacity = 1 }) {
     const href = MODE.assets + name + '.png';
     const t = flip ? `translate(${x + w},${y}) scale(-1,1)` : `translate(${x},${y})`;
-    return `<g class="gf-sprite" transform="${t}"><image href="${href}" x="0" y="0" width="${w}" height="${w}" opacity="${opacity}" preserveAspectRatio="xMidYMax"/></g>`;
+    const f = MODE.mode === 'hand' ? ' filter="url(#gf-hand)"' : '';
+    return `<g class="gf-sprite" transform="${t}"${f}><image href="${href}" x="0" y="0" width="${w}" height="${w}" opacity="${opacity}" preserveAspectRatio="xMidYMax"/></g>`;
   }
   // 표정 → 시트 이름 매핑 (시트에 없는 표정은 가장 가까운 것으로)
   const WIFE_MAP = { good: 'good', wink: 'wink', surprise: 'surprise', joy: 'joy', love: 'love', worry: 'worry', bad: 'worry', angry: 'worry', sad: 'worry', cry: 'worry', relief: 'joy', tired: 'worry' };

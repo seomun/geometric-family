@@ -7,13 +7,17 @@
   일관성 검증: `node tools/snapshot.js` → `notes/snapshots/`. 캐릭터를 고치면 직전 스냅샷과 비교한다.
 - `web/characters.html` 캐릭터 시트, `web/ep01.html` 1화 「부고」 완성본(11컷 + 투표 CTA + 2화 예고).
 - **배포됨**: https://seomun.github.io/geometric-family/ (gh-pages 브랜치 = dist/). 재배포는 `bash tools/deploy.sh`.
-- 전략: `docs/02_IP_STRATEGY.md` — 채널별 형식(쇼츠 A/B/C 고정 포맷), 주간 리듬, AI/사람 역할, 4주 KPI.
+- 사업 전체 흐름: `docs/04_IP_BUSINESS.md` (네모=화자/블로그, 세모=얼굴/굿즈, 동그라미=마크; 블로그→웹툰→쇼츠→굿즈→유아 게임→이모티콘→라이선싱; P1~P3 로드맵).
+- 굿즈 아트보드 `web/goods.html`: 노트 3종(엿보기/칼·방패/사랑) + 스티커. 세모 아내가 굿즈 주역.
+- 채널별 전략: `docs/02_IP_STRATEGY.md` — 채널별 형식(쇼츠 A/B/C 고정 포맷), 주간 리듬, AI/사람 역할, 4주 KPI.
 - 스크린샷: `notes/2026-09-16_characters.png`, `notes/2026-09-16_ep01.png`.
 
 ## 다음 할 일
 1. 댓글: giscus(GitHub Discussions) — 저장소 Discussions 켜고 giscus.app 에서 스크립트 받아 ep 페이지 CTA 아래에 삽입. (사람이 giscus 앱 설치 승인 1회)
 1-2. 네이버 도전만화/포스타입 계정 + 1화 컷 이미지 업로드(`tools/export_cuts.py` 예정: 컷별 PNG).
-2. 2화 「집 청소」 원고 → 컷 구성. 세 집의 같은 주말.
+2. 2화 「집 청소」 원고(사람) → 컷 구성.
+2-2. 노트 인쇄 규격 PDF(300dpi, 재단 3mm) 내보내기 도구 → POD 샘플 주문.
+2-3. 유아 게임 1호 「도형 맞추기」 프로토(Dress Story 엔진 재사용).
 3. 쇼츠 대본 2개(1화에서): "넌 얼마나 했냐?" / "세 창가". 세로 9:16 은 컷을 720→1080 리스케일.
 4. 캐릭터: 엄마·할머니·아이·동그라미 엄마/아들/딸의 표정·포즈 시트 추가(지금은 아빠 3인만 매트릭스). 이모티콘 24종 조합표.
 

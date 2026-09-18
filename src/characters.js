@@ -96,12 +96,36 @@
     return `<path d="${d}" stroke="${INK}" stroke-width="${w + LINE * 1.6}" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${color}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
   }
   const hand = (x, y, r, color) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" stroke="${INK}" stroke-width="${LINE * 0.8}"/>`;
+
+  /* 여성 팔다리: 곡선을 따라 굵기가 변한다. w0 시작 굵기, w1 끝 굵기, bulge(t=bulgeT 에서 볼록). 각선미의 핵심. */
+  function shapedLimb(x1, y1, x2, y2, color, { w0, w1, bulge = 0, bulgeT = 0.5, bend = 0, sw = LINE * 0.8 }) {
+    const mx = (x1 + x2) / 2 + bend, my = (y1 + y2) / 2 + Math.abs(bend) * 0.3, N = 16, L = [], R = [];
+    for (let i = 0; i <= N; i++) {
+      const t = i / N, u = 1 - t;
+      const px = u * u * x1 + 2 * u * t * mx + t * t * x2, py = u * u * y1 + 2 * u * t * my + t * t * y2;
+      const tx = 2 * u * (mx - x1) + 2 * t * (x2 - mx), ty = 2 * u * (my - y1) + 2 * t * (y2 - my); const tl = Math.hypot(tx, ty) || 1;
+      const nx = -ty / tl, ny = tx / tl;
+      const w = (w0 + (w1 - w0) * t + bulge * Math.exp(-(((t - bulgeT) / 0.2) ** 2))) / 2;
+      L.push([px + nx * w, py + ny * w]); R.push([px - nx * w, py - ny * w]);
+    }
+    const d = 'M' + L.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' L') + ' L' + R.reverse().map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' L') + 'z';
+    const caps = `<circle cx="${x1}" cy="${y1}" r="${w0 / 2}"/><circle cx="${x2}" cy="${y2}" r="${w1 / 2}"/>`;
+    return `<g fill="${color}" stroke="${INK}" stroke-width="${sw}" stroke-linejoin="round">${caps}<path d="${d}"/></g><g fill="${color}" stroke="none"><path d="${d}"/>${caps}</g>`;
+  }
+  const heel = (x, y, r, color, dir = 1) => `<g transform="translate(${x},${y}) scale(${dir},1)"><path d="M${-r * 0.9},${-r * 0.35} q${r * 1.3},${-r * 0.6} ${r * 2.3},${r * 0.35} q${-r * 0.4},${r * 0.35} ${-r * 1.2},${r * 0.3} q${-r * 0.5},${-r * 0.1} ${-r * 0.7},${r * 0.05} l${-r * 0.15},${r * 0.45} h${-r * 0.3} l${0},${-r * 0.55} q${-r * 0.2},${-r * 0.3} ${0.05 * r},${-r * 0.6}z" fill="${dark(color, 0.45)}" stroke="${INK}" stroke-width="${LINE * 0.7}" stroke-linejoin="round"/></g>`;
   const foot = (x, y, r, color) => `<ellipse cx="${x}" cy="${y}" rx="${r * 1.3}" ry="${r * 0.75}" fill="${dark(color, 0.35)}" stroke="${INK}" stroke-width="${LINE * 0.8}"/>`;
 
   /* 포즈: 어깨(sl, sr)·엉덩이(hl, hr) 좌표와 몸 크기 u 를 받아 팔다리 SVG 를 만든다. 손 위치는 u 기준 비율 [dx, dy, bend]. */
-  function limbs({ sl, sr, hl, hr, u, color, pose = 'stand', gaze = 0, armW, legW, ground }) {
+  function limbs({ sl, sr, hl, hr, u, color, pose = 'stand', gaze = 0, armW, legW, ground, female = false }) {
     armW = armW || u * 0.085; legW = legW || u * 0.095;
-    const hr_ = u * 0.075, fr = u * 0.085;
+    const hr_ = female ? u * 0.058 : u * 0.075, fr = u * 0.085;
+    if (female) ground += u * 0.05;
+    // 여성: 다리는 허벅지 0.085u → 종아리 볼록 → 발목 0.038u / 팔은 위팔 0.06u → 손목 0.034u
+    const legF = (x1, y1, x2, y2, bend) => shapedLimb(x1, y1, x2, y2, color, { w0: u * 0.095, w1: u * 0.036, bulge: u * 0.034, bulgeT: 0.58, bend });
+    const armF = (x1, y1, x2, y2, bend) => shapedLimb(x1, y1, x2, y2, color, { w0: u * 0.068, w1: u * 0.03, bulge: u * 0.018, bulgeT: 0.32, bend });
+    const LEG = female ? legF : (x1, y1, x2, y2, b) => limb(x1, y1, x2, y2, legW, color, b);
+    const ARM = female ? armF : (x1, y1, x2, y2, b) => limb(x1, y1, x2, y2, armW, color, b);
+    const FOOT = female ? (x, y, r, c, dir) => heel(x, y - r * 0.1, r * 0.7, c, dir) : (x, y, r, c) => foot(x, y, r, c);
     const P = {
       stand: { L: [-0.62, 0.42, 0], R: [0.62, 0.42, 0] },
       wave: { L: [-0.62, 0.42, 0], R: [0.95, -0.45, 12] },
@@ -120,17 +144,18 @@
     let g = '';
     // 다리
     if (pose === 'sit') {
-      g += limb(hl[0], hl[1], hl[0] - u * 0.35, hl[1] + u * 0.12, legW, color, 0) + limb(hr[0], hr[1], hr[0] + u * 0.35, hr[1] + u * 0.12, legW, color, 0);
-      g += foot(hl[0] - u * 0.42, hl[1] + u * 0.14, fr, color) + foot(hr[0] + u * 0.42, hr[1] + u * 0.14, fr, color);
+      g += LEG(hl[0], hl[1], hl[0] - u * 0.35, hl[1] + u * 0.12, 0) + LEG(hr[0], hr[1], hr[0] + u * 0.35, hr[1] + u * 0.12, 0);
+      g += FOOT(hl[0] - u * 0.42, hl[1] + u * 0.14, fr, color, -1) + FOOT(hr[0] + u * 0.42, hr[1] + u * 0.14, fr, color, 1);
     } else if (pose === 'walk') {
-      g += limb(hl[0], hl[1], hl[0] - u * 0.16, ground, legW, color, 0) + limb(hr[0], hr[1], hr[0] + u * 0.16, ground, legW, color, 0);
-      g += foot(hl[0] - u * 0.16, ground + fr * 0.4, fr, color) + foot(hr[0] + u * 0.16, ground + fr * 0.4, fr, color);
+      g += LEG(hl[0], hl[1], hl[0] - u * 0.16, ground, 0) + LEG(hr[0], hr[1], hr[0] + u * 0.16, ground, 0);
+      g += FOOT(hl[0] - u * 0.16, ground + fr * 0.4, fr, color, -1) + FOOT(hr[0] + u * 0.16, ground + fr * 0.4, fr, color, 1);
     } else { // 각선미: 무릎이 살짝 바깥, 발목은 안쪽
-      g += limb(hl[0], hl[1], hl[0] - u * 0.02, ground, legW, color, -u * 0.05) + limb(hr[0], hr[1], hr[0] + u * 0.02, ground, legW, color, u * 0.05);
-      g += foot(hl[0] - u * 0.02, ground + fr * 0.4, fr, color) + foot(hr[0] + u * 0.02, ground + fr * 0.4, fr, color);
+      const kb = female ? u * 0.09 : u * 0.05;
+      g += LEG(hl[0], hl[1], hl[0] - u * 0.02, ground, -kb) + LEG(hr[0], hr[1], hr[0] + u * 0.02, ground, kb);
+      g += FOOT(hl[0] - u * 0.02, ground + fr * 0.4, fr, color, -1) + FOOT(hr[0] + u * 0.02, ground + fr * 0.4, fr, color, 1);
     }
     // 팔 (hold·think 는 몸 앞에 그린다)
-    const arms = limb(sl[0], sl[1], Lh[0], Lh[1], armW, color, P.L[2]) + limb(sr[0], sr[1], Rh[0], Rh[1], armW, color, P.R[2]) + hand(Lh[0], Lh[1], hr_, color) + hand(Rh[0], Rh[1], hr_, color);
+    const arms = ARM(sl[0], sl[1], Lh[0], Lh[1], P.L[2]) + ARM(sr[0], sr[1], Rh[0], Rh[1], P.R[2]) + hand(Lh[0], Lh[1], hr_, color) + hand(Rh[0], Rh[1], hr_, color);
     const front = pose === 'hold' || pose === 'think';
     return { svg: g + (front ? '' : arms), front: front ? arms : '', Lh, Rh };
   }
@@ -154,6 +179,34 @@
     }
   }
 
+  /* 의상 오버레이. shape: 'square'|'tri'|'circle'. geom: 몸 기하. outfit: dress|blouse|skirt|apron|cardigan|pearl|none */
+  function outfitSvg(shape, geom, outfit, oc = '#fff') {
+    if (!outfit || outfit === 'none') return '';
+    const { cx, top, bottom, widthAt } = geom; // widthAt(y) → 그 높이에서 몸의 반폭
+    const S = (d, f, w = LINE * 0.7) => `<path d="${d}" fill="${f}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
+    const H = bottom - top; let g = '';
+    const pleats = (y0, y1, n = 7, f = oc) => { // 주름 스커트 밴드
+      const w0 = widthAt(y0), w1 = widthAt(y1); let d = `M${cx - w0},${y0} L${cx + w0},${y0} L${cx + w1},${y1} `;
+      for (let i = n; i >= 0; i--) { const x = cx - w1 + (2 * w1) * i / n; d += `Q${x - w1 / n},${y1 + 3.5 * (H / 100)} ${x - 2 * w1 / n},${y1} `; }
+      return S(d + 'z', f) + Array.from({ length: n - 1 }, (_, i) => { const t = (i + 1) / n; return `<path d="M${cx - w0 + 2 * w0 * t},${y0} L${cx - w1 + 2 * w1 * t},${y1}" stroke="${INK}" stroke-width="${LINE * 0.35}" opacity=".45"/>`; }).join('');
+    };
+    const collarBow = (y, sc = 1) => { const w = widthAt(y) * 0.45 * sc, k = H * 0.045 * sc;
+      return S(`M${cx - w},${y} L${cx},${y + w * 0.45} L${cx + w},${y} L${cx + w * 0.55},${y - k * 0.3} L${cx},${y + w * 0.15} L${cx - w * 0.55},${y - k * 0.3}z`, '#fff') +
+        S(`M${cx},${y + w * 0.4} q${-k * 1.5},${-k} ${-k * 1.4},0 q${0},${k} ${k * 1.4},0z M${cx},${y + w * 0.4} q${k * 1.5},${-k} ${k * 1.4},0 q${0},${k} ${-k * 1.4},0z`, '#f48ca0', LINE * 0.6) + `<circle cx="${cx}" cy="${y + w * 0.4}" r="${k * 0.4}" fill="#f9c5d1" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`; };
+    if (outfit === 'skirt') g += pleats(top + H * (shape === 'tri' ? 0.8 : 0.72), bottom - 1);
+    if (outfit === 'dress') g += pleats(top + H * (shape === 'tri' ? 0.88 : 0.82), bottom - 1, 9);
+    if (outfit === 'dress') g += collarBow(top + H * (shape === 'tri' ? 0.84 : 0.66), shape === 'tri' ? 0.55 : 0.8);
+    if (outfit === 'blouse') g += collarBow(top + H * (shape === 'tri' ? 0.8 : 0.62), shape === 'tri' ? 1.1 : 0.9);
+    if (outfit === 'apron') { const y0 = top + H * 0.68, w0 = widthAt(y0) * 0.55, w1 = widthAt(bottom - 2) * 0.8;
+      g += S(`M${cx - w0},${y0} L${cx + w0},${y0} L${cx + w1},${bottom - 2} L${cx - w1},${bottom - 2}z`, oc) + S(`M${cx - w0 * 0.6},${y0} v${-H * 0.06} h${w0 * 1.2} v${H * 0.06}`, 'none', LINE * 0.6) +
+        S(`M${cx - w1 * 0.3},${bottom - H * 0.22} h${w1 * 0.6} v${H * 0.13} h${-w1 * 0.6}z`, oc, LINE * 0.5); }
+    if (outfit === 'cardigan') { const y0 = top + H * 0.68, w = widthAt(y0); const c2 = oc;
+      g += S(`M${cx - w},${y0 - H * 0.08} L${cx - w * 0.55},${y0 + H * 0.05} L${cx - w},${y0 + H * 0.26}z`, c2) + S(`M${cx + w},${y0 - H * 0.08} L${cx + w * 0.55},${y0 + H * 0.05} L${cx + w},${y0 + H * 0.26}z`, c2) +
+        `<circle cx="${cx}" cy="${y0 + H * 0.1}" r="${H * 0.016}" fill="${INK}"/><circle cx="${cx}" cy="${y0 + H * 0.19}" r="${H * 0.016}" fill="${INK}"/>`; }
+    if (outfit === 'pearl' || outfit === 'cardigan') { const y = top + H * 0.63, w = widthAt(y) * 0.36;
+      for (let i = 0; i <= 8; i++) { const t = i / 8, x = cx - w + 2 * w * t, yy = y + Math.sin(Math.PI * t) * H * 0.06; g += `<circle cx="${x}" cy="${yy}" r="${H * 0.018}" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.35}"/>`; } }
+    return g;
+  }
   function collar(cx, yb, w) {
     return `<path d="M${cx - w / 2},${yb} L${cx},${yb + w * 0.28} L${cx + w / 2},${yb} L${cx + w * 0.3},${yb} L${cx},${yb + w * 0.18} L${cx - w * 0.3},${yb}z" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.6}" stroke-linejoin="round"/>` +
       `<path d="M${cx},${yb + w * 0.16} l${w * 0.07},${w * 0.1} l${-w * 0.07},${w * 0.34} l${-w * 0.07},${-w * 0.34}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`;
@@ -163,12 +216,13 @@
 
   /* ---------- 네모가족 ---------- */
   function square(o) {
-    const { x, y, w, h, color, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, faceY = 0.46, faceS = 1, feat = '', after = '', extraHands = false, faceOpt } = o;
+    const { x, y, w, h, color, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, faceY = 0.46, faceS = 1, feat = '', after = '', extraHands = false, faceOpt, female = false, outfit = 'none', outfitColor = '#fff' } = o;
     const cx = x + w / 2, s = (w / 100) * faceS, r = w * 0.16;
-    const L = limbs({ sl: [x + 2, y + h * 0.58], sr: [x + w - 2, y + h * 0.58], hl: [cx - w * 0.22, y + h - 4], hr: [cx + w * 0.22, y + h - 4], u: w, color, pose, gaze, ground: y + h + w * 0.13 });
+    const L = limbs({ sl: [x + 2, y + h * 0.58], sr: [x + w - 2, y + h * 0.58], hl: [cx - w * 0.22, y + h - 4], hr: [cx + w * 0.22, y + h - 4], u: w, color, pose, gaze, ground: y + h + w * 0.13, female });
     let g = L.svg;
-    if (extraHands) g += limb(x + 2, y + h * 0.78, x - w * 0.42, y + h * 0.95, w * 0.085, color, -6) + limb(x + w - 2, y + h * 0.78, x + w + w * 0.42, y + h * 0.95, w * 0.085, color, 6) + hand(x - w * 0.42, y + h * 0.95, w * 0.075, color) + hand(x + w + w * 0.42, y + h * 0.95, w * 0.075, color);
+    if (extraHands) g += shapedLimb(x + 2, y + h * 0.78, x - w * 0.42, y + h * 0.95, color, { w0: w * 0.06, w1: w * 0.034, bulge: w * 0.01, bulgeT: 0.3, bend: -6 }) + shapedLimb(x + w - 2, y + h * 0.78, x + w + w * 0.42, y + h * 0.95, color, { w0: w * 0.06, w1: w * 0.034, bulge: w * 0.01, bulgeT: 0.3, bend: 6 }) + hand(x - w * 0.42, y + h * 0.95, w * 0.058, color) + hand(x + w + w * 0.42, y + h * 0.95, w * 0.058, color);
     g += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${color}" stroke="${INK}" stroke-width="${LINE}"/>`;
+    g += outfitSvg('square', { cx, top: y, bottom: y + h, widthAt: () => w / 2 - 2 }, outfit, outfitColor);
     if (suit) g += `<path d="M${x},${y + h * 0.66} h${w} v${h * 0.34 - r} a${r},${r} 0 0 1 ${-r},${r} h${-(w - 2 * r)} a${r},${r} 0 0 1 ${-r},${-r}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE}"/>` + collar(cx, y + h * 0.66, w * 0.5);
     g += feat;
     g += face(cx, y + h * faceY, s, faceOpt || { emo, gaze });
@@ -187,28 +241,30 @@
   function nemoMom(o) {
     const { x, y, w = 96, h = 92 } = o; const cx = x + w / 2, s = w / 100;
     const feat = `<circle cx="${cx + 28 * s}" cy="${y - 2}" r="${10 * s}" fill="${INK}"/><path d="M${cx - 32 * s},${y + 3} q${32 * s},${-12 * s} ${64 * s},0" stroke="${INK}" stroke-width="${LINE * 1.2}" fill="none" stroke-linecap="round"/>`;
-    return square({ ...o, w, h, color: COLORS.nemoMom, feat, faceY: 0.47, extraHands: o.manyHands !== false, faceOpt: { emo: o.emo || 'good', gaze: o.gaze || 0, lashes: true } });
+    return square({ outfit: 'apron', outfitColor: '#fff7ee', ...o, w, h, color: COLORS.nemoMom, feat, faceY: 0.47, female: true, extraHands: o.manyHands !== false, faceOpt: { emo: o.emo || 'good', gaze: o.gaze || 0, lashes: true } });
   }
   function nemoKid(o) {
-    const { x, y, w = 66, h = 66, color = COLORS.nemoKid1, tuft = true } = o; const cx = x + w / 2;
+    const { x, y, w = 66, h = 66, color = COLORS.nemoKid1, tuft = true, girl = false } = o; const cx = x + w / 2;
     const feat = tuft ? `<path d="M${cx - 2},${y + 1} q-2,-13 7,-15 q-7,5 -3,15" stroke="${INK}" stroke-width="${LINE * 0.8}" fill="none" stroke-linecap="round"/>` : '';
-    return square({ ...o, w, h, color, feat, faceY: 0.52, faceS: 0.72, faceOpt: { emo: o.emo || 'good', gaze: o.gaze || 0, eyeStyle: 'big' } });
+    return square({ outfit: girl ? 'skirt' : 'none', outfitColor: '#fde3ea', ...o, w, h, color, feat, faceY: 0.52, faceS: 0.72, female: girl, faceOpt: { emo: o.emo || 'good', gaze: o.gaze || 0, eyeStyle: 'big', lashes: girl } });
   }
   function nemoGrandma(o) {
     const { x, y, w = 84, h = 80 } = o; const cx = x + w / 2, s = w / 100;
     const feat = `<circle cx="${cx}" cy="${y - 2}" r="${10 * s}" fill="#e8e2d8" stroke="${INK}" stroke-width="${LINE}"/>`;
-    return square({ ...o, w, h, color: COLORS.nemoGrandma, feat, faceY: 0.46, faceOpt: { emo: o.emo || 'good', gaze: o.gaze || 0, bags: true } });
+    return square({ outfit: 'cardigan', outfitColor: '#c9b6a4', ...o, w, h, color: COLORS.nemoGrandma, feat, faceY: 0.46, female: true, faceOpt: { emo: o.emo || 'good', gaze: o.gaze || 0, bags: true } });
   }
 
   /* ---------- 세모부부 ---------- */
-  function semo({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, wife = false, noLimbs = false }) {
+  function semo({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, wife = false, noLimbs = false, outfit, outfitColor = '#fff' }) {
     const cx = x + size / 2, h = size * 0.9, s = size / 130, color = wife ? COLORS.semoWife : COLORS.semoHusband;
-    const L = limbs({ sl: [cx - size * 0.27, y + h * 0.55], sr: [cx + size * 0.27, y + h * 0.55], hl: [cx - size * 0.2, y + h - 4], hr: [cx + size * 0.2, y + h - 4], u: size, color, pose, gaze, ground: y + h + size * 0.13 });
+    if (outfit === undefined) outfit = wife ? 'dress' : 'none';
+    const L = limbs({ sl: [cx - size * 0.27, y + h * 0.55], sr: [cx + size * 0.27, y + h * 0.55], hl: [cx - size * 0.2, y + h - 4], hr: [cx + size * 0.2, y + h - 4], u: size, color, pose, gaze, ground: y + h + size * 0.13, female: wife });
     if (noLimbs) { L.svg = ''; L.front = ''; }
     let g = L.svg;
     const rr = size * 0.07; // 둥근 꼭짓점
     g += `<path d="M${cx - rr * 0.6},${y + rr * 1.1} Q${cx},${y - rr * 0.4} ${cx + rr * 0.6},${y + rr * 1.1} L${cx + size / 2 - rr * 0.4},${y + h - rr * 0.9} Q${cx + size / 2 + rr * 0.1},${y + h + rr * 0.2} ${cx + size / 2 - rr},${y + h} L${cx - size / 2 + rr},${y + h} Q${cx - size / 2 - rr * 0.1},${y + h + rr * 0.2} ${cx - size / 2 + rr * 0.4},${y + h - rr * 0.9}z" fill="${color}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>`;
     if (suit) { const yb = y + h * 0.7, hw = (size / 2) * (yb - y) / h; g += `<path d="M${cx - hw},${yb} L${cx + hw},${yb} L${cx + size / 2},${y + h} L${cx - size / 2},${y + h}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>` + collar(cx, yb, size * 0.34); }
+    g += outfitSvg('tri', { cx, top: y, bottom: y + h, widthAt: (yy) => (size / 2) * (yy - y) / h - 2 }, outfit, outfitColor);
     if (!wife) g += `<path d="M${cx - 2},${y + 4} q-3,-15 11,-17 q-9,6 -4,17" stroke="${INK}" stroke-width="${LINE * 0.9}" fill="none" stroke-linecap="round"/>`; // 남편 퀴프
     else { const bx = cx + size * 0.12, by = y + size * 0.1, k = size * 0.06; // 아내: 분홍 리본
       g += `<path d="M${bx},${by} q${-k * 1.6},${-k * 1.2} ${-k * 1.5},0 q${-0.1 * k},${k * 1.2} ${k * 1.5},0z M${bx},${by} q${k * 1.6},${-k * 1.2} ${k * 1.5},0 q${0.1 * k},${k * 1.2} ${-k * 1.5},0z" fill="#f48ca0" stroke="${INK}" stroke-width="${LINE * 0.7}" stroke-linejoin="round"/><circle cx="${bx}" cy="${by}" r="${k * 0.45}" fill="#f9c5d1" stroke="${INK}" stroke-width="${LINE * 0.6}"/>`;
@@ -222,12 +278,16 @@
   const semoWife = (o) => semo({ ...o, wife: true });
 
   /* ---------- 동그라미가족 ---------- */
-  function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, glasses = false, suit = false, who = 'dad' }) {
+  function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, glasses = false, suit = false, who = 'dad', outfit, outfitColor = '#fff' }) {
     const s = r / 55, color = COLORS[{ dad: 'dongDad', mom: 'dongMom', son: 'dongSon', daughter: 'dongDaughter' }[who]], u = r * 2;
+    const female = who === 'mom' || who === 'daughter';
+    if (outfit === undefined) outfit = who === 'mom' ? 'cardigan' : who === 'daughter' ? 'skirt' : 'none';
+    if (who === 'mom' && outfitColor === '#fff') outfitColor = '#e9dfd2';
     const a = Math.PI / 180 * 20;
-    const L = limbs({ sl: [cx - r * Math.cos(a), cy + r * Math.sin(a)], sr: [cx + r * Math.cos(a), cy + r * Math.sin(a)], hl: [cx - r * 0.42, cy + r * 0.9], hr: [cx + r * 0.42, cy + r * 0.9], u, color, pose, gaze, ground: cy + r + u * 0.11 });
+    const L = limbs({ sl: [cx - r * Math.cos(a), cy + r * Math.sin(a)], sr: [cx + r * Math.cos(a), cy + r * Math.sin(a)], hl: [cx - r * 0.42, cy + r * 0.9], hr: [cx + r * 0.42, cy + r * 0.9], u, color, pose, gaze, ground: cy + r + u * 0.11, female });
     let g = L.svg;
     g += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" stroke="${INK}" stroke-width="${LINE}"/>`;
+    g += outfitSvg('circle', { cx, top: cy - r, bottom: cy + r, widthAt: (yy) => Math.sqrt(Math.max(0, r * r - (yy - cy) * (yy - cy))) - 2 }, outfit, outfitColor);
     if (suit) { const yb = cy + r * 0.45, hw = Math.sqrt(r * r - (yb - cy) * (yb - cy)); g += `<path d="M${cx - hw},${yb} A${r},${r} 0 0 0 ${cx + hw},${yb}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE}"/>` + collar(cx, yb, r * 0.9); }
     const H = (d, w = LINE) => `<path d="${d}" stroke="${INK}" stroke-width="${w}" fill="none" stroke-linecap="round"/>`;
     if (who === 'dad') g += H(`M${cx - r * 0.55},${cy - r * 0.62} q${r * 0.5},${-r * 0.2} ${r * 1.1},${r * 0.05}`) + H(`M${cx - r * 0.15},${cy - r * 0.68} l${r * 0.1},${r * 0.25}`, LINE * 0.7);

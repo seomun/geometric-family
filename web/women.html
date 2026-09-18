@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 — 여성 캐릭터 시트</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #f4ecdd; color: #3d2b1f; font-family: 'Gowun Dodum', sans-serif; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-family: Gaegu, sans-serif; font-size: 30px; margin: 0 0 4px; }
+  h2 { font-family: Gaegu, sans-serif; font-size: 22px; margin: 26px 0 8px; border-bottom: 2px solid #3d2b1f; }
+  svg { display: block; width: 100%; height: auto; }
+  .lbl { font-family: 'Gowun Dodum'; font-size: 14px; fill: #3d2b1f; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔺 여성 캐릭터 시트 — 각선미 · 의상</h1>
+  <h2>팔다리 디테일 (확대) — 허벅지 → 종아리 볼록 → 발목, 위팔 → 손목</h2>
+  <svg viewBox="0 0 900 380" id="detail"></svg>
+  <h2>세모 아내 — 의상 4종 × 포즈</h2>
+  <svg viewBox="0 0 900 300" id="wife"></svg>
+  <h2>네모 엄마(앞치마) · 할머니(가디건) · 큰딸(스커트) · 동그라미 엄마(가디건+진주) · 동그라미 딸</h2>
+  <svg viewBox="0 0 900 300" id="others"></svg>
+  <h2>세모 아내 포즈 10종</h2>
+  <svg viewBox="0 0 900 460" id="poses"></svg>
+</div>
+<script src="../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+const $ = id => document.getElementById(id);
+const L = (x, y, t) => `<text class="lbl" x="${x}" y="${y}" text-anchor="middle">${t}</text>`;
+$('detail').innerHTML = `<g transform="translate(60,20) scale(2.6)">${semoWife({ x: 0, y: 0, size: 122, emo: 'wink', pose: 'hips' })}</g>` +
+  `<g transform="translate(520,20) scale(2.6)">${semoWife({ x: 0, y: 0, size: 122, emo: 'good', pose: 'walk' })}</g>` + L(230, 360, 'hips ×2.6') + L(690, 360, 'walk ×2.6');
+$('wife').innerHTML = [['dress', '원피스(기본)'], ['blouse', '블라우스'], ['skirt', '스커트'], ['none', '민무늬']].map(([o, n], i) =>
+  semoWife({ x: 40 + i * 210, y: 30, size: 122, emo: ['good', 'joy', 'wink', 'love'][i], pose: ['stand', 'cheer', 'hips', 'hold'][i], outfit: o, item: i === 3 ? 'heart' : null }) + L(100 + i * 210, 280, n)).join('');
+$('others').innerHTML = nemoMom({ x: 30, y: 60, emo: 'good', pose: 'hold', item: 'coffee' }) + nemoGrandma({ x: 190, y: 70 }) + nemoKid({ x: 330, y: 90, girl: true, emo: 'joy', pose: 'cheer' }) +
+  dongMom({ cx: 520, cy: 110, emo: 'good', gaze: 1 }) + dongDaughter({ cx: 700, cy: 124 }) + L(80, 280, '네모 엄마') + L(232, 280, '할머니') + L(363, 280, '큰딸') + L(520, 280, '동그라미 엄마') + L(700, 280, '동그라미 딸');
+let p = '';
+POSES.forEach((pose, i) => { const x = 30 + (i % 5) * 172, y = 30 + Math.floor(i / 5) * 215; p += L(x + 55, y, pose) + semoWife({ x, y: y + 14, size: 110, pose, emo: ['good', 'joy', 'joy', 'worry', 'angry', 'wink', 'surprise', 'love', 'relief', 'good'][i] }); });
+$('poses').innerHTML = p;
+</script>
+</body>
+</html>

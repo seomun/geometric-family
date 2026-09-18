@@ -1,4 +1,4 @@
-# 03. 스타일 가이드 v6 「굿즈 에디션」 — 일관성 규격 (잠금)
+# 03. 스타일 가이드 v6.2 「굿즈 에디션」 — 일관성 규격 (잠금)
 
 작성 2026-09-18. 기준 이미지: `notes/snapshots/` 최신 `characters_*.png`. **이 문서와 `src/characters.js` 가 어긋나면 코드가 틀린 것이다.**
 목표물: 노트·가방·스티커·이모티콘. 헬로키티 문법 — 어디에 찍어도, 몇 년 뒤에도 같은 얼굴.
@@ -23,17 +23,24 @@
 | 네모 엄마 | `#ecb383` | 쪽머리(오른쪽 위 점) · 속눈썹 · **손 4개** |
 | 네모 할머니 | `#d8b58e` | 흰 쪽머리(정수리) · 눈밑주름 |
 | 네모 아이들 | `#f0c583` `#f2b49e` `#e6a9c0` `#f8dcb0`(막둥이) | 정수리 삐침 · 큰 눈(big) · 얼굴 0.72배 |
-| 세모 남편 | `#9fb6d0` | 꼭짓점 퀴프 · 아몬드 눈 |
-| 세모 아내 | `#ecc76a` | 퀴프 + 분홍 리본 점 · 속눈썹 |
-| 동그라미 아빠 | `#9fb0bf` | 가르마 · 안경 · **눈매 고정(calm)** |
+| 세모 남편 | `#9fb6d0` | 둥근 꼭짓점 · 퀴프 · 아몬드 눈. 날카롭고 쿨함 |
+| **세모 아내** | `#ecc76a` | 둥근 꼭짓점 · **분홍 리본** · 앞머리 한 가닥 · 속눈썹 3 · **분홍 입술**. IP 의 얼굴(굿즈 주역) |
+| 동그라미 아빠 | `#9fb0bf` | 가르마 · 안경 · **눈매 고정(calm = 둥근 눈 + 윗눈꺼풀 선)**. 표정은 입으로만 |
 | 동그라미 엄마 | `#c4b3a0` | 웨이브 앞머리 · 속눈썹 · 눈매 고정 |
 | 동그라미 아들/딸 | `#a9bcae` / `#cbb6c2` | 바이올린 / 테니스 라켓 + 분홍 핀 |
 
 ## 3. 표정 12 · 포즈 10 · 소품 10
 - emo: `good joy bad angry worry relief sad cry surprise love tired wink`. 동그라미는 눈매 고정 — 입·눈썹(angry 만)·땀으로만 표현. "약해 보이지 않는다."
 - pose: `stand wave cheer think point hips shrug hold sit walk`. `hold`·`think` 는 팔이 몸 앞. `point` 는 gaze 방향.
-- item: `coffee americano phone envelope book bag violin racket heart star`. 오른손에 붙는다.
+- item: `coffee americano phone envelope book bag violin racket heart star sword shield`. `item` 은 오른손, `itemL` 은 왼손.
+- 구도 함수: `coupleBattle(x,y,size)` 마주보고 칼·방패 / `coupleLove(x,y,size)` 하트 / `semoWifePeek({x,y,size,edgeY})` 담 너머 엿보기(팔이 담을 안음). 굿즈 아트보드 `web/goods.html`.
 - 새 표정/포즈/소품은 **여기에 먼저 적고** 코드에 추가한다. 시트(`web/characters.html`)에 자동으로 나타나야 한다.
+
+## 3-1. 역할 (누가 어디의 얼굴인가)
+- **세모(특히 아내)** = 매력. 굿즈·스티커·이모티콘·쇼츠 썸네일의 주역. 표정·포즈를 가장 많이 만든다.
+- **네모** = 평범. 화자. 블로그의 이름이자 목소리. 웃는 얼굴 기본.
+- **동그라미** = 완벽·균형. 표정 적어도 된다. 로고·브랜드 마크·'정답' 자리.
+- 전체 기본값은 **웃는 얼굴**. 슬픔·피곤은 이야기 안에서만.
 
 ## 4. 금지
 그라데이션, 외곽선 색 변경, 눈 모양 변경, 몸 비율 변경(네모 w:h ≈ 1.13), 캐릭터별 다른 선 굵기, AI 이미지로 대체, 손그림 필터.

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 — 굿즈 아트보드</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ddd5c6; color: #3d2b1f; font-family: 'Gowun Dodum', sans-serif; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-family: Gaegu, sans-serif; font-size: 30px; margin: 0 0 4px; }
+  h2 { font-family: Gaegu, sans-serif; font-size: 22px; margin: 26px 0 8px; }
+  .row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+  .board { background: #fff; box-shadow: 0 4px 16px rgba(0,0,0,.18); }
+  .board svg { display: block; width: 300px; height: auto; }
+  .cap { font-size: 13px; opacity: .8; margin-top: 6px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔺 세모 굿즈 아트보드 — 노트 표지 (A5 148×210mm, 1mm = 1 단위)</h1>
+  <div id="boards" class="row"></div>
+  <h2>스티커 시트 — 세모 아내 9종 · 세모 커플 3종</h2>
+  <div id="stickers" class="row"></div>
+</div>
+<script src="../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+const W = 148, H = 210; // A5 mm
+const board = (id, inner, bg, cap) => `<div><div class="board"><svg viewBox="0 0 ${W} ${H}" id="${id}"><rect width="${W}" height="${H}" fill="${bg}"/>${inner}</svg></div><div class="cap">${cap}</div></div>`;
+const logo = (y, dark = true) => `<text x="${W / 2}" y="${y}" text-anchor="middle" font-family="'Gowun Dodum'" font-size="5.5" fill="${dark ? INK : '#fff'}" letter-spacing="1">기하학 가족 · GEOMETRIC FAMILY</text>`;
+// mm 캔버스에 캐릭터를 놓기 위해 scale — 캐릭터 함수는 px 기준(폭 100 ≈ 25mm)
+const S = (inner, sx, sy, k) => `<g transform="translate(${sx},${sy}) scale(${k})">${inner}</g>`;
+
+let b = '';
+// 1. 담 너머 엿보기 — 표지 하단 2/3 가 진한 색 '담', 아내가 위에서 넘겨본다
+b += board('peek', `
+  <rect x="0" y="${H * 0.42}" width="${W}" height="${H * 0.58}" fill="#e9b93f"/>
+  <rect x="0" y="${H * 0.42 - 3}" width="${W}" height="3" fill="#c9962a"/>
+  ${S(semoWifePeek({ x: 0, y: 0, size: 220, edgeY: 198, emo: 'wink', gaze: 0, id: 'pk1' }), W / 2 - 220 * 0.42 / 2, H * 0.42 - 198 * 0.42 + 2, 0.42)}
+  <text x="${W / 2}" y="${H * 0.62}" text-anchor="middle" font-family="Gaegu" font-weight="700" font-size="14" fill="${INK}">뭐 해?</text>
+  <text x="${W / 2}" y="${H * 0.7}" text-anchor="middle" font-family="'Gowun Dodum'" font-size="6" fill="${INK}">삼한사온 · 세모 아내</text>
+  ${logo(H - 8)}
+`, '#fff3c4', '① 담 너머 엿보기 — 노트 표지');
+// 2. 마주보면 칼과 방패
+b += board('battle', `
+  ${S(coupleBattle(0, 0, 110), 8, 58, 0.36)}
+  <text x="${W / 2}" y="${H * 0.78}" text-anchor="middle" font-family="Gaegu" font-weight="700" font-size="13" fill="${INK}">오늘은 전투</text>
+  <text x="${W / 2}" y="${H * 0.84}" text-anchor="middle" font-family="'Gowun Dodum'" font-size="6" fill="${INK}">삼한사온 · 세모 부부</text>
+  ${logo(H - 8)}
+`, '#dfe8f2', '② 마주보면 칼과 방패');
+// 3. 사랑스러운 커플
+b += board('love', `
+  ${[[20, 30], [120, 24], [30, 150], [125, 160], [70, 12]].map(([x, y]) => `<g transform="translate(${x},${y}) scale(.09)">${itemAt('heart', 0, 0, 100)}</g>`).join('')}
+  ${S(coupleLove(0, 0, 110), 14, 62, 0.42)}
+  <text x="${W / 2}" y="${H * 0.8}" text-anchor="middle" font-family="Gaegu" font-weight="700" font-size="13" fill="${INK}">내일은 사랑</text>
+  <text x="${W / 2}" y="${H * 0.86}" text-anchor="middle" font-family="'Gowun Dodum'" font-size="6" fill="${INK}">삼한사온 · 세모 부부</text>
+  ${logo(H - 8)}
+`, '#fde4ea', '③ 너무 사랑스러운 커플');
+document.getElementById('boards').innerHTML = b;
+
+// 스티커
+const emos = ['good', 'joy', 'wink', 'love', 'surprise', 'angry', 'worry', 'tired', 'cry'];
+const poses = ['stand', 'cheer', 'wave', 'hold', 'shrug', 'hips', 'think', 'sit', 'stand'];
+let st = `<svg viewBox="0 0 300 400" style="width:300px;background:#fff">`;
+emos.forEach((emo, i) => { const x = 10 + (i % 3) * 96, y = 10 + Math.floor(i / 3) * 96;
+  st += `<rect x="${x}" y="${y}" width="86" height="86" rx="12" fill="#fff6f8" stroke="${INK}" stroke-width="1.5" stroke-dasharray="4 3"/>` + `<g transform="translate(${x + 8},${y + 6}) scale(.62)">` + semoWife({ x: 8, y: 6, size: 100, emo, pose: poses[i], item: emo === 'love' ? 'heart' : null }) + '</g>'; });
+st += `<rect x="10" y="298" width="280" height="92" rx="12" fill="#fff6f8" stroke="${INK}" stroke-width="1.5" stroke-dasharray="4 3"/><g transform="translate(20,306) scale(.34)">${coupleLove(0, 0, 100)}</g><g transform="translate(160,306) scale(.3)">${coupleBattle(0, 0, 100)}</g></svg>`;
+document.getElementById('stickers').innerHTML = `<div class="board">${st}</div>`;
+</script>
+</body>
+</html>

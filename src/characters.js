@@ -14,7 +14,7 @@
   };
   const EMOS = ['good', 'joy', 'bad', 'angry', 'worry', 'relief', 'sad', 'cry', 'surprise', 'love', 'tired', 'wink'];
   const POSES = ['stand', 'wave', 'cheer', 'think', 'point', 'hips', 'shrug', 'hold', 'sit', 'walk'];
-  const ITEMS = ['coffee', 'americano', 'phone', 'envelope', 'book', 'bag', 'violin', 'racket', 'heart', 'star'];
+  const ITEMS = ['coffee', 'americano', 'phone', 'envelope', 'book', 'bag', 'violin', 'racket', 'heart', 'star', 'sword', 'shield'];
 
   const ROUGH_DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs></defs></svg>`; // v6: 필터 없음(호환용)
   const CHAR_STYLE = `<style>
@@ -28,7 +28,7 @@
 
   /* ---------- 얼굴 ---------- cx,cy 얼굴 중심 · s 스케일(1 = 폭 100) · opt: emo gaze eyeStyle lashes bags stable */
   function face(cx, cy, s, opt) {
-    const { emo = 'good', gaze = 0, eyeStyle = 'round', lashes = false, bags = false, stable = false } = opt;
+    const { emo = 'good', gaze = 0, eyeStyle = 'round', lashes = false, bags = false, stable = false, lips = false } = opt;
     s *= 1.12;
     const ex = 16 * s, ey = -2 * s, px = gaze * 2.6 * s, lw = LINE * s;
     const E = (d, w = lw) => `<path d="${d}" stroke="${INK}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
@@ -55,13 +55,13 @@
       if (emo === 'surprise') { rx *= 1.15; ry *= 1.2; }
       let shape;
       if (eyeStyle === 'almond') shape = `<path class="white" d="M${x - 10 * s},${cy + ey} q${10 * s},${-12 * s} ${20 * s},0 q${-10 * s},${9 * s} ${-20 * s},0z" stroke-width="${lw * 0.7}"/>`;
-      else if (eyeStyle === 'calm') shape = `<path class="white" d="M${x - 10 * s},${cy + ey - 1 * s} q${10 * s},${-8 * s} ${20 * s},0 q${-10 * s},${11 * s} ${-20 * s},0z" stroke-width="${lw * 0.7}"/>`;
+      else if (eyeStyle === 'calm') shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${9 * s}" ry="${9.5 * s}" stroke-width="${lw * 0.7}"/><path d="M${x - 8 * s},${cy + ey - 4.5 * s} q${8 * s},${-6 * s} ${16 * s},0" stroke="${INK}" stroke-width="${lw * 0.9}" fill="none" stroke-linecap="round"/>`;
       else shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${rx}" ry="${ry}" stroke-width="${lw * 0.7}"/>`;
       const pr = (eyeStyle === 'big' ? 6.2 : (eyeStyle === 'almond' || eyeStyle === 'calm') ? 4.6 : 5.2) * s * (emo === 'surprise' ? 0.8 : 1);
-      const droop = (['sad', 'cry'].includes(emo) && !stable) ? 1.5 * s : 0;
+      const droop = ((['sad', 'cry'].includes(emo) && !stable) ? 1.5 * s : 0) + (eyeStyle === 'calm' ? 1 * s : 0);
       let g = shape + `<circle cx="${x + px}" cy="${cy + ey + droop}" r="${pr}" fill="${INK}"/>` +
         `<circle cx="${x + px + 2 * s}" cy="${cy + ey - 2.6 * s + droop}" r="${2.1 * s}" fill="#fff"/><circle cx="${x + px - 1.8 * s}" cy="${cy + ey + 2.2 * s + droop}" r="${1.1 * s}" fill="#fff"/>`;
-      if (lashes) g += E(`M${x + 8 * s},${cy + ey - 7 * s} l${3.5 * s},${-3 * s} M${x + 10 * s},${cy + ey - 3.5 * s} l${4 * s},${-1.5 * s}`, lw * 0.6);
+      if (lashes) g += E(`M${x + 8 * s},${cy + ey - 7.5 * s} l${4 * s},${-4 * s} M${x + 10 * s},${cy + ey - 4 * s} l${5 * s},${-2.5 * s} M${x + 10.5 * s},${cy + ey} l${5 * s},${-0.5 * s}`, lw * 0.6);
       if (bags) g += `<path d="M${x - 5 * s},${cy + ey + 12.5 * s} q${5 * s},${2.5 * s} ${10 * s},0" stroke="${INK}" stroke-width="${lw * 0.5}" fill="none" opacity=".6"/>`;
       if (emo === 'cry') g += `<path d="M${x + 6 * s},${cy + ey + 9 * s} q${3 * s},${8 * s} 0,${14 * s} q${-3 * s},${-6 * s} 0,${-14 * s}z" fill="#8fc7ee" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
       return g;
@@ -83,7 +83,8 @@
       tired: E(`M${cx - 6 * s},${my + 3 * s} l${12 * s},0`) + `<text x="${cx + 26 * s}" y="${cy - 10 * s}" font-size="${12 * s}" font-weight="700" fill="${INK}" font-family="sans-serif">z</text>`,
       wink: E(`M${cx - 8 * s},${my} q${8 * s},${9 * s} ${16 * s},0`)
     };
-    out += M[emo] || M.good;
+    if (lips && ['good', 'love', 'wink', 'relief'].includes(emo)) out += `<path d="M${cx - 7 * s},${my} q${7 * s},${9 * s} ${14 * s},0 q${-7 * s},${2 * s} ${-14 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}" stroke-linejoin="round"/>`;
+    else out += M[emo] || M.good;
     if (emo === 'love') out += `<path d="M${cx + 30 * s},${cy - 14 * s} c${-6 * s},${-4 * s} ${-4 * s},${-10 * s} 0,${-6 * s} c${4 * s},${-4 * s} ${6 * s},${2 * s} 0,${6 * s}z" fill="#f05a7a" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
     return out;
   }
@@ -146,6 +147,8 @@
       case 'violin': return `<g transform="translate(${x},${y}) rotate(-35) scale(${k})">${S('M-8,-24 q8,-8 16,0 q5,14 -1,30 q-8,5 -14,0 q-6,-16 -1,-30z', '#8a4b2a')}${S('M0,-24 v-22', 'none', LINE * 0.7)}<path d="M-3,-8 v12 M3,-8 v12" stroke="${INK}" stroke-width="1.5"/></g>`;
       case 'racket': return `<g transform="translate(${x},${y}) rotate(25) scale(${k})"><ellipse cx="0" cy="-26" rx="13" ry="17" fill="#fff" stroke="${INK}" stroke-width="${LINE}"/><path d="M-9,-26 h18 M0,-40 v28 M-5,-36 v20 M5,-36 v20" stroke="${INK}" stroke-width="1.5" opacity=".5"/>${S('M0,-9 v16', 'none')}</g>`;
       case 'heart': return `<path transform="translate(${x},${y - 14 * k}) scale(${k})" d="M0,10 c-16,-10 -12,-28 0,-18 c12,-10 16,8 0,18z" fill="#f05a7a" stroke="${INK}" stroke-width="${LINE}"/>`;
+      case 'sword': return `<g transform="translate(${x},${y}) rotate(55) scale(${k})">${S('M-5,-8 L-5,-48 L0,-60 L5,-48 L5,-8z', '#eceef2', LINE * 0.7)}<path d="M0,-10 v-44" stroke="${INK}" stroke-width="1.5" opacity=".4"/>${S('M-13,-8 h26 v6 h-26z', '#f5c542')}${S('M-3.5,-2 h7 v16 h-7z', '#8a4b2a')}<circle cx="0" cy="16" r="4" fill="#f5c542" stroke="${INK}" stroke-width="${LINE * 0.6}"/></g>`;
+      case 'shield': return `<g transform="translate(${x},${y - 10 * k}) scale(${k})">${S('M-18,-22 h36 v22 q0,20 -18,28 q-18,-8 -18,-28z', '#9fb6d0')}<path d="M0,-16 v34 M-12,-6 h24" stroke="${INK}" stroke-width="${LINE * 0.7}"/></g>`;
       case 'star': return `<path transform="translate(${x},${y - 14 * k}) scale(${k})" d="M0,-16 l4.7,9.5 10.5,1.5 -7.6,7.4 1.8,10.4 -9.4,-4.9 -9.4,4.9 1.8,-10.4 -7.6,-7.4 10.5,-1.5z" fill="#f5c542" stroke="${INK}" stroke-width="${LINE}"/>`;
       default: return '';
     }
@@ -160,7 +163,7 @@
 
   /* ---------- 네모가족 ---------- */
   function square(o) {
-    const { x, y, w, h, color, emo = 'good', pose = 'stand', gaze = 0, item = null, suit = false, faceY = 0.46, faceS = 1, feat = '', after = '', extraHands = false, faceOpt } = o;
+    const { x, y, w, h, color, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, faceY = 0.46, faceS = 1, feat = '', after = '', extraHands = false, faceOpt } = o;
     const cx = x + w / 2, s = (w / 100) * faceS, r = w * 0.16;
     const L = limbs({ sl: [x + 2, y + h * 0.58], sr: [x + w - 2, y + h * 0.58], hl: [cx - w * 0.22, y + h - 4], hr: [cx + w * 0.22, y + h - 4], u: w, color, pose, gaze, ground: y + h + w * 0.09 });
     let g = L.svg;
@@ -171,6 +174,7 @@
     g += face(cx, y + h * faceY, s, faceOpt || { emo, gaze });
     g += after + L.front;
     if (item) g += itemAt(item, L.Rh[0], L.Rh[1], w);
+    if (itemL) g += itemAt(itemL, L.Lh[0], L.Lh[1], w);
     return wrap(g);
   }
   function nemoDad(o) {
@@ -197,23 +201,28 @@
   }
 
   /* ---------- 세모부부 ---------- */
-  function semo({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, suit = false, wife = false }) {
+  function semo({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, wife = false, noLimbs = false }) {
     const cx = x + size / 2, h = size * 0.9, s = size / 130, color = wife ? COLORS.semoWife : COLORS.semoHusband;
     const L = limbs({ sl: [cx - size * 0.27, y + h * 0.55], sr: [cx + size * 0.27, y + h * 0.55], hl: [cx - size * 0.2, y + h - 4], hr: [cx + size * 0.2, y + h - 4], u: size, color, pose, gaze, ground: y + h + size * 0.09 });
+    if (noLimbs) { L.svg = ''; L.front = ''; }
     let g = L.svg;
-    g += `<path d="M${cx},${y} L${cx + size / 2},${y + h} L${cx - size / 2},${y + h}z" fill="${color}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>`;
+    const rr = size * 0.07; // 둥근 꼭짓점
+    g += `<path d="M${cx - rr * 0.6},${y + rr * 1.1} Q${cx},${y - rr * 0.4} ${cx + rr * 0.6},${y + rr * 1.1} L${cx + size / 2 - rr * 0.4},${y + h - rr * 0.9} Q${cx + size / 2 + rr * 0.1},${y + h + rr * 0.2} ${cx + size / 2 - rr},${y + h} L${cx - size / 2 + rr},${y + h} Q${cx - size / 2 - rr * 0.1},${y + h + rr * 0.2} ${cx - size / 2 + rr * 0.4},${y + h - rr * 0.9}z" fill="${color}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>`;
     if (suit) { const yb = y + h * 0.7, hw = (size / 2) * (yb - y) / h; g += `<path d="M${cx - hw},${yb} L${cx + hw},${yb} L${cx + size / 2},${y + h} L${cx - size / 2},${y + h}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>` + collar(cx, yb, size * 0.34); }
-    g += `<path d="M${cx - 2},${y + 3} q-3,-15 11,-17 q-9,6 -4,17" stroke="${INK}" stroke-width="${LINE * 0.9}" fill="none" stroke-linecap="round"/>`; // 퀴프
-    if (wife) g += `<circle cx="${cx + size * 0.08}" cy="${y + 2}" r="${size * 0.05}" fill="#f4c6d0" stroke="${INK}" stroke-width="${LINE * 0.6}"/>`;
-    g += face(cx, y + h * 0.6, s, { emo, gaze, eyeStyle: 'almond', lashes: wife }) + L.front;
+    if (!wife) g += `<path d="M${cx - 2},${y + 4} q-3,-15 11,-17 q-9,6 -4,17" stroke="${INK}" stroke-width="${LINE * 0.9}" fill="none" stroke-linecap="round"/>`; // 남편 퀴프
+    else { const bx = cx + size * 0.12, by = y + size * 0.1, k = size * 0.06; // 아내: 분홍 리본
+      g += `<path d="M${bx},${by} q${-k * 1.6},${-k * 1.2} ${-k * 1.5},0 q${-0.1 * k},${k * 1.2} ${k * 1.5},0z M${bx},${by} q${k * 1.6},${-k * 1.2} ${k * 1.5},0 q${0.1 * k},${k * 1.2} ${-k * 1.5},0z" fill="#f48ca0" stroke="${INK}" stroke-width="${LINE * 0.7}" stroke-linejoin="round"/><circle cx="${bx}" cy="${by}" r="${k * 0.45}" fill="#f9c5d1" stroke="${INK}" stroke-width="${LINE * 0.6}"/>`;
+      g += `<path d="M${cx - 6},${y + 6} q-2,-10 6,-12" stroke="${INK}" stroke-width="${LINE * 0.8}" fill="none" stroke-linecap="round"/>`; } // 앞머리 한 가닥
+    g += face(cx, y + h * 0.6, s, { emo, gaze, eyeStyle: 'almond', lashes: wife, lips: wife }) + L.front;
     if (item) g += itemAt(item, L.Rh[0], L.Rh[1], size);
+    if (itemL) g += itemAt(itemL, L.Lh[0], L.Lh[1], size);
     return wrap(g);
   }
   const semoHusband = (o) => semo({ ...o, wife: false });
   const semoWife = (o) => semo({ ...o, wife: true });
 
   /* ---------- 동그라미가족 ---------- */
-  function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, glasses = false, suit = false, who = 'dad' }) {
+  function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, glasses = false, suit = false, who = 'dad' }) {
     const s = r / 55, color = COLORS[{ dad: 'dongDad', mom: 'dongMom', son: 'dongSon', daughter: 'dongDaughter' }[who]], u = r * 2;
     const a = Math.PI / 180 * 20;
     const L = limbs({ sl: [cx - r * Math.cos(a), cy + r * Math.sin(a)], sr: [cx + r * Math.cos(a), cy + r * Math.sin(a)], hl: [cx - r * 0.42, cy + r * 0.9], hr: [cx + r * 0.42, cy + r * 0.9], u, color, pose, gaze, ground: cy + r + u * 0.08 });
@@ -229,6 +238,7 @@
     if (glasses) g += glassesAt(cx, cy + r * 0.05 - 2 * s, s);
     g += L.front;
     if (item) g += itemAt(item, L.Rh[0], L.Rh[1], u);
+    if (itemL) g += itemAt(itemL, L.Lh[0], L.Lh[1], u);
     return wrap(g);
   }
   const dongDad = (o) => dong({ glasses: true, ...o, who: 'dad' });
@@ -248,6 +258,23 @@
       nemoGrandma({ x: 262, y: 176, w: 84, h: 80, emo: 'good' }) +
       nemoKid({ x: 86, y: 216, w: 40, h: 40, color: COLORS.nemoBaby, emo: 'surprise', tuft: false, gaze: -1 }) +
       '</g>';
+  }
+  /* 세모 커플 — 마주보고 칼·방패 / 마주보고 사랑 / 담 너머 엿보기 */
+  function coupleBattle(x = 0, y = 0, size = 122) {
+    const gap = size * 0.55;
+    const wifeMirror = `<g transform="translate(${2 * size + gap},0) scale(-1,1)">` + semoWife({ x: 0, y: 0, size, emo: 'angry', gaze: 1, pose: 'point', item: 'sword', itemL: 'shield' }) + '</g>';
+    return `<g transform="translate(${x},${y})">` + semoHusband({ x: 0, y: 0, size, emo: 'angry', gaze: 1, pose: 'point', item: 'sword', itemL: 'shield' }) + wifeMirror + '</g>';
+  }
+  function coupleLove(x = 0, y = 0, size = 122) {
+    return `<g transform="translate(${x},${y})">` + semoHusband({ x: 0, y: 0, size, emo: 'love', gaze: 1, pose: 'hold' }) + semoWife({ x: size + 24, y: 0, size, emo: 'love', gaze: -1, pose: 'hold' }) +
+      `<g transform="translate(${size + 12},${size * 0.25})">` + itemAt('heart', 0, 0, size * 0.9) + `</g><g transform="translate(${size * 0.3},${-size * 0.05}) scale(.55)">` + itemAt('heart', 0, 0, size * 0.9) + `</g><g transform="translate(${size * 1.9},${-size * 0.02}) scale(.45)">` + itemAt('heart', 0, 0, size * 0.9) + '</g></g>';
+  }
+  function semoWifePeek({ x, y, size = 160, edgeY, emo = 'wink', gaze = 0, id = 'peek' }) { // edgeY 아래는 가려진다(노트 표지 = 담)
+    const cx = x + size / 2, h = size * 0.9, hw = size * 0.105, hx1 = cx - size * 0.3, hx2 = cx + size * 0.3, c = COLORS.semoWife;
+    const sl = [cx - size * 0.27, y + h * 0.55], sr = [cx + size * 0.27, y + h * 0.55];
+    return `<clipPath id="${id}"><rect x="${x - size}" y="${y - size}" width="${size * 3}" height="${edgeY - y + size}"/></clipPath><g clip-path="url(#${id})">` +
+      semoWife({ x, y, size, emo, gaze, noLimbs: true }) + '</g>' +
+      `<g class="gf-ch">${limb(sl[0], sl[1], hx1, edgeY + hw * 0.2, size * 0.15, c, -10)}${limb(sr[0], sr[1], hx2, edgeY + hw * 0.2, size * 0.15, c, 10)}${hand(hx1, edgeY + hw * 0.2, hw, c)}${hand(hx2, edgeY + hw * 0.2, hw, c)}</g>`;
   }
   function triangleWedding(x = 0, y = 0) {
     const size = 122;
@@ -283,6 +310,6 @@
 
   const GF = { VERSION: 'v6', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt,
     nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,
-    squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coffeeCup, windowBg, speech, narration, suitCollar: collar };
+    squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, coffeeCup, windowBg, speech, narration, suitCollar: collar };
   root.GF = GF; Object.assign(root, GF);
 })(typeof window !== 'undefined' ? window : globalThis);

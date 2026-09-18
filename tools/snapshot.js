@@ -5,7 +5,7 @@ const path = require('path'), fs = require('fs');
 const ROOT = path.resolve(__dirname, '..'), OUT = path.join(ROOT, 'notes', 'snapshots');
 fs.mkdirSync(OUT, { recursive: true });
 const date = new Date().toISOString().slice(0, 10);
-const pages = [['characters', 900], ['ep01', 400]];
+const pages = [['characters', 900], ['goods', 1000], ['ep01', 400]];
 (async () => {
   const b = await chromium.launch({ executablePath: process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
   for (const [name, w] of pages) {

@@ -303,41 +303,67 @@
     return wrap(g);
   }
   const semoHusband = (o) => semo({ ...o, wife: false });
-  /* 세모 아내 — 역삼각형(어깨 넓고 아래로 모임). 긴 변은 가슴·허리·힙 웨이브. 원피스 실루엣 그 자체. */
-  function semoWife({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, noLimbs = false, outfit = 'dress', outfitColor = '#fff' }) {
-    const cx = x + size / 2, h = size * 0.9, s = size / 130, color = COLORS.semoWife, W = size / 2;
-    // 폭 프로파일(어깨→꼭짓점, 단조 감소 + 허리 잘록): [t, 반폭/W]
-    const prof = [[0, 1.0], [0.22, 0.92], [0.42, 0.7], [0.56, 0.6], [0.7, 0.54], [0.84, 0.36], [0.95, 0.14], [1.0, 0.0]];
-    const wAt = (t) => { for (let i = 1; i < prof.length; i++) if (t <= prof[i][0]) { const [t0, w0] = prof[i - 1], [t1, w1] = prof[i]; return W * (w0 + (w1 - w0) * (t - t0) / (t1 - t0)); } return 0; };
-    const L = limbs({ sl: [cx - W * 0.88, y + h * 0.28], sr: [cx + W * 0.88, y + h * 0.28], hl: [cx - W * 0.2, y + h * 0.84], hr: [cx + W * 0.2, y + h * 0.84], u: size, color, pose, gaze, ground: y + h + size * 0.1, female: true });
+  /* 세모 아내 — 순수 역삼각형 ▽ (실루엣·의상 없음). 매력은 얼굴에서만: 눈·속눈썹·볼터치·리본·앞머리.
+     faceStyle: 'shoujo'(큰 눈+흰자+하이라이트 3, 기본) | 'kitty'(검은 타원 눈, 입 없음) | 'dot'(점 눈 + ω 입) */
+  function wifeFace(cx, cy, s, { emo = 'good', gaze = 0, faceStyle = 'shoujo' }) {
+    const lw = LINE * s, E = (d, w = lw) => `<path d="${d}" stroke="${INK}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
+    const ex = 15 * s, ey = 0, px = gaze * 2.4 * s; let out = '';
+    // 볼터치: 눈 바깥 아래, 살짝 높게
+    out += `<ellipse cx="${cx - ex - 11 * s}" cy="${cy + 8 * s}" rx="${6.5 * s}" ry="${3.8 * s}" fill="#f2a1ad" opacity=".6"/><ellipse cx="${cx + ex + 11 * s}" cy="${cy + 8 * s}" rx="${6.5 * s}" ry="${3.8 * s}" fill="#f2a1ad" opacity=".6"/>`;
+    const lashes = (x, side) => E(`M${x + side * 10 * s},${cy + ey - 8 * s} l${side * 4 * s},${-4.5 * s} M${x + side * 11.5 * s},${cy + ey - 4 * s} l${side * 5 * s},${-2.5 * s} M${x + side * 12 * s},${cy + ey + 0.5 * s} l${side * 5 * s},${-0.5 * s}`, lw * 0.6);
+    const closedHappy = (x, side) => E(`M${x - 9 * s},${cy + ey + 2 * s} q${9 * s},${-11 * s} ${18 * s},0`) + lashes(x, side);
+    const heart = (x) => `<path d="M${x},${cy + ey + 8 * s} c${-13 * s},${-9 * s} ${-10 * s},${-22 * s} 0,${-13 * s} c${10 * s},${-9 * s} ${13 * s},${4 * s} 0,${13 * s}z" fill="#f05a7a" stroke="${INK}" stroke-width="${lw * 0.6}"/>`;
+    const eye = (x, side) => {
+      if (emo === 'joy' || (emo === 'wink' && side === 1)) return closedHappy(x, side);
+      if (emo === 'relief' || emo === 'tired') return E(`M${x - 8 * s},${cy + ey} q${8 * s},${7 * s} ${16 * s},0`) + lashes(x, side);
+      if (emo === 'love') return heart(x);
+      if (faceStyle === 'kitty') return `<ellipse cx="${x + px}" cy="${cy + ey}" rx="${5.2 * s}" ry="${7.5 * s}" fill="${INK}" transform="rotate(${side * -8} ${x} ${cy + ey})"/><circle cx="${x + px + 1.6 * s}" cy="${cy + ey - 2.6 * s}" r="${1.6 * s}" fill="#fff"/>` + lashes(x, side);
+      if (faceStyle === 'dot') return `<circle cx="${x + px}" cy="${cy + ey}" r="${4.2 * s}" fill="${INK}"/><circle cx="${x + px + 1.4 * s}" cy="${cy + ey - 1.5 * s}" r="${1.3 * s}" fill="#fff"/>` + lashes(x, side);
+      // shoujo: 큰 눈(살짝 위로 올라간 바깥꼬리) + 홍채 + 하이라이트 3 + 두꺼운 윗눈꺼풀
+      const rx = 11 * s, ry = 12.5 * s, tilt = side * -6;
+      let g = `<g transform="rotate(${tilt} ${x} ${cy + ey})"><ellipse cx="${x}" cy="${cy + ey}" rx="${rx}" ry="${ry}" fill="#fff" stroke="${INK}" stroke-width="${lw * 0.65}"/>` +
+        `<path d="M${x - rx},${cy + ey - 1 * s} a${rx},${ry} 0 0 1 ${2 * rx},0" stroke="${INK}" stroke-width="${lw * 1.25}" fill="none" stroke-linecap="round"/>` + // 윗눈꺼풀
+        `<ellipse cx="${x + px}" cy="${cy + ey + 1.5 * s}" rx="${7 * s}" ry="${8.5 * s}" fill="#8a5a3c"/><ellipse cx="${x + px}" cy="${cy + ey + 2 * s}" rx="${4.6 * s}" ry="${6 * s}" fill="${INK}"/>` +
+        `<circle cx="${x + px + 2.8 * s}" cy="${cy + ey - 3 * s}" r="${3 * s}" fill="#fff"/><circle cx="${x + px - 2.8 * s}" cy="${cy + ey + 4.5 * s}" r="${1.6 * s}" fill="#fff"/><circle cx="${x + px + 4.5 * s}" cy="${cy + ey + 3 * s}" r="${0.9 * s}" fill="#fff"/></g>`;
+      if (emo === 'surprise') g = g.replace(`rx="${rx}"`, `rx="${rx * 1.1}"`);
+      return g + lashes(x, side);
+    };
+    out += eye(cx - ex, -1) + eye(cx + ex, 1);
+    // 눈썹: 얇고 멀리, 둥글게 (bad/angry 만 기울임)
+    const by = cy + ey - 19 * s, bl = (emo === 'bad' || emo === 'angry') ? 4 * s : (['worry', 'sad', 'cry'].includes(emo) ? -3 * s : 0);
+    out += E(`M${cx - ex - 6 * s},${by} Q${cx - ex},${by - 3 * s + bl / 2} ${cx - ex + 6 * s},${by + bl}`, lw * 0.5) + E(`M${cx + ex + 6 * s},${by} Q${cx + ex},${by - 3 * s + bl / 2} ${cx + ex - 6 * s},${by + bl}`, lw * 0.5);
+    // 입: 아주 작게, 눈 가까이. kitty 는 코만(노란 타원)
+    const my = cy + ey + 15 * s;
+    if (faceStyle === 'kitty') { out += `<ellipse cx="${cx}" cy="${my - 3 * s}" rx="${3.2 * s}" ry="${2.2 * s}" fill="#f2c94c" stroke="${INK}" stroke-width="${lw * 0.5}"/>`; if (emo === 'joy' || emo === 'love') out += E(`M${cx - 4 * s},${my + 3 * s} q${4 * s},${4 * s} ${8 * s},0`, lw * 0.7); }
+    else if (faceStyle === 'dot') out += E(`M${cx - 5 * s},${my - 1 * s} q${2.5 * s},${4 * s} ${5 * s},0 q${2.5 * s},${4 * s} ${5 * s},0`, lw * 0.7);
+    else {
+      const M = { good: E(`M${cx - 4.5 * s},${my} q${4.5 * s},${5.5 * s} ${9 * s},0`, lw * 0.8), joy: `<path d="M${cx - 7 * s},${my - 1 * s} q${7 * s},${12 * s} ${14 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}" stroke-linejoin="round"/>`,
+        bad: E(`M${cx - 5 * s},${my + 3 * s} q${5 * s},${-5 * s} ${10 * s},0`, lw * 0.8), angry: E(`M${cx - 5 * s},${my + 2 * s} h${10 * s}`, lw * 0.8), worry: E(`M${cx - 5 * s},${my + 1 * s} q${2.5 * s},${-3 * s} ${5 * s},0 q${2.5 * s},${3 * s} ${5 * s},0`, lw * 0.8),
+        sad: E(`M${cx - 4 * s},${my + 3 * s} q${4 * s},${-3 * s} ${8 * s},0`, lw * 0.8), cry: E(`M${cx - 5 * s},${my + 3 * s} q${5 * s},${-5 * s} ${10 * s},0`, lw * 0.8), surprise: `<ellipse cx="${cx}" cy="${my + 1 * s}" rx="${3.5 * s}" ry="${4.5 * s}" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}"/>` };
+      out += M[emo] || `<path d="M${cx - 4.5 * s},${my} q${4.5 * s},${6 * s} ${9 * s},0 q${-4.5 * s},${1.5 * s} ${-9 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.65}" stroke-linejoin="round"/>`;
+    }
+    if (emo === 'worry' || emo === 'cry') out += `<path d="M${cx + ex + 16 * s},${cy - 6 * s} q${3.5 * s},${7 * s} 0,${10 * s} q${-3.5 * s},${-3 * s} 0,${-10 * s}z" fill="#8fc7ee" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
+    if (emo === 'love') out += `<path d="M${cx + ex + 18 * s},${cy - 16 * s} c${-6 * s},${-4 * s} ${-4 * s},${-10 * s} 0,${-6 * s} c${4 * s},${-4 * s} ${6 * s},${2 * s} 0,${6 * s}z" fill="#f05a7a" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
+    return out;
+  }
+  function semoWife({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, noLimbs = false, faceStyle = 'shoujo', bow = 'left', bangs = true }) {
+    const cx = x + size / 2, h = size * 0.9, s = size / 130, color = COLORS.semoWife, W = size / 2, rr = size * 0.09;
+    const L = limbs({ sl: [cx - W * 0.78, y + h * 0.3], sr: [cx + W * 0.78, y + h * 0.3], hl: [cx - W * 0.16, y + h * 0.84], hr: [cx + W * 0.16, y + h * 0.84], u: size, color, pose, gaze, ground: y + h + size * 0.1, female: true });
     if (noLimbs) { L.svg = ''; L.front = ''; }
     let g = L.svg;
-    const rr = size * 0.08, top = y + rr * 0.3;
-    // Catmull-Rom → 부드러운 곡선 (오른쪽 변을 점으로 만들고 왼쪽은 대칭)
-    const pts = prof.map(([t, w]) => [cx + W * w, y + h * t]); pts[0] = [cx + W - rr * 0.35, top + rr * 0.45];
-    const crPath = (P) => { let d = ''; for (let i = 0; i < P.length - 1; i++) { const p0 = P[Math.max(0, i - 1)], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(P.length - 1, i + 2)];
-      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
-      d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`; } return d; };
-    const right = pts, left = pts.map(([px, py]) => [2 * cx - px, py]).reverse();
-    const d = `M${left[left.length - 1][0]},${left[left.length - 1][1]} Q${cx},${top - rr * 0.15} ${right[0][0]},${right[0][1]}` + crPath(right) + crPath(left.slice(0, left.length)).replace(/^ C[^C]*C/, ' C') + 'z';
-    g += `<path d="${d}" fill="${color}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>`;
-    // 의상: 원피스 = 스캘럽 네크라인(위 가장자리) + 허리 벨트·리본
-    const S = (dd, f, w = LINE * 0.7) => `<path d="${dd}" fill="${f}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
-    if (outfit === 'dress' || outfit === 'blouse') { const n = 8, wN = W * 0.84, yN = top + rr * 0.6; let dd = `M${cx - wN},${yN} Q${cx},${yN - rr * 0.2} ${cx + wN},${yN} `;
-      for (let i = n; i >= 0; i--) { const xx = cx - wN + 2 * wN * i / n; dd += `Q${xx - wN / n},${yN + rr * 0.42} ${xx - 2 * wN / n},${yN + rr * 0.08} `; } g += S(dd + 'z', outfitColor, LINE * 0.5); }
-    if (outfit === 'dress' || outfit === 'skirt') { const t = 0.56, wb = wAt(t) + 1, yb = y + h * t, k = size * 0.038;
-      g += S(`M${cx - wb},${yb - k * 0.45} Q${cx},${yb + k * 0.2} ${cx + wb},${yb - k * 0.45} L${cx + wb},${yb + k * 0.45} Q${cx},${yb + k * 1.1} ${cx - wb},${yb + k * 0.45}z`, outfitColor === '#fff' ? '#f48ca0' : outfitColor, LINE * 0.6);
-      g += S(`M${cx},${yb + k * 0.35} q${-k * 1.5},${-k} ${-k * 1.3},0 q${0},${k} ${k * 1.3},0z M${cx},${yb + k * 0.35} q${k * 1.5},${-k} ${k * 1.3},0 q${0},${k} ${-k * 1.3},0z`, '#f9c5d1', LINE * 0.55) + `<circle cx="${cx}" cy="${yb + k * 0.35}" r="${k * 0.35}" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`; }
-    // 리본(오른쪽 위 모서리) + 앞머리 한 가닥
-    { const bx2 = cx + W * 0.62, by2 = top + rr * 0.1, k = size * 0.06;
-      g += `<path d="M${bx2},${by2} q${-k * 1.6},${-k * 1.2} ${-k * 1.5},0 q${-0.1 * k},${k * 1.2} ${k * 1.5},0z M${bx2},${by2} q${k * 1.6},${-k * 1.2} ${k * 1.5},0 q${0.1 * k},${k * 1.2} ${-k * 1.5},0z" fill="#f48ca0" stroke="${INK}" stroke-width="${LINE * 0.7}" stroke-linejoin="round"/><circle cx="${bx2}" cy="${by2}" r="${k * 0.45}" fill="#f9c5d1" stroke="${INK}" stroke-width="${LINE * 0.6}"/>`;
-      g += `<path d="M${cx - W * 0.45},${top + rr * 0.3} q-3,-9 6,-11" stroke="${INK}" stroke-width="${LINE * 0.8}" fill="none" stroke-linecap="round"/>`; }
-    g += face(cx, y + h * 0.36, s, { emo, gaze, eyeStyle: 'almond', lashes: true, lips: true }) + L.front;
+    // 몸: 역삼각형, 모서리만 둥글게, 변은 직선
+    g += `<path d="M${cx - W + rr},${y} L${cx + W - rr},${y} Q${cx + W},${y} ${cx + W - rr * 0.5},${y + rr * 0.9} L${cx + rr * 0.55},${y + h - rr * 1.1} Q${cx},${y + h + rr * 0.1} ${cx - rr * 0.55},${y + h - rr * 1.1} L${cx - W + rr * 0.5},${y + rr * 0.9} Q${cx - W},${y} ${cx - W + rr},${y}z" fill="${color}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>`;
+    // 앞머리: 위 가장자리에 살짝 흘러내린 두 가닥
+    if (bangs) g += `<path d="M${cx - W * 0.55},${y + 2} q${-2 * s},${12 * s} ${6 * s},${16 * s} M${cx - W * 0.3},${y + 2} q${1 * s},${9 * s} ${7 * s},${12 * s}" stroke="${INK}" stroke-width="${LINE * 0.7}" fill="none" stroke-linecap="round"/>`;
+    // 리본: 한쪽 모서리에 크게
+    if (bow !== 'none') { const bx2 = bow === 'left' ? cx - W * 0.66 : cx + W * 0.66, by2 = y - 2 * s, k = size * 0.075;
+      g += `<path d="M${bx2},${by2} q${-k * 1.7},${-k * 1.3} ${-k * 1.6},0 q${-0.1 * k},${k * 1.3} ${k * 1.6},0z M${bx2},${by2} q${k * 1.7},${-k * 1.3} ${k * 1.6},0 q${0.1 * k},${k * 1.3} ${-k * 1.6},0z" fill="#f48ca0" stroke="${INK}" stroke-width="${LINE * 0.7}" stroke-linejoin="round"/>` +
+        `<path d="M${bx2 - k * 0.3},${by2 + k * 0.3} l${-k * 0.5},${k * 1.1} M${bx2 + k * 0.3},${by2 + k * 0.3} l${k * 0.5},${k * 1.1}" stroke="${INK}" stroke-width="${LINE * 0.6}" fill="none" stroke-linecap="round"/><circle cx="${bx2}" cy="${by2}" r="${k * 0.45}" fill="#f9c5d1" stroke="${INK}" stroke-width="${LINE * 0.6}"/>`; }
+    g += wifeFace(cx, y + h * 0.4, s, { emo, gaze, faceStyle }) + L.front;
     if (item) g += itemAt(item, L.Rh[0], L.Rh[1], size);
     if (itemL) g += itemAt(itemL, L.Lh[0], L.Lh[1], size);
     return wrap(g);
   }
-
   /* ---------- 동그라미가족 ---------- */
   function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, glasses = false, suit = false, who = 'dad', outfit, outfitColor = '#fff' }) {
     const s = r / 55, color = COLORS[{ dad: 'dongDad', mom: 'dongMom', son: 'dongSon', daughter: 'dongDaughter' }[who]], u = r * 2;
@@ -392,7 +418,7 @@
   }
   function semoWifePeek({ x, y, size = 160, edgeY, emo = 'wink', gaze = 0, id = 'peek' }) { // edgeY 아래는 가려진다(노트 표지 = 담)
     const cx = x + size / 2, h = size * 0.9, hw = size * 0.058, hx1 = cx - size * 0.3, hx2 = cx + size * 0.3, c = COLORS.semoWife;
-    const sl = [cx - size * 0.43, y + h * 0.3], sr = [cx + size * 0.43, y + h * 0.3];
+    const sl = [cx - size * 0.39, y + h * 0.3], sr = [cx + size * 0.39, y + h * 0.3];
     return `<clipPath id="${id}"><rect x="${x - size}" y="${y - size}" width="${size * 3}" height="${edgeY - y + size}"/></clipPath><g clip-path="url(#${id})">` +
       semoWife({ x, y, size, emo, gaze, noLimbs: true }) + '</g>' +
       `<g class="gf-ch">${shapedLimb(sl[0], sl[1], hx1, edgeY + hw * 0.2, c, { w0: size * 0.068, w1: size * 0.03, bulge: size * 0.018, bulgeT: 0.32, bend: -10 })}${shapedLimb(sr[0], sr[1], hx2, edgeY + hw * 0.2, c, { w0: size * 0.068, w1: size * 0.03, bulge: size * 0.018, bulgeT: 0.32, bend: 10 })}${hand(hx1, edgeY + hw * 0.2, hw, c)}${hand(hx2, edgeY + hw * 0.2, hw, c)}</g>`;
@@ -429,9 +455,9 @@
       lines.map((t, i) => `<text x="${x + w / 2}" y="${y + 16 + lh * (i + 0.75)}" text-anchor="middle" font-family="'Nanum Myeongjo', serif" font-size="${lh - 8}" font-weight="700" fill="${INK}">${t}</text>`).join('') + '</g>';
   }
 
-  const GF = { VERSION: 'v6.6', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt, touch, paper,
+  const GF = { VERSION: 'v6.9', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt, touch, paper,
     setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; },
     nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,
-    squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, coffeeCup, windowBg, speech, narration, suitCollar: collar };
+    squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, wifeFace, coffeeCup, windowBg, speech, narration, suitCollar: collar };
   root.GF = GF; Object.assign(root, GF);
 })(typeof window !== 'undefined' ? window : globalThis);

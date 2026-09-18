@@ -31,28 +31,21 @@
 - 균등한 간격, 닿을 듯 닿지 않음, 살짝 땅에 박힘. 아빠가 동창(가장 성공), 교정 창가.
 - 약점이 없고 늘 평정. **외로움은 이야기 속에만** 존재하고 겉으로는 절대 드러나지 않는다.
 
-## 3. 캐릭터 코드 시스템 (v5) — `src/characters.js`
-
-캐릭터는 **SVG 문자열로 고정** + 손그림 질감(feTurbulence 필터). 표정·시선·색만 파라미터. 입체 음영·광택·바닥 그림자·손(mitts) 자동.
-
+## 3. 캐릭터 코드 시스템 (v6 굿즈 에디션) — `src/characters.js`
+규격은 `docs/03_STYLE_GUIDE.md` (잠금). 플랫 컬러 · 외곽선 4 · 팔다리 · 표정 12 · 포즈 10 · 소품 10.
 ```
-nemoDad({ x, y, w=120, h=106, emo='good', gaze=0, glasses=false, suit=false })
-nemoMom({ x, y, w=96, h=92, emo, gaze })          nemoGrandma({ x, y, w=84, h=80, emo, gaze })
-nemoKid({ x, y, w=66, h=66, color, emo, tuft=true, gaze })
-semoHusband({ x, y, size=122, emo, gaze, suit })  semoWife({ x, y, size=122, emo, gaze })
-dongDad({ cx, cy, r=48, emo, gaze, glasses=true, suit })  dongMom({ cx, cy, r=48, emo, gaze })
-dongSon({ cx, cy, r=34, emo, gaze })   // 바이올린      dongDaughter({ cx, cy, r=34, emo, gaze })  // 테니스
-squareFamilyPortrait(x, y) · triangleWedding(x, y) · triangleBattle(x, y) · circleFamilyPortrait(x, y)
-coffeeCup(x, y, scale, warm) · windowBg(id, skyTop, skyBot, sill, wall) · speech(x, y, w, lines, {tail}) · narration(x, y, w, lines, {size})
-ROUGH_DEFS, CHAR_STYLE  // 페이지에 1회 주입
+nemoDad({ x, y, w=120, h=106, emo, pose, gaze, item, suit, glasses })
+nemoMom({ x, y, w=96, h=92, emo, pose, gaze, item, manyHands=true })   nemoGrandma({ x, y, w=84, h=80, ... })
+nemoKid({ x, y, w=66, h=66, color, emo, pose, gaze, item, tuft=true })
+semoHusband({ x, y, size=122, emo, pose, gaze, item, suit })   semoWife({ ... })
+dongDad({ cx, cy, r=48, emo, pose, gaze, item, suit, glasses=true })   dongMom / dongSon(violin) / dongDaughter(racket)
+squareFamilyPortrait(x,y) · triangleWedding(x,y) · triangleBattle(x,y) · circleFamilyPortrait(x,y)
+speech(x,y,w,lines,{tail,size}) · narration(x,y,w,lines,{size}) · windowBg(id,...) · itemAt(item,x,y,u)
+emo:  good joy bad angry worry relief sad cry surprise love tired wink
+pose: stand wave cheer think point hips shrug hold sit walk
+item: coffee americano phone envelope book bag violin racket heart star
 ```
-- **emo**: `good` · `bad` · `worry`(땀방울) · `relief`(감은 눈·한숨) · `sad`. 동그라미는 어떤 감정에서도 눈매 고정.
-- **gaze**: `-1` 왼쪽 · `0` 정면 · `1` 오른쪽.
-- **suit**: 검은 상복 + 흰 깃/넥타이. 아빠 3인.
-- 고유 디테일(자동): 네모 아빠=콧수염·눈밑주름·숱 적은 머리 / 네모 엄마=쪽머리·손 4개 / 세모=꼭짓점 퀴프·아몬드 눈매·(아내)속눈썹 / 동그라미=가르마·안경·평정한 눈매 / 네모 아이=정수리 삐침·큰 눈.
-
-### 폰트 · 색
-Gaegu(제목·말풍선) / Gowun Dodum(본문) / Nanum Myeongjo(내레이션). 외곽선 INK `#4a3626` · 종이 `#f4ecdd` · 상복 `#4a4a52`.
+검증: `node tools/snapshot.js` → `notes/snapshots/`. 시트 `web/characters.html` 이 정본.
 
 ## 4. 빌드
 `python tools/build.py` → `dist/` (characters.js 인라인, index.html = 최신 화). 검증은 playwright 스크린샷 fullPage.

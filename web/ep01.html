@@ -57,9 +57,9 @@ cut(360, `
   ${T(W / 2, 70, '기하학 가족', 26, 'middle', F, 'letter-spacing="6"')}
   ${T(W / 2, 150, '1화', 30, 'middle', F)}
   ${T(W / 2, 220, '「 부고 」', 58, 'middle', FM, 'font-weight="700"')}
-  ${nemoDad({ x: 150, y: 250, w: 70, h: 62, emo: 'worry' })}
-  ${semoHusband({ x: 320, y: 246, size: 74, emo: 'bad' })}
-  ${dongDad({ cx: 540, cy: 284, r: 32, emo: 'good' })}
+  ${nemoDad({ x: 150, y: 244, w: 70, h: 62, emo: 'worry', pose: 'think' })}
+  ${semoHusband({ x: 320, y: 240, size: 74, emo: 'bad', pose: 'hips' })}
+  ${dongDad({ cx: 540, cy: 278, r: 32, emo: 'good', pose: 'hold', item: 'phone' })}
 `);
 gap();
 // ---- 2. 문자 ----
@@ -86,11 +86,11 @@ gap(true);
 function windowCut(id, who, sky1, sky2, label, warm) {
   return `<svg class="cut" viewBox="0 0 ${W} 420" xmlns="http://www.w3.org/2000/svg">${windowBg(id, sky1, sky2)}${who}${T(W / 2, 404, label, 22, 'middle', FM, 'opacity=".8"')}</svg>`;
 }
-cuts.push(windowCut('sky1', nemoDad({ x: 300, y: 250, w: 120, h: 106, emo: 'worry', gaze: 0 }) + coffeeCup(440, 300, 1, true) +
+cuts.push(windowCut('sky1', nemoDad({ x: 300, y: 250, w: 120, h: 106, emo: 'worry', gaze: 0, pose: 'hold', item: 'coffee' }) +
   `<g opacity=".35">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${110 + i * 90}" y="${60 + (i % 2) * 20}" width="40" height="120" fill="${INK}"/>`).join('')}</g>`, '#cfe3f4', '#e6eef3', '네모 — 큰 건물 회사 창가, 믹스커피', true));
-cuts.push(windowCut('sky2', semoHusband({ x: 300, y: 236, size: 122, emo: 'sad', gaze: 1 }) + coffeeCup(440, 300, 1, false) +
+cuts.push(windowCut('sky2', semoHusband({ x: 300, y: 236, size: 122, emo: 'sad', gaze: 1, pose: 'hold', item: 'americano' }) +
   `<g opacity=".5"><rect x="100" y="150" width="520" height="100" fill="#9fc48a"/><circle cx="180" cy="150" r="40" fill="#7fae6a"/><circle cx="560" cy="160" r="30" fill="#7fae6a"/></g>`, '#dbe9f5', '#f3f0dc', '세모 — IT 사무실, 작은 마당, 아메리카노', false));
-cuts.push(windowCut('sky3', dongDad({ cx: 360, cy: 300, r: 52, emo: 'good', gaze: -1 }) +
+cuts.push(windowCut('sky3', dongDad({ cx: 360, cy: 300, r: 52, emo: 'good', gaze: -1, pose: 'think' }) +
   `<g opacity=".45"><rect x="90" y="200" width="540" height="60" fill="#c9b99a"/><path d="M120,200 v-70 h60 v70 M300,200 v-50 h80 v50 M520,200 v-80 h60 v80" fill="#e8dcc4" stroke="${INK}" stroke-width="2"/></g>`, '#cfe3f4', '#f0e6d2', '동그라미 — 교정 창가, 멀리 본다', false));
 cut(120, narration(90, 30, 540, ['셋은 모두 창가에 선다. 먼 곳을 본다.', '어떤 외로움과 추억이 함께 묻어난다.']));
 gap();
@@ -110,17 +110,17 @@ gap(true);
 // ---- 6. 다음날, 검은 정장 ----
 cut(300, `
   ${T(W / 2, 50, '다음날', 24, 'middle', FM)}
-  ${nemoDad({ x: 120, y: 120, w: 120, h: 106, emo: 'sad', suit: true })}
-  ${semoHusband({ x: 300, y: 112, size: 122, emo: 'bad', suit: true })}
-  ${dongDad({ cx: 560, cy: 176, r: 52, emo: 'good', suit: true })}
+  ${nemoDad({ x: 120, y: 120, w: 120, h: 106, emo: 'tired', suit: true })}
+  ${semoHusband({ x: 300, y: 112, size: 122, emo: 'bad', suit: true, pose: 'hips' })}
+  ${dongDad({ cx: 560, cy: 176, r: 52, emo: 'good', suit: true, pose: 'hold', item: 'phone' })}
 `, '#ece3d3');
 cut(150, narration(90, 30, 540, ['이놈저놈이 떠오른다. 삼겹살집 동창회.', '"진짜 오랜만에 보는구나" — 아, 이런 일 말고 볼걸.', '가기 싫다. 네모는 길게 한숨을 쉰다.']));
 gap();
 // ---- 7. 전철역 ----
 cut(520, `
   <g opacity=".35"><rect x="0" y="330" width="${W}" height="14" fill="${INK}"/><rect x="0" y="352" width="${W}" height="6" fill="${INK}"/><rect x="60" y="120" width="600" height="60" rx="6" fill="#c7b9a3"/>${T(360, 162, '구로디지털단지', 28, 'middle', FB)}</g>
-  ${nemoDad({ x: 160, y: 230, w: 120, h: 106, emo: 'relief', suit: true, gaze: 1 })}
-  ${semoHusband({ x: 420, y: 222, size: 122, emo: 'good', suit: true, gaze: -1 })}
+  ${nemoDad({ x: 160, y: 230, w: 120, h: 106, emo: 'relief', suit: true, gaze: 1, pose: 'wave' })}
+  ${semoHusband({ x: 420, y: 222, size: 122, emo: 'good', suit: true, gaze: -1, pose: 'shrug' })}
   ${speech(40, 20, 330, ['어어 왔어? 우리 생각보다', '가까운 데서 근무했구나!'], { tail: 'right' })}
   ${speech(380, 20, 310, ['그러게. 이럴 줄 알았으면', '중간에 소주라도 할걸.'], { tail: 'left' })}
   ${speech(350, 380, 340, ['넌 좀 친하지 않았냐?'], { tail: 'left' })}
@@ -131,7 +131,7 @@ gap();
 // ---- 8. 장례식장 앞 ----
 cut(400, `
   <g opacity=".4"><rect x="140" y="40" width="440" height="230" fill="#ddd3c2" stroke="${INK}" stroke-width="3"/><rect x="300" y="150" width="120" height="120" fill="#b9ad9b" stroke="${INK}" stroke-width="3"/>${T(360, 100, '장례식장', 26, 'middle', FM)}${T(360, 130, '203호', 18, 'middle', FB)}</g>
-  ${dongDad({ cx: 360, cy: 320, r: 52, emo: 'good', suit: true })}
+  ${dongDad({ cx: 360, cy: 320, r: 52, emo: 'good', suit: true, pose: 'point', gaze: 1 })}
   ${nemoDad({ x: 100, y: 268, w: 100, h: 88, emo: 'worry', suit: true, gaze: 1 })}
   ${semoHusband({ x: 520, y: 262, size: 100, emo: 'worry', suit: true, gaze: -1 })}
   ${speech(240, 190, 240, ['별일 없지? 들어가자.'], { tail: 'left' })}
@@ -141,8 +141,8 @@ gap();
 // ---- 9. 봉투 ----
 cut(420, `
   <rect x="60" y="60" width="600" height="80" fill="#fff" stroke="${INK}" stroke-width="2"/>${T(360, 110, '부의 (賻儀)', 24, 'middle', FM)}
-  ${nemoDad({ x: 120, y: 200, w: 110, h: 96, emo: 'worry', suit: true, gaze: -1 })}
-  ${semoHusband({ x: 280, y: 192, size: 112, emo: 'worry', suit: true, gaze: 1 })}
+  ${nemoDad({ x: 120, y: 200, w: 110, h: 96, emo: 'worry', suit: true, gaze: -1, pose: 'hold', item: 'envelope' })}
+  ${semoHusband({ x: 280, y: 192, size: 112, emo: 'worry', suit: true, gaze: 1, pose: 'hold', item: 'envelope' })}
   ${dongDad({ cx: 580, cy: 262, r: 50, emo: 'good', suit: true, gaze: -1 })}
   <rect x="150" y="150" width="60" height="40" fill="#fff" stroke="${INK}" stroke-width="2"/><rect x="310" y="150" width="60" height="40" fill="#fff" stroke="${INK}" stroke-width="2"/>
   ${T(180, 176, '네모', 14)}${T(340, 176, '세모', 14)}
@@ -152,8 +152,8 @@ cut(120, narration(90, 30, 540, ['얼마나 해야 하나. 종일 고민했다.'
 gap();
 // ---- 10. 얼마나 했냐 ----
 cut(420, `
-  ${semoHusband({ x: 110, y: 200, size: 112, emo: 'bad', suit: true, gaze: 1 })}
-  ${dongDad({ cx: 540, cy: 266, r: 50, emo: 'good', suit: true, gaze: -1 })}
+  ${semoHusband({ x: 110, y: 200, size: 112, emo: 'bad', suit: true, gaze: 1, pose: 'point' })}
+  ${dongDad({ cx: 540, cy: 266, r: 50, emo: 'good', suit: true, gaze: -1, pose: 'shrug' })}
   ${nemoDad({ x: 300, y: 250, w: 96, h: 84, emo: 'worry', suit: true, gaze: 1 })}
   ${speech(60, 40, 300, ['넌 얼마나 했냐?'], { tail: 'left' })}
   ${speech(380, 100, 300, ['뭐, 그런 거 알아 뭐하게.'], { tail: 'right' })}
@@ -163,7 +163,7 @@ gap(true);
 // ---- 11. 엔딩 ----
 cut(360, `
   ${nemoDad({ x: 110, y: 150, w: 120, h: 106, emo: 'sad', suit: true })}
-  ${semoHusband({ x: 300, y: 142, size: 122, emo: 'sad', suit: true })}
+  ${semoHusband({ x: 300, y: 142, size: 122, emo: 'sad', suit: true, pose: 'think' })}
   ${dongDad({ cx: 560, cy: 206, r: 52, emo: 'good', suit: true })}
   ${T(W / 2, 80, '1화 끝', 22, 'middle', F)}
 `, '#ece3d3');
@@ -173,9 +173,9 @@ document.getElementById('strip').innerHTML = cuts.join('') + `
   <h2>당신은 어느 도형인가요?</h2>
   <p>같은 부고를 받았다면 — 당신은 어떻게 했을 것 같나요.</p>
   <div class="votes" id="votes">
-    <button class="vote" data-k="square"><svg viewBox="0 0 80 80">${nemoDad({ x: 8, y: 10, w: 64, h: 56, emo: 'good' })}</svg>네모</button>
-    <button class="vote" data-k="triangle"><svg viewBox="0 0 80 80">${semoHusband({ x: 8, y: 8, size: 64, emo: 'good' })}</svg>세모</button>
-    <button class="vote" data-k="circle"><svg viewBox="0 0 80 80">${dongDad({ cx: 40, cy: 40, r: 30, emo: 'good' })}</svg>동그라미</button>
+    <button class="vote" data-k="square"><svg viewBox="0 0 80 80">${nemoDad({ x: 12, y: 8, w: 56, h: 50, emo: 'joy', pose: 'cheer' })}</svg>네모</button>
+    <button class="vote" data-k="triangle"><svg viewBox="0 0 80 80">${semoHusband({ x: 12, y: 6, size: 56, emo: 'wink', pose: 'hips' })}</svg>세모</button>
+    <button class="vote" data-k="circle"><svg viewBox="0 0 80 80">${dongDad({ cx: 40, cy: 34, r: 26, emo: 'good', pose: 'think' })}</svg>동그라미</button>
   </div>
   <div class="bars" id="bars"></div>
   <p class="note">댓글로 당신의 이야기를 남겨 주세요. 좋은 사연은 동의를 받아 외전으로 이어집니다.</p>

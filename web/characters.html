@@ -3,70 +3,105 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>기하학 가족 — 캐릭터 시트</title>
-<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+<title>기하학 가족 — 캐릭터 시트 v6</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
-  body { margin: 0; background: #f4ecdd; color: #4a3626; font-family: 'Gowun Dodum', sans-serif; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  body { margin: 0; background: #f4ecdd; color: #3d2b1f; font-family: 'Gowun Dodum', sans-serif; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
   h1 { font-family: Gaegu, sans-serif; font-size: 34px; margin: 0 0 4px; }
-  h2 { font-family: Gaegu, sans-serif; font-size: 24px; margin: 28px 0 8px; border-bottom: 2px solid #4a3626; }
+  h2 { font-family: Gaegu, sans-serif; font-size: 24px; margin: 28px 0 8px; border-bottom: 2px solid #3d2b1f; }
   .sub { font-size: 14px; opacity: .8; }
   svg { display: block; width: 100%; height: auto; }
-  .row { display: flex; flex-wrap: wrap; gap: 8px; }
-  .lbl { font-family: Gaegu, sans-serif; font-size: 16px; fill: #4a3626; }
+  .lbl { font-family: 'Gowun Dodum', sans-serif; font-size: 15px; fill: #3d2b1f; font-weight: 700; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>🟦🔺⚫ 기하학 가족 — 캐릭터 시트 v5</h1>
-  <div class="sub">SVG 코드로 고정. 표정(emo)·시선(gaze)·상복(suit)만 파라미터.</div>
+  <h1>🟦🔺⚫ 기하학 가족 — 캐릭터 시트 v6 「굿즈 에디션」</h1>
+  <div class="sub">플랫 컬러 · 외곽선 4 · 팔다리 · 표정 12 · 포즈 10 · 소품 10. 이 시트가 정본이다. (docs/03_STYLE_GUIDE.md)</div>
 
-  <h2>네모가족 — 벅참과 결핍의 대가족</h2>
-  <svg viewBox="0 0 720 300" id="sq"></svg>
-  <h2>세모부부 — 마주보면 사랑, 나란히 서면 전투</h2>
-  <svg viewBox="0 0 720 200" id="tri"></svg>
-  <h2>동그라미가족 — 완벽한데 외롭다</h2>
-  <svg viewBox="0 0 720 160" id="cir"></svg>
+  <h2>라인업</h2>
+  <svg viewBox="0 0 900 320" id="lineup"></svg>
 
-  <h2>감정 매트릭스 — good · bad · worry · relief · sad</h2>
-  <svg viewBox="0 0 720 560" id="emo"></svg>
+  <h2>표정 12종 — 네모 아빠 / 세모 남편 / 동그라미 아빠 (동그라미는 눈매 고정)</h2>
+  <svg viewBox="0 0 900 760" id="emo"></svg>
 
-  <h2>상복 · 시선 · 소품</h2>
-  <svg viewBox="0 0 720 200" id="suit"></svg>
+  <h2>포즈 10종</h2>
+  <svg viewBox="0 0 900 760" id="pose"></svg>
+
+  <h2>소품 10종 (오른손)</h2>
+  <svg viewBox="0 0 900 240" id="items"></svg>
+
+  <h2>가족 상태 — 직육면체 / 웨딩 / 전투 / 균등한 거리</h2>
+  <svg viewBox="0 0 900 520" id="family"></svg>
+
+  <h2>굿즈 미리보기 — 노트 표지 · 스티커</h2>
+  <svg viewBox="0 0 900 380" id="goods"></svg>
 </div>
 <script src="../src/characters.js"></script>
 <script>
 document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
 const $ = id => document.getElementById(id);
-$('sq').innerHTML = squareFamilyPortrait(200, 20);
-$('tri').innerHTML = triangleWedding(40, 20) + triangleBattle(400, 20);
-$('cir').innerHTML = circleFamilyPortrait(160, 10);
+const L = (x, y, t, a = 'middle') => `<text class="lbl" x="${x}" y="${y}" text-anchor="${a}">${t}</text>`;
 
+// 라인업
+$('lineup').innerHTML =
+  nemoDad({ x: 20, y: 120, emo: 'good', pose: 'wave' }) + nemoMom({ x: 160, y: 134, emo: 'good' }) + nemoGrandma({ x: 280, y: 146 }) +
+  nemoKid({ x: 380, y: 160, color: COLORS.nemoKid1 }) + nemoKid({ x: 450, y: 160, color: COLORS.nemoKid2, emo: 'joy' }) +
+  semoHusband({ x: 540, y: 110, emo: 'good' }) + semoWife({ x: 660, y: 110, emo: 'wink' }) +
+  dongDad({ cx: 830, cy: 170, r: 48 }) +
+  L(90, 300, '네모 아빠') + L(208, 300, '엄마') + L(322, 300, '할머니') + L(448, 300, '아이들') + L(600, 300, '세모 남편') + L(720, 300, '아내') + L(830, 300, '동그라미 아빠');
+
+// 표정 매트릭스 6열 × 2행 × 3인
 let e = '';
-const cols = [150, 270, 390, 510, 630];
-EMOS.forEach((emo, i) => { e += `<text class="lbl" x="${cols[i]}" y="22" text-anchor="middle">${emo}</text>`; });
-const rows = [
-  ['네모 아빠', (x, y, emo) => nemoDad({ x: x - 50, y, w: 100, h: 88, emo })],
-  ['네모 아이', (x, y, emo) => nemoKid({ x: x - 33, y: y + 10, emo })],
-  ['세모 남편', (x, y, emo) => semoHusband({ x: x - 50, y, size: 100, emo })],
-  ['세모 아내', (x, y, emo) => semoWife({ x: x - 50, y, size: 100, emo })],
-  ['동그라미 아빠', (x, y, emo) => dongDad({ cx: x, cy: y + 46, r: 44, emo })],
-];
-rows.forEach(([name, fn], r) => {
-  const y = 40 + r * 104;
-  e += `<text class="lbl" x="8" y="${y + 56}" font-size="15">${name}</text>`;
-  EMOS.forEach((emo, i) => { e += fn(cols[i], y, emo); });
+EMOS.forEach((emo, i) => {
+  const col = i % 6, row = Math.floor(i / 6);
+  const x = 40 + col * 145, y = 30 + row * 370;
+  e += L(x + 45, y, emo);
+  e += nemoDad({ x, y: y + 14, w: 90, h: 80, emo }) + semoHusband({ x, y: y + 130, size: 90, emo }) + dongDad({ cx: x + 45, cy: y + 280, r: 38, emo });
 });
 $('emo').innerHTML = e;
 
-$('suit').innerHTML =
-  nemoDad({ x: 20, y: 40, w: 110, h: 96, emo: 'sad', suit: true, gaze: 1 }) +
-  semoHusband({ x: 160, y: 30, size: 116, emo: 'sad', suit: true, gaze: 1 }) +
-  dongDad({ cx: 350, cy: 90, r: 50, emo: 'sad', suit: true, gaze: -1 }) +
-  `<text class="lbl" x="200" y="180" text-anchor="middle">상복(suit) — 얼굴 정체성 유지</text>` +
-  coffeeCup(460, 60, 1.2, true) + `<text class="lbl" x="480" y="140" text-anchor="middle">믹스</text>` +
-  coffeeCup(560, 60, 1.2, false) + `<text class="lbl" x="580" y="140" text-anchor="middle">아메리카노</text>` +
-  nemoKid({ x: 630, y: 40, w: 60, h: 60, emo: 'good', gaze: -1, color: COLORS.nemoKid3 }) + `<text class="lbl" x="660" y="140" text-anchor="middle">gaze -1</text>`;
+// 포즈 매트릭스 5열 × 2행 × 3인
+let p = '';
+POSES.forEach((pose, i) => {
+  const col = i % 5, row = Math.floor(i / 5);
+  const x = 60 + col * 170, y = 30 + row * 370;
+  p += L(x + 45, y, pose);
+  p += nemoDad({ x, y: y + 20, w: 90, h: 80, pose, emo: pose === 'cheer' ? 'joy' : pose === 'think' ? 'worry' : 'good' }) + semoHusband({ x, y: y + 136, size: 90, pose }) + dongDad({ cx: x + 45, cy: y + 286, r: 38, pose });
+});
+$('pose').innerHTML = p;
+
+// 소품
+let it = '';
+ITEMS.forEach((item, i) => {
+  const x = 30 + i * 86;
+  it += L(x + 45, 24, item) + nemoDad({ x, y: 50, w: 80, h: 70, pose: 'hold', item, emo: item === 'heart' ? 'love' : 'good' });
+});
+$('items').innerHTML = it;
+
+// 가족
+$('family').innerHTML = squareFamilyPortrait(10, 10) + triangleWedding(480, 20) + triangleBattle(480, 200) + circleFamilyPortrait(60, 360).replace('translate(60,360)', 'translate(60,360) scale(.85)') + L(200, 500, '동그라미 — 닿을 듯 닿지 않는다') + L(600, 500, '세모 — 마주보면 사랑, 나란히 서면 전투') + L(200, 330, '네모 — 직육면체로 뭉친다');
+
+// 굿즈: 노트 표지 (A5 비율) + 스티커
+$('goods').innerHTML = `
+  <rect x="30" y="20" width="240" height="340" rx="14" fill="#ffe08a" stroke="${INK}" stroke-width="4"/>
+  <rect x="30" y="20" width="26" height="340" rx="14" fill="#f2b84b" stroke="${INK}" stroke-width="4"/>
+  ${nemoDad({ x: 100, y: 90, w: 120, h: 106, emo: 'joy', pose: 'cheer' })}
+  <text x="160" y="300" text-anchor="middle" font-family="Gaegu" font-weight="700" font-size="30" fill="${INK}">오늘도 벅차다</text>
+  <text x="160" y="330" text-anchor="middle" font-family="'Gowun Dodum'" font-size="14" fill="${INK}">기하학 가족 · 네모</text>
+
+  <rect x="310" y="20" width="240" height="340" rx="14" fill="#cfe0f2" stroke="${INK}" stroke-width="4"/>
+  <rect x="310" y="20" width="26" height="340" rx="14" fill="#9fb6d0" stroke="${INK}" stroke-width="4"/>
+  ${semoHusband({ x: 360, y: 70, size: 140, emo: 'angry', pose: 'hips', gaze: 1 })}
+  <text x="430" y="300" text-anchor="middle" font-family="Gaegu" font-weight="700" font-size="30" fill="${INK}">삼한사온</text>
+  <text x="430" y="330" text-anchor="middle" font-family="'Gowun Dodum'" font-size="14" fill="${INK}">기하학 가족 · 세모</text>
+
+  <g transform="translate(590,20)">
+    ${[['good', 0, 0], ['joy', 90, 0], ['worry', 180, 0], ['love', 0, 100], ['surprise', 90, 100], ['tired', 180, 100], ['angry', 0, 200], ['cry', 90, 200], ['wink', 180, 200]].map(([emo, dx, dy]) =>
+      `<rect x="${dx}" y="${dy}" width="82" height="90" rx="12" fill="#fff" stroke="${INK}" stroke-width="2" stroke-dasharray="4 3"/>` + dongDad({ cx: dx + 41, cy: dy + 38, r: 24, emo, pose: emo === 'joy' ? 'cheer' : emo === 'love' ? 'hold' : 'stand', item: emo === 'love' ? 'heart' : null })).join('')}
+    <text x="135" y="320" text-anchor="middle" font-family="'Gowun Dodum'" font-size="14" fill="${INK}">스티커 시트 · 동그라미</text>
+  </g>`;
 </script>
 </body>
 </html>

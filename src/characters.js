@@ -6,7 +6,7 @@
    item: coffee americano phone envelope book bag violin racket heart star  */
 (function (root) {
   'use strict';
-  const INK = '#3d2b1f', PAPER = '#f4ecdd', SUIT = '#4a4a52', LINE = 4;      // LINE = 기준 외곽선. 절대 바꾸지 않는다.
+  const INK = '#6b5443', PAPER = '#f4ecdd', SUIT = '#5a5a63', LINE = 3.4;    // INK 연갈색(검정 금지), LINE 기준 외곽선. 절대 바꾸지 않는다.
   const COLORS = {
     nemoDad: '#e29368', nemoMom: '#ecb383', nemoGrandma: '#d8b58e', nemoKid1: '#f0c583', nemoKid2: '#f2b49e', nemoKid3: '#e6a9c0', nemoBaby: '#f8dcb0',
     semoHusband: '#9fb6d0', semoWife: '#ecc76a',
@@ -21,7 +21,7 @@
     <filter id="gf-hand" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
       <feTurbulence type="fractalNoise" baseFrequency="0.016" numOctaves="2" seed="3" result="n"/>
       <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="w"/>
-      <feMorphology in="w" operator="dilate" radius="0.5" result="thick"/>
+      <feMorphology in="w" operator="dilate" radius="0.4" result="thick"/>
       <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="1" seed="11" result="n2"/>
       <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  5 0 0 0 -2.1" result="mask"/>
       <feComposite in="thick" in2="mask" operator="in" result="thickMasked"/>
@@ -234,7 +234,7 @@
   function touch(inner) { // 칠 패스(어긋남) + 선 패스(흔들림·굵기 변화). 미세 기울기는 길이 해시로 결정(같은 입력 = 같은 결과)
     const h = inner.length % 7; const rot = ((h - 3) * 0.5).toFixed(2); // -1.5° ~ +1.5°
     const fills = inner.replace(/stroke="#[0-9a-fA-F]{6}"/g, 'stroke="none"').replace(/stroke="none" stroke-width="[^"]*"/g, 'stroke="none"');
-    const lines = inner.replace(/fill="(#[0-9a-fA-F]{6}|[a-z]+)"/g, (m, c) => (c.toLowerCase() === INK ? m : 'fill="none"'));
+    const lines = inner.replace(/fill="(#[0-9a-fA-F]{6}|[a-z]+)"/g, (m, c) => (c.toLowerCase() === INK.toLowerCase() ? m : 'fill="none"'));
     return `<g class="gf-ch gf-hand" style="transform-box:fill-box;transform-origin:center;transform:rotate(${rot}deg)"><g filter="url(#gf-fill)" transform="translate(0.8,0.5)">${fills}</g><g filter="url(#gf-hand)">${lines}</g></g>`;
   }
   const wrap = (inner) => MODE.mode === 'hand' ? touch(inner) : `<g class="gf-ch">${inner}</g>`;
@@ -288,8 +288,9 @@
     const L = limbs({ sl: [cx - size * 0.27, y + h * 0.55], sr: [cx + size * 0.27, y + h * 0.55], hl: [cx - size * 0.2, y + h - 4], hr: [cx + size * 0.2, y + h - 4], u: size, color, pose, gaze, ground: y + h + size * 0.13, female: wife });
     if (noLimbs) { L.svg = ''; L.front = ''; }
     let g = L.svg;
-    const rr = size * 0.07; // 둥근 꼭짓점
-    g += `<path d="M${cx - rr * 0.6},${y + rr * 1.1} Q${cx},${y - rr * 0.4} ${cx + rr * 0.6},${y + rr * 1.1} L${cx + size / 2 - rr * 0.4},${y + h - rr * 0.9} Q${cx + size / 2 + rr * 0.1},${y + h + rr * 0.2} ${cx + size / 2 - rr},${y + h} L${cx - size / 2 + rr},${y + h} Q${cx - size / 2 - rr * 0.1},${y + h + rr * 0.2} ${cx - size / 2 + rr * 0.4},${y + h - rr * 0.9}z" fill="${color}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>`;
+    const rr = size * 0.07; // 둥근 꼭짓점, 변은 아주 살짝 볼록(직선 금지)
+    const bx = size * 0.035;
+    g += `<path d="M${cx - rr * 0.6},${y + rr * 1.1} Q${cx},${y - rr * 0.4} ${cx + rr * 0.6},${y + rr * 1.1} Q${cx + size * 0.3 + bx},${y + h * 0.5} ${cx + size / 2 - rr * 0.4},${y + h - rr * 0.9} Q${cx + size / 2 + rr * 0.1},${y + h + rr * 0.2} ${cx + size / 2 - rr},${y + h} Q${cx},${y + h + bx * 0.6} ${cx - size / 2 + rr},${y + h} Q${cx - size / 2 - rr * 0.1},${y + h + rr * 0.2} ${cx - size / 2 + rr * 0.4},${y + h - rr * 0.9} Q${cx - size * 0.3 - bx},${y + h * 0.5} ${cx - rr * 0.6},${y + rr * 1.1}z" fill="${color}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>`;
     if (suit) { const yb = y + h * 0.7, hw = (size / 2) * (yb - y) / h; g += `<path d="M${cx - hw},${yb} L${cx + hw},${yb} L${cx + size / 2},${y + h} L${cx - size / 2},${y + h}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>` + collar(cx, yb, size * 0.34); }
     g += outfitSvg('tri', { cx, top: y, bottom: y + h, widthAt: (yy) => (size / 2) * (yy - y) / h - 2 }, outfit, outfitColor);
     if (!wife) g += `<path d="M${cx - 2},${y + 4} q-3,-15 11,-17 q-9,6 -4,17" stroke="${INK}" stroke-width="${LINE * 0.9}" fill="none" stroke-linecap="round"/>`; // 남편 퀴프
@@ -302,7 +303,40 @@
     return wrap(g);
   }
   const semoHusband = (o) => semo({ ...o, wife: false });
-  const semoWife = (o) => semo({ ...o, wife: true });
+  /* 세모 아내 — 역삼각형(어깨 넓고 아래로 모임). 긴 변은 가슴·허리·힙 웨이브. 원피스 실루엣 그 자체. */
+  function semoWife({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, noLimbs = false, outfit = 'dress', outfitColor = '#fff' }) {
+    const cx = x + size / 2, h = size * 0.9, s = size / 130, color = COLORS.semoWife, W = size / 2;
+    // 폭 프로파일(어깨→꼭짓점, 단조 감소 + 허리 잘록): [t, 반폭/W]
+    const prof = [[0, 1.0], [0.22, 0.92], [0.42, 0.7], [0.56, 0.6], [0.7, 0.54], [0.84, 0.36], [0.95, 0.14], [1.0, 0.0]];
+    const wAt = (t) => { for (let i = 1; i < prof.length; i++) if (t <= prof[i][0]) { const [t0, w0] = prof[i - 1], [t1, w1] = prof[i]; return W * (w0 + (w1 - w0) * (t - t0) / (t1 - t0)); } return 0; };
+    const L = limbs({ sl: [cx - W * 0.88, y + h * 0.28], sr: [cx + W * 0.88, y + h * 0.28], hl: [cx - W * 0.2, y + h * 0.84], hr: [cx + W * 0.2, y + h * 0.84], u: size, color, pose, gaze, ground: y + h + size * 0.1, female: true });
+    if (noLimbs) { L.svg = ''; L.front = ''; }
+    let g = L.svg;
+    const rr = size * 0.08, top = y + rr * 0.3;
+    // Catmull-Rom → 부드러운 곡선 (오른쪽 변을 점으로 만들고 왼쪽은 대칭)
+    const pts = prof.map(([t, w]) => [cx + W * w, y + h * t]); pts[0] = [cx + W - rr * 0.35, top + rr * 0.45];
+    const crPath = (P) => { let d = ''; for (let i = 0; i < P.length - 1; i++) { const p0 = P[Math.max(0, i - 1)], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(P.length - 1, i + 2)];
+      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6], c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`; } return d; };
+    const right = pts, left = pts.map(([px, py]) => [2 * cx - px, py]).reverse();
+    const d = `M${left[left.length - 1][0]},${left[left.length - 1][1]} Q${cx},${top - rr * 0.15} ${right[0][0]},${right[0][1]}` + crPath(right) + crPath(left.slice(0, left.length)).replace(/^ C[^C]*C/, ' C') + 'z';
+    g += `<path d="${d}" fill="${color}" stroke="${INK}" stroke-width="${LINE}" stroke-linejoin="round"/>`;
+    // 의상: 원피스 = 스캘럽 네크라인(위 가장자리) + 허리 벨트·리본
+    const S = (dd, f, w = LINE * 0.7) => `<path d="${dd}" fill="${f}" stroke="${INK}" stroke-width="${w}" stroke-linejoin="round"/>`;
+    if (outfit === 'dress' || outfit === 'blouse') { const n = 8, wN = W * 0.84, yN = top + rr * 0.6; let dd = `M${cx - wN},${yN} Q${cx},${yN - rr * 0.2} ${cx + wN},${yN} `;
+      for (let i = n; i >= 0; i--) { const xx = cx - wN + 2 * wN * i / n; dd += `Q${xx - wN / n},${yN + rr * 0.42} ${xx - 2 * wN / n},${yN + rr * 0.08} `; } g += S(dd + 'z', outfitColor, LINE * 0.5); }
+    if (outfit === 'dress' || outfit === 'skirt') { const t = 0.56, wb = wAt(t) + 1, yb = y + h * t, k = size * 0.038;
+      g += S(`M${cx - wb},${yb - k * 0.45} Q${cx},${yb + k * 0.2} ${cx + wb},${yb - k * 0.45} L${cx + wb},${yb + k * 0.45} Q${cx},${yb + k * 1.1} ${cx - wb},${yb + k * 0.45}z`, outfitColor === '#fff' ? '#f48ca0' : outfitColor, LINE * 0.6);
+      g += S(`M${cx},${yb + k * 0.35} q${-k * 1.5},${-k} ${-k * 1.3},0 q${0},${k} ${k * 1.3},0z M${cx},${yb + k * 0.35} q${k * 1.5},${-k} ${k * 1.3},0 q${0},${k} ${-k * 1.3},0z`, '#f9c5d1', LINE * 0.55) + `<circle cx="${cx}" cy="${yb + k * 0.35}" r="${k * 0.35}" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`; }
+    // 리본(오른쪽 위 모서리) + 앞머리 한 가닥
+    { const bx2 = cx + W * 0.62, by2 = top + rr * 0.1, k = size * 0.06;
+      g += `<path d="M${bx2},${by2} q${-k * 1.6},${-k * 1.2} ${-k * 1.5},0 q${-0.1 * k},${k * 1.2} ${k * 1.5},0z M${bx2},${by2} q${k * 1.6},${-k * 1.2} ${k * 1.5},0 q${0.1 * k},${k * 1.2} ${-k * 1.5},0z" fill="#f48ca0" stroke="${INK}" stroke-width="${LINE * 0.7}" stroke-linejoin="round"/><circle cx="${bx2}" cy="${by2}" r="${k * 0.45}" fill="#f9c5d1" stroke="${INK}" stroke-width="${LINE * 0.6}"/>`;
+      g += `<path d="M${cx - W * 0.45},${top + rr * 0.3} q-3,-9 6,-11" stroke="${INK}" stroke-width="${LINE * 0.8}" fill="none" stroke-linecap="round"/>`; }
+    g += face(cx, y + h * 0.36, s, { emo, gaze, eyeStyle: 'almond', lashes: true, lips: true }) + L.front;
+    if (item) g += itemAt(item, L.Rh[0], L.Rh[1], size);
+    if (itemL) g += itemAt(itemL, L.Lh[0], L.Lh[1], size);
+    return wrap(g);
+  }
 
   /* ---------- 동그라미가족 ---------- */
   function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, glasses = false, suit = false, who = 'dad', outfit, outfitColor = '#fff' }) {
@@ -357,11 +391,11 @@
       `<g transform="translate(${size + 12},${size * 0.25})">` + itemAt('heart', 0, 0, size * 0.9) + `</g><g transform="translate(${size * 0.3},${-size * 0.05}) scale(.55)">` + itemAt('heart', 0, 0, size * 0.9) + `</g><g transform="translate(${size * 1.9},${-size * 0.02}) scale(.45)">` + itemAt('heart', 0, 0, size * 0.9) + '</g></g>';
   }
   function semoWifePeek({ x, y, size = 160, edgeY, emo = 'wink', gaze = 0, id = 'peek' }) { // edgeY 아래는 가려진다(노트 표지 = 담)
-    const cx = x + size / 2, h = size * 0.9, hw = size * 0.075, hx1 = cx - size * 0.3, hx2 = cx + size * 0.3, c = COLORS.semoWife;
-    const sl = [cx - size * 0.27, y + h * 0.55], sr = [cx + size * 0.27, y + h * 0.55];
+    const cx = x + size / 2, h = size * 0.9, hw = size * 0.058, hx1 = cx - size * 0.3, hx2 = cx + size * 0.3, c = COLORS.semoWife;
+    const sl = [cx - size * 0.43, y + h * 0.3], sr = [cx + size * 0.43, y + h * 0.3];
     return `<clipPath id="${id}"><rect x="${x - size}" y="${y - size}" width="${size * 3}" height="${edgeY - y + size}"/></clipPath><g clip-path="url(#${id})">` +
       semoWife({ x, y, size, emo, gaze, noLimbs: true }) + '</g>' +
-      `<g class="gf-ch">${limb(sl[0], sl[1], hx1, edgeY + hw * 0.2, size * 0.085, c, -10)}${limb(sr[0], sr[1], hx2, edgeY + hw * 0.2, size * 0.085, c, 10)}${hand(hx1, edgeY + hw * 0.2, hw, c)}${hand(hx2, edgeY + hw * 0.2, hw, c)}</g>`;
+      `<g class="gf-ch">${shapedLimb(sl[0], sl[1], hx1, edgeY + hw * 0.2, c, { w0: size * 0.068, w1: size * 0.03, bulge: size * 0.018, bulgeT: 0.32, bend: -10 })}${shapedLimb(sr[0], sr[1], hx2, edgeY + hw * 0.2, c, { w0: size * 0.068, w1: size * 0.03, bulge: size * 0.018, bulgeT: 0.32, bend: 10 })}${hand(hx1, edgeY + hw * 0.2, hw, c)}${hand(hx2, edgeY + hw * 0.2, hw, c)}</g>`;
   }
   function triangleWedding(x = 0, y = 0) {
     const size = 122;

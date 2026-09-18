@@ -36,9 +36,10 @@
 <script src="../src/characters.js"></script>
 <script>
 document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+GF.setMode('hand'); // 웹툰은 손 터치 렌더 (굿즈 인쇄용은 clean)
 const W = 720, F = "font-family:'Gaegu',sans-serif", FB = "font-family:'Gowun Dodum',sans-serif", FM = "font-family:'Nanum Myeongjo',serif";
 const cuts = [];
-const cut = (h, inner, bg) => cuts.push(`<svg class="cut" viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg">${bg ? `<rect width="${W}" height="${h}" fill="${bg}"/>` : ''}${inner}</svg>`);
+const cut = (h, inner, bg) => cuts.push(`<svg class="cut" viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg">${bg ? `<rect width="${W}" height="${h}" fill="${bg}"/>` : ''}${inner}${paper(W, h)}</svg>`);
 const gap = (big) => cuts.push(`<div class="gap${big ? ' big' : ''}"></div>`);
 const T = (x, y, t, size = 26, anchor = 'middle', font = FB, extra = '') => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" style="${font}" fill="${INK}" ${extra}>${t}</text>`;
 
@@ -84,7 +85,7 @@ cut(110, narration(90, 30, 540, ['맞장구는 쳐 줬다. 셋 다, 딱히 관�
 gap(true);
 // ---- 4. 세 창가 ----
 function windowCut(id, who, sky1, sky2, label, warm) {
-  return `<svg class="cut" viewBox="0 0 ${W} 420" xmlns="http://www.w3.org/2000/svg">${windowBg(id, sky1, sky2)}${who}${T(W / 2, 404, label, 22, 'middle', FM, 'opacity=".8"')}</svg>`;
+  return `<svg class="cut" viewBox="0 0 ${W} 420" xmlns="http://www.w3.org/2000/svg">${windowBg(id, sky1, sky2)}${who}${T(W / 2, 404, label, 22, 'middle', FM, 'opacity=".8"')}${paper(W, 420)}</svg>`;
 }
 cuts.push(windowCut('sky1', nemoDad({ x: 300, y: 250, w: 120, h: 106, emo: 'worry', gaze: 0, pose: 'hold', item: 'coffee' }) +
   `<g opacity=".35">${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${110 + i * 90}" y="${60 + (i % 2) * 20}" width="40" height="120" fill="${INK}"/>`).join('')}</g>`, '#cfe3f4', '#e6eef3', '네모 — 큰 건물 회사 창가, 믹스커피', true));

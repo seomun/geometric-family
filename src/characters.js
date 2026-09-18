@@ -16,7 +16,26 @@
   const POSES = ['stand', 'wave', 'cheer', 'think', 'point', 'hips', 'shrug', 'hold', 'sit', 'walk'];
   const ITEMS = ['coffee', 'americano', 'phone', 'envelope', 'book', 'bag', 'violin', 'racket', 'heart', 'star', 'sword', 'shield'];
 
-  const ROUGH_DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs></defs></svg>`; // v6: 필터 없음(호환용)
+  /* 손 터치 렌더 (v6.6). 캐릭터 벡터는 그대로, 렌더에서만 입힌다: 선 흔들림·굵기 변화·칠 어긋남·종이 결. GF.mode = 'hand' | 'clean' */
+  const ROUGH_DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="gf-hand" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.016" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="w"/>
+      <feMorphology in="w" operator="dilate" radius="0.5" result="thick"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="1" seed="11" result="n2"/>
+      <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  5 0 0 0 -2.1" result="mask"/>
+      <feComposite in="thick" in2="mask" operator="in" result="thickMasked"/>
+      <feMerge><feMergeNode in="w"/><feMergeNode in="thickMasked"/></feMerge>
+    </filter>
+    <filter id="gf-fill" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.0" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="gf-paper" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="5" stitchTiles="stitch" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.2  0 0 0 0.09 0"/>
+    </filter>
+  </defs></svg>`;
   const CHAR_STYLE = `<style>
     .gf-ch .ink { stroke: ${INK}; stroke-width: ${LINE}; stroke-linecap: round; stroke-linejoin: round; fill: none; }
     .gf-ch .fill { stroke: ${INK}; stroke-width: ${LINE}; stroke-linejoin: round; stroke-linecap: round; }
@@ -211,7 +230,15 @@
     return `<path d="M${cx - w / 2},${yb} L${cx},${yb + w * 0.28} L${cx + w / 2},${yb} L${cx + w * 0.3},${yb} L${cx},${yb + w * 0.18} L${cx - w * 0.3},${yb}z" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.6}" stroke-linejoin="round"/>` +
       `<path d="M${cx},${yb + w * 0.16} l${w * 0.07},${w * 0.1} l${-w * 0.07},${w * 0.34} l${-w * 0.07},${-w * 0.34}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`;
   }
-  const wrap = (inner) => `<g class="gf-ch">${inner}</g>`;
+  const MODE = { mode: 'clean', seed: 0 };
+  function touch(inner) { // 칠 패스(어긋남) + 선 패스(흔들림·굵기 변화). 미세 기울기는 길이 해시로 결정(같은 입력 = 같은 결과)
+    const h = inner.length % 7; const rot = ((h - 3) * 0.5).toFixed(2); // -1.5° ~ +1.5°
+    const fills = inner.replace(/stroke="#[0-9a-fA-F]{6}"/g, 'stroke="none"').replace(/stroke="none" stroke-width="[^"]*"/g, 'stroke="none"');
+    const lines = inner.replace(/fill="(#[0-9a-fA-F]{6}|[a-z]+)"/g, (m, c) => (c.toLowerCase() === INK ? m : 'fill="none"'));
+    return `<g class="gf-ch gf-hand" style="transform-box:fill-box;transform-origin:center;transform:rotate(${rot}deg)"><g filter="url(#gf-fill)" transform="translate(0.8,0.5)">${fills}</g><g filter="url(#gf-hand)">${lines}</g></g>`;
+  }
+  const wrap = (inner) => MODE.mode === 'hand' ? touch(inner) : `<g class="gf-ch">${inner}</g>`;
+  const paper = (w, h, x = 0, y = 0) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" filter="url(#gf-paper)" style="mix-blend-mode:multiply" pointer-events="none"/>`;
   const glassesAt = (cx, cy, s) => `<circle cx="${cx - 17 * s}" cy="${cy}" r="${12 * s}" fill="none" stroke="${INK}" stroke-width="${LINE * 0.7}"/><circle cx="${cx + 17 * s}" cy="${cy}" r="${12 * s}" fill="none" stroke="${INK}" stroke-width="${LINE * 0.7}"/><path d="M${cx - 5 * s},${cy} h${10 * s}" stroke="${INK}" stroke-width="${LINE * 0.7}"/>`;
 
   /* ---------- 네모가족 ---------- */
@@ -368,7 +395,8 @@
       lines.map((t, i) => `<text x="${x + w / 2}" y="${y + 16 + lh * (i + 0.75)}" text-anchor="middle" font-family="'Nanum Myeongjo', serif" font-size="${lh - 8}" font-weight="700" fill="${INK}">${t}</text>`).join('') + '</g>';
   }
 
-  const GF = { VERSION: 'v6', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt,
+  const GF = { VERSION: 'v6.6', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt, touch, paper,
+    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; },
     nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,
     squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, coffeeCup, windowBg, speech, narration, suitCollar: collar };
   root.GF = GF; Object.assign(root, GF);

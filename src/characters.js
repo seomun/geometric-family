@@ -6,7 +6,7 @@
    item: coffee americano phone envelope book bag violin racket heart star  */
 (function (root) {
   'use strict';
-  const INK = '#6b5443', PAPER = '#f4ecdd', SUIT = '#5a5a63', LINE = 3.4;    // INK 연갈색(검정 금지), LINE 기준 외곽선. 절대 바꾸지 않는다.
+  const INK = '#6b5443', PAPER = '#f4ecdd', SUIT = '#5a5a63', LINE = 2.6;    // INK 연갈색(검정 금지), LINE 기준 외곽선. 절대 바꾸지 않는다.
   const COLORS = {
     nemoDad: '#e29368', nemoMom: '#ecb383', nemoGrandma: '#d8b58e', nemoKid1: '#f0c583', nemoKid2: '#f2b49e', nemoKid3: '#e6a9c0', nemoBaby: '#f8dcb0',
     semoHusband: '#9fb6d0', semoWife: '#f6de5c', skin: '#f7dcc8', heelPink: '#f08aa4',
@@ -308,10 +308,10 @@
      faceStyle: 'shoujo'(큰 눈+흰자+하이라이트 3, 기본) | 'kitty'(검은 타원 눈, 입 없음) | 'dot'(점 눈 + ω 입) */
   function wifeFace(cx, cy, s, { emo = 'good', gaze = 0, faceStyle = 'shoujo' }) {
     const lw = LINE * s, E = (d, w = lw) => `<path d="${d}" stroke="${INK}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
-    const ex = 15 * s, ey = 0, px = gaze * 2.4 * s; let out = '';
+    const ex = (faceStyle === 'ref' ? 17.5 : 15) * s, ey = 0, px = gaze * 2.4 * s; let out = '';
     // 볼터치: 눈 바깥 아래, 살짝 높게
     const chk = faceStyle === 'chic';
-    if (faceStyle === 'ref') out += `<circle cx="${cx - ex - 8 * s}" cy="${cy + 9.5 * s}" r="${4.2 * s}" fill="#f3a0b4" opacity=".85"/><circle cx="${cx + ex + 8 * s}" cy="${cy + 9.5 * s}" r="${4.2 * s}" fill="#f3a0b4" opacity=".85"/>`;
+    if (faceStyle === 'ref') out += `<circle cx="${cx - ex - 9 * s}" cy="${cy + 10.5 * s}" r="${5 * s}" fill="#f4a3b6" opacity=".8"/><circle cx="${cx + ex + 9 * s}" cy="${cy + 10.5 * s}" r="${5 * s}" fill="#f4a3b6" opacity=".8"/>`;
     else out += `<ellipse cx="${cx - ex - (chk ? 9 : 11) * s}" cy="${cy + (chk ? 10 : 8) * s}" rx="${(chk ? 8 : 6.5) * s}" ry="${(chk ? 3.4 : 3.8) * s}" fill="#f2a1ad" opacity="${chk ? .5 : .6}"/><ellipse cx="${cx + ex + (chk ? 9 : 11) * s}" cy="${cy + (chk ? 10 : 8) * s}" rx="${(chk ? 8 : 6.5) * s}" ry="${(chk ? 3.4 : 3.8) * s}" fill="#f2a1ad" opacity="${chk ? .5 : .6}"/>`;
     const lashes = (x, side) => E(`M${x + side * 10 * s},${cy + ey - 8 * s} l${side * 4 * s},${-4.5 * s} M${x + side * 11.5 * s},${cy + ey - 4 * s} l${side * 5 * s},${-2.5 * s} M${x + side * 12 * s},${cy + ey + 0.5 * s} l${side * 5 * s},${-0.5 * s}`, lw * 0.6);
     const closedHappy = (x, side) => E(`M${x - 9 * s},${cy + ey + 2 * s} q${9 * s},${-11 * s} ${18 * s},0`) + lashes(x, side);
@@ -323,17 +323,21 @@
       if (faceStyle === 'kitty') return `<ellipse cx="${x + px}" cy="${cy + ey}" rx="${5.2 * s}" ry="${7.5 * s}" fill="${INK}" transform="rotate(${side * -8} ${x} ${cy + ey})"/><circle cx="${x + px + 1.6 * s}" cy="${cy + ey - 2.6 * s}" r="${1.6 * s}" fill="#fff"/>` + lashes(x, side);
       if (faceStyle === 'dot') return `<circle cx="${x + px}" cy="${cy + ey}" r="${4.2 * s}" fill="${INK}"/><circle cx="${x + px + 1.4 * s}" cy="${cy + ey - 1.5 * s}" r="${1.3 * s}" fill="#fff"/>` + lashes(x, side);
       if (faceStyle === 'ref') {
-        // 레퍼런스: 아몬드 눈(위는 완만, 아래는 둥근), 두꺼운 윗눈꺼풀, 큰 갈색 홍채(아래로 치우침), 하이라이트 1, 바깥 속눈썹 3(휨), 아래 눈꺼풀 짧게
-        const rx = 11.5 * s, ry = 8 * s, tilt = side * -4;
-        const lidY = cy + ey - ry * 0.35; // 윗눈꺼풀이 눈 위 1/3 을 덮음
-        const shape = `M${x - rx},${cy + ey} Q${x - rx * 0.6},${lidY - 1 * s} ${x},${lidY} Q${x + rx * 0.6},${lidY - 1 * s} ${x + rx},${cy + ey} Q${x + rx * 0.5},${cy + ey + ry * 1.05} ${x},${cy + ey + ry} Q${x - rx * 0.5},${cy + ey + ry * 1.05} ${x - rx},${cy + ey}z`;
-        const iris = `<clipPath id="wf${Math.round(x)}${side > 0 ? 'r' : 'l'}"><path d="${shape}"/></clipPath><g clip-path="url(#wf${Math.round(x)}${side > 0 ? 'r' : 'l'})">` +
-          `<ellipse cx="${x + px + side * 0.6 * s}" cy="${cy + ey + 1.6 * s}" rx="${6.6 * s}" ry="${7 * s}" fill="#5b3a26"/><ellipse cx="${x + px + side * 0.6 * s}" cy="${cy + ey + 2.2 * s}" rx="${3.6 * s}" ry="${4.2 * s}" fill="#2e1c12"/>` +
-          `<circle cx="${x + px + side * 0.6 * s - 2.2 * s}" cy="${cy + ey - 0.6 * s}" r="${2 * s}" fill="#fff"/></g>`;
-        const lidLine = `<path d="M${x - rx * 0.98},${cy + ey - 0.3 * s} Q${x - rx * 0.5},${lidY - 1.6 * s} ${x},${lidY - 0.4 * s} Q${x + rx * 0.5},${lidY - 1.6 * s} ${x + rx * 0.98},${cy + ey - 0.3 * s}" stroke="${INK}" stroke-width="${lw * 1.5}" fill="none" stroke-linecap="round"/>`;
-        const lash = [[0.92, -0.2, 4.5, -5], [0.75, -0.9, 3.5, -6], [0.5, -1.35, 2.2, -6.5]].map(([fx, fy, dx, dy]) => `<path d="M${x + side * rx * fx},${cy + ey + fy * s} q${side * dx * 0.6 * s},${dy * 0.5 * s} ${side * dx * s},${dy * s}" stroke="${INK}" stroke-width="${lw * 0.75}" fill="none" stroke-linecap="round"/>`).join('');
-        const lower = `<path d="M${x + side * 2 * s},${cy + ey + ry + 1.2 * s} q${side * 4 * s},${0.4 * s} ${side * 7.5 * s},${-2.2 * s}" stroke="${INK}" stroke-width="${lw * 0.5}" fill="none" stroke-linecap="round" opacity=".85"/>`;
-        return `<g transform="rotate(${tilt} ${x} ${cy + ey})"><path d="${shape}" fill="#fff" stroke="${INK}" stroke-width="${lw * 0.6}"/>${iris}${lidLine}${lash}${lower}</g>`;
+        // 레퍼런스 계측: 눈 가로:세로 ≈ 1.75, 홍채가 눈 높이를 거의 채움(윗눈꺼풀이 위 30% 자름), 눈꺼풀 선은 안쪽이 높고 바깥으로 처짐(요염), 속눈썹 3 바깥 위로
+        const rx = 12.2 * s, ry = 7.2 * s, ey2 = cy + ey;
+        const lidY = ey2 - ry * 0.32;
+        const shape = `M${x - rx},${ey2 + 0.6 * s} Q${x - rx * 0.55},${lidY - 1.2 * s} ${x - rx * 0.05},${lidY} Q${x + rx * 0.6},${lidY - 0.4 * s} ${x + rx},${ey2 + 1.2 * s} Q${x + rx * 0.55},${ey2 + ry * 1.1} ${x},${ey2 + ry} Q${x - rx * 0.55},${ey2 + ry * 1.1} ${x - rx},${ey2 + 0.6 * s}z`;
+        const id = `wf${Math.round(x * 10)}${side > 0 ? 'r' : 'l'}`;
+        const coy = gaze === 0 ? -0.9 * s : px; // 기본: 살짝 왼쪽을 본다(애교)
+        const iris = `<clipPath id="${id}"><path d="${shape}"/></clipPath><g clip-path="url(#${id})">` +
+          `<ellipse cx="${x + coy}" cy="${ey2 + 1.2 * s}" rx="${8.8 * s}" ry="${8.6 * s}" fill="#5a3722"/><ellipse cx="${x + coy}" cy="${ey2 + 2 * s}" rx="${4.8 * s}" ry="${5 * s}" fill="#2a1a10"/>` +
+          `<circle cx="${x + coy - 3 * s}" cy="${ey2 - 1 * s}" r="${2.3 * s}" fill="#fff"/><circle cx="${x + coy + 2.6 * s}" cy="${ey2 + 4.4 * s}" r="${0.9 * s}" fill="#fff" opacity=".8"/></g>`;
+        // 윗눈꺼풀: 안쪽 1/3 지점이 가장 높고 바깥 끝이 내려온다 (side 로 좌우 미러)
+        const inX = x - side * rx, outX = x + side * rx, peakX = x - side * rx * 0.25;
+        const lidLine = `<path d="M${inX},${ey2 + 0.4 * s} Q${peakX},${lidY - 2.4 * s} ${x + side * rx * 0.35},${lidY - 0.6 * s} Q${x + side * rx * 0.75},${lidY + 0.2 * s} ${outX},${ey2 + 1.4 * s}" stroke="${INK}" stroke-width="${lw * 1.35}" fill="none" stroke-linecap="round"/>`;
+        const lash = [[0.98, 1.2, 5.4, -5.6], [0.84, -0.4, 4.6, -7], [0.62, -1.3, 3, -7.4]].map(([fx, fy, dx, dy]) => `<path d="M${x + side * rx * fx},${ey2 + fy * s} q${side * dx * 0.5 * s},${dy * 0.45 * s} ${side * dx * s},${dy * s}" stroke="${INK}" stroke-width="${lw * 0.8}" fill="none" stroke-linecap="round"/>`).join('');
+        const lower = `<path d="M${x + side * 1.5 * s},${ey2 + ry + 1 * s} q${side * 4 * s},${0.6 * s} ${side * 8 * s},${-1.8 * s}" stroke="${INK}" stroke-width="${lw * 0.42}" fill="none" stroke-linecap="round" opacity=".8"/>`;
+        return `<path d="${shape}" fill="#fff" stroke="${INK}" stroke-width="${lw * 0.5}"/>${iris}${lidLine}${lash}${lower}`;
       }
       if (faceStyle === 'chic') {
         const rx = 12.5 * s, ry = 8.8 * s, tilt = side * -9, lid = emo === 'surprise' ? 0.12 : emo === 'worry' ? 0.28 : 0.36; // lid = 눈꺼풀이 덮는 비율(요염함의 양)
@@ -359,7 +363,7 @@
     // 눈썹: 얇고 멀리, 둥글게 (bad/angry 만 기울임)
     const chic = faceStyle === 'chic', ref = faceStyle === 'ref';
     const by = cy + ey - (chic ? 17 : 19) * s, bl = (emo === 'bad' || emo === 'angry') ? 4 * s : (['worry', 'sad', 'cry'].includes(emo) ? -3 * s : 0), bw2 = chic ? 8 * s : 6 * s, arch = chic ? 4.5 * s : 3 * s;
-    if (ref) { const by2 = cy + ey - 16 * s; out += E(`M${cx - ex - 6 * s},${by2 + 1.5 * s + bl * 0.5} Q${cx - ex - 1 * s},${by2 - 3 * s + bl / 2} ${cx - ex + 5 * s},${by2 + bl}`, lw * 0.5) + E(`M${cx + ex + 6 * s},${by2 + 1.5 * s + bl * 0.5} Q${cx + ex + 1 * s},${by2 - 3 * s + bl / 2} ${cx + ex - 5 * s},${by2 + bl}`, lw * 0.5); }
+    if (ref) { const by2 = cy + ey - 15.5 * s; out += E(`M${cx - ex - 6 * s},${by2 + 1.8 * s + bl * 0.5} Q${cx - ex - 0.5 * s},${by2 - 2.6 * s + bl / 2} ${cx - ex + 5 * s},${by2 + 0.6 * s + bl}`, lw * 0.42) + E(`M${cx + ex + 6 * s},${by2 + 1.8 * s + bl * 0.5} Q${cx + ex + 0.5 * s},${by2 - 2.6 * s + bl / 2} ${cx + ex - 5 * s},${by2 + 0.6 * s + bl}`, lw * 0.42); }
     else out += E(`M${cx - ex - bw2},${by + (chic ? 1.5 * s : 0)} Q${cx - ex - 1 * s},${by - arch + bl / 2} ${cx - ex + bw2 * 0.8},${by + bl}`, lw * (chic ? 0.45 : 0.5)) + E(`M${cx + ex + bw2},${by + (chic ? 1.5 * s : 0)} Q${cx + ex + 1 * s},${by - arch + bl / 2} ${cx + ex - bw2 * 0.8},${by + bl}`, lw * (chic ? 0.45 : 0.5));
     // 입: 아주 작게, 눈 가까이. kitty 는 코만(노란 타원)
     const my = cy + ey + 15 * s;
@@ -369,7 +373,7 @@
       const M = { good: E(`M${cx - 4.5 * s},${my} q${4.5 * s},${5.5 * s} ${9 * s},0`, lw * 0.8), joy: `<path d="M${cx - 7 * s},${my - 1 * s} q${7 * s},${12 * s} ${14 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}" stroke-linejoin="round"/>`,
         bad: E(`M${cx - 5 * s},${my + 3 * s} q${5 * s},${-5 * s} ${10 * s},0`, lw * 0.8), angry: E(`M${cx - 5 * s},${my + 2 * s} h${10 * s}`, lw * 0.8), worry: E(`M${cx - 5 * s},${my + 1 * s} q${2.5 * s},${-3 * s} ${5 * s},0 q${2.5 * s},${3 * s} ${5 * s},0`, lw * 0.8),
         sad: E(`M${cx - 4 * s},${my + 3 * s} q${4 * s},${-3 * s} ${8 * s},0`, lw * 0.8), cry: E(`M${cx - 5 * s},${my + 3 * s} q${5 * s},${-5 * s} ${10 * s},0`, lw * 0.8), surprise: `<ellipse cx="${cx}" cy="${my + 1 * s}" rx="${3.5 * s}" ry="${4.5 * s}" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}"/>` };
-      if (ref && (emo === 'good' || emo === 'wink')) out += E(`M${cx - 3.5 * s},${my - 1 * s} q${3.5 * s},${4 * s} ${7 * s},0`, lw * 0.8);
+      if (ref && (emo === 'good' || emo === 'wink')) out += E(`M${cx - 3 * s},${my - 1.5 * s} q${3 * s},${3.6 * s} ${6 * s},0`, lw * 0.7);
       else if (ref && emo === 'love') out += `<path d="M${cx - 3.5 * s},${my} q${1.7 * s},${-2.2 * s} ${3.5 * s},0 q${1.7 * s},${-2.2 * s} ${3.5 * s},0 q${-1.7 * s},${4.2 * s} ${-3.5 * s},${3 * s} q${-1.7 * s},${1.2 * s} ${-3.5 * s},${-3 * s}z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.55}" stroke-linejoin="round"/>`;
       else if (chic && (emo === 'good' || emo === 'wink' || emo === 'love')) out += `<path d="M${cx - 4 * s},${my + 0.5 * s} q${4 * s},${4.5 * s} ${9 * s},${-1.5 * s}" stroke="${INK}" stroke-width="${lw * 0.85}" fill="none" stroke-linecap="round"/><path d="M${cx - 3 * s},${my + 1 * s} q${3.5 * s},${3 * s} ${7 * s},${-0.5 * s} q${-3.5 * s},${1.2 * s} ${-7 * s},${0.5 * s}z" fill="#e9748d" opacity=".85"/>`;
       else out += M[emo] || `<path d="M${cx - 4.5 * s},${my} q${4.5 * s},${6 * s} ${9 * s},0 q${-4.5 * s},${1.5 * s} ${-9 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.65}" stroke-linejoin="round"/>`;
@@ -388,10 +392,10 @@
     // 앞머리: 위 가장자리에 살짝 흘러내린 두 가닥
     if (bangs) g += `<path d="M${cx - W * 0.55},${y + 2} q${-2 * s},${12 * s} ${6 * s},${16 * s} M${cx - W * 0.3},${y + 2} q${1 * s},${9 * s} ${7 * s},${12 * s}" stroke="${INK}" stroke-width="${LINE * 0.7}" fill="none" stroke-linecap="round"/>`;
     // 리본: 한쪽 모서리에 크게
-    if (bow !== 'none') { const dir = bow === 'left' ? -1 : 1, bx2 = cx + dir * W * 0.72, by2 = y + size * 0.04, k = size * 0.1; // 큰 리본이 모서리를 덮는다
+    if (bow !== 'none') { const dir = bow === 'left' ? -1 : 1, bx2 = cx + dir * W * 0.7, by2 = y + size * 0.035, k = size * 0.088; // 큰 리본이 모서리를 덮는다
       const loop = (ang) => `<ellipse cx="0" cy="0" rx="${k * 1.15}" ry="${k * 0.72}" transform="rotate(${ang}) translate(${k * 1.05},0)" fill="#f28ba5" stroke="${INK}" stroke-width="${LINE * 0.7}"/>`;
       g += `<g transform="translate(${bx2},${by2})"><path d="M${-k * 0.2},${k * 0.3} l${-k * 0.55},${k * 1.2} l${k * 0.55},${-k * 0.3}z M${k * 0.2},${k * 0.3} l${k * 0.55},${k * 1.2} l${-k * 0.55},${-k * 0.3}z" fill="#f28ba5" stroke="${INK}" stroke-width="${LINE * 0.6}" stroke-linejoin="round"/>${loop(200)}${loop(-20)}<circle cx="0" cy="0" r="${k * 0.42}" fill="#f6a7ba" stroke="${INK}" stroke-width="${LINE * 0.6}"/></g>`; }
-    g += wifeFace(cx, y + h * 0.42, s, { emo, gaze, faceStyle }) + L.front;
+    g += wifeFace(cx, y + h * 0.44, s, { emo, gaze, faceStyle }) + L.front;
     if (item) g += itemAt(item, L.Rh[0], L.Rh[1], size);
     if (itemL) g += itemAt(itemL, L.Lh[0], L.Lh[1], size);
     return wrap(g);

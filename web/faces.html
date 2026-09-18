@@ -17,13 +17,13 @@
 <body>
 <div class="wrap">
   <h1>🔺 세모 아내 — 얼굴 3안 (순수 역삼각형, 의상 없음)</h1>
-  <h2>A2. chic — 반쯤 내린 눈꺼풀·아이라인 꼬리·곡선 속눈썹·올라간 입꼬리 &nbsp;|&nbsp; A. shoujo &nbsp;|&nbsp; B. kitty</h2>
+  <h2>REF — 레퍼런스 복제(살색 팔다리·큰 리본·두꺼운 윗눈꺼풀·속눈썹 3) &nbsp;|&nbsp; A2 chic &nbsp;|&nbsp; A shoujo</h2>
   <svg viewBox="0 0 900 400" id="big"></svg>
-  <h2>표정 — good · joy · wink · love · surprise · worry (A2 chic)</h2>
+  <h2>표정 — good · joy · wink · love · surprise · worry (REF)</h2>
   <svg viewBox="0 0 900 200" id="emoA"></svg>
-  <h2>표정 (A shoujo)</h2>
+  <h2>표정 (A2 chic)</h2>
   <svg viewBox="0 0 900 200" id="emoB"></svg>
-  <h2>표정 (B kitty)</h2>
+  <h2>표정 (A shoujo)</h2>
   <svg viewBox="0 0 900 200" id="emoC"></svg>
   <h2>작은 크기(스티커·아이콘) + 남편과 나란히</h2>
   <svg viewBox="0 0 900 200" id="small"></svg>
@@ -33,13 +33,13 @@
 document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
 const $ = id => document.getElementById(id);
 const L = (x, y, t) => `<text class="lbl" x="${x}" y="${y}" text-anchor="middle">${t}</text>`;
-const styles = ['chic', 'shoujo', 'kitty'];
-$('big').innerHTML = styles.map((f, i) => `<g transform="translate(${40 + i * 300},30) scale(2.4)">${semoWife({ x: 0, y: 0, size: 100, emo: 'good', faceStyle: f })}</g>` + L(160 + i * 300, 385, ['A2 chic (요염+귀여움)', 'A shoujo', 'B kitty'][i])).join('');
+const styles = ['ref', 'chic', 'shoujo'];
+$('big').innerHTML = styles.map((f, i) => `<g transform="translate(${40 + i * 300},30) scale(2.4)">${semoWife({ x: 0, y: 0, size: 100, emo: 'good', faceStyle: f })}</g>` + L(160 + i * 300, 385, ['REF (챗GPT 레퍼런스 복제)', 'A2 chic', 'A shoujo'][i])).join('');
 const emos = ['good', 'joy', 'wink', 'love', 'surprise', 'worry'];
-for (const [id, f] of [['emoA', 'chic'], ['emoB', 'shoujo'], ['emoC', 'kitty']])
+for (const [id, f] of [['emoA', 'ref'], ['emoB', 'chic'], ['emoC', 'shoujo']])
   $(id).innerHTML = emos.map((e, i) => `<g transform="translate(${30 + i * 145},20) scale(1.15)">${semoWife({ x: 0, y: 0, size: 100, emo: e, faceStyle: f, pose: ['stand', 'cheer', 'hips', 'hold', 'shrug', 'think'][i], item: e === 'love' ? 'heart' : null })}</g>` + L(88 + i * 145, 190, e)).join('');
 $('small').innerHTML = styles.map((f, i) => `<g transform="translate(${40 + i * 130},40) scale(.6)">${semoWife({ x: 0, y: 0, size: 100, emo: 'wink', faceStyle: f })}</g>`).join('') +
-  `<g transform="translate(470,20)">${semoHusband({ x: 0, y: 0, size: 122, emo: 'good', gaze: 1 })}${semoWife({ x: 150, y: 0, size: 122, emo: 'good', gaze: -1, faceStyle: 'chic' })}</g>` + L(120, 190, '×0.6') + L(610, 190, '남▲ 여▽');
+  `<g transform="translate(470,20)">${semoHusband({ x: 0, y: 0, size: 122, emo: 'good', gaze: 1 })}${semoWife({ x: 150, y: 0, size: 122, emo: 'good', gaze: -1, faceStyle: 'ref' })}</g>` + L(120, 190, '×0.6') + L(610, 190, '남▲ 여▽');
 </script>
 </body>
 </html>

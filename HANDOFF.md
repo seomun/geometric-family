@@ -8,6 +8,7 @@
 - `web/characters.html` 캐릭터 시트, `web/ep01.html` 1화 「부고」 완성본(11컷 + 투표 CTA + 2화 예고).
 - **배포됨**: https://seomun.github.io/geometric-family/ (gh-pages 브랜치 = dist/). 재배포는 `bash tools/deploy.sh`.
 - 사업 전체 흐름: `docs/04_IP_BUSINESS.md` (네모=화자/블로그, 세모=얼굴/굿즈, 동그라미=마크; 블로그→웹툰→쇼츠→굿즈→유아 게임→이모티콘→라이선싱; P1~P3 로드맵).
+- **이야기 수집기** `python tools/collect_stories.py` → `content/seeds/inbox/` (주 1회). 소스 `tools/sources.json`. 형식 2안(6컷+네모의 글)은 02 §3-6.
 - 굿즈 아트보드 `web/goods.html`: 노트 3종(엿보기/칼·방패/사랑) + 스티커. 세모 아내가 굿즈 주역.
 - 채널별 전략: `docs/02_IP_STRATEGY.md` — 채널별 형식(쇼츠 A/B/C 고정 포맷), 주간 리듬, AI/사람 역할, 4주 KPI.
 - 스크린샷: `notes/2026-09-16_characters.png`, `notes/2026-09-16_ep01.png`.

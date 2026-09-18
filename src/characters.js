@@ -29,14 +29,14 @@
   /* ---------- 얼굴 ---------- cx,cy 얼굴 중심 · s 스케일(1 = 폭 100) · opt: emo gaze eyeStyle lashes bags stable */
   function face(cx, cy, s, opt) {
     const { emo = 'good', gaze = 0, eyeStyle = 'round', lashes = false, bags = false, stable = false, lips = false } = opt;
-    s *= 1.12;
-    const ex = 16 * s, ey = -2 * s, px = gaze * 2.6 * s, lw = LINE * s;
+    s *= 1.18;
+    const ex = 13.5 * s, ey = -1 * s, px = gaze * 2.4 * s, lw = LINE * s;
     const E = (d, w = lw) => `<path d="${d}" stroke="${INK}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
     let out = '';
     // 볼터치 (플랫)
-    out += `<ellipse cx="${cx - ex - 9 * s}" cy="${cy + 9 * s}" rx="${7 * s}" ry="${4 * s}" fill="#f2a1ad" opacity=".55"/><ellipse cx="${cx + ex + 9 * s}" cy="${cy + 9 * s}" rx="${7 * s}" ry="${4 * s}" fill="#f2a1ad" opacity=".55"/>`;
+    out += `<ellipse cx="${cx - ex - 10 * s}" cy="${cy + 8 * s}" rx="${6 * s}" ry="${3.5 * s}" fill="#f2a1ad" opacity=".6"/><ellipse cx="${cx + ex + 10 * s}" cy="${cy + 8 * s}" rx="${6 * s}" ry="${3.5 * s}" fill="#f2a1ad" opacity=".6"/>`;
     // 눈썹
-    const browY = cy + ey - 14 * s, bw = 8 * s;
+    const browY = cy + ey - 15 * s, bw = 6.5 * s;
     let bl = 0, br = 0;
     if (!stable || emo === 'angry') { if (emo === 'bad' || emo === 'angry') { bl = 5 * s; br = 5 * s; } else if (['worry', 'sad', 'cry'].includes(emo)) { bl = -5 * s; br = -5 * s; } else if (emo === 'surprise') { bl = -2 * s; br = -2 * s; } }
     const browLift = emo === 'surprise' ? -3 * s : 0;
@@ -50,17 +50,17 @@
       if (emo === 'relief' || emo === 'tired') return closedDown(x);
       if (emo === 'wink' && side === 1) return closedHappy(x);
       if (emo === 'love' && !stable) return heart(x);
-      let rx = 9.5 * s, ry = 10.5 * s;
-      if (eyeStyle === 'big') { rx = 10.5 * s; ry = 12 * s; }
+      let rx = 10.5 * s, ry = 12 * s;
+      if (eyeStyle === 'big') { rx = 11.5 * s; ry = 13.5 * s; }
       if (emo === 'surprise') { rx *= 1.15; ry *= 1.2; }
       let shape;
-      if (eyeStyle === 'almond') shape = `<path class="white" d="M${x - 10 * s},${cy + ey} q${10 * s},${-12 * s} ${20 * s},0 q${-10 * s},${9 * s} ${-20 * s},0z" stroke-width="${lw * 0.7}"/>`;
-      else if (eyeStyle === 'calm') shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${9 * s}" ry="${9.5 * s}" stroke-width="${lw * 0.7}"/><path d="M${x - 8 * s},${cy + ey - 4.5 * s} q${8 * s},${-6 * s} ${16 * s},0" stroke="${INK}" stroke-width="${lw * 0.9}" fill="none" stroke-linecap="round"/>`;
+      if (eyeStyle === 'almond') shape = `<path class="white" d="M${x - 11 * s},${cy + ey} q${11 * s},${-14 * s} ${22 * s},0 q${-11 * s},${11 * s} ${-22 * s},0z" stroke-width="${lw * 0.7}"/>`;
+      else if (eyeStyle === 'calm') shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${10 * s}" ry="${11 * s}" stroke-width="${lw * 0.7}"/><path d="M${x - 9 * s},${cy + ey - 5.5 * s} q${9 * s},${-6.5 * s} ${18 * s},0" stroke="${INK}" stroke-width="${lw * 0.9}" fill="none" stroke-linecap="round"/>`;
       else shape = `<ellipse class="white" cx="${x}" cy="${cy + ey}" rx="${rx}" ry="${ry}" stroke-width="${lw * 0.7}"/>`;
-      const pr = (eyeStyle === 'big' ? 6.2 : (eyeStyle === 'almond' || eyeStyle === 'calm') ? 4.6 : 5.2) * s * (emo === 'surprise' ? 0.8 : 1);
+      const pr = (eyeStyle === 'big' ? 7 : (eyeStyle === 'almond' || eyeStyle === 'calm') ? 5.4 : 6.2) * s * (emo === 'surprise' ? 0.8 : 1);
       const droop = ((['sad', 'cry'].includes(emo) && !stable) ? 1.5 * s : 0) + (eyeStyle === 'calm' ? 1 * s : 0);
       let g = shape + `<circle cx="${x + px}" cy="${cy + ey + droop}" r="${pr}" fill="${INK}"/>` +
-        `<circle cx="${x + px + 2 * s}" cy="${cy + ey - 2.6 * s + droop}" r="${2.1 * s}" fill="#fff"/><circle cx="${x + px - 1.8 * s}" cy="${cy + ey + 2.2 * s + droop}" r="${1.1 * s}" fill="#fff"/>`;
+        `<circle cx="${x + px + 2.4 * s}" cy="${cy + ey - 3 * s + droop}" r="${2.6 * s}" fill="#fff"/><circle cx="${x + px - 2.2 * s}" cy="${cy + ey + 2.6 * s + droop}" r="${1.3 * s}" fill="#fff"/>`;
       if (lashes) g += E(`M${x + 8 * s},${cy + ey - 7.5 * s} l${4 * s},${-4 * s} M${x + 10 * s},${cy + ey - 4 * s} l${5 * s},${-2.5 * s} M${x + 10.5 * s},${cy + ey} l${5 * s},${-0.5 * s}`, lw * 0.6);
       if (bags) g += `<path d="M${x - 5 * s},${cy + ey + 12.5 * s} q${5 * s},${2.5 * s} ${10 * s},0" stroke="${INK}" stroke-width="${lw * 0.5}" fill="none" opacity=".6"/>`;
       if (emo === 'cry') g += `<path d="M${x + 6 * s},${cy + ey + 9 * s} q${3 * s},${8 * s} 0,${14 * s} q${-3 * s},${-6 * s} 0,${-14 * s}z" fill="#8fc7ee" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
@@ -68,10 +68,10 @@
     };
     out += eye(cx - ex, -1) + eye(cx + ex, 1);
     // 입
-    const my = cy + 16 * s;
+    const my = cy + 15 * s;
     const M = {
-      good: E(`M${cx - 8 * s},${my} q${8 * s},${9 * s} ${16 * s},0`),
-      joy: `<path d="M${cx - 11 * s},${my - 2 * s} q${11 * s},${18 * s} ${22 * s},0z" fill="#c0392b" stroke="${INK}" stroke-width="${lw * 0.8}" stroke-linejoin="round"/>`,
+      good: E(`M${cx - 6 * s},${my} q${6 * s},${7 * s} ${12 * s},0`),
+      joy: `<path d="M${cx - 9 * s},${my - 2 * s} q${9 * s},${15 * s} ${18 * s},0z" fill="#c0392b" stroke="${INK}" stroke-width="${lw * 0.8}" stroke-linejoin="round"/>`,
       bad: E(`M${cx - 8 * s},${my + 4 * s} q${8 * s},${-7 * s} ${16 * s},0`),
       angry: E(`M${cx - 9 * s},${my + 3 * s} l${18 * s},0`),
       worry: E(`M${cx - 8 * s},${my + 2 * s} q${4 * s},${-4 * s} ${8 * s},0 q${4 * s},${4 * s} ${8 * s},0`) + `<path d="M${cx + 28 * s},${cy - 8 * s} q${3.5 * s},${7 * s} 0,${10 * s} q${-3.5 * s},${-3 * s} 0,${-10 * s}z" fill="#8fc7ee" stroke="${INK}" stroke-width="${lw * 0.5}"/>`,
@@ -83,7 +83,7 @@
       tired: E(`M${cx - 6 * s},${my + 3 * s} l${12 * s},0`) + `<text x="${cx + 26 * s}" y="${cy - 10 * s}" font-size="${12 * s}" font-weight="700" fill="${INK}" font-family="sans-serif">z</text>`,
       wink: E(`M${cx - 8 * s},${my} q${8 * s},${9 * s} ${16 * s},0`)
     };
-    if (lips && ['good', 'love', 'wink', 'relief'].includes(emo)) out += `<path d="M${cx - 7 * s},${my} q${7 * s},${9 * s} ${14 * s},0 q${-7 * s},${2 * s} ${-14 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}" stroke-linejoin="round"/>`;
+    if (lips && ['good', 'love', 'wink', 'relief'].includes(emo)) out += `<path d="M${cx - 5.5 * s},${my} q${5.5 * s},${8 * s} ${11 * s},0 q${-5.5 * s},${2 * s} ${-11 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}" stroke-linejoin="round"/>`;
     else out += M[emo] || M.good;
     if (emo === 'love') out += `<path d="M${cx + 30 * s},${cy - 14 * s} c${-6 * s},${-4 * s} ${-4 * s},${-10 * s} 0,${-6 * s} c${4 * s},${-4 * s} ${6 * s},${2 * s} 0,${6 * s}z" fill="#f05a7a" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
     return out;
@@ -93,15 +93,15 @@
   function limb(x1, y1, x2, y2, w, color, bend = 0) {
     const mx = (x1 + x2) / 2 + bend, my = (y1 + y2) / 2 + Math.abs(bend) * 0.3;
     const d = `M${x1},${y1} Q${mx},${my} ${x2},${y2}`;
-    return `<path d="${d}" stroke="${INK}" stroke-width="${w + LINE * 2}" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${color}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
+    return `<path d="${d}" stroke="${INK}" stroke-width="${w + LINE * 1.6}" stroke-linecap="round" fill="none"/><path d="${d}" stroke="${color}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
   }
-  const hand = (x, y, r, color) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" stroke="${INK}" stroke-width="${LINE}"/>`;
-  const foot = (x, y, r, color) => `<ellipse cx="${x}" cy="${y}" rx="${r * 1.25}" ry="${r * 0.8}" fill="${dark(color, 0.35)}" stroke="${INK}" stroke-width="${LINE}"/>`;
+  const hand = (x, y, r, color) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" stroke="${INK}" stroke-width="${LINE * 0.8}"/>`;
+  const foot = (x, y, r, color) => `<ellipse cx="${x}" cy="${y}" rx="${r * 1.3}" ry="${r * 0.75}" fill="${dark(color, 0.35)}" stroke="${INK}" stroke-width="${LINE * 0.8}"/>`;
 
   /* 포즈: 어깨(sl, sr)·엉덩이(hl, hr) 좌표와 몸 크기 u 를 받아 팔다리 SVG 를 만든다. 손 위치는 u 기준 비율 [dx, dy, bend]. */
   function limbs({ sl, sr, hl, hr, u, color, pose = 'stand', gaze = 0, armW, legW, ground }) {
-    armW = armW || u * 0.15; legW = legW || u * 0.15;
-    const hr_ = u * 0.105, fr = u * 0.1;
+    armW = armW || u * 0.085; legW = legW || u * 0.095;
+    const hr_ = u * 0.075, fr = u * 0.085;
     const P = {
       stand: { L: [-0.62, 0.42, 0], R: [0.62, 0.42, 0] },
       wave: { L: [-0.62, 0.42, 0], R: [0.95, -0.45, 12] },
@@ -125,9 +125,9 @@
     } else if (pose === 'walk') {
       g += limb(hl[0], hl[1], hl[0] - u * 0.16, ground, legW, color, 0) + limb(hr[0], hr[1], hr[0] + u * 0.16, ground, legW, color, 0);
       g += foot(hl[0] - u * 0.16, ground + fr * 0.4, fr, color) + foot(hr[0] + u * 0.16, ground + fr * 0.4, fr, color);
-    } else {
-      g += limb(hl[0], hl[1], hl[0], ground, legW, color, 0) + limb(hr[0], hr[1], hr[0], ground, legW, color, 0);
-      g += foot(hl[0], ground + fr * 0.4, fr, color) + foot(hr[0], ground + fr * 0.4, fr, color);
+    } else { // 각선미: 무릎이 살짝 바깥, 발목은 안쪽
+      g += limb(hl[0], hl[1], hl[0] - u * 0.02, ground, legW, color, -u * 0.05) + limb(hr[0], hr[1], hr[0] + u * 0.02, ground, legW, color, u * 0.05);
+      g += foot(hl[0] - u * 0.02, ground + fr * 0.4, fr, color) + foot(hr[0] + u * 0.02, ground + fr * 0.4, fr, color);
     }
     // 팔 (hold·think 는 몸 앞에 그린다)
     const arms = limb(sl[0], sl[1], Lh[0], Lh[1], armW, color, P.L[2]) + limb(sr[0], sr[1], Rh[0], Rh[1], armW, color, P.R[2]) + hand(Lh[0], Lh[1], hr_, color) + hand(Rh[0], Rh[1], hr_, color);
@@ -165,9 +165,9 @@
   function square(o) {
     const { x, y, w, h, color, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, faceY = 0.46, faceS = 1, feat = '', after = '', extraHands = false, faceOpt } = o;
     const cx = x + w / 2, s = (w / 100) * faceS, r = w * 0.16;
-    const L = limbs({ sl: [x + 2, y + h * 0.58], sr: [x + w - 2, y + h * 0.58], hl: [cx - w * 0.22, y + h - 4], hr: [cx + w * 0.22, y + h - 4], u: w, color, pose, gaze, ground: y + h + w * 0.09 });
+    const L = limbs({ sl: [x + 2, y + h * 0.58], sr: [x + w - 2, y + h * 0.58], hl: [cx - w * 0.22, y + h - 4], hr: [cx + w * 0.22, y + h - 4], u: w, color, pose, gaze, ground: y + h + w * 0.13 });
     let g = L.svg;
-    if (extraHands) g += limb(x + 2, y + h * 0.78, x - w * 0.42, y + h * 0.95, w * 0.16, color, -6) + limb(x + w - 2, y + h * 0.78, x + w + w * 0.42, y + h * 0.95, w * 0.16, color, 6) + hand(x - w * 0.42, y + h * 0.95, w * 0.11, color) + hand(x + w + w * 0.42, y + h * 0.95, w * 0.11, color);
+    if (extraHands) g += limb(x + 2, y + h * 0.78, x - w * 0.42, y + h * 0.95, w * 0.085, color, -6) + limb(x + w - 2, y + h * 0.78, x + w + w * 0.42, y + h * 0.95, w * 0.085, color, 6) + hand(x - w * 0.42, y + h * 0.95, w * 0.075, color) + hand(x + w + w * 0.42, y + h * 0.95, w * 0.075, color);
     g += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${color}" stroke="${INK}" stroke-width="${LINE}"/>`;
     if (suit) g += `<path d="M${x},${y + h * 0.66} h${w} v${h * 0.34 - r} a${r},${r} 0 0 1 ${-r},${r} h${-(w - 2 * r)} a${r},${r} 0 0 1 ${-r},${-r}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE}"/>` + collar(cx, y + h * 0.66, w * 0.5);
     g += feat;
@@ -203,7 +203,7 @@
   /* ---------- 세모부부 ---------- */
   function semo({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, wife = false, noLimbs = false }) {
     const cx = x + size / 2, h = size * 0.9, s = size / 130, color = wife ? COLORS.semoWife : COLORS.semoHusband;
-    const L = limbs({ sl: [cx - size * 0.27, y + h * 0.55], sr: [cx + size * 0.27, y + h * 0.55], hl: [cx - size * 0.2, y + h - 4], hr: [cx + size * 0.2, y + h - 4], u: size, color, pose, gaze, ground: y + h + size * 0.09 });
+    const L = limbs({ sl: [cx - size * 0.27, y + h * 0.55], sr: [cx + size * 0.27, y + h * 0.55], hl: [cx - size * 0.2, y + h - 4], hr: [cx + size * 0.2, y + h - 4], u: size, color, pose, gaze, ground: y + h + size * 0.13 });
     if (noLimbs) { L.svg = ''; L.front = ''; }
     let g = L.svg;
     const rr = size * 0.07; // 둥근 꼭짓점
@@ -225,7 +225,7 @@
   function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, glasses = false, suit = false, who = 'dad' }) {
     const s = r / 55, color = COLORS[{ dad: 'dongDad', mom: 'dongMom', son: 'dongSon', daughter: 'dongDaughter' }[who]], u = r * 2;
     const a = Math.PI / 180 * 20;
-    const L = limbs({ sl: [cx - r * Math.cos(a), cy + r * Math.sin(a)], sr: [cx + r * Math.cos(a), cy + r * Math.sin(a)], hl: [cx - r * 0.42, cy + r * 0.9], hr: [cx + r * 0.42, cy + r * 0.9], u, color, pose, gaze, ground: cy + r + u * 0.08 });
+    const L = limbs({ sl: [cx - r * Math.cos(a), cy + r * Math.sin(a)], sr: [cx + r * Math.cos(a), cy + r * Math.sin(a)], hl: [cx - r * 0.42, cy + r * 0.9], hr: [cx + r * 0.42, cy + r * 0.9], u, color, pose, gaze, ground: cy + r + u * 0.11 });
     let g = L.svg;
     g += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" stroke="${INK}" stroke-width="${LINE}"/>`;
     if (suit) { const yb = cy + r * 0.45, hw = Math.sqrt(r * r - (yb - cy) * (yb - cy)); g += `<path d="M${cx - hw},${yb} A${r},${r} 0 0 0 ${cx + hw},${yb}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE}"/>` + collar(cx, yb, r * 0.9); }
@@ -270,11 +270,11 @@
       `<g transform="translate(${size + 12},${size * 0.25})">` + itemAt('heart', 0, 0, size * 0.9) + `</g><g transform="translate(${size * 0.3},${-size * 0.05}) scale(.55)">` + itemAt('heart', 0, 0, size * 0.9) + `</g><g transform="translate(${size * 1.9},${-size * 0.02}) scale(.45)">` + itemAt('heart', 0, 0, size * 0.9) + '</g></g>';
   }
   function semoWifePeek({ x, y, size = 160, edgeY, emo = 'wink', gaze = 0, id = 'peek' }) { // edgeY 아래는 가려진다(노트 표지 = 담)
-    const cx = x + size / 2, h = size * 0.9, hw = size * 0.105, hx1 = cx - size * 0.3, hx2 = cx + size * 0.3, c = COLORS.semoWife;
+    const cx = x + size / 2, h = size * 0.9, hw = size * 0.075, hx1 = cx - size * 0.3, hx2 = cx + size * 0.3, c = COLORS.semoWife;
     const sl = [cx - size * 0.27, y + h * 0.55], sr = [cx + size * 0.27, y + h * 0.55];
     return `<clipPath id="${id}"><rect x="${x - size}" y="${y - size}" width="${size * 3}" height="${edgeY - y + size}"/></clipPath><g clip-path="url(#${id})">` +
       semoWife({ x, y, size, emo, gaze, noLimbs: true }) + '</g>' +
-      `<g class="gf-ch">${limb(sl[0], sl[1], hx1, edgeY + hw * 0.2, size * 0.15, c, -10)}${limb(sr[0], sr[1], hx2, edgeY + hw * 0.2, size * 0.15, c, 10)}${hand(hx1, edgeY + hw * 0.2, hw, c)}${hand(hx2, edgeY + hw * 0.2, hw, c)}</g>`;
+      `<g class="gf-ch">${limb(sl[0], sl[1], hx1, edgeY + hw * 0.2, size * 0.085, c, -10)}${limb(sr[0], sr[1], hx2, edgeY + hw * 0.2, size * 0.085, c, 10)}${hand(hx1, edgeY + hw * 0.2, hw, c)}${hand(hx2, edgeY + hw * 0.2, hw, c)}</g>`;
   }
   function triangleWedding(x = 0, y = 0) {
     const size = 122;

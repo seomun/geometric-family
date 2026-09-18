@@ -1,0 +1,62 @@
+[
+  {
+    "name": "reddit/Parenting",
+    "lang": "en",
+    "url": "https://www.reddit.com/r/Parenting/top/.rss?t=week"
+  },
+  {
+    "name": "reddit/daddit",
+    "lang": "en",
+    "url": "https://www.reddit.com/r/daddit/top/.rss?t=week"
+  },
+  {
+    "name": "reddit/Marriage",
+    "lang": "en",
+    "url": "https://www.reddit.com/r/Marriage/top/.rss?t=week"
+  },
+  {
+    "name": "reddit/CasualConversation",
+    "lang": "en",
+    "url": "https://www.reddit.com/r/CasualConversation/top/.rss?t=week"
+  },
+  {
+    "name": "reddit/tifu",
+    "lang": "en",
+    "url": "https://www.reddit.com/r/tifu/top/.rss?t=week"
+  },
+  {
+    "name": "reddit/AmItheAsshole",
+    "lang": "en",
+    "url": "https://www.reddit.com/r/AmItheAsshole/top/.rss?t=week"
+  },
+  {
+    "name": "reddit/offmychest",
+    "lang": "en",
+    "url": "https://www.reddit.com/r/offmychest/top/.rss?t=week"
+  },
+  {
+    "name": "reddit/korea",
+    "lang": "en",
+    "url": "https://www.reddit.com/r/korea/top/.rss?t=week"
+  },
+  {
+    "name": "구글뉴스/가족 사연",
+    "lang": "ko",
+    "url": "https://news.google.com/rss/search?q=%EA%B0%80%EC%A1%B1+%EC%82%AC%EC%97%B0&hl=ko&gl=KR&ceid=KR:ko"
+  },
+  {
+    "name": "구글뉴스/부부 갈등",
+    "lang": "ko",
+    "url": "https://news.google.com/rss/search?q=%EB%B6%80%EB%B6%80+%EA%B0%88%EB%93%B1&hl=ko&gl=KR&ceid=KR:ko"
+  },
+  {
+    "name": "구글뉴스/직장인 고민",
+    "lang": "ko",
+    "url": "https://news.google.com/rss/search?q=%EC%A7%81%EC%9E%A5%EC%9D%B8+%EA%B3%A0%EB%AF%BC&hl=ko&gl=KR&ceid=KR:ko"
+  },
+  {
+    "name": "구글뉴스/육아 고민",
+    "lang": "ko",
+    "url": "https://news.google.com/rss/search?q=%EC%9C%A1%EC%95%84+%EA%B3%A0%EB%AF%BC&hl=ko&gl=KR&ceid=KR:ko"
+  }
+]

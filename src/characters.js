@@ -309,7 +309,8 @@
     const lw = LINE * s, E = (d, w = lw) => `<path d="${d}" stroke="${INK}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`;
     const ex = 15 * s, ey = 0, px = gaze * 2.4 * s; let out = '';
     // 볼터치: 눈 바깥 아래, 살짝 높게
-    out += `<ellipse cx="${cx - ex - 11 * s}" cy="${cy + 8 * s}" rx="${6.5 * s}" ry="${3.8 * s}" fill="#f2a1ad" opacity=".6"/><ellipse cx="${cx + ex + 11 * s}" cy="${cy + 8 * s}" rx="${6.5 * s}" ry="${3.8 * s}" fill="#f2a1ad" opacity=".6"/>`;
+    const chk = faceStyle === 'chic';
+    out += `<ellipse cx="${cx - ex - (chk ? 9 : 11) * s}" cy="${cy + (chk ? 10 : 8) * s}" rx="${(chk ? 8 : 6.5) * s}" ry="${(chk ? 3.4 : 3.8) * s}" fill="#f2a1ad" opacity="${chk ? .5 : .6}"/><ellipse cx="${cx + ex + (chk ? 9 : 11) * s}" cy="${cy + (chk ? 10 : 8) * s}" rx="${(chk ? 8 : 6.5) * s}" ry="${(chk ? 3.4 : 3.8) * s}" fill="#f2a1ad" opacity="${chk ? .5 : .6}"/>`;
     const lashes = (x, side) => E(`M${x + side * 10 * s},${cy + ey - 8 * s} l${side * 4 * s},${-4.5 * s} M${x + side * 11.5 * s},${cy + ey - 4 * s} l${side * 5 * s},${-2.5 * s} M${x + side * 12 * s},${cy + ey + 0.5 * s} l${side * 5 * s},${-0.5 * s}`, lw * 0.6);
     const closedHappy = (x, side) => E(`M${x - 9 * s},${cy + ey + 2 * s} q${9 * s},${-11 * s} ${18 * s},0`) + lashes(x, side);
     const heart = (x) => `<path d="M${x},${cy + ey + 8 * s} c${-13 * s},${-9 * s} ${-10 * s},${-22 * s} 0,${-13 * s} c${10 * s},${-9 * s} ${13 * s},${4 * s} 0,${13 * s}z" fill="#f05a7a" stroke="${INK}" stroke-width="${lw * 0.6}"/>`;
@@ -319,6 +320,17 @@
       if (emo === 'love') return heart(x);
       if (faceStyle === 'kitty') return `<ellipse cx="${x + px}" cy="${cy + ey}" rx="${5.2 * s}" ry="${7.5 * s}" fill="${INK}" transform="rotate(${side * -8} ${x} ${cy + ey})"/><circle cx="${x + px + 1.6 * s}" cy="${cy + ey - 2.6 * s}" r="${1.6 * s}" fill="#fff"/>` + lashes(x, side);
       if (faceStyle === 'dot') return `<circle cx="${x + px}" cy="${cy + ey}" r="${4.2 * s}" fill="${INK}"/><circle cx="${x + px + 1.4 * s}" cy="${cy + ey - 1.5 * s}" r="${1.3 * s}" fill="#fff"/>` + lashes(x, side);
+      if (faceStyle === 'chic') {
+        const rx = 12.5 * s, ry = 8.8 * s, tilt = side * -9, lid = emo === 'surprise' ? 0.12 : emo === 'worry' ? 0.28 : 0.36; // lid = 눈꺼풀이 덮는 비율(요염함의 양)
+        const iris = `<ellipse cx="${x + px}" cy="${cy + ey + 1.2 * s}" rx="${6.4 * s}" ry="${7.2 * s}" fill="#7a4a30"/><ellipse cx="${x + px}" cy="${cy + ey + 1.8 * s}" rx="${4 * s}" ry="${5 * s}" fill="${INK}"/>` +
+          `<circle cx="${x + px + 2.6 * s}" cy="${cy + ey - 0.2 * s}" r="${2.7 * s}" fill="#fff"/><circle cx="${x + px - 2.4 * s}" cy="${cy + ey + 4.2 * s}" r="${1.3 * s}" fill="#fff"/>`;
+        const lidY = cy + ey - ry + 2 * ry * lid; // 눈꺼풀 아래선
+        const cover = `<path d="M${x - rx},${lidY} A${rx},${ry} 0 0 1 ${x + rx},${lidY}z" fill="${COLORS.semoWife}"/>`; // 몸색으로 위쪽 덮기
+        const line = `<path d="M${x - rx * 0.95},${lidY + 0.5 * s} Q${x},${lidY - 3 * s} ${x + rx * 0.95},${lidY} q${side * 3.5 * s},${-1 * s} ${side * 5.5 * s},${-3.5 * s}" stroke="${INK}" stroke-width="${lw * 1.35}" fill="none" stroke-linecap="round"/>`; // 아이라인 + 꼬리
+        const lash = `<path d="M${x + side * rx * 0.7},${lidY - 0.5 * s} q${side * 3 * s},${-3 * s} ${side * 4 * s},${-6.5 * s} M${x + side * rx * 0.35},${lidY - 1.5 * s} q${side * 2 * s},${-3 * s} ${side * 2.5 * s},${-6 * s}" stroke="${INK}" stroke-width="${lw * 0.7}" fill="none" stroke-linecap="round"/>`;
+        const lower = `<path d="M${x + side * 3 * s},${cy + ey + ry + 1.5 * s} q${side * 4 * s},${0.5 * s} ${side * 7 * s},${-2 * s}" stroke="${INK}" stroke-width="${lw * 0.45}" fill="none" stroke-linecap="round" opacity=".8"/>`;
+        return `<g transform="rotate(${tilt} ${x} ${cy + ey})"><ellipse cx="${x}" cy="${cy + ey}" rx="${rx}" ry="${ry}" fill="#fff" stroke="${INK}" stroke-width="${lw * 0.55}"/>${iris}${cover}${line}${lash}${lower}</g>`;
+      }
       // shoujo: 큰 눈(살짝 위로 올라간 바깥꼬리) + 홍채 + 하이라이트 3 + 두꺼운 윗눈꺼풀
       const rx = 11 * s, ry = 12.5 * s, tilt = side * -6;
       let g = `<g transform="rotate(${tilt} ${x} ${cy + ey})"><ellipse cx="${x}" cy="${cy + ey}" rx="${rx}" ry="${ry}" fill="#fff" stroke="${INK}" stroke-width="${lw * 0.65}"/>` +
@@ -330,8 +342,9 @@
     };
     out += eye(cx - ex, -1) + eye(cx + ex, 1);
     // 눈썹: 얇고 멀리, 둥글게 (bad/angry 만 기울임)
-    const by = cy + ey - 19 * s, bl = (emo === 'bad' || emo === 'angry') ? 4 * s : (['worry', 'sad', 'cry'].includes(emo) ? -3 * s : 0);
-    out += E(`M${cx - ex - 6 * s},${by} Q${cx - ex},${by - 3 * s + bl / 2} ${cx - ex + 6 * s},${by + bl}`, lw * 0.5) + E(`M${cx + ex + 6 * s},${by} Q${cx + ex},${by - 3 * s + bl / 2} ${cx + ex - 6 * s},${by + bl}`, lw * 0.5);
+    const chic = faceStyle === 'chic';
+    const by = cy + ey - (chic ? 17 : 19) * s, bl = (emo === 'bad' || emo === 'angry') ? 4 * s : (['worry', 'sad', 'cry'].includes(emo) ? -3 * s : 0), bw2 = chic ? 8 * s : 6 * s, arch = chic ? 4.5 * s : 3 * s;
+    out += E(`M${cx - ex - bw2},${by + (chic ? 1.5 * s : 0)} Q${cx - ex - 1 * s},${by - arch + bl / 2} ${cx - ex + bw2 * 0.8},${by + bl}`, lw * (chic ? 0.45 : 0.5)) + E(`M${cx + ex + bw2},${by + (chic ? 1.5 * s : 0)} Q${cx + ex + 1 * s},${by - arch + bl / 2} ${cx + ex - bw2 * 0.8},${by + bl}`, lw * (chic ? 0.45 : 0.5));
     // 입: 아주 작게, 눈 가까이. kitty 는 코만(노란 타원)
     const my = cy + ey + 15 * s;
     if (faceStyle === 'kitty') { out += `<ellipse cx="${cx}" cy="${my - 3 * s}" rx="${3.2 * s}" ry="${2.2 * s}" fill="#f2c94c" stroke="${INK}" stroke-width="${lw * 0.5}"/>`; if (emo === 'joy' || emo === 'love') out += E(`M${cx - 4 * s},${my + 3 * s} q${4 * s},${4 * s} ${8 * s},0`, lw * 0.7); }
@@ -340,13 +353,14 @@
       const M = { good: E(`M${cx - 4.5 * s},${my} q${4.5 * s},${5.5 * s} ${9 * s},0`, lw * 0.8), joy: `<path d="M${cx - 7 * s},${my - 1 * s} q${7 * s},${12 * s} ${14 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}" stroke-linejoin="round"/>`,
         bad: E(`M${cx - 5 * s},${my + 3 * s} q${5 * s},${-5 * s} ${10 * s},0`, lw * 0.8), angry: E(`M${cx - 5 * s},${my + 2 * s} h${10 * s}`, lw * 0.8), worry: E(`M${cx - 5 * s},${my + 1 * s} q${2.5 * s},${-3 * s} ${5 * s},0 q${2.5 * s},${3 * s} ${5 * s},0`, lw * 0.8),
         sad: E(`M${cx - 4 * s},${my + 3 * s} q${4 * s},${-3 * s} ${8 * s},0`, lw * 0.8), cry: E(`M${cx - 5 * s},${my + 3 * s} q${5 * s},${-5 * s} ${10 * s},0`, lw * 0.8), surprise: `<ellipse cx="${cx}" cy="${my + 1 * s}" rx="${3.5 * s}" ry="${4.5 * s}" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.7}"/>` };
-      out += M[emo] || `<path d="M${cx - 4.5 * s},${my} q${4.5 * s},${6 * s} ${9 * s},0 q${-4.5 * s},${1.5 * s} ${-9 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.65}" stroke-linejoin="round"/>`;
+      if (chic && (emo === 'good' || emo === 'wink' || emo === 'love')) out += `<path d="M${cx - 4 * s},${my + 0.5 * s} q${4 * s},${4.5 * s} ${9 * s},${-1.5 * s}" stroke="${INK}" stroke-width="${lw * 0.85}" fill="none" stroke-linecap="round"/><path d="M${cx - 3 * s},${my + 1 * s} q${3.5 * s},${3 * s} ${7 * s},${-0.5 * s} q${-3.5 * s},${1.2 * s} ${-7 * s},${0.5 * s}z" fill="#e9748d" opacity=".85"/>`;
+      else out += M[emo] || `<path d="M${cx - 4.5 * s},${my} q${4.5 * s},${6 * s} ${9 * s},0 q${-4.5 * s},${1.5 * s} ${-9 * s},0z" fill="#e9748d" stroke="${INK}" stroke-width="${lw * 0.65}" stroke-linejoin="round"/>`;
     }
     if (emo === 'worry' || emo === 'cry') out += `<path d="M${cx + ex + 16 * s},${cy - 6 * s} q${3.5 * s},${7 * s} 0,${10 * s} q${-3.5 * s},${-3 * s} 0,${-10 * s}z" fill="#8fc7ee" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
     if (emo === 'love') out += `<path d="M${cx + ex + 18 * s},${cy - 16 * s} c${-6 * s},${-4 * s} ${-4 * s},${-10 * s} 0,${-6 * s} c${4 * s},${-4 * s} ${6 * s},${2 * s} 0,${6 * s}z" fill="#f05a7a" stroke="${INK}" stroke-width="${lw * 0.5}"/>`;
     return out;
   }
-  function semoWife({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, noLimbs = false, faceStyle = 'shoujo', bow = 'left', bangs = true }) {
+  function semoWife({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, noLimbs = false, faceStyle = 'chic', bow = 'left', bangs = true }) {
     const cx = x + size / 2, h = size * 0.9, s = size / 130, color = COLORS.semoWife, W = size / 2, rr = size * 0.09;
     const L = limbs({ sl: [cx - W * 0.78, y + h * 0.3], sr: [cx + W * 0.78, y + h * 0.3], hl: [cx - W * 0.16, y + h * 0.84], hr: [cx + W * 0.16, y + h * 0.84], u: size, color, pose, gaze, ground: y + h + size * 0.1, female: true });
     if (noLimbs) { L.svg = ''; L.front = ''; }

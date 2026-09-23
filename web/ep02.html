@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 1화 「단톡방」</title>
+<meta name="description" content="말을 걸어볼까? 미룬다. 또 미룬다. — 네모·세모·동그라미, 당신은 어느 도형인가요?">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #6b5443; --paper: #f4ecdd; }
+  body { margin: 0; background: #e9dfcc; color: var(--ink); font-family: 'Gowun Dodum', sans-serif; }
+  .strip { max-width: 720px; margin: 0 auto; background: var(--paper); box-shadow: 0 0 40px rgba(0,0,0,.15); }
+  .cut { display: block; width: 100%; height: auto; }
+  .gap { height: 24px; } .gap.big { height: 72px; }
+  .cta { padding: 36px 24px 20px; text-align: center; }
+  .cta h2 { font-family: Gaegu, sans-serif; font-size: 32px; margin: 0 0 6px; }
+  .cta p { margin: 6px 0 18px; font-size: 17px; line-height: 1.6; }
+  .votes { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .vote { flex: 1 1 150px; max-width: 200px; border: 3px solid var(--ink); background: #fff; border-radius: 16px; padding: 14px 10px; cursor: pointer; font-family: Gaegu, sans-serif; font-size: 21px; color: var(--ink); }
+  .vote:active { transform: scale(.97); }
+  .vote svg { width: 72px; height: 72px; display: block; margin: 0 auto 6px; }
+  .vote.picked { background: #fff3d6; box-shadow: 0 0 0 3px #e2b76a; }
+  .vote small { display: block; font-family: 'Gowun Dodum'; font-size: 13px; opacity: .75; margin-top: 2px; }
+  .bars { margin: 18px auto 0; max-width: 420px; text-align: left; display: none; }
+  .bar { margin: 8px 0; font-size: 14px; }
+  .bar i { display: block; height: 14px; border-radius: 7px; background: var(--ink); margin-top: 4px; transition: width .5s; }
+  .note { font-size: 15px; opacity: .8; margin-top: 14px; }
+  .more { margin: 0 24px 40px; padding: 22px; background: #fff; border-radius: 16px; border: 2px dashed var(--ink); text-align: center; }
+  .more b { font-family: Gaegu, sans-serif; font-size: 22px; display: block; margin-bottom: 4px; }
+  .more a { color: var(--ink); font-size: 17px; font-weight: 700; }
+  .next { margin: 0 24px 40px; padding-top: 18px; border-top: 2px dashed var(--ink); font-family: Gaegu, sans-serif; font-size: 20px; text-align: center; }
+  .foot { text-align: center; font-size: 12px; opacity: .6; padding: 20px; }
+</style>
+</head>
+<body>
+<div class="strip" id="strip"></div>
+<div class="foot">© 기하학 가족 · 이야기는 모두 허구입니다. 상처가 되었다면 미안합니다 — 연락 주시면 내리거나 고치겠습니다.</div>
+
+<script src="../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+GF.setMode('hand');
+const W = 720, F = "font-family:'Gaegu',sans-serif", FB = "font-family:'Gowun Dodum',sans-serif", FM = "font-family:'Nanum Myeongjo',serif";
+const cuts = [];
+const cut = (h, inner, bg) => cuts.push(`<svg class="cut" viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg">${bg ? `<rect width="${W}" height="${h}" fill="${bg}"/>` : ''}${inner}${paper(W, h)}</svg>`);
+const gap = (big) => cuts.push(`<div class="gap${big ? ' big' : ''}"></div>`);
+const T = (x, y, t, size = 26, anchor = 'middle', font = FB, extra = '') => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" style="${font}" fill="${INK}" ${extra}>${t}</text>`;
+// 생각(속마음) — 구름꼬리
+function think(x, y, w, lines, tail = 'left') {
+  const lh = 34, h = lines.length * lh + 26, tx = tail === 'left' ? x + 40 : x + w - 40;
+  return `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="#fff" stroke="${INK}" stroke-width="2.5"/>` +
+    `<circle cx="${tx}" cy="${y + h + 13}" r="9" fill="#fff" stroke="${INK}" stroke-width="2.5"/><circle cx="${tx - 14}" cy="${y + h + 30}" r="5" fill="#fff" stroke="${INK}" stroke-width="2"/>` +
+    lines.map((t, i) => T(x + w / 2, y + 20 + lh * (i + 0.72), t, 27)).join('') + '</g>';
+}
+function chat(x, y, w, lines, mine = false, name = '') {
+  const lh = 31, h = lines.length * lh + 20; let g = '';
+  if (name) g += T(mine ? x + w : x, y - 8, name, 17, mine ? 'end' : 'start');
+  g += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${mine ? '#ffe98a' : '#fff'}" stroke="${INK}" stroke-width="2"/>`;
+  lines.forEach((l, i) => { g += T(x + 15, y + 15 + lh * (i + 0.64), l, 24, 'start'); });
+  return g;
+}
+const phone = (x, y, w, h, screen = '#b7c8d6') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="26" fill="#2b2b30" stroke="${INK}" stroke-width="3"/><rect x="${x + 12}" y="${y + 26}" width="${w - 24}" height="${h - 52}" rx="12" fill="${screen}"/><circle cx="${x + w / 2}" cy="${y + 15}" r="4" fill="#666"/>`;
+
+// ── 타이틀 ──
+cut(300, `
+  ${T(W / 2, 62, '기하학 가족', 24, 'middle', F, 'letter-spacing="6"')}
+  ${T(W / 2, 128, '1화', 28, 'middle', F)}
+  ${T(W / 2, 200, '「 단톡방 」', 58, 'middle', FM, 'font-weight="700"')}
+  ${nemoDad({ x: 290, y: 212, w: 130, h: 115, emo: 'worry', item: 'phone' })}
+`);
+gap();
+
+// ── 컷 1 : 말을 걸어볼까? ──
+cut(400, `
+  ${nemoDad({ x: 250, y: 190, w: 200, h: 176, emo: 'worry', item: 'phone' })}
+  ${think(150, 40, 420, ['말을 걸어볼까?'])}
+`, '#efe6d6');
+gap();
+
+// ── 컷 2 : 한동안 참 많이도 ──
+cut(470, `
+  ${phone(230, 20, 260, 400, '#9dbcd6')}
+  ${chat(250, 62, 150, ['ㅋㅋㅋㅋ'], false)}
+  ${chat(330, 118, 140, ['진짜?'], true)}
+  ${chat(250, 174, 190, ['야 그거 봤냐'], false)}
+  ${chat(300, 230, 170, ['ㅇㅇ 봤지'], true)}
+  ${chat(250, 286, 160, ['내일 볼까'], false)}
+  ${chat(340, 342, 130, ['ㄱㄱ'], true)}
+  ${narration(30, 40, 180, ['언제였을까', '이 친구랑', '아주 한동안', '참 많이도 얘기하고', '거의 맨날', '카톡한거 같은데.'], { size: 30 })}
+`);
+gap();
+
+// ── 컷 3 : 기록도 지워졌네 ──
+cut(470, `
+  ${phone(230, 16, 260, 356, '#dfe6ec')}
+  ${T(360, 196, '대화 내용이 없습니다', 22, 'middle', FB, 'opacity=".5"')}
+  ${narration(110, 392, 500, ['마지막이 언제지? 기록도 지워졌네.'])}
+`, '#efe6d6');
+gap();
+
+// ── 컷 4 : 미룬다. 또 미룬다. ──
+cut(390, `
+  ${nemoDad({ x: 40, y: 90, w: 130, h: 115, emo: 'worry', item: 'phone' })}
+  ${nemoDad({ x: 290, y: 90, w: 130, h: 115, emo: 'bad', item: 'phone' })}
+  ${nemoDad({ x: 540, y: 90, w: 130, h: 115, emo: 'tired', item: 'phone' })}
+  ${T(105, 60, '월', 24, 'middle', FM, 'opacity=".6"')}${T(355, 60, '수', 24, 'middle', FM, 'opacity=".6"')}${T(605, 60, '금', 24, 'middle', FM, 'opacity=".6"')}
+  ${narration(150, 268, 200, ['미룬다.'])}
+  ${narration(380, 268, 200, ['또 미룬다.'])}
+`);
+gap(true);
+
+// ── 컷 5 : 보냈다 · 답이 없다 ──
+cut(600, `
+  ${think(180, 24, 360, ['그냥 한번 말 걸어볼까?'], 'right')}
+  ${phone(210, 140, 300, 440, '#9dbcd6')}
+  ${chat(250, 190, 240, ['하이루, 어케 지내?', '그동안 너무', '연락이 없었지..'], true)}
+  ${T(470, 336, '1', 20, 'end', FB, 'opacity=".55"')}
+  ${T(360, 420, '· · ·', 40, 'middle', FB, 'opacity=".35"')}
+  ${narration(30, 470, 170, ['답이 없다.', '안읽는다.'], { size: 27 })}
+  ${narration(520, 470, 180, ['괜히 말 걸엇나,', '에이 일이나 하자'], { size: 27 })}
+`, '#e7ddcb');
+gap();
+
+// ── 컷 6 : 띠링 ──
+cut(560, `
+  ${T(W / 2, 46, '띠링', 40, 'middle', F)}
+  ${phone(200, 70, 320, 400, '#9dbcd6')}
+  ${chat(222, 110, 276, ['아 쏘리 바뻐서 늦게봤다.', '어케 지내?', '나도 뭐 그냥저냥', '전과 비슷하다.', '와 우리 얼굴본지', '오래되었지?'], false, '친구')}
+  ${nemoDad({ x: 560, y: 330, w: 140, h: 124, emo: 'joy' })}
+  ${narration(60, 484, 400, ['그래, 말걸길 잘했다.'], { size: 38 })}
+`, '#f2ead9');
+
+// ── 컷 7 : 그때, 다른 두 집 (세계관 연결) ──
+gap(true);
+cut(360, `
+  ${T(W / 2, 46, '그 시각, 같은 단톡방', 24, 'middle', FM, 'opacity=".75"')}
+  ${semoHusband({ x: 60, y: 110, size: 120, emo: 'joy', gaze: 1 })}
+  ${semoWife({ x: 210, y: 110, size: 120, emo: 'angry', gaze: -1 })}
+  ${speech(60, 250, 300, ['"가지 마."'], { tail: 'left' })}
+  ${dongDad({ cx: 555, cy: 180, r: 56, emo: 'good', item: 'phone' })}
+  ${T(555, 272, '3초 만에 답장.', 22, 'middle', FB, 'opacity=".85"')}
+  ${T(555, 298, '그리고 폰을 엎어 둔다.', 22, 'middle', FB, 'opacity=".85"')}
+`, '#ece3d3');
+
+document.getElementById('strip').innerHTML = cuts.join('') + `
+<div class="cta">
+  <h2>당신은 어느 도형인가요?</h2>
+  <p>오래 연락 없던 사람에게서 온 한 줄. 당신이라면?</p>
+  <div class="votes" id="votes">
+    <button class="vote" data-k="square"><svg viewBox="0 0 90 90">${nemoDad({ x: 10, y: 6, w: 70, h: 62, emo: 'worry' })}</svg>네모<small>미루다 보낸다</small></button>
+    <button class="vote" data-k="triangle"><svg viewBox="0 0 90 90">${semoHusband({ x: 12, y: 4, size: 66, emo: 'joy' })}</svg>세모<small>바로 답한다</small></button>
+    <button class="vote" data-k="circle"><svg viewBox="0 0 90 90">${dongDad({ cx: 45, cy: 40, r: 30, emo: 'good' })}</svg>동그라미<small>읽고 만다</small></button>
+  </div>
+  <div class="bars" id="bars"></div>
+  <p class="note">댓글로 당신의 이야기를 남겨 주세요. 좋은 사연은 동의를 받아 외전으로 이어집니다.</p>
+</div>
+<div class="more"><b>네모의 글</b><a href="#">「말을 걸어볼까?」 — 전문 읽기 →</a></div>
+<div class="next">다음 화 — 2화 「집 청소」<br><span style="font-size:15px;opacity:.7">토요일 아침, "오늘 대청소하자" 한마디</span></div>`;
+
+const KEY = 'gf.ep02.vote', NAMES = { square: '네모', triangle: '세모', circle: '동그라미' }, BASE = { square: 44, triangle: 24, circle: 32 };
+function showBars(mine) {
+  const el = document.getElementById('bars'); el.style.display = 'block';
+  const tot = Object.values(BASE).reduce((a, b) => a + b, 0) + 1;
+  el.innerHTML = Object.keys(NAMES).map(k => { const v = BASE[k] + (k === mine ? 1 : 0), p = Math.round(v * 100 / tot); return `<div class="bar">${NAMES[k]} ${p}%${k === mine ? ' — 당신' : ''}<i style="width:${p}%"></i></div>`; }).join('');
+}
+document.getElementById('votes').addEventListener('click', e => {
+  const b = e.target.closest('.vote'); if (!b) return;
+  try { localStorage.setItem(KEY, b.dataset.k); } catch (err) {}
+  document.querySelectorAll('.vote').forEach(v => v.classList.toggle('picked', v === b)); showBars(b.dataset.k);
+});
+try { const m = localStorage.getItem(KEY); if (m) { document.querySelector(`.vote[data-k="${m}"]`)?.classList.add('picked'); showBars(m); } } catch (err) {}
+</script>
+</body>
+</html>

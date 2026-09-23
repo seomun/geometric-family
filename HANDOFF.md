@@ -13,7 +13,7 @@
 - 채널별 전략: `docs/02_IP_STRATEGY.md` — 채널별 형식(쇼츠 A/B/C 고정 포맷), 주간 리듬, AI/사람 역할, 4주 KPI.
 - 스크린샷: `notes/2026-09-16_characters.png`, `notes/2026-09-16_ep01.png`.
 
-## 🧩 멀티 세션: `docs/07_MULTI_SESSION.md` — art/toon/word/game 4개 세션, 폴더 소유권·git 규칙·첫 메시지 복사본
+## 🧩 세션 구조: `docs/07_MULTI_SESSION.md` — **허브 1개(지금) → 쇼츠 → 블로그 → 게임** 단계 분화. 분리 신호·소유 구역·첫 메시지 복사본 포함
 ## 📚 에피소드 뱅크: `content/episodes/EPISODES.md` — 10편 후보, **1화 = E01「단톡방」** 확정
 
 ## 📘 백서: `docs/00_WHITEPAPER.md` — 세계관·전개·굿즈 원칙·시장 조사·결정 기록·90일 계획 (먼저 읽을 것)

@@ -42,9 +42,12 @@ hand 가 하는 일(전부 SVG 필터, 원본 무수정):
 비교 시트: `web/touch.html`. 값은 여기서만 바꾼다. **이모티콘·굿즈 벡터 납품은 clean.**
 트렌드 근거: 2025~26 캐릭터 = "불완전한 매력"(흐트러진 선, 낮은 채도 파스텔, 빈틈) — 망그러진 곰·최고심·빵빵이 계열.
 
-## 1-3. 세모 아내 = 래스터 정본 (2026-09-23, D4 실행)
+## 1-3. 세모 부부 = 래스터 정본 (2026-09-23, D4 실행)
 - 정본 시트: `assets/wife/_sheet/sheet_v1.png` (ChatGPT, 2×3). 잘린 낱장: `assets/wife/{good,joy,wink,love,surprise,worry}.png` (600×600 투명, 발끝 하단 5% 정렬).
-- 코드는 `semoWife({emo})` 호출 시 자동으로 해당 PNG 를 배치(`GF.sprite`). 표정 매핑은 `WIFE_MAP` — 시트에 없는 표정(angry/bad/sad/cry→worry, relief→joy, tired→worry)은 가장 가까운 칸으로 대체된다. **angry 가 없어서 전투 장면이 약하다 → 시트 v2 에서 보강할 것.**
+- 남편도 동일: `assets/husband/` (시트 v1, 6표정). 상복 컷만 코드 벡터 유지.
+- 코드는 `semoWife({emo})` / `semoHusband({emo})` 호출 시 자동으로 해당 PNG 배치(`GF.sprite`). 표정은 `sheetEmo(who, emo)` 가 **캐릭터별로 있는 칸 중 가장 가까운 것**을 고른다(예: angry → bad → worry → good).
+- 아내 시트 v2(2026-09-23): angry/bad/smug/tired/cry/calm 추가 → 전투 장면 해결.
+- 반입은 `assets/_inbox/<이름>.png` + `python tools/ingest.py` (규칙표는 docs/06 상단).
 - 코드 벡터 아내는 `semoWife({ raster: false })` 로 남아 있다(대안·비교용). 전역 전환: `GF.setRasterWife(false)`.
 - 새 표정/포즈는 `_sheet/sheet_v1.png` 를 첨부해 같은 스타일로 생성 → `tools/cut_sheet.py` (docs/05).
 - 남은 차이: 래스터는 포즈가 고정(팔 내림)이라 `pose` 가 무시된다. 포즈가 필요한 컷은 시트 v2(포즈 3×3) 를 뽑는다.

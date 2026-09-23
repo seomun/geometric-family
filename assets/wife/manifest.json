@@ -1,4 +1,28 @@
 {
+  "angry": {
+    "file": "angry.png",
+    "w": 446,
+    "h": 540,
+    "ground": 570
+  },
+  "bad": {
+    "file": "bad.png",
+    "w": 444,
+    "h": 540,
+    "ground": 570
+  },
+  "calm": {
+    "file": "calm.png",
+    "w": 448,
+    "h": 540,
+    "ground": 570
+  },
+  "cry": {
+    "file": "cry.png",
+    "w": 448,
+    "h": 540,
+    "ground": 570
+  },
   "good": {
     "file": "good.png",
     "w": 458,
@@ -11,21 +35,33 @@
     "h": 540,
     "ground": 570
   },
-  "wink": {
-    "file": "wink.png",
-    "w": 451,
-    "h": 540,
-    "ground": 570
-  },
   "love": {
     "file": "love.png",
     "w": 461,
     "h": 540,
     "ground": 570
   },
+  "smug": {
+    "file": "smug.png",
+    "w": 445,
+    "h": 540,
+    "ground": 570
+  },
   "surprise": {
     "file": "surprise.png",
     "w": 455,
+    "h": 540,
+    "ground": 570
+  },
+  "tired": {
+    "file": "tired.png",
+    "w": 490,
+    "h": 540,
+    "ground": 570
+  },
+  "wink": {
+    "file": "wink.png",
+    "w": 451,
     "h": 540,
     "ground": 570
   },

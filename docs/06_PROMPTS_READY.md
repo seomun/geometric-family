@@ -2,6 +2,49 @@
 
 작성 2026-09-23. **이 파일의 블록을 통째로 복사해서 ChatGPT 에 붙여넣는다.** 조립 규칙·검수·금지 사항은 `05_CHATGPT_ART_PIPELINE.md`.
 
+## 📁 폴더·파일 이름 규칙 (이것만 지키면 나머지는 자동)
+
+**1. 시트가 나오면 `assets/_inbox/` 에 넣고 파일 이름만 바꾼다.**
+```
+assets/_inbox/husband.png      ← 세모 남편
+assets/_inbox/wife_v2.png      ← 아내 두 번째 시트(표정 추가)
+assets/_inbox/nemo_mom.png     ← 네모 엄마
+```
+**2. 터미널에서 한 줄:**
+```
+python tools/ingest.py
+```
+배경 제거 → 칸 자르기 → 폴더 배치 → 원본 보관까지 전부 자동입니다.
+
+| 파일 이름 | 캐릭터 | 격자 | 자동으로 만들어지는 것 |
+|---|---|---|---|
+| `wife.png` | 세모 아내 | 3×2 | `assets/wife/{good,joy,wink,love,surprise,worry}.png` |
+| `wife_v2.png` | 아내 표정 추가 | 3×2 | `assets/wife/{angry,bad,smug,tired,cry,calm}.png` |
+| `husband.png` / `husband_v2.png` | 세모 남편 | 3×2 | `assets/husband/…` |
+| `nemo_dad.png` | 네모 아빠 | 3×2 | `assets/nemo_dad/…` |
+| `nemo_mom.png` | 네모 엄마 | 3×2 | `assets/nemo_mom/…` |
+| `nemo_grandma.png` | 네모 할머니 | 3×2 | `assets/nemo_grandma/…` |
+| `nemo_kids.png` | 네모 아이 4인 | **2×2** | `assets/nemo_kids/{kid1,kid2,kid3,baby}.png` |
+| `dong_dad.png` | 동그라미 아빠 | 3×2 | `assets/dong_dad/…` |
+| `dong_mom.png` | 동그라미 엄마 | 3×2 | `assets/dong_mom/…` |
+| `dong_kids.png` | 동그라미 아이 2인 | **2×2** | `assets/dong_kids/…` |
+| `lineup.png` | 13인 라인업 | 통째로 | `assets/_lineup/lineup.png` |
+
+한글도 됩니다: `세모남편.png` `네모엄마.png` `할머니.png` `동그라미아빠.png` `라인업.png`
+
+**폴더 구조 (자동 생성)**
+```
+assets/<캐릭터>/
+├── good.png  joy.png  wink.png  love.png  surprise.png  worry.png   ← 코드가 쓰는 낱장 (600×600 투명, 발끝 정렬)
+├── manifest.json                                                     ← 크기 기록
+└── _sheet/sheet_v1.png  sheet_v2.png                                 ← 정본 원본 (다음 생성 때 첨부용, 절대 삭제 금지)
+```
+
+**표정 이름 = 코드의 `emo` 값.** 시트에 없는 표정은 가장 가까운 것으로 자동 대체됩니다
+(`angry` 없으면 `bad`→`worry`→`good` 순). 그래서 v2 를 넣으면 전투 장면이 바로 살아납니다.
+
+---
+
 ## 쓰는 법 (매번 같다)
 1. **`assets/wife/_sheet/sheet_v1.png` 를 첨부한다.** (승인된 정본 = 그림체의 기준. 첨부 없이 생성 금지)
    - 남편까지 승인되면 두 장 첨부, 그 다음부터는 승인된 것 전부. 첨부 상한에 걸리면 라인업 한 장(05 §6)으로 대체.
@@ -190,8 +233,9 @@ no gradients, flat colors, clean uniform lines, no shadows, no texture, white ba
 
 ## 진행 체크리스트
 - [x] 세모 아내 v1 (2026-09-23)
-- [ ] 세모 남편
-- [ ] 세모 아내 v2 (angry 등)
+- [x] 세모 남편 v1 (2026-09-23)
+- [x] 세모 아내 v2 — angry/bad/smug/tired/cry/calm (2026-09-23)
+- [ ] 세모 남편 v2 (아내 v2 와 같은 6표정)
 - [ ] 네모 아빠 / 엄마 / 할머니 / 아이 4
 - [ ] 동그라미 아빠 / 엄마 / 아이 2
 - [ ] 라인업 v1

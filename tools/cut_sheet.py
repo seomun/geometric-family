@@ -9,12 +9,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("sheet"); ap.add_argument("--cols", type=int, default=3); ap.add_argument("--rows", type=int, default=2)
-    ap.add_argument("--names", default=""); ap.add_argument("--size", type=int, default=600); ap.add_argument("--fill", type=float, default=0.9); a = ap.parse_args()
+    ap.add_argument("--names", default=""); ap.add_argument("--size", type=int, default=600); ap.add_argument("--fill", type=float, default=0.9); ap.add_argument("--out", default=""); a = ap.parse_args()
     from rembg import remove, new_session
     sess = new_session("isnet-anime")
     path = os.path.join(ROOT, a.sheet) if not os.path.isabs(a.sheet) else a.sheet
     im = Image.open(path).convert("RGBA"); W, H = im.size; cw, ch = W / a.cols, H / a.rows
-    outdir = os.path.dirname(path); names = a.names.split(",") if a.names else [f"c{i + 1}" for i in range(a.cols * a.rows)]
+    outdir = (os.path.join(ROOT, a.out) if a.out and not os.path.isabs(a.out) else a.out) if a.out else os.path.dirname(path)
+    os.makedirs(outdir, exist_ok=True); names = a.names.split(",") if a.names else [f"c{i + 1}" for i in range(a.cols * a.rows)]
     manifest = {}
     for r in range(a.rows):
         for c in range(a.cols):

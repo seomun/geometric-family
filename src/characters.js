@@ -231,7 +231,7 @@
     return `<path d="M${cx - w / 2},${yb} L${cx},${yb + w * 0.28} L${cx + w / 2},${yb} L${cx + w * 0.3},${yb} L${cx},${yb + w * 0.18} L${cx - w * 0.3},${yb}z" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.6}" stroke-linejoin="round"/>` +
       `<path d="M${cx},${yb + w * 0.16} l${w * 0.07},${w * 0.1} l${-w * 0.07},${w * 0.34} l${-w * 0.07},${-w * 0.34}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`;
   }
-  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true };
+  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true, rasterHusband: true };
   /* 래스터 캐릭터(ChatGPT 정본). name = 'wife/wink'. 600×600 캔버스, 발끝이 하단 5%. x,y = 좌상단, w = 폭(높이 = w). flip 으로 좌우 반전. */
   function sprite(name, { x, y, w, flip = false, opacity = 1 }) {
     const href = MODE.assets + name + '.png';
@@ -240,7 +240,13 @@
     return `<g class="gf-sprite" transform="${t}"${f}><image href="${href}" x="0" y="0" width="${w}" height="${w}" opacity="${opacity}" preserveAspectRatio="xMidYMax"/></g>`;
   }
   // 표정 → 시트 이름 매핑 (시트에 없는 표정은 가장 가까운 것으로)
-  const WIFE_MAP = { good: 'good', wink: 'wink', surprise: 'surprise', joy: 'joy', love: 'love', worry: 'worry', bad: 'worry', angry: 'worry', sad: 'worry', cry: 'worry', relief: 'joy', tired: 'worry' };
+  // 표정 → 시트 파일. 캐릭터별로 있는 칸이 다르므로 있는 것부터 찾아 쓴다.
+  const SHEET_HAVE = { wife: ['good','joy','wink','love','surprise','worry','angry','bad','smug','tired','cry','calm'], husband: ['good','joy','wink','love','surprise','worry'] };
+  const EMO_FALLBACK = { good: ['good','calm'], joy: ['joy','good'], wink: ['wink','joy','good'], love: ['love','joy','good'], surprise: ['surprise','good'],
+    worry: ['worry','bad','good'], bad: ['bad','worry','good'], angry: ['angry','bad','worry','good'], sad: ['cry','worry','bad','good'], cry: ['cry','worry','good'],
+    relief: ['calm','joy','good'], tired: ['tired','calm','worry','good'], smug: ['smug','wink','good'], calm: ['calm','good'] };
+  const sheetEmo = (who, emo) => (EMO_FALLBACK[emo] || ['good']).find(e => (SHEET_HAVE[who] || []).includes(e)) || 'good';
+  const WIFE_MAP = new Proxy({}, { get: (_, e) => sheetEmo('wife', e) });
   function touch(inner) { // 칠 패스(어긋남) + 선 패스(흔들림·굵기 변화). 미세 기울기는 길이 해시로 결정(같은 입력 = 같은 결과)
     const h = inner.length % 7; const rot = ((h - 3) * 0.5).toFixed(2); // -1.5° ~ +1.5°
     const fills = inner.replace(/stroke="#[0-9a-fA-F]{6}"/g, 'stroke="none"').replace(/stroke="none" stroke-width="[^"]*"/g, 'stroke="none"');
@@ -292,7 +298,14 @@
   }
 
   /* ---------- 세모부부 ---------- */
-  function semo({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, wife = false, noLimbs = false, outfit, outfitColor = '#fff' }) {
+  function semo({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, suit = false, wife = false, noLimbs = false, outfit, outfitColor = '#fff', raster, flip = false }) {
+    if (!wife && (raster === undefined ? MODE.rasterHusband : raster) && !noLimbs && !suit) { // ChatGPT 정본 래스터 (상복 컷은 코드 유지)
+      const w = size * 1.3, sx = x + size / 2 - w / 2, sy = y - size * 0.06;
+      let g = sprite('husband/' + sheetEmo('husband', emo), { x: sx, y: sy, w, flip: flip || gaze < 0 });
+      if (item) g += itemAt(item, x + size * (flip ? 0.12 : 0.88), y + size * 0.62, size * 0.75);
+      if (itemL) g += itemAt(itemL, x + size * (flip ? 0.88 : 0.12), y + size * 0.62, size * 0.75);
+      return `<g class="gf-ch gf-raster">${g}</g>`;
+    }
     const cx = x + size / 2, h = size * 0.9, s = size / 130, color = wife ? COLORS.semoWife : COLORS.semoHusband;
     if (outfit === undefined) outfit = wife ? 'dress' : 'none';
     const L = limbs({ sl: [cx - size * 0.27, y + h * 0.55], sr: [cx + size * 0.27, y + h * 0.55], hl: [cx - size * 0.2, y + h - 4], hr: [cx + size * 0.2, y + h - 4], u: size, color, pose, gaze, ground: y + h + size * 0.13, female: wife });
@@ -394,7 +407,7 @@
   function semoWife({ x, y, size = 122, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, noLimbs = false, faceStyle = 'ref', bow = 'left', bangs = false, raster = MODE.rasterWife, flip = false }) {
     if (raster && !noLimbs) { // ChatGPT 정본 래스터. size 기준 캔버스 폭 = size*1.3 (몸 폭이 캔버스의 ~75%)
       const w = size * 1.3, sx = x + size / 2 - w / 2, sy = y - size * 0.06;
-      let g = sprite('wife/' + (WIFE_MAP[emo] || 'good'), { x: sx, y: sy, w, flip: flip || gaze > 0 });
+      let g = sprite('wife/' + sheetEmo('wife', emo), { x: sx, y: sy, w, flip: flip || gaze > 0 });
       if (item) g += itemAt(item, x + size * (flip ? 0.12 : 0.88), y + size * 0.62, size * 0.75);
       if (itemL) g += itemAt(itemL, x + size * (flip ? 0.88 : 0.12), y + size * 0.62, size * 0.75);
       return `<g class="gf-ch gf-raster">${g}</g>`;
@@ -472,7 +485,7 @@
     if (raster) {
       const w = size * 1.3, sx = x + size / 2 - w / 2, sy = y - size * 0.06, cx = x + size / 2, hw = size * 0.085;
       return `<clipPath id="${id}"><rect x="${x - size}" y="${y - size}" width="${size * 3}" height="${edgeY - y + size}"/></clipPath>` +
-        `<g clip-path="url(#${id})">` + sprite('wife/' + (WIFE_MAP[emo] || 'good'), { x: sx, y: sy, w }) + '</g>' +
+        `<g clip-path="url(#${id})">` + sprite('wife/' + sheetEmo('wife', emo), { x: sx, y: sy, w }) + '</g>' +
         `<g class="gf-ch">${hand(cx - size * 0.32, edgeY + hw * 0.15, hw, COLORS.skin)}${hand(cx + size * 0.32, edgeY + hw * 0.15, hw, COLORS.skin)}</g>`;
     }
     const cx = x + size / 2, h = size * 0.9, hw = size * 0.058, hx1 = cx - size * 0.3, hx2 = cx + size * 0.3, c = COLORS.semoWife;
@@ -514,7 +527,7 @@
   }
 
   const GF = { VERSION: 'v7', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt, touch, paper,
-    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, sprite,
+    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, setRasterHusband: (b) => { MODE.rasterHusband = b; }, sprite,
     nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,
     squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, wifeFace, coffeeCup, windowBg, speech, narration, suitCollar: collar };
   root.GF = GF; Object.assign(root, GF);

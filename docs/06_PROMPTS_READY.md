@@ -236,6 +236,7 @@ no gradients, flat colors, clean uniform lines, no shadows, no texture, white ba
 - [x] 세모 남편 v1 (2026-09-23)
 - [x] 세모 아내 v2 — angry/bad/smug/tired/cry/calm (2026-09-23)
 - [ ] 세모 남편 v2 (아내 v2 와 같은 6표정)
-- [ ] 네모 아빠 / 엄마 / 할머니 / 아이 4
+- [x] 네모 아빠 v1 (2026-09-23)
+- [ ] 네모 엄마 / 할머니 / 아이 4
 - [ ] 동그라미 아빠 / 엄마 / 아이 2
 - [ ] 라인업 v1

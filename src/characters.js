@@ -231,7 +231,7 @@
     return `<path d="M${cx - w / 2},${yb} L${cx},${yb + w * 0.28} L${cx + w / 2},${yb} L${cx + w * 0.3},${yb} L${cx},${yb + w * 0.18} L${cx - w * 0.3},${yb}z" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.6}" stroke-linejoin="round"/>` +
       `<path d="M${cx},${yb + w * 0.16} l${w * 0.07},${w * 0.1} l${-w * 0.07},${w * 0.34} l${-w * 0.07},${-w * 0.34}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`;
   }
-  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true, rasterHusband: true };
+  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true, rasterHusband: true, rasterNemoDad: true };
   /* 래스터 캐릭터(ChatGPT 정본). name = 'wife/wink'. 600×600 캔버스, 발끝이 하단 5%. x,y = 좌상단, w = 폭(높이 = w). flip 으로 좌우 반전. */
   function sprite(name, { x, y, w, flip = false, opacity = 1 }) {
     const href = MODE.assets + name + '.png';
@@ -241,7 +241,7 @@
   }
   // 표정 → 시트 이름 매핑 (시트에 없는 표정은 가장 가까운 것으로)
   // 표정 → 시트 파일. 캐릭터별로 있는 칸이 다르므로 있는 것부터 찾아 쓴다.
-  const SHEET_HAVE = { wife: ['good','joy','wink','love','surprise','worry','angry','bad','smug','tired','cry','calm'], husband: ['good','joy','wink','love','surprise','worry'] };
+  const SHEET_HAVE = { wife: ['good','joy','wink','love','surprise','worry','angry','bad','smug','tired','cry','calm'], husband: ['good','joy','wink','love','surprise','worry'], nemo_dad: ['good','joy','wink','love','surprise','worry'] };
   const EMO_FALLBACK = { good: ['good','calm'], joy: ['joy','good'], wink: ['wink','joy','good'], love: ['love','joy','good'], surprise: ['surprise','good'],
     worry: ['worry','bad','good'], bad: ['bad','worry','good'], angry: ['angry','bad','worry','good'], sad: ['cry','worry','bad','good'], cry: ['cry','worry','good'],
     relief: ['calm','joy','good'], tired: ['tired','calm','worry','good'], smug: ['smug','wink','good'], calm: ['calm','good'] };
@@ -275,7 +275,15 @@
     return wrap(g);
   }
   function nemoDad(o) {
-    const { x, y, w = 120, h = 106 } = o; const cx = x + w / 2, s = w / 100, fy = y + h * 0.46;
+    const { x, y, w = 120, h = 106 } = o;
+    if ((o.raster === undefined ? MODE.rasterNemoDad : o.raster) && !o.suit) { // ChatGPT 정본 래스터 (상복 컷은 코드)
+      const cw = w * 1.42, sx = x + w / 2 - cw / 2, sy = y - h * 0.08;
+      let g = sprite('nemo_dad/' + sheetEmo('nemo_dad', o.emo || 'good'), { x: sx, y: sy, w: cw, flip: o.flip || (o.gaze || 0) < 0 });
+      if (o.item) g += itemAt(o.item, x + w * (o.flip ? 0.06 : 0.94), y + h * 0.72, w * 0.8);
+      if (o.itemL) g += itemAt(o.itemL, x + w * (o.flip ? 0.94 : 0.06), y + h * 0.72, w * 0.8);
+      return `<g class="gf-ch gf-raster">${g}</g>`;
+    }
+    const cx = x + w / 2, s = w / 100, fy = y + h * 0.46;
     const feat = `<path d="M${cx - 26 * s},${y + 6} q4,-9 8,0 M${cx - 8 * s},${y + 5} q4,-10 8,0 M${cx + 12 * s},${y + 6} q4,-9 8,0" stroke="${INK}" stroke-width="${LINE}" fill="none" stroke-linecap="round"/>`;
     let after = `<path d="M${cx - 9 * s},${fy + 11 * s} q${4.5 * s},${-5 * s} ${9 * s},0 q${4.5 * s},${-5 * s} ${9 * s},0" stroke="${INK}" stroke-width="${LINE * 1.2}" fill="none" stroke-linecap="round"/>`;
     if (o.glasses) after += glassesAt(cx, fy - 2 * s, s);
@@ -527,7 +535,7 @@
   }
 
   const GF = { VERSION: 'v7', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt, touch, paper,
-    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, setRasterHusband: (b) => { MODE.rasterHusband = b; }, sprite,
+    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, setRasterHusband: (b) => { MODE.rasterHusband = b; }, setRasterNemoDad: (b) => { MODE.rasterNemoDad = b; }, sprite,
     nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,
     squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, wifeFace, coffeeCup, windowBg, speech, narration, suitCollar: collar };
   root.GF = GF; Object.assign(root, GF);

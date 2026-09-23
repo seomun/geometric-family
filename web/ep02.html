@@ -193,28 +193,71 @@ cut(520, `
   ${narration(150, 452, 420, ['둘만 있다보니 더 밖에 나가는 일이 적다'], { size: 28 })}
 `, '#f2ead9');
 
-// ── 동그라미 예고 ──
+// ══════════ 반대편 2 : 동그라미 ══════════
 gap(true);
-cut(330, `
-  ${T(W / 2, 54, '그리고 ⚫ 동그라미는', 26, 'middle', FM, 'opacity=".75"')}
-  ${dongDad({ cx: 360, cy: 150, r: 54, emo: 'good', item: 'phone' })}
-  ${T(W / 2, 290, '3초 만에 답장. 그리고 폰을 엎어 둔다.', 24, 'middle', FB, 'opacity=".85"')}
-`, '#ece3d3');
+cut(150, `
+  ${T(W / 2, 62, '그리고, 같은 단톡방', 26, 'middle', FM, 'opacity=".8"')}
+  ${T(W / 2, 118, '⚫ 동그라미', 40, 'middle', F)}
+`, '#e4e6e8');
+gap();
+
+// ── D1 : 부고 ──
+cut(430, `
+  ${phone(200, 16, 320, 400, '#c9ced2')}
+  ${T(360, 92, '[부고]', 30, 'middle', FM, 'font-weight="700"')}
+  ${T(360, 150, '김원상, 본인상', 32, 'middle', FM)}
+  ${T(360, 200, '상주 …', 26, 'middle', FB, 'opacity=".6"')}
+  ${narration(120, 320, 480, ['채팅이 얼마 지나지 않아,', '본인상 부고가 뜬다.'], { size: 30 })}
+`, '#ddd9d4');
+gap();
+
+// ── D2 : 동그라미의 공지 ──
+cut(430, `
+  ${T(60, 46, '— 동그라미가 만든 단톡방 —', 22, 'start', FM, 'opacity=".75"')}
+  ${chat(60, 76, 600, ['난 내일 저녁 7시쯤 가서', '9시쯤 올 예정이야.', '갈 수 있는 사람은 가고,', '혹시 여기 톡에 없어도', '알만한 사람은 연락하고'], false, '동그라미')}
+  ${dongDad({ cx: 600, cy: 350, r: 50, emo: 'good', item: 'phone' })}
+`);
+gap();
+
+// ── D3 : 네모와 세모의 답 ──
+cut(430, `
+  ${chat(60, 40, 300, ['반장 올만..'], false, '네모')}
+  ${chat(320, 130, 340, ['쟤가 아직도 반장이냐.', '으이그..'], true, '세모')}
+  ${T(360, 246, '· · ·', 34, 'middle', FB, 'opacity=".35"')}
+  ${chat(240, 280, 420, ['우리 수요일에 보려고 햇는데,', '내일 보자 나도 간다.'], true, '세모')}
+`, '#eef1f4');
+gap();
+
+// ── D4 : 동그라미는 ──
+cut(480, `
+  ${dongDad({ cx: 250, cy: 160, r: 62, emo: 'good', item: 'condolence' })}
+  ${narration(400, 70, 290, ['아무 감정변화 없는', '표정으로', '빠르게 부고를', '전달한고,', '조화를 보낸다.'], { size: 28 })}
+  ${narration(140, 310, 440, ['댓긋을 남기고, 업무에 복귀한다.'], { size: 30 })}
+  ${dongDad({ cx: 570, cy: 400, r: 40, emo: 'good', item: 'book' })}
+`, '#e4e6e8');
+gap(true);
+
+// ── D5 : 네모 ──
+cut(520, `
+  ${nemoDad({ x: 270, y: 180, w: 190, h: 168, emo: 'worry' })}
+  ${narration(120, 40, 480, ['사실 제일 친했던 네모는'], { size: 30 })}
+  ${think(110, 380, 500, ['왜 먼저 말걸지 못했을까?'], 'right')}
+`, '#efe6d6');
 
 document.getElementById('strip').innerHTML = cuts.join('') + `
 <div class="cta">
   <h2>당신은 어느 도형인가요?</h2>
-  <p>같은 카톡 한 줄. 네모는 망설였고, 세모는 약속을 잡았고, 동그라미는 폰을 엎어 뒀다.<br>당신이라면?</p>
+  <p>말을 걸었고, 약속을 잡았고, 그리고 다른 친구의 부고가 왔다.<br>연락하고 싶은 사람이 떠오른다면, 당신은 어느 쪽인가요?</p>
   <div class="votes" id="votes">
-    <button class="vote" data-k="square"><svg viewBox="0 0 90 90">${nemoDad({ x: 10, y: 6, w: 70, h: 62, emo: 'worry' })}</svg>네모<small>미루다 보낸다</small></button>
-    <button class="vote" data-k="triangle"><svg viewBox="0 0 90 90">${semoHusband({ x: 12, y: 4, size: 66, emo: 'joy' })}</svg>세모<small>약속을 잡는다</small></button>
-    <button class="vote" data-k="circle"><svg viewBox="0 0 90 90">${dongDad({ cx: 45, cy: 40, r: 30, emo: 'good' })}</svg>동그라미<small>답하고 덮는다</small></button>
+    <button class="vote" data-k="square"><svg viewBox="0 0 90 90">${nemoDad({ x: 10, y: 6, w: 70, h: 62, emo: 'worry' })}</svg>네모<small>미루다 후회한다</small></button>
+    <button class="vote" data-k="triangle"><svg viewBox="0 0 90 90">${semoHusband({ x: 12, y: 4, size: 66, emo: 'joy' })}</svg>세모<small>바로 약속을 잡는다</small></button>
+    <button class="vote" data-k="circle"><svg viewBox="0 0 90 90">${dongDad({ cx: 45, cy: 40, r: 30, emo: 'good' })}</svg>동그라미<small>할 일을 한다</small></button>
   </div>
   <div class="bars" id="bars"></div>
   <p class="note">댓글로 당신의 이야기를 남겨 주세요. 좋은 사연은 동의를 받아 외전으로 이어집니다.</p>
 </div>
 <div class="more"><b>네모의 글</b><a href="#">「말을 걸어볼까?」 — 전문 읽기 →</a></div>
-<div class="next">다음 화 — 2화 「집 청소」<br><span style="font-size:15px;opacity:.7">토요일 아침, "오늘 대청소하자" 한마디</span></div>`;
+<div class="next"><a href="ep01.html" style="color:inherit">다음 화 — 2화 「부고」 →</a><br><span style="font-size:15px;opacity:.7">다음날 저녁 7시, 구로. 셋은 검은 정장을 입는다</span></div>`;
 
 const KEY = 'gf.ep02.vote', NAMES = { square: '네모', triangle: '세모', circle: '동그라미' }, BASE = { square: 44, triangle: 24, circle: 32 };
 function showBars(mine) {

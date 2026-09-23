@@ -16,3 +16,4 @@
 - 2026-09-18 D4: 세모 아내 래스터 채택. cut_sheet.py(시트 6분할·rembg), GF.sprite, semoWife raster 모드, wife.html 확인 페이지. 시트 파일 대기 중.
 - 2026-09-18 docs/05 ChatGPT 아트 파이프라인(스타일 블록·DNA 블록·시트 블록·검수·라인업 고정·조사 결과). 래스터에도 hand 필터.
 - 2026-09-23 세모 아내 ChatGPT 시트 v1 반입(2×3 → 6표정 투명 PNG). semoWife 래스터 모드 실사용, 엿보기·소품 위치 보정. 굿즈 3종·1화·라인업 반영.
+- 2026-09-23 docs/06 복사용 프롬프트(캐릭터 12인 + 라인업). build.py newline 버그 수정.

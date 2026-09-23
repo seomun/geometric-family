@@ -15,7 +15,7 @@
 
 ## ✅ 세모 아내 래스터 적용 완료 (2026-09-23)
 - 시트 v1 반입 → 6표정 잘라 `assets/wife/` 배치 → 굿즈·1화·라인업에 자동 반영. 규격은 `docs/03_STYLE_GUIDE.md` §1-3.
-- 다음: ① 남편 시트(docs/05 §10-3 프롬프트, 아내 시트 첨부) → `assets/husband/` ② 아내 시트 v2 로 angry·포즈 보강 ③ 네모·동그라미 순서대로.
+- 다음: **`docs/06_PROMPTS_READY.md`** 의 복사용 프롬프트를 순서대로 — ① 남편 ② 아내 v2(angry 등) ③ 네모 아빠·엄마·할머니·아이4 ④ 동그라미 아빠·엄마·아이2 ⑤ 라인업. 각 블록에 폴더명·자르기 명령까지 적혀 있다.
 
 ## 다음 할 일
 1. 댓글: giscus(GitHub Discussions) — 저장소 Discussions 켜고 giscus.app 에서 스크립트 받아 ep 페이지 CTA 아래에 삽입. (사람이 giscus 앱 설치 승인 1회)

@@ -48,6 +48,8 @@ hand 가 하는 일(전부 SVG 필터, 원본 무수정):
 - 코드는 `semoWife({emo})` / `semoHusband({emo})` 호출 시 자동으로 해당 PNG 배치(`GF.sprite`). 표정은 `sheetEmo(who, emo)` 가 **캐릭터별로 있는 칸 중 가장 가까운 것**을 고른다(예: angry → bad → worry → good).
 - 아내 시트 v2(2026-09-23): angry/bad/smug/tired/cry/calm 추가 → 전투 장면 해결.
 - 반입은 `assets/_inbox/<이름>.png` + `python tools/ingest.py` (규칙표는 docs/06 상단).
+- **래스터 적용 캐릭터(2026-09-23)**: 세모 아내(12표정) · 세모 남편(6) · 네모 아빠(6) · **동그라미 아빠(6: good/joy/calm/warm/surprise/trouble)**. 나머지는 코드 벡터 유지.
+- 동그라미 가족은 **표정 폴백이 다르다**(`EMO_FALLBACK_CALM`): angry·bad·sad 모두 `calm`/`trouble` 로 수렴한다 — "약해 보이지 않는다" 원칙의 코드 구현.
 - 코드 벡터 아내는 `semoWife({ raster: false })` 로 남아 있다(대안·비교용). 전역 전환: `GF.setRasterWife(false)`.
 - 새 표정/포즈는 `_sheet/sheet_v1.png` 를 첨부해 같은 스타일로 생성 → `tools/cut_sheet.py` (docs/05).
 - 남은 차이: 래스터는 포즈가 고정(팔 내림)이라 `pose` 가 무시된다. 포즈가 필요한 컷은 시트 v2(포즈 3×3) 를 뽑는다.

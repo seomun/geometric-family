@@ -237,7 +237,7 @@
     return `<path d="M${cx - w / 2},${yb} L${cx},${yb + w * 0.28} L${cx + w / 2},${yb} L${cx + w * 0.3},${yb} L${cx},${yb + w * 0.18} L${cx - w * 0.3},${yb}z" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.6}" stroke-linejoin="round"/>` +
       `<path d="M${cx},${yb + w * 0.16} l${w * 0.07},${w * 0.1} l${-w * 0.07},${w * 0.34} l${-w * 0.07},${-w * 0.34}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`;
   }
-  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true, rasterHusband: true, rasterNemoDad: true };
+  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true, rasterHusband: true, rasterNemoDad: true, rasterDongDad: true };
   /* 래스터 캐릭터(ChatGPT 정본). name = 'wife/wink'. 600×600 캔버스, 발끝이 하단 5%. x,y = 좌상단, w = 폭(높이 = w). flip 으로 좌우 반전. */
   function sprite(name, { x, y, w, flip = false, opacity = 1 }) {
     const href = MODE.assets + name + '.png';
@@ -247,11 +247,15 @@
   }
   // 표정 → 시트 이름 매핑 (시트에 없는 표정은 가장 가까운 것으로)
   // 표정 → 시트 파일. 캐릭터별로 있는 칸이 다르므로 있는 것부터 찾아 쓴다.
-  const SHEET_HAVE = { wife: ['good','joy','wink','love','surprise','worry','angry','bad','smug','tired','cry','calm'], husband: ['good','joy','wink','love','surprise','worry'], nemo_dad: ['good','joy','wink','love','surprise','worry'] };
+  const SHEET_HAVE = { wife: ['good','joy','wink','love','surprise','worry','angry','bad','smug','tired','cry','calm'], husband: ['good','joy','wink','love','surprise','worry'], nemo_dad: ['good','joy','wink','love','surprise','worry'], dong_dad: ['good','joy','calm','warm','surprise','trouble'] };
   const EMO_FALLBACK = { good: ['good','calm'], joy: ['joy','good'], wink: ['wink','joy','good'], love: ['love','joy','good'], surprise: ['surprise','good'],
     worry: ['worry','bad','good'], bad: ['bad','worry','good'], angry: ['angry','bad','worry','good'], sad: ['cry','worry','bad','good'], cry: ['cry','worry','good'],
     relief: ['calm','joy','good'], tired: ['tired','calm','worry','good'], smug: ['smug','wink','good'], calm: ['calm','good'] };
-  const sheetEmo = (who, emo) => (EMO_FALLBACK[emo] || ['good']).find(e => (SHEET_HAVE[who] || []).includes(e)) || 'good';
+  const EMO_FALLBACK_CALM = { good: ['good'], joy: ['joy','good'], wink: ['joy','good'], love: ['warm','joy','good'], surprise: ['surprise','good'],
+    worry: ['trouble','calm','good'], bad: ['calm','trouble','good'], angry: ['calm','trouble','good'], sad: ['trouble','calm','good'], cry: ['trouble','calm','good'],
+    relief: ['warm','calm','good'], tired: ['calm','trouble','good'], smug: ['warm','joy','good'], calm: ['calm','good'], warm: ['warm','good'], trouble: ['trouble','calm','good'] };
+  const CALM_CHARS = ['dong_dad', 'dong_mom', 'dong_son', 'dong_daughter'];
+  const sheetEmo = (who, emo) => ((CALM_CHARS.includes(who) ? EMO_FALLBACK_CALM : EMO_FALLBACK)[emo] || ['good']).find(e => (SHEET_HAVE[who] || []).includes(e)) || 'good';
   const WIFE_MAP = new Proxy({}, { get: (_, e) => sheetEmo('wife', e) });
   function touch(inner) { // 칠 패스(어긋남) + 선 패스(흔들림·굵기 변화). 미세 기울기는 길이 해시로 결정(같은 입력 = 같은 결과)
     const h = inner.length % 7; const rot = ((h - 3) * 0.5).toFixed(2); // -1.5° ~ +1.5°
@@ -444,7 +448,16 @@
     return wrap(g);
   }
   /* ---------- 동그라미가족 ---------- */
-  function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, glasses = false, suit = false, who = 'dad', outfit, outfitColor = '#fff' }) {
+  function dong({ cx, cy, r = 48, emo = 'good', pose = 'stand', gaze = 0, item = null, itemL = null, glasses = false, suit = false, who = 'dad', outfit, outfitColor = '#fff', raster, flip = false }) {
+    const KEY = { dad: 'dong_dad', mom: 'dong_mom', son: 'dong_son', daughter: 'dong_daughter' }[who];
+    const useR = raster === undefined ? (KEY === 'dong_dad' ? MODE.rasterDongDad : false) : raster;
+    if (useR && !suit && SHEET_HAVE[KEY]) { // ChatGPT 정본 래스터 (상복 컷은 코드)
+      const u = r * 2, w = u * 1.45, sx = cx - w / 2, sy = cy - r - u * 0.14;
+      let g = sprite(KEY + '/' + sheetEmo(KEY, emo), { x: sx, y: sy, w, flip: flip || gaze < 0 });
+      if (item) g += itemAt(item, cx + (flip ? -1 : 1) * r * 1.05, cy + r * 0.62, u * 0.85);
+      if (itemL) g += itemAt(itemL, cx + (flip ? 1 : -1) * r * 1.05, cy + r * 0.62, u * 0.85);
+      return `<g class="gf-ch gf-raster">${g}</g>`;
+    }
     const s = r / 55, color = COLORS[{ dad: 'dongDad', mom: 'dongMom', son: 'dongSon', daughter: 'dongDaughter' }[who]], u = r * 2;
     const female = who === 'mom' || who === 'daughter';
     if (outfit === undefined) outfit = who === 'mom' ? 'cardigan' : who === 'daughter' ? 'skirt' : 'none';
@@ -541,7 +554,7 @@
   }
 
   const GF = { VERSION: 'v7', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt, touch, paper,
-    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, setRasterHusband: (b) => { MODE.rasterHusband = b; }, setRasterNemoDad: (b) => { MODE.rasterNemoDad = b; }, sprite,
+    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, setRasterHusband: (b) => { MODE.rasterHusband = b; }, setRasterNemoDad: (b) => { MODE.rasterNemoDad = b; }, setRasterDongDad: (b) => { MODE.rasterDongDad = b; }, sprite,
     nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,
     squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, wifeFace, coffeeCup, windowBg, speech, narration, suitCollar: collar };
   root.GF = GF; Object.assign(root, GF);

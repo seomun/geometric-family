@@ -14,7 +14,7 @@
   };
   const EMOS = ['good', 'joy', 'bad', 'angry', 'worry', 'relief', 'sad', 'cry', 'surprise', 'love', 'tired', 'wink'];
   const POSES = ['stand', 'wave', 'cheer', 'think', 'point', 'hips', 'shrug', 'hold', 'sit', 'walk'];
-  const ITEMS = ['coffee', 'americano', 'phone', 'envelope', 'book', 'bag', 'violin', 'racket', 'heart', 'star', 'sword', 'shield'];
+  const ITEMS = ['coffee', 'americano', 'phone', 'envelope', 'book', 'bag', 'violin', 'racket', 'heart', 'star', 'sword', 'shield', 'glasses2', 'pills', 'tie', 'hat', 'condolence', 'remote'];
 
   /* 손 터치 렌더 (v6.6). 캐릭터 벡터는 그대로, 렌더에서만 입힌다: 선 흔들림·굵기 변화·칠 어긋남·종이 결. GF.mode = 'hand' | 'clean' */
   const ROUGH_DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -194,6 +194,12 @@
       case 'heart': return `<path transform="translate(${x},${y - 14 * k}) scale(${k})" d="M0,10 c-16,-10 -12,-28 0,-18 c12,-10 16,8 0,18z" fill="#f05a7a" stroke="${INK}" stroke-width="${LINE}"/>`;
       case 'sword': return `<g transform="translate(${x},${y}) rotate(55) scale(${k})">${S('M-5,-8 L-5,-48 L0,-60 L5,-48 L5,-8z', '#eceef2', LINE * 0.7)}<path d="M0,-10 v-44" stroke="${INK}" stroke-width="1.5" opacity=".4"/>${S('M-13,-8 h26 v6 h-26z', '#f5c542')}${S('M-3.5,-2 h7 v16 h-7z', '#8a4b2a')}<circle cx="0" cy="16" r="4" fill="#f5c542" stroke="${INK}" stroke-width="${LINE * 0.6}"/></g>`;
       case 'shield': return `<g transform="translate(${x},${y - 10 * k}) scale(${k})">${S('M-18,-22 h36 v22 q0,20 -18,28 q-18,-8 -18,-28z', '#9fb6d0')}<path d="M0,-16 v34 M-12,-6 h24" stroke="${INK}" stroke-width="${LINE * 0.7}"/></g>`;
+      case 'glasses2': return `<g transform="translate(${x},${y - 12 * k}) scale(${k})">${S('M-22,0 a11,9 0 1 0 22,0 a11,9 0 1 0 -22,0z', 'none')}${S('M2,0 a11,9 0 1 0 22,0 a11,9 0 1 0 -22,0z', 'none')}${S('M0,-1 h2', 'none')}${S('M-33,-6 l11,4 M35,-6 l-11,4', 'none', LINE * 0.7)}</g>`;
+      case 'pills': return `<g transform="translate(${x - 14 * k},${y - 16 * k}) scale(${k})">${S('M0,0 h28 v20 h-28z', '#fff')}<circle cx="7" cy="7" r="4" fill="#f4a3b6" stroke="${INK}" stroke-width="${LINE * 0.6}"/><circle cx="17" cy="7" r="4" fill="#bcd6ea" stroke="${INK}" stroke-width="${LINE * 0.6}"/><circle cx="7" cy="15" r="4" fill="#bcd6ea" stroke="${INK}" stroke-width="${LINE * 0.6}"/><circle cx="17" cy="15" r="4" fill="#f4a3b6" stroke="${INK}" stroke-width="${LINE * 0.6}"/></g>`;
+      case 'tie': return `<g transform="translate(${x},${y - 20 * k}) scale(${k})">${S('M-7,-14 l7,6 l7,-6 l-4,-5 h-6z', '#9b3b4a')}${S('M0,-8 l6,8 l-6,26 l-6,-26z', '#b8495a')}</g>`;
+      case 'hat': return `<g transform="translate(${x},${y - 10 * k}) scale(${k})">${S('M-26,4 q26,-10 52,0 q-26,9 -52,0z', '#8aa06a')}${S('M-14,3 q0,-22 14,-22 q14,0 14,22z', '#9db478')}${S('M-14,-4 h28', 'none', LINE * 0.6)}</g>`;
+      case 'condolence': return `<g transform="translate(${x - 16 * k},${y - 12 * k}) scale(${k})">${S('M0,0 h32 v22 h-32z', '#fff')}${S('M0,0 l16,12 l16,-12', 'none', LINE * 0.7)}<path d="M13,8 v8 M11,10 h4 M11,13 h4" stroke="${INK}" stroke-width="1.6" fill="none"/></g>`;
+      case 'remote': return `<g transform="translate(${x - 7 * k},${y - 22 * k}) scale(${k})">${S('M0,0 h14 a3,3 0 0 1 3,3 v28 a3,3 0 0 1 -3,3 h-14 a3,3 0 0 1 -3,-3 v-28 a3,3 0 0 1 3,-3z', '#4a4a52')}<circle cx="7" cy="7" r="2.6" fill="#e04a4a"/><path d="M3,15 h8 M3,21 h8 M3,27 h8" stroke="#bbb" stroke-width="2"/></g>`;
       case 'star': return `<path transform="translate(${x},${y - 14 * k}) scale(${k})" d="M0,-16 l4.7,9.5 10.5,1.5 -7.6,7.4 1.8,10.4 -9.4,-4.9 -9.4,4.9 1.8,-10.4 -7.6,-7.4 10.5,-1.5z" fill="#f5c542" stroke="${INK}" stroke-width="${LINE}"/>`;
       default: return '';
     }

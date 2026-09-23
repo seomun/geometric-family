@@ -68,7 +68,8 @@ hand 가 하는 일(전부 SVG 필터, 원본 무수정):
 ## 3. 표정 12 · 포즈 10 · 소품 10
 - emo: `good joy bad angry worry relief sad cry surprise love tired wink`. 동그라미는 눈매 고정 — 입·눈썹(angry 만)·땀으로만 표현. "약해 보이지 않는다."
 - pose: `stand wave cheer think point hips shrug hold sit walk`. `hold`·`think` 는 팔이 몸 앞. `point` 는 gaze 방향.
-- item: `coffee americano phone envelope book bag violin racket heart star sword shield`. `item` 은 오른손, `itemL` 은 왼손.
+- item(18): `coffee americano phone envelope book bag violin racket heart star sword shield` + **중년 소품** `glasses2`(돋보기) `pills`(약봉지) `tie`(넥타이) `hat`(등산모) `condolence`(경조사 봉투) `remote`(리모컨). `item` 은 오른손, `itemL` 은 왼손.
+- **나이는 얼굴이 아니라 소품·대사·배경으로 낸다** (D5, 백서 §5). 어른 얼굴을 늙게 고치지 않는다.
 - 구도 함수: `coupleBattle(x,y,size)` 마주보고 칼·방패 / `coupleLove(x,y,size)` 하트 / `semoWifePeek({x,y,size,edgeY})` 담 너머 엿보기(팔이 담을 안음). 굿즈 아트보드 `web/goods.html`.
 - 새 표정/포즈/소품은 **여기에 먼저 적고** 코드에 추가한다. 시트(`web/characters.html`)에 자동으로 나타나야 한다.
 

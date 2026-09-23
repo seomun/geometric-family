@@ -395,7 +395,8 @@
     if (raster && !noLimbs) { // ChatGPT 정본 래스터. size 기준 캔버스 폭 = size*1.3 (몸 폭이 캔버스의 ~75%)
       const w = size * 1.3, sx = x + size / 2 - w / 2, sy = y - size * 0.06;
       let g = sprite('wife/' + (WIFE_MAP[emo] || 'good'), { x: sx, y: sy, w, flip: flip || gaze > 0 });
-      if (item) g += itemAt(item, x + size * (flip ? 0.2 : 0.8), y + size * 0.95, size * 0.8);
+      if (item) g += itemAt(item, x + size * (flip ? 0.12 : 0.88), y + size * 0.62, size * 0.75);
+      if (itemL) g += itemAt(itemL, x + size * (flip ? 0.88 : 0.12), y + size * 0.62, size * 0.75);
       return `<g class="gf-ch gf-raster">${g}</g>`;
     }
     const cx = x + size / 2, h = size * 0.9, s = size / 130, color = COLORS.semoWife, W = size / 2, rr = size * 0.11;
@@ -467,7 +468,13 @@
     return `<g transform="translate(${x},${y})">` + semoHusband({ x: 0, y: 0, size, emo: 'love', gaze: 1, pose: 'hold' }) + semoWife({ x: size + 24, y: 0, size, emo: 'love', gaze: -1, pose: 'hold' }) +
       `<g transform="translate(${size + 12},${-size * 0.12})">` + itemAt('heart', 0, 0, size * 0.8) + `</g><g transform="translate(${size * 0.3},${-size * 0.05}) scale(.55)">` + itemAt('heart', 0, 0, size * 0.9) + `</g><g transform="translate(${size * 1.9},${-size * 0.02}) scale(.45)">` + itemAt('heart', 0, 0, size * 0.9) + '</g></g>';
   }
-  function semoWifePeek({ x, y, size = 160, edgeY, emo = 'wink', gaze = 0, id = 'peek' }) { // edgeY 아래는 가려진다(노트 표지 = 담)
+  function semoWifePeek({ x, y, size = 160, edgeY, emo = 'wink', gaze = 0, id = 'peek', raster = MODE.rasterWife }) { // edgeY 아래는 가려진다(노트 표지 = 담)
+    if (raster) {
+      const w = size * 1.3, sx = x + size / 2 - w / 2, sy = y - size * 0.06, cx = x + size / 2, hw = size * 0.085;
+      return `<clipPath id="${id}"><rect x="${x - size}" y="${y - size}" width="${size * 3}" height="${edgeY - y + size}"/></clipPath>` +
+        `<g clip-path="url(#${id})">` + sprite('wife/' + (WIFE_MAP[emo] || 'good'), { x: sx, y: sy, w }) + '</g>' +
+        `<g class="gf-ch">${hand(cx - size * 0.32, edgeY + hw * 0.15, hw, COLORS.skin)}${hand(cx + size * 0.32, edgeY + hw * 0.15, hw, COLORS.skin)}</g>`;
+    }
     const cx = x + size / 2, h = size * 0.9, hw = size * 0.058, hx1 = cx - size * 0.3, hx2 = cx + size * 0.3, c = COLORS.semoWife;
     const sl = [cx - size * 0.33, y + h * 0.5], sr = [cx + size * 0.33, y + h * 0.5];
     return `<clipPath id="${id}"><rect x="${x - size}" y="${y - size}" width="${size * 3}" height="${edgeY - y + size}"/></clipPath><g clip-path="url(#${id})">` +

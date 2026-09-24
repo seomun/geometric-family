@@ -47,6 +47,8 @@ hand 가 하는 일(전부 SVG 필터, 원본 무수정):
 - 위치: 직육면체 중앙 틈. `squareFamilyPortrait()` 에서 **맨 마지막에 그려** 앞으로 나온다.
 - 규격: 어른의 45% 크기, 삐친 머리 **없음**(유일하게), 눈은 얼굴의 **60%**(형제보다도 크게), 볼터치 진하게.
 - 이 캐릭터만은 "귀여움"이 다른 모든 기준보다 우선한다. 시트를 여러 번 다시 뽑아도 된다.
+- **전용 폴더 `assets/baby/`** — 형제들과 달리 표정 6종(good/joy/surprise/love/cry/tired). 형제는 `assets/nemo_kids/` 에 1표정씩.
+- 폴백도 전용(`EMO_FALLBACK_BABY`): 화남·슬픔은 전부 `cry` 로 간다. 막둥이는 화내지 않는다 — 운다.
 
 ## 1-3. 세모 부부 = 래스터 정본 (2026-09-23, D4 실행)
 - 정본 시트: `assets/wife/_sheet/sheet_v1.png` (ChatGPT, 2×3). 잘린 낱장: `assets/wife/{good,joy,wink,love,surprise,worry}.png` (600×600 투명, 발끝 하단 5% 정렬).

@@ -19,6 +19,7 @@ REGISTRY = {
     "nemo_mom":    ("nemo_mom",     3, 2, E6,  {}),
     "nemo_grandma":("nemo_grandma", 3, 2, E6,  {}),
     "nemo_kids":   ("nemo_kids",    2, 2, "kid1,kid2,kid3,baby", {}),
+    "baby":        ("baby",         3, 2, "good,joy,surprise,love,cry,tired", {}),
     "dong_dad":    ("dong_dad",     3, 2, E6B, {}),
     "dong_mom":    ("dong_mom",     3, 2, E6B, {}),
     "dong_kids":   ("dong_kids",    2, 2, "son,son_calm,daughter,daughter_calm", {}),
@@ -27,7 +28,7 @@ REGISTRY = {
 ALIAS = {  # 편하게 쓰라고: 한글·줄임말도 받는다
     "세모아내": "wife", "아내": "wife", "세모와이프": "wife", "wife2": "wife",
     "세모남편": "husband", "남편": "husband",
-    "네모아빠": "nemo_dad", "네모엄마": "nemo_mom", "할머니": "nemo_grandma", "네모아이": "nemo_kids", "네모아이들": "nemo_kids",
+    "네모아빠": "nemo_dad", "네모엄마": "nemo_mom", "할머니": "nemo_grandma", "네모아이": "nemo_kids", "네모아이들": "nemo_kids", "막둥이": "baby", "막내": "baby",
     "동그라미아빠": "dong_dad", "동그라미엄마": "dong_mom", "동그라미아이": "dong_kids", "동그라미아이들": "dong_kids",
     "라인업": "lineup",
 }

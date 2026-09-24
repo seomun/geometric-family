@@ -25,6 +25,7 @@ python tools/ingest.py
 | `nemo_mom.png` | 네모 엄마 | 3×2 | `assets/nemo_mom/…` |
 | `nemo_grandma.png` | 네모 할머니 | 3×2 | `assets/nemo_grandma/…` |
 | `nemo_kids.png` | 네모 아이 4인 | **2×2** | `assets/nemo_kids/{kid1,kid2,kid3,baby}.png` |
+| `baby.png` / `막둥이.png` | 막둥이 단독 표정 | 3×2 | `assets/baby/{good,joy,surprise,love,cry,tired}.png` |
 | `dong_dad.png` | 동그라미 아빠 | 3×2 | `assets/dong_dad/…` |
 | `dong_mom.png` | 동그라미 엄마 | 3×2 | `assets/dong_mom/…` |
 | `dong_kids.png` | 동그라미 아이 2인 | **2×2** | `assets/dong_kids/…` |
@@ -239,7 +240,7 @@ no gradients, flat colors, clean uniform lines, no shadows, no texture, white ba
 - [x] 네모 아빠 v1 (2026-09-23)
 - [x] 네모 엄마 v1 (2026-09-24, 팔 4개 확인)
 - [x] 네모 아이 4인 v1 (2026-09-24)
-- [ ] 🔴 **막둥이 v2 — 더 귀엽게** (가족사진 메인, 최우선)
+- [x] 🔴 **막둥이 v2 — 표정 6종 전용 시트** (2026-09-24, `assets/baby/`)
 - [ ] 네모 할머니
 - [x] 동그라미 아빠 v1 (2026-09-23)
 - [ ] 동그라미 엄마 / 아이 2

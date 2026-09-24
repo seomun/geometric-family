@@ -247,16 +247,19 @@
   }
   // 표정 → 시트 이름 매핑 (시트에 없는 표정은 가장 가까운 것으로)
   // 표정 → 시트 파일. 캐릭터별로 있는 칸이 다르므로 있는 것부터 찾아 쓴다.
-  const SHEET_HAVE = { wife: ['good','joy','wink','love','surprise','worry','angry','bad','smug','tired','cry','calm'], husband: ['good','joy','wink','love','surprise','worry'], nemo_dad: ['good','joy','wink','love','surprise','worry'], dong_dad: ['good','joy','calm','warm','surprise','trouble'], nemo_mom: ['good','joy','wink','love','surprise','worry'] };
+  const SHEET_HAVE = { wife: ['good','joy','wink','love','surprise','worry','angry','bad','smug','tired','cry','calm'], husband: ['good','joy','wink','love','surprise','worry'], nemo_dad: ['good','joy','wink','love','surprise','worry'], dong_dad: ['good','joy','calm','warm','surprise','trouble'], nemo_mom: ['good','joy','wink','love','surprise','worry'], baby: ['good','joy','surprise','love','cry','tired'] };
   const EMO_FALLBACK = { good: ['good','calm'], joy: ['joy','good'], wink: ['wink','joy','good'], love: ['love','joy','good'], surprise: ['surprise','good'],
     worry: ['worry','bad','good'], bad: ['bad','worry','good'], angry: ['angry','bad','worry','good'], sad: ['cry','worry','bad','good'], cry: ['cry','worry','good'],
     relief: ['calm','joy','good'], tired: ['tired','calm','worry','good'], smug: ['smug','wink','good'], calm: ['calm','good'] };
   const EMO_FALLBACK_CALM = { good: ['good'], joy: ['joy','good'], wink: ['joy','good'], love: ['warm','joy','good'], surprise: ['surprise','good'],
     worry: ['trouble','calm','good'], bad: ['calm','trouble','good'], angry: ['calm','trouble','good'], sad: ['trouble','calm','good'], cry: ['trouble','calm','good'],
     relief: ['warm','calm','good'], tired: ['calm','trouble','good'], smug: ['warm','joy','good'], calm: ['calm','good'], warm: ['warm','good'], trouble: ['trouble','calm','good'] };
+  const EMO_FALLBACK_BABY = { good: ['good'], joy: ['joy','good'], wink: ['joy','good'], love: ['love','joy','good'], surprise: ['surprise','good'],
+    worry: ['cry','surprise','good'], bad: ['cry','good'], angry: ['cry','good'], sad: ['cry','good'], cry: ['cry','good'],
+    relief: ['tired','joy','good'], tired: ['tired','good'], calm: ['good'], smug: ['joy','good'] };
   const CALM_CHARS = ['dong_dad', 'dong_mom', 'dong_son', 'dong_daughter'];
   const KID_BY_COLOR = { '#f0c583': 'kid1', '#f2b49e': 'kid2', '#e6a9c0': 'kid3', '#f8dcb0': 'baby' };
-  const sheetEmo = (who, emo) => ((CALM_CHARS.includes(who) ? EMO_FALLBACK_CALM : EMO_FALLBACK)[emo] || ['good']).find(e => (SHEET_HAVE[who] || []).includes(e)) || 'good';
+  const sheetEmo = (who, emo) => ((who === 'baby' ? EMO_FALLBACK_BABY : CALM_CHARS.includes(who) ? EMO_FALLBACK_CALM : EMO_FALLBACK)[emo] || ['good']).find(e => (SHEET_HAVE[who] || []).includes(e)) || 'good';
   const WIFE_MAP = new Proxy({}, { get: (_, e) => sheetEmo('wife', e) });
   function touch(inner) { // 칠 패스(어긋남) + 선 패스(흔들림·굵기 변화). 미세 기울기는 길이 해시로 결정(같은 입력 = 같은 결과)
     const h = inner.length % 7; const rot = ((h - 3) * 0.5).toFixed(2); // -1.5° ~ +1.5°
@@ -316,9 +319,11 @@
   function nemoKid(o) {
     const { x, y, w = 66, h = 66, color = COLORS.nemoKid1, tuft = true, girl = false } = o;
     const kid = o.who || KID_BY_COLOR[String(color).toLowerCase()];
-    if ((o.raster === undefined ? MODE.rasterNemoKids : o.raster) && kid) { // ChatGPT 정본 래스터 (아이는 표정 1종)
-      const cw = w * (kid === 'baby' ? 1.62 : 1.5), sx = x + w / 2 - cw / 2, sy = y - h * (kid === 'baby' ? 0.05 : 0.09);
-      let g = sprite('nemo_kids/' + kid, { x: sx, y: sy, w: cw, flip: o.flip || (o.gaze || 0) < 0 });
+    if ((o.raster === undefined ? MODE.rasterNemoKids : o.raster) && kid) { // ChatGPT 정본 래스터
+      const baby = kid === 'baby';
+      const cw = w * (baby ? 1.5 : 1.5), sx = x + w / 2 - cw / 2, sy = y - h * (baby ? 0.1 : 0.09);
+      const path = baby ? 'baby/' + sheetEmo('baby', o.emo || 'good') : 'nemo_kids/' + kid;  // 막둥이만 표정 6종
+      let g = sprite(path, { x: sx, y: sy, w: cw, flip: o.flip || (o.gaze || 0) < 0 });
       if (o.item) g += itemAt(o.item, x + w * (o.flip ? 0 : 1), y + h * 0.74, w * 0.9);
       return `<g class="gf-ch gf-raster">${g}</g>`;
     }
@@ -514,7 +519,7 @@
     g += nemoDad({ x: 0, y: y2, w: A, h: A * 0.9 });
     g += nemoMom({ x: A * 1.02, y: y2 + 6, w: A * 0.92, h: A * 0.85 });
     g += nemoGrandma({ x: A * 1.98, y: y2 + 12, w: A * 0.84, h: A * 0.78 });
-    g += nemoKid({ x: A * 0.92, y: y2 - K * 0.58, w: K * 0.78, h: K * 0.78, color: COLORS.nemoBaby });
+    g += nemoKid({ x: A * 0.88, y: y2 - K * 0.62, w: K * 0.86, h: K * 0.86, color: COLORS.nemoBaby, emo: 'good' });
     return `<g transform="translate(${x},${y}) scale(${scale})">${g}</g>`;
   }
   /* 세모 커플 — 마주보고 칼·방패 / 마주보고 사랑 / 담 너머 엿보기 */

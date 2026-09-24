@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 — 당신은 어느 도형인가요?</title>
+<meta name="description" content="같은 일을 겪는 세 도형 가족. 네모는 평범하고, 세모는 삼한사온이고, 동그라미는 완벽한데 외롭다.">
+<meta property="og:title" content="기하학 가족">
+<meta property="og:description" content="같은 일을 겪는 세 도형 가족. 당신은 어느 도형인가요?">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #6b5443; --paper: #f4ecdd; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9dfcc; color: var(--ink); font-family: 'Gowun Dodum', sans-serif; }
+  .wrap { max-width: 720px; margin: 0 auto; background: var(--paper); box-shadow: 0 0 40px rgba(0,0,0,.15); min-height: 100vh; }
+  header { padding: 40px 24px 10px; text-align: center; }
+  h1 { font-family: Gaegu, sans-serif; font-size: 46px; margin: 0; letter-spacing: 2px; }
+  .tag { font-size: 17px; margin: 10px 0 0; line-height: 1.7; opacity: .9; }
+  .hero { display: block; width: 100%; height: auto; }
+  h2 { font-family: Gaegu, sans-serif; font-size: 28px; margin: 40px 24px 12px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+  .eps { margin: 0 24px; }
+  .ep { display: flex; gap: 16px; align-items: center; background: #fff; border: 2px solid var(--ink); border-radius: 16px; padding: 14px; margin-bottom: 14px; text-decoration: none; color: inherit; }
+  .ep:active { transform: scale(.99); }
+  .ep svg { width: 86px; height: 86px; flex: none; }
+  .ep .no { font-family: Gaegu, sans-serif; font-size: 17px; opacity: .7; }
+  .ep .ti { font-family: Gaegu, sans-serif; font-size: 27px; line-height: 1.2; }
+  .ep .de { font-size: 14px; opacity: .8; margin-top: 4px; line-height: 1.5; }
+  .ep.soon { opacity: .55; border-style: dashed; }
+  .fam { margin: 0 24px; }
+  .row { display: flex; gap: 14px; align-items: center; background: #fff; border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; }
+  .row svg { width: 74px; height: 74px; flex: none; }
+  .row b { font-family: Gaegu, sans-serif; font-size: 23px; display: block; }
+  .row span { font-size: 14px; opacity: .85; line-height: 1.5; }
+  .cards { display: flex; gap: 12px; margin: 0 24px; flex-wrap: wrap; }
+  .card { flex: 1 1 180px; background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 16px; text-align: center; text-decoration: none; color: inherit; }
+  .card b { font-family: Gaegu, sans-serif; font-size: 21px; display: block; margin-bottom: 4px; }
+  .card span { font-size: 14px; opacity: .8; }
+  .foot { text-align: center; font-size: 12px; opacity: .6; padding: 36px 24px 40px; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>기하학 가족</h1>
+    <p class="tag">삶은 수학이 아니지만, 수학만큼 반복적일지도 모른다.<br>같은 일을 겪는 세 가족의 이야기.</p>
+  </header>
+  <svg class="hero" viewBox="0 0 720 300" id="hero"></svg>
+
+  <h2>이야기</h2>
+  <div class="eps" id="eps"></div>
+
+  <h2>세 가족</h2>
+  <div class="fam" id="fam"></div>
+
+  <h2>굿즈 · 캐릭터</h2>
+  <div class="cards">
+    <a class="card" href="goods.html"><b>굿즈 시안</b><span>노트 3종 · 스티커</span></a>
+    <a class="card" href="characters.html"><b>캐릭터 시트</b><span>표정 · 포즈 · 소품</span></a>
+  </div>
+
+  <div class="foot">
+    © 기하학 가족 · 이야기는 모두 허구입니다.<br>
+    상처가 되었다면 미안합니다 — 연락 주시면 내리거나 고치겠습니다.
+  </div>
+</div>
+
+<script src="../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+GF.setMode('hand');
+const $ = id => document.getElementById(id);
+
+$('hero').innerHTML = `<rect width="720" height="300" fill="#f4ecdd"/>` +
+  nemoDad({ x: 60, y: 60, w: 150, h: 133, emo: 'good' }) +
+  semoHusband({ x: 250, y: 55, size: 145, emo: 'good', gaze: 1 }) +
+  semoWife({ x: 400, y: 55, size: 145, emo: 'wink', gaze: -1 }) +
+  dongDad({ cx: 630, cy: 128, r: 68, emo: 'good' }) + paper(720, 300);
+
+const EPS = [
+  { n: '1화', t: '단톡방', d: '말을 걸어볼까? 미룬다. 또 미룬다.', href: 'ep02.html',
+    thumb: () => nemoDad({ x: 12, y: 6, w: 62, h: 55, emo: 'worry', item: 'phone' }) },
+  { n: '2화', t: '부고', d: '같은 부고 문자를 받은 세 동창. 우린 상관이 좀 있단다, 친구야.', href: 'ep01.html',
+    thumb: () => semoHusband({ x: 12, y: 4, size: 62, emo: 'sad', suit: true }) },
+  { n: '3화', t: '집 청소', d: '토요일 아침, "오늘 대청소하자" 한마디', href: null,
+    thumb: () => nemoMom({ x: 12, y: 8, w: 58, h: 52, emo: 'worry' }) },
+];
+$('eps').innerHTML = EPS.map(e => {
+  const inner = `<svg viewBox="0 0 86 86">${e.thumb()}</svg><div><div class="no">${e.n}${e.href ? '' : ' · 준비 중'}</div><div class="ti">${e.t}</div><div class="de">${e.d}</div></div>`;
+  return e.href ? `<a class="ep" href="${e.href}">${inner}</a>` : `<div class="ep soon">${inner}</div>`;
+}).join('');
+
+const FAM = [
+  ['네모', '벅참과 결핍의 대가족. 따뜻한데 늘 부담스럽다.', () => nemoDad({ x: 10, y: 6, w: 54, h: 48, emo: 'good' })],
+  ['세모', '삼한사온. 마주보면 사랑, 나란히 서면 전투.', () => semoWife({ x: 10, y: 4, size: 56, emo: 'wink' })],
+  ['동그라미', '완벽한데 외롭다. 닿을 듯 닿지 않는다.', () => dongDad({ cx: 37, cy: 34, r: 27, emo: 'good' })],
+];
+$('fam').innerHTML = FAM.map(([b, s, f]) => `<div class="row"><svg viewBox="0 0 74 74">${f()}</svg><div><b>${b}</b><span>${s}</span></div></div>`).join('');
+</script>
+</body>
+</html>

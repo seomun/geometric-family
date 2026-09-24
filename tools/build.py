@@ -13,7 +13,7 @@ for fp in sorted(glob.glob(os.path.join(ROOT, "web/*.html"))):
     out = "<script>\n".join(html.split(TAG)[:1]) + "<script>\n" + js + "\n</script>" + html.split(TAG)[1]
     name = os.path.basename(fp)
     open(os.path.join(dist, name), "w", encoding="utf-8", newline="\n").write(out); print("built", name, len(out))
-shutil.copy(os.path.join(dist, "ep01.html"), os.path.join(dist, "index.html")); print("index.html = ep01")
+print("index.html = web/index.html (목차)")
 # 래스터 자산 복사 (시트 원본 _sheet 제외) + 배포본에서는 assets 경로가 같은 층
 src_assets = os.path.join(ROOT, "assets")
 if os.path.isdir(src_assets):

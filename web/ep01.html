@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>기하학 가족 1화 「부고」</title>
+<title>기하학 가족 2화 「부고」</title>
 <meta name="description" content="같은 부고 문자를 받은 세 동창. 네모·세모·동그라미 — 당신은 어느 도형인가요?">
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 <style>
@@ -56,7 +56,7 @@ const phoneFrame = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height=
 // ---- 1. 타이틀 ----
 cut(360, `
   ${T(W / 2, 70, '기하학 가족', 26, 'middle', F, 'letter-spacing="6"')}
-  ${T(W / 2, 150, '1화', 30, 'middle', F)}
+  ${T(W / 2, 150, '2화', 30, 'middle', F)}
   ${T(W / 2, 220, '「 부고 」', 58, 'middle', FM, 'font-weight="700"')}
   ${nemoDad({ x: 150, y: 244, w: 70, h: 62, emo: 'worry', pose: 'think' })}
   ${semoHusband({ x: 320, y: 240, size: 74, emo: 'bad', pose: 'hips' })}
@@ -180,7 +180,7 @@ document.getElementById('strip').innerHTML = cuts.join('') + `
   </div>
   <div class="bars" id="bars"></div>
   <p class="note">댓글로 당신의 이야기를 남겨 주세요. 좋은 사연은 동의를 받아 외전으로 이어집니다.</p>
-  <div class="next">다음 화 — 2화 「집 청소」<br><span style="font-size:15px;opacity:.7">같은 주말, 세 집의 청소는 어떻게 다를까</span></div>
+  <div class="next"><a href="ep02.html" style="color:inherit">← 1화 「단톡방」</a> &nbsp;·&nbsp; <a href="index.html" style="color:inherit">목차</a><br><span style="font-size:15px;opacity:.7">다음 화 — 3화 「집 청소」 준비 중</span></div>
 </div>`;
 
 // 투표: 서버 없음. 이 브라우저에만 저장. (배포 시 폼/댓글 서비스로 교체 지점)

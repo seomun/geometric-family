@@ -13,6 +13,8 @@
 - 채널별 전략: `docs/02_IP_STRATEGY.md` — 채널별 형식(쇼츠 A/B/C 고정 포맷), 주간 리듬, AI/사람 역할, 4주 KPI.
 - 스크린샷: `notes/2026-09-16_characters.png`, `notes/2026-09-16_ep01.png`.
 
+## 🌐 사이트 구조: `web/index.html` = 목차(첫 화면). 1화 `ep02.html` 단톡방 / 2화 `ep01.html` 부고 — **파일명과 화 번호가 어긋나 있으니 주의**(기존 링크 보존 때문). 새 화는 `ep03.html` 부터.
+
 ## 🧩 세션 구조: `docs/07_MULTI_SESSION.md` — **허브 1개(지금) → 쇼츠 → 블로그 → 게임** 단계 분화. 분리 신호·소유 구역·첫 메시지 복사본 포함
 ## 📚 에피소드 뱅크: `content/episodes/EPISODES.md` — 10편 후보, **1화 = E01「단톡방」** 확정
 

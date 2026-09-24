@@ -22,5 +22,5 @@ if os.path.isdir(src_assets):
     shutil.copytree(src_assets, dst_assets, ignore=shutil.ignore_patterns("_sheet", "*.psd"))
     for fn in os.listdir(dist):
         if fn.endswith(".html"):
-            fp = os.path.join(dist, fn); h = open(fp, encoding="utf-8").read().replace("assets: '../assets/'", "assets: './assets/'"); open(fp, "w", encoding="utf-8", newline=chr(10)).write(h)
+            fp = os.path.join(dist, fn); h = open(fp, encoding="utf-8").read().replace("assets: '../assets/'", "assets: './assets/'").replace("GF.setAssets('../../assets/')", "GF.setAssets('./assets/')"); open(fp, "w", encoding="utf-8", newline=chr(10)).write(h)
     print("assets copied")

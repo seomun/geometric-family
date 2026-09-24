@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>쇼츠 01 — 보험 전화</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #2a2230; font-family: 'Gowun Dodum', sans-serif; }
+  .frames { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; }
+  .frame { width: 270px; height: 480px; }   /* 화면 미리보기용 축소. 내보내기는 1080×1920 */
+  .frame svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div class="frames" id="frames"></div>
+<script src="../../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+GF.setMode('hand');
+GF.setAssets('../../assets/');   // web/shorts/ 에서는 두 단계 위
+const W = 1080, H = 1920;
+const F = "font-family:'Gaegu',sans-serif", FB = "font-family:'Gowun Dodum',sans-serif", FM = "font-family:'Nanum Myeongjo',serif";
+const T = (x, y, t, size, anchor = 'middle', font = FB, fill = INK, extra = '') =>
+  `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" style="${font}" fill="${fill}" ${extra}>${t}</text>`;
+// 상단 자막 바 (쇼츠는 하단을 UI 가 가리므로 위쪽에 둔다)
+const cap = (lines, y = 210, size = 74) => {
+  const h = lines.length * (size * 1.35) + 56;
+  return `<rect x="60" y="${y - 70}" width="${W - 120}" height="${h}" rx="30" fill="#fff" stroke="${INK}" stroke-width="6"/>` +
+    lines.map((t, i) => T(W / 2, y + size * 1.35 * i, t, size, 'middle', FB, INK, 'font-weight="700"')).join('');
+};
+const label = (t) => T(W / 2, 1780, t, 52, 'middle', FM, INK, 'opacity=".7"');
+const phoneBig = (x, y, w, h, screen) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="60" fill="#2b2b30" stroke="${INK}" stroke-width="8"/><rect x="${x + 26}" y="${y + 60}" width="${w - 52}" height="${h - 120}" rx="28" fill="${screen}"/><circle cx="${x + w / 2}" cy="${y + 34}" r="9" fill="#666"/>`;
+
+const frames = [];
+const frame = (bg, inner) => frames.push(`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="${bg}"/>${inner}${paper(W, H)}</svg>`);
+
+// ── 1 (0–3s) 상황 ──
+frame('#efe6d6', `
+  ${cap(['모르는 번호'], 200, 88)}
+  ${phoneBig(300, 480, 480, 900, '#b7c8d6')}
+  ${T(540, 800, '010-XXXX-XXXX', 62, 'middle', FB, INK)}
+  ${T(540, 900, '수신 중…', 50, 'middle', FB, INK, 'opacity=".6"')}
+  ${T(540, 1130, '"고객님, 혜택이…"', 58, 'middle', FM, INK, 'opacity=".8"')}
+  ${T(540, 1560, '📞', 150, 'middle', FB)}
+`);
+
+// ── 2 (3–7s) 네모 ──
+frame('#f4ecdd', `
+  ${cap(['🟦 네모'], 200, 80)}
+  ${nemoDad({ x: 330, y: 620, w: 420, h: 372, emo: 'worry', item: 'phone' })}
+  ${cap(['못 끊는다.', '3분째 듣는 중'], 1260, 72)}
+  ${label('"아… 다음에요" 하고 미안해한다')}
+`);
+
+// ── 3 (7–11s) 세모 ──
+frame('#e6edf5', `
+  ${cap(['🔺 세모'], 200, 80)}
+  ${semoHusband({ x: 90, y: 640, size: 380, emo: 'bad' })}
+  ${semoWife({ x: 570, y: 640, size: 380, emo: 'angry' })}
+  ${T(280, 1120, '뚝', 90, 'middle', F, INK)}
+  ${T(760, 1120, '"그게 무슨 말씀이죠?"', 44, 'middle', FB, INK)}
+  ${cap(['남편은 바로 끊고,', '아내는 조목조목 따진다'], 1300, 66)}
+`);
+
+// ── 4 (11–15s) 동그라미 ──
+frame('#e4e6e8', `
+  ${cap(['⚫ 동그라미'], 200, 80)}
+  ${dongDad({ cx: 540, cy: 860, r: 230, emo: 'good' })}
+  ${phoneBig(760, 1120, 190, 330, '#c9ced2')}
+  ${T(855, 1300, '📵', 70, 'middle', FB)}
+  ${cap(['받지 않는다.', '차단도 안 한다'], 1520, 68)}
+`);
+
+// ── 5 (15–18s) 질문 ──
+frame('#f4ecdd', `
+  ${T(540, 260, '당신은', 84, 'middle', F, INK)}
+  ${T(540, 380, '어느 도형인가요?', 96, 'middle', F, INK)}
+  ${nemoDad({ x: 80, y: 700, w: 240, h: 212, emo: 'worry' })}
+  ${semoHusband({ x: 400, y: 690, size: 250, emo: 'bad' })}
+  ${dongDad({ cx: 880, cy: 830, r: 125, emo: 'good' })}
+  ${T(230, 1050, '못 끊음', 52, 'middle', FB, INK)}
+  ${T(525, 1050, '바로 끊음', 52, 'middle', FB, INK)}
+  ${T(880, 1050, '안 받음', 52, 'middle', FB, INK)}
+  ${T(540, 1320, '댓글로 알려주세요', 62, 'middle', FB, INK, 'opacity=".85"')}
+  ${T(540, 1560, '기하학 가족', 76, 'middle', F, INK, 'letter-spacing="8"')}
+  ${T(540, 1640, 'seomun.github.io/geometric-family', 40, 'middle', FB, INK, 'opacity=".6"')}
+`);
+
+document.getElementById('frames').innerHTML = frames.map((f, i) => `<div class="frame" id="f${i + 1}">${f}</div>`).join('');
+</script>
+</body>
+</html>

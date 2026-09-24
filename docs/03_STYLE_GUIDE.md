@@ -42,13 +42,20 @@ hand 가 하는 일(전부 SVG 필터, 원본 무수정):
 비교 시트: `web/touch.html`. 값은 여기서만 바꾼다. **이모티콘·굿즈 벡터 납품은 clean.**
 트렌드 근거: 2025~26 캐릭터 = "불완전한 매력"(흐트러진 선, 낮은 채도 파스텔, 빈틈) — 망그러진 곰·최고심·빵빵이 계열.
 
+## 1-2-1. 🔴 막둥이 = IP 의 마스코트 (2026-09-24)
+**네모가족 가족사진이 이 IP 의 메인 컷이고, 그 중심의 막둥이가 가장 귀여워야 한다.**
+- 위치: 직육면체 중앙 틈. `squareFamilyPortrait()` 에서 **맨 마지막에 그려** 앞으로 나온다.
+- 규격: 어른의 45% 크기, 삐친 머리 **없음**(유일하게), 눈은 얼굴의 **60%**(형제보다도 크게), 볼터치 진하게.
+- 이 캐릭터만은 "귀여움"이 다른 모든 기준보다 우선한다. 시트를 여러 번 다시 뽑아도 된다.
+
 ## 1-3. 세모 부부 = 래스터 정본 (2026-09-23, D4 실행)
 - 정본 시트: `assets/wife/_sheet/sheet_v1.png` (ChatGPT, 2×3). 잘린 낱장: `assets/wife/{good,joy,wink,love,surprise,worry}.png` (600×600 투명, 발끝 하단 5% 정렬).
 - 남편도 동일: `assets/husband/` (시트 v1, 6표정). 상복 컷만 코드 벡터 유지.
 - 코드는 `semoWife({emo})` / `semoHusband({emo})` 호출 시 자동으로 해당 PNG 배치(`GF.sprite`). 표정은 `sheetEmo(who, emo)` 가 **캐릭터별로 있는 칸 중 가장 가까운 것**을 고른다(예: angry → bad → worry → good).
 - 아내 시트 v2(2026-09-23): angry/bad/smug/tired/cry/calm 추가 → 전투 장면 해결.
 - 반입은 `assets/_inbox/<이름>.png` + `python tools/ingest.py` (규칙표는 docs/06 상단).
-- **래스터 적용 캐릭터**: 세모 아내(12표정) · 세모 남편(6) · 네모 아빠(6) · 동그라미 아빠(6: good/joy/calm/warm/surprise/trouble) · **네모 엄마(6, 팔 4개)**. 나머지는 코드 벡터 유지.
+- **래스터 적용 캐릭터**: 세모 아내(12표정) · 세모 남편(6) · 네모 아빠(6) · 동그라미 아빠(6: good/joy/calm/warm/surprise/trouble) · 네모 엄마(6, 팔 4개) · **네모 아이 4인(각 1표정: kid1/kid2/kid3/baby)**. 나머지는 코드 벡터 유지.
+- 아이는 표정이 1종뿐이라 `emo` 를 무시하고 색(`color`)으로 누구인지 판별한다(`KID_BY_COLOR`). 표정이 더 필요하면 아이별 시트를 따로 뽑는다.
 - **반입 경로 2가지**: ① `assets/_inbox/<이름>.png` + `ingest.py` ② **채팅에 붙여넣기** — 업로드는 `~/.claude/uploads/<세션>/`에 저장되므로 허브가 꺼내 쓴다(밖에서 작업할 때).
 - 동그라미 가족은 **표정 폴백이 다르다**(`EMO_FALLBACK_CALM`): angry·bad·sad 모두 `calm`/`trouble` 로 수렴한다 — "약해 보이지 않는다" 원칙의 코드 구현.
 - 코드 벡터 아내는 `semoWife({ raster: false })` 로 남아 있다(대안·비교용). 전역 전환: `GF.setRasterWife(false)`.

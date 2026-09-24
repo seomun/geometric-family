@@ -33,7 +33,7 @@
   <svg viewBox="0 0 900 240" id="items"></svg>
 
   <h2>가족 상태 — 직육면체 / 웨딩 / 전투 / 균등한 거리</h2>
-  <svg viewBox="0 0 900 520" id="family"></svg>
+  <svg viewBox="0 0 900 560" id="family"></svg>
 
   <h2>굿즈 미리보기 — 노트 표지 · 스티커</h2>
   <svg viewBox="0 0 900 380" id="goods"></svg>
@@ -81,7 +81,7 @@ ITEMS.forEach((item, i) => {
 $('items').innerHTML = it;
 
 // 가족
-$('family').innerHTML = squareFamilyPortrait(10, 10) + triangleWedding(480, 20) + triangleBattle(480, 200) + circleFamilyPortrait(60, 360).replace('translate(60,360)', 'translate(60,360) scale(.85)') + L(200, 500, '동그라미 — 닿을 듯 닿지 않는다') + L(600, 500, '세모 — 마주보면 사랑, 나란히 서면 전투') + L(200, 330, '네모 — 직육면체로 뭉친다');
+$('family').innerHTML = squareFamilyPortrait(20, 10, 1.05) + triangleWedding(480, 20) + triangleBattle(480, 200) + circleFamilyPortrait(60, 360).replace('translate(60,360)', 'translate(60,360) scale(.85)') + L(200, 500, '동그라미 — 닿을 듯 닿지 않는다') + L(600, 500, '세모 — 마주보면 사랑, 나란히 서면 전투') + L(200, 330, '네모 — 직육면체로 뭉친다');
 
 // 굿즈: 노트 표지 (A5 비율) + 스티커
 $('goods').innerHTML = `

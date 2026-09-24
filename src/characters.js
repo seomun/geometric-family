@@ -237,7 +237,7 @@
     return `<path d="M${cx - w / 2},${yb} L${cx},${yb + w * 0.28} L${cx + w / 2},${yb} L${cx + w * 0.3},${yb} L${cx},${yb + w * 0.18} L${cx - w * 0.3},${yb}z" fill="#fff" stroke="${INK}" stroke-width="${LINE * 0.6}" stroke-linejoin="round"/>` +
       `<path d="M${cx},${yb + w * 0.16} l${w * 0.07},${w * 0.1} l${-w * 0.07},${w * 0.34} l${-w * 0.07},${-w * 0.34}z" fill="${SUIT}" stroke="${INK}" stroke-width="${LINE * 0.5}"/>`;
   }
-  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true, rasterHusband: true, rasterNemoDad: true, rasterDongDad: true, rasterNemoMom: true };
+  const MODE = { mode: 'clean', seed: 0, assets: '../assets/', rasterWife: true, rasterHusband: true, rasterNemoDad: true, rasterDongDad: true, rasterNemoMom: true, rasterNemoKids: true };
   /* 래스터 캐릭터(ChatGPT 정본). name = 'wife/wink'. 600×600 캔버스, 발끝이 하단 5%. x,y = 좌상단, w = 폭(높이 = w). flip 으로 좌우 반전. */
   function sprite(name, { x, y, w, flip = false, opacity = 1 }) {
     const href = MODE.assets + name + '.png';
@@ -255,6 +255,7 @@
     worry: ['trouble','calm','good'], bad: ['calm','trouble','good'], angry: ['calm','trouble','good'], sad: ['trouble','calm','good'], cry: ['trouble','calm','good'],
     relief: ['warm','calm','good'], tired: ['calm','trouble','good'], smug: ['warm','joy','good'], calm: ['calm','good'], warm: ['warm','good'], trouble: ['trouble','calm','good'] };
   const CALM_CHARS = ['dong_dad', 'dong_mom', 'dong_son', 'dong_daughter'];
+  const KID_BY_COLOR = { '#f0c583': 'kid1', '#f2b49e': 'kid2', '#e6a9c0': 'kid3', '#f8dcb0': 'baby' };
   const sheetEmo = (who, emo) => ((CALM_CHARS.includes(who) ? EMO_FALLBACK_CALM : EMO_FALLBACK)[emo] || ['good']).find(e => (SHEET_HAVE[who] || []).includes(e)) || 'good';
   const WIFE_MAP = new Proxy({}, { get: (_, e) => sheetEmo('wife', e) });
   function touch(inner) { // 칠 패스(어긋남) + 선 패스(흔들림·굵기 변화). 미세 기울기는 길이 해시로 결정(같은 입력 = 같은 결과)
@@ -313,7 +314,15 @@
     return square({ outfit: 'apron', outfitColor: '#fff7ee', ...o, w, h, color: COLORS.nemoMom, feat, faceY: 0.47, female: true, extraHands: o.manyHands !== false, faceOpt: { emo: o.emo || 'good', gaze: o.gaze || 0, lashes: true } });
   }
   function nemoKid(o) {
-    const { x, y, w = 66, h = 66, color = COLORS.nemoKid1, tuft = true, girl = false } = o; const cx = x + w / 2;
+    const { x, y, w = 66, h = 66, color = COLORS.nemoKid1, tuft = true, girl = false } = o;
+    const kid = o.who || KID_BY_COLOR[String(color).toLowerCase()];
+    if ((o.raster === undefined ? MODE.rasterNemoKids : o.raster) && kid) { // ChatGPT 정본 래스터 (아이는 표정 1종)
+      const cw = w * (kid === 'baby' ? 1.62 : 1.5), sx = x + w / 2 - cw / 2, sy = y - h * (kid === 'baby' ? 0.05 : 0.09);
+      let g = sprite('nemo_kids/' + kid, { x: sx, y: sy, w: cw, flip: o.flip || (o.gaze || 0) < 0 });
+      if (o.item) g += itemAt(o.item, x + w * (o.flip ? 0 : 1), y + h * 0.74, w * 0.9);
+      return `<g class="gf-ch gf-raster">${g}</g>`;
+    }
+    const cx = x + w / 2;
     const feat = tuft ? `<path d="M${cx - 2},${y + 1} q-2,-13 7,-15 q-7,5 -3,15" stroke="${INK}" stroke-width="${LINE * 0.8}" fill="none" stroke-linecap="round"/>` : '';
     return square({ outfit: girl ? 'skirt' : 'none', outfitColor: '#fde3ea', ...o, w, h, color, feat, faceY: 0.52, faceS: 0.72, female: girl, faceOpt: { emo: o.emo || 'good', gaze: o.gaze || 0, eyeStyle: 'big', lashes: girl } });
   }
@@ -494,17 +503,19 @@
   const dongDaughter = (o) => dong({ r: 34, item: 'racket', ...o, who: 'daughter' });
 
   /* ---------- 가족 초상 / 상태 ---------- */
-  function squareFamilyPortrait(x = 0, y = 0) {
-    return `<g transform="translate(${x},${y})">` +
-      nemoKid({ x: 0, y: 40, w: 66, h: 66, color: COLORS.nemoKid1, emo: 'joy', gaze: 1 }) +
-      nemoKid({ x: 96, y: 40, w: 66, h: 66, color: COLORS.nemoKid2, emo: 'angry', gaze: 1, pose: 'point' }) +
-      nemoKid({ x: 192, y: 40, w: 66, h: 66, color: COLORS.nemoKid3, emo: 'bad', gaze: -1, pose: 'hips' }) +
-      nemoKid({ x: 290, y: 50, w: 56, h: 56, color: COLORS.nemoBaby, emo: 'good', tuft: false, pose: 'cheer' }) +
-      nemoDad({ x: 0, y: 150, w: 120, h: 106, emo: 'relief', pose: 'stand' }) +
-      nemoMom({ x: 140, y: 164, w: 96, h: 92, emo: 'good', pose: 'hold' }) +
-      nemoGrandma({ x: 262, y: 176, w: 84, h: 80, emo: 'good' }) +
-      nemoKid({ x: 86, y: 216, w: 40, h: 40, color: COLORS.nemoBaby, emo: 'surprise', tuft: false, gaze: -1 }) +
-      '</g>';
+  /* 가족사진 — 직육면체로 뭉친 7인. 막둥이가 중앙 틈에 있다. 네모가족의 메인 컷. */
+  function squareFamilyPortrait(x = 0, y = 0, scale = 1) {
+    const K = 74, A = 118;   // 아이 몸 폭 / 어른 몸 폭
+    let g = '';
+    g += nemoKid({ x: 8, y: 0, w: K, h: K, color: COLORS.nemoKid1 });
+    g += nemoKid({ x: 8 + K * 1.06, y: 0, w: K, h: K, color: COLORS.nemoKid2 });
+    g += nemoKid({ x: 8 + K * 2.12, y: 0, w: K, h: K, color: COLORS.nemoKid3 });
+    const y2 = K * 1.12;
+    g += nemoDad({ x: 0, y: y2, w: A, h: A * 0.9 });
+    g += nemoMom({ x: A * 1.02, y: y2 + 6, w: A * 0.92, h: A * 0.85 });
+    g += nemoGrandma({ x: A * 1.98, y: y2 + 12, w: A * 0.84, h: A * 0.78 });
+    g += nemoKid({ x: A * 0.92, y: y2 - K * 0.58, w: K * 0.78, h: K * 0.78, color: COLORS.nemoBaby });
+    return `<g transform="translate(${x},${y}) scale(${scale})">${g}</g>`;
   }
   /* 세모 커플 — 마주보고 칼·방패 / 마주보고 사랑 / 담 너머 엿보기 */
   function coupleBattle(x = 0, y = 0, size = 122) {
@@ -562,7 +573,7 @@
   }
 
   const GF = { VERSION: 'v7', INK, PAPER, SUIT, LINE, COLORS, EMOS, POSES, ITEMS, ROUGH_DEFS, CHAR_STYLE, face, itemAt, touch, paper,
-    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, setRasterHusband: (b) => { MODE.rasterHusband = b; }, setRasterNemoDad: (b) => { MODE.rasterNemoDad = b; }, setRasterDongDad: (b) => { MODE.rasterDongDad = b; }, setRasterNemoMom: (b) => { MODE.rasterNemoMom = b; }, sprite,
+    setMode: (m) => { MODE.mode = m; }, get mode() { return MODE.mode; }, setAssets: (p) => { MODE.assets = p; }, setRasterWife: (b) => { MODE.rasterWife = b; }, setRasterHusband: (b) => { MODE.rasterHusband = b; }, setRasterNemoDad: (b) => { MODE.rasterNemoDad = b; }, setRasterDongDad: (b) => { MODE.rasterDongDad = b; }, setRasterNemoMom: (b) => { MODE.rasterNemoMom = b; }, setRasterNemoKids: (b) => { MODE.rasterNemoKids = b; }, sprite,
     nemoDad, nemoMom, nemoKid, nemoGrandma, semoHusband, semoWife, dongDad, dongMom, dongSon, dongDaughter,
     squareFamilyPortrait, triangleWedding, triangleBattle, circleFamilyPortrait, coupleBattle, coupleLove, semoWifePeek, wifeFace, coffeeCup, windowBg, speech, narration, suitCollar: collar };
   root.GF = GF; Object.assign(root, GF);

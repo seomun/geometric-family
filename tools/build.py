@@ -22,5 +22,20 @@ if os.path.isdir(src_assets):
     shutil.copytree(src_assets, dst_assets, ignore=shutil.ignore_patterns("_sheet", "*.psd"))
     for fn in os.listdir(dist):
         if fn.endswith(".html"):
-            fp = os.path.join(dist, fn); h = open(fp, encoding="utf-8").read().replace("assets: '../assets/'", "assets: './assets/'").replace("GF.setAssets('../../assets/')", "GF.setAssets('./assets/')"); open(fp, "w", encoding="utf-8", newline=chr(10)).write(h)
+            fp = os.path.join(dist, fn); h = open(fp, encoding="utf-8").read().replace("assets: '../assets/'", "assets: './assets/'").replace("GF.setAssets('../../assets/')", "GF.setAssets('./assets/')").replace("'../content/shorts/'", "'./shorts/'"); open(fp, "w", encoding="utf-8", newline=chr(10)).write(h)
     print("assets copied")
+
+# 쇼츠 프레임 복사 (content/shorts/<name>/*.png → dist/shorts/<name>/)
+src_shorts = os.path.join(ROOT, "content", "shorts")
+if os.path.isdir(src_shorts):
+    dst_shorts = os.path.join(dist, "shorts")
+    if os.path.isdir(dst_shorts): shutil.rmtree(dst_shorts)
+    n = 0
+    for name in sorted(os.listdir(src_shorts)):
+        d = os.path.join(src_shorts, name)
+        if not os.path.isdir(d): continue
+        os.makedirs(os.path.join(dst_shorts, name), exist_ok=True)
+        for fn in sorted(os.listdir(d)):
+            if fn.endswith(".png"):
+                shutil.copy2(os.path.join(d, fn), os.path.join(dst_shorts, name, fn)); n += 1
+    print("shorts frames copied", n)

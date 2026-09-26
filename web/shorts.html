@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 — 쇼츠</title>
+<meta name="description" content="기하학 가족 쇼츠. 편집표 타이밍 그대로 미리 보기.">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #6b5443; --paper: #f4ecdd; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9dfcc; color: var(--ink); font-family: 'Gowun Dodum', sans-serif; }
+  .wrap { max-width: 720px; margin: 0 auto; background: var(--paper); box-shadow: 0 0 40px rgba(0,0,0,.15); min-height: 100vh; padding-bottom: 40px; }
+  header { padding: 30px 24px 6px; text-align: center; }
+  h1 { font-family: Gaegu, sans-serif; font-size: 40px; margin: 0; letter-spacing: 2px; }
+  .tag { font-size: 15px; opacity: .8; margin: 8px 0 0; line-height: 1.7; }
+  .back { display: block; text-align: center; font-size: 15px; color: var(--ink); margin: 6px 0 0; }
+  .hero { display: block; width: 100%; height: auto; }
+  .pick { display: flex; gap: 10px; margin: 20px 24px 16px; flex-wrap: wrap; }
+  .pick button { flex: 1 1 150px; font-family: Gaegu, sans-serif; font-size: 20px; color: var(--ink); background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 12px 8px; cursor: pointer; line-height: 1.3; }
+  .pick button small { display: block; font-family: 'Gowun Dodum'; font-size: 13px; opacity: .7; margin-top: 3px; }
+  .pick button.on { background: #fff3d6; box-shadow: 0 0 0 3px #e2b76a; }
+  .stage { margin: 0 24px; }
+  .screen { position: relative; width: 100%; aspect-ratio: 9 / 16; background: #2a2230; border: 3px solid var(--ink); border-radius: 18px; overflow: hidden; cursor: pointer; }
+  .screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .bar { position: absolute; left: 0; right: 0; top: 0; display: flex; gap: 3px; padding: 7px; }
+  .bar i { flex: 1; height: 3px; background: rgba(255,255,255,.35); border-radius: 2px; overflow: hidden; }
+  .bar i b { display: block; height: 100%; width: 0; background: #fff; }
+  .play { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.35); color: #fff; font-family: Gaegu, sans-serif; font-size: 26px; }
+  .play.hide { display: none; }
+  .ctrl { display: flex; gap: 10px; justify-content: center; align-items: center; margin: 14px 0 0; font-size: 15px; }
+  .ctrl button { font-family: Gaegu, sans-serif; font-size: 19px; color: var(--ink); background: #fff; border: 2px solid var(--ink); border-radius: 12px; padding: 7px 18px; cursor: pointer; }
+  .cap { margin: 16px 24px 0; background: #fff; border: 2px dashed var(--ink); border-radius: 14px; padding: 16px; font-size: 15px; line-height: 1.8; }
+  .cap b { font-family: Gaegu, sans-serif; font-size: 20px; display: block; margin-bottom: 4px; }
+  .foot { text-align: center; font-size: 12px; opacity: .6; padding: 34px 24px 10px; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>쇼츠</h1>
+    <p class="tag">편집표 타이밍 그대로 재생됩니다. 화면을 누르면 재생 / 멈춤.</p>
+    <a class="back" href="index.html">← 목차로</a>
+  </header>
+  <svg class="hero" viewBox="0 0 720 160" id="hero"></svg>
+
+  <div class="pick" id="pick"></div>
+  <div class="stage">
+    <div class="screen" id="screen">
+      <img id="shot" alt="">
+      <div class="bar" id="bar"></div>
+      <div class="play" id="play">▶ 재생</div>
+    </div>
+    <div class="ctrl">
+      <button id="prev">◀ 이전 컷</button>
+      <span id="now">1 / 6</span>
+      <button id="next">다음 컷 ▶</button>
+    </div>
+  </div>
+  <div class="cap" id="cap"></div>
+
+  <div class="foot">© 기하학 가족 · 이야기는 모두 허구입니다.</div>
+</div>
+
+<script src="../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+GF.setMode('hand');
+const BASE = '../content/shorts/';   // 배포본에서는 './shorts/' 로 치환된다
+const $ = id => document.getElementById(id);
+
+$('hero').innerHTML = `<rect width="720" height="160" fill="#f4ecdd"/>` +
+  nemoDad({ x: 150, y: 28, w: 96, h: 85, emo: 'good' }) +
+  semoHusband({ x: 300, y: 24, size: 92, emo: 'joy', gaze: 1 }) +
+  dongDad({ cx: 500, cy: 76, r: 44, emo: 'good' }) + paper(720, 160);
+
+const SHORTS = [
+  { id: 's01', t: '모르는 번호', sub: '18초 · 보험 전화', n: 5, dur: [3.0, 4.0, 4.0, 4.0, 3.0],
+    note: '포맷 A(세 반응). 낯선 번호 하나에 세 가족이 다르게 반응한다. 나레이션 없음, 자막만.',
+    cta: '① 못 끊음 ② 바로 끊음 ③ 안 받음' },
+  { id: 's02', t: '넌 얼마나 했냐?', sub: '20초 · 2화 부고', n: 6, dur: [3.5, 3.5, 3.5, 3.5, 3.0, 3.0],
+    note: '포맷 B(한 마디). 대사 세 줄은 작가 원문 그대로다. 14~17초 구간은 효과음 없이 BGM 만.',
+    cta: '① 남들 만큼 ② 물어본다 ③ 정해져 있다' },
+];
+
+let cur = SHORTS[SHORTS.length - 1], i = 0, timer = null, raf = null, playing = false;
+
+$('pick').innerHTML = SHORTS.map(s => `<button data-id="${s.id}">${s.t}<small>${s.sub}</small></button>`).join('');
+$('pick').addEventListener('click', e => { const b = e.target.closest('button'); if (b) load(SHORTS.find(s => s.id === b.dataset.id)); });
+
+function load(s) {
+  stop(); cur = s; i = 0;
+  document.querySelectorAll('.pick button').forEach(b => b.classList.toggle('on', b.dataset.id === s.id));
+  $('bar').innerHTML = Array.from({ length: s.n }, () => '<i><b></b></i>').join('');
+  $('cap').innerHTML = `<b>${s.t}</b>${s.note}<br><span style="opacity:.75">고정 댓글: ${s.cta}</span>`;
+  show(0); $('play').classList.remove('hide');
+}
+function show(k) {
+  i = (k + cur.n) % cur.n;
+  $('shot').src = BASE + cur.id + '/f' + (i + 1) + '.png';
+  $('now').textContent = (i + 1) + ' / ' + cur.n;
+  document.querySelectorAll('.bar b').forEach((b, j) => { b.style.width = j < i ? '100%' : '0'; });
+}
+function stop() { playing = false; clearTimeout(timer); cancelAnimationFrame(raf); $('play').classList.remove('hide'); }
+function play() {
+  playing = true; $('play').classList.add('hide');
+  const step = () => {
+    const ms = cur.dur[i] * 1000, t0 = performance.now(), fill = document.querySelectorAll('.bar b')[i];
+    const tick = () => { if (!playing) return; const p = Math.min(1, (performance.now() - t0) / ms); if (fill) fill.style.width = (p * 100) + '%'; if (p < 1) raf = requestAnimationFrame(tick); };
+    tick();
+    timer = setTimeout(() => {
+      if (!playing) return;
+      if (i + 1 >= cur.n) { stop(); return; }   // 마지막 컷에서 멈춘다
+      show(i + 1); step();
+    }, ms);
+  };
+  step();
+}
+$('screen').addEventListener('click', () => playing ? stop() : (i + 1 >= cur.n ? (show(0), play()) : play()));
+$('prev').addEventListener('click', () => { stop(); show(i - 1); });
+$('next').addEventListener('click', () => { stop(); show(i + 1); });
+load(cur);
+</script>
+</body>
+</html>

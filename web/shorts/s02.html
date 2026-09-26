@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>쇼츠 02 — 넌 얼마나 했냐?</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #2a2230; font-family: 'Gowun Dodum', sans-serif; }
+  .frames { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; }
+  .frame { width: 270px; height: 480px; }   /* 화면 미리보기용 축소. 내보내기는 1080×1920 */
+  .frame svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div class="frames" id="frames"></div>
+<script src="../../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+GF.setMode('hand');
+GF.setAssets('../../assets/');   // web/shorts/ 에서는 두 단계 위
+const W = 1080, H = 1920;
+const F = "font-family:'Gaegu',sans-serif", FB = "font-family:'Gowun Dodum',sans-serif", FM = "font-family:'Nanum Myeongjo',serif";
+const T = (x, y, t, size, anchor = 'middle', font = FB, fill = INK, extra = '') =>
+  `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" style="${font}" fill="${fill}" ${extra}>${t}</text>`;
+// 상단 자막 바 (쇼츠는 하단을 UI 가 가리므로 위쪽에 둔다)
+const cap = (lines, y = 210, size = 74) => {
+  const h = lines.length * (size * 1.35) + 56;
+  return `<rect x="60" y="${y - 70}" width="${W - 120}" height="${h}" rx="30" fill="#fff" stroke="${INK}" stroke-width="6"/>` +
+    lines.map((t, i) => T(W / 2, y + size * 1.35 * i, t, size, 'middle', FB, INK, 'font-weight="700"')).join('');
+};
+const label = (t, y = 1780) => T(W / 2, y, t, 50, 'middle', FM, INK, 'opacity=".7"');
+// 대사 말풍선 — 포맷 B 는 대사 한 줄이 주인공이라 크게 잡는다
+const line = (y, t, size = 86, font = F) =>
+  `<rect x="70" y="${y - size}" width="${W - 140}" height="${size * 1.75}" rx="${size * 0.75}" fill="#fff" stroke="${INK}" stroke-width="7"/>` +
+  T(W / 2, y + size * 0.3, t, size, 'middle', font, INK);
+// 접수대 (부의금 테이블)
+const desk = (y) => `<rect x="60" y="${y}" width="${W - 120}" height="34" rx="12" fill="#b99e7a" stroke="${INK}" stroke-width="6"/>` +
+  `<rect x="110" y="${y + 34}" width="${W - 220}" height="240" fill="#cdb392" stroke="${INK}" stroke-width="6"/>`;
+
+const frames = [];
+const frame = (bg, inner) => frames.push(`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="${bg}"/>${inner}${paper(W, H)}</svg>`);
+
+// ── 1 (0–3.5s) 상황: 봉투 앞에서 ──
+frame('#e6e1d8', `
+  ${cap(['얼마나 해야 하나?'], 200, 84)}
+  ${itemAt('condolence', 540, 790, 1340)}
+  ${desk(1000)}
+  ${T(540, 1460, '봉투에 이름을 적고,', 64, 'middle', FM, INK, 'opacity=".85"')}
+  ${T(540, 1550, '살짝 돌아서 돈을 넣는다', 64, 'middle', FM, INK, 'opacity=".85"')}
+  ${label('종일 고민했다. 서로 묻진 못했다')}
+`);
+
+// ── 2 (3.5–7s) 셋 ── 상복이라 코드 캐릭터(suit)
+frame('#ddd9d2', `
+  ${cap(['장례식장'], 200, 76)}
+  ${nemoDad({ x: 90, y: 700, w: 300, h: 266, emo: 'worry', suit: true })}
+  ${semoHusband({ x: 410, y: 690, size: 280, emo: 'sad', suit: true })}
+  ${dongDad({ cx: 850, cy: 860, r: 145, emo: 'calm', suit: true })}
+  ${T(240, 1090, '얼마 하지?', 46, 'middle', FB, INK)}
+  ${T(550, 1090, '얼마 하지?', 46, 'middle', FB, INK)}
+  ${T(850, 1090, '…', 46, 'middle', FB, INK)}
+  ${cap(['동그라미는 미리 준비해왔다.', '뒤에서 기다린다'], 1320, 62)}
+`);
+
+// ── 3 (7–10.5s) 한 마디 ──
+frame('#e6e1d8', `
+  ${nemoDad({ x: 240, y: 560, w: 600, h: 532, emo: 'worry', suit: true, gaze: 1 })}
+  ${line(1300, '"넌 얼마나 했냐?"', 84)}
+  ${label('끝내 묻고 말았다')}
+`);
+
+// ── 4 (10.5–14s) 대답 ──
+frame('#dcdee0', `
+  ${dongDad({ cx: 540, cy: 840, r: 300, emo: 'calm', suit: true })}
+  ${line(1300, '"뭐 그런 거 알아 뭐하게"', 70)}
+  ${label('금액이 뭔 상관이냐고 묻는 듯하다')}
+`);
+
+// ── 5 (14–17s) 속마음 ──
+frame('#e6e1d8', `
+  ${T(540, 480, '우린', 100, 'middle', FM, INK)}
+  ${T(540, 630, '상관이 좀 있단다,', 100, 'middle', FM, INK)}
+  ${T(540, 780, '친구야', 100, 'middle', FM, INK)}
+  ${nemoDad({ x: 305, y: 980, w: 470, h: 417, emo: 'sad', suit: true })}
+  ${label('네모는 속으로만 말했다', 1560)}
+`);
+
+// ── 6 (17–20s) 질문 ──
+frame('#f4ecdd', `
+  ${T(540, 260, '당신은', 84, 'middle', F, INK)}
+  ${T(540, 380, '어느 도형인가요?', 96, 'middle', F, INK)}
+  ${nemoDad({ x: 80, y: 700, w: 240, h: 212, emo: 'worry' })}
+  ${semoHusband({ x: 400, y: 690, size: 250, emo: 'bad' })}
+  ${dongDad({ cx: 880, cy: 830, r: 125, emo: 'good' })}
+  ${T(200, 1050, '남들 만큼', 50, 'middle', FB, INK)}
+  ${T(525, 1050, '물어본다', 50, 'middle', FB, INK)}
+  ${T(880, 1050, '정해져 있다', 50, 'middle', FB, INK)}
+  ${T(540, 1320, '댓글로 알려주세요', 62, 'middle', FB, INK, 'opacity=".85"')}
+  ${T(540, 1560, '기하학 가족', 76, 'middle', F, INK, 'letter-spacing="8"')}
+  ${T(540, 1640, 'seomun.github.io/geometric-family', 40, 'middle', FB, INK, 'opacity=".6"')}
+`);
+
+document.getElementById('frames').innerHTML = frames.map((f, i) => `<div class="frame" id="f${i + 1}">${f}</div>`).join('');
+</script>
+</body>
+</html>

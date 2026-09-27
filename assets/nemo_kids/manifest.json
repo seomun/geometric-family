@@ -1,0 +1,26 @@
+{
+  "kid1": {
+    "file": "kid1.png",
+    "w": 470,
+    "h": 540,
+    "ground": 570
+  },
+  "kid2": {
+    "file": "kid2.png",
+    "w": 472,
+    "h": 540,
+    "ground": 570
+  },
+  "kid3": {
+    "file": "kid3.png",
+    "w": 463,
+    "h": 540,
+    "ground": 570
+  },
+  "baby": {
+    "file": "baby.png",
+    "w": 507,
+    "h": 540,
+    "ground": 570
+  }
+}

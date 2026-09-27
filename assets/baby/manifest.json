@@ -1,0 +1,38 @@
+{
+  "good": {
+    "file": "good.png",
+    "w": 570,
+    "h": 533,
+    "ground": 570
+  },
+  "joy": {
+    "file": "joy.png",
+    "w": 570,
+    "h": 540,
+    "ground": 570
+  },
+  "surprise": {
+    "file": "surprise.png",
+    "w": 568,
+    "h": 540,
+    "ground": 570
+  },
+  "love": {
+    "file": "love.png",
+    "w": 568,
+    "h": 540,
+    "ground": 570
+  },
+  "cry": {
+    "file": "cry.png",
+    "w": 568,
+    "h": 540,
+    "ground": 570
+  },
+  "tired": {
+    "file": "tired.png",
+    "w": 570,
+    "h": 526,
+    "ground": 570
+  }
+}

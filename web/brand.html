@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>기하학 가족 — 채널 브랜드 자산</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #2a2230; font-family: 'Gowun Dodum', sans-serif; color: #f4ecdd; }
+  h2 { font-family: Gaegu, sans-serif; margin: 26px 0 8px; font-weight: 400; }
+  .pane { padding: 20px 26px 40px; }
+  .box svg { display: block; }
+  #profile { width: 300px; }          /* 내보내기 800×800 */
+  #banner { width: 760px; }           /* 내보내기 2560×1440 */
+  #blogtitle { width: 760px; }        /* 내보내기 966×400 */
+  #og { width: 600px; }               /* 내보내기 1200×630 */
+</style>
+</head>
+<body>
+<div class="pane">
+  <h2>프로필 800×800</h2><div class="box" id="profile"></div>
+  <h2>유튜브 배너 2560×1440 (가운데 1546×423 만 모든 기기에서 보인다)</h2><div class="box" id="banner"></div>
+  <h2>블로그 타이틀 966×400</h2><div class="box" id="blogtitle"></div>
+  <h2>OG 썸네일 1200×630</h2><div class="box" id="og"></div>
+</div>
+<script src="../src/characters.js"></script>
+<script>
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
+GF.setMode('hand');
+const F = "font-family:'Gaegu',sans-serif", FB = "font-family:'Gowun Dodum',sans-serif";
+const T = (x, y, t, s, a = 'middle', f = F, fill = INK, ex = '') =>
+  `<text x="${x}" y="${y}" text-anchor="${a}" font-size="${s}" style="${f}" fill="${fill}" ${ex}>${t}</text>`;
+const svg = (id, w, h, inner, bg = '#f4ecdd') => document.getElementById(id).innerHTML =
+  `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto"><rect width="${w}" height="${h}" fill="${bg}"/>${inner}${paper(w, h)}</svg>`;
+
+// 프로필 — 세모 아내가 IP 의 얼굴 (백서 §1-0)
+svg('profile', 800, 800, `
+  <circle cx="400" cy="400" r="392" fill="#efe6d6" stroke="${INK}" stroke-width="10"/>
+  ${semoWife({ x: 215, y: 190, size: 370, emo: 'wink' })}
+  ${T(400, 730, '기하학 가족', 76, 'middle', F, INK, 'letter-spacing="6"')}
+`, '#e9dfcc');
+
+// 유튜브 배너 — 안전영역(가운데 1546×423) 안에만 글자를 둔다
+svg('banner', 2560, 1440, `
+  ${nemoDad({ x: 905, y: 528, w: 170, h: 150, emo: 'good' })}
+  ${semoHusband({ x: 1105, y: 513, size: 165, emo: 'joy', gaze: 1 })}
+  ${semoWife({ x: 1295, y: 513, size: 165, emo: 'wink', gaze: -1 })}
+  ${dongDad({ cx: 1575, cy: 618, r: 80, emo: 'good' })}
+  ${T(1280, 858, '기하학 가족', 108, 'middle', F, INK, 'letter-spacing="10"')}
+  ${T(1280, 910, '같은 일을 겪는 세 도형 가족 · 당신은 어느 도형인가요?', 38, 'middle', FB, INK, 'opacity=".8"')}
+`);
+
+// 네이버 블로그 타이틀 — 화자는 네모 (백서 §블로그)
+svg('blogtitle', 966, 400, `
+  ${nemoDad({ x: 96, y: 150, w: 150, h: 133, emo: 'good', item: 'coffee' })}
+  ${T(560, 205, '네모의 기하학 가족', 78, 'middle', F, INK, 'letter-spacing="4"')}
+  ${T(560, 270, '평범한 네모가 쓰는, 세 가족 이야기', 34, 'middle', FB, INK, 'opacity=".8"')}
+`);
+
+// OG 썸네일
+svg('og', 1200, 630, `
+  ${nemoDad({ x: 210, y: 210, w: 150, h: 133, emo: 'good' })}
+  ${semoHusband({ x: 400, y: 200, size: 145, emo: 'joy', gaze: 1 })}
+  ${semoWife({ x: 550, y: 200, size: 145, emo: 'wink', gaze: -1 })}
+  ${dongDad({ cx: 790, cy: 275, r: 70, emo: 'good' })}
+  ${T(600, 460, '기하학 가족', 86, 'middle', F, INK, 'letter-spacing="8"')}
+  ${T(600, 525, '당신은 어느 도형인가요?', 38, 'middle', FB, INK, 'opacity=".8"')}
+`);
+</script>
+</body>
+</html>

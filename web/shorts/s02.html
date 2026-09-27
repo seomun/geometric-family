@@ -2,12 +2,12 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>쇼츠 02 — 넌 얼마나 했냐?</title>
+<title>쇼츠 02 — 부의금 5만원, 적나요?</title>
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 <style>
   body { margin: 0; background: #2a2230; font-family: 'Gowun Dodum', sans-serif; }
   .frames { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; }
-  .frame { width: 270px; height: 480px; }   /* 화면 미리보기용 축소. 내보내기는 1080×1920 */
+  .frame { width: 270px; height: 480px; }   /* 미리보기 축소. 내보내기는 1080×1920 */
   .frame svg { display: block; width: 100%; height: 100%; }
 </style>
 </head>
@@ -17,87 +17,93 @@
 <script>
 document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
 GF.setMode('hand');
-GF.setAssets('../../assets/');   // web/shorts/ 에서는 두 단계 위
+GF.setAssets('../../assets/');
 const W = 1080, H = 1920;
 const F = "font-family:'Gaegu',sans-serif", FB = "font-family:'Gowun Dodum',sans-serif", FM = "font-family:'Nanum Myeongjo',serif";
 const T = (x, y, t, size, anchor = 'middle', font = FB, fill = INK, extra = '') =>
   `<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" style="${font}" fill="${fill}" ${extra}>${t}</text>`;
-// 상단 자막 바 (쇼츠는 하단을 UI 가 가리므로 위쪽에 둔다)
+// 큰 훅 문장 (쇼츠는 상단이 안전지대)
+const hook = (lines, y = 300, size = 112, font = F) =>
+  lines.map((t, i) => T(W / 2, y + size * 1.22 * i, t, size, 'middle', font, INK, 'font-weight="700"')).join('');
+// 흰 자막 바
 const cap = (lines, y = 210, size = 74) => {
   const h = lines.length * (size * 1.35) + 56;
   return `<rect x="60" y="${y - 70}" width="${W - 120}" height="${h}" rx="30" fill="#fff" stroke="${INK}" stroke-width="6"/>` +
     lines.map((t, i) => T(W / 2, y + size * 1.35 * i, t, size, 'middle', FB, INK, 'font-weight="700"')).join('');
 };
-const label = (t, y = 1780) => T(W / 2, y, t, 50, 'middle', FM, INK, 'opacity=".7"');
-// 대사 말풍선 — 포맷 B 는 대사 한 줄이 주인공이라 크게 잡는다
-const line = (y, t, size = 86, font = F) =>
-  `<rect x="70" y="${y - size}" width="${W - 140}" height="${size * 1.75}" rx="${size * 0.75}" fill="#fff" stroke="${INK}" stroke-width="7"/>` +
-  T(W / 2, y + size * 0.3, t, size, 'middle', font, INK);
-// 접수대 (부의금 테이블)
-const desk = (y) => `<rect x="60" y="${y}" width="${W - 120}" height="34" rx="12" fill="#b99e7a" stroke="${INK}" stroke-width="6"/>` +
-  `<rect x="110" y="${y + 34}" width="${W - 220}" height="240" fill="#cdb392" stroke="${INK}" stroke-width="6"/>`;
+// 출처 — 숫자를 쓰면 반드시 붙인다 (docs/08_SOCIAL_STATS.md §4-1)
+const src = (t, y = 1830) => T(W / 2, y, t, 36, 'middle', FB, INK, 'opacity=".55"');
+const label = (t, y = 1700) => T(W / 2, y, t, 50, 'middle', FM, INK, 'opacity=".72"');
+const line = (y, t, size = 78) =>
+  `<rect x="70" y="${y - size}" width="${W - 140}" height="${size * 1.72}" rx="${size * 0.72}" fill="#fff" stroke="${INK}" stroke-width="7"/>` +
+  T(W / 2, y + size * 0.28, t, size, 'middle', F, INK);
+// 가로 막대 — 통계 컷
+const bar = (y, name, pct, w, color, big) => {
+  const bw = (W - 300) * (pct / 100);
+  return `<rect x="150" y="${y}" width="${W - 300}" height="86" rx="18" fill="#fff" stroke="${INK}" stroke-width="5"/>` +
+    `<rect x="150" y="${y}" width="${bw}" height="86" rx="18" fill="${color}" stroke="${INK}" stroke-width="5"/>` +
+    T(180, y + 60, name, big ? 54 : 46, 'start', F, INK) +
+    T(930, y + 60, pct + '%', big ? 54 : 46, 'end', F, INK);
+};
 
 const frames = [];
 const frame = (bg, inner) => frames.push(`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="${bg}"/>${inner}${paper(W, H)}</svg>`);
 
-// ── 1 (0–3.5s) 상황: 봉투 앞에서 ──
-frame('#e6e1d8', `
-  ${cap(['얼마나 해야 하나?'], 200, 84)}
-  ${itemAt('condolence', 540, 790, 1340)}
-  ${desk(1000)}
-  ${T(540, 1460, '봉투에 이름을 적고,', 64, 'middle', FM, INK, 'opacity=".85"')}
-  ${T(540, 1550, '살짝 돌아서 돈을 넣는다', 64, 'middle', FM, INK, 'opacity=".85"')}
-  ${label('종일 고민했다. 서로 묻진 못했다')}
+// ── 1 (0–2.5s) 훅: 시청자에게 먼저 묻는다 ──
+frame('#efe6d6', `
+  ${hook(['부의금 5만원,', '적나요?'], 280, 118)}
+  ${itemAt('condolence', 540, 1080, 1180)}
+  ${label('2026년, 처음으로 10만원이 5만원을 넘었습니다', 1600)}
 `);
 
-// ── 2 (3.5–7s) 셋 ── 상복이라 코드 캐릭터(suit)
-frame('#ddd9d2', `
-  ${cap(['장례식장'], 200, 76)}
-  ${nemoDad({ x: 90, y: 700, w: 300, h: 266, emo: 'worry', suit: true })}
-  ${semoHusband({ x: 410, y: 690, size: 280, emo: 'sad', suit: true })}
-  ${dongDad({ cx: 850, cy: 860, r: 145, emo: 'calm', suit: true })}
-  ${T(240, 1090, '얼마 하지?', 46, 'middle', FB, INK)}
-  ${T(550, 1090, '얼마 하지?', 46, 'middle', FB, INK)}
-  ${T(850, 1090, '…', 46, 'middle', FB, INK)}
-  ${cap(['동그라미는 미리 준비해왔다.', '뒤에서 기다린다'], 1320, 62)}
-`);
-
-// ── 3 (7–10.5s) 한 마디 ──
-frame('#e6e1d8', `
-  ${nemoDad({ x: 240, y: 560, w: 600, h: 532, emo: 'worry', suit: true, gaze: 1 })}
-  ${line(1300, '"넌 얼마나 했냐?"', 84)}
-  ${label('끝내 묻고 말았다')}
-`);
-
-// ── 4 (10.5–14s) 대답 ──
-frame('#dcdee0', `
-  ${dongDad({ cx: 540, cy: 840, r: 300, emo: 'calm', suit: true })}
-  ${line(1300, '"뭐 그런 거 알아 뭐하게"', 70)}
-  ${label('금액이 뭔 상관이냐고 묻는 듯하다')}
-`);
-
-// ── 5 (14–17s) 속마음 ──
-frame('#e6e1d8', `
-  ${T(540, 480, '우린', 100, 'middle', FM, INK)}
-  ${T(540, 630, '상관이 좀 있단다,', 100, 'middle', FM, INK)}
-  ${T(540, 780, '친구야', 100, 'middle', FM, INK)}
-  ${nemoDad({ x: 305, y: 980, w: 470, h: 417, emo: 'sad', suit: true })}
-  ${label('네모는 속으로만 말했다', 1560)}
-`);
-
-// ── 6 (17–20s) 질문 ──
+// ── 2 (2.5–5.5s) 통계 ──
 frame('#f4ecdd', `
-  ${T(540, 260, '당신은', 84, 'middle', F, INK)}
-  ${T(540, 380, '어느 도형인가요?', 96, 'middle', F, INK)}
-  ${nemoDad({ x: 80, y: 700, w: 240, h: 212, emo: 'worry' })}
-  ${semoHusband({ x: 400, y: 690, size: 250, emo: 'bad' })}
-  ${dongDad({ cx: 880, cy: 830, r: 125, emo: 'good' })}
-  ${T(200, 1050, '남들 만큼', 50, 'middle', FB, INK)}
-  ${T(525, 1050, '물어본다', 50, 'middle', FB, INK)}
-  ${T(880, 1050, '정해져 있다', 50, 'middle', FB, INK)}
-  ${T(540, 1320, '댓글로 알려주세요', 62, 'middle', FB, INK, 'opacity=".85"')}
-  ${T(540, 1560, '기하학 가족', 76, 'middle', F, INK, 'letter-spacing="8"')}
-  ${T(540, 1640, 'seomun.github.io/geometric-family', 40, 'middle', FB, INK, 'opacity=".6"')}
+  ${cap(['실제로는 이렇습니다'], 190, 72)}
+  ${bar(520, '10만원', 61.8, W, '#e2b76a', true)}
+  ${bar(660, '5만원', 25.7, W, '#b7c8d6', true)}
+  ${bar(800, '15만원', 7.2, W, '#d9d2c6')}
+  ${bar(920, '20만원', 4.6, W, '#d9d2c6')}
+  ${T(540, 1160, '평균 95,300원', 82, 'middle', F, INK)}
+  ${T(540, 1330, '경조사비가 부담된다', 64, 'middle', FB, INK, 'opacity=".85"')}
+  ${T(540, 1430, '65.8%', 104, 'middle', F, INK)}
+  ${src('SM C&C 틸리언 프로 2026.5 · 전국 성인 1,500명')}
+`);
+
+// ── 3 (5.5–8.0s) 작가의 질문 ① ──
+frame('#e6e1d8', `
+  ${hook(['5만원은 먼 지인,', '10만원은 지인?'], 300, 96)}
+  ${nemoDad({ x: 330, y: 900, w: 420, h: 372, emo: 'worry', suit: true })}
+  ${label('봉투 앞에서 종일 계산했다', 1560)}
+`);
+
+// ── 4 (8.0–10.5s) 작가의 질문 ② ──
+frame('#ddd9d2', `
+  ${hook(['받은 만큼 똑같이?', '인플레이션 반영?'], 300, 92)}
+  ${semoHusband({ x: 150, y: 900, size: 330, emo: 'bad', suit: true })}
+  ${dongDad({ cx: 760, cy: 1090, r: 175, emo: 'calm', suit: true })}
+  ${label('규칙이 있는 것도 아닌데', 1560)}
+`);
+
+// ── 5 (10.5–13.5s) 원작 대사 ──
+frame('#e6e1d8', `
+  ${nemoDad({ x: 120, y: 620, w: 340, h: 301, emo: 'worry', suit: true, gaze: 1 })}
+  ${dongDad({ cx: 790, cy: 780, r: 165, emo: 'calm', suit: true })}
+  ${line(1150, '"넌 얼마나 했냐?"', 74)}
+  ${line(1420, '"뭐 그런 거 알아 뭐하게"', 62)}
+  ${label('끝내 묻고 말았다', 1660)}
+`);
+
+// ── 6 (13.5–17.0s) 착지 — 작가의 문장 ──
+frame('#efe6d6', `
+  ${hook(['그냥 형편껏 하고,'], 300, 92, FM)}
+  ${hook(['마음만 잘 전달되기를…'], 420, 92, FM)}
+  ${nemoDad({ x: 350, y: 800, w: 380, h: 337, emo: 'good', suit: true })}
+  ${T(540, 1330, '당신은?', 68, 'middle', F, INK)}
+  ${T(230, 1450, '① 5만', 58, 'middle', FB, INK)}
+  ${T(540, 1450, '② 10만', 58, 'middle', FB, INK)}
+  ${T(860, 1450, '③ 형편껏', 58, 'middle', FB, INK)}
+  ${T(540, 1660, '기하학 가족', 72, 'middle', F, INK, 'letter-spacing="8"')}
+  ${T(540, 1740, 'seomun.github.io/geometric-family', 38, 'middle', FB, INK, 'opacity=".6"')}
 `);
 
 document.getElementById('frames').innerHTML = frames.map((f, i) => `<div class="frame" id="f${i + 1}">${f}</div>`).join('');

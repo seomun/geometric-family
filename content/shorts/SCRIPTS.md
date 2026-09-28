@@ -79,7 +79,7 @@
 
 | 항목 | 상태 |
 |---|---|
-| mp4 파일 | ❌ **없음.** PNG 6장뿐 → `tools/shorts_video.py`(ffmpeg) 로 만들 것 |
+| mp4 파일 | ✅ `content/shorts/s01.mp4`·`s02.mp4` (무음, 편집 표 타이밍). 재생성 `python tools/shorts_video.py s02` — 음악은 CapCut 에서 얹는다 |
 | 썸네일 | ❌ 쇼츠는 f1 이 곧 썸네일. f1 을 가장 세게 |
 | BGM | ❌ 저작권 프리 1곡 확정 필요. **매 편 같은 곡**(소리도 IP) |
 | 채널 | ❌ 유튜브 채널명 미정 — 「기하학 가족」 |

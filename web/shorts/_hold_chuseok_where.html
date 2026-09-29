@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>쇼츠 04 — 이번 추석, 어디서?</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #2a2230; }
+  .frames { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; }
+  .frame { width: 270px; height: 480px; }   /* 미리보기 축소. 내보내기는 1080×1920 */
+  .frame svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div class="frames" id="frames"></div>
+<script src="../../src/characters.js"></script>
+<script src="_shorts.js"></script>
+<script>
+// 주제: docs/09_TREND_TOPICS.md 1위 · 화풍 v2 (_shorts.js)
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE + SH.DEFS);
+GF.setMode('clean');
+GF.setAssets('../../assets/');
+const { W, C, INK2, T, head, hl, sticker, pill, src, cloud, frame, HEAD, anim } = SH;
+
+// 말풍선 (꼬리 방향 tx,ty)
+const say = (cx, cy, w, h, lines, size, tx, ty) =>
+  `<path d="M${cx - w / 2 + 40},${cy - h / 2} h${w - 80} a40,40 0 0 1 40,40 v${h - 80} a40,40 0 0 1 -40,40 h${-(w - 80)} a40,40 0 0 1 -40,-40 v${-(h - 80)} a40,40 0 0 1 40,-40z" fill="#fff" stroke="${INK2}" stroke-width="7"/>` +
+  `<path d="M${cx - 40},${cy + h / 2 - 4} L${tx},${ty} L${cx + 20},${cy + h / 2 - 4}" fill="#fff" stroke="${INK2}" stroke-width="7" stroke-linejoin="round"/>` +
+  `<rect x="${cx - 38}" y="${cy + h / 2 - 12}" width="56" height="14" fill="#fff"/>` +
+  lines.map((t, i) => T(cx, cy - (lines.length - 1) * size * 0.6 + i * size * 1.2 + size * 0.35, t, size, { font: HEAD })).join('');
+// 소품
+const house = (cx, cy, s = 1) => `<g transform="translate(${cx},${cy}) scale(${s})"><path d="M-70,0 L0,-60 L70,0z" fill="#ff8a65" stroke="${INK2}" stroke-width="6" stroke-linejoin="round"/><rect x="-55" y="0" width="110" height="80" fill="#fff" stroke="${INK2}" stroke-width="6"/><rect x="-15" y="30" width="30" height="50" fill="#d9a066" stroke="${INK2}" stroke-width="5"/></g>`;
+const plane = (cx, cy, s = 1, rot = -15) => `<g transform="translate(${cx},${cy}) rotate(${rot}) scale(${s})"><path d="M-90,0 q0,-16 20,-16 h120 q30,0 40,16 q-10,16 -40,16 h-120 q-20,0 -20,-16z" fill="#fff" stroke="${INK2}" stroke-width="6"/><path d="M-10,-14 l-30,-50 h24 l46,50z M-10,14 l-30,50 h24 l46,-50z M-75,-12 l-20,-30 h16 l24,28z" fill="#9fd3ff" stroke="${INK2}" stroke-width="5" stroke-linejoin="round"/></g>`;
+const car = (cx, cy, w, color = '#ffd84d') => { const h = w * 0.34;
+  return `<g transform="translate(${cx},${cy})"><path d="M${-w / 2},0 v${-h * 0.55} q0,-${h * 0.25} ${w * 0.12},-${h * 0.3} l${w * 0.12},-${h * 0.55} h${w * 0.5} l${w * 0.14},${h * 0.55} q${w * 0.12},0 ${w * 0.12},${h * 0.3} v${h * 0.55}z" fill="${color}" stroke="${INK2}" stroke-width="7" stroke-linejoin="round"/>` +
+    `<circle cx="${-w * 0.3}" cy="0" r="${h * 0.3}" fill="#444" stroke="${INK2}" stroke-width="6"/><circle cx="${w * 0.3}" cy="0" r="${h * 0.3}" fill="#444" stroke="${INK2}" stroke-width="6"/></g>`; };
+const suitcase = (cx, cy, s = 1, color = C.pink) => `<g transform="translate(${cx},${cy}) scale(${s})"><rect x="-60" y="-80" width="120" height="160" rx="18" fill="${color}" stroke="${INK2}" stroke-width="6"/><path d="M-25,-80 v-25 h50 v25" fill="none" stroke="${INK2}" stroke-width="6"/><circle cx="-30" cy="-30" r="14" fill="#fff" stroke="${INK2}" stroke-width="4"/><rect x="0" y="10" width="40" height="26" rx="6" fill="#ffd84d" stroke="${INK2}" stroke-width="4"/></g>`;
+const songpyeon = (cx, cy, color, s = 1, rot = 0) => `<path transform="translate(${cx},${cy}) rotate(${rot}) scale(${s})" d="M-40,10 q0,-50 40,-50 q40,0 40,50z" fill="${color}" stroke="${INK2}" stroke-width="6" stroke-linejoin="round"/>`;
+
+// ── 1 훅 ──
+frame(C.yellow, `
+  ${T(540, 300, '이번 추석,', 130, { font: HEAD, outline: 14 })}
+  ${hl(540, 450, 780, 160, '#fff', -3)}
+  ${head(['어디서', '보냈어요?'], 500, 165)}
+  ${sticker(anim('a-bob', house(230, 1120, 1.7)))}
+  ${sticker(anim('a-bob', car(540, 1230, 260, '#9fd3ff'), -0.3))}
+  ${sticker(anim('a-wiggle', plane(850, 1060, 1.1)))}
+`);
+
+// ── 2 통계 ──
+frame(C.cream, `
+  ${T(540, 260, '추석 연휴 계획', 96, { font: HEAD })}
+  ${T(540, 470, '집에서 쉰다', 100, { font: HEAD, outline: 12 })}
+  ${hl(540, 600, 620, 190, C.hlY, -2)}
+  ${T(540, 670, '59.6%', 200, { font: HEAD })}
+  ${T(540, 850, '고향 40.0% · 국내여행 18.9%', 58)}
+  ${T(540, 1070, '그런데 인천공항은', 76, { outline: 12 })}
+  ${T(540, 1190, '추석 역대 최다', 110, { font: HEAD, outline: 14 })}
+  ${sticker(anim('a-wiggle', plane(540, 1350, 1.2, -10)))}
+  ${src('피앰아이 2026.9 · 20~69세 1,000명(복수응답) / 인천공항 보도 2026.9', 1560)}
+`);
+
+// ── 3 네모네 — 꽉 막힌 고속도로, 양가 순회 ──
+frame(C.peach, `
+  ${T(540, 220, '네모네', 120, { font: HEAD, outline: 14 })}
+  ${T(540, 320, '양가 순회, 왕복 9시간', 64, { outline: 10 })}
+  <rect x="0" y="1060" width="1080" height="220" fill="#8d8d8d"/>
+  <path d="M0,1170 h1080" stroke="#fff" stroke-width="10" stroke-dasharray="60 50"/>
+  ${car(130, 1000, 220, '#d9d2c6')}${car(960, 1000, 220, '#d9d2c6')}
+  ${sticker(anim('a-bob',
+    nemoKid({ x: 330, y: 700, w: 100, h: 100, who: 'kid1' }) +
+    nemoKid({ x: 440, y: 710, w: 95, h: 95, who: 'kid2' }) +
+    nemoKid({ x: 545, y: 715, w: 90, h: 90, who: 'kid3' }) +
+    nemoKid({ x: 645, y: 720, w: 85, h: 85, who: 'baby', emo: 'cry' }) +
+    car(540, 1110, 560, '#ffd84d')))}
+  ${say(540, 520, 700, 170, ['아직 멀었어??'], 84, 600, 690)}
+  ${anim('a-wiggle', T(900, 700, '빵빵', 70, { font: HEAD, outline: 10, rot: 10 }))}
+`);
+
+// ── 4 세모네 — 공항에서 싸우고, 온천에서 화해 ──
+frame(C.sky, `
+  ${T(540, 220, '세모네', 120, { font: HEAD, outline: 14 })}
+  ${T(540, 320, '오사카 3박 4일', 64, { outline: 10 })}
+  ${T(270, 480, '공항에서', 70, { font: HEAD, outline: 10 })}
+  ${T(810, 480, '온천에서', 70, { font: HEAD, outline: 10 })}
+  <line x1="540" y1="430" x2="540" y2="1300" stroke="${INK2}" stroke-width="5" stroke-dasharray="16 16" opacity=".4"/>
+  ${sticker(anim('a-wiggle', semoHusband({ x: 40, y: 640, size: 240, emo: 'angry' })))}
+  ${sticker(anim('a-wiggle', semoWife({ x: 250, y: 640, size: 240, emo: 'angry', flip: true }), -0.5))}
+  ${sticker(suitcase(270, 1070, 1.1))}
+  ${anim('a-wiggle', T(270, 610, '흥!', 90, { font: HEAD, outline: 12, fill: '#e04a4a' }))}
+  <ellipse cx="810" cy="1080" rx="240" ry="80" fill="#9fd3ff" stroke="${INK2}" stroke-width="7"/>
+  ${sticker(anim('a-slow', semoHusband({ x: 600, y: 720, size: 220, emo: 'love' })))}
+  ${sticker(anim('a-slow', semoWife({ x: 790, y: 720, size: 220, emo: 'love' }), -0.5))}
+  ${anim('a-steam', `<path d="M700,1000 q14,-40 0,-80 M810,1000 q14,-40 0,-80 M920,1000 q14,-40 0,-80" stroke="${INK2}" stroke-width="7" fill="none" stroke-linecap="round" opacity=".45"/>`)}
+  ${anim('a-bob', itemAt('heart', 810, 650, 140))}
+  ${T(540, 1440, '사진은 전부 웃는 얼굴', 76, { font: HEAD, outline: 12 })}
+`);
+
+// ── 5 동그라미네 — 너무 조용한 거실 ──
+frame('#2f3a55', `
+  ${T(540, 220, '동그라미네', 120, { font: HEAD, fill: '#fff' })}
+  ${T(540, 320, '부모님은 크루즈, 아이들은 해외', 60, { fill: '#dfe6f2' })}
+  <rect x="120" y="1000" width="840" height="60" rx="16" fill="#f3efe7" stroke="${INK2}" stroke-width="7"/>
+  ${sticker(anim('a-slow', dongDad({ cx: 540, cy: 780, r: 170, emo: 'good' })))}
+  <ellipse cx="540" cy="990" rx="160" ry="30" fill="#fff" stroke="${INK2}" stroke-width="6"/>
+  ${songpyeon(480, 985, '#f7c6d6', 0.9, -8)}${songpyeon(590, 985, '#c9e8b8', 0.9, 6)}
+  ${say(540, 1300, 620, 180, ['…조용하다'], 90, 560, 1080)}
+  ${T(540, 1520, '송편은 혼자 두 개', 70, { font: HEAD, fill: '#fff' })}
+`);
+
+// ── 6 착지 ──
+frame(C.mint, `
+  ${T(540, 150, '기하학 가족', 50, { font: HEAD, extra: 'letter-spacing="8"' })}
+  ${T(540, 320, '고향이든, 여행이든, 집이든', 64, { outline: 10 })}
+  ${hl(540, 470, 860, 160, C.hlY, -2)}
+  ${head(['다들 수고했어요'], 520, 130, { outline: 0 })}
+  ${sticker(anim('a-bob', songpyeon(420, 900, '#f7c6d6', 2.4, -8)))}
+  ${sticker(anim('a-bob', songpyeon(660, 900, '#c9e8b8', 2.4, 8), -0.4))}
+  ${T(540, 1180, '당신은?', 90, { font: HEAD, outline: 14 })}
+  ${pill(300, 1320, '① 고향', 56)}
+  ${pill(780, 1320, '② 여행', 56)}
+  ${pill(540, 1450, '③ 집에서 쉼', 56)}
+`);
+
+SH.mount();
+</script>
+</body>
+</html>

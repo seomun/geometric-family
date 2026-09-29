@@ -54,6 +54,36 @@ async def tts(lines, voice, rate, outdir):
     return files
 
 
+def read_rec(md):
+    """「## 녹음」 표 → {컷 번호: [(시작, 끝), …]}"""
+    sec = re.search(r"## 녹음\n(.*?)(?=\n## |\Z)", md, re.S)
+    if not sec:
+        return {}
+    out = {}
+    for m in re.finditer(r"^\|\s*(\d+)\s*\|\s*([\d.,\s-]+?)\s*\|\s*$", sec[1], re.M):
+        out[int(m[1])] = [tuple(map(float, r.split("-"))) for r in m[2].split(",")]
+    return out
+
+
+def cut_recording(raw, ranges, tempo, outdir, pad=0.08, gap=0.3):
+    """작가 녹음에서 컷별 구간을 잘라, 구 사이 쉼을 gap 초로 줄이고 잡음·음량을 정리한다."""
+    outdir.mkdir(parents=True, exist_ok=True)
+    clean = f"highpass=f=80,afftdn=nf=-25,acompressor=threshold=-20dB:ratio=3:attack=5:release=80,atempo={tempo}"
+    files = {}
+    for cut, rs in ranges.items():
+        args, parts = [], []
+        for k, (s, e) in enumerate(rs):
+            args += ["-ss", f"{max(0, s - pad):.3f}", "-to", f"{e + pad:.3f}", "-i", str(raw)]
+            parts.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=mono,"
+                         f"afade=t=in:d=0.03,apad=pad_dur={gap if k < len(rs) - 1 else 0}[p{k}]")
+        graph = ";".join(parts) + ";" + "".join(f"[p{k}]" for k in range(len(rs))) + \
+            f"concat=n={len(rs)}:v=0:a=1,{clean}[o]"
+        wav = outdir / f"r{cut}.wav"
+        subprocess.run([FF, "-y", "-loglevel", "error", *args, "-filter_complex", graph, "-map", "[o]", str(wav)], check=True)
+        files[cut] = wav
+    return files
+
+
 def effect_filter(fx):
     """표의 효과 문구 → ffmpeg 필터. 표에 없는 효과는 넣지 않는다(정지)."""
     if "흔들" in fx:  # 진동: 좌우 2px, 0.3초 주기
@@ -73,6 +103,8 @@ def main():
     ap.add_argument("--bgm", help="배경음악 파일 (볼륨 --bgm-vol)")
     ap.add_argument("--bgm-vol", type=float, default=0.15)
     ap.add_argument("--out", help="출력 파일 이름(확장자 제외)")
+    ap.add_argument("--rec", action="store_true", help="TTS 대신 작가 녹음(<name>/_rec/raw.*, 「녹음」 표)을 쓴다")
+    ap.add_argument("--tempo", type=float, default=1.0, help="녹음 빠르기 (음높이 유지), 예: 1.08")
     a = ap.parse_args()
 
     md = (ROOT / "content" / "shorts" / f"{a.name}.md").read_text(encoding="utf-8")
@@ -83,7 +115,15 @@ def main():
     out = ROOT / "content" / "shorts" / f"{a.out or a.name}.mp4"
 
     lines = read_narration(md)
-    voice = asyncio.run(tts(lines, VOICES[a.voice], a.rate, frames / "_voice")) if lines else {}
+    if a.rec:
+        raw = next((frames / "_rec").glob("raw.*"), None)
+        ranges = read_rec(md)
+        if not raw or not ranges:
+            sys.exit(f"{a.name}/_rec/raw.* 또는 「녹음」 표가 없다")
+        voice = cut_recording(raw, ranges, a.tempo, frames / "_rec")
+        a.voice = "작가 녹음"
+    else:
+        voice = asyncio.run(tts(lines, VOICES[a.voice], a.rate, frames / "_voice")) if lines else {}
 
     # 컷 길이 = max(편집 표, 대사 길이 + 여유)
     durs, starts, t = [], [], 0.0

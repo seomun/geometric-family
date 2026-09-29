@@ -80,13 +80,30 @@ frame('#eef0ea', `
   ${src('SM C&C 틸리언 프로 2026.5 · 전국 성인 1,500명')}
 `);
 
-// ── 4 원작 대사 — 정답은 아무도 모른다 ──
-frame('#e6e1d8', `
-  ${nemoDad({ x: 120, y: 620, w: 340, h: 301, emo: 'worry', suit: true, gaze: 1 })}
-  ${dongDad({ cx: 790, cy: 780, r: 165, emo: 'calm', suit: true })}
-  ${line(1150, '"넌 얼마나 했냐?"', 74)}
-  ${line(1420, '"뭐 그런 거 알아 뭐하게"', 62)}
-  ${label('끝내 묻고 말았다', 1660)}
+// ── 4 두 가족의 봉투 — 세모는 고민 없이 10만, 네모의 속마음 ──
+// 큰 부의 봉투 (금액을 겉에 크게)
+const env = (cx, cy, w, amount, rot = 0) => { const h = w * 0.62;
+  return `<g transform="translate(${cx},${cy}) rotate(${rot})"><rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="8" fill="#fff" stroke="${INK}" stroke-width="6"/>` +
+    `<path d="M${-w / 2},${-h / 2} L0,${h * 0.06} L${w / 2},${-h / 2}" fill="none" stroke="${INK}" stroke-width="4"/>` +
+    T(0, h * 0.36, amount, w * 0.26, 'middle', F, INK, 'font-weight="700"') + '</g>'; };
+// 속마음 구름 말풍선 — 꼬리는 작은 원 두 개
+const thought = (cx, cy, w, h, lines, size, tx, ty) =>
+  `<ellipse cx="${cx}" cy="${cy}" rx="${w / 2}" ry="${h / 2}" fill="#fff" stroke="${INK}" stroke-width="6" stroke-dasharray="2 0"/>` +
+  `<circle cx="${tx}" cy="${ty}" r="22" fill="#fff" stroke="${INK}" stroke-width="5"/><circle cx="${tx + 26}" cy="${ty - 52}" r="12" fill="#fff" stroke="${INK}" stroke-width="4"/>` +
+  lines.map((t, i) => T(cx, cy - (lines.length - 1) * size * 0.62 + i * size * 1.24 + size * 0.35, t, size, 'middle', F, INK)).join('');
+frame('#ebe5da', `
+  <line x1="540" y1="150" x2="540" y2="1030" stroke="${INK}" stroke-width="4" stroke-dasharray="14 14" opacity=".35"/>
+  ${T(270, 230, '세모네', 84, 'middle', F, INK, 'font-weight="700"')}
+  ${T(270, 310, '맞벌이 · 아이 없음', 44, 'middle', FB, INK, 'opacity=".75"')}
+  ${T(810, 230, '네모네', 84, 'middle', F, INK, 'font-weight="700"')}
+  ${T(810, 310, '아이 넷', 44, 'middle', FB, INK, 'opacity=".75"')}
+  ${semoHusband({ x: 105, y: 500, size: 330, emo: 'good', suit: true })}
+  ${env(265, 950, 220, '10만', -8)}
+  ${T(430, 890, '척!', 68, 'middle', F, INK)}
+  ${nemoDad({ x: 650, y: 560, w: 330, h: 292, emo: 'good', suit: true })}
+  ${env(815, 950, 200, '5만', 4)}
+  ${thought(540, 1340, 920, 330, ['내 5만원이 훨씬 가치 있다는 걸', '알아둬라…'], 64, 860, 1140)}
+  ${label('— 네모의 속마음', 1560)}
 `);
 
 // ── 5 착지 — 5만원도 괜찮다 + 작가의 문장 ──

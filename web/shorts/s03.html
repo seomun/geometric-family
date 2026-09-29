@@ -43,7 +43,7 @@ frame(C.yellow, `
   ${T(540, 300, '아이랑 저녁,', 120, { font: HEAD, outline: 14 })}
   ${hl(540, 450, 700, 150, '#fff', -3)}
   ${head(['매일 같이', '드세요?'], 500, 165)}
-  ${sticker(bowl(400, 1080, 2.2, '#e9dcc6') + bowl(690, 1080, 2.2, '#e9dcc6'))}
+  ${sticker(bowl(400, 1080, 2.2, '#e9dcc6'))}${sticker(bowl(690, 1080, 2.2, '#e9dcc6'))}
   ${steam(390, 950)}${steam(680, 950, -0.5)}
 `);
 
@@ -95,23 +95,26 @@ frame('#2f3a55', `
   ${sticker(anim('a-slow', dongSon({ cx: 380, cy: 780, r: 150, emo: 'good', gaze: 1, item: 'phone' })))}
   ${plate(380, 985, 250, `<path d="M320,975 q30,-25 80,-10 q20,8 5,18 q-40,10 -85,-8z" fill="#8a4b2a" stroke="${INK2}" stroke-width="5"/>`)}
   ${plate(800, 985, 170)}
-  ${sticker(notice(760, 1230, -8))}
-  ${T(540, 1480, '대충 먹다 만다', 76, { font: HEAD, fill: '#fff' })}
+  <path d="M150,1180 h780 a50,50 0 0 1 50,50 v170 a50,50 0 0 1 -50,50 h-780 a50,50 0 0 1 -50,-50 v-170 a50,50 0 0 1 50,-50z" fill="#fff" stroke="${INK2}" stroke-width="7"/>
+  <path d="M330,1182 l-40,-110 l110,108z" fill="#fff" stroke="${INK2}" stroke-width="7" stroke-linejoin="round"/>
+  <rect x="300" y="1170" width="110" height="20" fill="#fff"/>
+  ${T(540, 1290, '얼른 먹고', 84, { font: HEAD })}
+  ${T(540, 1390, '학원 가야지…', 84, { font: HEAD })}
 `);
 
 // ── 5 착지 — 작가 나레이션 ──
 frame(C.mint, `
-  ${T(540, 330, '행복은 그냥', 110, { font: HEAD, outline: 14 })}
-  ${hl(540, 480, 900, 160, C.hlY, -2)}
-  ${head(['같이 밥 한 끼'], 530, 150, { outline: 0 })}
-  ${T(540, 680, '먹는 건지도 모르겠다', 84, { font: HEAD, outline: 12 })}
-  ${sticker(bowl(540, 960, 2.6, '#e9dcc6'))}
-  ${steam(540, 830)}
+  ${T(540, 150, '기하학 가족', 50, { font: HEAD, extra: 'letter-spacing="8"' })}
+  ${T(540, 300, '공부도 좋고, 바쁜 것도 좋지만', 64, { outline: 10 })}
+  ${hl(540, 450, 900, 160, C.hlY, -2)}
+  ${head(['같이 저녁 먹는 게'], 500, 128, { outline: 0 })}
+  ${T(540, 660, '행복 아닐까요?', 128, { font: HEAD, outline: 14 })}
+  ${sticker(bowl(400, 960, 2.2, '#e9dcc6'))}${sticker(bowl(680, 960, 2.2, '#e9dcc6'))}
+  ${steam(400, 850)}${steam(680, 850, -0.5)}
   ${T(540, 1180, '당신은?', 90, { font: HEAD, outline: 14 })}
   ${pill(285, 1320, '① 거의 매일', 50)}
   ${pill(795, 1320, '② 주 2~3번', 50)}
   ${pill(540, 1450, '③ 주말에만', 50)}
-  ${T(540, 150, '기하학 가족', 50, { font: HEAD, extra: 'letter-spacing="8"' })}
 `);
 
 SH.mount();

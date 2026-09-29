@@ -26,7 +26,7 @@ def read_table(md):
 
 def read_narration(md):
     """「## 나레이션」 표 → {컷 번호: 대사}"""
-    sec = re.search(r"## 나레이션\n(.*?)(?=\n## |\Z)", md, re.S)
+    sec = re.search(r"## 나레이션[^\n]*\n(.*?)(?=\n## |\Z)", md, re.S)
     if not sec:
         return {}
     return {int(m[1]): m[2].strip() for m in re.finditer(r"^\|\s*(\d+)\s*\|\s*([^|]+?)\s*\|\s*$", sec[1], re.M)}
@@ -56,7 +56,7 @@ async def tts(lines, voice, rate, outdir):
 
 def read_rec(md):
     """「## 녹음」 표 → {컷 번호: [(시작, 끝), …]}"""
-    sec = re.search(r"## 녹음\n(.*?)(?=\n## |\Z)", md, re.S)
+    sec = re.search(r"## 녹음[^\n]*\n(.*?)(?=\n## |\Z)", md, re.S)
     if not sec:
         return {}
     out = {}

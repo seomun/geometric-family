@@ -2,8 +2,12 @@
 
 갱신 2026-09-28. 폴더 `C:\projects\geometric-family`. 먼저 `CLAUDE.md`.
 
-## 🚀 런칭 준비 (2026-09-28, D7 플랫폼 확정)
-**쇼츠 = 유튜브 + 인스타 릴스 · 공식 = 네이버 블로그(웹툰 본편·댓글) · 개인 「네모의 …」 = 브런치 · 자체 사이트 = 보관용**
+## 🚀 런칭 준비 (2026-09-29, **D8 채널 확정** — D7 대체)
+**쇼츠 = 릴스 + 틱톡 · 네이버 = 웹툰 연재 · 티스토리 = 네모의 정보 콘텐츠(검색·애드센스) · 글로벌 = 자체 사이트 다국어 + WEBTOON Canvas(영어→일본어)**
+단계: ① 쇼츠 공장(주 3편, 반응 확인) → ② 쇼츠마다 티스토리 정보글 → ③ 반응 좋은 주제를 웹툰 화로 확장·번역
+주간 루프: 월 주제·대본(허브) → 화 작가 3편 몰아 녹음 → 수 완성·캡션·티스토리 초안 → 수·금·일 업로드
+쇼츠 제작: `web/shorts/sNN.html`(화풍 v2 `_shorts.js`, 움직임 `a-*`) → `node tools/shorts_export.js sNN` → `python tools/shorts_video.py sNN --rec --tempo 1.08`
+완성: s02 부의금(`content/shorts/s02.mp4`), s03 아이랑 저녁(`s03.mp4`). 다음: s04 추석 · s05 학원비 · s06 축구화(작가 원고) · s07 밥값 · s08 모르는 번호(새 화풍)
 
 있는 것
 - 쇼츠 mp4 2편: `content/shorts/s01.mp4`(18초)·`s02.mp4`(17초), 무음. 재생성 `python tools/shorts_video.py sNN` (편집 표를 읽는다. ffmpeg = `pip install imageio-ffmpeg`)

@@ -60,8 +60,14 @@ def read_rec(md):
     if not sec:
         return {}
     out = {}
-    for m in re.finditer(r"^\|\s*(\d+)\s*\|\s*([\d.,\s-]+?)\s*\|\s*$", sec[1], re.M):
-        out[int(m[1])] = [tuple(map(float, r.split("-"))) for r in m[2].split(",")]
+    # 구간 앞에 "파일명@" 을 붙이면 _rec/ 안의 다른 녹음(재녹음)을 쓴다. 예: cut4.m4a@2.58-6.21
+    for m in re.finditer(r"^\|\s*(\d+)\s*\|\s*([\w.@,\s-]+?)\s*\|\s*$", sec[1], re.M):
+        rs = []
+        for r in m[2].split(","):
+            f, _, span = r.strip().rpartition("@")
+            s, e = map(float, span.split("-"))
+            rs.append((f or None, s, e))
+        out[int(m[1])] = rs
     return out
 
 
@@ -72,8 +78,9 @@ def cut_recording(raw, ranges, tempo, outdir, pad=0.08, gap=0.3):
     files = {}
     for cut, rs in ranges.items():
         args, parts = [], []
-        for k, (s, e) in enumerate(rs):
-            args += ["-ss", f"{max(0, s - pad):.3f}", "-to", f"{e + pad:.3f}", "-i", str(raw)]
+        for k, (f, s, e) in enumerate(rs):
+            src = raw.parent / f if f else raw
+            args += ["-ss", f"{max(0, s - pad):.3f}", "-to", f"{e + pad:.3f}", "-i", str(src)]
             parts.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=mono,"
                          f"afade=t=in:d=0.03,apad=pad_dur={gap if k < len(rs) - 1 else 0}[p{k}]")
         graph = ";".join(parts) + ";" + "".join(f"[p{k}]" for k in range(len(rs))) + \

@@ -17,7 +17,24 @@
       <feOffset in="o" dx="10" dy="12" result="so"/><feFlood flood-color="${INK2}" flood-opacity=".9"/>
       <feComposite in2="so" operator="in" result="shadow"/>
       <feMerge><feMergeNode in="shadow"/><feMergeNode in="white"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter></defs></svg>`;
+    </filter></defs></svg>
+    <style>
+      /* 움직임 — 주기는 모두 2초의 약수(0.5·1·2초). 내보내기가 2초(60장)를 찍고 영상에서 반복한다.
+         엇박자는 음수 delay 로 (예: style="animation-delay:-.2s") */
+      .a-bob, .a-slow, .a-chew, .a-wiggle, .a-flicker { transform-box: fill-box; transform-origin: 50% 100%; }
+      .a-bob { animation: a-bob .5s ease-in-out infinite alternate; }          /* 들썩들썩 (1초) */
+      .a-slow { animation: a-bob 1s ease-in-out infinite alternate; }          /* 느린 숨 (2초) */
+      .a-chew { animation: a-chew .25s ease-in-out infinite alternate; }       /* 오물오물 (0.5초) */
+      .a-wiggle { transform-origin: 50% 50%; animation: a-wiggle .5s ease-in-out infinite alternate; }  /* 흔들 (1초) */
+      .a-flicker { animation: a-flicker .25s ease-in-out infinite alternate; } /* 촛불 (0.5초) */
+      .a-steam { animation: a-steam 1s linear infinite; }                      /* 김 (1초) */
+      @keyframes a-bob { from { transform: translateY(0) scale(1, 1); } to { transform: translateY(-12px) scale(1.02, .98); } }
+      @keyframes a-chew { from { transform: scale(1, 1); } to { transform: scale(1.03, .95); } }
+      @keyframes a-wiggle { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+      @keyframes a-flicker { from { transform: scale(.85, .9); } to { transform: scale(1.1, 1.12); } }
+      @keyframes a-steam { from { transform: translateY(0); opacity: .7; } to { transform: translateY(-40px); opacity: 0; } }
+    </style>`;
+  const ANIM_LOOP_MS = 2000;   // 내보내기 루프 길이
 
   const esc = (t) => String(t);
   // 글자: 흰 외곽선을 글자 뒤에 깔아 어떤 배경에서도 읽힌다
@@ -58,5 +75,7 @@
   // 브랜드 꼬리 — 마지막 컷 하단 안전지대 위
   const brand = (y = 1500) => T(W / 2, y, '기하학 가족', 72, { font: HEAD, extra: 'letter-spacing="10"' });
 
-  root.SH = { W, H, C, INK2, HEAD, BODY, FONTS, DEFS, T, head, hl, sticker, pill, src, env, cloud, frame, mount, brand };
+  // 움직임 래퍼: anim('a-bob', svg, -0.2) → 엇박자 delay(초)
+  const anim = (cls, svg, delay = 0) => `<g class="${cls}" style="animation-delay:${delay}s">${svg}</g>`;
+  root.SH = { W, H, C, INK2, HEAD, BODY, FONTS, DEFS, T, anim, ANIM_LOOP_MS, head, hl, sticker, pill, src, env, cloud, frame, mount, brand };
 })(window);

@@ -18,10 +18,25 @@ const OUT = path.join(ROOT, 'content', 'shorts', name);
   await p.setViewportSize({ width: 1080, height: 1920 });
   await p.waitForTimeout(600);
   const n = await p.locator('.frame').count();
+  // 움직임(.a-*)이 있는 컷은 루프 한 바퀴(2초)를 30fps 로 찍어 f<i>_anim/0001.png… 에 둔다.
+  // 시간은 애니메이션을 멈추고 currentTime 을 직접 넣어 맞춘다(찍는 속도와 무관하게 정확).
+  const FPS = 30, LOOP = await p.evaluate(() => (window.SH && SH.ANIM_LOOP_MS) || 2000);
+  const setT = (ms) => p.evaluate((t) => document.getAnimations().forEach(a => { a.pause(); a.currentTime = t; }), ms);
   for (let i = 1; i <= n; i++) {
-    const f = path.join(OUT, `f${i}.png`);
+    const f = path.join(OUT, `f${i}.png`), dir = path.join(OUT, `f${i}_anim`);
+    await setT(0);
     await p.locator(`#f${i}`).screenshot({ path: f });
-    console.log('saved', f);
+    fs.rmSync(dir, { recursive: true, force: true });
+    const animated = await p.locator(`#f${i} [class^="a-"], #f${i} [class*=" a-"]`).count();
+    if (animated) {
+      fs.mkdirSync(dir, { recursive: true });
+      const total = Math.round(LOOP / 1000 * FPS);
+      for (let k = 0; k < total; k++) {
+        await setT(k * 1000 / FPS);
+        await p.locator(`#f${i}`).screenshot({ path: path.join(dir, String(k + 1).padStart(4, '0') + '.png') });
+      }
+    }
+    console.log('saved', f, animated ? `+ ${Math.round(LOOP / 1000 * FPS)} anim frames` : '');
   }
   console.log(errs.length ? 'ERRORS: ' + errs.join(' | ') : `${n} frames ok`);
   await b.close();

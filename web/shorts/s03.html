@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>쇼츠 03 — 저녁 식사</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #2a2230; }
+  .frames { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; }
+  .frame { width: 270px; height: 480px; }   /* 미리보기 축소. 내보내기는 1080×1920 */
+  .frame svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div class="frames" id="frames"></div>
+<script src="../../src/characters.js"></script>
+<script src="_shorts.js"></script>
+<script>
+// 원고: content/seeds/author/2026-09-29_저녁식사.md · 화풍 v2 (_shorts.js)
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE + SH.DEFS);
+GF.setMode('clean');
+GF.setAssets('../../assets/');
+const { W, C, INK2, T, head, hl, sticker, pill, src, cloud, frame, HEAD, anim } = SH;
+// 김 두 줄 — 1초마다 피어올라 사라진다
+const steam = (x, y, d = 0) => anim('a-steam', `<path d="M${x - 30},${y} q14,-40 0,-80 M${x + 30},${y} q14,-40 0,-80" stroke="${INK2}" stroke-width="7" fill="none" stroke-linecap="round" opacity=".5"/>`, d);
+
+// 소품 — 밥그릇·접시·촛대·가정통신문
+const bowl = (cx, cy, s = 1, body = '#e9dcc6') => `<g transform="translate(${cx},${cy}) scale(${s})">
+  <path d="M-40,-20 q40,-46 80,0z" fill="#fff" stroke="${INK2}" stroke-width="5"/>
+  <path d="M-46,-20 h92 q-8,52 -46,54 q-38,-2 -46,-54z" fill="${body}" stroke="${INK2}" stroke-width="6" stroke-linejoin="round"/>
+  <rect x="-16" y="32" width="32" height="8" rx="3" fill="${body}" stroke="${INK2}" stroke-width="5"/></g>`;
+const plate = (cx, cy, w, food = '') => `<ellipse cx="${cx}" cy="${cy}" rx="${w / 2}" ry="${w * 0.2}" fill="#fff" stroke="${INK2}" stroke-width="6"/>${food}`;
+const burst = (x, y, t, rot = 0, size = 64) => `<g transform="rotate(${rot} ${x} ${y})">` +
+  `<path d="M${x - 120},${y - 60} l40,20 l20,-40 l30,35 l45,-30 l5,45 l55,-5 l-25,40 l40,25 l-50,15 l15,45 l-50,-20 l-25,40 l-20,-45 l-50,20 l10,-45 l-50,-15 l45,-25z" fill="#fff" stroke="${INK2}" stroke-width="6" stroke-linejoin="round"/>` +
+  T(x, y + size * 0.35, t, size, { font: HEAD }) + '</g>';
+const notice = (cx, cy, rot = -6) => `<g transform="translate(${cx},${cy}) rotate(${rot})">
+  <rect x="-150" y="-100" width="300" height="200" fill="#fff" stroke="${INK2}" stroke-width="6"/>
+  ${T(0, -40, '가정통신문', 50, { font: HEAD })}
+  ${[0, 1, 2].map(i => `<rect x="-110" y="${i * 34}" width="${i === 2 ? 140 : 220}" height="12" rx="6" fill="#c9bfb2"/>`).join('')}</g>`;
+
+// ── 1 훅 ──
+frame(C.yellow, `
+  ${T(540, 300, '아이랑 저녁,', 120, { font: HEAD, outline: 14 })}
+  ${hl(540, 450, 700, 150, '#fff', -3)}
+  ${head(['매일 같이', '드세요?'], 500, 165)}
+  ${sticker(bowl(400, 1080, 2.2, '#e9dcc6') + bowl(690, 1080, 2.2, '#e9dcc6'))}
+  ${steam(390, 950)}${steam(680, 950, -0.5)}
+`);
+
+// ── 2 통계 — 계단처럼 내려간다 ──
+const step = (i, grade, pct, color) => { const x = 110 + i * 225, base = 1250, h = pct * 9;
+  return `<rect x="${x + 10}" y="${base - h + 12}" width="190" height="${h}" rx="18" fill="${INK2}"/>` +
+    `<rect x="${x}" y="${base - h}" width="190" height="${h}" rx="18" fill="${color}" stroke="${INK2}" stroke-width="7"/>` +
+    T(x + 95, base - h - 30, pct + '%', 70, { font: HEAD }) + T(x + 95, base + 85, grade, 64, { font: HEAD }); };
+frame(C.cream, `
+  ${T(540, 230, '부모와 매일 저녁', 96, { font: HEAD })}
+  ${T(540, 320, '같은 아이들 7년 추적', 58)}
+  ${step(0, '초6', 66.3, C.hlY)}${step(1, '중3', 42.4, C.hlY)}${step(2, '고1', 27.4, C.hlB)}${step(3, '고3', 19.2, C.hlP)}
+  ${T(540, 1440, '덜 먹는 쪽은 오히려', 60, { outline: 10 })}
+  ${T(540, 1520, '여유 있는 맞벌이 집', 60, { outline: 10 })}
+  ${src('질병관리청 청소년건강패널조사 2025 · 3,756명', 1600)}
+`);
+
+// ── 3 네모네 — 왁자지껄, 그리고 속마음 ──
+frame(C.peach, `
+  ${T(540, 210, '네모네 저녁', 110, { font: HEAD, outline: 14 })}
+  <rect x="70" y="930" width="940" height="170" rx="24" fill="#d9a066" stroke="${INK2}" stroke-width="8"/>
+  ${/* 식구마다 박자를 어긋나게 들썩 — 왁자지껄 */ ''}
+  ${sticker(anim('a-bob', nemoKid({ x: 110, y: 560, w: 150, h: 150, who: 'kid1' }), -0.1))}
+  ${sticker(anim('a-chew', nemoMom({ x: 300, y: 470, w: 230, h: 230, emo: 'surprise' }), -0.2))}
+  ${sticker(anim('a-slow', nemoDad({ x: 560, y: 470, w: 250, h: 221, emo: 'tired' })))}
+  ${sticker(anim('a-bob', nemoKid({ x: 840, y: 580, w: 140, h: 140, who: 'kid2' }), -0.35))}
+  ${sticker(anim('a-bob', nemoKid({ x: 200, y: 790, w: 130, h: 130, who: 'kid3' }), -0.25))}
+  ${sticker(anim('a-chew', nemoKid({ x: 760, y: 800, w: 120, h: 120, who: 'baby', emo: 'joy' }), -0.1))}
+  ${bowl(240, 1010, 1.1)}${bowl(430, 1010, 1.1)}${bowl(620, 1010, 1.1)}${bowl(810, 1010, 1.1)}
+  ${anim('a-wiggle', burst(210, 420, '내 거야!', -8, 52))}
+  ${anim('a-wiggle', burst(880, 440, '엄마!!', 8, 56), -0.5)}
+  ${anim('a-wiggle', burst(230, 1195, '쏟았다!', -6, 52), -0.25)}
+  ${cloud(540, 1440, 940, 300)}
+  <circle cx="690" cy="1250" r="24" fill="#fff" stroke="${INK2}" stroke-width="6"/><circle cx="705" cy="1180" r="14" fill="#fff" stroke="${INK2}" stroke-width="5"/>
+  ${T(540, 1420, '아… 혼자 여유롭게', 76, { font: HEAD })}
+  ${T(540, 1510, '밥 한 끼가 소원이다!!', 76, { font: HEAD })}
+`);
+
+// ── 4 동그라미네 — 빈 고급 식탁 ──
+frame('#2f3a55', `
+  ${T(540, 210, '동그라미네 저녁', 104, { font: HEAD, fill: '#fff' })}
+  ${T(540, 300, '아무도 없는 식탁', 56, { fill: '#dfe6f2' })}
+  <path d="M190,560 v180 M890,560 v180" stroke="#8a93a8" stroke-width="10" stroke-linecap="round" opacity=".6"/>
+  <rect x="60" y="930" width="960" height="120" rx="20" fill="#f3efe7" stroke="${INK2}" stroke-width="8"/>
+  <rect x="60" y="1050" width="960" height="30" fill="#c9bfb2" stroke="${INK2}" stroke-width="6"/>
+  ${[210, 870].map(x => `<rect x="${x - 70}" y="700" width="140" height="230" rx="16" fill="#4a5674" stroke="#1b2233" stroke-width="6"/>`).join('')}
+  <rect x="${640 - 12}" y="820" width="24" height="110" fill="#f5c542" stroke="${INK2}" stroke-width="5"/>
+  ${anim('a-flicker', `<path d="M640,800 q-14,-22 0,-40 q14,18 0,40" fill="#ffb347" stroke="${INK2}" stroke-width="4"/>`)}
+  ${sticker(anim('a-slow', dongSon({ cx: 380, cy: 780, r: 150, emo: 'good', gaze: 1, item: 'phone' })))}
+  ${plate(380, 985, 250, `<path d="M320,975 q30,-25 80,-10 q20,8 5,18 q-40,10 -85,-8z" fill="#8a4b2a" stroke="${INK2}" stroke-width="5"/>`)}
+  ${plate(800, 985, 170)}
+  ${sticker(notice(760, 1230, -8))}
+  ${T(540, 1480, '대충 먹다 만다', 76, { font: HEAD, fill: '#fff' })}
+`);
+
+// ── 5 착지 — 작가 나레이션 ──
+frame(C.mint, `
+  ${T(540, 330, '행복은 그냥', 110, { font: HEAD, outline: 14 })}
+  ${hl(540, 480, 900, 160, C.hlY, -2)}
+  ${head(['같이 밥 한 끼'], 530, 150, { outline: 0 })}
+  ${T(540, 680, '먹는 건지도 모르겠다', 84, { font: HEAD, outline: 12 })}
+  ${sticker(bowl(540, 960, 2.6, '#e9dcc6'))}
+  ${steam(540, 830)}
+  ${T(540, 1180, '당신은?', 90, { font: HEAD, outline: 14 })}
+  ${pill(285, 1320, '① 거의 매일', 50)}
+  ${pill(795, 1320, '② 주 2~3번', 50)}
+  ${pill(540, 1450, '③ 주말에만', 50)}
+  ${T(540, 150, '기하학 가족', 50, { font: HEAD, extra: 'letter-spacing="8"' })}
+`);
+
+SH.mount();
+</script>
+</body>
+</html>

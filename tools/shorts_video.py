@@ -145,9 +145,16 @@ def main():
 
     args, chains = [], []
     for i, (t0, t1, f, fx) in enumerate(rows):
-        args += ["-loop", "1", "-framerate", str(FPS), "-t", f"{durs[i] + 1:.3f}", "-i", str(frames / f)]
+        seq = frames / f"{Path(f).stem}_anim"   # shorts_export.js 가 찍은 움직임 루프
+        if seq.is_dir():
+            n_seq = len(list(seq.glob("*.png")))
+            args += ["-framerate", str(FPS), "-i", str(seq / "%04d.png")]
+            loop = f"loop=loop=-1:size={n_seq}:start=0,"
+        else:
+            args += ["-loop", "1", "-framerate", str(FPS), "-t", f"{durs[i] + 1:.3f}", "-i", str(frames / f)]
+            loop = ""
         # 구간 길이를 프레임 단위로 정확히 맞춘다 (-t 만 쓰면 컷마다 1프레임씩 짧아진다)
-        chains.append(f"[{i}:v]{effect_filter(fx)},fps={FPS},tpad=stop_mode=clone:stop_duration=1,"
+        chains.append(f"[{i}:v]{loop}{effect_filter(fx)},fps={FPS},tpad=stop_mode=clone:stop_duration=1,"
                       f"trim=duration={durs[i]:.3f},setpts=PTS-STARTPTS,format=yuv420p[v{i}]")
         say = f"  «{lines[i + 1]}»" if i + 1 in lines else ""
         print(f"  {starts[i]:5.2f}-{starts[i] + durs[i]:5.2f}  {f}{say}")

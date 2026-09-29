@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>쇼츠 04 — 코스피 3배, 나만 그대로?</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #2a2230; }
+  .frames { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px; }
+  .frame { width: 270px; height: 480px; }   /* 미리보기 축소. 내보내기는 1080×1920 */
+  .frame svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div class="frames" id="frames"></div>
+<script src="../../src/characters.js"></script>
+<script src="_shorts.js"></script>
+<script>
+// 작가 대사(2026-09-29 채팅) · 통계 docs/11_AUTHOR_ISSUES.md · 화풍 v2
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE + SH.DEFS);
+GF.setMode('clean');
+GF.setAssets('../../assets/');
+const { W, C, INK2, T, head, hl, sticker, pill, src, cloud, frame, HEAD, anim, say } = SH;
+
+// 통장
+const bankbook = (cx, cy, s = 1) => `<g transform="translate(${cx},${cy}) scale(${s})">
+  <rect x="-110" y="-75" width="220" height="150" rx="10" fill="#7fb3d5" stroke="${INK2}" stroke-width="6"/>
+  <rect x="-110" y="-75" width="220" height="40" rx="10" fill="#5a8fb5" stroke="${INK2}" stroke-width="6"/>
+  ${T(0, 20, '통장', 50, { font: HEAD, fill: '#fff' })}</g>`;
+// 사람 아이콘
+const person = (cx, cy, color) => `<circle cx="${cx}" cy="${cy - 40}" r="26" fill="${color}" stroke="${INK2}" stroke-width="5"/><path d="M${cx - 38},${cy + 40} q0,-58 38,-58 q38,0 38,58z" fill="${color}" stroke="${INK2}" stroke-width="5"/>`;
+
+// ── 1 훅 — 치솟는 코스피 ──
+const pts = [[170, 1250, "'24 말", '2,399'], [520, 1030, "'25 말", '4,214'], [880, 640, '9/29', '6,870']];
+frame(C.yellow, `
+  ${T(540, 280, '코스피', 110, { font: HEAD, outline: 14 })}
+  ${hl(540, 440, 700, 190, '#fff', -3)}
+  ${T(540, 505, '거의 3배', 190, { font: HEAD })}
+  <path d="M${pts.map(p => p[0] + ',' + p[1]).join(' L')}" fill="none" stroke="#e04a4a" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  ${anim('a-bob', `<path d="M880,640 l-70,10 l40,-70z" fill="#e04a4a" stroke="${INK2}" stroke-width="6" transform="rotate(20 880 640)"/>`)}
+  ${pts.map(([x, y, d, v]) => `<circle cx="${x}" cy="${y}" r="22" fill="#fff" stroke="${INK2}" stroke-width="7"/>` +
+    T(x, y + 95, v, 64, { font: HEAD, outline: 10 }) + T(x, y + 160, d, 46, { outline: 8 })).join('')}
+  ${src('한국거래소 코스피 종가 (2024.12 · 2025.12 · 2026.9.29)', 1560)}
+`);
+
+// ── 2 대화 — 동그라미 아빠가 묻는다 ──
+frame(C.cream, `
+  ${say(360, 330, 560, 150, ['너 주식 좀 하냐?'], 70, 250, 560)}
+  ${say(760, 560, 380, 140, ['난 안 해.'], 70, 820, 780)}
+  ${say(470, 1400, 820, 230, ['옆집 누구네는 몇억 벌었다는데?', '반도체 거 있잖아…'], 64, 300, 1230)}
+  ${sticker(anim('a-slow', dongDad({ cx: 260, cy: 900, r: 190, emo: 'good', gaze: 1 })))}
+  ${sticker(anim('a-slow', nemoDad({ x: 600, y: 790, w: 360, h: 318, emo: 'worry' }), -0.6))}
+`);
+
+// ── 3 네모 혼자 — 속마음 ──
+frame('#dfe6f2', `
+  ${sticker(anim('a-slow', nemoDad({ x: 340, y: 1040, w: 400, h: 354, emo: 'sad' })))}
+  ${sticker(bankbook(820, 1330, 1))}
+  ${T(820, 1470, '잔액 그대로', 50, { outline: 8 })}
+  ${cloud(540, 560, 980, 620)}
+  <circle cx="560" cy="930" r="26" fill="#fff" stroke="${INK2}" stroke-width="6"/><circle cx="545" cy="995" r="15" fill="#fff" stroke="${INK2}" stroke-width="5"/>
+  ${T(540, 440, '나만, 그대로인 건가…', 76, { font: HEAD })}
+  ${T(540, 560, '할 돈도 없었지만', 64)}
+  ${T(540, 680, '이대로 영영 기회가 없나…', 72, { font: HEAD })}
+`);
+
+// ── 4 통계 — 주식 없는 사람, 열에 일곱 ──
+frame(C.mint, `
+  ${T(540, 280, '사실, 주식 없는 사람', 88, { font: HEAD, outline: 12 })}
+  ${hl(540, 440, 680, 190, C.hlY, -2)}
+  ${T(540, 505, '열에 일곱', 180, { font: HEAD })}
+  ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => { const x = 150 + (i % 5) * 195, y = 820 + Math.floor(i / 5) * 230;
+    return i < 7 ? anim('a-bob', person(x, y, '#fff'), -i * 0.07) : person(x, y, '#9aa3a0'); }).join('')}
+  ${T(540, 1330, '주식 없음 71.5%', 76, { font: HEAD, outline: 12 })}
+  ${T(540, 1430, '주식 가진 사람 1,456만 명 / 인구 5,112만 명', 44, { outline: 8 })}
+  ${src('예탁원 2025 결산 · 행안부 주민등록인구 2025.12', 1540)}
+`);
+
+// ── 5 착지 ──
+frame(C.pink, `
+  ${T(540, 150, '기하학 가족', 50, { font: HEAD, extra: 'letter-spacing="8"' })}
+  ${hl(540, 330, 860, 170, '#fff', -3)}
+  ${head(['너무 고민', '하지 마세요'], 380, 150, { outline: 0 })}
+  ${sticker(anim('a-bob', nemoDad({ x: 380, y: 700, w: 320, h: 283, emo: 'joy' })))}
+  ${T(540, 1180, '당신은?', 90, { font: HEAD, outline: 14 })}
+  ${pill(300, 1320, '① 벌었다', 54)}
+  ${pill(780, 1320, '② 잃었다', 54)}
+  ${pill(540, 1450, '③ 안 한다', 54)}
+`);
+
+SH.mount();
+</script>
+</body>
+</html>

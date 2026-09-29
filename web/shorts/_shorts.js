@@ -75,7 +75,13 @@
   // 브랜드 꼬리 — 마지막 컷 하단 안전지대 위
   const brand = (y = 1500) => T(W / 2, y, '기하학 가족', 72, { font: HEAD, extra: 'letter-spacing="10"' });
 
+  // 말풍선 — 꼬리 끝 (tx,ty)
+  const say = (cx, cy, w, h, lines, size, tx, ty, fill = '#fff') =>
+    `<path d="M${cx - w / 2 + 40},${cy - h / 2} h${w - 80} a40,40 0 0 1 40,40 v${h - 80} a40,40 0 0 1 -40,40 h${-(w - 80)} a40,40 0 0 1 -40,-40 v${-(h - 80)} a40,40 0 0 1 40,-40z" fill="${fill}" stroke="${INK2}" stroke-width="7"/>` +
+    `<path d="M${tx < cx ? cx - 70 : cx + 10},${ty < cy ? cy - h / 2 + 4 : cy + h / 2 - 4} L${tx},${ty} L${tx < cx ? cx - 10 : cx + 70},${ty < cy ? cy - h / 2 + 4 : cy + h / 2 - 4}" fill="${fill}" stroke="${INK2}" stroke-width="7" stroke-linejoin="round"/>` +
+    `<rect x="${tx < cx ? cx - 66 : cx + 14}" y="${ty < cy ? cy - h / 2 - 2 : cy + h / 2 - 12}" width="52" height="14" fill="${fill}"/>` +
+    lines.map((t, i) => T(cx, cy - (lines.length - 1) * size * 0.6 + i * size * 1.2 + size * 0.35, t, size, { font: HEAD })).join('');
   // 움직임 래퍼: anim('a-bob', svg, -0.2) → 엇박자 delay(초)
   const anim = (cls, svg, delay = 0) => `<g class="${cls}" style="animation-delay:${delay}s">${svg}</g>`;
-  root.SH = { W, H, C, INK2, HEAD, BODY, FONTS, DEFS, T, anim, ANIM_LOOP_MS, head, hl, sticker, pill, src, env, cloud, frame, mount, brand };
+  root.SH = { W, H, C, INK2, HEAD, BODY, FONTS, DEFS, T, anim, ANIM_LOOP_MS, say, head, hl, sticker, pill, src, env, cloud, frame, mount, brand };
 })(window);

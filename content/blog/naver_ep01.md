@@ -1,6 +1,6 @@
 # 네이버 블로그 첫 글 — 1화 「단톡방」
 
-게시: blog.naver.com/geometricfamily · 카테고리 「기하학 가족 웹툰」 · 이미지 `content/blog/ep02_cuts/c01~c21.png` (1080폭)
+게시: blog.naver.com/gihahakf · 카테고리 「기하학 가족 웹툰」 · 이미지 `content/blog/ep02_cuts/c01~c21.png` (1080폭)
 재생성: `node tools/export_cuts.js ep02`
 
 ## 검색어 전략

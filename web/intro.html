@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 — 가족 소개</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #f1e6cf; }
+  .strip { max-width: 720px; margin: 0 auto; }
+  .cut { display: block; width: 100%; height: auto; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="strip" id="strip"></div>
+<script src="../src/characters.js"></script>
+<script src="shorts/_shorts.js"></script>
+<script>
+// 가족 소개 4장 (720×900 → 내보내기 1080×1350, 블로그 첫 글·인스타 캐러셀). 세계관은 docs/00_WHITEPAPER.md §1
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE + SH.DEFS);
+GF.setMode('clean');
+GF.setAssets('../assets/');
+const W = 720, H = 900, { C, INK2, HEAD, sticker, hl } = SH;
+const T = (x, y, t, size = 36, o = {}) => SH.T(x, y, t, size, o);
+const cuts = [];
+const card = (bg, inner) => cuts.push(`<svg class="cut" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="${bg}"/>${inner}</svg>`);
+const tag = (y, t, fill = INK2) => T(W / 2, y, t, 34, { fill });
+const foot = (fill = INK2) => T(W / 2, 860, '기하학 가족', 30, { font: HEAD, fill, extra: 'letter-spacing="8" opacity=".7"' });
+
+// 1 — 타이틀
+card(C.yellow, `
+  ${T(W / 2, 150, '같은 일을 겪는', 46, { outline: 10 })}
+  ${T(W / 2, 215, '세 도형 가족', 46, { outline: 10 })}
+  ${hl(W / 2, 320, 560, 140, '#fff', -3)}
+  ${T(W / 2, 365, '기하학 가족', 110, { font: HEAD })}
+  ${sticker(nemoDad({ x: 70, y: 480, w: 170, h: 150 }))}
+  ${sticker(semoWife({ x: 275, y: 470, size: 170, emo: 'wink' }))}
+  ${sticker(dongDad({ cx: 585, cy: 560, r: 82, emo: 'good' }))}
+  ${T(155, 790, '네모', 44, { font: HEAD })}${T(360, 790, '세모', 44, { font: HEAD })}${T(585, 790, '동그라미', 44, { font: HEAD })}
+  ${T(W / 2, 850, '고등학교 동창 세 남자, 그리고 그 가족들', 28)}
+`);
+
+// 2 — 네모네
+card(C.peach, `
+  ${T(W / 2, 110, '네모네', 96, { font: HEAD, outline: 12 })}
+  ${tag(170, '아빠 · 엄마 · 할머니 · 아이 넷')}
+  <g transform="translate(150,215) scale(1.55)">${squareFamilyPortrait(0, 0, 1)}</g>
+  ${hl(W / 2, 660, 600, 160, '#fff', -2)}
+  ${T(W / 2, 640, '없는 것 같지만,', 56, { font: HEAD })}
+  ${T(W / 2, 715, '가장 많이 가졌다', 56, { font: HEAD })}
+  ${T(W / 2, 800, '늘 정신없고, 늘 웃는 집', 34)}
+  ${foot()}
+`);
+
+// 3 — 세모네
+card(C.sky, `
+  ${T(W / 2, 110, '세모네', 96, { font: HEAD, outline: 12 })}
+  ${tag(170, '맞벌이 부부 · 아이 없음')}
+  ${sticker(semoHusband({ x: 110, y: 250, size: 240, emo: 'love' }))}
+  ${sticker(semoWife({ x: 370, y: 250, size: 240, emo: 'love' }))}
+  ${SH.anim('', itemAt('heart', 360, 260, 120))}
+  ${hl(W / 2, 660, 600, 160, '#fff', -2)}
+  ${T(W / 2, 640, '고민 없이 쓰고,', 56, { font: HEAD })}
+  ${T(W / 2, 715, '극단으로 끝난다', 56, { font: HEAD })}
+  ${T(W / 2, 800, '싸우면 전쟁, 좋으면 신혼', 34)}
+  ${foot()}
+`);
+
+// 4 — 동그라미네 + 질문
+card('#2f3a55', `
+  ${T(W / 2, 110, '동그라미네', 96, { font: HEAD, fill: '#fff' })}
+  ${tag(170, '모두가 부러워하는 집 · 아이 둘', '#dfe6f2')}
+  ${sticker(dongDad({ cx: 115, cy: 320, r: 62, emo: 'good' }))}
+  ${sticker(dongMom({ cx: 280, cy: 320, r: 58, emo: 'good' }))}
+  ${sticker(dongSon({ cx: 445, cy: 345, r: 42, emo: 'good' }))}
+  ${sticker(dongDaughter({ cx: 600, cy: 345, r: 42, emo: 'good' }))}
+  ${T(W / 2, 560, '다 가졌는데,', 56, { font: HEAD, fill: '#fff' })}
+  ${T(W / 2, 635, '곁에 사람이 없다', 56, { font: HEAD, fill: '#fff' })}
+  ${SH.pill(W / 2, 755, '당신은 어느 도형인가요?', 44, C.yellow)}
+  ${foot('#fff')}
+`);
+
+document.getElementById('strip').innerHTML = cuts.join('');
+</script>
+</body>
+</html>

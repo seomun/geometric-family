@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>기하학 가족 — 권리 등록 자료</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ddd; }
+  .strip { max-width: 720px; margin: 0 auto; }
+  .cut { display: block; width: 100%; height: auto; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="strip" id="strip"></div>
+<script src="../src/characters.js"></script>
+<script src="shorts/_shorts.js"></script>
+<script>
+// 권리 등록 자료 — node tools/export_cuts.js ip_kit → content/blog/ip_kit_cuts/
+// c01 상표 견본(문자) · c02 상표 견본(로고) · c03 캐릭터 시트(저작권 등록, 미술저작물)
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE + SH.DEFS);
+GF.setMode('clean');
+GF.setAssets('../assets/');
+const { INK2, HEAD, sticker } = SH;
+const T = (x, y, t, size = 36, o = {}) => SH.T(x, y, t, size, o);
+const cuts = [];
+const card = (w, h, inner, bg = '#fff') => cuts.push(`<svg class="cut" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg"><rect width="${w}" height="${h}" fill="${bg}"/>${inner}</svg>`);
+
+// 1 — 문자 상표 견본: 흰 바탕 검정 글자만 (색·그림 없음 → 어떤 서체·색으로 써도 보호 범위가 넓다)
+card(720, 720, `${T(360, 400, '기하학 가족', 120, { font: HEAD, fill: '#000' })}`);
+
+// 2 — 로고 상표 견본: 우리 캐릭터 셋 + 이름 (테두리만 있는 기본 도형 □△○ 은 쓰지 않는다 —
+//     식별력이 약하고 「오징어 게임」 기호와 혼동 위험)
+card(720, 720, `
+  ${sticker(nemoDad({ x: 60, y: 140, w: 190, h: 168 }))}
+  ${sticker(semoWife({ x: 265, y: 125, size: 190 }))}
+  ${sticker(dongDad({ cx: 570, cy: 235, r: 92 }))}
+  ${T(360, 520, '기하학 가족', 110, { font: HEAD, fill: '#000' })}
+`);
+
+// 3 — 캐릭터 시트 (저작권 등록용): 13명 + 이름
+const lab = (x, y, t) => T(x, y, t, 22, { fill: INK2 });
+card(1000, 1300, `
+  ${T(500, 70, '기하학 가족 — 캐릭터 시트', 46, { font: HEAD })}
+  ${T(500, 115, '저작자: 네모(필명) · 2026', 24, { fill: '#555' })}
+  ${T(500, 190, '네모네', 36, { font: HEAD })}
+  ${nemoDad({ x: 60, y: 220, w: 150, h: 133 })}${lab(135, 430, '네모 아빠')}
+  ${nemoMom({ x: 240, y: 220, w: 140, h: 140 })}${lab(310, 430, '네모 엄마')}
+  ${nemoGrandma({ x: 410, y: 240, w: 120, h: 114 })}${lab(470, 430, '할머니')}
+  ${nemoKid({ x: 570, y: 260, w: 90, h: 90, who: 'kid1' })}${lab(615, 430, '큰딸')}
+  ${nemoKid({ x: 680, y: 260, w: 90, h: 90, who: 'kid2' })}${lab(725, 430, '작은딸')}
+  ${nemoKid({ x: 790, y: 260, w: 90, h: 90, who: 'kid3' })}${lab(835, 430, '작은아들')}
+  ${nemoKid({ x: 895, y: 280, w: 70, h: 70, who: 'baby' })}${lab(930, 430, '막둥이')}
+  ${T(500, 500, '세모네', 36, { font: HEAD })}
+  ${semoHusband({ x: 250, y: 530, size: 200 })}${lab(350, 810, '세모 남편')}
+  ${semoWife({ x: 550, y: 530, size: 200 })}${lab(650, 810, '세모 아내')}
+  ${T(500, 870, '동그라미네', 36, { font: HEAD })}
+  ${dongDad({ cx: 190, cy: 1000, r: 80 })}${lab(190, 1185, '동그라미 아빠')}
+  ${dongMom({ cx: 410, cy: 1000, r: 76 })}${lab(410, 1185, '동그라미 엄마')}
+  ${dongSon({ cx: 610, cy: 1020, r: 56 })}${lab(610, 1185, '아들')}
+  ${dongDaughter({ cx: 800, cy: 1020, r: 56 })}${lab(800, 1185, '딸')}
+  ${T(500, 1250, '「기하학 가족」 웹툰·쇼츠에 등장하는 오리지널 캐릭터 13인', 24, { fill: '#555' })}
+`);
+
+document.getElementById('strip').innerHTML = cuts.join('');
+</script>
+</body>
+</html>

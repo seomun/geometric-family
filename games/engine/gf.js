@@ -87,12 +87,13 @@
 
   /* ---------------- 캐릭터 ---------------- */
   GF.src = function (id) {
+    if (GF.art && GF.art[id]) return GF.art[id].src;     // 코드 그림(data URI)
     let c = GF.data.chars[id];
     if (!c) { const who = id.split('.')[0]; c = GF.data.chars[who + '.good'] || GF.data.chars[who + '.kid1']; if (!c) console.warn('no char', id); }
     return c ? GF.base + c.src : '';
   };
   GF.img = (id, cls) => { const i = new Image(); i.src = GF.src(id); i.draggable = false; if (cls) i.className = cls; return i; };
-  GF.aspect = (id) => { const c = GF.data.chars[id] || GF.data.chars[id.split('.')[0] + '.good']; return c ? c.w / c.h : 1; };
+  GF.aspect = (id) => { if (GF.art && GF.art[id]) return GF.art[id].w / GF.art[id].h; const c = GF.data.chars[id] || GF.data.chars[id.split('.')[0] + '.good']; return c ? c.w / c.h : 1; };
 
   /* ---------------- 배경 (코드 SVG) ---------------- */
   const sky = (a, b) => '<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + a + '"/><stop offset="1" stop-color="' + b + '"/></linearGradient></defs><rect width="360" height="640" fill="url(#sk)"/>';
@@ -178,10 +179,10 @@
     bare: false,
     enter(r) {
       GF.bg('home', r);
-      const t = el('div', 'hometitle', r, '<svg class="logo" viewBox="0 0 220 70"><rect x="6" y="14" width="42" height="42" rx="8" fill="#F6C28B"/><path d="M78 12l24 44H54z" fill="#8FD3F4" transform="translate(6 0)"/><circle cx="154" cy="35" r="22" fill="#3B4A7A"/><circle cx="196" cy="35" r="0" fill="none"/></svg>');
+      const t = el('div', 'hometitle', r, '<div class="ttl"><span style="color:#E39B4B">기</span><span style="color:#4DABF7">하</span><span style="color:#3B4A7A">학</span> <span style="color:#FF8FA8">가</span><span style="color:#6CCB8A">족</span></div><div class="sub">놀이터</div>');
       const c = el('div', 'homechars', r);
-      [['wife.joy', 4, 168], ['baby.joy', 128, 126], ['dong_dad.good', 238, 156]].forEach((a, i) => { const im = GF.img(a[0]); im.style.left = a[1] + 'px'; im.style.height = a[2] + 'px'; im.style.animation = 'bounceIn .6s ' + (i * 0.12) + 's backwards'; c.appendChild(im); });
-            const row = el('div', 'homebtns', r);
+      [['wife.joy', 138], ['baby.joy', 96], ['dong_dad.good', 130]].forEach((a, i) => { const im = GF.img(a[0]); im.style.height = a[1] + 'px'; im.style.animation = 'bounceIn .6s ' + (i * 0.12) + 's backwards'; c.appendChild(im); });
+      const row = el('div', 'homebtns', r);
       [['story', 'book', '#FFE0E8', () => GF.go('map')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album')]].forEach((b) => {
         const k = el('button', 'card', row, IC[b[1]]); k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
       });
@@ -228,8 +229,12 @@
       const render = () => {
         stageEl.innerHTML = ''; const c = cuts[i];
         GF.bg(c.bg, stageEl);
-        (c.chars || []).forEach((ch, k) => {
-          const d = el('div', 'cut-char in', stageEl); const hh = ch.h || 230;
+        const role = (id) => (/^baby\./.test(id) || id === 'nemo_kids.baby' ? 'baby' : /^nemo_kids\./.test(id) ? 'kid' : /^art\./.test(id) ? 'art' : 'adult');
+        const list = c.chars || [], adults = list.filter((x) => role(x.id) === 'adult'), kids = list.filter((x) => role(x.id) === 'kid');
+        const A = adults.length ? Math.max(...adults.map((x) => x.h || 230)) : kids.length ? Math.max(...kids.map((x) => x.h || 220)) / 0.78 : 240;
+        const H = { adult: null, kid: A * 0.78, baby: A * 0.5, art: null };   // 세계관 비율 고정: 어른 1 : 아이 .78 : 막둥이 .5
+        list.forEach((ch, k) => {
+          const d = el('div', 'cut-char in', stageEl); const hh = H[role(ch.id)] || ch.h || 230;
           d.style.cssText = 'left:' + ch.x + 'px;top:' + (ch.y || 560) + 'px;height:' + hh + 'px;width:' + Math.round(hh * GF.aspect(ch.id)) + 'px;animation-delay:' + (k * 0.12) + 's';
           d.appendChild(GF.img(ch.id));
         });
@@ -341,7 +346,7 @@
       return;
     }
     // 스테이지 완료
-    const avg = Math.max(1, Math.round(run.res.reduce((a, b) => a + b, 0) / run.res.length));
+    const avg = Math.max(1, Math.floor(run.res.reduce((a, b) => a + b, 0) / run.res.length));   // 평균 내림: 한 라운드라도 틀리면 ★3 이 안 된다
     const rec = GF.state.stages[run.id] || {}; rec.done = true; rec.stars = Math.max(rec.stars || 0, avg); GF.state.stages[run.id] = rec; Store.save(); refreshBar();
     const gain = Reward.sticker(run.ch + '_' + 'ABC'[run.k], avg === 3);
     const n = run.ch.slice(2);

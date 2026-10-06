@@ -11,12 +11,11 @@ GF.mode('faces', {
     const gap = 10, X = 12, Wd = 336, Ht = 548;
     const cw = (Wd - gap * (cols - 1)) / cols, chh = Math.min((Ht - gap * (rows - 1)) / rows, cw * 1.3);
     const oy = 12 + (Ht - (chh * rows + gap * (rows - 1))) / 2;
-    const BACK = ['<circle cx="50" cy="50" r="34" fill="#fff"/>', '<path d="M50 14L88 82H12z" fill="#fff"/>', '<rect x="18" y="18" width="64" height="64" rx="10" fill="#fff"/>'];
     const cards = ctx.shuffle(ids.concat(ids)).map((id, i) => {
       const c = GF.el('div', 'fcard', root), r = Math.floor(i / cols), k = i % cols;
       c.style.cssText = `left:${X + k * (cw + gap)}px;top:${oy + r * (chh + gap)}px;width:${cw}px;height:${chh}px`;
       const inn = GF.el('div', 'in', c);
-      GF.el('div', 'b', inn, '<svg viewBox="0 0 100 100">' + BACK[i % 3] + '</svg>');
+      const bk = GF.el('div', 'b', inn); const sil = ctx.img('baby.good'); sil.style.cssText = 'position:absolute;left:14%;top:14%;width:72%;height:72%;object-fit:contain;filter:brightness(0) invert(1) opacity(.9)'; bk.appendChild(sil);   // 막둥이 실루엣 (기호 아님)
       const f = GF.el('div', 'f', inn); f.appendChild(ctx.img(id));
       return { c, id, up: false, matched: false };
     });

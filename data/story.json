@@ -1,34 +1,512 @@
 {
-  "ch1": {
-    "pro": [
-      { "bg": "stream", "voice": "c1_p1", "text": "오늘은 막둥이의 생일! 잔칫집에 가요.",
-        "chars": [{ "id": "baby.joy", "x": 110, "y": 540, "h": 200 }, { "id": "nemo_kids.kid1", "x": 250, "y": 540, "h": 240 }] },
-      { "bg": "bridge", "voice": "c1_p2", "text": "어? 다리가 아주 좁네!",
-        "chars": [{ "id": "baby.surprise", "x": 120, "y": 600, "h": 190 }, { "id": "nemo_kids.kid1", "x": 250, "y": 600, "h": 230 }] },
-      { "bg": "bridge", "voice": "c1_p3", "text": "동그라미 아빠가 말했어요. \"큰 순서대로. 가자.\"",
-        "chars": [{ "id": "dong_dad.warm", "x": 180, "y": 610, "h": 270 }] }
-    ],
-    "epi": [
-      { "bg": "bridge", "voice": "c1_e1", "text": "모두 무사히 건넜어요!",
-        "chars": [{ "id": "baby.joy", "x": 90, "y": 600, "h": 190 }, { "id": "dong_dad.joy", "x": 190, "y": 610, "h": 260 }, { "id": "nemo_kids.kid1", "x": 285, "y": 600, "h": 220 }] },
-      { "bg": "stream", "voice": "c1_e2", "text": "어? 저 멀리서 \"뚝!\" 소리가 나요.",
-        "chars": [{ "id": "baby.surprise", "x": 180, "y": 560, "h": 240 }] }
+ "ch1": {
+  "pro": [
+   {
+    "bg": "stream",
+    "voice": "c1_p1",
+    "text": "오늘은 막둥이의 생일! 잔칫집에 가요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 540,
+      "h": 200
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 540,
+      "h": 240
+     }
     ]
-  },
-  "ch2": {
-    "pro": [
-      { "bg": "hill", "voice": "c2_p1", "text": "뚝! 무슨 소리지?",
-        "chars": [{ "id": "baby.surprise", "x": 110, "y": 580, "h": 200 }, { "id": "nemo_kids.kid1", "x": 240, "y": 580, "h": 240 }] },
-      { "bg": "hill", "voice": "c2_p2", "text": "세모엄마도 깜짝!",
-        "chars": [{ "id": "wife.surprise", "x": 180, "y": 590, "h": 300 }] },
-      { "bg": "hill", "voice": "c2_p3", "text": "같은 얼굴을 찾아봐요.",
-        "chars": [{ "id": "wife.worry", "x": 120, "y": 590, "h": 260 }, { "id": "baby.good", "x": 270, "y": 590, "h": 170 }] }
-    ],
-    "epi": [
-      { "bg": "hill", "voice": "c2_e1", "text": "소리의 정체는 곶감이 떨어지는 소리였어요!",
-        "chars": [{ "id": "wife.joy", "x": 130, "y": 590, "h": 280 }, { "id": "baby.joy", "x": 255, "y": 590, "h": 180 }] },
-      { "bg": "field", "voice": "c2_e2", "text": "곶감을 한 줄 받았어요. 마당에서 무언가 보여요.",
-        "chars": [{ "id": "wife.wink", "x": 120, "y": 600, "h": 260 }, { "id": "baby.love", "x": 250, "y": 600, "h": 180 }] }
+   },
+   {
+    "bg": "bridge",
+    "voice": "c1_p2",
+    "text": "어? 다리가 아주 좁네!",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 120,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
     ]
-  }
+   },
+   {
+    "bg": "bridge",
+    "voice": "c1_p3",
+    "text": "동그라미 아빠가 말했어요. \"큰 순서대로. 가자.\"",
+    "chars": [
+     {
+      "id": "dong_dad.warm",
+      "x": 180,
+      "y": 610,
+      "h": 270
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "bridge",
+    "voice": "c1_e1",
+    "text": "모두 무사히 건넜어요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 90,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 190,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 285,
+      "y": 600,
+      "h": 220
+     }
+    ]
+   },
+   {
+    "bg": "stream",
+    "voice": "c1_e2",
+    "text": "어? 저 멀리서 \"뚝!\" 소리가 나요.",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 180,
+      "y": 560,
+      "h": 240
+     }
+    ]
+   }
+  ]
+ },
+ "ch2": {
+  "pro": [
+   {
+    "bg": "hill",
+    "voice": "c2_p1",
+    "text": "뚝! 무슨 소리지?",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 110,
+      "y": 580,
+      "h": 200
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 240,
+      "y": 580,
+      "h": 240
+     }
+    ]
+   },
+   {
+    "bg": "hill",
+    "voice": "c2_p2",
+    "text": "세모엄마도 깜짝!",
+    "chars": [
+     {
+      "id": "wife.surprise",
+      "x": 180,
+      "y": 590,
+      "h": 300
+     }
+    ]
+   },
+   {
+    "bg": "hill",
+    "voice": "c2_p3",
+    "text": "같은 얼굴을 찾아봐요.",
+    "chars": [
+     {
+      "id": "wife.worry",
+      "x": 120,
+      "y": 590,
+      "h": 260
+     },
+     {
+      "id": "baby.good",
+      "x": 270,
+      "y": 590,
+      "h": 170
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "hill",
+    "voice": "c2_e1",
+    "text": "소리의 정체는 곶감이 떨어지는 소리였어요!",
+    "chars": [
+     {
+      "id": "wife.joy",
+      "x": 130,
+      "y": 590,
+      "h": 280
+     },
+     {
+      "id": "baby.joy",
+      "x": 255,
+      "y": 590,
+      "h": 180
+     }
+    ]
+   },
+   {
+    "bg": "field",
+    "voice": "c2_e2",
+    "text": "곶감을 한 줄 받았어요. 마당에서 무언가 보여요.",
+    "chars": [
+     {
+      "id": "wife.wink",
+      "x": 120,
+      "y": 600,
+      "h": 260
+     },
+     {
+      "id": "baby.love",
+      "x": 250,
+      "y": 600,
+      "h": 180
+     }
+    ]
+   }
+  ]
+ },
+ "ch3": {
+  "pro": [
+   {
+    "bg": "field",
+    "voice": "c3_p1",
+    "text": "마당에 아주 큰 무가 있어요!",
+    "chars": [
+     {
+      "id": "art.radish",
+      "x": 180,
+      "y": 610,
+      "h": 320
+     },
+     {
+      "id": "baby.surprise",
+      "x": 70,
+      "y": 610,
+      "h": 130
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 300,
+      "y": 610,
+      "h": 160
+     }
+    ]
+   },
+   {
+    "bg": "field",
+    "voice": "c3_p2",
+    "text": "영차! 할머니가 당겨 봐요. 어? 안 뽑혀요.",
+    "chars": [
+     {
+      "id": "nemo_grandma.good",
+      "x": 100,
+      "y": 610,
+      "h": 200
+     },
+     {
+      "id": "art.radish",
+      "x": 270,
+      "y": 610,
+      "h": 260
+     }
+    ]
+   },
+   {
+    "bg": "field",
+    "voice": "c3_p3",
+    "text": "다 같이 힘을 모아요! 흩어진 조각을 맞춰 보세요.",
+    "chars": [
+     {
+      "id": "nemo_mom.worry",
+      "x": 100,
+      "y": 610,
+      "h": 230
+     },
+     {
+      "id": "nemo_dad.worry",
+      "x": 250,
+      "y": 610,
+      "h": 230
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "field",
+    "voice": "c3_e1",
+    "text": "세모엄마와 동그라미 아빠도 도와줘서… 쑥!",
+    "chars": [
+     {
+      "id": "wife.joy",
+      "x": 70,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "art.radish",
+      "x": 180,
+      "y": 610,
+      "h": 230
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 290,
+      "y": 610,
+      "h": 170
+     }
+    ]
+   },
+   {
+    "bg": "night",
+    "voice": "c3_e2",
+    "text": "어느새 해가 지고 깜깜해졌어요.",
+    "chars": [
+     {
+      "id": "baby.tired",
+      "x": 130,
+      "y": 590,
+      "h": 180
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 590,
+      "h": 220
+     }
+    ]
+   }
+  ]
+ },
+ "ch4": {
+  "pro": [
+   {
+    "bg": "night",
+    "voice": "c4_p1",
+    "text": "깜깜한 밤길이에요. 잔칫집이 보이지 않아요.",
+    "chars": [
+     {
+      "id": "baby.tired",
+      "x": 130,
+      "y": 590,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 590,
+      "h": 230
+     }
+    ]
+   },
+   {
+    "bg": "night",
+    "voice": "c4_p2",
+    "text": "어? 하늘에 해님도 달님도 별님도 없어요!",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 180,
+      "y": 590,
+      "h": 240
+     }
+    ]
+   },
+   {
+    "bg": "night",
+    "voice": "c4_p3",
+    "text": "색을 칠해서 하늘을 밝혀 주세요.",
+    "chars": [
+     {
+      "id": "baby.love",
+      "x": 120,
+      "y": 590,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 590,
+      "h": 230
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "night",
+    "voice": "c4_e1",
+    "text": "달님이 환하게 길을 비춰 줘요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 130,
+      "y": 590,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 590,
+      "h": 230
+     }
+    ]
+   },
+   {
+    "bg": "house",
+    "voice": "c4_e2",
+    "text": "저기 봐요! 잔칫집 불빛이 보여요!",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 130,
+      "y": 600,
+      "h": 200
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 240
+     }
+    ]
+   }
+  ]
+ },
+ "ch5": {
+  "pro": [
+   {
+    "bg": "house",
+    "voice": "c5_p1",
+    "text": "잔칫집에 도착! 그런데 바람이 후~ 불어와요.",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 130,
+      "y": 600,
+      "h": 200
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 240
+     }
+    ]
+   },
+   {
+    "bg": "house",
+    "voice": "c5_p2",
+    "text": "세 가족이 각자 집을 지어요. 도형 조각을 맞춰 보세요!",
+    "chars": [
+     {
+      "id": "nemo_dad.good",
+      "x": 70,
+      "y": 610,
+      "h": 190
+     },
+     {
+      "id": "wife.good",
+      "x": 180,
+      "y": 610,
+      "h": 190
+     },
+     {
+      "id": "dong_dad.good",
+      "x": 290,
+      "y": 610,
+      "h": 190
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "house",
+    "voice": "c5_e1",
+    "text": "바람이 후~ 불어도 끄떡없어요!",
+    "chars": [
+     {
+      "id": "nemo_dad.joy",
+      "x": 70,
+      "y": 610,
+      "h": 200
+     },
+     {
+      "id": "wife.joy",
+      "x": 180,
+      "y": 610,
+      "h": 200
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 290,
+      "y": 610,
+      "h": 200
+     }
+    ]
+   },
+   {
+    "bg": "house",
+    "voice": "c5_e2",
+    "text": "세 가족이 한자리에 모였어요. 막둥이, 생일 축하해!",
+    "chars": [
+     {
+      "id": "nemo_dad.joy",
+      "x": 52,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 120,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "wife.joy",
+      "x": 190,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 262,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "baby.joy",
+      "x": 325,
+      "y": 610,
+      "h": 120
+     }
+    ]
+   }
+  ]
+ }
 }

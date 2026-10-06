@@ -35,12 +35,47 @@ async function solveFaces(p, wrongFirst) {
   }
   for (const g of groups) { for (const i of g) { await p.mouse.click(cards[i].x, cards[i].y); await wait(p, 450); } await wait(p, 500); }
 }
+
+async function dragTo(p, a, b) { await p.mouse.move(a.x, a.y); await p.mouse.down(); await p.mouse.move(b.x, b.y, { steps: 8 }); await p.mouse.up(); await wait(p, 300); }
+async function solvePuzzle(p) {
+  const pairs = await p.evaluate(() => {
+    const cells = {}; document.querySelectorAll('.slotring[data-cell]').forEach((e) => { const r = e.getBoundingClientRect(); cells[e.dataset.cell] = { x: r.x + r.width / 2, y: r.y + r.height / 2 }; });
+    return [...document.querySelectorAll('.tok[data-cell]')].map((e) => { const r = e.getBoundingClientRect(); return { from: { x: r.x + r.width / 2, y: r.y + r.height / 2 }, to: cells[e.dataset.cell] }; });
+  });
+  for (const q of pairs) await dragTo(p, q.from, q.to);
+}
+async function solveShapes(p) {
+  const info = await p.evaluate(() => {
+    const holes = [...document.querySelectorAll('[data-hole]')].map((e) => { const r = e.getBoundingClientRect(); return { key: e.dataset.key, x: r.x + r.width / 2, y: r.y + r.height / 2, used: false }; });
+    const toks = [...document.querySelectorAll('.tok[data-key]')].map((e) => { const r = e.getBoundingClientRect(); return { key: e.dataset.key, x: r.x + r.width / 2, y: r.y + r.height / 2 }; });
+    return { holes, toks };
+  });
+  for (const t of info.toks) { const h = info.holes.find((q) => !q.used && q.key === t.key); h.used = true; await dragTo(p, t, h); }
+}
+async function solvePaint(p, tag) {
+  await wait(p, 900);
+  const need = await p.evaluate(() => 0);
+  const pts = await p.evaluate(() => document.querySelector('.playarea').__pts());
+  const sw = await p.$$('.playarea .round-btn');
+  let n = 0;
+  for (const pt of pts) {
+    if (await p.$('.playarea .big')) break;
+    if (sw.length && n % 2 === 1) { const bb = await sw[n % sw.length].boundingBox(); await p.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2); }
+    await p.mouse.click(pt.x, pt.y); await wait(p, 120); n++;
+  }
+  return pts.length;
+}
 async function playStage(p, mode, tag) {
   for (let r = 0; r < 3; r++) {
     await wait(p, 500);
     if (r === 0) await shot(p, tag + '_round1');
-    if (mode === 'shadow') await solveShadow(p, r === 0 && tag.endsWith('A')); else await solveFaces(p, r === 0 && tag.endsWith('A'));
-    await wait(p, 2200);
+    if (mode === 'shadow') await solveShadow(p, r === 0 && tag.endsWith('A'));
+    else if (mode === 'faces') await solveFaces(p, r === 0 && tag.endsWith('A'));
+    else if (mode === 'puzzle') await solvePuzzle(p);
+    else if (mode === 'shapes') await solveShapes(p);
+    else if (mode === 'paint') { await solvePaint(p, tag); await shot(p, tag + '_painted' + r); await p.click('.playarea .big', { force: true }); }
+    if (r === 0 || (mode === 'paint' && r < 3)) await shot(p, tag + '_solved' + r);
+    await wait(p, mode === 'shapes' ? 3600 : 2200);
     if (r === 0) await shot(p, tag + '_result1');
     if (r === 2) await shot(p, tag + '_stageresult');
     await p.click('.overlay .big:last-child'); await wait(p, 500);
@@ -54,11 +89,12 @@ async function playStage(p, mode, tag) {
   p.on('pageerror', (e) => { errs.push(e.message); console.log('PAGEERR', e.message); }); p.on('console', (m) => { if (m.type() === 'error') errs.push(m.text()); });
   await p.goto(URL); await wait(p, 1200); await shot(p, 'home');
   await p.click('.homebtns .card:nth-child(1)'); await wait(p, 500); await shot(p, 'map');
-  for (const ch of [1, 2]) {
-    const mode = ch === 1 ? 'shadow' : 'faces';
+  for (const ch of [1, 2, 3, 4, 5]) {
+    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes'][ch - 1];
     await wait(p, 400);
     const nodes = await p.$$('.node'); await nodes[ch - 1].click(); await wait(p, 600);
-    for (let k = 0; k < 3; k++) { if (k === 0) await shot(p, 'ch' + ch + '_book1'); await p.click('.nextbtn', { force: true }); await wait(p, 450); }
+    const np = await p.evaluate((c) => GF.data.story['ch' + c].pro.length, ch);
+    for (let k = 0; k < np; k++) { if (k === 0) await shot(p, 'ch' + ch + '_book1'); await p.click('.nextbtn', { force: true }); await wait(p, 450); }
     await shot(p, 'ch' + ch + '_stages');
     for (let s = 0; s < 3; s++) {
       const btns = await p.$$('.stagebtn'); await btns[s].click(); await wait(p, 500);
@@ -75,5 +111,11 @@ async function playStage(p, mode, tag) {
   console.log(errs.length ? 'ERRORS:\n' + errs.join('\n') : 'no errors');
   const st = await p.evaluate(() => JSON.stringify(GF.state.stages) + ' ' + JSON.stringify(GF.state.stickers));
   console.log(st);
+  const S = await p.evaluate(() => GF.state.stages);
+  const bad = [];
+  if (!(S.c1A.stars < 3)) bad.push('c1A 는 일부러 틀렸으니 ★3 이면 안 됨');
+  if (!(S.c2A.stars < 3)) bad.push('c2A 는 일부러 틀렸으니 ★3 이면 안 됨');
+  if (S.c1B.stars !== 3) bad.push('c1B 는 완벽했으니 ★3');
+  if (bad.length) { console.log('ASSERT FAIL:', bad.join(' / ')); process.exitCode = 1; } else console.log('assert ok (별 규칙)');
   await b.close();
 })();

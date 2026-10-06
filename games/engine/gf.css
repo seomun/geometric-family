@@ -47,13 +47,14 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .lock { position: absolute; right: 10px; bottom: 8px; width: 34px; height: 34px; }
 
 /* ---- 홈 ---- */
-.hometitle { position: absolute; top: 78px; left: 0; right: 0; text-align: center; }
-.logo { width: 220px; height: 70px; display: inline-block; }
-.homechars { position: absolute; left: 0; right: 0; top: 150px; height: 190px; }
-.homechars img { position: absolute; height: 170px; bottom: 0; }
+.hometitle { position: absolute; top: 84px; left: 0; right: 0; text-align: center; }
+.ttl { font-size: 50px; line-height: 1.1; font-weight: 900; letter-spacing: 2px; -webkit-text-stroke: 6px #fff; paint-order: stroke fill; text-shadow: 0 4px 0 rgba(0,0,0,.12); }
+.sub { display: inline-block; margin-top: 4px; background: #fff; border-radius: 16px; padding: 2px 18px; font-size: 22px; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+.homechars { position: absolute; left: 0; right: 0; top: 230px; height: 170px; display: flex; justify-content: center; align-items: flex-end; gap: 6px; }
+.homechars img { position: static; height: 130px; width: auto; }
 .homebtns { position: absolute; left: 0; right: 0; bottom: 36px; display: flex; justify-content: center; gap: 18px; }
-.homebtns .card { position: relative; width: 100px; height: 120px; }
-.homebtns .card svg { width: 64px; height: 64px; }
+.homebtns .card { position: relative; width: 96px; height: 116px; }
+.homebtns .card svg { width: 62px; height: 62px; }
 
 /* ---- 배경 ---- */
 .bg { position: absolute; inset: 0; overflow: hidden; }
@@ -154,3 +155,5 @@ img { -webkit-user-drag: none; pointer-events: none; }
 #toast.on { opacity: 1; }
 
 .stagebtn > div > svg { width: 44px; height: 44px; }
+@keyframes houseshake { 25% { transform: translateX(-7px) rotate(-1.5deg) } 75% { transform: translateX(7px) rotate(1.5deg) } }
+.abs.glow { animation: glow .8s infinite; border-radius: 16px; }

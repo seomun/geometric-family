@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "note": "사연 4컷. src=원문이면 작가 원문 그대로, src=각색이면 [제안] 문장(허브 확인 필요). 원문 위치는 source 필드. 동그라미네 아들 래스터가 없어 동그라미 아저씨를 대역으로 쓴다(허브 요청 목록).",
+  "note": "사연 4컷. src=원문이면 작가 원문 그대로, src=각색이면 [제안] 문장(허브 확인 필요). 원문 위치는 source 필드. 동그라미네 아들·엄마·딸은 래스터가 올 때까지 src/characters.js 코드 캐릭터(code.*)를 쓴다.",
   "stories": [
     {
       "id": "s01", "title": "저녁 식사", "source": "content/seeds/author/2026-09-29_저녁식사.md", "bg": "indoor",
       "cuts": [
         { "text": "정신없이 모두가 왁자지껄한 저녁식사,", "src": "원문", "chars": ["nemo_dad.good", "nemo_mom.good", "nemo_kids.kid1", "nemo_kids.kid2", "baby.joy"] },
         { "text": "네모는 생각한다.\n\"아, 혼자 여유롭게 밥 한 끼 먹는 게 소원이다!!\"", "src": "원문(띄어쓰기 정리 [제안])", "chars": ["nemo_dad.worry"], "bubble": "bang" },
-        { "text": "아무도 없는 고급 식탁, 동그라미네 아들. 폰을 보면서 고급 식사를 하지만, 대충 먹다 만다.", "src": "원문 요약 [제안]", "chars": ["dong_dad.calm"], "stand_in": true },
-        { "text": "그리곤 옆에 통신문을 내려놓는다.\n\n행복은 그냥 같이 밥 한 끼 먹는 건지도 모르겠다.", "src": "원문(오탈자 정리 [제안])", "chars": ["dong_dad.calm", "nemo_dad.joy"], "stand_in": true }
+        { "text": "아무도 없는 고급 식탁, 동그라미네 아들. 폰을 보면서 고급 식사를 하지만, 대충 먹다 만다.", "src": "원문 요약 [제안]", "chars": ["code.dong_son.tired"] },
+        { "text": "그리곤 옆에 통신문을 내려놓는다.\n\n행복은 그냥 같이 밥 한 끼 먹는 건지도 모르겠다.", "src": "원문(오탈자 정리 [제안])", "chars": ["code.dong_son.tired", "nemo_dad.joy"] }
       ],
       "question": { "q": "우리 집 저녁 식탁은?", "options": [ { "k": "nemo", "t": "왁자지껄, 정신이 없다" }, { "k": "semo", "t": "둘이 티격태격 도란도란" }, { "k": "dong", "t": "조용하게 각자 먹는다" } ] },
       "reward": { "laugh": 40 }, "stat": "질병관리청 청소년건강패널조사 2025 — 부모와 매일 식사: 초6 66.3% → 고3 19.2% (서울신문 2026-08-16)"
@@ -16,10 +16,10 @@
     {
       "id": "s02", "title": "축구화", "source": "content/seeds/author/2026-09-29_축구화.md", "bg": "house",
       "cuts": [
-        { "text": "이제 막 축구를 시작한 아들이 축구화를 사 달란다. 사 주는 게 맞을까?", "src": "각색 [제안]", "chars": ["husband.worry"] },
-        { "text": "\"뭐, 애가 얼마나 축구를 한다고. 그냥 냅둬.\"", "src": "원문(발화자 배정 [제안])", "chars": ["husband.wink", "nemo_dad.good"] },
-        { "text": "\"아니, 사 줘라. 꼭 사 주고, 축구화를 신으면 축구가 잘된다고 알려 줘라.\"", "src": "원문", "chars": ["nemo_dad.joy", "husband.surprise"], "bubble": "bang" },
-        { "text": "\"축구 때문이 아니다. 나머지 모든 운동화를 다 버린다. 나중에 예식장 신고 갈 신발 하나 남지 않는다. 축구화가 싸게 먹힌다.\"\n\"아……\"", "src": "원문 줄임 [제안]", "chars": ["nemo_dad.good", "husband.worry"], "bubble": "sparkle" }
+        { "text": "이제 막 축구를 시작한 아들이 축구화를 사 달란다. 사 주는 게 맞을까?", "src": "각색 [제안]", "chars": ["dong_dad.worry"] },
+        { "text": "\"뭐, 애가 얼마나 축구를 한다고. 그냥 냅둬.\"", "src": "원문(발화자 배정 [제안])", "chars": ["dong_dad.calm", "nemo_dad.good"] },
+        { "text": "\"아니, 사 줘라. 꼭 사 주고, 축구화를 신으면 축구가 잘된다고 알려 줘라.\"", "src": "원문", "chars": ["nemo_dad.joy", "dong_dad.surprise"], "bubble": "bang" },
+        { "text": "\"축구 때문이 아니다. 나머지 모든 운동화를 다 버린다. 나중에 예식장 신고 갈 신발 하나 남지 않는다. 축구화가 싸게 먹힌다.\"\n\"아……\"", "src": "원문 줄임 [제안]", "chars": ["nemo_dad.good", "dong_dad.trouble"], "bubble": "sparkle" }
       ],
       "question": { "q": "아이 물건을 사 줄 때, 나는?", "options": [ { "k": "nemo", "t": "싸게 먹히는 쪽으로 계산한다" }, { "k": "semo", "t": "부부가 한참 의논한다" }, { "k": "dong", "t": "계획대로 필요한 것만 산다" } ] },
       "reward": { "laugh": 40 }

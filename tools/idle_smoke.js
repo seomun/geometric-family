@@ -53,7 +53,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await D('restore', snap);
   let gain = 0; for (let i = 0; i < 160; i++) { const r = await D('skip', 180000); gain += r ? r.gained : 0; }
   ok(Math.abs(o.gained - gain) / gain < 0.01, '8시간 정산 = 3분×160 진행: ' + o.gained.toExponential(3) + ' vs ' + gain.toExponential(3));
-  ok(o.gained >= rate0 * 8 * 3600 * 0.99, '8시간 정산 ≥ 현재속도×8h (웃음 보너스로 복리): ' + (o.gained / (rate0 * 28800)).toFixed(2) + '배');
+  const rr = await D('rates'), base0 = rr.n.w + rr.s.base + rr.d.w, lin = base0 * 8 * 3600 * 0.8; ok(Math.abs(o.gained - lin) / lin < 0.02 && o.laugh === 0, '오프라인 = 현재속도 선형×0.8, 웃음 없음: ' + (o.gained / (base0 * 28800)).toFixed(2) + '배');
   await pg.reload(); await pg.waitForSelector('.tcard'); await pg.waitForTimeout(400); await shot('home_after');
   ok(errs.length === 0, '콘솔 오류 없음 ' + errs.slice(0, 3).join(' | '));
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

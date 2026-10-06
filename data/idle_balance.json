@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "offlineCapHours": 8,
+  "offlineCapHours": 8, "offlineEfficiency": 0.8,
   "laughMult": 0.01,
   "tableLevel": { "baseCost": 120, "growth": 3.2, "mult": 1.6, "max": 20 },
   "dexTotal": 30,
@@ -10,13 +10,13 @@
       "bowlsBase": 2, "sliderDefault": 0.2, "laughPerOutput": 0.05,
       "pot": { "id": "n_pot", "name": "밥솥 늘리기", "cost": 60, "growth": 1.9, "note": "밥그릇이 하나 늘어요" },
       "gens": [
-        { "id": "n_dad", "name": "아빠", "img": "nemo_dad.good", "cost": 10, "growth": 1.3, "rate": 0.2, "premium": false },
-        { "id": "n_mom", "name": "엄마", "img": "nemo_mom.good", "cost": 45, "growth": 1.3, "rate": 0.8, "premium": false },
-        { "id": "n_gma", "name": "할머니", "img": "nemo_grandma.good", "cost": 220, "growth": 1.3, "rate": 3, "premium": false },
-        { "id": "n_k1", "name": "큰딸", "img": "nemo_kids.kid1", "cost": 1100, "growth": 1.3, "rate": 12, "premium": false },
-        { "id": "n_k2", "name": "작은딸", "img": "nemo_kids.kid2", "cost": 5500, "growth": 1.3, "rate": 50, "premium": false },
-        { "id": "n_k3", "name": "작은아들", "img": "nemo_kids.kid3", "cost": 27000, "growth": 1.3, "rate": 210, "premium": false },
-        { "id": "n_baby", "name": "막둥이", "img": "baby.joy", "cost": 135000, "growth": 1.3, "rate": 900, "premium": false }
+        { "id": "n_dad", "name": "네모 아빠", "img": "nemo_dad.good", "cost": 10, "growth": 1.3, "rate": 0.2, "premium": false },
+        { "id": "n_mom", "name": "네모 엄마", "img": "nemo_mom.good", "cost": 45, "growth": 1.3, "rate": 0.8, "premium": false },
+        { "id": "n_gma", "name": "네모 할머니", "img": "nemo_grandma.good", "cost": 220, "growth": 1.3, "rate": 3, "premium": false },
+        { "id": "n_k1", "name": "네모 큰딸", "img": "nemo_kids.kid1", "cost": 1100, "growth": 1.3, "rate": 12, "premium": false },
+        { "id": "n_k2", "name": "네모 작은딸", "img": "nemo_kids.kid2", "cost": 5500, "growth": 1.3, "rate": 50, "premium": false },
+        { "id": "n_k3", "name": "네모 작은아들", "img": "nemo_kids.kid3", "cost": 27000, "growth": 1.3, "rate": 210, "premium": false },
+        { "id": "n_baby", "name": "네모 막둥이", "img": "baby.joy", "cost": 135000, "growth": 1.3, "rate": 900, "premium": false }
       ]
     },
     "semo": {
@@ -27,8 +27,8 @@
         "extreme": { "name": "공항에서 대판 싸움 → 온천 화해", "desc": "10초 동안 멈췄다가 크게 터져요", "pauseSec": 10, "mult": 4.2, "sec": 60 }
       },
       "gens": [
-        { "id": "s_wife", "name": "세모 이모", "img": "wife.joy", "cost": 30, "growth": 1.3, "rate": 0.6, "premium": false },
-        { "id": "s_hus", "name": "세모 삼촌", "img": "husband.joy", "cost": 160, "growth": 1.3, "rate": 3.2, "premium": false },
+        { "id": "s_wife", "name": "세모 아내", "img": "wife.joy", "cost": 30, "growth": 1.3, "rate": 0.6, "premium": false },
+        { "id": "s_hus", "name": "세모 남편", "img": "husband.joy", "cost": 160, "growth": 1.3, "rate": 3.2, "premium": false },
         { "id": "s_bag", "name": "여행 가방", "img": "art.radish", "cost": 800, "growth": 1.3, "rate": 14, "premium": true, "note": "소품 — 나중에 꾸미기 팩(유료 가능)" },
         { "id": "s_hot", "name": "온천 이용권", "img": "wife.love", "cost": 4200, "growth": 1.3, "rate": 62, "premium": false }
       ]
@@ -42,10 +42,10 @@
         { "need": { "nemo": 3, "semo": 3 }, "text": "세 가족이 한자리에 앉자는 큰 초대장이에요" }
       ],
       "gens": [
-        { "id": "d_dad", "name": "동그라미 아저씨", "img": "dong_dad.good", "cost": 70, "growth": 1.3, "rate": 1.4, "premium": false },
-        { "id": "d_mom", "name": "아주머니", "img": "nemo_mom.wink", "cost": 360, "growth": 1.3, "rate": 7, "premium": false },
-        { "id": "d_son", "name": "아들(공부 중)", "img": "nemo_kids.kid3", "cost": 1900, "growth": 1.3, "rate": 30, "premium": false },
-        { "id": "d_dau", "name": "딸(테니스)", "img": "nemo_kids.kid2", "cost": 9500, "growth": 1.3, "rate": 140, "premium": false }
+        { "id": "d_dad", "name": "동그라미 아빠", "img": "dong_dad.good", "cost": 70, "growth": 1.3, "rate": 1.4, "premium": false },
+        { "id": "d_mom", "name": "동그라미 엄마", "img": "code.dong_mom.good", "cost": 360, "growth": 1.3, "rate": 7, "premium": false },
+        { "id": "d_son", "name": "동그라미 아들", "img": "code.dong_son.good", "cost": 1900, "growth": 1.3, "rate": 30, "premium": false },
+        { "id": "d_dau", "name": "동그라미 딸", "img": "code.dong_daughter.good", "cost": 9500, "growth": 1.3, "rate": 140, "premium": false }
       ]
     }
   },

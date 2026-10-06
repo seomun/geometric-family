@@ -206,7 +206,7 @@
 
   /* ---------------- 사연 ---------------- */
   const CAST = (a, SH) => {
-    const role = (id) => (/^baby\./.test(id) ? 'baby' : /^nemo_kids\./.test(id) ? 'kid' : 'adult'), RATIO = { adult: 1, kid: 0.8, baby: 0.45 };
+    const role = (id) => (/^baby\./.test(id) ? 'baby' : /^(nemo_kids|code\.dong_(son|daughter))\./.test(id) ? 'kid' : 'adult'), RATIO = { adult: 1, kid: 0.8, baby: 0.45 };
     const A = 230, list = a.map((id) => ({ id, role: role(id), asp: GF.aspect(id) }));
     list.forEach((q) => { q.h = A * RATIO[q.role]; q.w = q.h * q.asp; });
     const tot = list.reduce((s, q) => s + q.w * 0.8, 0), f = Math.min(1, 336 / (tot || 1)); list.forEach((q) => { q.h *= f; q.w *= f; });
@@ -280,11 +280,13 @@
     UI.upd.forEach((f) => f());
     if (!document.hidden) { tick.n = (tick.n || 0) + 1; if (tick.n % 20 === 0) save(); }
   }
+  // 오프라인: 지금 속도 그대로 선형 × 효율(복리 없음, 웃음·여행 버프는 쌓이지 않음). 3분 온라인이 늘 더 재미있다.
   function offline() {
     const t = now(), dt = t - S.last, cap = B.offlineCapHours * 3600000;
     if (dt < 2 * 60000) return null;
-    const use = Math.min(dt, cap), w0 = S.w, l0 = S.l; advance(S.last, S.last + use); S.last = t;
-    return { ms: dt, capped: dt > cap, gained: S.w - w0, laugh: S.l - l0 };
+    const use = Math.min(dt, cap), r = rates(Infinity), gained = (r.n.w + r.s.base + r.d.w) * (use / 1000) * B.offlineEfficiency;
+    S.w += gained; S.tot += gained; S.last = t;
+    return { ms: dt, capped: dt > cap, gained, laugh: 0 };
   }
   // 테스트·디버그: 가짜 시계 (8시간 경과 시험 등)
   IDLE.debug = {
@@ -296,8 +298,26 @@
     snap() { return JSON.stringify(S); }, restore(j) { S = Object.assign(fresh(), JSON.parse(j)); S.last = now(); },
     reloadOffline() { save(); const o = offline(); UI.welcome = o; return o; },
   };
+
+  /* 동그라미 아들·엄마·딸: 래스터가 올 때까지 src/characters.js(읽기 전용)의 코드 그림을 GF.art 로 만든다. 엔진 GF 를 덮지 않도록 가짜 window 로 실행. */
+  async function loadCodeChars() {
+    try {
+      const code = await (await fetch(GF.base + 'src/characters.js')).text(), fake = {};
+      new Function('window', code)(fake);
+      const C = fake.GF, defs = C.ROUGH_DEFS.replace(/<svg[^>]*>/, '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">') ;
+      const mk = { dong_mom: ['dongMom', 44], dong_son: ['dongSon', 34], dong_daughter: ['dongDaughter', 34] };
+      GF.art = GF.art || {};
+      Object.keys(mk).forEach((k) => ['good', 'joy', 'tired', 'worry', 'calm'].forEach((emo) => {
+        const [fn, r] = mk[k], g = C[fn]({ cx: 70, cy: 52 + r * 0.2 + (r > 40 ? 6 : 0), r, emo: emo === 'calm' ? 'good' : emo, item: null });
+        const W = 140, H = 150;
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" width="' + W * 3 + '" height="' + H * 3 + '">' + C.ROUGH_DEFS.replace(/^<svg[^>]*>|<\/svg>$/g, '') + C.CHAR_STYLE + g + '</svg>';
+        GF.art['code.' + k + '.' + emo] = { src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg), w: W, h: H };
+      }));
+    } catch (e) { console.error('code chars', e); }
+  }
   IDLE.start = async function (opts) {
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'idle_balance', 'idle_stories'], storeKey: 'gf:idle:ui:v1', start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'idle_balance', 'idle_stories'], storeKey: 'gf:idle:ui:v1', async start() {
+      await loadCodeChars();
       B = GF.data.idle_balance; ST = GF.data.idle_stories; S = load(); S.last = S.last || Date.now();
       const o = offline(); if (o && o.gained > 0) UI.welcome = o;
       if (!B || !ST) return; GF.go('itable');

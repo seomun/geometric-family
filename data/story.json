@@ -1,0 +1,34 @@
+{
+  "ch1": {
+    "pro": [
+      { "bg": "stream", "voice": "c1_p1", "text": "오늘은 막둥이의 생일! 잔칫집에 가요.",
+        "chars": [{ "id": "baby.joy", "x": 110, "y": 540, "h": 200 }, { "id": "nemo_kids.kid1", "x": 250, "y": 540, "h": 240 }] },
+      { "bg": "bridge", "voice": "c1_p2", "text": "어? 다리가 아주 좁네!",
+        "chars": [{ "id": "baby.surprise", "x": 120, "y": 600, "h": 190 }, { "id": "nemo_kids.kid1", "x": 250, "y": 600, "h": 230 }] },
+      { "bg": "bridge", "voice": "c1_p3", "text": "동그라미 아빠가 말했어요. \"큰 순서대로. 가자.\"",
+        "chars": [{ "id": "dong_dad.warm", "x": 180, "y": 610, "h": 270 }] }
+    ],
+    "epi": [
+      { "bg": "bridge", "voice": "c1_e1", "text": "모두 무사히 건넜어요!",
+        "chars": [{ "id": "baby.joy", "x": 90, "y": 600, "h": 190 }, { "id": "dong_dad.joy", "x": 190, "y": 610, "h": 260 }, { "id": "nemo_kids.kid1", "x": 285, "y": 600, "h": 220 }] },
+      { "bg": "stream", "voice": "c1_e2", "text": "어? 저 멀리서 \"뚝!\" 소리가 나요.",
+        "chars": [{ "id": "baby.surprise", "x": 180, "y": 560, "h": 240 }] }
+    ]
+  },
+  "ch2": {
+    "pro": [
+      { "bg": "hill", "voice": "c2_p1", "text": "뚝! 무슨 소리지?",
+        "chars": [{ "id": "baby.surprise", "x": 110, "y": 580, "h": 200 }, { "id": "nemo_kids.kid1", "x": 240, "y": 580, "h": 240 }] },
+      { "bg": "hill", "voice": "c2_p2", "text": "세모엄마도 깜짝!",
+        "chars": [{ "id": "wife.surprise", "x": 180, "y": 590, "h": 300 }] },
+      { "bg": "hill", "voice": "c2_p3", "text": "같은 얼굴을 찾아봐요.",
+        "chars": [{ "id": "wife.worry", "x": 120, "y": 590, "h": 260 }, { "id": "baby.good", "x": 270, "y": 590, "h": 170 }] }
+    ],
+    "epi": [
+      { "bg": "hill", "voice": "c2_e1", "text": "소리의 정체는 곶감이 떨어지는 소리였어요!",
+        "chars": [{ "id": "wife.joy", "x": 130, "y": 590, "h": 280 }, { "id": "baby.joy", "x": 255, "y": 590, "h": 180 }] },
+      { "bg": "field", "voice": "c2_e2", "text": "곶감을 한 줄 받았어요. 마당에서 무언가 보여요.",
+        "chars": [{ "id": "wife.wink", "x": 120, "y": 600, "h": 260 }, { "id": "baby.love", "x": 250, "y": 600, "h": 180 }] }
+    ]
+  }
+}

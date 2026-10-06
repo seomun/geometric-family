@@ -1,0 +1,207 @@
+{
+ "wife.angry": {
+  "src": "assets/wife/angry.png",
+  "w": 446,
+  "h": 540
+ },
+ "wife.bad": {
+  "src": "assets/wife/bad.png",
+  "w": 444,
+  "h": 540
+ },
+ "wife.calm": {
+  "src": "assets/wife/calm.png",
+  "w": 448,
+  "h": 540
+ },
+ "wife.cry": {
+  "src": "assets/wife/cry.png",
+  "w": 448,
+  "h": 540
+ },
+ "wife.good": {
+  "src": "assets/wife/good.png",
+  "w": 458,
+  "h": 540
+ },
+ "wife.joy": {
+  "src": "assets/wife/joy.png",
+  "w": 452,
+  "h": 540
+ },
+ "wife.love": {
+  "src": "assets/wife/love.png",
+  "w": 461,
+  "h": 540
+ },
+ "wife.smug": {
+  "src": "assets/wife/smug.png",
+  "w": 445,
+  "h": 540
+ },
+ "wife.surprise": {
+  "src": "assets/wife/surprise.png",
+  "w": 455,
+  "h": 540
+ },
+ "wife.tired": {
+  "src": "assets/wife/tired.png",
+  "w": 490,
+  "h": 540
+ },
+ "wife.wink": {
+  "src": "assets/wife/wink.png",
+  "w": 451,
+  "h": 540
+ },
+ "wife.worry": {
+  "src": "assets/wife/worry.png",
+  "w": 451,
+  "h": 540
+ },
+ "dong_dad.good": {
+  "src": "assets/dong_dad/good.png",
+  "w": 431,
+  "h": 540
+ },
+ "dong_dad.joy": {
+  "src": "assets/dong_dad/joy.png",
+  "w": 431,
+  "h": 540
+ },
+ "dong_dad.calm": {
+  "src": "assets/dong_dad/calm.png",
+  "w": 427,
+  "h": 540
+ },
+ "dong_dad.warm": {
+  "src": "assets/dong_dad/warm.png",
+  "w": 434,
+  "h": 540
+ },
+ "dong_dad.surprise": {
+  "src": "assets/dong_dad/surprise.png",
+  "w": 429,
+  "h": 540
+ },
+ "dong_dad.trouble": {
+  "src": "assets/dong_dad/trouble.png",
+  "w": 427,
+  "h": 540
+ },
+ "nemo_dad.good": {
+  "src": "assets/nemo_dad/good.png",
+  "w": 456,
+  "h": 540
+ },
+ "nemo_dad.joy": {
+  "src": "assets/nemo_dad/joy.png",
+  "w": 456,
+  "h": 540
+ },
+ "nemo_dad.wink": {
+  "src": "assets/nemo_dad/wink.png",
+  "w": 456,
+  "h": 540
+ },
+ "nemo_dad.love": {
+  "src": "assets/nemo_dad/love.png",
+  "w": 456,
+  "h": 540
+ },
+ "nemo_dad.surprise": {
+  "src": "assets/nemo_dad/surprise.png",
+  "w": 456,
+  "h": 540
+ },
+ "nemo_dad.worry": {
+  "src": "assets/nemo_dad/worry.png",
+  "w": 456,
+  "h": 540
+ },
+ "nemo_mom.good": {
+  "src": "assets/nemo_mom/good.png",
+  "w": 482,
+  "h": 540
+ },
+ "nemo_mom.joy": {
+  "src": "assets/nemo_mom/joy.png",
+  "w": 481,
+  "h": 540
+ },
+ "nemo_mom.wink": {
+  "src": "assets/nemo_mom/wink.png",
+  "w": 470,
+  "h": 540
+ },
+ "nemo_mom.love": {
+  "src": "assets/nemo_mom/love.png",
+  "w": 481,
+  "h": 540
+ },
+ "nemo_mom.surprise": {
+  "src": "assets/nemo_mom/surprise.png",
+  "w": 480,
+  "h": 540
+ },
+ "nemo_mom.worry": {
+  "src": "assets/nemo_mom/worry.png",
+  "w": 474,
+  "h": 540
+ },
+ "nemo_grandma.good": {
+  "src": "assets/nemo_grandma/good.png",
+  "w": 540,
+  "h": 540
+ },
+ "nemo_kids.kid1": {
+  "src": "assets/nemo_kids/kid1.png",
+  "w": 470,
+  "h": 540
+ },
+ "nemo_kids.kid2": {
+  "src": "assets/nemo_kids/kid2.png",
+  "w": 472,
+  "h": 540
+ },
+ "nemo_kids.kid3": {
+  "src": "assets/nemo_kids/kid3.png",
+  "w": 463,
+  "h": 540
+ },
+ "nemo_kids.baby": {
+  "src": "assets/nemo_kids/baby.png",
+  "w": 507,
+  "h": 540
+ },
+ "baby.good": {
+  "src": "assets/baby/good.png",
+  "w": 570,
+  "h": 533
+ },
+ "baby.joy": {
+  "src": "assets/baby/joy.png",
+  "w": 570,
+  "h": 540
+ },
+ "baby.surprise": {
+  "src": "assets/baby/surprise.png",
+  "w": 568,
+  "h": 540
+ },
+ "baby.love": {
+  "src": "assets/baby/love.png",
+  "w": 568,
+  "h": 540
+ },
+ "baby.cry": {
+  "src": "assets/baby/cry.png",
+  "w": 568,
+  "h": 540
+ },
+ "baby.tired": {
+  "src": "assets/baby/tired.png",
+  "w": 570,
+  "h": 526
+ }
+}

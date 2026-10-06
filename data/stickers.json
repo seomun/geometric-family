@@ -1,0 +1,7 @@
+[
+  { "id": "ch1_A", "ch": 1, "char": "baby.good" }, { "id": "ch1_B", "ch": 1, "char": "dong_dad.good" }, { "id": "ch1_C", "ch": 1, "char": "wife.good" }, { "id": "ch1_star", "ch": 1, "char": "nemo_dad.good" }, { "id": "ch1_book", "ch": 1, "char": "nemo_mom.good" },
+  { "id": "ch2_A", "ch": 2, "char": "wife.joy" }, { "id": "ch2_B", "ch": 2, "char": "wife.wink" }, { "id": "ch2_C", "ch": 2, "char": "wife.love" }, { "id": "ch2_star", "ch": 2, "char": "wife.smug" }, { "id": "ch2_book", "ch": 2, "char": "baby.love" },
+  { "id": "ch3_A", "ch": 3, "char": "nemo_grandma.good" }, { "id": "ch3_B", "ch": 3, "char": "nemo_kids.kid1" }, { "id": "ch3_C", "ch": 3, "char": "nemo_kids.kid2" }, { "id": "ch3_star", "ch": 3, "char": "nemo_kids.kid3" }, { "id": "ch3_book", "ch": 3, "char": "nemo_kids.baby" },
+  { "id": "ch4_A", "ch": 4, "char": "baby.tired" }, { "id": "ch4_B", "ch": 4, "char": "nemo_mom.wink" }, { "id": "ch4_C", "ch": 4, "char": "dong_dad.calm" }, { "id": "ch4_star", "ch": 4, "char": "wife.calm" }, { "id": "ch4_book", "ch": 4, "char": "nemo_dad.wink" },
+  { "id": "ch5_A", "ch": 5, "char": "nemo_dad.love" }, { "id": "ch5_B", "ch": 5, "char": "nemo_mom.love" }, { "id": "ch5_C", "ch": 5, "char": "dong_dad.warm" }, { "id": "ch5_star", "ch": 5, "char": "wife.love" }, { "id": "ch5_book", "ch": 5, "char": "baby.cry" }
+]

@@ -1,5 +1,5 @@
 {
- "version": 2,
+ "version": 3,
  "note": "사연 4컷. src=원문이면 작가 원문 그대로, src=각색이면 [제안] 문장(허브 확인 필요). 원문 위치는 source 필드. 동그라미네 아들·엄마·딸은 래스터가 올 때까지 src/characters.js 코드 캐릭터(code.*)를 쓴다.",
  "stories": [
   {
@@ -222,7 +222,7 @@
      ]
     },
     {
-     "text": "동그라미는 덤덤하다. 세모는 이제 애들을 자주 봐야겠다고 생각한다.\n네모는… 건강검진표가 머리를 지나간다.\n\"아, 난 진짜 아프면 안 되는데.\"",
+     "text": "동그라미는 덤덤하다. 세모는 이제 이 녀석들을 자주 봐야겠다고 생각한다.\n네모는… 건강검진표가 머리를 지나간다.\n\"아, 난 진짜 아프면 안 되는데.\"",
      "src": "원문 줄임 [제안]",
      "chars": [
       "dong_dad.calm",
@@ -516,6 +516,1350 @@
    "reward": {
     "laugh": 40
    }
+  },
+  {
+   "id": "s09",
+   "title": "동창 프로필 사진",
+   "source": "content/episodes/BANK_v2.md #6 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "단톡방 프로필 사진 구경 시간.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "네모의 사진은 막둥이 돌사진 그대로다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.joy",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "세모 부부는 여행 사진이다. 매달 바뀐다. 동그라미는 풍경 사진, 5년째.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy",
+      "wife.joy",
+      "dong_dad.calm"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "\"꽃 사진으로 바꾸면 늙은 거래.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "husband.wink",
+      "dong_dad.surprise"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "question": {
+    "q": "내 프로필 사진은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "가족·아이 사진"
+     },
+     {
+      "k": "semo",
+      "t": "둘이 찍은 여행 사진"
+     },
+     {
+      "k": "dong",
+      "t": "풍경이나 기본 사진"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s10",
+   "title": "포인트 모으기",
+   "source": "content/episodes/BANK_v2.md #11 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "영수증 포인트가 2,300점 쌓여 있었다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.surprise"
+     ]
+    },
+    {
+     "text": "네모는 쓸 곳을 한참 고민한다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "세모 부부는 쿠폰 전쟁이다. 누가 더 아꼈나.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.wink",
+      "wife.smug"
+     ]
+    },
+    {
+     "text": "동그라미는 포인트가 있는 줄도 몰랐다.\n\"2,300원이 생겼다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "nemo_dad.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "쌓인 포인트, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "한 푼까지 알뜰하게 쓴다"
+     },
+     {
+      "k": "semo",
+      "t": "쿠폰부터 비교한다"
+     },
+     {
+      "k": "dong",
+      "t": "있는 줄도 몰랐다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s11",
+   "title": "흰머리",
+   "source": "content/episodes/BANK_v2.md #19 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "막둥이가 아빠 흰머리를 뽑아 준다. 개당 100원.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.joy",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "세모 부부는 같은 날 염색한다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.good",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "동그라미는 미용실 예약. 늘 같은 시간에.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"개당 100원.\"\n막둥이는 오늘 5천 원을 벌었다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.love",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "흰머리를 발견하면?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "누가 뽑아 줄 사람부터 찾는다"
+     },
+     {
+      "k": "semo",
+      "t": "같이 염색하러 간다"
+     },
+     {
+      "k": "dong",
+      "t": "미용실 예약 앱을 연다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s12",
+   "title": "에어컨 리모컨",
+   "source": "content/episodes/BANK_v2.md #25 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "리모컨 쟁탈전. 네모네는 할머니가 이긴다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_grandma.good",
+      "nemo_dad.worry",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "세모네는 18도 대 26도의 전쟁이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.worry",
+      "wife.angry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "동그라미네는 각 방 자동 온도다. 다툴 일이 없다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_son.good"
+     ]
+    },
+    {
+     "text": "\"할머니가 이긴다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_grandma.good",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "에어컨 온도는 누가 정하나?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "결국 가장 어른이 정한다"
+     },
+     {
+      "k": "semo",
+      "t": "18도 대 26도, 매일 협상"
+     },
+     {
+      "k": "dong",
+      "t": "각자 자동으로 맞춘다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s13",
+   "title": "결혼기념일",
+   "source": "content/episodes/BANK_v2.md #29 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "네모는 결혼기념일을 잊었다. 아이들이 기억했다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.surprise",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "세모 부부는 레스토랑을 예약했다가 싸우고, 집에서 라면을 끓인다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.worry",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미네는 꽃이 정확한 시간에 배달된다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_mom.good"
+     ]
+    },
+    {
+     "text": "\"라면이 맛있었다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.love",
+      "wife.love"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "결혼기념일 저녁은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "아이들이 먼저 챙겨 준다"
+     },
+     {
+      "k": "semo",
+      "t": "예약했다 싸우고 라면"
+     },
+     {
+      "k": "dong",
+      "t": "꽃 배달과 정해진 식사"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s14",
+   "title": "각방",
+   "source": "content/episodes/BANK_v2.md #34 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "네모네에서 각방은 꿈이다. 아이가 끼어 잔다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "baby.tired"
+     ]
+    },
+    {
+     "text": "세모 부부는 싸우면 각방. 새벽에 슬그머니 건너온다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.worry",
+      "wife.tired"
+     ]
+    },
+    {
+     "text": "동그라미네는 각방 10년째. 불편한 게 없다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_mom.good"
+     ]
+    },
+    {
+     "text": "\"코 고는 소리가 그립다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.warm"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "잠자리는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "아이들과 한 방 가득"
+     },
+     {
+      "k": "semo",
+      "t": "싸우면 각방, 새벽엔 합방"
+     },
+     {
+      "k": "dong",
+      "t": "각방이 편하다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s15",
+   "title": "키오스크",
+   "source": "content/episodes/BANK_v2.md #48 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "뒤에 줄이 길다. 네모는 키오스크 앞에서 얼어붙었다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "막둥이가 대신 눌러 준다. 척척.",
+     "src": "각색 [제안]",
+     "chars": [
+      "baby.joy",
+      "nemo_dad.surprise"
+     ]
+    },
+    {
+     "text": "세모 부부는 각자 눌러서 두 번 결제했다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.surprise",
+      "wife.surprise"
+     ]
+    },
+    {
+     "text": "\"막둥이가 어른이다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "baby.joy",
+      "nemo_dad.love"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "키오스크 앞에서 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "뒤에 줄이 신경 쓰인다"
+     },
+     {
+      "k": "semo",
+      "t": "둘이 각자 눌러 두 번 결제"
+     },
+     {
+      "k": "dong",
+      "t": "능숙한데 아무도 안 기다려 준다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s16",
+   "title": "버킷리스트",
+   "source": "content/episodes/BANK_v2.md #55 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "버킷리스트를 적어 보기로 했다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "text": "네모의 1번은 \"혼자 밥 한 끼\".",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.joy"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "세모 부부는 50개를 적었다. 서로 겹치는 건 3개.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "동그라미는 다 해 봤다.\n\"…그런데 뭘 하지?\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "question": {
+    "q": "내 버킷리스트 1번은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "혼자 있는 시간"
+     },
+     {
+      "k": "semo",
+      "t": "둘이 함께할 여행"
+     },
+     {
+      "k": "dong",
+      "t": "이미 다 해 봤다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s17",
+   "title": "청첩장",
+   "source": "content/episodes/BANK_v2.md #7 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "모바일 청첩장이 도착했다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "네모는 5만 원 봉투. 아이를 다 데려가면 식대가 미안하다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "text": "세모는 10만 원을 넣고 뷔페에서 전투를 벌인다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.wink",
+      "wife.smug"
+     ]
+    },
+    {
+     "text": "동그라미는 화환만 보낸다.\n\"밥값은 했나?\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "question": {
+    "q": "청첩장을 받으면?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "봉투 금액부터 고민한다"
+     },
+     {
+      "k": "semo",
+      "t": "축의금보다 뷔페를 본다"
+     },
+     {
+      "k": "dong",
+      "t": "화환만 보낸다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s18",
+   "title": "부모님 용돈",
+   "source": "content/episodes/BANK_v2.md #8 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "명절 앞두고 형제 단톡방이 열렸다. n분의 1 계산이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "세모 부부는 양가에 똑같이 드린다. 그래서 싸운다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.worry",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미는 자동이체. 전화는 하지 않는다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"통장엔 들어가는데 목소리는 안 간다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.trouble"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "부모님 용돈은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "형제끼리 n분의 1"
+     },
+     {
+      "k": "semo",
+      "t": "양가 똑같이, 가끔 싸움"
+     },
+     {
+      "k": "dong",
+      "t": "자동이체"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s19",
+   "title": "아이 용돈 협상",
+   "source": "content/episodes/BANK_v2.md #9 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "네모네는 아이가 넷이라 용돈을 차등 협상한다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "text": "막둥이가 제일 셈이 빠르다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "동그라미네는 앱으로 자동 지급. 대화가 없다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_son.good"
+     ]
+    },
+    {
+     "text": "\"엄마, 이번 달 사정이 좀…\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_mom.worry",
+      "baby.cry"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "아이 용돈은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "협상하고 또 협상"
+     },
+     {
+      "k": "semo",
+      "t": "그때그때 통 크게"
+     },
+     {
+      "k": "dong",
+      "t": "앱으로 자동 지급"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s20",
+   "title": "중고거래",
+   "source": "content/episodes/BANK_v2.md #10 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "큰딸이 옷을 팔고, 막둥이 옷을 샀다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "세모 남편은 캠핑 장비를 몰래 팔다가 걸렸다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.surprise",
+      "wife.angry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "동그라미는 팔 줄 몰라 기부한다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"당근입니다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "안 쓰는 물건은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "팔아서 다시 산다"
+     },
+     {
+      "k": "semo",
+      "t": "몰래 팔다 들킨다"
+     },
+     {
+      "k": "dong",
+      "t": "기부한다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s21",
+   "title": "연말정산",
+   "source": "content/episodes/BANK_v2.md #12 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "연말정산 시즌. 네모네는 부양가족 공제가 최다다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "text": "처음으로 1등이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.surprise"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "세모 부부는 맞벌이, 누가 받나 전쟁이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.worry",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "\"애 넷이 효자다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "연말정산 결과는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "부양가족 덕에 환급"
+     },
+     {
+      "k": "semo",
+      "t": "누가 받을지 전쟁"
+     },
+     {
+      "k": "dong",
+      "t": "세무사에게 메일 한 통"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s22",
+   "title": "노후 계산기",
+   "source": "content/episodes/BANK_v2.md #13 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "국민연금 예상액을 조회했다. 네모는 한숨을 쉰다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "세모 부부는 \"다 쓰고 죽자.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy",
+      "wife.wink"
+     ]
+    },
+    {
+     "text": "동그라미는 계획이 완벽하다.\n그런데 함께 늙을 사람은?",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "\"계산기가 모르는 게 있다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "노후 준비는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "한숨부터 나온다"
+     },
+     {
+      "k": "semo",
+      "t": "있는 만큼 즐긴다"
+     },
+     {
+      "k": "dong",
+      "t": "계획은 완벽하다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s23",
+   "title": "로또",
+   "source": "content/episodes/BANK_v2.md #14 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "네모는 매주 5천 원. 당첨되면 방을 하나 더 늘린다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "세모 부부는 사자 대 말자로 싸운다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.wink",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미는 확률을 안다. 그래서 안 산다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"방 하나만.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.love",
+      "nemo_mom.joy"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "로또를 산다면?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "매주 5천 원"
+     },
+     {
+      "k": "semo",
+      "t": "사자 대 말자"
+     },
+     {
+      "k": "dong",
+      "t": "확률을 알아서 안 산다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s24",
+   "title": "새벽 4시",
+   "source": "content/episodes/BANK_v2.md #18 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "새벽 4시. 네모는 깨서 아이들 도시락을 생각한다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "세모 부부는 둘 다 깨서 넷플릭스를 본다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "동그라미는 혼자 거실에 앉아 있다. 시계 소리뿐.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"잠이 줄었다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "husband.worry",
+      "dong_dad.calm"
+     ]
+    }
+   ],
+   "question": {
+    "q": "새벽에 눈이 떠지면?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "내일 걱정부터 한다"
+     },
+     {
+      "k": "semo",
+      "t": "같이 깬 사람과 논다"
+     },
+     {
+      "k": "dong",
+      "t": "조용히 앉아 있는다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s25",
+   "title": "혈압약 첫날",
+   "source": "content/episodes/BANK_v2.md #20 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "네모는 혈압약 봉지를 아이들이 볼까 숨긴다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "세모 부부는 서로 약을 챙기다 싸운다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.worry",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미는 담담하게 알람을 설정한다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"평생 먹어야 한대.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "husband.worry",
+      "dong_dad.calm"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "약을 처음 먹게 되면?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "가족 눈에 안 띄게 숨긴다"
+     },
+     {
+      "k": "semo",
+      "t": "서로 챙겨 준다"
+     },
+     {
+      "k": "dong",
+      "t": "알람 설정부터"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s26",
+   "title": "냉장고 정리",
+   "source": "content/episodes/BANK_v2.md #26 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "네모네 냉장고 문을 열면 반찬통이 쏟아진다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.surprise",
+      "nemo_mom.surprise"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "세모 부부네는 텅 비었다. 배달 앱만 가득.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "동그라미네는 라벨이 붙어 있다. 먹을 사람이 없다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_mom.good"
+     ]
+    },
+    {
+     "text": "\"반찬은 남는다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_mom.joy",
+      "nemo_grandma.good"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "우리 집 냉장고는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "꽉 차서 쏟아진다"
+     },
+     {
+      "k": "semo",
+      "t": "텅 비고 배달 앱"
+     },
+     {
+      "k": "dong",
+      "t": "라벨까지 정리돼 있다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s27",
+   "title": "김장",
+   "source": "content/episodes/BANK_v2.md #28 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "김장하는 날. 네모네는 할머니 지휘 아래 일곱 명이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_grandma.good",
+      "nemo_dad.joy",
+      "nemo_mom.joy",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "세모 부부는 \"사 먹자\" 대 \"담그자\".",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.wink",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미네는 주문한 김치가 도착했다. 혼자 먹기엔 많다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"김치는 같이 먹어야.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_grandma.good",
+      "nemo_dad.love"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "김장은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "온 가족이 모여서"
+     },
+     {
+      "k": "semo",
+      "t": "사 먹자 대 담그자"
+     },
+     {
+      "k": "dong",
+      "t": "주문해서 받는다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s28",
+   "title": "읽씹",
+   "source": "content/episodes/BANK_v2.md #50 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "네모는 바빠서 못 봤다. 미안하다고 보낸다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "세모는 1이 안 사라지면 전쟁이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "wife.angry",
+      "husband.surprise"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "동그라미는 읽고도 답하지 않는다. 원래 그렇다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"1이 사라졌다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "메시지를 읽고 나면?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "바로 미안하다고 한다"
+     },
+     {
+      "k": "semo",
+      "t": "1이 안 사라지면 전화한다"
+     },
+     {
+      "k": "dong",
+      "t": "읽고 나중에 답한다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s29",
+   "title": "노래방 18번",
+   "source": "content/episodes/BANK_v2.md #53 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "노래방. 네모가 아이들 앞에서 처음 부른다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "세모 부부는 듀엣이다. 박자에서 싸운다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미는 18번이 없다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "\"우리 아빠 노래 잘하네.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_dad.love"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "노래방에서 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "아이들 앞에서 용기를 낸다"
+     },
+     {
+      "k": "semo",
+      "t": "듀엣으로 간다"
+     },
+     {
+      "k": "dong",
+      "t": "18번이 없다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s30",
+   "title": "언제 밥 한번",
+   "source": "content/episodes/BANK_v2.md #56 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "\"언제 밥 한번 먹자.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.joy",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "네모는 진짜로 날짜를 잡는다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.wink"
+     ]
+    },
+    {
+     "text": "세모는 \"오늘 바로 하자\"고 한다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy"
+     ]
+    },
+    {
+     "text": "동그라미는 \"그래, 언제 한번\" 하고 웃는다.\n언제가 오늘이 됐다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.warm",
+      "nemo_dad.joy",
+      "husband.love"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "\"언제 밥 한번 먹자\"는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "날짜를 잡는다"
+     },
+     {
+      "k": "semo",
+      "t": "오늘 바로 만난다"
+     },
+     {
+      "k": "dong",
+      "t": "\"그래, 언제 한번\""
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
   }
  ],
  "seasonMemo": [
@@ -525,6 +1869,135 @@
    "season": "연말",
    "source": "content/seeds/author/2026-10-07_파리목숨*.md",
    "note": "큰 사건 — 시즌 사건 카드 후보로 메모만(허브 지시)"
+  }
+ ],
+ "seasons": [
+  {
+   "id": "e14a",
+   "title": "파리목숨 ① 권고사직 공고",
+   "season": "연말",
+   "months": [
+    12
+   ],
+   "source": "content/seeds/author/2026-10-07_파리목숨1_권고사직공고.md",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "셋이 술자리하기 직전에,\n네모네 회사에 권고사직 공고가 붙었다.",
+     "src": "원문",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "부장이 담배 한 대 피자고 한다.\n\"네모는 아이가 셋이지? 막내가 몇 살이야?\"",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "nemo_dad.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "뜬금없는 호구조사야… 라고 네모는 생각했다.\n\"넌 아니지만, 넌 좀 더 다녀. 우리 부서에 최소 둘은 정리해야 해. 좀 고민해 둬. 다음 주에 소주 한잔하자…\"",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "누군가를 걱정하기 전에,\n염치없이 지출 예정이 스쳐 지나가는 네모다.\n학원비… 아, 자동차보험 만기가… 참, 어머님 치과…",
+     "src": "원문",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    }
+   ],
+   "question": {
+    "q": "회사에 공고가 붙은 날, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "지출 예정부터 계산한다"
+     },
+     {
+      "k": "semo",
+      "t": "그만두고 여행 가자고 한다"
+     },
+     {
+      "k": "dong",
+      "t": "해당은 없는데 동기가 걱정이다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 60
+   }
+  },
+  {
+   "id": "e14b",
+   "title": "파리목숨 ② 술자리, 세모",
+   "season": "연말",
+   "months": [
+    12
+   ],
+   "source": "content/seeds/author/2026-10-07_파리목숨2_술자리세모.md",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "술자리에서 가볍게 고민을 털어놓는 네모.",
+     "src": "원문",
+     "chars": [
+      "nemo_dad.worry",
+      "husband.good"
+     ]
+    },
+    {
+     "text": "\"나? 나야 뭐 애도 없고, 퇴사하면 같이 세계일주 하지 뭐.\"\n세모는 덤덤하다.",
+     "src": "원문",
+     "chars": [
+      "husband.wink",
+      "nemo_dad.surprise"
+     ]
+    },
+    {
+     "text": "수없이 아내와 여행하는 계획을 가지고 있었다.\n유럽으로, 미국, 남미로. 둘은 여행을 많이 다녔고, 많이 좋았다.",
+     "src": "원문",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "그런데 지금 세 달째 냉전 중이다.\n냉전이 끝나지 않으면… 아니, 혼자 가야 하나?\n이럴 때 가족이 없는 게 너무 불편한 세모다.",
+     "src": "원문",
+     "chars": [
+      "husband.worry"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "question": {
+    "q": "퇴사하면 가장 먼저 하고 싶은 일은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "가족 먼저, 생활비 먼저"
+     },
+     {
+      "k": "semo",
+      "t": "세계일주, 같이 간다면"
+     },
+     {
+      "k": "dong",
+      "t": "조용히 정리하고 쉰다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 60
+   }
   }
  ]
 }

@@ -46,9 +46,11 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await pg.click('.screen.on .dbtn'); await pg.waitForSelector('.dexg'); await shot('dex'); await pg.click('.screen.on .back');
   // 모든 사연: 컷마다 이미지가 실제로 그려지는지, 글자 ≥18px
   const ids = await pg.evaluate(() => IDLE.debug.B().storyThresholds.map((_, i) => GF.data.idle_stories.stories[i] && GF.data.idle_stories.stories[i].id).filter(Boolean));
-  for (const id of ids) {
-    await pg.evaluate((id) => GF.go('istory', { id }), id); await pg.waitForTimeout(250);
-    const n = await pg.evaluate((id) => GF.data.idle_stories.stories.find((x) => x.id === id).cuts.length, id); let broken = 0;
+  const sids = await pg.evaluate(() => GF.data.idle_stories.seasons.map((x) => x.id));
+  for (const id of ids.concat(sids)) {
+    const season = sids.includes(id);
+    await pg.evaluate(([id, season]) => GF.go('istory', { id, season }), [id, season]); await pg.waitForTimeout(250);
+    const n = await pg.evaluate(([id, season]) => (season ? GF.data.idle_stories.seasons : GF.data.idle_stories.stories).find((x) => x.id === id).cuts.length, [id, season]); let broken = 0;
     for (let i = 0; i < n; i++) { await pg.waitForTimeout(150); broken += await pg.evaluate(() => [...document.querySelectorAll('.screen.on .cut-char img')].filter((m) => !m.complete || !m.naturalWidth).length); if (i < n - 1) await pg.click('.screen.on .bigbtn:last-of-type'); }
     ok(broken === 0, id + ' 모든 컷 이미지 로드'); await pg.evaluate(() => GF.back());
   }

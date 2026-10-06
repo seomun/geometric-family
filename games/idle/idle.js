@@ -5,7 +5,7 @@
   const el = GF.el, $q = (r, s) => r.querySelector(s);
   const IDLE = (window.IDLE = {
     hooks: { adAvailable: () => false, rewardedAd: (placement, cb) => cb && cb(false), purchase: (sku, cb) => cb && cb(false), event: () => {} },   // 광고·결제 자리(no-op)
-    review: /[?&]review=1/.test(location.search),
+    review: /[?&]review=1/.test(location.search), season: (/[?&]season=(\d+)/.exec(location.search) || [])[1] | 0,
   });
   let B, ST, S, UI = { upd: [] };
   const KEY = 'gf:idle:data:v1';
@@ -27,7 +27,7 @@
   const fmtRate = (n) => '+' + (n < 10 ? n.toFixed(1) : fmt(n)) + '/초';
 
   /* ---------------- 상태 ---------------- */
-  const fresh = () => ({ v: 1, w: 15, l: 0, tot: 0, g: {}, tl: { nemo: 1, semo: 1, dong: 1 }, slider: 0.2, buffs: [], tripReady: 0, chairs: 1, inv: [], sd: {}, last: Date.now(), clock: 0, mute: false });
+  const fresh = () => ({ v: 1, w: 15, l: 0, tot: 0, g: {}, tl: { nemo: 1, semo: 1, dong: 1 }, slider: 0.2, buffs: [], tripReady: 0, chairs: 1, inv: [], sd: {}, ss: {}, last: Date.now(), clock: 0, mute: false });
   function load() {
     try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v === 1) return Object.assign(fresh(), x); } catch (e) {}
     return fresh();
@@ -89,6 +89,11 @@
   }
   const Rbtn = (t) => ({ nemo: '#E8870F', semo: '#2F8FD0', dong: '#3B4A7A' }[t]);
 
+  /* 시즌 사건 카드: 해당 달에만 나타나고, 해마다 한 번씩 다시 읽을 수 있다(연도별 도장). */
+  const seasonOn = () => IDLE.season || new Date(now()).getMonth() + 1;
+  const seasonList = () => (ST.seasons || []).filter((x) => (x.months || []).includes(IDLE.season ? x.months[0] : seasonOn()));
+  const seasonKey = (id) => id + ':' + new Date(now()).getFullYear();
+  const seasonTodo = () => seasonList().filter((x) => !S.ss[seasonKey(x.id)]);
   /* ---------------- 식탁(홈) ---------------- */
   GF.screen('itable', {
     bare: true,
@@ -120,6 +125,9 @@
         $q(hd, '#itl').textContent = S.tl.nemo + S.tl.semo + S.tl.dong; $q(hd, '#idx').textContent = Math.round(dexCount() / B.dexTotal * 100) + '%';
         const n = readyStories().length, bd = $q(sb, '.badge'); bd.style.display = n ? 'inline-flex' : 'none'; bd.textContent = n;
       });
+      const rb = el('button', 'ribbon', sc, ''); rb.style.display = 'none';
+      rb.onclick = () => { const t = seasonTodo()[0] || seasonList()[0]; if (t) { GF.sfx('pick'); GF.go('istory', { id: t.id, season: true }); } };
+      UI.upd.push(() => { const l = seasonList(), todo = seasonTodo(); rb.style.display = l.length ? 'flex' : 'none'; if (l.length) rb.textContent = todo.length ? '연말 사건 · ' + todo[0].title : '연말 사건 · 다시 보기'; rb.classList.toggle('done', !todo.length); });
       UI.upd.forEach((f) => f());
       if (UI.welcome) { const w = UI.welcome; UI.welcome = null; welcomeBack(sc, w); }
     },
@@ -215,7 +223,7 @@
   GF.screen('istory', {
     bare: true,
     enter(r, p) {
-      r.classList.add('idle'); const sc = el('div', 'scr', r), st = ST.stories.find((x) => x.id === p.id); let i = 0; UI.upd = [];
+      r.classList.add('idle'); const sc = el('div', 'scr', r), st = (p.season ? ST.seasons : ST.stories).find((x) => x.id === p.id), seen = p.season ? S.ss[seasonKey(p.id)] : S.sd[st.id]; let i = 0; UI.upd = [];
       const bgHost = el('div', 'abs', sc); bgHost.style.cssText = 'inset:0';
       const bk = el('button', 'back', sc, '‹'); bk.onclick = () => { GF.sfx('tap'); GF.back(); };
       const cnt = el('div', 'cnt', sc);
@@ -224,10 +232,13 @@
       GF.bg(st.bg, bgHost);
       function render() {
         stage.innerHTML = ''; const c = st.cuts[i]; cnt.textContent = st.title + ' · ' + (i + 1) + '/' + st.cuts.length;
-        const list = CAST(c.chars, 640), tot = list.reduce((s, q) => s + q.w * 0.8, 0); let x = 180 - tot / 2;
-        list.forEach((q, k) => { const d = el('div', 'cut-char in', stage); d.style.cssText = `left:${x + q.w / 2}px;top:398px;height:${q.h}px;width:${q.w}px;animation-delay:${k * 0.1}s`; d.appendChild(GF.img(q.id)); x += q.w * 0.8; });
-        if (c.bubble) { const bb = el('div', 'bubble', stage, {bang:'<svg viewBox="0 0 52 52"><rect x="21" y="6" width="10" height="26" rx="5" fill="#FF8FA8"/><circle cx="26" cy="43" r="6" fill="#FF8FA8"/></svg>',question:'<svg viewBox="0 0 52 52"><path d="M16 18c0-7 6-11 11-11 6 0 10 4 10 9 0 8-9 8-10 15" fill="none" stroke="#8FD3F4" stroke-width="7" stroke-linecap="round"/><circle cx="26" cy="44" r="5" fill="#8FD3F4"/></svg>',heart:'<svg viewBox="0 0 52 52"><path d="M26 44C8 31 6 16 16 11c5-2 9 1 10 5 1-4 5-7 10-5 10 5 8 20-10 33z" fill="#FF6B8B"/></svg>',sparkle:'<svg viewBox="0 0 52 52"><path d="M26 4l5 17 17 5-17 5-5 17-5-17-17-5 17-5z" fill="#FFC933"/></svg>'}[c.bubble]); bb.style.left = '180px'; bb.style.top = (398 - list[0].h * 0.9) + 'px'; }
-        cap.textContent = c.text; if (IDLE.review) { const tg = el('div', 'tag', cap, c.src + (c.stand_in ? ' · 대역' : '')); }
+        cap.textContent = c.text; if (IDLE.review) { el('div', 'tag', cap, c.src + (c.stand_in ? ' · 대역' : '')); }
+        const feet = 640 - 82 - cap.offsetHeight - 4;                      // 글상자가 길면 인물이 그 위로 올라온다
+        const list = CAST(c.chars, 640), mh = Math.max.apply(null, list.map((q) => q.h)), f = Math.min(1, (feet - 90) / mh);
+        list.forEach((q) => { q.h *= f; q.w *= f; });
+        const tot = list.reduce((s, q) => s + q.w * 0.8, 0); let x = 180 - tot / 2;
+        list.forEach((q, k) => { const d = el('div', 'cut-char in', stage); d.style.cssText = `left:${x + q.w / 2}px;top:${feet}px;height:${q.h}px;width:${q.w}px;animation-delay:${k * 0.1}s`; d.appendChild(GF.img(q.id)); x += q.w * 0.8; });
+        if (c.bubble) { const bb = el('div', 'bubble', stage, {bang:'<svg viewBox="0 0 52 52"><rect x="21" y="6" width="10" height="26" rx="5" fill="#FF8FA8"/><circle cx="26" cy="43" r="6" fill="#FF8FA8"/></svg>',question:'<svg viewBox="0 0 52 52"><path d="M16 18c0-7 6-11 11-11 6 0 10 4 10 9 0 8-9 8-10 15" fill="none" stroke="#8FD3F4" stroke-width="7" stroke-linecap="round"/><circle cx="26" cy="44" r="5" fill="#8FD3F4"/></svg>',heart:'<svg viewBox="0 0 52 52"><path d="M26 44C8 31 6 16 16 11c5-2 9 1 10 5 1-4 5-7 10-5 10 5 8 20-10 33z" fill="#FF6B8B"/></svg>',sparkle:'<svg viewBox="0 0 52 52"><path d="M26 4l5 17 17 5-17 5-5 17-5-17-17-5 17-5z" fill="#FFC933"/></svg>'}[c.bubble]); bb.style.left = '180px'; bb.style.top = Math.max(110, feet - list[0].h * 0.9 - 4) + 'px'; }
         nx.textContent = i < st.cuts.length - 1 ? '다음 ›' : '다 읽었어요';
       }
       nx.onclick = () => { GF.sfx('page'); if (i < st.cuts.length - 1) { i++; render(); } else question(); };
@@ -235,14 +246,14 @@
         stage.innerHTML = ''; cap.style.display = 'none'; nx.style.display = 'none'; cnt.textContent = '';
         const q = el('div', 'q', sc, `<h3>${st.question.q}</h3>`);
         st.question.options.forEach((o, k) => { const b = el('button', 'opt', q, `<i>${{ nemo: '🟦', semo: '🔺', dong: '⚪' }[o.k]}</i>${o.t}`); b.style.background = B.tables[o.k].color; b.style.color = B.tables[o.k].ink;
-          b.onclick = () => { S.sd[st.id] = { k: o.k, t: now() }; const lg = st.reward.laugh; S.l += lg; GF.sfx('celebrate'); q.remove(); done(o.k, lg); }; });
+          b.onclick = () => { if (p.season) S.ss[seasonKey(st.id)] = { k: o.k, t: now() }; else S.sd[st.id] = { k: o.k, t: now() }; const lg = st.reward.laugh; S.l += lg; GF.sfx('celebrate'); q.remove(); done(o.k, lg); }; });
       }
       function done(k, lg) {
         const ov = el('div', 'ov', sc), pp = el('div', 'ovp', ov), pct = Math.round(dexCount() / B.dexTotal * 100);
-        pp.innerHTML = `<h2>당신은 ${FAM[k]} 쪽이군요</h2><p>${B.tables[k].tag}</p><div class="big">웃음 +${lg}</div><p>도감 ${dexCount()}/${B.dexTotal} (${pct}%)</p>${st.stat ? '<p style="font-size:18px">' + st.stat + '</p>' : ''}`;
+        pp.innerHTML = `<h2>당신은 ${FAM[k]} 쪽이군요</h2><p>${B.tables[k].tag}</p><div class="big">웃음 +${lg}</div><p>${p.season ? '올해의 연말 사건 도장을 찍었어요' : '도감 ' + dexCount() + '/' + B.dexTotal + ' (' + pct + '%)'}</p>${st.stat ? '<p style="font-size:18px">' + st.stat + '</p>' : ''}`;
         const b = el('button', '', pp, '식탁으로'); b.onclick = () => { ov.remove(); GF.back(); }; save();
       }
-      if (S.sd[st.id]) { /* 다시 보기: 질문은 건너뛴다 */ nx.onclick = () => { GF.sfx('page'); if (i < st.cuts.length - 1) { i++; render(); } else GF.back(); }; }
+      if (seen) { /* 다시 보기: 질문은 건너뛴다 */ nx.onclick = () => { GF.sfx('page'); if (i < st.cuts.length - 1) { i++; render(); } else GF.back(); }; }
       render();
     },
   });

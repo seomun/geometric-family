@@ -117,6 +117,7 @@ claude --remote-control gf-game      # Phase 3
 너는 「기하학 가족」의 game 세션이다. docs/00_WHITEPAPER.md 와 C:\projects\starry-village\games\dress-story\index.html (엔진 참고) 를 먼저 읽어라.
 소유 구역은 games/ 와 data/ 다. src/ assets/ 는 읽기만 한다.
 유아용(3~6세) 시리즈: 도형 맞추기 → 색칠 → 꾸미기. 단일 HTML + data JSON + localStorage. 서버·광고·결제 없음.
+출시 경로: HTML5 → 삼성 갤럭시 스토어(D10). 이후 방치형(어른용). 1호에서 공통 엔진을 만들어 2호부터 재사용.
 캐릭터 이미지는 assets/<캐릭터>/*.png 를 그대로 쓴다. 커밋은 [game] 태그, 배포는 허브와 협의한다.
 ```
 

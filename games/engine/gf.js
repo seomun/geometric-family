@@ -76,46 +76,63 @@
     tada() { [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.11, 0.3, 'triangle')); },
     page() { tone(330, 0, 0.1, 'sine', 0.15); },
   };
-  // 효과음: games/audio/*.wav (tools/make_audio.py 자작 합성). 파일이 없거나 아직 못 읽었으면 위의 합성음으로 대신한다.
-  const SOUND_FILES = ['tap', 'pick', 'drop', 'ok', 'celebrate', 'hmm', 'flip', 'star', 'page'];
-  const ALIAS = { no: 'hmm', tada: 'celebrate' };
+  // 소리는 "자리(슬롯)": 코드는 id 만 안다. 파일·음량은 data/sounds.json (docs/16_SOUND.md). 교체 = 파일만 바꾸면 되고 코드 수정 없음.
+  const snd = () => GF.data.sounds || { sfx: {}, music: {}, voice: {}, alias: {} };
+  const urlOf = (file) => (file && ((GF.data.audio && GF.data.audio[file]) || file)) || null;   // 빌드본은 data URI 로 인라인
   const bufs = {}; let loading = false;
   function loadSounds() {
     if (loading || !ac) return; loading = true;
-    SOUND_FILES.forEach((n) => {
-      const src = (GF.data.audio && GF.data.audio[n]) || 'audio/' + n + '.wav';
-      fetch(src).then((r) => r.arrayBuffer()).then((a) => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).then((b) => { bufs[n] = b; }).catch(() => {});
+    const sfx = snd().sfx;
+    Object.keys(sfx).forEach((id) => {
+      const u = urlOf(sfx[id].file); if (!u) return;
+      fetch(u).then((r) => r.arrayBuffer()).then((a) => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).then((b) => { bufs[id] = b; }).catch(() => {});
     });
   }
   GF.sfx = function (n) {
-    ensureAudio(); loadSounds(); n = ALIAS[n] || n;
+    ensureAudio(); loadSounds(); n = (snd().alias || {})[n] || n;
     if (!ac || GF.state.settings.mute) return;
-    const b = bufs[n];
-    if (!b) { if (SFX[n]) SFX[n](); return; }
-    const s = ac.createBufferSource(), g = ac.createGain();
-    s.buffer = b; s.playbackRate.value = 1 + (Math.random() - 0.5) * 0.05;     // 같은 소리가 반복돼도 지루하지 않게 ±2.5%
-    g.gain.value = GF.state.settings.vol; s.connect(g); g.connect(ac.destination); s.start();
+    const b = bufs[n], e = snd().sfx[n];
+    if (!b) { if (SFX[n]) SFX[n](); return; }                 // 파일이 없거나 아직 못 읽었으면 합성음으로 대신
+    const s = ac.createBufferSource(), g = ac.createGain(), j = e && e.jitter != null ? e.jitter : 0.05;
+    s.buffer = b; s.playbackRate.value = 1 + (Math.random() - 0.5) * j;     // 같은 소리가 반복돼도 지루하지 않게
+    g.gain.value = GF.state.settings.vol * ((e && e.vol) != null ? e.vol : 1); s.connect(g); g.connect(ac.destination); s.start();
   };
-  // 배경음: 자장가 한 곡 루프. 음소거·앱이 백그라운드로 가면 멈춘다.
+  // 음악: 슬롯(theme_main·theme_kids·night …)을 id 로 틀고, file 이 비어 있으면 fallback 슬롯을 쓴다. 같은 파일이면 끊지 않고 이어 간다.
   GF.bgm = {
-    el: null, started: false,
-    start() {
-      if (this.started) return; this.started = true;
-      const f = (GF.data.audio && GF.data.audio.bgm) || 'audio/bgm.wav';
-      this.el = new Audio(f); this.el.loop = true; this.sync();
+    el: null, started: false, want: null, file: null, duck: false, vol: 0.22,
+    resolve(id) { const m = snd().music; let e = m[id], guard = 0; while (e && !e.file && e.fallback && guard++ < 5) e = m[e.fallback]; return e && e.file ? e : null; },
+    play(id) { this.want = id; if (this.started) this.apply(); },
+    start() { this.started = true; this.apply(); },
+    apply() {
+      const e = this.resolve(this.want || 'theme_main'); if (!e) return;
+      const u = urlOf(e.file); this.vol = e.vol != null ? e.vol : 0.22;
+      if (this.file !== e.file) {
+        const old = this.el, el = new Audio(u); el.loop = e.loop !== false; this.el = el; this.file = e.file;
+        if (old) { let k = 0; const t = setInterval(() => { k++; old.volume = Math.max(0, old.volume * 0.8); if (k > 8) { clearInterval(t); old.pause(); } }, 60); }
+      }
+      this.sync();
     },
     sync() {
       const e = this.el; if (!e) return;
-      e.volume = Math.min(1, 0.22 * GF.state.settings.vol);
+      e.volume = Math.min(1, this.vol * GF.state.settings.vol * (this.duck ? 0.4 : 1));
       if (GF.state.settings.mute || document.hidden || GF.appHidden) e.pause(); else e.play().catch(() => {});
     },
   };
+  GF.sting = function () {                                     // 소리 로고(2초). 파일이 없으면 별 소리
+    const e = snd().music.logo_sting, u = e && urlOf(e.file);
+    if (!u || GF.state.settings.mute) { GF.sfx('star'); return; }
+    try { const a = new Audio(u); a.volume = Math.min(1, (e.vol || 0.6) * GF.state.settings.vol); a.play().catch(() => {}); } catch (x) {}
+  };
   let voiceEl = null;
-  GF.say = function (id) {                 // 녹음이 들어오면 data.voice[id] = 'voice/xx.mp3' 로 연결
-    const f = GF.data.voice && GF.data.voice[id];
-    if (voiceEl) { voiceEl.pause(); voiceEl = null; }
-    if (!f || GF.state.settings.mute) return;
-    try { voiceEl = new Audio(f); voiceEl.volume = GF.state.settings.vol; voiceEl.play().catch(() => {}); } catch (e) {}
+  GF.say = function (id) {                                     // 그림책 음성: 슬롯 voice_<id>, file 이 null 이면 아직 녹음 전
+    const e = snd().voice['voice_' + id], u = e && urlOf(e.file);
+    if (voiceEl) { voiceEl.pause(); voiceEl = null; GF.bgm.duck = false; GF.bgm.sync(); }
+    if (!u || GF.state.settings.mute) return;
+    try {
+      voiceEl = new Audio(u); voiceEl.volume = GF.state.settings.vol * (e.vol != null ? e.vol : 1);
+      GF.bgm.duck = true; GF.bgm.sync();                      // 말하는 동안 음악을 낮춘다
+      voiceEl.onended = () => { GF.bgm.duck = false; GF.bgm.sync(); }; voiceEl.play().catch(() => {});
+    } catch (x) {}
   };
 
   /* ---------------- 캐릭터 ---------------- */
@@ -193,6 +210,7 @@
     $('b-home').style.visibility = name === 'home' ? 'hidden' : 'visible';
     refreshBar();
     s.enter(s.el, s.params);
+    GF.bgm.play(name === 'round' ? ((run && run.ch === 'ch4') ? 'night' : 'theme_kids') : name === 'book' ? (s.params.ch === 'ch4' ? 'night' : 'theme_kids') : 'theme_main');
   }
   GF.go = (name, params) => { GF.stack.push({ name, params }); show(name, params); };
   GF.replace = (name, params) => { GF.stack.pop(); GF.go(name, params); };
@@ -280,7 +298,7 @@
       // 눈 깜빡임: 눈을 감은 표정(joy)으로 0.14초만 바꿨다가 돌아온다
       clearInterval(GF._blink);
       GF._blink = setInterval(() => { const [im, w] = GF.rnd(ims); const o = im.src; im.src = GF.src(w + '.joy'); setTimeout(() => { im.src = o; }, 140); }, 1700);
-      if (!GF._intro) { GF._intro = 1; setTimeout(() => GF.sfx('star'), 650); }
+      if (!GF._intro) { GF._intro = 1; setTimeout(() => GF.sting(), 650); }
       const row = el('div', 'homebtns', r);
       [['story', 'book', '#FFE0E8', () => GF.go('map')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album')]].forEach((b) => {
         const k = el('button', 'card', row, IC[b[1]]); k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
@@ -552,13 +570,13 @@
   /* ---------------- 부팅 ---------------- */
   async function loadData() {
     if (window.GF_DATA) return window.GF_DATA;
-    const names = ['chars', 'stages', 'story', 'stickers'], out = {};
+    const names = ['chars', 'stages', 'story', 'stickers', 'sounds'], out = {};
     await Promise.all(names.map(async (n) => { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); }));
     return out;
   }
   GF.boot = async function () {
     stage = $('stage'); safeEl = $('safe'); topbar = $('topbar');
-    GF.data = await loadData(); GF.data.voice = GF.data.voice || {};
+    GF.data = await loadData();
     if (GF.data.base != null) GF.base = GF.data.base;
     GF.state = Store.load();
     ensureAudio(); loadSounds();

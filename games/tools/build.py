@@ -27,12 +27,22 @@ for k, v in data['chars'].items():
     img_bytes += len(raw)
     v['src'] = b64(raw, 'image/webp')
 data['base'] = ''
+sounds = json.loads((ROOT / 'data' / 'sounds.json').read_text(encoding='utf-8'))
+data['sounds'] = sounds
 audio = {}
 aud_bytes = 0
-for f in sorted((G / 'audio').glob('*.wav')):
-    raw = f.read_bytes(); aud_bytes += len(raw); audio[f.stem] = b64(raw, 'audio/wav')
+files = set()
+for grp in ('sfx', 'music', 'voice'):
+    for e in sounds.get(grp, {}).values():
+        if e.get('file'): files.add(e['file'])
+for f in sorted(files):                      # 슬롯이 가리키는 파일만 (경로는 games/ 기준)
+    path = G / f
+    if not path.exists():
+        print('  ! 없는 소리 파일:', f); continue
+    raw = path.read_bytes(); aud_bytes += len(raw)
+    mime = {'.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg'}.get(path.suffix, 'audio/wav')
+    audio[f] = b64(raw, mime)
 data['audio'] = audio
-data['voice'] = {}
 
 css = (G / 'engine' / 'gf.css').read_text(encoding='utf-8')
 js_files = ['engine/gf.js', 'engine/art.js'] + [f'engine/modes/{n}.js' for n in ['shadow', 'faces', 'puzzle', 'paint', 'shapes']]

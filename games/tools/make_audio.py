@@ -110,6 +110,25 @@ def s_page():
     b = np.pad(y, (0, int(0.4 * SR))); place(b, musicbox(hz('E5'), 0.5), 0.16, 0.6)
     return finish(reverb(b, 0.16), 0.6)
 
+def s_wind():                       # 바람 친구 "후~": 숨소리 같은 잡음이 부드럽게 커졌다 작아짐 + 아주 작은 휘파람
+    n = int(1.6 * SR); t = np.arange(n) / SR
+    env = np.sin(np.pi * np.clip(t / 1.6, 0, 1)) ** 1.6
+    nz = rng.standard_normal(n)
+    from scipy.signal import butter as _b, lfilter as _l
+    fc = 520 + 380 * np.sin(np.pi * t / 1.6)                    # 중심 주파수가 살짝 올라갔다 내려옴
+    out = np.zeros(n); blk = 2048
+    for i in range(0, n, blk):
+        lo, hi = max(120, fc[i] * 0.55), fc[i] * 1.5
+        bb, aa = _b(2, [lo / (SR / 2), hi / (SR / 2)], btype='band'); out[i:i + blk] = _l(bb, aa, nz[i:i + blk])
+    out *= env * 1.8
+    whistle = np.sin(2 * np.pi * np.cumsum(780 + 40 * np.sin(2 * np.pi * 5.5 * t)) / SR) * env * 0.05
+    return finish(reverb(out + whistle, 0.2, 0.5), 0.6, 0.08)
+def s_door():                       # 문 열림 "딩동": 맑은 종 두 음(미→도), 끼익 소리 없음
+    b = buf(1.5)
+    place(b, glock(hz('E6'), 1.2), 0.0, 1.0); place(b, marimba(hz('E5'), 0.4), 0.0, 0.3)
+    place(b, glock(hz('C6'), 1.3), 0.30, 1.0); place(b, marimba(hz('C5'), 0.4), 0.30, 0.3)
+    return finish(reverb(b, 0.24, 0.6), 0.8)
+
 # ---- BGM: 자작 자장가 (뮤직박스, C 장조, 78 BPM, 16마디 ≈ 49초 루프) ----
 def bgm():
     bpm = 78; beat = 60 / bpm; bars = 16; total = bars * 4 * beat
@@ -136,6 +155,6 @@ def bgm():
     return b / (np.abs(b).max() + 1e-9) * 0.7
 
 if __name__ == '__main__':
-    for name, fn in [('tap', s_tap), ('pick', s_pick), ('drop', s_drop), ('ok', s_ok), ('celebrate', s_celebrate), ('hmm', s_hmm), ('flip', s_flip), ('star', s_star), ('page', s_page)]:
+    for name, fn in [('tap', s_tap), ('pick', s_pick), ('drop', s_drop), ('ok', s_ok), ('celebrate', s_celebrate), ('hmm', s_hmm), ('flip', s_flip), ('star', s_star), ('page', s_page), ('wind', s_wind), ('door', s_door)]:
         save(name, fn())
     save('bgm', bgm(), 22050)

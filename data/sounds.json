@@ -1,0 +1,207 @@
+{
+ "version": 1,
+ "sfx": {
+  "tap": {
+   "file": "audio/tap.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "버튼 누름 — 톡, 나무 마림바 한 음"
+  },
+  "pick": {
+   "file": "audio/pick.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "캐릭터·조각 집기 — 뿅, 위로 오르는 짧은 음"
+  },
+  "drop": {
+   "file": "audio/drop.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "내려놓기(스냅) — 퐁, 부드러운 착지"
+  },
+  "ok": {
+   "file": "audio/ok.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "정답 — 두세 음 오르는 반짝임"
+  },
+  "hmm": {
+   "file": "audio/hmm.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "오답 — 부정적이지 않게 내려갔다 오르는 \"음?\""
+  },
+  "flip": {
+   "file": "audio/flip.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "카드 뒤집기 — 종이 사락"
+  },
+  "page": {
+   "file": "audio/page.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "그림책 넘김 — 책장"
+  },
+  "star": {
+   "file": "audio/star.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "별 받기 — 반짝 띵"
+  },
+  "celebrate": {
+   "file": "audio/celebrate.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "라운드 클리어 — 꽃가루 팡 + 짧은 팡파레"
+  },
+  "wind": {
+   "file": "audio/wind.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "5장 바람 친구 — 후~ 귀여운 바람"
+  },
+  "door": {
+   "file": "audio/door.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "5장 문 열림 — 끼익 아닌 \"딩동\""
+  }
+ },
+ "alias": {
+  "no": "hmm",
+  "tada": "celebrate"
+ },
+ "music": {
+  "theme_main": {
+   "file": null,
+   "vol": 0.22,
+   "loop": true,
+   "desc": "「기하학 가족」 테마 — 타이틀·홈 (60~90초 루프)",
+   "fallback": "theme_kids"
+  },
+  "theme_kids": {
+   "file": "audio/bgm.wav",
+   "vol": 0.22,
+   "loop": true,
+   "desc": "놀이 중 BGM — 테마의 자장가·뮤직박스 편곡 (60초 루프, 지금은 임시 자장가)"
+  },
+  "theme_short": {
+   "file": null,
+   "vol": 0.13,
+   "loop": true,
+   "desc": "쇼츠·릴스 나레이션 밑 — 잔잔한 피아노, 말소리 대역 비움 (30초 루프)"
+  },
+  "logo_sting": {
+   "file": null,
+   "vol": 0.6,
+   "loop": false,
+   "desc": "소리 로고 2초 — 테마 첫 네 음"
+  },
+  "night": {
+   "file": null,
+   "vol": 0.2,
+   "loop": true,
+   "desc": "4장 밤길 — 고요한 편곡 (60초 루프)",
+   "fallback": "theme_kids"
+  }
+ },
+ "voice": {
+  "voice_c1_p1": {
+   "file": null,
+   "text": "오늘은 막둥이의 생일! 잔칫집에 가요."
+  },
+  "voice_c1_p2": {
+   "file": null,
+   "text": "어? 다리가 아주 좁네!"
+  },
+  "voice_c1_p3": {
+   "file": null,
+   "text": "동그라미 아저씨가 말했어요. \"큰 순서대로. 가자.\""
+  },
+  "voice_c1_e1": {
+   "file": null,
+   "text": "모두 무사히 건넜어요!"
+  },
+  "voice_c1_e2": {
+   "file": null,
+   "text": "어? 저 멀리서 \"뚝!\" 소리가 나요."
+  },
+  "voice_c2_p1": {
+   "file": null,
+   "text": "뚝! 무슨 소리지?"
+  },
+  "voice_c2_p2": {
+   "file": null,
+   "text": "세모 이모도 깜짝!"
+  },
+  "voice_c2_p3": {
+   "file": null,
+   "text": "같은 얼굴을 찾아봐요."
+  },
+  "voice_c2_e1": {
+   "file": null,
+   "text": "소리의 정체는 곶감이 떨어지는 소리였어요!"
+  },
+  "voice_c2_e2": {
+   "file": null,
+   "text": "곶감을 한 줄 받았어요. 마당에서 무언가 보여요."
+  },
+  "voice_c3_p1": {
+   "file": null,
+   "text": "마당에 아주 큰 무가 있어요!"
+  },
+  "voice_c3_p2": {
+   "file": null,
+   "text": "영차! 할머니가 당겨 봐요. 어? 안 뽑혀요."
+  },
+  "voice_c3_p3": {
+   "file": null,
+   "text": "다 같이 힘을 모아요! 흩어진 조각을 맞춰 보세요."
+  },
+  "voice_c3_e1": {
+   "file": null,
+   "text": "세모 이모와 동그라미 아저씨도 도와줘서… 쑥!"
+  },
+  "voice_c3_e2": {
+   "file": null,
+   "text": "어느새 해가 지고 깜깜해졌어요."
+  },
+  "voice_c4_p1": {
+   "file": null,
+   "text": "깜깜한 밤길이에요. 잔칫집이 보이지 않아요."
+  },
+  "voice_c4_p2": {
+   "file": null,
+   "text": "어? 하늘에 해님도 달님도 별님도 없어요!"
+  },
+  "voice_c4_p3": {
+   "file": null,
+   "text": "색을 칠해서 하늘을 밝혀 주세요."
+  },
+  "voice_c4_e1": {
+   "file": null,
+   "text": "달님이 환하게 길을 비춰 줘요."
+  },
+  "voice_c4_e2": {
+   "file": null,
+   "text": "저기 봐요! 잔칫집 불빛이 보여요!"
+  },
+  "voice_c5_p1": {
+   "file": null,
+   "text": "잔칫집에 도착! 그런데 바람이 후~ 불어와요."
+  },
+  "voice_c5_p2": {
+   "file": null,
+   "text": "세 가족이 각자 집을 지어요. 도형 조각을 맞춰 보세요!"
+  },
+  "voice_c5_e1": {
+   "file": null,
+   "text": "바람이 후~ 불어도 끄떡없어요!"
+  },
+  "voice_c5_e2": {
+   "file": null,
+   "text": "세 가족이 한자리에 모였어요. 막둥이, 생일 축하해!"
+  }
+ }
+}

@@ -156,7 +156,7 @@ GF.mode('shapes', {
       light.style.cssText = `left:${h.cx - h.w / 2}px;top:${h.cy - h.h / 2}px;width:${h.w}px;height:${h.h}px;z-index:2;border-radius:${dk.p.k === 'semi' ? '999px 999px 6px 6px' : '12px'};background:radial-gradient(circle,#FFF6C2,#FFC933)`;
       dk.el.style.transformOrigin = 'left center'; dk.el.style.zIndex = 5;
       dk.el.animate([{ transform: 'perspective(500px) rotateY(0)' }, { transform: 'perspective(500px) rotateY(-80deg)' }], { duration: 520, fill: 'forwards', easing: 'cubic-bezier(.3,1.3,.5,1)' });
-      warm.style.opacity = 1; ctx.sfx('star'); GF.burst(root, h.cx, h.cy, 18); react('joy');
+      warm.style.opacity = 1; ctx.sfx('door'); GF.burst(root, h.cx, h.cy, 18); react('joy');
     }
     function windFriend() {
       const svg = '<svg viewBox="0 0 150 110" width="150" height="110"><g stroke="#4A3030" stroke-width="3.5" stroke-linejoin="round"><ellipse cx="75" cy="64" rx="56" ry="36" fill="#EAF4FF"/><ellipse cx="40" cy="50" rx="26" ry="22" fill="#EAF4FF"/><ellipse cx="108" cy="46" rx="30" ry="24" fill="#EAF4FF"/><ellipse cx="74" cy="38" rx="28" ry="24" fill="#EAF4FF"/></g>'
@@ -194,8 +194,8 @@ GF.mode('shapes', {
       // 마지막 판: 바람 친구가 후~ 불어도 집은 끄떡없다 → 문이 열리며 생일 잔치
       const houseEls = [...root.querySelectorAll('.tok.done')].filter((e) => !(doorTok && e === doorTok.el));
       ctx.timeout(() => {
-        const w = windFriend(); ctx.sfx('no');
-        ctx.timeout(() => { swirl(); houseEls.forEach((e) => (e.style.animation = 'houseshake .35s 4')); ctx.sfx('flip'); }, 650);
+        const w = windFriend(); ctx.sfx('wind');
+        ctx.timeout(() => { swirl(); houseEls.forEach((e) => (e.style.animation = 'houseshake .35s 4')); }, 650);
         ctx.timeout(() => { w.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, fill: 'forwards' }); react('joy'); ctx.sfx('star'); }, 2300);
       }, 900);
       ctx.timeout(() => { party(); ctx.sfx('celebrate'); }, 3600);

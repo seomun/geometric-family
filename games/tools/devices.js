@@ -17,7 +17,7 @@ const wait = (p, ms) => p.waitForTimeout(ms);
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch2', k: 2, id: 'c2C' }); }); await wait(p, 900); await shot('faces');
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.go('map'); }); await wait(p, 600); await shot('map');
     await p.evaluate(() => { GF.go('stages', { ch: 'ch1' }); }); await wait(p, 600); await shot('stages');
-    for (const [tag, st] of [['puzzle', ['ch3', 2, 'c3C']], ['paint', ['ch4', 2, 'c4C']], ['shapes', ['ch5', 2, 'c5C']]]) {
+    for (const [tag, st] of [['puzzle', ['ch3', 2, 'c3C']], ['paint', ['ch4', 2, 'c4C']], ['shapes', ['ch5', 2, 'c5C']], ['shapes2', ['ch5', 1, 'c5B']]]) {
       await p.evaluate(([c, k, id]) => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: c, k, id }); }, st); await wait(p, 1500); await shot(tag);
     }
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.go('playroom'); }); await wait(p, 700); await shot('playroom');

@@ -1,8 +1,8 @@
-// 스토어 스크린샷 초안: node games/tools/store_shots.js  → games/store/shots/phone_*.png (1080×1920), tab_*.png (1920×1200)
+// 스토어 스크린샷 초안: node games/tools/store_shots.js  → games/store/shots/raw/*.png 원본 (이후 python games/tools/frame_shots.py 가 문구 띠를 얹어 완성)
 // 빌드본(app/index.html)이 있으면 그걸, 없으면 개발본을 쓴다. 로컬 서버 필요(python -m http.server 8765).
 const { chromium } = require('playwright-core');
 const path = require('path'), fs = require('fs');
-const OUT = path.resolve(__dirname, '..', 'store', 'shots'); fs.mkdirSync(OUT, { recursive: true });
+const OUT = path.resolve(__dirname, '..', 'store', 'shots', 'raw'); fs.mkdirSync(OUT, { recursive: true });
 const URL = process.env.URL || 'http://localhost:8765/games/index.html';
 const wait = (p, ms) => p.waitForTimeout(ms);
 
@@ -29,10 +29,12 @@ const go = (p, fn, arg) => p.evaluate(fn, arg);
     await go(p, () => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch1', k: 1, id: 'c1B' }); }); await wait(p, 1200); await shot('3_shadow');
     await solveShadow(p); await wait(p, 1500); await shot('4_celebrate');
     await go(p, () => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch2', k: 1, id: 'c2B' }); }); await wait(p, 1000); await shot('5_faces');
-    await go(p, () => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch4', k: 1, id: 'c4B' }); }); await wait(p, 1500);
+    await go(p, () => { GF.modes.paint.free = () => ({ id: 'nemo_kids.kid1', colors: 5, fills: 4 }); GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'free', mode: 'paint', diff: 2 }); }); await wait(p, 1500);
     const pts = await p.evaluate(() => document.querySelector('.playarea').__pts());
-    const sw = await p.$$('.playarea .round-btn'); let n = 0;
-    for (const pt of pts.slice(0, 4)) { const bb = await sw[n % sw.length].boundingBox(); await p.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.mouse.click(pt.x, pt.y); await wait(p, 200); n++; }
+    const sw = await p.$$('.playarea .round-btn');
+    for (const [k, c] of [[0, 1], [1, 4], [2, 2], [3, 3]]) {            // 몸=노랑, 둘째=분홍, 셋째=초록, 넷째=파랑
+      if (!pts[k]) break; const bb = await sw[c].boundingBox(); await p.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.mouse.click(pts[k].x, pts[k].y); await wait(p, 200);
+    }
     await wait(p, 300); await shot('6_paint');
     console.log(kind, 'ok');
     await p.close();

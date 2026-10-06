@@ -41,7 +41,7 @@
   const dotsHTML = (n) => '<svg viewBox="0 0 56 56" width="56" height="56">' + ({ 1: [[28, 28]], 2: [[17, 28], [39, 28]], 3: [[28, 17], [16, 38], [40, 38]] }[n]).map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="8" fill="#fff"/>').join('') + '</svg>';
 
   /* ---------------- 저장 (localStorage 한 키) ---------------- */
-  const KEY = 'gf:v1';
+  let KEY = 'gf:v1';                                          // 앱마다 다른 저장 키(방치형은 gf:idle:v1)
   const fresh = () => ({ v: 1, stages: {}, stickers: {}, seen: {}, settings: { vol: 0.8, mute: false, captions: false }, avatar: null });
   const Store = {
     load() { try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.v === 1) return Object.assign(fresh(), s, { settings: Object.assign(fresh().settings, s.settings) }); } catch (e) {} return fresh(); },
@@ -78,7 +78,7 @@
   };
   // 소리는 "자리(슬롯)": 코드는 id 만 안다. 파일·음량은 data/sounds.json (docs/16_SOUND.md). 교체 = 파일만 바꾸면 되고 코드 수정 없음.
   const snd = () => GF.data.sounds || { sfx: {}, music: {}, voice: {}, alias: {} };
-  const urlOf = (file) => (file && ((GF.data.audio && GF.data.audio[file]) || file)) || null;   // 빌드본은 data URI 로 인라인
+  const urlOf = (file) => (file && ((GF.data.audio && GF.data.audio[file]) || (GF.audioBase || '') + file)) || null;   // 빌드본은 data URI 로 인라인
   const bufs = {}; let loading = false;
   function loadSounds() {
     if (loading || !ac) return; loading = true;
@@ -203,6 +203,7 @@
     hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + G(rep(() => hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90])) + band(600, '#A9D36E') + '<g class="sway"><rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/></g>') + butterfly(360, '#FF8FA8', '#FFF3B0'),
     field: () => sky('#CDEFFF', '#F7FCFF') + cloud(90, 90, 1) + cloud(260, 150, .8) + G(rep(() => hill(500, '#B6E6A0', [180, 340, 100])) + band(520, '#C79A6B') + band(558, '#A97B4E', 6) + band(598, '#A97B4E', 6)) + butterfly(320, '#B197FC', '#fff'),
     night: () => sky('#1F2A5C', '#4B5C9C') + rep(() => [[40, 80], [120, 150], [250, 70], [320, 160], [200, 210], [60, 260], [310, 300]].map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#FFF3B0"/>').join('')) + '<circle cx="270" cy="120" r="40" fill="#FFF3B0"/><circle cx="286" cy="110" r="36" fill="#2B3870"/>' + G(rep(() => hill(660, '#2F4A6B', [180, 330, 160])) + band(640, '#2F4A6B')),
+    indoor: () => '<rect width="360" height="640" fill="#FFEBCB"/><rect y="0" width="360" height="380" fill="#FFE1B8"/><g><rect x="244" y="70" width="96" height="104" rx="10" fill="#BFE8FF" stroke="#8A5A3B" stroke-width="6"/><path d="M292 70v104M244 122h96" stroke="#8A5A3B" stroke-width="4"/></g><g><path d="M30 60q30-30 60 0" fill="none" stroke="#E7B77E" stroke-width="5"/><circle cx="60" cy="56" r="6" fill="#FFC933"/></g>' + band(470, '#D9A66B', 170) + band(470, '#B98550', 6) + '<rect x="0" y="476" width="360" height="164" fill="#E3B27F" opacity=".5"/>',
     house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + G(rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A')),
   };
   GF.bg = function (name, parent) { const d = el('div', 'bg', parent); d.innerHTML = '<svg viewBox="' + (GF.safeWide ? '-0 0 720 440' : '0 0 360 640') + '" preserveAspectRatio="none" style="overflow:visible">' + (GF.safeWide ? '<g transform="translate(180 0)">' + (BG[name] || BG.home)() + '</g>' : (BG[name] || BG.home)()) + '</svg>'; return d; };
@@ -676,15 +677,18 @@
   GF.overlayOpen = () => { if (Gate.p.classList.contains('on')) { Gate.close(); return true; } return false; };
 
   /* ---------------- 부팅 ---------------- */
-  async function loadData() {
+  async function loadData(namesOpt) {
     if (window.GF_DATA) return window.GF_DATA;
-    const names = ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors'], out = {};
+    const names = namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors'], out = {};
     await Promise.all(names.map(async (n) => { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); }));
     return out;
   }
-  GF.boot = async function () {
+  // opts: {base:데이터 경로, audioBase:소리 경로, dataNames:[…], storeKey, start:()=>첫 화면}  — 방치형 등 다른 앱이 같은 엔진을 쓴다
+  GF.boot = async function (opts) {
+    opts = opts || {};
+    if (opts.base != null) GF.base = opts.base; if (opts.audioBase != null) GF.audioBase = opts.audioBase; if (opts.storeKey) KEY = opts.storeKey; GF.opts = opts;
     stage = $('stage'); safeEl = $('safe'); topbar = $('topbar');
-    GF.data = await loadData();
+    GF.data = await loadData(opts.dataNames);
     if (GF.data.base != null) GF.base = GF.data.base;
     GF.state = Store.load();
     ensureAudio(); loadSounds();
@@ -704,7 +708,7 @@
     document.addEventListener('visibilitychange', () => GF.bgm.sync());
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') GF.back(); });
     window.addEventListener('popstate', () => GF.back());
-    GF.screens.home || 0; GF.home();
+    if (opts.start) opts.start(); else GF.home();
     GF.ready = true;
   };
 })();

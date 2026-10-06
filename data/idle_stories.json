@@ -1,42 +1,530 @@
 {
-  "version": 1,
-  "note": "사연 4컷. src=원문이면 작가 원문 그대로, src=각색이면 [제안] 문장(허브 확인 필요). 원문 위치는 source 필드. 동그라미네 아들·엄마·딸은 래스터가 올 때까지 src/characters.js 코드 캐릭터(code.*)를 쓴다.",
-  "stories": [
+ "version": 2,
+ "note": "사연 4컷. src=원문이면 작가 원문 그대로, src=각색이면 [제안] 문장(허브 확인 필요). 원문 위치는 source 필드. 동그라미네 아들·엄마·딸은 래스터가 올 때까지 src/characters.js 코드 캐릭터(code.*)를 쓴다.",
+ "stories": [
+  {
+   "id": "s01",
+   "title": "저녁 식사",
+   "source": "content/seeds/author/2026-09-29_저녁식사.md",
+   "bg": "indoor",
+   "cuts": [
     {
-      "id": "s01", "title": "저녁 식사", "source": "content/seeds/author/2026-09-29_저녁식사.md", "bg": "indoor",
-      "cuts": [
-        { "text": "정신없이 모두가 왁자지껄한 저녁식사,", "src": "원문", "chars": ["nemo_dad.good", "nemo_mom.good", "nemo_kids.kid1", "nemo_kids.kid2", "baby.joy"] },
-        { "text": "네모는 생각한다.\n\"아, 혼자 여유롭게 밥 한 끼 먹는 게 소원이다!!\"", "src": "원문(띄어쓰기 정리 [제안])", "chars": ["nemo_dad.worry"], "bubble": "bang" },
-        { "text": "아무도 없는 고급 식탁, 동그라미네 아들. 폰을 보면서 고급 식사를 하지만, 대충 먹다 만다.", "src": "원문 요약 [제안]", "chars": ["code.dong_son.tired"] },
-        { "text": "그리곤 옆에 통신문을 내려놓는다.\n\n행복은 그냥 같이 밥 한 끼 먹는 건지도 모르겠다.", "src": "원문(오탈자 정리 [제안])", "chars": ["code.dong_son.tired", "nemo_dad.joy"] }
-      ],
-      "question": { "q": "우리 집 저녁 식탁은?", "options": [ { "k": "nemo", "t": "왁자지껄, 정신이 없다" }, { "k": "semo", "t": "둘이 티격태격 도란도란" }, { "k": "dong", "t": "조용하게 각자 먹는다" } ] },
-      "reward": { "laugh": 40 }, "stat": "질병관리청 청소년건강패널조사 2025 — 부모와 매일 식사: 초6 66.3% → 고3 19.2% (서울신문 2026-08-16)"
+     "text": "정신없이 모두가 왁자지껄한 저녁식사,",
+     "src": "원문",
+     "chars": [
+      "nemo_dad.good",
+      "nemo_mom.good",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "baby.joy"
+     ]
     },
     {
-      "id": "s02", "title": "축구화", "source": "content/seeds/author/2026-09-29_축구화.md", "bg": "house",
-      "cuts": [
-        { "text": "이제 막 축구를 시작한 아들이 축구화를 사 달란다. 사 주는 게 맞을까?", "src": "각색 [제안]", "chars": ["dong_dad.worry"] },
-        { "text": "\"뭐, 애가 얼마나 축구를 한다고. 그냥 냅둬.\"", "src": "원문(발화자 배정 [제안])", "chars": ["dong_dad.calm", "nemo_dad.good"] },
-        { "text": "\"아니, 사 줘라. 꼭 사 주고, 축구화를 신으면 축구가 잘된다고 알려 줘라.\"", "src": "원문", "chars": ["nemo_dad.joy", "dong_dad.surprise"], "bubble": "bang" },
-        { "text": "\"축구 때문이 아니다. 나머지 모든 운동화를 다 버린다. 나중에 예식장 신고 갈 신발 하나 남지 않는다. 축구화가 싸게 먹힌다.\"\n\"아……\"", "src": "원문 줄임 [제안]", "chars": ["nemo_dad.good", "dong_dad.trouble"], "bubble": "sparkle" }
-      ],
-      "question": { "q": "아이 물건을 사 줄 때, 나는?", "options": [ { "k": "nemo", "t": "싸게 먹히는 쪽으로 계산한다" }, { "k": "semo", "t": "부부가 한참 의논한다" }, { "k": "dong", "t": "계획대로 필요한 것만 산다" } ] },
-      "reward": { "laugh": 40 }
+     "text": "네모는 생각한다.\n\"아, 혼자 여유롭게 밥 한 끼 먹는 게 소원이다!!\"",
+     "src": "원문(띄어쓰기 정리 [제안])",
+     "chars": [
+      "nemo_dad.worry"
+     ],
+     "bubble": "bang"
     },
     {
-      "id": "s03", "title": "다음 모임", "source": "content/seeds/author/2026-10-06_다음모임.md", "bg": "indoor",
-      "cuts": [
-        { "text": "만난 김에 여러 모임과 만남이 생기고, 카톡도 활발하다.", "src": "원문(나레이션)", "chars": ["nemo_dad.joy", "husband.joy", "dong_dad.good"] },
-        { "text": "\"왜 50대 넘어야 동창회가 잘 되는지 아냐?\"", "src": "원문", "chars": ["husband.wink"], "bubble": "question" },
-        { "text": "\"왜인데? 좀 여유가 생겨서 그런가?\"", "src": "원문", "chars": ["dong_dad.calm", "nemo_dad.good"] },
-        { "text": "\"3, 40대는 잘난 놈 못난 놈, 집 산 놈 안 산 놈… 다들 갈리는데,\n50대가 되면 10대처럼 그냥 건강하면 된다는 게 강해져.\"", "src": "원문 줄임 [제안]", "chars": ["husband.love", "nemo_dad.joy", "dong_dad.warm"], "bubble": "heart" }
-      ],
-      "question": { "q": "동창 모임, 나는?", "options": [ { "k": "nemo", "t": "먼저 연락해서 모은다" }, { "k": "semo", "t": "가면 좋은데 나가기가 귀찮다" }, { "k": "dong", "t": "조용히 소식만 듣는다" } ] },
-      "reward": { "laugh": 40 }
+     "text": "아무도 없는 고급 식탁, 동그라미네 아들. 폰을 보면서 고급 식사를 하지만, 대충 먹다 만다.",
+     "src": "원문 요약 [제안]",
+     "chars": [
+      "code.dong_son.tired"
+     ]
+    },
+    {
+     "text": "그리곤 옆에 통신문을 내려놓는다.\n\n행복은 그냥 같이 밥 한 끼 먹는 건지도 모르겠다.",
+     "src": "원문(오탈자 정리 [제안])",
+     "chars": [
+      "code.dong_son.tired",
+      "nemo_dad.joy"
+     ]
     }
-  ],
-  "seasonMemo": [
-    { "id": "E14", "title": "파리목숨(권고사직 공고·술자리 세모)", "season": "연말", "source": "content/seeds/author/2026-10-07_파리목숨*.md", "note": "큰 사건 — 시즌 사건 카드 후보로 메모만(허브 지시)" }
-  ]
+   ],
+   "question": {
+    "q": "우리 집 저녁 식탁은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "왁자지껄, 정신이 없다"
+     },
+     {
+      "k": "semo",
+      "t": "둘이 티격태격 도란도란"
+     },
+     {
+      "k": "dong",
+      "t": "조용하게 각자 먹는다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   },
+   "stat": "질병관리청 청소년건강패널조사 2025 — 부모와 매일 식사: 초6 66.3% → 고3 19.2% (서울신문 2026-08-16)"
+  },
+  {
+   "id": "s02",
+   "title": "축구화",
+   "source": "content/seeds/author/2026-09-29_축구화.md",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "이제 막 축구를 시작한 아들이 축구화를 사 달란다. 사 주는 게 맞을까?",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.trouble"
+     ]
+    },
+    {
+     "text": "\"뭐, 애가 얼마나 축구를 한다고. 그냥 냅둬.\"",
+     "src": "원문(발화자 배정 [제안])",
+     "chars": [
+      "dong_dad.calm",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "text": "\"아니, 사 줘라. 꼭 사 주고, 축구화를 신으면 축구가 잘된다고 알려 줘라.\"",
+     "src": "원문",
+     "chars": [
+      "nemo_dad.joy",
+      "dong_dad.surprise"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "\"축구 때문이 아니다. 나머지 모든 운동화를 다 버린다. 나중에 예식장 신고 갈 신발 하나 남지 않는다. 축구화가 싸게 먹힌다.\"\n\"아……\"",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "dong_dad.trouble"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "아이 물건을 사 줄 때, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "싸게 먹히는 쪽으로 계산한다"
+     },
+     {
+      "k": "semo",
+      "t": "부부가 한참 의논한다"
+     },
+     {
+      "k": "dong",
+      "t": "계획대로 필요한 것만 산다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s03",
+   "title": "다음 모임",
+   "source": "content/seeds/author/2026-10-06_다음모임.md",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "만난 김에 여러 모임과 만남이 생기고, 카톡도 활발하다.",
+     "src": "원문(나레이션)",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.joy",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "\"왜 50대 넘어야 동창회가 잘 되는지 아냐?\"",
+     "src": "원문",
+     "chars": [
+      "husband.wink"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "\"왜인데? 좀 여유가 생겨서 그런가?\"",
+     "src": "원문",
+     "chars": [
+      "dong_dad.calm",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "text": "\"3, 40대는 잘난 놈 못난 놈, 집 산 놈 안 산 놈… 다들 갈리는데,\n50대가 되면 10대처럼 그냥 건강하면 된다는 게 강해져.\"",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "husband.love",
+      "nemo_dad.joy",
+      "dong_dad.warm"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "동창 모임, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "먼저 연락해서 모은다"
+     },
+     {
+      "k": "semo",
+      "t": "가면 좋은데 나가기가 귀찮다"
+     },
+     {
+      "k": "dong",
+      "t": "조용히 소식만 듣는다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s04",
+   "title": "상갓집",
+   "source": "content/seeds/author/2026-10-06_상갓집.md",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "죽은 사람은 어떻게 추억되는가?\n세모와 네모는 전철역에서 만나 같이 들어갔다. 인사를 하고, 맞절을 한다.",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "husband.good",
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "다들 문자 얘길 하고, 왜 죽었는지 가족은 어떤지 걱정한다.\n그리곤 곧바로 주식 얘기, 정치 얘기다.",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "\"우리도 일어서자. 다음 주에 우리끼리 함 보자. 언제 누가 죽을지 모르니…\"",
+     "src": "원문",
+     "chars": [
+      "husband.worry",
+      "dong_dad.calm",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "text": "동그라미는 덤덤하다. 세모는 이제 애들을 자주 봐야겠다고 생각한다.\n네모는… 건강검진표가 머리를 지나간다.\n\"아, 난 진짜 아프면 안 되는데.\"",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "husband.love",
+      "nemo_dad.worry"
+     ],
+     "bubble": "bang"
+    }
+   ],
+   "question": {
+    "q": "조문 다녀온 날 밤, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "건강검진표부터 꺼내 본다"
+     },
+     {
+      "k": "semo",
+      "t": "가족에게 먼저 연락한다"
+     },
+     {
+      "k": "dong",
+      "t": "덤덤하게 하루를 마무리한다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s05",
+   "title": "실직한다면",
+   "source": "content/seeds/author/2026-10-07_실직한다면.md",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "모든 직장인은 실직의 타이밍을 관망하고 있다.\n40대 초까지는 내가 너무 잘나서 회사가 나 없이는 안 돌아간다고 믿는다.",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "text": "와이프는 회사에서 절대 나오지 말라고 잔소리한다.\n둘 다, 내가 있을 수 있다면 있을 수 있다는 전제다.",
+     "src": "원문",
+     "chars": [
+      "nemo_mom.worry",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "text": "50이 넘으면 둘 다 알게 된다.\n그건 내가 선택하는 것도, 내 남편이 선택할 수 있는 것도 아니라는 걸.",
+     "src": "원문",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_mom.worry"
+     ]
+    },
+    {
+     "text": "남자는 \"내일이라도 그만두면…\" 걱정을 시작하고,\n여자는 \"그만둬도 괜찮아, 그동안 수고 많았어\"로 변한다.",
+     "src": "원문",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    },
+    {
+     "text": "그렇게 그만두기 직전의 상황을 넘기며, 1년씩 연장하는 파리목숨 이야기가 시작된다.",
+     "src": "원문 줄임 [제안]",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    }
+   ],
+   "question": {
+    "q": "퇴직 걱정, 우리 집은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "내가 먼저 걱정부터 한다"
+     },
+     {
+      "k": "semo",
+      "t": "그만둬도 같이 놀러 가자고 한다"
+     },
+     {
+      "k": "dong",
+      "t": "이미 계산이 끝나 있다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s06",
+   "title": "첫 술자리",
+   "source": "content/episodes/BANK_v2.md #5 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "공덕 소주집. 삼십 년 만에 셋이 마주 앉았다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "네모는 2차 가자는 말을 끝내 못 한다. 집에 막둥이 숙제가 있다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "세모는 계산을 먼저 해 버리고, 동그라미가 말리느라 실랑이가 벌어진다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.wink",
+      "dong_dad.surprise"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "동그라미는 8시 반에 일어선다. 내일 회의가 있다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"다음엔 내가 낼게.\"\n셋 다 진심이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "dong_dad.good"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "술자리가 끝날 때, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "2차 말을 끝내 못 꺼낸다"
+     },
+     {
+      "k": "semo",
+      "t": "계산부터 먼저 한다"
+     },
+     {
+      "k": "dong",
+      "t": "시간 맞춰 일어선다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s07",
+   "title": "화장실 하나",
+   "source": "content/episodes/BANK_v2.md #24 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "아침 7시. 일곱 명, 화장실 하나.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_mom.worry",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "화장실 두 개인 집. 두 사람이 각자 쓴다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.good",
+      "wife.good"
+     ]
+    },
+    {
+     "text": "화장실 세 개인 집. 아무도 마주치지 않는다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_son.tired"
+     ]
+    },
+    {
+     "text": "줄 서는 집이 웃는다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "우리 집 아침 화장실은?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "줄을 선다"
+     },
+     {
+      "k": "semo",
+      "t": "각자 알아서 쓴다"
+     },
+     {
+      "k": "dong",
+      "t": "마주칠 일이 없다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  },
+  {
+   "id": "s08",
+   "title": "돋보기",
+   "source": "content/episodes/BANK_v2.md #17 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "메뉴판을 팔 길이만큼 멀리 들고 본다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "세모 부부는 서로 읽어 준다. 오늘은 사이가 좋다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "동그라미는 다초점 안경을 쓴다. 아무도 모르게.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "\"글씨가 작아졌다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "dong_dad.good"
+     ]
+    }
+   ],
+   "question": {
+    "q": "메뉴판 앞에서 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "팔을 쭉 뻗어 본다"
+     },
+     {
+      "k": "semo",
+      "t": "옆 사람에게 읽어 달라고 한다"
+     },
+     {
+      "k": "dong",
+      "t": "안경을 슬쩍 바꿔 쓴다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
+  }
+ ],
+ "seasonMemo": [
+  {
+   "id": "E14",
+   "title": "파리목숨(권고사직 공고·술자리 세모)",
+   "season": "연말",
+   "source": "content/seeds/author/2026-10-07_파리목숨*.md",
+   "note": "큰 사건 — 시즌 사건 카드 후보로 메모만(허브 지시)"
+  }
+ ]
 }

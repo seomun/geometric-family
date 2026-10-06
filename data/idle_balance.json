@@ -1,53 +1,237 @@
 {
-  "version": 1,
-  "offlineCapHours": 8, "offlineEfficiency": 0.8,
-  "laughMult": 0.01,
-  "tableLevel": { "baseCost": 120, "growth": 3.2, "mult": 1.6, "max": 20 },
-  "dexTotal": 30,
-  "tables": {
-    "nemo": {
-      "name": "네모네 식탁", "tag": "넘치고 북적이는 7인 가족", "color": "#FFE3C2", "ink": "#B5651D",
-      "bowlsBase": 2, "sliderDefault": 0.2, "laughPerOutput": 0.05,
-      "pot": { "id": "n_pot", "name": "밥솥 늘리기", "cost": 60, "growth": 1.9, "note": "밥그릇이 하나 늘어요" },
-      "gens": [
-        { "id": "n_dad", "name": "네모 아빠", "img": "nemo_dad.good", "cost": 10, "growth": 1.3, "rate": 0.2, "premium": false },
-        { "id": "n_mom", "name": "네모 엄마", "img": "nemo_mom.good", "cost": 45, "growth": 1.3, "rate": 0.8, "premium": false },
-        { "id": "n_gma", "name": "네모 할머니", "img": "nemo_grandma.good", "cost": 220, "growth": 1.3, "rate": 3, "premium": false },
-        { "id": "n_k1", "name": "네모 큰딸", "img": "nemo_kids.kid1", "cost": 1100, "growth": 1.3, "rate": 12, "premium": false },
-        { "id": "n_k2", "name": "네모 작은딸", "img": "nemo_kids.kid2", "cost": 5500, "growth": 1.3, "rate": 50, "premium": false },
-        { "id": "n_k3", "name": "네모 작은아들", "img": "nemo_kids.kid3", "cost": 27000, "growth": 1.3, "rate": 210, "premium": false },
-        { "id": "n_baby", "name": "네모 막둥이", "img": "baby.joy", "cost": 135000, "growth": 1.3, "rate": 900, "premium": false }
-      ]
+ "version": 1,
+ "offlineCapHours": 8,
+ "offlineEfficiency": 0.8,
+ "laughLog": 0.25,
+ "tableLevel": {
+  "baseCost": 120,
+  "growth": 7,
+  "mult": 1.6,
+  "max": 20
+ },
+ "dexTotal": 30,
+ "tables": {
+  "nemo": {
+   "name": "네모네 식탁",
+   "tag": "넘치고 북적이는 7인 가족",
+   "color": "#FFE3C2",
+   "ink": "#B5651D",
+   "bowlsBase": 2,
+   "sliderDefault": 0.2,
+   "laughPerOutput": 0.05,
+   "pot": {
+    "id": "n_pot",
+    "name": "밥솥 늘리기",
+    "cost": 60,
+    "growth": 1.6,
+    "note": "밥그릇이 하나 늘어요"
+   },
+   "gens": [
+    {
+     "id": "n_dad",
+     "name": "네모 아빠",
+     "img": "nemo_dad.good",
+     "cost": 10,
+     "growth": 1.6,
+     "rate": 0.2,
+     "premium": false
     },
-    "semo": {
-      "name": "세모네 식탁", "tag": "티격태격 달달한 두 사람", "color": "#D8F0FF", "ink": "#1F6FA8",
-      "trip": {
-        "cooldownSec": 90,
-        "sweet": { "name": "달달 여행", "desc": "둘이 손잡고 온천 여행", "mult": 1.6, "sec": 120 },
-        "extreme": { "name": "공항에서 대판 싸움 → 온천 화해", "desc": "10초 동안 멈췄다가 크게 터져요", "pauseSec": 10, "mult": 4.2, "sec": 60 }
-      },
-      "gens": [
-        { "id": "s_wife", "name": "세모 아내", "img": "wife.joy", "cost": 30, "growth": 1.3, "rate": 0.6, "premium": false },
-        { "id": "s_hus", "name": "세모 남편", "img": "husband.joy", "cost": 160, "growth": 1.3, "rate": 3.2, "premium": false },
-        { "id": "s_bag", "name": "여행 가방", "img": "art.radish", "cost": 800, "growth": 1.3, "rate": 14, "premium": true, "note": "소품 — 나중에 꾸미기 팩(유료 가능)" },
-        { "id": "s_hot", "name": "온천 이용권", "img": "wife.love", "cost": 4200, "growth": 1.3, "rate": 62, "premium": false }
-      ]
+    {
+     "id": "n_mom",
+     "name": "네모 엄마",
+     "img": "nemo_mom.good",
+     "cost": 45,
+     "growth": 1.6,
+     "rate": 0.8,
+     "premium": false
     },
-    "dong": {
-      "name": "동그라미네 식탁", "tag": "완벽한데, 의자가 비어 있어요", "color": "#E2E6FA", "ink": "#3B4A7A",
-      "chairs": 4, "chairStart": 1, "lonelyPenalty": 0.1, "laughPerChair": 0.2,
-      "invites": [
-        { "need": { "nemo": 2 }, "text": "네모네 식탁이 넘치니 남는 국을 나눠 먹자고 초대장이 왔어요" },
-        { "need": { "semo": 2 }, "text": "세모네 부부가 온천 사진을 보내며 함께 가자고 해요" },
-        { "need": { "nemo": 3, "semo": 3 }, "text": "세 가족이 한자리에 앉자는 큰 초대장이에요" }
-      ],
-      "gens": [
-        { "id": "d_dad", "name": "동그라미 아빠", "img": "dong_dad.good", "cost": 70, "growth": 1.3, "rate": 1.4, "premium": false },
-        { "id": "d_mom", "name": "동그라미 엄마", "img": "code.dong_mom.good", "cost": 360, "growth": 1.3, "rate": 7, "premium": false },
-        { "id": "d_son", "name": "동그라미 아들", "img": "code.dong_son.good", "cost": 1900, "growth": 1.3, "rate": 30, "premium": false },
-        { "id": "d_dau", "name": "동그라미 딸", "img": "code.dong_daughter.good", "cost": 9500, "growth": 1.3, "rate": 140, "premium": false }
-      ]
+    {
+     "id": "n_gma",
+     "name": "네모 할머니",
+     "img": "nemo_grandma.good",
+     "cost": 220,
+     "growth": 1.6,
+     "rate": 3,
+     "premium": false
+    },
+    {
+     "id": "n_k1",
+     "name": "네모 큰딸",
+     "img": "nemo_kids.kid1",
+     "cost": 1100,
+     "growth": 1.6,
+     "rate": 12,
+     "premium": false
+    },
+    {
+     "id": "n_k2",
+     "name": "네모 작은딸",
+     "img": "nemo_kids.kid2",
+     "cost": 5500,
+     "growth": 1.6,
+     "rate": 50,
+     "premium": false
+    },
+    {
+     "id": "n_k3",
+     "name": "네모 작은아들",
+     "img": "nemo_kids.kid3",
+     "cost": 27000,
+     "growth": 1.6,
+     "rate": 210,
+     "premium": false
+    },
+    {
+     "id": "n_baby",
+     "name": "네모 막둥이",
+     "img": "baby.joy",
+     "cost": 135000,
+     "growth": 1.6,
+     "rate": 900,
+     "premium": false
     }
+   ]
   },
-  "storyThresholds": [120, 1500, 12000]
+  "semo": {
+   "name": "세모네 식탁",
+   "tag": "티격태격 달달한 두 사람",
+   "color": "#D8F0FF",
+   "ink": "#1F6FA8",
+   "trip": {
+    "cooldownSec": 90,
+    "sweet": {
+     "name": "달달 여행",
+     "desc": "둘이 손잡고 온천 여행",
+     "mult": 1.6,
+     "sec": 120
+    },
+    "extreme": {
+     "name": "공항에서 대판 싸움 → 온천 화해",
+     "desc": "10초 동안 멈췄다가 크게 터져요",
+     "pauseSec": 10,
+     "mult": 4.2,
+     "sec": 60
+    }
+   },
+   "gens": [
+    {
+     "id": "s_wife",
+     "name": "세모 아내",
+     "img": "wife.joy",
+     "cost": 30,
+     "growth": 1.6,
+     "rate": 0.6,
+     "premium": false
+    },
+    {
+     "id": "s_hus",
+     "name": "세모 남편",
+     "img": "husband.joy",
+     "cost": 160,
+     "growth": 1.6,
+     "rate": 3.2,
+     "premium": false
+    },
+    {
+     "id": "s_bag",
+     "name": "여행 가방",
+     "img": "art.radish",
+     "cost": 800,
+     "growth": 1.6,
+     "rate": 14,
+     "premium": true,
+     "note": "소품 — 나중에 꾸미기 팩(유료 가능)"
+    },
+    {
+     "id": "s_hot",
+     "name": "온천 이용권",
+     "img": "wife.love",
+     "cost": 4200,
+     "growth": 1.6,
+     "rate": 62,
+     "premium": false
+    }
+   ]
+  },
+  "dong": {
+   "name": "동그라미네 식탁",
+   "tag": "완벽한데, 의자가 비어 있어요",
+   "color": "#E2E6FA",
+   "ink": "#3B4A7A",
+   "chairs": 4,
+   "chairStart": 1,
+   "lonelyPenalty": 0.1,
+   "laughPerChair": 0.2,
+   "invites": [
+    {
+     "need": {
+      "nemo": 2
+     },
+     "text": "네모네 식탁이 넘치니 남는 국을 나눠 먹자고 초대장이 왔어요"
+    },
+    {
+     "need": {
+      "semo": 2
+     },
+     "text": "세모네 부부가 온천 사진을 보내며 함께 가자고 해요"
+    },
+    {
+     "need": {
+      "nemo": 3,
+      "semo": 3
+     },
+     "text": "세 가족이 한자리에 앉자는 큰 초대장이에요"
+    }
+   ],
+   "gens": [
+    {
+     "id": "d_dad",
+     "name": "동그라미 아빠",
+     "img": "dong_dad.good",
+     "cost": 70,
+     "growth": 1.6,
+     "rate": 1.4,
+     "premium": false
+    },
+    {
+     "id": "d_mom",
+     "name": "동그라미 엄마",
+     "img": "code.dong_mom.good",
+     "cost": 360,
+     "growth": 1.6,
+     "rate": 7,
+     "premium": false
+    },
+    {
+     "id": "d_son",
+     "name": "동그라미 아들",
+     "img": "code.dong_son.good",
+     "cost": 1900,
+     "growth": 1.6,
+     "rate": 30,
+     "premium": false
+    },
+    {
+     "id": "d_dau",
+     "name": "동그라미 딸",
+     "img": "code.dong_daughter.good",
+     "cost": 9500,
+     "growth": 1.6,
+     "rate": 140,
+     "premium": false
+    }
+   ]
+  }
+ },
+ "storyThresholds": [
+  120,
+  200000000,
+  400000000000,
+  3000000000000,
+  8000000000000,
+  20000000000000,
+  45000000000000,
+  80000000000000
+ ],
+ "balanceNote": "2026-10-07 tools/idle_sim.js(하루 3회×3분, 초당 1회 구매, 오프라인 선형×0.8) 기준으로 사연 문턱을 1·2·4·8·13·21·29일로 맞춤"
 }

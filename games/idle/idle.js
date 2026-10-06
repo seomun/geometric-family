@@ -35,7 +35,7 @@
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
   const lvl = (id) => S.g[id] || 0;
   const tmult = (t) => Math.pow(B.tableLevel.mult, S.tl[t] - 1);
-  const laughMult = () => 1 + B.laughMult * Math.sqrt(Math.max(0, S.l));
+  const laughMult = () => 1 + B.laughLog * Math.log10(1 + Math.max(0, S.l));   // 웃음 보너스는 로그: 폭주하지 않는다
   const genCost = (g) => g.cost * Math.pow(g.growth, lvl(g.id));
   const tlCost = (t) => B.tableLevel.baseCost * Math.pow(B.tableLevel.growth, S.tl[t] - 1);
   const gross = (t) => B.tables[t].gens.reduce((a, g) => a + lvl(g.id) * g.rate, 0);
@@ -302,7 +302,7 @@
   /* 동그라미 아들·엄마·딸: 래스터가 올 때까지 src/characters.js(읽기 전용)의 코드 그림을 GF.art 로 만든다. 엔진 GF 를 덮지 않도록 가짜 window 로 실행. */
   async function loadCodeChars() {
     try {
-      const code = await (await fetch(GF.base + 'src/characters.js')).text(), fake = {};
+      const code = window.GF_CODECHARS || await (await fetch(GF.base + 'src/characters.js')).text(), fake = {};
       new Function('window', code)(fake);
       const C = fake.GF, defs = C.ROUGH_DEFS.replace(/<svg[^>]*>/, '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">') ;
       const mk = { dong_mom: ['dongMom', 44], dong_son: ['dongSon', 34], dong_daughter: ['dongDaughter', 34] };

@@ -2,7 +2,7 @@
 const { chromium } = require('playwright-core');
 const path = require('path'), fs = require('fs');
 const OUT = path.join(__dirname, '..', 'notes', 'snapshots');
-const URL = 'http://localhost:8765/games/idle/index.html';
+const URL = process.env.URL || 'http://localhost:8765/games/idle/index.html';
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
@@ -44,6 +44,14 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   const S2 = await D('S'); ok(Object.keys(S2.sd).length === 1, '도감 1칸'); await shot('home1');
   // 도감
   await pg.click('.screen.on .dbtn'); await pg.waitForSelector('.dexg'); await shot('dex'); await pg.click('.screen.on .back');
+  // 모든 사연: 컷마다 이미지가 실제로 그려지는지, 글자 ≥18px
+  const ids = await pg.evaluate(() => IDLE.debug.B().storyThresholds.map((_, i) => GF.data.idle_stories.stories[i] && GF.data.idle_stories.stories[i].id).filter(Boolean));
+  for (const id of ids) {
+    await pg.evaluate((id) => GF.go('istory', { id }), id); await pg.waitForTimeout(250);
+    const n = await pg.evaluate((id) => GF.data.idle_stories.stories.find((x) => x.id === id).cuts.length, id); let broken = 0;
+    for (let i = 0; i < n; i++) { await pg.waitForTimeout(150); broken += await pg.evaluate(() => [...document.querySelectorAll('.screen.on .cut-char img')].filter((m) => !m.complete || !m.naturalWidth).length); if (i < n - 1) await pg.click('.screen.on .bigbtn:last-of-type'); }
+    ok(broken === 0, id + ' 모든 컷 이미지 로드'); await pg.evaluate(() => GF.back());
+  }
   // 8시간 가짜 시계: 오프라인 계산 (캡)
   // 8시간: (A) 12시간 부재 → 8시간 캡 한 번에 정산  (B) 같은 상태에서 3분씩 160번(=8시간) 가짜 시계로 진행 → 두 값이 같아야 한다
   const snap = await D('snap'), wBase = (await D('S')).w, rate0 = (await D('rates')).w;

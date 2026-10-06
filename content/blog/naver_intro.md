@@ -1,5 +1,7 @@
 # 네이버 블로그 첫 글 — 「기하학 가족을 소개합니다」 (공지 고정)
 
+**✅ 발행 2026-10-06: https://blog.naver.com/gihahakf/224432980933** (첫 장 = 손그림 스케치 `intro_sketch_cuts/c01.png`, 이후 소개_02~04)
+
 게시: blog.naver.com/gihahakf · 카테고리 「가족 소개」 · 이미지 `content/blog/intro_cuts/c01~c04.png` (1080×1350, 인스타 캐러셀 겸용)
 재생성: `node tools/export_cuts.js intro` (원본 `web/intro.html`)
 

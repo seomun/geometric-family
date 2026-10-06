@@ -75,7 +75,8 @@ async function playStage(p, mode, tag) {
     else if (mode === 'shapes') await solveShapes(p);
     else if (mode === 'paint') { await solvePaint(p, tag); await shot(p, tag + '_painted' + r); await p.click('.playarea .big', { force: true }); }
     if (r === 0 || (mode === 'paint' && r < 3)) await shot(p, tag + '_solved' + r);
-    await wait(p, mode === 'shapes' ? 3600 : 2200);
+    if (r === 0 && mode !== 'paint') { await wait(p, 1100); await shot(p, tag + '_celebrate'); }
+    await wait(p, mode === 'shapes' ? 5200 : 3400);
     if (r === 0) await shot(p, tag + '_result1');
     if (r === 2) await shot(p, tag + '_stageresult');
     await p.click('.overlay .big:last-child'); await wait(p, 500);

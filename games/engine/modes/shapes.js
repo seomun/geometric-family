@@ -82,7 +82,7 @@ GF.mode('shapes', {
               ctx.sfx('ok'); fingerOff();
               if (--left === 0) finish(); return;
             }
-            mistakes++; ctx.sfx('no'); d.classList.add('shake'); setTimeout(() => d.classList.remove('shake'), 400);
+            mistakes++; ctx.sfx('no'); d.classList.add('tilt'); setTimeout(() => d.classList.remove('tilt'), 700);
           }
           d.classList.add('back'); d.style.left = tk.home.x + 'px'; d.style.top = tk.home.y + 'px';
         },

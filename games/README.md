@@ -14,6 +14,15 @@ python games/tools/gen_chars.py       # assets/*/manifest.json → data/chars.js
 
 ## 진행
 - [x] 엔진 코어, 홈·지도·그림책·스테이지·놀이방·앨범·부모 메뉴
-- [x] 1장 그림자 찾기 · 2장 같은 얼굴 (3스테이지 × 3라운드, 힌트·적응형·별·스티커)
-- [ ] 3장 퍼즐 · 4장 색칠(칸 채우기 시험) · 5장 도형 · 3~5장 그림책
-- [ ] 소리 녹음 슬롯 · build.py(단일 HTML + WebP) · WebView APK
+- [x] 1~5장 놀이(그림자·같은 얼굴·퍼즐·색칠·도형) + 그림책, 스모크 15스테이지 완주 + 별 규칙 단언
+- [x] **1장 버티컬 슬라이스(QA 요청 중)**: 전체 화면 배경+안전 영역(가로·세로·탭), 자작 효과음 9종+BGM(`sound_test.html`), 손맛(집기·스냅 바운스·파티클·꽃가루·갸웃 복귀), 움직이는 배경, 그림책 말풍선 그림, 첫 3초 타이틀
+- [ ] 3~5장·2장을 1장 규격으로 끌어올리기 (QA 통과 후)
+- [ ] 음성 녹음 연결 · build.py(단일 HTML + WebP) · WebView APK · 스토어 패키지
+
+## 검수 도구
+```
+node games/tools/smoke.js      # 5장 자동 플레이 + 스크린샷 + 별 규칙 단언
+node games/tools/devices.js    # 기기 4종(412×915, 384×832, 탭 세로/가로) 스크린샷
+games/sound_test.html          # 효과음·BGM 듣기 (자작 합성, SOUND_CREDITS.md)
+python games/tools/make_audio.py   # 소리 다시 만들기
+```

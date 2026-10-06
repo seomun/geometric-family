@@ -49,11 +49,11 @@ GF.mode('shadow', {
               best.filled = true; tk.done = true; t.classList.add('done', 'pop');
               t.style.left = best.cx - bw / 2 + 'px'; t.style.top = best.cy - bh / 2 + 'px';
               best.ring.style.borderColor = '#6CCB8A'; best.ring.style.borderStyle = 'solid';
-              ctx.sfx('ok'); fingerOff();
+              ctx.sfx('ok'); fingerOff(); GF.snap(t); GF.burst(root, best.cx, best.cy, 14);
               if (--left === 0) ctx.timeout(() => ctx.done({ mistakes }), 700);
               return;
             }
-            mistakes++; ctx.sfx('no'); t.classList.add('shake'); setTimeout(() => t.classList.remove('shake'), 400);
+            mistakes++; ctx.sfx('no'); t.classList.add('tilt'); setTimeout(() => t.classList.remove('tilt'), 700);
           }
           t.classList.add('back'); t.style.left = tk.home.x + 'px'; t.style.top = tk.home.y + 'px';
         },

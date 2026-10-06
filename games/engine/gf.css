@@ -159,3 +159,40 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .stagebtn > div > svg { width: 44px; height: 44px; }
 @keyframes houseshake { 25% { transform: translateX(-7px) rotate(-1.5deg) } 75% { transform: translateX(7px) rotate(1.5deg) } }
 .abs.glow { animation: glow .8s infinite; border-radius: 16px; }
+
+/* ---- 손맛 ---- */
+.tok { transition: transform .12s ease; }
+.tok.drag { transform: scale(1.12); }
+.tok.back { transition: left .5s cubic-bezier(.3,1.35,.5,1), top .5s cubic-bezier(.3,1.35,.5,1), transform .2s; }
+.tok.tilt { animation: tilt .7s ease; }
+@keyframes tilt { 20% { transform: rotate(-9deg) } 45% { transform: rotate(7deg) } 70% { transform: rotate(-3deg) } 100% { transform: rotate(0) } }
+.particle { position: absolute; pointer-events: none; z-index: 70; }
+.fcard.tilt { animation: tilt .7s ease; }
+
+/* ---- 움직이는 배경 ---- */
+.drift { animation: drift 40s ease-in-out infinite alternate; }
+@keyframes drift { from { transform: translateX(-40px) } to { transform: translateX(70px) } }
+.wave { animation: wave 3.2s linear infinite; }
+@keyframes wave { to { transform: translateX(-60px) } }
+.sway { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 3.6s ease-in-out infinite alternate; }
+@keyframes sway { from { transform: rotate(-3deg) } to { transform: rotate(3deg) } }
+.fly { animation: fly 16s linear infinite; }
+@keyframes fly { 0% { transform: translate(-90px, 0) } 25% { transform: translate(60px, -34px) } 50% { transform: translate(210px, 10px) } 75% { transform: translate(350px, -40px) } 100% { transform: translate(520px, 0) } }
+.flap { transform-box: fill-box; transform-origin: 50% 50%; animation: flap .3s ease-in-out infinite alternate; }
+@keyframes flap { to { transform: scaleX(.4) } }
+.bob { animation: bob 2.6s ease-in-out infinite alternate; }
+@keyframes bob { to { transform: translateY(5px) } }
+
+/* ---- 그림책: 숨쉬는 캐릭터 + 말풍선 그림 ---- */
+.cut-char img { transform-origin: 50% 100%; animation: idle 2.2s ease-in-out infinite alternate; }
+@keyframes idle { from { transform: scale(1, 1) } to { transform: scale(1.025, .975) rotate(.6deg) } }
+.bubble { position: absolute; width: 74px; height: 74px; transform: translate(-50%, -100%); background: #fff; border-radius: 50%;
+  box-shadow: 0 4px 0 rgba(0,0,0,.14); display: flex; align-items: center; justify-content: center; animation: bubbleIn .5s .35s cubic-bezier(.3,1.5,.5,1) backwards; z-index: 5; }
+.bubble::after { content: ""; position: absolute; left: 50%; bottom: -10px; margin-left: -9px; border: 9px solid transparent; border-top-color: #fff; border-bottom: 0; }
+.bubble svg { width: 52px; height: 52px; }
+@keyframes bubbleIn { from { transform: translate(-50%, -60%) scale(0); opacity: 0 } to { transform: translate(-50%, -100%) scale(1); opacity: 1 } }
+
+/* ---- 첫 3초 ---- */
+.ttl span { display: inline-block; animation: dropin .75s cubic-bezier(.3,1.5,.5,1) backwards; }
+@keyframes dropin { from { transform: translateY(-160px) rotate(-18deg); opacity: 0 } }
+.sub { animation: bounceUp .6s .8s backwards; }

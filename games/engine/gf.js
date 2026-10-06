@@ -136,13 +136,17 @@
   const band = (y, c, h) => '<rect x="' + X0 + '" y="' + y + '" width="' + XW + '" height="' + (h || 2400) + '" fill="' + c + '"/>';
   const rep = (fn) => [-1080, -720, -360, 0, 360, 720, 1080].map((dx) => '<g transform="translate(' + dx + ' 0)">' + fn() + '</g>').join('');
   const hill = (y, c, r) => '<ellipse cx="' + r[0] + '" cy="' + y + '" rx="' + r[1] + '" ry="' + r[2] + '" fill="' + c + '"/>';
-  const cloud = (x, y, s) => '<g transform="translate(' + x + ' ' + y + ') scale(' + (s || 1) + ')" fill="#fff" opacity=".9"><ellipse cx="0" cy="0" rx="34" ry="16"/><ellipse cx="-22" cy="6" rx="22" ry="12"/><ellipse cx="24" cy="6" rx="24" ry="12"/></g>';
+  const cloud = (x, y, s) => '<g class="drift"><g transform="translate(' + x + ' ' + y + ') scale(' + (s || 1) + ')" fill="#fff" opacity=".9"><ellipse cx="0" cy="0" rx="34" ry="16"/><ellipse cx="-22" cy="6" rx="22" ry="12"/><ellipse cx="24" cy="6" rx="24" ry="12"/></g></g>';
+  const flowers = (y) => rep(() => [[24, 8, '#FF8FA8'], [88, 22, '#FFF3B0'], [150, 4, '#FFFFFF'], [212, 18, '#FF8FA8'], [280, 6, '#FFF3B0'], [334, 20, '#fff']].map((f) => '<g transform="translate(' + f[0] + ' ' + (y + f[1]) + ')"><circle r="5" fill="' + f[2] + '"/><circle r="2" fill="#FFC933"/></g>').join(''));
+  const reeds = (y) => rep(() => [[30, 0], [44, 8], [318, 2], [332, 10]].map((r) => '<g class="sway" style="animation-delay:-' + (r[0] % 7) * 0.4 + 's"><path d="M' + r[0] + ' ' + (y + r[1]) + 'v-58" stroke="#7BAA55" stroke-width="4" stroke-linecap="round"/><ellipse cx="' + r[0] + '" cy="' + (y + r[1] - 64) + '" rx="5.5" ry="13" fill="#8A5A3B"/></g>').join(''));
+  const lilies = () => rep(() => [[70, 505], [160, 548], [255, 515], [330, 556]].map((l) => '<g class="bob" style="animation-delay:-' + l[0] % 5 + 's"><ellipse cx="' + l[0] + '" cy="' + l[1] + '" rx="24" ry="9" fill="#5FB57B"/><circle cx="' + (l[0] + 6) + '" cy="' + (l[1] - 5) + '" r="5" fill="#FF8FA8"/></g>').join(''));
+  const butterfly = (y, c) => '<g class="fly"><g transform="translate(0 ' + y + ')"><g class="flap"><ellipse cx="-6" cy="0" rx="8" ry="11" fill="' + c + '"/><ellipse cx="6" cy="0" rx="8" ry="11" fill="' + c + '"/></g><rect x="-1.5" y="-8" width="3" height="16" rx="1.5" fill="#4A3030"/></g></g>';
   const BG = {
     home: () => sky('#FFE9C7', '#FFF6E5') + '<circle cx="300" cy="110" r="46" fill="#FFD36B"/>' + rep(() => hill(660, '#BFE6A8', [90, 260, 150]) + hill(670, '#9BD98A', [290, 230, 130])) + band(640, '#9BD98A'),
-    stream: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="290" cy="90" r="38" fill="#FFE27A"/>' + cloud(70, 80, 1) + cloud(200, 140, .8) + rep(() => hill(470, '#B6E6A0', [100, 240, 90]) + hill(480, '#9ADB88', [300, 200, 80])) + band(500, '#7CC8F0', 60) + rep(() => '<path d="M0 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/>') + band(560, '#8FD67A'),
-    bridge: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="60" cy="90" r="34" fill="#FFE27A"/>' + cloud(230, 70, 1) + cloud(130, 150, .7) + rep(() => hill(420, '#B6E6A0', [250, 260, 80])) + band(450, '#7CC8F0', 130) + rep(() => '<path d="M0 480q30-10 60 0t60 0 60 0 60 0 60 0 60 0M0 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/><rect x="20" y="395" width="12" height="40" fill="#A8703F"/><rect x="330" y="395" width="12" height="40" fill="#A8703F"/>') + band(430, '#C98F5A', 26) + band(400, '#A8703F', 8) + band(580, '#8FD67A'),
-    hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + rep(() => hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90])) + band(600, '#A9D36E') + '<rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/>',
-    field: () => sky('#CDEFFF', '#F7FCFF') + cloud(90, 90, 1) + cloud(260, 150, .8) + rep(() => hill(500, '#B6E6A0', [180, 340, 100])) + band(520, '#C79A6B') + band(558, '#A97B4E', 6) + band(598, '#A97B4E', 6),
+    stream: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="290" cy="90" r="38" fill="#FFE27A"/>' + cloud(70, 80, 1) + cloud(200, 140, .8) + rep(() => hill(470, '#B6E6A0', [100, 240, 90]) + hill(480, '#9ADB88', [300, 200, 80])) + band(500, '#7CC8F0', 60) + rep(() => '<g class="wave"><path d="M-60 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/></g>') + band(560, '#8FD67A') + flowers(582) + butterfly(330, '#FFB3C7'),
+    bridge: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="60" cy="90" r="34" fill="#FFE27A"/>' + cloud(230, 70, 1) + cloud(130, 150, .7) + rep(() => hill(420, '#B6E6A0', [250, 260, 80])) + band(450, '#7CC8F0', 130) + rep(() => '<g class="wave"><path d="M-60 480q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0M-60 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/></g><rect x="20" y="395" width="12" height="40" fill="#A8703F"/><rect x="330" y="395" width="12" height="40" fill="#A8703F"/>') + band(430, '#C98F5A', 26) + band(400, '#A8703F', 8) + lilies() + band(580, '#8FD67A') + reeds(604) + flowers(612) + butterfly(300, '#FFD36B'),
+    hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + rep(() => hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90])) + band(600, '#A9D36E') + '<g class="sway"><rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/></g>' + butterfly(360, '#FFB3C7'),
+    field: () => sky('#CDEFFF', '#F7FCFF') + cloud(90, 90, 1) + cloud(260, 150, .8) + rep(() => hill(500, '#B6E6A0', [180, 340, 100])) + band(520, '#C79A6B') + band(558, '#A97B4E', 6) + band(598, '#A97B4E', 6) + butterfly(320, '#B197FC'),
     night: () => sky('#1F2A5C', '#4B5C9C') + rep(() => [[40, 80], [120, 150], [250, 70], [320, 160], [200, 210], [60, 260], [310, 300]].map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#FFF3B0"/>').join('')) + '<circle cx="270" cy="120" r="40" fill="#FFF3B0"/><circle cx="286" cy="110" r="36" fill="#2B3870"/>' + rep(() => hill(660, '#2F4A6B', [180, 330, 160])) + band(640, '#2F4A6B'),
     house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A'),
   };
@@ -198,6 +202,28 @@
   GF.refreshBar = refreshBar;
   GF.toast = (t) => { const o = $('toast'); o.textContent = t; o.classList.add('on'); clearTimeout(GF._tt); GF._tt = setTimeout(() => o.classList.remove('on'), 1400); };
 
+  /* ---------------- 연출: 반짝이 터짐 · 꽃가루 ---------------- */
+  const PCOL = ['#FFC933', '#FF8FA8', '#8FD3F4', '#6CCB8A', '#fff', '#B197FC'];
+  GF.burst = function (parent, x, y, n) {
+    for (let i = 0; i < (n || 12); i++) {
+      const p = el('div', 'particle', parent), ang = Math.random() * 6.283, d = 36 + Math.random() * 56, s = 8 + Math.random() * 8;
+      p.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + s + 'px;height:' + s + 'px;background:' + PCOL[i % PCOL.length] + ';border-radius:' + (i % 3 ? '50%' : '3px');
+      p.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 1 }, { transform: 'translate(' + (Math.cos(ang) * d) + 'px,' + (Math.sin(ang) * d - 14) + 'px) scale(.2) rotate(200deg)', opacity: 0 }],
+        { duration: 560 + Math.random() * 300, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => p.remove();
+    }
+  };
+  GF.confetti = function (parent) {
+    const v = GF.view || { lw: 360 }, x0 = -(v.lw - 360) / 2;
+    for (let i = 0; i < 44; i++) {
+      const p = el('div', 'particle', parent), s = 8 + Math.random() * 9, x = x0 + Math.random() * v.lw;
+      p.style.cssText = 'left:' + x + 'px;top:-20px;width:' + s + 'px;height:' + s * 1.5 + 'px;background:' + PCOL[i % PCOL.length] + ';border-radius:2px';
+      p.animate([{ transform: 'translateY(0) rotate(0)', opacity: 1 }, { transform: 'translate(' + ((Math.random() - 0.5) * 120) + 'px,' + (640 + Math.random() * 260) + 'px) rotate(' + (360 + Math.random() * 360) + 'deg)', opacity: 1 }],
+        { duration: 1300 + Math.random() * 700, delay: Math.random() * 350, easing: 'cubic-bezier(.3,.6,.6,1)', fill: 'forwards' }).onfinish = () => p.remove();
+    }
+  };
+  GF.jump = (node) => node.animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-22px) scale(1.1,.95)' }, { transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-9px)' }, { transform: 'translateY(0)' }], { duration: 650, easing: 'ease-out' });
+  GF.snap = (node) => node.animate([{ transform: 'scale(1.15)' }, { transform: 'scale(1.28) translateY(-8px)', offset: 0.35 }, { transform: 'scale(.94)', offset: 0.7 }, { transform: 'scale(1)' }], { duration: 480, easing: 'ease-out' });
+
   /* ---------------- 입력: 드래그 (한 번에 하나, 멀티터치 무시) ---------------- */
   let dragging = null;
   GF.drag = function (node, h) {
@@ -227,9 +253,10 @@
     bare: false,
     enter(r) {
       GF.bg('home', r);
-      const t = el('div', 'hometitle', r, '<div class="ttl"><span style="color:#E39B4B">기</span><span style="color:#4DABF7">하</span><span style="color:#3B4A7A">학</span> <span style="color:#FF8FA8">가</span><span style="color:#6CCB8A">족</span></div><div class="sub">놀이터</div>');
+      const t = el('div', 'hometitle', r, '<div class="ttl"><span style="color:#E39B4B;animation-delay:.05s">기</span><span style="color:#4DABF7;animation-delay:.17s">하</span><span style="color:#3B4A7A;animation-delay:.29s">학</span> <span style="color:#FF8FA8;animation-delay:.41s">가</span><span style="color:#6CCB8A;animation-delay:.53s">족</span></div><div class="sub">놀이터</div>');
       const c = el('div', 'homechars', r);
       [['wife.joy', 138], ['baby.joy', 96], ['dong_dad.good', 130]].forEach((a, i) => { const im = GF.img(a[0]); im.style.height = a[1] + 'px'; im.style.animation = 'bounceIn .6s ' + (i * 0.12) + 's backwards'; c.appendChild(im); });
+      if (!GF._intro) { GF._intro = 1; setTimeout(() => GF.sfx('star'), 650); }
       const row = el('div', 'homebtns', r);
       [['story', 'book', '#FFE0E8', () => GF.go('map')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album')]].forEach((b) => {
         const k = el('button', 'card', row, IC[b[1]]); k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
@@ -266,6 +293,14 @@
   });
 
   /* ---------------- 그림책 ---------------- */
+  const BUBBLE = {
+    bang: '<svg viewBox="0 0 52 52"><rect x="21" y="6" width="10" height="26" rx="5" fill="#FF8FA8"/><circle cx="26" cy="43" r="6" fill="#FF8FA8"/></svg>',
+    heart: '<svg viewBox="0 0 52 52"><path d="M26 44C8 31 6 16 16 11c5-2 9 1 10 5 1-4 5-7 10-5 10 5 8 20-10 33z" fill="#FF6B8B"/></svg>',
+    note: '<svg viewBox="0 0 52 52"><path d="M20 38V12l22-5v26" fill="none" stroke="#6CCB8A" stroke-width="5" stroke-linejoin="round"/><circle cx="14" cy="38" r="8" fill="#6CCB8A"/><circle cx="36" cy="33" r="8" fill="#6CCB8A"/></svg>',
+    sizes: '<svg viewBox="0 0 52 52"><circle cx="13" cy="28" r="11" fill="#F6C28B"/><circle cx="33" cy="31" r="8" fill="#8FD3F4"/><circle cx="46" cy="34" r="5" fill="#3B4A7A"/></svg>',
+    question: '<svg viewBox="0 0 52 52"><path d="M16 18c0-7 6-11 11-11 6 0 10 4 10 9 0 8-9 8-10 15" fill="none" stroke="#8FD3F4" stroke-width="7" stroke-linecap="round"/><circle cx="26" cy="44" r="5" fill="#8FD3F4"/></svg>',
+    sparkle: '<svg viewBox="0 0 52 52"><path d="M26 4l5 17 17 5-17 5-5 17-5-17-17-5 17-5z" fill="#FFC933"/></svg>',
+  };
   GF.screen('book', {
     enter(r, p) {
       const cuts = GF.data.story[p.ch][p.part], hero = (GF.data.stages[p.ch] || {}).bg;
@@ -279,13 +314,14 @@
         GF.bg(c.bg, stageEl);
         const role = (id) => (/^baby\./.test(id) || id === 'nemo_kids.baby' ? 'baby' : /^nemo_kids\./.test(id) ? 'kid' : /^art\./.test(id) ? 'art' : 'adult');
         const list = c.chars || [], adults = list.filter((x) => role(x.id) === 'adult'), kids = list.filter((x) => role(x.id) === 'kid');
-        const A = adults.length ? Math.max(...adults.map((x) => x.h || 230)) : kids.length ? Math.max(...kids.map((x) => x.h || 220)) / 0.78 : 240;
-        const H = { adult: null, kid: A * 0.78, baby: A * 0.5, art: null };   // 세계관 비율 고정: 어른 1 : 아이 .78 : 막둥이 .5
+        const A = adults.length ? Math.max(...adults.map((x) => x.h || 230)) : kids.length ? Math.max(...kids.map((x) => x.h || 220)) / 0.78 : null;
+        const H = { adult: null, kid: A && A * 0.78, baby: A && A * 0.45, art: null };   // 세계관 비율 고정: 어른 1 : 아이 .78 : 막둥이 .5
         list.forEach((ch, k) => {
           const d = el('div', 'cut-char in', stageEl); const hh = H[role(ch.id)] || ch.h || 230;
           d.style.cssText = 'left:' + ch.x + 'px;top:' + (ch.y || 560) + 'px;height:' + hh + 'px;width:' + Math.round(hh * GF.aspect(ch.id)) + 'px;animation-delay:' + (k * 0.12) + 's';
-          d.appendChild(GF.img(ch.id));
+          d.appendChild(GF.img(ch.id)); d.firstChild.style.animationDelay = '-' + (k * 0.7) + 's';
         });
+        if (c.bubble) { const bb = el('div', 'bubble', stageEl, BUBBLE[c.bubble.type]); bb.style.left = c.bubble.x + 'px'; bb.style.top = c.bubble.y + 'px'; }
         dots.innerHTML = cuts.map((_, k) => '<i class="' + (k === i ? 'on' : '') + '"></i>').join('');
         cap.style.display = GF.state.settings.captions && c.text ? 'block' : 'none'; cap.textContent = c.text || '';
         GF.say(c.voice);
@@ -371,7 +407,12 @@
         W: 360, H: 576, AW: Math.min(GF.view.lw, 720), AX: (360 - Math.min(GF.view.lw, 720)) / 2, level: run.level, sfx: GF.sfx, img: GF.img, shuffle, rnd, say: GF.say,
         timeout(fn, ms) { const t = setTimeout(fn, ms); timers.push(t); return t; },
         setHint(fn) { hintFn = fn; armHint(); },
-        done(res) { if (finished) return; finished = true; hintFn = null; hintT.forEach(clearTimeout); res.hints = hintCount; finish(r, res, def); },
+        done(res) {
+          if (finished) return; finished = true; hintFn = null; hintT.forEach(clearTimeout); res.hints = hintCount;
+          GF.sfx('celebrate'); GF.confetti(area);
+          const fx = [...area.querySelectorAll('.tok.done, .cut-char')]; fx.forEach((n, i) => setTimeout(() => GF.jump(n), i * 110));
+          ctx.timeout(() => finish(r, res, def), 1500);
+        },
       };
       area.addEventListener('pointerdown', () => { ensureAudio(); armHint(); }, true);
       mode.setup(area, cfg, ctx);
@@ -387,7 +428,7 @@
     const hero = el('div', 'hero', pn); hero.appendChild(GF.img(rnd(heroes)));
     const sv = el('div', '', pn, starsHTML(stars, 'xl')); sv.style.cssText = 'display:flex;justify-content:center';
     sv.querySelectorAll('svg').forEach((s, k) => { if (!s.classList.contains('off')) { s.classList.add('pop'); s.style.animationDelay = (0.15 + k * 0.18) + 's'; } });
-    GF.sfx('ok'); setTimeout(() => GF.sfx('star'), 350);
+    setTimeout(() => GF.sfx('star'), 150);
     const row = el('div', 'row', pn);
     if (!last) {
       const nb = el('button', 'big', row, IC.play); nb.onclick = () => { GF.sfx('pick'); run.i++; clearTimers(); r.innerHTML = ''; GF.screens.round.enter(r); };
@@ -399,7 +440,7 @@
     const gain = Reward.sticker(run.ch + '_' + 'ABC'[run.k], avg === 3);
     const n = run.ch.slice(2);
     if (run.k === 2 && ['A', 'B', 'C'].every((l) => (GF.state.stages['c' + n + l] || {}).stars === 3)) Reward.sticker(run.ch + '_star');
-    if (gain) { const s = Reward.stickerEl(run.ch + '_' + 'ABC'[run.k]); pn.insertBefore(s, row); GF.sfx('tada'); }
+    if (gain) { const s = Reward.stickerEl(run.ch + '_' + 'ABC'[run.k]); pn.insertBefore(s, row); setTimeout(() => GF.sfx('star'), 500); }
     const again = el('button', 'big gold', row, IC.again); again.onclick = () => { GF.sfx('pick'); const o = run; GF.stack.pop(); Stage.start({ kind: 'story', ch: o.ch, k: o.k, id: o.id }); };
     const nxt = el('button', 'big', row, IC.play);
     nxt.onclick = () => { GF.sfx('pick'); if (run.k < 2) GF.popTo('stages', { ch: run.ch }); else GF.replace('book', { ch: run.ch, part: 'epi' }); };

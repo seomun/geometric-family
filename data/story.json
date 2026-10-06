@@ -928,5 +928,135 @@
     "sfx": "shutter"
    }
   ]
+ },
+ "ch9": {
+  "pro": [
+   {
+    "bg": "village",
+    "voice": "c9_p1",
+    "text": "기차가 산골 마을에 섰어요. 폴폴 맛있는 냄새!",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 110,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 610,
+      "h": 250
+     }
+    ]
+   },
+   {
+    "bg": "village",
+    "voice": "c9_p2",
+    "text": "할머니가 큰 솥에 팥죽을 쑤고 있어요. 그런데 나를 곳이 없네요.",
+    "chars": [
+     {
+      "id": "nemo_grandma.good",
+      "x": 110,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "baby.good",
+      "x": 250,
+      "y": 610,
+      "h": 170
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   },
+   {
+    "bg": "village",
+    "voice": "c9_p3",
+    "text": "친구들이 줄줄이 모여 기차가 되면 팥죽을 나를 수 있어요! 순서를 맞춰 이어 주세요.",
+    "chars": [
+     {
+      "id": "dong_dad.joy",
+      "x": 70,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "husband.joy",
+      "x": 180,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "wife.joy",
+      "x": 290,
+      "y": 610,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 1
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "village",
+    "voice": "c9_e1",
+    "text": "칙칙폭폭! 친구들 기차가 팥죽을 가득 싣고 출발!",
+    "chars": [
+     {
+      "id": "nemo_grandma.good",
+      "x": 110,
+      "y": 610,
+      "h": 250
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 250,
+      "y": 610,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "note",
+     "at": 1
+    },
+    "sfx": "whistle"
+   },
+   {
+    "bg": "village",
+    "voice": "c9_e2",
+    "text": "후후 불어 호호! 모두 모여 맛있게 냠냠.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 90,
+      "y": 610,
+      "h": 160
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 190,
+      "y": 610,
+      "h": 240
+     },
+     {
+      "id": "nemo_grandma.good",
+      "x": 290,
+      "y": 610,
+      "h": 250
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 2
+    }
+   }
+  ]
  }
 }

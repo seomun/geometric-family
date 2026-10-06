@@ -10,6 +10,10 @@
       svg: S(125, '<path d="M50 8L90 110H10z" fill="#FF8FA8"/><path d="M31 66h38M23 88h54" stroke="#fff" stroke-width="7" opacity=".85" fill="none"/><rect x="6" y="104" width="88" height="12" rx="6" fill="#8FD3F4"/><circle cx="50" cy="10" r="9" fill="#FFD36B"/>') },
     hat_crown: { slot: 'hat', ref: 'body', k: 0.62, ar: 0.72, ax: 0.5, ay: 0.95, to: 'hat', z: 5,
       svg: S(72, '<path d="M8 64V20l22 22 20-30 20 30 22-22v44z" fill="#FFC933"/><rect x="8" y="56" width="84" height="12" rx="4" fill="#E0A200"/><circle cx="8" cy="18" r="6" fill="#FF6B6B"/><circle cx="50" cy="10" r="6" fill="#4DABF7"/><circle cx="92" cy="18" r="6" fill="#6CCB8A"/><circle cx="30" cy="44" r="4" fill="#fff"/><circle cx="70" cy="44" r="4" fill="#fff"/>') },
+    hat_straw: { slot: 'hat', ref: 'body', k: 0.7, ar: 0.62, ax: 0.5, ay: 0.8, to: 'hat', z: 5, extra: true,
+      svg: S(62, '<ellipse cx="50" cy="46" rx="47" ry="12" fill="#F2D27A"/><path d="M24 44C24 10 76 10 76 44z" fill="#F2D27A"/><path d="M24 44h52v-9H24z" fill="#FF8FA8"/><path d="M12 46q38 8 76 0" fill="none" stroke="#C9A24A" stroke-width="2.4"/>') },
+    face_hearts: { slot: 'face', ref: 'eye', k: 2.3, ar: 0.4, ax: 0.5, ay: 0.5, to: 'mouth', z: 4, extra: true,
+      svg: S(40, '<path d="M17 32C3 22 2 10 9 6c4-2 7 0 8 3 1-3 5-5 8-3 7 4 6 16-8 26z" fill="#FF6B8B" fill-opacity=".9"/><path d="M83 32C69 22 68 10 75 6c4-2 7 0 8 3 1-3 5-5 8-3 7 4 6 16-8 26z" fill="#FF6B8B" fill-opacity=".9"/>') },
     hat_ribbon: { slot: 'hat', ref: 'body', k: 0.52, ar: 0.62, ax: 0.5, ay: 0.8, to: 'hat', z: 5,
       svg: S(62, '<path d="M50 32C32 6 4 8 8 34c3 20 26 22 42-2z" fill="#FF8FA8"/><path d="M50 32C68 6 96 8 92 34c-3 20-26 22-42-2z" fill="#FF8FA8"/><path d="M20 22q8 4 12 14M80 22q-8 4-12 14" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/><circle cx="50" cy="32" r="9" fill="#FF5E86"/>') },
     face_glasses: { slot: 'face', ref: 'eye', k: 2.6, ar: 0.42, ax: 0.5, ay: 0.5, to: 'face', z: 4, maxBody: 0.86,
@@ -38,6 +42,13 @@
     bg_night: { slot: 'bg', css: 'linear-gradient(#1F2A5C,#4B5C9C)', deco: '<circle cx="78" cy="24" r="9" fill="#FFF3B0"/><circle cx="20" cy="18" r="1.6" fill="#FFF3B0"/><circle cx="40" cy="34" r="1.4" fill="#FFF3B0"/><circle cx="60" cy="14" r="1.6" fill="#FFF3B0"/><circle cx="26" cy="52" r="1.3" fill="#FFF3B0"/>' },
   };
   const SLOT_ITEMS = { hat: ['hat_party', 'hat_crown', 'hat_ribbon'], face: ['face_glasses', 'face_shades', 'face_mustache'], neck: ['neck_scarf', 'neck_bow', 'neck_medal'], hand: ['hand_balloon', 'hand_flowers', 'hand_star'], bg: ['bg_sky', 'bg_sunset', 'bg_night'] };
+  // 캐릭터당 액세서리 하나 원칙: 이미 가진 것과 겹치는 소품은 빼고, 모자라면 여분(extra)에서 채운다 (세모 이모=리본, 동그라미 아저씨=안경)
+  const EXCL = { wife: ['hat_ribbon'], dong_dad: ['face_glasses', 'face_shades'] };
+  GF.propsFor = function (slot, who) {
+    const key = who.split('.')[0], ex = EXCL[key] || [], list = SLOT_ITEMS[slot].filter((id) => !ex.includes(id));
+    Object.keys(P).filter((id) => P[id].slot === slot && P[id].extra && !ex.includes(id) && !list.includes(id)).forEach((id) => { if (list.length < 3) list.push(id); });
+    return list.slice(0, 3);
+  };
   GF.props = P; GF.propBGs = BGS; GF.propSlots = SLOT_ITEMS;
   GF.propEl = function (id, widthPx) {           // 소품 요소(가로 widthPx) — src 가 있으면 래스터 우선
     const p = P[id], d = document.createElement('div');

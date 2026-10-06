@@ -287,3 +287,13 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .dpitem > * { pointer-events: none; }
 .dpthumb { position: absolute; inset: 12%; border-radius: 18px; overflow: hidden; border: 3px solid #4A3030; box-sizing: border-box; }
 .propin { animation: propin .45s cubic-bezier(.3,1.6,.5,1); } @keyframes propin { from { transform: scale(.3) rotate(-14deg); opacity: 0 } }
+
+/* ---- 기차 만들기 ---- */
+.trtray { position: absolute; border-radius: 26px; background: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.16); touch-action: none; transition: transform .12s; z-index: 5; }
+.trtray.drag { transform: scale(1.1); z-index: 20; } .trtray.back { transition: left .45s cubic-bezier(.3,1.35,.5,1), top .45s cubic-bezier(.3,1.35,.5,1); }
+.trtray::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--hit, 64px)); height: max(100%, var(--hit, 64px)); transform: translate(-50%, -50%); }
+.trtray.hintglow { box-shadow: 0 0 0 9px rgba(255,201,51,.85), 0 6px 0 rgba(0,0,0,.16); }
+.trtray > * { pointer-events: none; }
+.trhole { position: absolute; inset: 4% 4% 22% 4%; border: 4px dashed rgba(58,46,57,.45); border-radius: 14px; background: rgba(255,255,255,.55); }
+.trgap.active .trhole { animation: ringp 1s ease-in-out infinite alternate; border-color: #FF8FA8; background: rgba(255,143,168,.2); }
+.trin { animation: propin .45s cubic-bezier(.3,1.6,.5,1); }

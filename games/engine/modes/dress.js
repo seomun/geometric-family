@@ -9,7 +9,7 @@ GF.mode('dress', {
     // ---- 사진 카드(캐릭터가 서는 곳) ----
     const cw = wide ? 330 : 300, chh = wide ? ctx.H - 28 : 330, cx0 = wide ? 36 : (ctx.W - cw) / 2, cy0 = wide ? 14 : 70;
     const card = GF.el('div', 'dresscard', root); card.style.cssText = `left:${cx0}px;top:${cy0}px;width:${cw}px;height:${chh}px;background:linear-gradient(#FFF6E5,#FFE9C7)`;
-    const asp = GF.aspect(who), ih = chh * 0.9, iw = ih * asp, ix = (cw - iw) / 2, iy = chh - ih - 4;
+    const asp = GF.aspect(who), ih = chh * 0.7, iw = ih * asp, ix = (cw - iw) / 2, iy = chh - ih - 8;     // 큰 소품(모자·지팡이)이 카드 밖으로 잘리지 않게 위·옆 여백을 둔다
     const deco = GF.el('div', 'abs', card); deco.style.cssText = 'inset:0;pointer-events:none';
     const ch = ctx.img(who); ch.style.cssText = `position:absolute;left:${ix}px;top:${iy}px;width:${iw}px;height:${ih}px;pointer-events:none`; card.appendChild(ch);
     const look = {}; let si = 0, finished = false, finger = null;
@@ -29,13 +29,13 @@ GF.mode('dress', {
     // ---- 자리 링 + 트레이 ----
     const ring = GF.el('div', 'dpring', card); ring.style.display = 'none';
     const trayItems = [];
-    const tsize = wide ? 104 : 92, tgap = 16;
+    const tsize = wide ? 108 : 100, tgap = wide ? 16 : 12;
     function fillTray() {
       trayItems.forEach((t) => t.el.remove()); trayItems.length = 0;
-      const slot = slots[si], list = GF.propSlots[slot];
+      const slot = slots[si], list = slot === 'bg' ? GF.propSlots.bg : GF.propsFor(slot, who);
       // 링: 이번 자리에 붙을 곳
       if (slot === 'bg') { ring.style.display = 'none'; } else {
-        const p = GF.props[list[0]], pt = base(p.to), r = Math.max(46, widthOf(p) * 0.55);
+        const p = GF.props[list[0]], pt = base(p.to), r = Math.max(46, Math.min(widthOf(p) * 0.55, 64));
         ring.style.display = 'block'; ring.style.cssText += `;left:${pt[0] - r}px;top:${pt[1] - r}px;width:${2 * r}px;height:${2 * r}px`;
       }
       list.forEach((id, i) => {
@@ -44,7 +44,7 @@ GF.mode('dress', {
         const el = GF.el('div', 'dpitem', root); el.dataset.item = id;
         el.style.cssText = `left:${x}px;top:${y}px;width:${tsize}px;height:${tsize}px`;
         if (GF.propBGs[id]) { const b = GF.propBGs[id]; el.innerHTML = `<div class="dpthumb" style="background:${b.css}"><svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%">${b.deco}</svg></div>`; }
-        else { const p = GF.props[id]; let w0 = tsize * 0.7; if (p.ar * w0 > tsize * 0.78) w0 = tsize * 0.78 / p.ar; const q = GF.propEl(id, w0); q.style.left = (tsize - w0) / 2 + 'px'; q.style.top = (tsize - w0 * p.ar) / 2 + 'px'; el.appendChild(q); }
+        else { const p = GF.props[id]; let w0 = tsize * 0.84; if (p.ar * w0 > tsize * 0.86) w0 = tsize * 0.86 / p.ar; const q = GF.propEl(id, w0); q.style.left = (tsize - w0) / 2 + 'px'; q.style.top = (tsize - w0 * p.ar) / 2 + 'px'; el.appendChild(q); }
         const tk = { el, id, home: { x, y } };
         GF.drag(el, {
           start() { if (finished) return; el.classList.remove('back'); el.classList.add('drag'); tk.moved = 0; ctx.sfx('tap'); },
@@ -64,7 +64,7 @@ GF.mode('dress', {
       if (GF.propBGs[id]) { card.style.background = GF.propBGs[id].css; deco.innerHTML = '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%">' + GF.propBGs[id].deco + '</svg>'; GF.burst(root, cx0 + cw / 2, cy0 + 40, 12); }
       else { const a = attach(id); GF.burst(root, cx0 + a.pt[0], cy0 + a.pt[1], 14); }
       GF.jump(ch); si++;
-      trayItems.forEach((t) => { t.el.style.pointerEvents = 'none'; t.el.style.opacity = t === tk ? 0 : 0.35; });
+      trayItems.forEach((t) => { t.el.style.pointerEvents = 'none'; t.el.style.opacity = 0; });      // 고른 뒤 트레이는 바로 사라진다(빈 칸이 남지 않게)
       if (si >= slots.length) ctx.timeout(snapshot, 500); else ctx.timeout(fillTray, 420);
     }
     function snapshot() {                                       // 찰칵! 사진
@@ -81,7 +81,7 @@ GF.mode('dress', {
       if (lv === 1) {
         fingerOff(); finger = GF.el('div', 'finger', root); const t = trayItems[0];
         finger.style.left = t.home.x + tsize / 2 + 'px'; finger.style.top = t.home.y + tsize / 2 + 'px'; finger.style.transition = 'left 1.1s ease-in-out, top 1.1s ease-in-out';
-        const tgt = slots[si] === 'bg' ? [cw / 2, 60] : base(GF.props[GF.propSlots[slots[si]][0]].to);
+        const tgt = slots[si] === 'bg' ? [cw / 2, 60] : base(GF.props[GF.propsFor(slots[si], who)[0]].to);
         requestAnimationFrame(() => requestAnimationFrame(() => { if (finger) { finger.style.left = cx0 + tgt[0] + 'px'; finger.style.top = cy0 + tgt[1] + 'px'; } }));
       } else ring.classList.add('glow2');
     });

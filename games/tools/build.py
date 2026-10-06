@@ -32,6 +32,12 @@ data['sounds'] = sounds
 audio = {}
 aud_bytes = 0
 files = set()
+LOOPS = {e['file'] for e in sounds.get('music', {}).values() if e.get('file') and e.get('loop', True)}
+def to_mp3(path):
+    import wave, lameenc
+    w = wave.open(str(path)); pcm = w.readframes(w.getnframes()); enc = lameenc.Encoder()
+    enc.set_bit_rate(112); enc.set_in_sample_rate(w.getframerate()); enc.set_channels(w.getnchannels()); enc.set_quality(2)
+    return bytes(enc.encode(pcm) + enc.flush())
 for grp in ('sfx', 'music', 'voice'):
     for e in sounds.get(grp, {}).values():
         if e.get('file'): files.add(e['file'])
@@ -39,9 +45,10 @@ for f in sorted(files):                      # 슬롯이 가리키는 파일만 
     path = G / f
     if not path.exists():
         print('  ! 없는 소리 파일:', f); continue
-    raw = path.read_bytes(); aud_bytes += len(raw)
-    mime = {'.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg'}.get(path.suffix, 'audio/wav')
-    audio[f] = b64(raw, mime)
+    raw = path.read_bytes(); mime = {'.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg'}.get(path.suffix, 'audio/wav')
+    if path.suffix == '.wav' and f not in LOOPS:                # 짧은 효과음·로고는 MP3(112kbps)로 줄여 넣는다(루프 음악은 이음새 때문에 WAV 유지)
+        raw, mime = to_mp3(path), 'audio/mpeg'
+    aud_bytes += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
 
 css = (G / 'engine' / 'gf.css').read_text(encoding='utf-8')

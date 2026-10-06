@@ -6,7 +6,7 @@ GF.mode('cake', {
   setup(root, cfg, ctx) {
     const wide = ctx.W > 400, L = Array.from({ length: cfg.layers }, (_, i) => i), deco = cfg.deco, candles = cfg.candles || 0;
     const COL = ['#FFF3C2', '#FFB3C7', '#C99A6B', '#BFE8C8'], WID = [236, 196, 156, 116], LH = 46;
-    const cx = wide ? 190 : ctx.W / 2, plateY = wide ? ctx.H - 56 : 336;
+    const cx = wide ? 190 : ctx.W / 2, plateY = wide ? ctx.H - 56 : 372;          // 접시는 모래밭 위(바다·배와 겹치지 않게)
     // ---- 접시 + 케이크 영역 ----
     const stage = GF.el('div', 'abs', root); stage.style.cssText = `left:0;top:0;width:${ctx.W}px;height:${ctx.H}px;pointer-events:none`;
     const plate = GF.el('div', 'abs', stage, '<svg viewBox="0 0 300 40" style="width:300px;height:40px"><ellipse cx="150" cy="22" rx="144" ry="16" fill="#E8E1EE" stroke="#4A3030" stroke-width="3.4"/><ellipse cx="150" cy="18" rx="118" ry="11" fill="#fff"/></svg>');

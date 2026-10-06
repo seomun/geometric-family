@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>기하학 가족 — 첫 스케치</title>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #ccc; }
+  .strip { max-width: 720px; margin: 0 auto; }
+  .cut { display: block; width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<div class="strip" id="strip"></div>
+<script>
+// 첫 소개 이미지 — "공책에 막 그려 보는 중" 손그림 스케치. 래스터 캐릭터·코드 캐릭터를 쓰지 않고 연필 선을 직접 만든다.
+// 원칙: 선은 두세 번 겹쳐 긋고 끝이 안 맞는다 · 색은 선 밖으로 삐져나오고 덜 칠한다 · 고친 흔적을 남긴다.
+const W = 720, H = 900;
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647; const j = (a) => (rnd() - 0.5) * 2 * a;
+const PEN = "font-family:'Nanum Pen Script',cursive", GA = "font-family:'Gaegu',cursive";
+const LEAD = '#3b3a38';
+
+// 흔들리는 선: 점 목록 → 잘게 나눠 흔들고, 끝은 살짝 지나치게(overshoot)
+function wobble(pts, amp = 2.2, close = false) {
+  const P = close ? [...pts, pts[0]] : pts; let out = [];
+  for (let i = 0; i < P.length - 1; i++) {
+    const [x1, y1] = P[i], [x2, y2] = P[i + 1], n = Math.max(3, Math.round(Math.hypot(x2 - x1, y2 - y1) / 18));
+    for (let k = 0; k < n; k++) { const t = k / n; out.push([x1 + (x2 - x1) * t + j(amp), y1 + (y2 - y1) * t + j(amp)]); }
+  }
+  const [lx, ly] = P[P.length - 1], [px, py] = P[P.length - 2];
+  out.push([lx + (lx - px) * 0.06 + j(amp), ly + (ly - py) * 0.06 + j(amp)]);
+  return 'M' + out.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' L');
+}
+// 연필로 두세 번 긋기
+const pencil = (pts, close = true, w = 3, passes = 3) => Array.from({ length: passes }, (_, i) =>
+  `<path d="${wobble(pts, 2 + i, close)}" fill="none" stroke="${LEAD}" stroke-width="${i ? w * 0.5 : w}" stroke-linecap="round" stroke-linejoin="round" opacity="${i ? 0.45 : 0.9}"/>`).join('');
+const circlePts = (cx, cy, r, n = 28, start = 0, sweep = 1.06) => Array.from({ length: n + 1 }, (_, i) => { const a = start + (i / n) * Math.PI * 2 * sweep; return [cx + Math.cos(a) * (r + j(2)), cy + Math.sin(a) * (r + j(2))]; });
+const pencilCircle = (cx, cy, r, w = 3) => [0, 1].map(i => `<path d="${wobble(circlePts(cx, cy, r + i * 3, 30, j(0.5)), 1.5)}" fill="none" stroke="${LEAD}" stroke-width="${i ? w * 0.5 : w}" stroke-linecap="round" opacity="${i ? 0.45 : 0.9}"/>`).join('');
+// 마커 칠: 지그재그 왕복선으로 덜 채운다 (선 밖으로 조금 삐져나감)
+function marker(x, y, w, h, color, cover = 0.8, angle = -12) {
+  let d = '', step = 13, rows = Math.floor(h * cover / step);
+  for (let r = 0; r < rows; r++) { const yy = y + r * step + j(3); d += `M${x + j(10)},${yy} L${x + w + j(12)},${yy + j(4) + 6} `; }
+  return `<path d="${d}" stroke="${color}" stroke-width="17" stroke-linecap="round" opacity=".55" transform="rotate(${angle} ${x + w / 2} ${y + h / 2})" style="mix-blend-mode:multiply"/>`;
+}
+const dot = (x, y, r = 5) => `<circle cx="${x + j(1)}" cy="${y + j(1)}" r="${r}" fill="${LEAD}"/>`;
+const smile = (x, y, w) => `<path d="M${x - w / 2},${y} q${w / 2},${w * 0.55} ${w},0" fill="none" stroke="${LEAD}" stroke-width="3" stroke-linecap="round"/>`;
+const pen = (x, y, t, size, rot = 0, fill = LEAD, font = PEN) => `<text x="${x}" y="${y}" font-size="${size}" style="${font}" fill="${fill}" transform="rotate(${rot} ${x} ${y})">${t}</text>`;
+const arrow = (x1, y1, x2, y2) => { const a = Math.atan2(y2 - y1, x2 - x1), h = 14;
+  return `<path d="M${x1},${y1} Q${(x1 + x2) / 2 + j(25)},${(y1 + y2) / 2 + j(25)} ${x2},${y2} M${x2},${y2} l${-h * Math.cos(a - 0.5)},${-h * Math.sin(a - 0.5)} M${x2},${y2} l${-h * Math.cos(a + 0.5)},${-h * Math.sin(a + 0.5)}" fill="none" stroke="${LEAD}" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>`; };
+const tape = (x, y, w, rot) => `<rect x="${x}" y="${y}" width="${w}" height="34" fill="#efe2b8" opacity=".75" transform="rotate(${rot} ${x + w / 2} ${y + 17})"/>`;
+
+// 모눈 종이
+let grid = '';
+for (let x = 30; x < W; x += 30) grid += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#bcd3e6" stroke-width="1" opacity=".6"/>`;
+for (let y = 30; y < H; y += 30) grid += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#bcd3e6" stroke-width="1" opacity=".6"/>`;
+
+const svg = `<svg class="cut" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+<defs><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0.3  0 0 0 0 0.28  0 0 0 0 0.25  0 0 0 0.08 0"/></filter></defs>
+<rect width="${W}" height="${H}" fill="#fbf8f0"/>${grid}
+<rect width="${W}" height="${H}" filter="url(#grain)"/>
+
+<!-- 지운 흔적 + 제목 고친 자국 -->
+<ellipse cx="200" cy="96" rx="120" ry="24" fill="#e9e4da" opacity=".7"/>
+${pen(120, 110, '도형 가족', 54, -3, '#8b8780')}
+<path d="M110,98 L300,88" stroke="${LEAD}" stroke-width="4" stroke-linecap="round"/>
+<path d="M112,106 L296,98" stroke="${LEAD}" stroke-width="2" opacity=".6"/>
+${pen(150, 205, '기하학 가족', 104, -2)}
+<path d="${wobble([[150, 225], [330, 220], [560, 228]], 3, false)}" stroke="#e8754a" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>
+${pen(470, 110, '← 이게 낫다!', 40, 4)}
+
+<!-- 네모 : 칠이 삐져나옴 -->
+${marker(78, 330, 175, 165, '#f2955f', 0.95, -8)}
+${pencil([[80, 320], [250, 316], [254, 488], [84, 492]])}
+${dot(140, 390)}${dot(195, 388)}${smile(168, 425, 34)}
+
+${pencil([[118, 492], [112, 545]], false, 3, 2)}${pencil([[215, 492], [222, 545]], false, 3, 2)}
+${pen(70, 600, '네모', 52, -4)}
+${pen(52, 645, '아이 넷 + 할머니', 30, -3)}${pen(80, 680, '(일곱!)', 30, -3)}
+
+<!-- 세모 : 반만 칠함, 리본 -->
+${marker(300, 380, 150, 70, '#f5cf4c', 0.9, 6)}
+${pencil([[300, 330], [460, 330], [380, 480]])}
+<path d="${wobble([[338, 320], [312, 296], [306, 334], [338, 320], [366, 296], [372, 334], [338, 320]], 1.5)}" fill="none" stroke="#e2577a" stroke-width="3.5"/>
+${dot(355, 368)}${dot(405, 366)}${smile(380, 395, 26)}
+<path d="M350,360 l-10,-6 M410,358 l10,-6" stroke="${LEAD}" stroke-width="2.5"/>
+${pencil([[370, 480], [365, 540]], false, 3, 2)}${pencil([[392, 478], [398, 540]], false, 3, 2)}
+${pen(330, 600, '세모', 52, 3)}
+${pen(318, 645, '싸우면 전쟁,', 30, 2)}${pen(322, 680, '좋으면 신혼', 30, 2)}
+
+<!-- 동그라미 : 아직 안 칠함, 안경 -->
+${pencilCircle(590, 405, 78)}
+<circle cx="565" cy="392" r="17" fill="none" stroke="${LEAD}" stroke-width="2.6"/><circle cx="615" cy="392" r="17" fill="none" stroke="${LEAD}" stroke-width="2.6"/><path d="M582,392 h16" stroke="${LEAD}" stroke-width="2.6"/>
+${dot(565, 393, 4)}${dot(615, 393, 4)}${smile(590, 430, 22)}
+${pencil([[570, 482], [566, 540]], false, 3, 2)}${pencil([[610, 482], [614, 540]], false, 3, 2)}
+${pen(520, 600, '동그라미', 52, -2)}
+${pen(530, 645, '완벽…한데', 30, -2)}${pen(545, 680, '외롭다', 30, -2)}
+${pen(600, 300, '색은 나중에', 26, 8, '#8b8780')}
+${arrow(640, 310, 625, 335)}
+
+<!-- 아래 메모 -->
+${pen(70, 745, '같은 일을 겪는 세 가족.', 46, -1)}
+<ellipse cx="380" cy="822" rx="290" ry="48" fill="none" stroke="#e8754a" stroke-width="4" transform="rotate(-2 380 822)" opacity=".85"/>
+${pen(130, 838, '당신은 어느 도형인가요?', 54, -1)}
+${pen(560, 885, '2026 가을, 첫 스케치', 24, 0, '#8b8780')}
+
+<!-- 마스킹테이프 · 지우개 가루 -->
+${tape(-12, 18, 120, -18)}${tape(612, 12, 130, 16)}
+${Array.from({ length: 14 }, () => `<circle cx="${470 + j(60)}" cy="${700 + j(25)}" r="${1.5 + rnd() * 2}" fill="#d9d2c6"/>`).join('')}
+</svg>`;
+document.getElementById('strip').innerHTML = svg;
+</script>
+</body>
+</html>

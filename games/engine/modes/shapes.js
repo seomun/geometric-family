@@ -67,7 +67,7 @@ GF.mode('shapes', {
         start() { if (tk.done) return; d.classList.remove('back'); d.classList.add('drag'); ctx.sfx('tap'); },
         move(x, y) { if (!tk.done) { d.style.left = x + 'px'; d.style.top = y + 'px'; } },
         end() {
-          if (tk.done) return; d.classList.remove('drag');
+          if (tk.done) return; d.classList.remove('drag'); ctx.sfx('drop');
           const cx = parseFloat(d.style.left) + tk.w / 2, cy = parseFloat(d.style.top) + tk.h / 2;
           let best = null, bd = 1e9;
           holes.forEach((h) => { const dd = Math.hypot(h.cx - cx, h.cy - cy); if (dd < bd && !h.filled) { bd = dd; best = h; } });

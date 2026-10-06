@@ -39,7 +39,7 @@ GF.mode('puzzle', {
         move(nx, ny) { if (!pc.done) { p.style.left = nx + 'px'; p.style.top = ny + 'px'; } },
         end() {
           if (pc.done) return;
-          p.classList.remove('drag');
+          p.classList.remove('drag'); ctx.sfx('drop');
           const cx = parseFloat(p.style.left) + cw / 2, cy = parseFloat(p.style.top) + chh / 2;
           let best = null, bd = 1e9;
           cells.forEach((c) => { const d = Math.hypot(c.cx - cx, c.cy - cy); if (d < bd && !c.filled) { bd = d; best = c; } });

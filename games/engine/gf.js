@@ -76,7 +76,40 @@
     tada() { [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.11, 0.3, 'triangle')); },
     page() { tone(330, 0, 0.1, 'sine', 0.15); },
   };
-  GF.sfx = (n) => { ensureAudio(); if (SFX[n]) SFX[n](); };
+  // 효과음: games/audio/*.wav (tools/make_audio.py 자작 합성). 파일이 없거나 아직 못 읽었으면 위의 합성음으로 대신한다.
+  const SOUND_FILES = ['tap', 'pick', 'drop', 'ok', 'celebrate', 'hmm', 'flip', 'star', 'page'];
+  const ALIAS = { no: 'hmm', tada: 'celebrate' };
+  const bufs = {}; let loading = false;
+  function loadSounds() {
+    if (loading || !ac) return; loading = true;
+    SOUND_FILES.forEach((n) => {
+      const src = (GF.data.audio && GF.data.audio[n]) || 'audio/' + n + '.wav';
+      fetch(src).then((r) => r.arrayBuffer()).then((a) => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).then((b) => { bufs[n] = b; }).catch(() => {});
+    });
+  }
+  GF.sfx = function (n) {
+    ensureAudio(); loadSounds(); n = ALIAS[n] || n;
+    if (!ac || GF.state.settings.mute) return;
+    const b = bufs[n];
+    if (!b) { if (SFX[n]) SFX[n](); return; }
+    const s = ac.createBufferSource(), g = ac.createGain();
+    s.buffer = b; s.playbackRate.value = 1 + (Math.random() - 0.5) * 0.05;     // 같은 소리가 반복돼도 지루하지 않게 ±2.5%
+    g.gain.value = GF.state.settings.vol; s.connect(g); g.connect(ac.destination); s.start();
+  };
+  // 배경음: 자장가 한 곡 루프. 음소거·앱이 백그라운드로 가면 멈춘다.
+  GF.bgm = {
+    el: null, started: false,
+    start() {
+      if (this.started) return; this.started = true;
+      const f = (GF.data.audio && GF.data.audio.bgm) || 'audio/bgm.wav';
+      this.el = new Audio(f); this.el.loop = true; this.sync();
+    },
+    sync() {
+      const e = this.el; if (!e) return;
+      e.volume = Math.min(1, 0.22 * GF.state.settings.vol);
+      if (GF.state.settings.mute || document.hidden) e.pause(); else e.play().catch(() => {});
+    },
+  };
   let voiceEl = null;
   GF.say = function (id) {                 // 녹음이 들어오면 data.voice[id] = 'voice/xx.mp3' 로 연결
     const f = GF.data.voice && GF.data.voice[id];
@@ -415,7 +448,7 @@
       const s = GF.state.settings, pn = Gate.p.firstChild;
       pn.innerHTML = '<h3>부모 메뉴</h3>';
       const l1 = el('div', 'line', pn, '<span>소리 크기</span>'), rg = el('input', '', l1); rg.type = 'range'; rg.min = 0; rg.max = 1; rg.step = 0.1; rg.value = s.vol;
-      rg.oninput = () => { s.vol = +rg.value; Store.save(); SFX.tap(); };
+      rg.oninput = () => { s.vol = +rg.value; Store.save(); GF.bgm.sync(); GF.sfx('tap'); };
       const l2 = el('div', 'line', pn, '<span>자막 보기</span>'), b2 = el('button', 't', l2, s.captions ? '켜짐' : '꺼짐');
       b2.onclick = () => { s.captions = !s.captions; b2.textContent = s.captions ? '켜짐' : '꺼짐'; Store.save(); };
       const l3 = el('div', 'line', pn, '<span>진행 지우기</span>'), b3 = el('button', 't', l3, '지우기'); let armed = false;
@@ -438,6 +471,7 @@
     GF.data = await loadData(); GF.data.voice = GF.data.voice || {};
     if (GF.data.base != null) GF.base = GF.data.base;
     GF.state = Store.load();
+    ensureAudio(); loadSounds();
     fit(); window.addEventListener('resize', fit);
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     // 상단 바
@@ -447,10 +481,11 @@
       if (!armed) { armed = true; this.classList.add('warn'); GF.sfx('tap'); setTimeout(() => { armed = false; this.classList.remove('warn'); }, 1500); return; }
       armed = false; this.classList.remove('warn'); GF.home();
     };
-    $('b-sound').onclick = () => { GF.state.settings.mute = !GF.state.settings.mute; Store.save(); refreshBar(); GF.sfx('tap'); };
+    $('b-sound').onclick = () => { GF.state.settings.mute = !GF.state.settings.mute; Store.save(); refreshBar(); GF.bgm.sync(); GF.sfx('tap'); };
     // 부모 패널
     const p = el('div', 'parent', safeEl); el('div', 'panel', p); Gate.p = p;
-    document.addEventListener('pointerdown', ensureAudio, { once: true });
+    document.addEventListener('pointerdown', () => { ensureAudio(); loadSounds(); GF.bgm.start(); }, { once: true });
+    document.addEventListener('visibilitychange', () => GF.bgm.sync());
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') GF.back(); });
     window.addEventListener('popstate', () => GF.back());
     GF.screens.home || 0; GF.home();

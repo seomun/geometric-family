@@ -39,7 +39,7 @@ GF.mode('shadow', {
         move(x, y) { if (!tk.done) { t.style.left = x + 'px'; t.style.top = y + 'px'; } },
         end() {
           if (tk.done) return;
-          t.classList.remove('drag');
+          t.classList.remove('drag'); ctx.sfx('drop');
           const cx = parseFloat(t.style.left) + bw / 2, cy = parseFloat(t.style.top) + bh / 2;
           let best = null, bd = 1e9;
           slots.forEach((s) => { const d = Math.hypot(s.cx - cx, s.cy - cy); if (d < bd && !s.filled) { bd = d; best = s; } });

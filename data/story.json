@@ -797,5 +797,136 @@
     "sfx": "snd_gourd"
    }
   ]
+ },
+ "ch8": {
+  "pro": [
+   {
+    "bg": "forest",
+    "voice": "c8_p1",
+    "text": "기차가 깊은 도깨비 숲을 지나요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 120,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 610,
+      "h": 250
+     }
+    ]
+   },
+   {
+    "bg": "forest",
+    "voice": "c8_p2",
+    "text": "어? 귀여운 도깨비가 방망이를 들고 나타났어요!",
+    "chars": [
+     {
+      "id": "art.dokkaebi",
+      "x": 110,
+      "y": 600,
+      "h": 260
+     },
+     {
+      "id": "baby.surprise",
+      "x": 250,
+      "y": 610,
+      "h": 170
+     }
+    ],
+    "bubble": {
+     "type": "bang",
+     "at": 1
+    }
+   },
+   {
+    "bg": "forest",
+    "voice": "c8_p3",
+    "text": "도깨비 방망이 뚝딱! 소풍 갈 모습을 예쁘게 꾸며 줄까요?",
+    "chars": [
+     {
+      "id": "art.dokkaebi",
+      "x": 100,
+      "y": 600,
+      "h": 240
+     },
+     {
+      "id": "wife.joy",
+      "x": 240,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    },
+    "sfx": "tukdak"
+   }
+  ],
+  "epi": [
+   {
+    "bg": "forest",
+    "voice": "c8_e1",
+    "text": "뚝딱! 모두 변신 성공!",
+    "chars": [
+     {
+      "id": "wife.wink",
+      "x": 90,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "baby.joy",
+      "x": 190,
+      "y": 610,
+      "h": 150
+     },
+     {
+      "id": "husband.love",
+      "x": 290,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "forest",
+    "voice": "c8_e2",
+    "text": "찰칵! 가족사진이 한 장 생겼어요.",
+    "chars": [
+     {
+      "id": "art.dokkaebi",
+      "x": 100,
+      "y": 600,
+      "h": 230
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 210,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "baby.joy",
+      "x": 300,
+      "y": 610,
+      "h": 150
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 2
+    },
+    "sfx": "shutter"
+   }
+  ]
  }
 }

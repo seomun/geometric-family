@@ -150,6 +150,18 @@
    "vol": 1.0,
    "jitter": 0.05,
    "desc": "7장 — 박수 짝짝짝"
+  },
+  "shutter": {
+   "file": "audio/shutter.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "8장 꾸미기 — 찰칵(사진)"
+  },
+  "tukdak": {
+   "file": "audio/tukdak.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "8장 — 도깨비 방망이 뚝딱"
   }
  },
  "alias": {
@@ -330,6 +342,26 @@
   "voice_c7_e2": {
    "file": null,
    "text": "박이 쩍! 반짝반짝 보물이 가득!"
+  },
+  "voice_c8_p1": {
+   "file": null,
+   "text": "기차가 깊은 도깨비 숲을 지나요."
+  },
+  "voice_c8_p2": {
+   "file": null,
+   "text": "어? 귀여운 도깨비가 방망이를 들고 나타났어요!"
+  },
+  "voice_c8_p3": {
+   "file": null,
+   "text": "도깨비 방망이 뚝딱! 소풍 갈 모습을 예쁘게 꾸며 줄까요?"
+  },
+  "voice_c8_e1": {
+   "file": null,
+   "text": "뚝딱! 모두 변신 성공!"
+  },
+  "voice_c8_e2": {
+   "file": null,
+   "text": "찰칵! 가족사진이 한 장 생겼어요."
   }
  }
 }

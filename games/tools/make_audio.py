@@ -147,6 +147,16 @@ def s_door():                       # 문 열림 "딩동": 맑은 종 두 음(�
     place(b, glock(hz('C6'), 1.3), 0.30, 1.0); place(b, marimba(hz('C5'), 0.4), 0.30, 0.3)
     return finish(reverb(b, 0.24, 0.6), 0.8)
 
+def s_shutter():                    # 찰칵: 부드러운 셔터 두 번(딸깍 + 철컥) + 작은 종소리
+    n1 = int(0.05 * SR); t1 = np.arange(n1) / SR
+    c1 = hp(rng.standard_normal(n1), 1500) * np.exp(-t1 / 0.012) * 0.8 + np.sin(2 * np.pi * 900 * t1) * np.exp(-t1 / 0.01) * 0.3
+    b = buf(0.9); place(b, c1, 0.0, 1.0); place(b, c1 * 0.8, 0.09, 1.0); place(b, glock(hz('G6'), 0.6), 0.12, 0.25)
+    return finish(reverb(b, 0.14, 0.4), 0.75)
+def s_tukdak():                     # 뚝딱: 나무 마림바 두 번 두드리고 반짝 스윽
+    b = buf(1.4); place(b, marimba(hz('D5'), 0.3), 0.0, 1.0); place(b, marimba(hz('G5'), 0.3), 0.18, 1.0)
+    for i, nm in enumerate(['C6', 'E6', 'G6', 'C7']): place(b, glock(hz(nm), 0.8), 0.42 + i * 0.08, 0.4)
+    return finish(reverb(b, 0.22, 0.6), 0.8)
+
 # ---- 7장 소리 찾기: 8종 (제비·종·북·기적·물방울·박·바람·박수). 기적·바람은 기존 파일을 슬롯으로 재사용 ----
 def _bp(x, lo, hi, order=2):
     b, a = butter(order, [lo / (SR / 2), hi / (SR / 2)], btype='band'); return lfilter(b, a, x)
@@ -215,7 +225,7 @@ def bgm():
     return b / (np.abs(b).max() + 1e-9) * 0.7
 
 if __name__ == '__main__':
-    for name, fn in [('tap', s_tap), ('pick', s_pick), ('drop', s_drop), ('ok', s_ok), ('celebrate', s_celebrate), ('hmm', s_hmm), ('flip', s_flip), ('star', s_star), ('page', s_page), ('wind', s_wind), ('door', s_door), ('note1', s_note('C5')), ('note2', s_note('D5')), ('note3', s_note('E5')), ('note4', s_note('G5')), ('note5', s_note('A5')), ('whistle', s_whistle), ('snd_swallow', s_swallow), ('snd_bell', s_bell), ('snd_drum', s_drum), ('snd_drop', s_drop), ('snd_gourd', s_gourd), ('snd_clap', s_clap)]:
+    for name, fn in [('tap', s_tap), ('pick', s_pick), ('drop', s_drop), ('ok', s_ok), ('celebrate', s_celebrate), ('hmm', s_hmm), ('flip', s_flip), ('star', s_star), ('page', s_page), ('wind', s_wind), ('door', s_door), ('note1', s_note('C5')), ('note2', s_note('D5')), ('note3', s_note('E5')), ('note4', s_note('G5')), ('note5', s_note('A5')), ('whistle', s_whistle), ('snd_swallow', s_swallow), ('snd_bell', s_bell), ('snd_drum', s_drum), ('snd_drop', s_drop), ('snd_gourd', s_gourd), ('snd_clap', s_clap), ('shutter', s_shutter), ('tukdak', s_tukdak)]:
         save(name, fn())
     save('bgm', bgm(), 22050)
     try:                                                    # 7장 소리 8종 묶음(순서: 제비·종·북·기적·물방울·박·바람·박수, 각 두 번)

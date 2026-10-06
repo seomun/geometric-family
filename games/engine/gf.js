@@ -167,6 +167,10 @@
   const G = (s) => (GF.safeWide ? '<g transform="translate(0 -170)">' + s + '</g>' : s);
   const railsG = (y) => band(y, '#6B5F70', 4) + band(y + 16, '#6B5F70', 4) + rep(() => Array.from({ length: 9 }, (_, i) => '<rect x="' + (i * 40 + 6) + '" y="' + (y - 4) + '" width="22" height="26" rx="3" fill="#8A5A3B"/>').join('')).replace(/<rect/g, '<rect opacity=".9"');
   const BG = {
+    forest: () => sky('#A8DDB0', '#EAF7D6') + '<circle cx="290" cy="80" r="30" fill="#FFF3B0" opacity=".9"/>' + cloud(80, 90, .9)
+      + G(rep(() => [[20, 430, 70], [120, 410, 90], [240, 440, 64], [330, 420, 80]].map((t) => '<rect x="' + (t[0] - 9) + '" y="' + t[1] + '" width="18" height="' + (560 - t[1]) + '" fill="#8A5A3B"/><circle cx="' + t[0] + '" cy="' + t[1] + '" r="' + t[2] + '" fill="#5FAF6B" stroke="#3E8A4A" stroke-width="3"/>').join('') + hill(560, '#7FBF5A', [180, 330, 70])) + band(560, '#7FBF5A')
+        + [[40, 590], [140, 598], [250, 592], [320, 600]].map((m) => '<g transform="translate(' + m[0] + ' ' + m[1] + ')"><rect x="-3" y="0" width="6" height="12" fill="#FFF3E0"/><path d="M-12 2q12-18 24 0z" fill="#FF6B6B"/><circle cx="-4" cy="-4" r="2" fill="#fff"/><circle cx="4" cy="-6" r="2" fill="#fff"/></g>').join('') + flowers(606))
+      + [[60, 300], [190, 250], [300, 330]].map((f, i) => '<g class="bob" style="animation-delay:-' + i + 's"><circle cx="' + f[0] + '" cy="' + f[1] + '" r="9" fill="#FFF3B0" opacity=".35"/><circle cx="' + f[0] + '" cy="' + f[1] + '" r="3.5" fill="#FFE27A"/></g>').join(''),
     station: () => sky('#BFE8FF', '#FFF1DA') + '<circle cx="300" cy="86" r="34" fill="#FFE27A"/>' + cloud(70, 90, 1) + cloud(220, 150, .8)
       + G(rep(() => hill(470, '#C7E6B0', [180, 330, 80])) + '<g><rect x="150" y="372" width="200" height="150" rx="18" fill="#8FD3F4" stroke="#4A3030" stroke-width="4"/><rect x="150" y="440" width="200" height="14" fill="#FF8FA8"/>' + [0, 1, 2].map((i) => '<rect x="' + (170 + i * 60) + '" y="392" width="44" height="40" rx="8" fill="#fff" stroke="#4A3030" stroke-width="3"/>').join('') + '</g>'
         + '<g><rect x="42" y="340" width="8" height="190" fill="#8A5A3B"/><circle cx="46" cy="330" r="26" fill="#fff" stroke="#4A3030" stroke-width="4"/><path d="M46 330V314M46 330L58 336" stroke="#4A3030" stroke-width="4" stroke-linecap="round"/></g>'
@@ -561,6 +565,7 @@
           ctx.timeout(() => finish(r, res, def), 1500);
         },
       };
+      r.querySelectorAll('.fly').forEach((e) => { e.style.display = 'none'; });          // 놀이 영역에서는 나비를 숨긴다
       area.addEventListener('pointerdown', () => { ensureAudio(); armHint(); }, true);
       mode.setup(area, cfg, ctx);
     },
@@ -653,7 +658,7 @@
   /* ---------------- 부팅 ---------------- */
   async function loadData() {
     if (window.GF_DATA) return window.GF_DATA;
-    const names = ['chars', 'stages', 'story', 'stickers', 'sounds'], out = {};
+    const names = ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors'], out = {};
     await Promise.all(names.map(async (n) => { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); }));
     return out;
   }

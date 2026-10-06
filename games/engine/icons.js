@@ -19,6 +19,13 @@
       + `<g class="hand-r" style="transform-origin:58px 82px"><g transform="rotate(-14 70 60)"><rect x="56" y="52" width="30" height="34" rx="12" fill="#FFC896"/><rect x="79" y="26" width="7" height="32" rx="3.5" fill="#FFC896"/><rect x="71" y="20" width="7" height="38" rx="3.5" fill="#FFC896"/><rect x="63" y="22" width="7" height="36" rx="3.5" fill="#FFC896"/><rect x="55" y="30" width="7" height="30" rx="3.5" fill="#FFC896"/><ellipse cx="88" cy="68" rx="6" ry="11" fill="#FFC896" transform="rotate(-20 88 68)"/></g></g>`
       + `<g class="burst" fill="none" stroke="#FFC933" stroke-width="4"><path d="M50 6v10M32 12l5 8M68 12l-5 8"/></g>`),
   };
+  // 도깨비(귀여운 외뿔): 그림책용 정지 그림
+  const dok = `<g stroke="${K}" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><path d="M44 14Q50 -2 56 14z" fill="#FFD36B"/><ellipse cx="50" cy="52" rx="30" ry="32" fill="#7FD6C2"/><path d="M22 40Q14 26 24 22M78 40Q86 26 76 22" fill="#7FD6C2"/>`
+    + `<ellipse cx="38" cy="48" rx="7" ry="9" fill="#fff"/><ellipse cx="62" cy="48" rx="7" ry="9" fill="#fff"/><circle cx="39" cy="50" r="4" fill="${K}"/><circle cx="61" cy="50" r="4" fill="${K}"/><circle cx="40" cy="48" r="1.4" fill="#fff" stroke="none"/><circle cx="62" cy="48" r="1.4" fill="#fff" stroke="none"/>`
+    + `<path d="M40 64q10 10 20 0" fill="#fff"/><path d="M45 64l2 5 3-5M50 64l2 5 3-5" fill="#fff" stroke-width="2.4"/><circle cx="29" cy="60" r="5" fill="#FF8FA8" stroke="none" opacity=".8"/><circle cx="71" cy="60" r="5" fill="#FF8FA8" stroke="none" opacity=".8"/>`
+    + `<path d="M26 82q-10 6-8 16h14z" fill="#7FD6C2"/><path d="M74 82q10 6 8 16H68z" fill="#7FD6C2"/><rect x="30" y="80" width="40" height="20" rx="8" fill="#FF8FA8"/>`
+    + `<path d="M80 62L94 20" stroke="#C98F5A" stroke-width="7" fill="none"/><circle cx="95" cy="16" r="9" fill="#C98F5A"/><path d="M90 10l-4-6M100 14l6-3M96 24l5 5" stroke="#8A5A3B" fill="none"/></g>`;
+  GF.art['art.dokkaebi'] = { src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 104" width="330" height="312">${dok}</svg>`), w: 110, h: 104 };
   GF.icons = ICONS;
   // 그림책용 큰 그림(제비·박): 움직임 없이 정지 상태로 art.* 에 등록
   ['swallow', 'gourd'].forEach((k) => {

@@ -79,6 +79,14 @@ async function solveSoundfind(p, wrongFirst) {
   if (wrongFirst) { const w = info.cards.find((c) => c.id !== info.target); await p.mouse.click(w.x, w.y); await wait(p, 2400); }
   const t = info.cards.find((c) => c.id === info.target); await p.mouse.click(t.x, t.y);
 }
+async function solveDress(p) {
+  await wait(p, 600);
+  for (let k = 0; k < 8; k++) {
+    const item = await p.$('.playarea .dpitem[data-item]:not([style*="pointer-events: none"])');
+    if (!item) { await wait(p, 300); if (!(await p.$('.dpitem'))) break; continue; }
+    const b = await item.boundingBox(); await p.mouse.click(b.x + b.width / 2, b.y + b.height / 2); await wait(p, 900);
+  }
+}
 async function playStage(p, mode, tag) {
   for (let r = 0; r < 3; r++) {
     await wait(p, 500);
@@ -88,6 +96,7 @@ async function playStage(p, mode, tag) {
     else if (mode === 'puzzle') await solvePuzzle(p);
     else if (mode === 'shapes') await solveShapes(p);
     else if (mode === 'sequence') await solveSequence(p);
+    else if (mode === 'dress') await solveDress(p);
     else if (mode === 'soundfind') await solveSoundfind(p, r === 0 && tag.endsWith('A'));
     else if (mode === 'paint') { await solvePaint(p, tag); await shot(p, tag + '_painted' + r); await p.click('.playarea .big', { force: true }); }
     if (r === 0 || (mode === 'paint' && r < 3)) await shot(p, tag + '_solved' + r);
@@ -107,8 +116,8 @@ async function playStage(p, mode, tag) {
   await p.goto(URL); await wait(p, 1200); await shot(p, 'home');
   await p.click('.homebtns .card:nth-child(1)'); await wait(p, 500); await shot(p, 'shelf');
   await p.click('.cover[data-book="1"]'); await wait(p, 500); await shot(p, 'map');
-  for (const ch of [1, 2, 3, 4, 5, 6, 7]) {
-    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence', 'soundfind'][ch - 1];
+  for (const ch of [1, 2, 3, 4, 5, 6, 7, 8]) {
+    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence', 'soundfind', 'dress'][ch - 1];
     if (ch === 6) { await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.go('shelf'); GF.go('map', { book: 2 }); }); await wait(p, 600); await shot(p, 'map2'); }
     await wait(p, 400);
     const nodes = await p.$$('.node'); await nodes[(ch - 1) % 5].click(); await wait(p, 600);

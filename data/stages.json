@@ -604,5 +604,100 @@
     ]
    }
   ]
+ },
+ "ch8": {
+  "mode": "dress",
+  "bg": "forest",
+  "heroes": [
+   "wife.wink",
+   "baby.joy",
+   "husband.love"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "who": "baby.joy",
+      "slots": [
+       "hat"
+      ]
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "slots": [
+       "hat"
+      ]
+     },
+     {
+      "who": "nemo_kids.kid2",
+      "slots": [
+       "hat"
+      ]
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "who": "wife.joy",
+      "slots": [
+       "hat",
+       "face",
+       "hand"
+      ]
+     },
+     {
+      "who": "husband.joy",
+      "slots": [
+       "hat",
+       "face",
+       "hand"
+      ]
+     },
+     {
+      "who": "nemo_mom.joy",
+      "slots": [
+       "hat",
+       "face",
+       "hand"
+      ]
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "who": "nemo_dad.joy",
+      "slots": [
+       "hat",
+       "face",
+       "neck",
+       "hand",
+       "bg"
+      ]
+     },
+     {
+      "who": "nemo_kids.kid3",
+      "slots": [
+       "hat",
+       "face",
+       "neck",
+       "hand",
+       "bg"
+      ]
+     },
+     {
+      "who": "baby.joy",
+      "slots": [
+       "hat",
+       "face",
+       "neck",
+       "hand",
+       "bg"
+      ]
+     }
+    ]
+   }
+  ]
  }
 }

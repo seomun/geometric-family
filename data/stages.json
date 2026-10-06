@@ -515,5 +515,94 @@
     ]
    }
   ]
+ },
+ "ch7": {
+  "mode": "soundfind",
+  "bg": "field",
+  "heroes": [
+   "wife.joy",
+   "baby.surprise",
+   "nemo_dad.love"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "cards": [
+       "swallow",
+       "drum"
+      ],
+      "learn": true
+     },
+     {
+      "cards": [
+       "bell",
+       "gourd"
+      ],
+      "learn": true
+     },
+     {
+      "cards": [
+       "train",
+       "clap"
+      ],
+      "learn": true
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "cards": [
+       "swallow",
+       "bell",
+       "drum"
+      ]
+     },
+     {
+      "cards": [
+       "drop",
+       "train",
+       "clap"
+      ]
+     },
+     {
+      "cards": [
+       "gourd",
+       "wind",
+       "swallow"
+      ]
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "cards": [
+       "bell",
+       "drop",
+       "swallow",
+       "clap"
+      ]
+     },
+     {
+      "cards": [
+       "drum",
+       "gourd",
+       "clap",
+       "train"
+      ]
+     },
+     {
+      "cards": [
+       "wind",
+       "train",
+       "swallow",
+       "drop"
+      ]
+     }
+    ]
+   }
+  ]
  }
 }

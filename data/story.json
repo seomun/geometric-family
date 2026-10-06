@@ -661,5 +661,141 @@
     "sfx": "whistle"
    }
   ]
+ },
+ "ch7": {
+  "pro": [
+   {
+    "bg": "field",
+    "voice": "c7_p1",
+    "text": "기차가 달려 달려, 시골 들판에 도착했어요.",
+    "chars": [
+     {
+      "id": "wife.joy",
+      "x": 80,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "baby.joy",
+      "x": 180,
+      "y": 610,
+      "h": 150
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 280,
+      "y": 610,
+      "h": 240
+     }
+    ]
+   },
+   {
+    "bg": "field",
+    "voice": "c7_p2",
+    "text": "창밖에서 제비가 박씨 하나를 떨어뜨렸어요!",
+    "chars": [
+     {
+      "id": "art.swallow",
+      "x": 110,
+      "y": 380,
+      "h": 150
+     },
+     {
+      "id": "baby.surprise",
+      "x": 230,
+      "y": 610,
+      "h": 200
+     }
+    ],
+    "bubble": {
+     "type": "bang",
+     "at": 1
+    }
+   },
+   {
+    "bg": "field",
+    "voice": "c7_p3",
+    "text": "어디서 나는 소리일까요? 귀를 쫑긋! 소리를 찾아봐요.",
+    "chars": [
+     {
+      "id": "wife.worry",
+      "x": 110,
+      "y": 610,
+      "h": 280
+     },
+     {
+      "id": "baby.good",
+      "x": 240,
+      "y": 610,
+      "h": 170
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "field",
+    "voice": "c7_e1",
+    "text": "소리를 찾았어요! 박씨가 쏙, 땅에 심겼어요.",
+    "chars": [
+     {
+      "id": "nemo_dad.joy",
+      "x": 90,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "baby.joy",
+      "x": 200,
+      "y": 610,
+      "h": 160
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 290,
+      "y": 610,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 0
+    }
+   },
+   {
+    "bg": "field",
+    "voice": "c7_e2",
+    "text": "박이 쩍! 반짝반짝 보물이 가득!",
+    "chars": [
+     {
+      "id": "art.gourd",
+      "x": 130,
+      "y": 600,
+      "h": 220
+     },
+     {
+      "id": "baby.surprise",
+      "x": 250,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "wife.joy",
+      "x": 320,
+      "y": 610,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 1
+    },
+    "sfx": "snd_gourd"
+   }
+  ]
  }
 }

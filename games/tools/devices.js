@@ -26,6 +26,7 @@ const wait = (p, ms) => p.waitForTimeout(ms);
     await p.evaluate(() => { GF.go('map', { book: 2 }); }); await wait(p, 700); await shot('map2');
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch6', k: 2, id: 'c6C' }); }); await wait(p, 3200); await shot('sequence');
     await p.evaluate(() => { GF.state.seen.ch6 = 1; GF.stack = []; GF.go('home'); GF.go('book', { ch: 'ch6', part: 'pro', replay: true }); }); await wait(p, 800); await shot('book6');
+    await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch7', k: 2, id: 'c7C' }); }); await wait(p, 2600); await shot('soundfind');
     console.log(name, w + 'x' + h, errs.length ? 'ERR ' + errs.join('|') : 'ok');
     await p.close();
   }

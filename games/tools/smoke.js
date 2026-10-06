@@ -73,6 +73,12 @@ async function solveSequence(p) {
     const pd = info.pads[info.seq[k]]; await p.mouse.click(pd.x, pd.y); await wait(p, 450);
   }
 }
+async function solveSoundfind(p, wrongFirst) {
+  await p.waitForFunction(() => document.querySelector('.playarea').__ready === true, null, { timeout: 15000 });
+  const info = await p.evaluate(() => { const a = document.querySelector('.playarea'); return { target: a.__target, cards: [...a.querySelectorAll('.sfcard')].map((e) => { const r = e.getBoundingClientRect(); return { id: e.dataset.card, x: r.x + r.width / 2, y: r.y + r.height / 2 }; }) }; });
+  if (wrongFirst) { const w = info.cards.find((c) => c.id !== info.target); await p.mouse.click(w.x, w.y); await wait(p, 2400); }
+  const t = info.cards.find((c) => c.id === info.target); await p.mouse.click(t.x, t.y);
+}
 async function playStage(p, mode, tag) {
   for (let r = 0; r < 3; r++) {
     await wait(p, 500);
@@ -82,6 +88,7 @@ async function playStage(p, mode, tag) {
     else if (mode === 'puzzle') await solvePuzzle(p);
     else if (mode === 'shapes') await solveShapes(p);
     else if (mode === 'sequence') await solveSequence(p);
+    else if (mode === 'soundfind') await solveSoundfind(p, r === 0 && tag.endsWith('A'));
     else if (mode === 'paint') { await solvePaint(p, tag); await shot(p, tag + '_painted' + r); await p.click('.playarea .big', { force: true }); }
     if (r === 0 || (mode === 'paint' && r < 3)) await shot(p, tag + '_solved' + r);
     if (r === 0 && mode !== 'paint') { await wait(p, 1100); await shot(p, tag + '_celebrate'); }
@@ -100,8 +107,8 @@ async function playStage(p, mode, tag) {
   await p.goto(URL); await wait(p, 1200); await shot(p, 'home');
   await p.click('.homebtns .card:nth-child(1)'); await wait(p, 500); await shot(p, 'shelf');
   await p.click('.cover[data-book="1"]'); await wait(p, 500); await shot(p, 'map');
-  for (const ch of [1, 2, 3, 4, 5, 6]) {
-    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence'][ch - 1];
+  for (const ch of [1, 2, 3, 4, 5, 6, 7]) {
+    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence', 'soundfind'][ch - 1];
     if (ch === 6) { await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.go('shelf'); GF.go('map', { book: 2 }); }); await wait(p, 600); await shot(p, 'map2'); }
     await wait(p, 400);
     const nodes = await p.$$('.node'); await nodes[(ch - 1) % 5].click(); await wait(p, 600);

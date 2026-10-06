@@ -248,3 +248,29 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .shelfdots { position: absolute; left: 0; right: 0; display: flex; justify-content: center; gap: 12px; z-index: 3; }
 .shelfdots i { width: 14px; height: 14px; border-radius: 50%; background: rgba(58,46,57,.25); }
 .shelfdots i.on { background: var(--pink); }
+
+/* ---- 소리 찾기 ---- */
+.sfcard { position: absolute; border-radius: 28px; background: #fff; border: 5px solid #FFE0B5; box-shadow: 0 6px 0 rgba(0,0,0,.16); touch-action: none; transition: transform .12s, background .15s; }
+.sfcard::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--hit, 64px)); height: max(100%, var(--hit, 64px)); transform: translate(-50%, -50%); }
+.sfcard .sfsvg { position: absolute; left: 8%; top: 8%; width: 84%; height: 84%; pointer-events: none; }
+.sfcard.right { background: #FFF3C2; border-color: #6CCB8A; transform: scale(1.08); }
+.sfcard.hintglow { box-shadow: 0 0 0 9px rgba(255,201,51,.85), 0 6px 0 rgba(0,0,0,.16); }
+.sfspeaker { position: absolute; background: var(--pink); z-index: 4; }
+.sfspeaker.pulse { animation: spk .5s ease 2; } @keyframes spk { 50% { transform: scale(1.16) } }
+.sfsvg .spark, .sfsvg .burst { opacity: 0; }
+.sf.play .wing { animation: wingflap .22s ease-in-out 8 alternate; } @keyframes wingflap { from { transform: rotate(6deg) } to { transform: rotate(-40deg) } }
+.sf.play .sw-all { animation: hopx 1.5s ease-in-out; } @keyframes hopx { 0%, 100% { transform: translateY(0) } 25% { transform: translateY(-9px) } 50% { transform: translateY(0) } 75% { transform: translateY(-7px) } }
+.sf.play .bell { animation: swingb .42s ease-in-out 4 alternate; } @keyframes swingb { from { transform: rotate(-17deg) } to { transform: rotate(17deg) } }
+.sf.play .drum { animation: boom .24s ease-out 5; } @keyframes boom { 0% { transform: scale(1.09, .93) } 100% { transform: scale(1) } }
+.sf.play .stick-l { animation: stl .24s ease-in-out 5 alternate; } @keyframes stl { to { transform: rotate(24deg) } }
+.sf.play .stick-r { animation: str .24s ease-in-out 5 alternate; } @keyframes str { to { transform: rotate(-24deg) } }
+.sf.play .train { animation: chug .26s ease-in-out 6 alternate; } @keyframes chug { from { transform: translateX(-3px) } to { transform: translateX(3px) } }
+.sf.play .steam circle { animation: puff 1.2s ease-out; } @keyframes puff { from { transform: translateY(6px) scale(.5); opacity: 1 } to { transform: translateY(-16px) scale(1.5); opacity: 0 } }
+.sf.play .ripple { animation: rip 1.1s ease-out 2; transform-origin: 50px 90px; } .sf.play .ripple.r2 { animation-delay: .3s; } @keyframes rip { 0% { transform: scale(.4); opacity: 1 } 100% { transform: scale(2.3); opacity: 0 } }
+.sf.play .g-left { animation: openl .7s ease-out forwards; transform-origin: 38px 80px; } @keyframes openl { to { transform: translate(-15px, 0) rotate(-12deg) } }
+.sf.play .g-right { animation: openr .7s ease-out forwards; transform-origin: 62px 80px; } @keyframes openr { to { transform: translate(15px, 0) rotate(12deg) } }
+.sf.play .spark { animation: sparkin .6s .1s forwards; } @keyframes sparkin { to { opacity: 1 } }
+.sf.play .swirl { animation: swirlx .5s ease-in-out 4 alternate; } @keyframes swirlx { from { transform: translateX(-7px) } to { transform: translateX(7px) } }
+.sf.play .hand-l { animation: clapl .19s ease-in-out 9 alternate; } @keyframes clapl { to { transform: rotate(16deg) } }
+.sf.play .hand-r { animation: clapr .19s ease-in-out 9 alternate; } @keyframes clapr { to { transform: rotate(-16deg) } }
+.sf.play .burst { animation: bst .19s ease-in-out 9 alternate; } @keyframes bst { to { opacity: 1 } }

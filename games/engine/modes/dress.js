@@ -9,7 +9,7 @@ GF.mode('dress', {
     // ---- 사진 카드(캐릭터가 서는 곳) ----
     const cw = wide ? 330 : 300, chh = wide ? ctx.H - 28 : 330, cx0 = wide ? 36 : (ctx.W - cw) / 2, cy0 = wide ? 14 : 70;
     const card = GF.el('div', 'dresscard', root); card.style.cssText = `left:${cx0}px;top:${cy0}px;width:${cw}px;height:${chh}px;background:linear-gradient(#FFF6E5,#FFE9C7)`;
-    const asp = GF.aspect(who), ih = chh * 0.7, iw = ih * asp, ix = (cw - iw) / 2, iy = chh - ih - 8;     // 큰 소품(모자·지팡이)이 카드 밖으로 잘리지 않게 위·옆 여백을 둔다
+    const asp = GF.aspectN(who), ih = chh * 0.76, iw = ih * asp, ix = (cw - iw) / 2, iy = chh - ih - 8;     // 큰 소품(모자·지팡이)이 카드 밖으로 잘리지 않게 위·옆 여백을 둔다
     const deco = GF.el('div', 'abs', card); deco.style.cssText = 'inset:0;pointer-events:none';
     const ch = ctx.img(who); ch.style.cssText = `position:absolute;left:${ix}px;top:${iy}px;width:${iw}px;height:${ih}px;pointer-events:none`; card.appendChild(ch);
     const look = {}; let si = 0, finished = false, finger = null;
@@ -19,7 +19,9 @@ GF.mode('dress', {
     };
     const widthOf = (p) => {
       const ref = p.ref === 'eye' ? A.eyeDist * iw : p.ref === 'neck' ? A.neckW * iw : A.bodyW * iw;
-      let w = ref * p.k; if (p.maxBody) w = Math.min(w, A.bodyW * iw * p.maxBody); return w;
+      let w = ref * p.k; if (p.maxBody) w = Math.min(w, A.bodyW * iw * p.maxBody);
+      const room = base(p.to)[1] - 12; w = Math.min(w, room / (p.ay * p.ar));       // 위로 뻗는 소품(모자·풍선·지팡이)이 카드 위로 잘리지 않게 줄인다
+      return w;
     };
     function attach(id) {                                       // 소품을 카드의 캐릭터에 붙인다
       const p = GF.props[id], w = widthOf(p), el = GF.propEl(id, w), pt = base(p.to);

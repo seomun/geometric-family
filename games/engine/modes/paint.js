@@ -10,7 +10,7 @@ GF.mode('paint', {
     const pal = PICK[cfg.colors].map((i) => COLORS[i]);
     let sel = 0, filledBig = 0, finger = null, ready = false, doneBtn = null, need = cfg.fills;
     const K = 1.5;                                                   // 작업 해상도 배율
-    const asp = GF.aspect(cfg.id);
+    const cr = GF.crop(cfg.id), asp = cr.asp;
     let dh = wide ? ctx.H - 28 : pal.length > 5 ? 370 : 410, dw = dh * asp;
     if (dw > (wide ? 500 : 330)) { dw = wide ? 500 : 330; dh = dw / asp; }
     const WW = Math.round(dw * K), HH = Math.round(dh * K), N = WW * HH;
@@ -39,7 +39,7 @@ GF.mode('paint', {
     const im = new Image(); let lab, regs = [], alpha, fillData, fctx;
     im.onload = () => {
       const oc = document.createElement('canvas'); oc.width = WW; oc.height = HH;
-      const o = oc.getContext('2d'); o.drawImage(im, 0, 0, WW, HH);
+      const o = oc.getContext('2d'); o.drawImage(im, cr.x0 * im.naturalWidth, cr.y0 * im.naturalHeight, (cr.x1 - cr.x0) * im.naturalWidth, (cr.y1 - cr.y0) * im.naturalHeight, 0, 0, WW, HH);
       const d = o.getImageData(0, 0, WW, HH).data;
       const lineData = lineC.getContext('2d').createImageData(WW, HH), ld = lineData.data;
       alpha = new Uint8Array(N); lab = new Int32Array(N);

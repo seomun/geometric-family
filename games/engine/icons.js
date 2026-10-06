@@ -26,6 +26,13 @@
     + `<path d="M26 82q-10 6-8 16h14z" fill="#7FD6C2"/><path d="M74 82q10 6 8 16H68z" fill="#7FD6C2"/><rect x="30" y="80" width="40" height="20" rx="8" fill="#FF8FA8"/>`
     + `<path d="M80 62L94 20" stroke="#C98F5A" stroke-width="7" fill="none"/><circle cx="95" cy="16" r="9" fill="#C98F5A"/><path d="M90 10l-4-6M100 14l6-3M96 24l5 5" stroke="#8A5A3B" fill="none"/></g>`;
   GF.art['art.dokkaebi'] = { src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 104" width="330" height="312">${dok}</svg>`), w: 110, h: 104 };
+  // 과자 요정(순한 버전): 쿠키 얼굴 + 스프링클 + 별 지팡이
+  const fairy = `<g stroke="${K}" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"><ellipse cx="22" cy="44" rx="14" ry="20" fill="#fff" opacity=".85" transform="rotate(-24 22 44)"/><ellipse cx="78" cy="44" rx="14" ry="20" fill="#fff" opacity=".85" transform="rotate(24 78 44)"/>`
+    + `<circle cx="50" cy="52" r="30" fill="#F2C48D"/><path d="M26 40q6-18 24-18t24 18" fill="none" stroke="#C99A6B" stroke-width="2.4"/>`
+    + `<circle cx="39" cy="52" r="4.2" fill="${K}" stroke="none"/><circle cx="61" cy="52" r="4.2" fill="${K}" stroke="none"/><circle cx="40" cy="50.6" r="1.4" fill="#fff" stroke="none"/><circle cx="62" cy="50.6" r="1.4" fill="#fff" stroke="none"/><path d="M42 64q8 8 16 0" fill="none"/><circle cx="31" cy="62" r="5" fill="#FF8FA8" stroke="none" opacity=".8"/><circle cx="69" cy="62" r="5" fill="#FF8FA8" stroke="none" opacity=".8"/>`
+    + `<g stroke="none"><rect x="36" y="34" width="7" height="3.4" rx="1.7" fill="#FF6B6B" transform="rotate(-20 40 36)"/><rect x="56" y="32" width="7" height="3.4" rx="1.7" fill="#4DABF7" transform="rotate(25 60 34)"/><rect x="46" y="28" width="7" height="3.4" rx="1.7" fill="#6CCB8A"/></g>`
+    + `<path d="M50 82v12" stroke-width="6"/><path d="M82 70L92 30" stroke="#C98F5A" stroke-width="5" fill="none"/><path d="M92 14l4 9 10 1-8 6 3 10-9-6-9 6 3-10-8-6 10-1z" fill="#FFD36B"/></g>`;
+  GF.art['art.fairy'] = { src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 100" width="330" height="300">${fairy}</svg>`), w: 110, h: 100 };
   GF.icons = ICONS;
   // 그림책용 큰 그림(제비·박): 움직임 없이 정지 상태로 art.* 에 등록
   ['swallow', 'gourd'].forEach((k) => {

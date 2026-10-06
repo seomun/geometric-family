@@ -149,6 +149,15 @@
     (obj && obj.pieces != null || true) && ids.forEach((id) => { const i = new Image(); i.src = GF.src(id); i.decode && i.decode().catch(() => {}); });
   };
   GF.img = (id, cls) => { const i = new Image(); i.src = GF.src(id); i.draggable = false; if (cls) i.className = cls; return i; };
+  // 원본 PNG 의 실제 가로/세로(자리표·자르기는 이 기준). 캐릭터 PNG 는 600×600 캔버스 안에 몸이 들어 있다.
+  GF.aspectN = (id) => { const c = GF.data.chars[id] || GF.data.chars[id.split('.')[0] + '.good']; return c && c.nw ? c.nw / c.nh : GF.aspect(id); };
+  // 몸이 있는 부분만 잘라 쓰는 영역(퍼즐·색칠): 비율을 왜곡하지 않는다. 자리표가 없는 그림(코드 그림 등)은 전체.
+  GF.crop = function (id) {
+    const A = GF.data.anchors || {}, key = /^nemo_kids\./.test(id) ? id : id.split('.')[0] + '.good', a = A[key];
+    if (GF.art && GF.art[id] || !a) return { asp: GF.aspect(id), x0: 0, y0: 0, x1: 1, y1: 1 };
+    const m = 0.015, x0 = Math.max(0, a.bbox[0] - m), y0 = Math.max(0, a.bbox[1] - m), x1 = Math.min(1, a.bbox[2] + m), y1 = Math.min(1, a.bbox[3] + m), n = GF.aspectN(id);
+    return { asp: ((x1 - x0) * n) / (y1 - y0), x0, y0, x1, y1 };
+  };
   GF.aspect = (id) => { if (GF.art && GF.art[id]) return GF.art[id].w / GF.art[id].h; const c = GF.data.chars[id] || GF.data.chars[id.split('.')[0] + '.good']; return c ? c.w / c.h : 1; };
 
   /* ---------------- 배경 (코드 SVG) ---------------- */
@@ -171,6 +180,12 @@
       + G(rep(() => [[20, 430, 70], [120, 410, 90], [240, 440, 64], [330, 420, 80]].map((t) => '<rect x="' + (t[0] - 9) + '" y="' + t[1] + '" width="18" height="' + (560 - t[1]) + '" fill="#8A5A3B"/><circle cx="' + t[0] + '" cy="' + t[1] + '" r="' + t[2] + '" fill="#5FAF6B" stroke="#3E8A4A" stroke-width="3"/>').join('') + hill(560, '#7FBF5A', [180, 330, 70])) + band(560, '#7FBF5A')
         + [[40, 590], [140, 598], [250, 592], [320, 600]].map((m) => '<g transform="translate(' + m[0] + ' ' + m[1] + ')"><rect x="-3" y="0" width="6" height="12" fill="#FFF3E0"/><path d="M-12 2q12-18 24 0z" fill="#FF6B6B"/><circle cx="-4" cy="-4" r="2" fill="#fff"/><circle cx="4" cy="-6" r="2" fill="#fff"/></g>').join('') + flowers(606))
       + [[60, 300], [190, 250], [300, 330]].map((f, i) => '<g class="bob" style="animation-delay:-' + i + 's"><circle cx="' + f[0] + '" cy="' + f[1] + '" r="9" fill="#FFF3B0" opacity=".35"/><circle cx="' + f[0] + '" cy="' + f[1] + '" r="3.5" fill="#FFE27A"/></g>').join(''),
+    seaside: () => sky('#BDE6FF', '#FFF3DC') + '<circle cx="290" cy="76" r="34" fill="#FFE27A"/>' + cloud(80, 80, 1) + cloud(200, 140, .8)
+      + G(band(380, '#7CC8F0', 120) + rep(() => '<g class="wave"><path d="M-60 400q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0M-60 440q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/></g>') + band(480, '#F6E3B5')
+        + '<g><path d="M300 470v-90" stroke="#8A5A3B" stroke-width="6"/><path d="M250 392q50-52 100 0z" fill="#FF8FA8" stroke="#4A3030" stroke-width="3"/><path d="M270 392q30-46 60 0" fill="none" stroke="#fff" stroke-width="5" opacity=".7"/></g>'
+        + '<g><path d="M40 440q40-12 80 0l-10 26h-60z" fill="#C98F5A" stroke="#4A3030" stroke-width="3"/><path d="M80 440V396l30 28z" fill="#fff" stroke="#4A3030" stroke-width="3"/></g>'
+        + rep(() => [[30, 560], [120, 590], [230, 566], [320, 598]].map((s) => '<g transform="translate(' + s[0] + ' ' + s[1] + ')"><path d="M0 0l6-8 6 8-6 8z" fill="#FF8FA8" opacity=".9"/></g>').join('')))
+      + butterfly(300, '#8FD3F4', '#fff'),
     village: () => sky('#BFE3F5', '#FFF3DC') + '<circle cx="70" cy="90" r="32" fill="#FFE27A"/>' + cloud(210, 80, 1) + cloud(300, 150, .7)
       + G(rep(() => '<path d="M-20 470L70 330L150 470z" fill="#9DB7A5"/><path d="M80 470L190 300L300 470z" fill="#8AA896"/><path d="M60 392l10-12l10 12z" fill="#fff"/><path d="M180 338l10-14l10 14z" fill="#fff"/>' + hill(500, '#B6D88E', [180, 300, 60])) + band(500, '#9CCB6A')
         + '<g><path d="M232 452l60-44l60 44z" fill="#C9A24A" stroke="#4A3030" stroke-width="3"/><rect x="246" y="450" width="92" height="64" fill="#F3E0BE" stroke="#4A3030" stroke-width="3"/><rect x="278" y="474" width="22" height="40" fill="#8A5A3B"/><rect x="300" y="414" width="12" height="22" fill="#6B5F70"/></g>'

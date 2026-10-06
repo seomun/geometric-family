@@ -297,3 +297,5 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .trhole { position: absolute; inset: 4% 4% 22% 4%; border: 4px dashed rgba(58,46,57,.45); border-radius: 14px; background: rgba(255,255,255,.55); }
 .trgap.active .trhole { animation: ringp 1s ease-in-out infinite alternate; border-color: #FF8FA8; background: rgba(255,143,168,.2); }
 .trin { animation: propin .45s cubic-bezier(.3,1.6,.5,1); }
+
+.flame { animation: flick .35s ease-in-out infinite alternate; } @keyframes flick { to { transform: scale(.88, 1.12) rotate(4deg) } }

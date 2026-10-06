@@ -886,5 +886,73 @@
     ]
    }
   ]
+ },
+ "ch10": {
+  "mode": "cake",
+  "bg": "seaside",
+  "heroes": [
+   "wife.love",
+   "husband.joy",
+   "baby.joy"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "layers": 2,
+      "deco": 1,
+      "candles": 0
+     },
+     {
+      "layers": 2,
+      "deco": 2,
+      "candles": 0
+     },
+     {
+      "layers": 2,
+      "deco": 1,
+      "candles": 0
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "layers": 3,
+      "deco": 2,
+      "candles": 0
+     },
+     {
+      "layers": 3,
+      "deco": 3,
+      "candles": 0
+     },
+     {
+      "layers": 3,
+      "deco": 3,
+      "candles": 0
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "layers": 4,
+      "deco": 3,
+      "candles": 1
+     },
+     {
+      "layers": 4,
+      "deco": 4,
+      "candles": 2
+     },
+     {
+      "layers": 4,
+      "deco": 4,
+      "candles": 3
+     }
+    ]
+   }
+  ]
  }
 }

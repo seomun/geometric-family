@@ -7,7 +7,7 @@ GF.mode('puzzle', {
     const sizes = [2, 4, 6];
     const n = sizes[Math.max(0, Math.min(2, sizes.indexOf(cfg.pieces) + (ctx.level || 0)))];
     const [cols, rows, bh0] = LAYOUT[n];
-    const asp = GF.aspect(cfg.id), src = GF.src(cfg.id);
+    const cr = GF.crop(cfg.id), asp = cr.asp, src = GF.src(cfg.id);
     let bh = wide ? Math.min(ctx.H - 40, bh0 * 1.2) : bh0, bw = bh * asp;
     if (bw > (wide ? 280 : 320)) { bw = wide ? 280 : 320; bh = bw / asp; }
     const bx = wide ? 24 + (340 - bw) / 2 : (360 - bw) / 2, by = wide ? 16 + (ctx.H - 40 - bh) / 2 : 16, cw = bw / cols, chh = bh / rows;
@@ -15,8 +15,8 @@ GF.mode('puzzle', {
     // 판 (흐린 그림 + 칸 선)
     const board = GF.el('div', 'abs', root);
     board.style.cssText = `left:${bx - 8}px;top:${by - 8}px;width:${bw + 16}px;height:${bh + 16}px;background:#fff;border-radius:22px;box-shadow:0 5px 0 rgba(0,0,0,.12)`;
-    const ghost = ctx.img(cfg.id); ghost.style.cssText = `position:absolute;left:8px;top:8px;width:${bw}px;height:${bh}px;opacity:.16;filter:grayscale(1)`;
-    board.appendChild(ghost);
+    const bgW = bw / (cr.x1 - cr.x0), bgH = bh / (cr.y1 - cr.y0), bgPos = (c0, r0) => `${-(cr.x0 * bgW + c0)}px ${-(cr.y0 * bgH + r0)}px/${bgW}px ${bgH}px no-repeat`;
+    const ghost = GF.el('div', 'abs', board); ghost.style.cssText = `left:8px;top:8px;width:${bw}px;height:${bh}px;opacity:.16;filter:grayscale(1);background:url("${src}") ${bgPos(0, 0)}`;
     const cells = [];
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
       const d = GF.el('div', 'slotring', root);
@@ -35,7 +35,7 @@ GF.mode('puzzle', {
       const cell = cells[key], row = Math.floor(pos / perRow), inRow = row === trows - 1 ? n - row * perRow : perRow;
       const col = pos % perRow, x = trayCx - (inRow * (cw + 8) - 8) / 2 + col * (cw + 8), y = trayTop + rowOff + row * rowH + Math.max(0, (rowH - chh) / 2);
       const p = GF.el('div', 'tok', root); p.dataset.cell = key;
-      p.style.cssText = `left:${x}px;top:${y}px;width:${cw}px;height:${chh}px;background:#fff url("${src}") ${-cell.c * cw}px ${-cell.r * chh}px/${bw}px ${bh}px no-repeat;border-radius:10px;box-shadow:0 0 0 3px #8FD3F4,0 4px 0 rgba(0,0,0,.15)`;
+      p.style.cssText = `left:${x}px;top:${y}px;width:${cw}px;height:${chh}px;background:#fff url("${src}") ${bgPos(cell.c * cw, cell.r * chh)};border-radius:10px;box-shadow:0 0 0 3px #8FD3F4,0 4px 0 rgba(0,0,0,.15)`;
       const pc = { el: p, cell, home: { x, y }, done: false };
       GF.drag(p, {
         start() { if (pc.done) return; p.classList.remove('back'); p.classList.add('drag'); ctx.sfx('tap'); },

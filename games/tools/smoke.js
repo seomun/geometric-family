@@ -97,6 +97,23 @@ async function solveTrain(p, wrongFirst) {
     const q = info.tray.find((x) => x.k === need); await p.mouse.click(q.x, q.y); await wait(p, 800);
   }
 }
+async function solveCake(p, wrongFirst) {
+  await wait(p, 500);
+  const L = await p.evaluate(() => document.querySelector('.playarea').__cake().layers);
+  for (let i = 0; i < L; i++) {                                    // 층: 큰 것(0)부터. 트레이 항목 순서는 섞여 있어 폭으로 찾는다
+    const items = await p.evaluate(() => [...document.querySelectorAll('.playarea .trtray')].map((e) => { const r = e.getBoundingClientRect(), s = e.querySelector('svg').getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2, w: s.width, vis: getComputedStyle(e).opacity }; }));
+    const live = items.filter((q) => q.vis !== '0').sort((a, b) => b.w - a.w);
+    if (wrongFirst && i === 0 && live.length > 1) { const w = live[live.length - 1]; await p.mouse.click(w.x, w.y); await wait(p, 900); }
+    await p.mouse.click(live[0].x, live[0].y); await wait(p, 800);
+  }
+  await wait(p, 1000);
+  for (let guard = 0; guard < 12; guard++) {                        // 장식·초: 트레이 첫 항목을 계속 누르면 개수가 차면 끝난다
+    const t = await p.$('.playarea .trtray'); if (!t) break;
+    const b = await t.boundingBox(); await p.mouse.click(b.x + b.width / 2, b.y + b.height / 2); await wait(p, 450);
+    const st = await p.evaluate(() => document.querySelector('.overlay.on') ? 'ov' : '');
+    if (st) break;
+  }
+}
 async function playStage(p, mode, tag) {
   for (let r = 0; r < 3; r++) {
     await wait(p, 500);
@@ -107,6 +124,7 @@ async function playStage(p, mode, tag) {
     else if (mode === 'shapes') await solveShapes(p);
     else if (mode === 'sequence') await solveSequence(p);
     else if (mode === 'dress') await solveDress(p);
+    else if (mode === 'cake') await solveCake(p, r === 0 && tag.endsWith('A'));
     else if (mode === 'train') await solveTrain(p, r === 0 && tag.endsWith('A'));
     else if (mode === 'soundfind') await solveSoundfind(p, r === 0 && tag.endsWith('A'));
     else if (mode === 'paint') { await solvePaint(p, tag); await shot(p, tag + '_painted' + r); await p.click('.playarea .big', { force: true }); }
@@ -130,8 +148,8 @@ async function playStage(p, mode, tag) {
   // ONLY=9 같은 환경변수로 특정 장만 빠르게 돌린다(앞 장은 완료로 채움)
   const ONLY = (process.env.ONLY || '').split(',').filter(Boolean).map(Number);
   if (ONLY.length) await p.evaluate(() => { for (let c = 1; c <= 10; c++) for (const l of 'ABC') GF.state.stages['c' + c + l] = { done: true, stars: 3 }; GF.Store.save(); });
-  for (const ch of (ONLY.length ? ONLY : [1, 2, 3, 4, 5, 6, 7, 8, 9])) {
-    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence', 'soundfind', 'dress', 'train'][ch - 1];
+  for (const ch of (ONLY.length ? ONLY : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) {
+    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence', 'soundfind', 'dress', 'train', 'cake'][ch - 1];
     if (ch === 6 || (ONLY.length && ch === ONLY[0] && ch >= 6)) { await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.go('shelf'); GF.go('map', { book: 2 }); }); await wait(p, 600); await shot(p, 'map2'); }
     await wait(p, 400);
     const nodes = await p.$$('.node'); await nodes[(ch - 1) % 5].click(); await wait(p, 600);

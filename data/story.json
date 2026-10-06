@@ -1058,5 +1058,159 @@
     }
    }
   ]
+ },
+ "ch10": {
+  "pro": [
+   {
+    "bg": "seaside",
+    "voice": "c10_p1",
+    "text": "기차가 바닷가에 도착! 철썩철썩 파도 소리.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 100,
+      "y": 610,
+      "h": 170
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 230,
+      "y": 610,
+      "h": 250
+     }
+    ]
+   },
+   {
+    "bg": "seaside",
+    "voice": "c10_p2",
+    "text": "어? 모래 위에 과자 반죽이 놓여 있어요. 과자 요정이 두고 갔나 봐요!",
+    "chars": [
+     {
+      "id": "art.fairy",
+      "x": 110,
+      "y": 560,
+      "h": 220
+     },
+     {
+      "id": "baby.surprise",
+      "x": 250,
+      "y": 610,
+      "h": 170
+     }
+    ],
+    "bubble": {
+     "type": "bang",
+     "at": 1
+    }
+   },
+   {
+    "bg": "seaside",
+    "voice": "c10_p3",
+    "text": "큰 케이크를 만들어서 모두 함께 나눠 먹어요! 큰 층부터 차례대로 쌓아 보세요.",
+    "chars": [
+     {
+      "id": "wife.joy",
+      "x": 80,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "husband.joy",
+      "x": 190,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 300,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 1
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "seaside",
+    "voice": "c10_e1",
+    "text": "와! 커다란 케이크가 완성됐어요!",
+    "chars": [
+     {
+      "id": "art.fairy",
+      "x": 100,
+      "y": 560,
+      "h": 210
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 210,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "baby.joy",
+      "x": 300,
+      "y": 610,
+      "h": 150
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "seaside",
+    "voice": "c10_e2",
+    "text": "세 가족이 모두 모여 냠냠! 오늘 정말 맛있는 소풍이었어요.",
+    "chars": [
+     {
+      "id": "nemo_dad.joy",
+      "x": 40,
+      "y": 610,
+      "h": 250
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 105,
+      "y": 610,
+      "h": 250
+     },
+     {
+      "id": "wife.joy",
+      "x": 170,
+      "y": 610,
+      "h": 250
+     },
+     {
+      "id": "husband.joy",
+      "x": 235,
+      "y": 610,
+      "h": 250
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 300,
+      "y": 610,
+      "h": 250
+     },
+     {
+      "id": "baby.joy",
+      "x": 345,
+      "y": 610,
+      "h": 140
+     }
+    ],
+    "bubble": {
+     "type": "note",
+     "at": 2
+    },
+    "sfx": "celebrate"
+   }
+  ]
  }
 }

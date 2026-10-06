@@ -6,16 +6,17 @@ GF.mode('train', {
   land: true,
   setup(root, cfg, ctx) {
     const wide = ctx.W > 400, pat = cfg.pattern, gaps = cfg.gaps.slice().sort((a, b) => a - b), n = pat.length;
-    const STY = { a: ['#F6C28B', 'sq'], b: ['#8FD3F4', 'tri'], c: ['#3B4A7A', 'circ'], x: ['#FF8FA8', 'heart'] };
-    const GLYPH = {
-      sq: '<rect x="30" y="26" width="40" height="40" rx="6" fill="#fff"/>',
-      tri: '<path d="M50 24L74 68H26z" fill="#fff" stroke-linejoin="round"/>',
-      circ: '<circle cx="50" cy="46" r="22" fill="#fff"/>',
-      heart: '<path d="M50 70C26 54 24 38 34 30c7-5 14-2 16 6 2-8 9-11 16-6 10 8 8 24-16 40z" fill="#fff"/>',
+    // 객차 무늬 = 가족 얼굴 창문(둥근 창): 네모 아빠·세모 이모·동그라미 아저씨, 방해물은 하트 눈 막둥이. (흰 □△○ 기호 금지 — 허브 원칙)
+    const STY = { a: ['#F6C28B', 'nemo_dad.good'], b: ['#8FD3F4', 'wife.good'], c: ['#3B4A7A', 'dong_dad.good'], x: ['#FF8FA8', 'baby.good'] };
+    let cid = 0;
+    const face = (who) => {                                       // 얼굴이 창 한가운데 오도록 이미지를 배치 (자리표 data/anchors.json)
+      const key = /^nemo_kids\./.test(who) ? who : who.split('.')[0] + '.good', A = GF.data.anchors[key], asp = GF.aspectN(who);
+      const Wi = (A.tri ? 38 : 46) / A.bodyW, Hi = Wi / asp, fx = A.tri ? (A.bbox[0] + A.bbox[2]) / 2 : A.face[0], id = 'tc' + (++cid);
+      return `<clipPath id="${id}"><circle cx="50" cy="36" r="22"/></clipPath><image href="${GF.src(who)}" x="${50 - fx * Wi}" y="${36 - A.face[1] * Hi}" width="${Wi}" height="${Hi}" preserveAspectRatio="none" clip-path="url(#${id})"/>`;
     };
-    const car = (k, w) => {                                       // 객차 한 칸 (코드 SVG)
-      const [col, g] = STY[k];
-      return `<svg viewBox="0 0 100 86" style="width:${w}px;height:${w * 0.86}px;display:block"><g stroke="#4A3030" stroke-width="3.6" stroke-linejoin="round"><rect x="4" y="6" width="92" height="60" rx="14" fill="${col}"/><circle cx="26" cy="72" r="10" fill="#4A3030"/><circle cx="74" cy="72" r="10" fill="#4A3030"/></g><g stroke="none">${GLYPH[g]}</g></svg>`;
+    const car = (k, w) => {                                       // 객차 한 칸 (코드 SVG + 얼굴 창)
+      const [col, who] = STY[k];
+      return `<svg viewBox="0 0 100 86" style="width:${w}px;height:${w * 0.86}px;display:block"><g stroke="#4A3030" stroke-width="3.6" stroke-linejoin="round"><rect x="4" y="6" width="92" height="60" rx="14" fill="${col}"/><circle cx="26" cy="72" r="10" fill="#4A3030"/><circle cx="74" cy="72" r="10" fill="#4A3030"/><circle cx="50" cy="36" r="24" fill="#fff"/></g>${face(who)}<circle cx="50" cy="36" r="22" fill="none" stroke="#4A3030" stroke-width="2.4"/></svg>`;
     };
     const engine = (w) => `<svg viewBox="0 0 100 86" style="width:${w}px;height:${w * 0.86}px;display:block"><g stroke="#4A3030" stroke-width="3.6" stroke-linejoin="round"><rect x="4" y="22" width="62" height="44" rx="12" fill="#FFB347"/><rect x="52" y="8" width="44" height="58" rx="10" fill="#FF8FA8"/><rect x="60" y="18" width="28" height="20" rx="5" fill="#fff"/><rect x="14" y="6" width="14" height="22" fill="#6B5F70"/><circle cx="26" cy="72" r="10" fill="#4A3030"/><circle cx="60" cy="72" r="10" fill="#4A3030"/><circle cx="84" cy="72" r="9" fill="#4A3030"/></g></svg>`;
     // ---- 기차 줄: 기관차 + 객차 n칸 (폰에서 너무 작아지면 두 줄로 접는다) ----

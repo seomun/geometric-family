@@ -29,6 +29,7 @@ const wait = (p, ms) => p.waitForTimeout(ms);
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch7', k: 2, id: 'c7C' }); }); await wait(p, 2600); await shot('soundfind');
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch8', k: 1, id: 'c8B' }); }); await wait(p, 1500); await shot('dress');
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch9', k: 2, id: 'c9C' }); }); await wait(p, 1500); await shot('train');
+    await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch10', k: 2, id: 'c10C' }); }); await wait(p, 1500); await shot('cake');
     console.log(name, w + 'x' + h, errs.length ? 'ERR ' + errs.join('|') : 'ok');
     await p.close();
   }

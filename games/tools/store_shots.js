@@ -28,7 +28,12 @@ const go = (p, fn, arg) => p.evaluate(fn, arg);
     await p.click('.nextbtn', { force: true }); await wait(p, 1300); await shot('2_story');
     await go(p, () => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch1', k: 1, id: 'c1B' }); }); await wait(p, 1200); await shot('3_shadow');
     await solveShadow(p); await wait(p, 1500); await shot('4_celebrate');
-    await go(p, () => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch2', k: 1, id: 'c2B' }); }); await wait(p, 1000); await shot('5_faces');
+    await go(p, () => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch2', k: 1, id: 'c2B' }); }); await wait(p, 1000);
+    // 한 쌍을 맞춰 뒤집어 둔 채(노랗게) + 다른 카드 한 장이 뒤집힌 순간
+    const cards = await p.evaluate(() => [...document.querySelectorAll('.fcard')].map((c) => { const r = c.getBoundingClientRect(); return { src: c.querySelector('.f img').src, x: r.x + r.width / 2, y: r.y + r.height / 2 }; }));
+    const grp = {}; cards.forEach((c, i) => (grp[c.src] = grp[c.src] || []).push(i)); const gs = Object.values(grp);
+    for (const i of gs[0]) { await p.mouse.click(cards[i].x, cards[i].y); await wait(p, 500); }
+    await wait(p, 700); await p.mouse.click(cards[gs[1][0]].x, cards[gs[1][0]].y); await wait(p, 600); await shot('5_faces');
     await go(p, () => { GF.modes.paint.free = () => ({ id: 'nemo_kids.kid1', colors: 5, fills: 4 }); GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'free', mode: 'paint', diff: 2 }); }); await wait(p, 1500);
     const pts = await p.evaluate(() => document.querySelector('.playarea').__pts());
     const sw = await p.$$('.playarea .round-btn');

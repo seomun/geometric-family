@@ -12,7 +12,7 @@ GF.mode('faces', {
       ctx.shuffle(pool).forEach((k) => { const e = k.split('.')[1], gi = GROUPS.findIndex((g_) => g_.includes(e)); if (ids.length < np && !(gi >= 0 && used.has(gi)) && !['bad', 'calm', 'smug'].includes(e)) { ids.push(k); if (gi >= 0) used.add(gi); } });
     }
     const n = ids.length, total = n * 2, wide = ctx.W > 400;
-    const rows = wide ? (total <= 4 ? 1 : 2) : null, cols = wide ? Math.ceil(total / rows) : { 2: 2, 3: 3, 4: 2, 5: 2, 6: 3 }[n] || 3, rowsN = wide ? rows : Math.ceil(total / cols);
+    const rows = wide ? (total <= 4 ? 1 : 2) : null, cols = wide ? Math.ceil(total / rows) : { 2: 2, 3: 2, 4: 2, 5: 2, 6: 3 }[n] || 3, rowsN = wide ? rows : Math.ceil(total / cols);
     const gap = 10, X = wide ? 12 : 12, Wd = ctx.W - 24, Ht = wide ? ctx.H - 28 : 548;
     const cw = (Wd - gap * (cols - 1)) / cols, chh = Math.min((Ht - gap * (rowsN - 1)) / rowsN, cw * 1.3);
     const oy = 12 + (Ht - (chh * rowsN + gap * (rowsN - 1))) / 2;

@@ -2,7 +2,7 @@
 import json, pathlib
 from PIL import Image
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-USE = ['wife', 'dong_dad', 'nemo_dad', 'nemo_mom', 'nemo_grandma', 'nemo_kids', 'baby']
+USE = ['wife', 'husband', 'dong_dad', 'nemo_dad', 'nemo_mom', 'nemo_grandma', 'nemo_kids', 'baby']
 out = {}
 for c in USE:
     m = json.loads((ROOT / 'assets' / c / 'manifest.json').read_text(encoding='utf-8'))

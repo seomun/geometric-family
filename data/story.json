@@ -524,5 +524,142 @@
     ]
    }
   ]
+ },
+ "ch6": {
+  "pro": [
+   {
+    "bg": "station",
+    "voice": "c6_p1",
+    "text": "어린이날 아침, 승강장에 세 가족이 모였어요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 200
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 240
+     }
+    ]
+   },
+   {
+    "bg": "station",
+    "voice": "c6_p2",
+    "text": "기차가 곧 떠나요! 누가 먼저 도착할까요?",
+    "chars": [
+     {
+      "id": "husband.surprise",
+      "x": 100,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "dong_dad.good",
+      "x": 260,
+      "y": 610,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "bang",
+     "at": 0
+    }
+   },
+   {
+    "bg": "station",
+    "voice": "c6_p3",
+    "text": "세모 삼촌은 빨라요. 휘리릭! 동그라미 아저씨는 느릿느릿 뚜벅뚜벅.",
+    "chars": [
+     {
+      "id": "husband.joy",
+      "x": 100,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "dong_dad.warm",
+      "x": 260,
+      "y": 610,
+      "h": 260
+     }
+    ]
+   },
+   {
+    "bg": "station",
+    "voice": "c6_p4",
+    "text": "막둥이가 응원할 순서를 따라 해 봐요!",
+    "chars": [
+     {
+      "id": "baby.love",
+      "x": 120,
+      "y": 610,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 610,
+      "h": 240
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "station",
+    "voice": "c6_e1",
+    "text": "어? 세모 삼촌이 중간에 쿨쿨 낮잠을 잤어요.",
+    "chars": [
+     {
+      "id": "husband.wink",
+      "x": 180,
+      "y": 610,
+      "h": 300
+     }
+    ],
+    "bubble": {
+     "type": "zzz",
+     "at": 0
+    }
+   },
+   {
+    "bg": "station",
+    "voice": "c6_e2",
+    "text": "동그라미 아저씨가 제일 먼저! 모두 박수~ 기차가 출발해요.",
+    "chars": [
+     {
+      "id": "dong_dad.joy",
+      "x": 100,
+      "y": 610,
+      "h": 250
+     },
+     {
+      "id": "baby.joy",
+      "x": 210,
+      "y": 610,
+      "h": 150
+     },
+     {
+      "id": "husband.surprise",
+      "x": 290,
+      "y": 610,
+      "h": 250
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 0
+    },
+    "sfx": "whistle"
+   }
+  ]
  }
 }

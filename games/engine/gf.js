@@ -165,7 +165,14 @@
   const lilies = () => rep(() => [[70, 505], [160, 548], [255, 515], [330, 556]].map((l) => '<g class="bob" style="animation-delay:-' + l[0] % 5 + 's"><ellipse cx="' + l[0] + '" cy="' + l[1] + '" rx="24" ry="9" fill="#5FB57B"/><circle cx="' + (l[0] + 6) + '" cy="' + (l[1] - 5) + '" r="5" fill="#FF8FA8"/></g>').join(''));
   const butterfly = (y, c, c2) => '<g class="fly"><g transform="translate(0 ' + y + ') scale(1.5)"><g class="flap"><ellipse cx="-9" cy="-2" rx="11" ry="14" fill="' + c + '" stroke="#4A3030" stroke-width="1.6"/><ellipse cx="9" cy="-2" rx="11" ry="14" fill="' + c + '" stroke="#4A3030" stroke-width="1.6"/><ellipse cx="-8" cy="8" rx="7" ry="8" fill="' + (c2 || '#fff') + '" stroke="#4A3030" stroke-width="1.4"/><ellipse cx="8" cy="8" rx="7" ry="8" fill="' + (c2 || '#fff') + '" stroke="#4A3030" stroke-width="1.4"/><circle cx="-9" cy="-4" r="3" fill="#fff"/><circle cx="9" cy="-4" r="3" fill="#fff"/></g><rect x="-2" y="-13" width="4" height="26" rx="2" fill="#4A3030"/><path d="M-1 -13q-6-8-10-8M1 -13q6-8 10-8" fill="none" stroke="#4A3030" stroke-width="1.6" stroke-linecap="round"/></g></g>';
   const G = (s) => (GF.safeWide ? '<g transform="translate(0 -170)">' + s + '</g>' : s);
+  const railsG = (y) => band(y, '#6B5F70', 4) + band(y + 16, '#6B5F70', 4) + rep(() => Array.from({ length: 9 }, (_, i) => '<rect x="' + (i * 40 + 6) + '" y="' + (y - 4) + '" width="22" height="26" rx="3" fill="#8A5A3B"/>').join('')).replace(/<rect/g, '<rect opacity=".9"');
   const BG = {
+    station: () => sky('#BFE8FF', '#FFF1DA') + '<circle cx="300" cy="86" r="34" fill="#FFE27A"/>' + cloud(70, 90, 1) + cloud(220, 150, .8)
+      + G(rep(() => hill(470, '#C7E6B0', [180, 330, 80])) + '<g><rect x="150" y="372" width="200" height="150" rx="18" fill="#8FD3F4" stroke="#4A3030" stroke-width="4"/><rect x="150" y="440" width="200" height="14" fill="#FF8FA8"/>' + [0, 1, 2].map((i) => '<rect x="' + (170 + i * 60) + '" y="392" width="44" height="40" rx="8" fill="#fff" stroke="#4A3030" stroke-width="3"/>').join('') + '</g>'
+        + '<g><rect x="42" y="340" width="8" height="190" fill="#8A5A3B"/><circle cx="46" cy="330" r="26" fill="#fff" stroke="#4A3030" stroke-width="4"/><path d="M46 330V314M46 330L58 336" stroke="#4A3030" stroke-width="4" stroke-linecap="round"/></g>'
+        + band(520, '#D8D2DE') + band(520, '#FFD36B', 8) + band(560, '#B9B2C0') + railsG(576)),
+    rails: () => sky('#D3EEFF', '#F8FCFF') + '<circle cx="290" cy="88" r="36" fill="#FFE27A"/>' + cloud(80, 90, 1) + cloud(200, 150, .8)
+      + G(rep(() => hill(470, '#B6E6A0', [100, 240, 90]) + hill(480, '#9ADB88', [300, 200, 80])) + band(500, '#8FD67A') + railsG(560) + flowers(600)) + butterfly(330, '#FF8FA8', '#FFF3B0'),
     home: () => sky('#FFE9C7', '#FFF6E5') + (GF.safeWide ? '<circle cx="470" cy="104" r="46" fill="#FFD36B"/>' : '<circle cx="318" cy="180" r="34" fill="#FFD36B"/>') + G(rep(() => hill(660, '#BFE6A8', [90, 260, 150]) + hill(670, '#9BD98A', [290, 230, 130])) + band(640, '#9BD98A')),
     stream: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="290" cy="90" r="38" fill="#FFE27A"/>' + cloud(70, 80, 1) + cloud(200, 140, .8) + G(rep(() => hill(470, '#B6E6A0', [100, 240, 90]) + hill(480, '#9ADB88', [300, 200, 80])) + band(500, '#7CC8F0', 60) + rep(() => '<g class="wave"><path d="M-60 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/></g>') + band(560, '#8FD67A') + flowers(582)) + butterfly(330, '#FFB347', '#FFE27A'),
     bridge: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="60" cy="90" r="34" fill="#FFE27A"/>' + cloud(230, 70, 1) + cloud(130, 150, .7) + G(rep(() => hill(420, '#B6E6A0', [250, 260, 80])) + band(450, '#7CC8F0', 130) + rep(() => '<g class="wave"><path d="M-60 480q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0M-60 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/></g><rect x="20" y="395" width="12" height="40" fill="#A8703F"/><rect x="330" y="395" width="12" height="40" fill="#A8703F"/>') + band(430, '#C98F5A', 26) + band(400, '#A8703F', 8) + lilies() + band(580, '#8FD67A') + reeds(604) + flowers(612)) + butterfly(300, '#B197FC', '#FFFFFF'),
@@ -300,7 +307,7 @@
       GF._blink = setInterval(() => { const [im, w] = GF.rnd(ims); const o = im.src; im.src = GF.src(w + '.joy'); setTimeout(() => { im.src = o; }, 140); }, 1700);
       if (!GF._intro) { GF._intro = 1; setTimeout(() => GF.sting(), 650); }
       const row = el('div', 'homebtns', r);
-      [['story', 'book', '#FFE0E8', () => GF.go('map')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album')]].forEach((b) => {
+      [['story', 'book', '#FFE0E8', () => GF.go('shelf')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album', { book: 1 })]].forEach((b) => {
         const k = el('button', 'card', row, IC[b[1]]); k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
       });
       // 부모 메뉴: 로고를 3초 길게
@@ -310,29 +317,87 @@
     },
   });
 
-  /* ---------------- 이야기 지도 ---------------- */
-  const NODES_P = [[80, 520], [250, 430], [100, 330], [250, 230], [110, 130]], NODES_W = [[90, 300], [230, 210], [370, 310], [510, 200], [640, 300]];
-  const chOpen = (i) => i === 0 || (GF.state.stages['c' + i + 'C'] && GF.state.stages['c' + i + 'C'].done);
-  const chReady = (i) => !!GF.data.stages['ch' + (i + 1)];
-  GF.screen('map', {
+  /* ---------------- 책 표지(코드 그림) · 책장 ---------------- */
+  // 표지는 300×400 비율. 캐릭터는 DOM 이미지로 올린다(래스터 캐릭터 그대로).
+  const COVER = {
+    1: { title: '막둥이의 생일 가는 길', lines: ['막둥이의', '생일 가는 길'], ty: 104, sky: ['#BFE8FF', '#FFF6E5'],
+      svg: '<ellipse cx="80" cy="360" rx="190" ry="90" fill="#B6E6A0"/><ellipse cx="250" cy="372" rx="170" ry="80" fill="#9ADB88"/><circle cx="238" cy="66" r="30" fill="#FFE27A"/>'
+        + '<path d="M0 36Q150 84 300 36" fill="none" stroke="#fff" stroke-width="3"/>' + [0, 1, 2, 3, 4, 5, 6, 7].map((i) => { const t = i / 7, x = 12 + t * 276, y = 38 + 24 * 4 * t * (1 - t) * 1.0; return '<path d="M' + (x - 9) + ' ' + y + 'L' + (x + 9) + ' ' + y + 'L' + x + ' ' + (y + 20) + 'z" fill="' + ['#FF8FA8', '#FFD36B', '#8FD3F4', '#6CCB8A'][i % 4] + '"/>'; }).join('')
+        + '<path d="M130 290L170 290L210 400L90 400z" fill="#F3DDB3"/><rect x="95" y="190" width="110" height="100" rx="8" fill="#F6C28B" stroke="#4A3030" stroke-width="4"/><rect x="80" y="160" width="140" height="42" rx="8" fill="#D9765B" stroke="#4A3030" stroke-width="4"/><rect x="136" y="232" width="28" height="58" rx="8" fill="#8A5A3B"/><rect x="110" y="215" width="26" height="26" fill="#BFE8FF" stroke="#4A3030" stroke-width="3"/><rect x="170" y="215" width="26" height="26" fill="#BFE8FF" stroke="#4A3030" stroke-width="3"/>',
+      chars: [['baby.joy', 24, 99, 24], ['nemo_kids.kid1', 76, 99, 30]] },
+    2: { title: '막둥이의 기차 여행', lines: ['막둥이의', '기차 여행'], ty: 78, sky: ['#BFE8FF', '#FFF1DA'],
+      svg: '<ellipse cx="60" cy="330" rx="180" ry="70" fill="#C7E6B0"/><ellipse cx="260" cy="340" rx="150" ry="64" fill="#B6E6A0"/><circle cx="240" cy="64" r="30" fill="#FFE27A"/><rect x="0" y="352" width="300" height="48" fill="#8FD67A"/>'
+        + '<rect x="0" y="362" width="300" height="5" fill="#6B5F70"/><rect x="0" y="380" width="300" height="5" fill="#6B5F70"/>' + Array.from({ length: 11 }, (_, i) => '<rect x="' + (i * 30 - 4) + '" y="357" width="18" height="34" rx="3" fill="#8A5A3B" opacity=".9"/>').join('')
+        + '<g stroke="#4A3030" stroke-width="4" stroke-linejoin="round"><rect x="8" y="214" width="82" height="120" rx="14" fill="#FFB347"/><rect x="62" y="184" width="26" height="46" fill="#6B5F70"/><rect x="94" y="228" width="100" height="106" rx="14" fill="#8FD3F4"/><rect x="198" y="228" width="96" height="106" rx="14" fill="#FF8FA8"/><rect x="16" y="230" width="44" height="38" rx="8" fill="#fff"/></g>'
+        + '<g fill="#4A3030"><circle cx="38" cy="340" r="15"/><circle cx="124" cy="340" r="15"/><circle cx="166" cy="340" r="15"/><circle cx="228" cy="340" r="15"/><circle cx="268" cy="340" r="15"/></g>'
+        + '<path d="M70 176q-14-26 10-40M86 154q-6-22 14-34" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".85"/>'
+        + '<g fill="#fff" opacity=".95"><ellipse cx="62" cy="170" rx="34" ry="13"/><ellipse cx="44" cy="177" rx="22" ry="10"/><ellipse cx="86" cy="177" rx="24" ry="10"/><ellipse cx="226" cy="150" rx="36" ry="13"/><ellipse cx="206" cy="157" rx="22" ry="10"/><ellipse cx="250" cy="157" rx="24" ry="10"/></g><g fill="none" stroke="#4A3030" stroke-width="3" stroke-linecap="round"><path d="M150 140q6-8 12 0q6-8 12 0"/><path d="M186 120q5-7 10 0q5-7 10 0"/></g>',
+      windows: [[102, 240, 40, 56, 'wife.joy'], [148, 240, 40, 56, 'baby.joy'], [206, 240, 40, 56, 'husband.good'], [250, 240, 40, 56, 'dong_dad.good']], chars: [] },
+    3: { title: '다음 이야기', sky: ['#E9E3F0', '#F6F2FA'], svg: '<ellipse cx="150" cy="380" rx="220" ry="80" fill="#DCD4E6"/>', chars: [], locked: true },
+  };
+  GF.cover = function (book, parent) {
+    const c = COVER[book], d = el('div', 'coverart', parent), id = 'cg' + (++gid);
+    d.innerHTML = '<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%"><defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + c.sky[0] + '"/><stop offset="1" stop-color="' + c.sky[1] + '"/></linearGradient></defs><rect width="300" height="400" fill="url(#' + id + ')"/>' + c.svg
+      + (c.lines ? c.lines.map((t, i) => '<text x="150" y="' + (c.ty + i * 38) + '" font-size="31" text-anchor="middle" font-weight="900" font-family="Jua,Malgun Gothic,sans-serif" fill="#fff" stroke="#3A2E39" stroke-width="7" stroke-linejoin="round" paint-order="stroke">' + t + '</text>').join('') : '')
+      + (c.locked ? '<text x="150" y="250" font-size="150" text-anchor="middle" fill="#fff" font-weight="900" font-family="sans-serif">?</text>' : '') + '</svg>';
+    (c.windows || []).forEach((w) => {
+      const f = el('div', 'abs', d); f.style.cssText = 'left:' + w[0] / 3 + '%;top:' + w[1] / 4 + '%;width:' + w[2] / 3 + '%;height:' + w[3] / 4 + '%;overflow:hidden;border-radius:10px;background:#fff;border:3px solid #4A3030;box-sizing:border-box';
+      const im = GF.img(w[4]); im.style.cssText = 'position:absolute;left:50%;top:6%;width:150%;transform:translateX(-50%);height:auto'; f.appendChild(im);
+    });
+    (c.chars || []).forEach((q) => { const im = GF.img(q[0]); im.style.cssText = 'position:absolute;left:' + q[1] + '%;top:' + q[2] + '%;height:' + q[3] + '%;width:auto;transform:translate(-50%,-100%)'; d.appendChild(im); });
+    return d;
+  };
+  GF.screen('shelf', {
     wide: () => true,
     enter(r) {
-      GF.bg('stream', r);
+      GF.bg('home', r);
+      const w = GF.safeWide, cw = w ? 168 : 104, chh = cw * 4 / 3, gapx = w ? 40 : 14, total = 3 * cw + 2 * gapx, x0 = (GF.safe.w - total) / 2, y0 = w ? 96 : 190;
+      const plank = el('div', 'abs', r); plank.style.cssText = 'left:-2000px;right:-2000px;top:' + (y0 + chh - 6) + 'px;height:30px;background:linear-gradient(#C98F5A,#A8703F);box-shadow:0 6px 0 rgba(0,0,0,.14);z-index:1';
+      [1, 2, 3].forEach((bk, i) => {
+        const open = bk <= 2, b = el('button', 'cover' + (open ? '' : ' locked'), r); b.dataset.book = bk;
+        b.style.cssText = 'left:' + (x0 + i * (cw + gapx)) + 'px;top:' + y0 + 'px;width:' + cw + 'px;height:' + chh + 'px';
+        GF.cover(bk, b); el('div', 'bknum', b, bk);
+        if (!open) el('div', 'abs', b, '<svg class="lock" viewBox="0 0 32 32" style="width:44px;height:44px;right:8px;bottom:8px;position:absolute">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
+        b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('tilt'); setTimeout(() => b.classList.remove('tilt'), 700); return; } GF.sfx('pick'); GF.go('map', { book: bk }); };
+      });
+    },
+  });
+
+  /* ---------------- 이야기 지도 (책 한 권 = 장 5개) ---------------- */
+  const NODES_P = [[80, 520], [250, 430], [100, 330], [250, 230], [110, 130]], NODES_W = [[90, 300], [230, 210], [370, 310], [510, 200], [640, 300]];
+  const chOpen = (n) => n === 1 || n === 6 || (GF.state.stages['c' + (n - 1) + 'C'] && GF.state.stages['c' + (n - 1) + 'C'].done);   // 2편(6장)은 처음부터 열려 있다
+  const chReady = (n) => !!GF.data.stages['ch' + n];
+  function bookArrows(r, book, name) {                                        // 책 넘기기 ◀ ▶ (지도·앨범 공통)
+    [[-1, 14], [1, null]].forEach(([dir, left]) => {
+      const nb = book + dir; if (nb < 1 || nb > 2) return;
+      const b = el('button', 'round-btn', r, dir < 0 ? '<svg viewBox="0 0 32 32"><path d="M22 5L6 16l16 11z" fill="#3A2E39"/></svg>' : '<svg viewBox="0 0 32 32"><path d="M10 5l16 11-16 11z" fill="#3A2E39"/></svg>');
+      b.style.cssText = 'position:absolute;bottom:18px;width:64px;height:64px;' + (left != null ? 'left:' + left + 'px' : 'right:14px');
+      b.onclick = () => { GF.sfx('page'); GF.replace(name, { book: nb }); };
+    });
+  }
+  GF.screen('map', {
+    wide: () => true,
+    enter(r, p) {
+      const book = p.book || 1, off = (book - 1) * 5;
+      GF.bg(book === 2 ? 'rails' : 'stream', r);
       const NODES = GF.safeWide ? NODES_W : NODES_P;
       let d = 'M' + NODES.map((n) => n.join(' ')).join(' L');
-      el('div', 'bg', r, '<svg viewBox="0 0 ' + GF.safe.w + ' ' + GF.safe.h + '"><path d="' + d + '" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 22" opacity=".95"/></svg>');
+      el('div', 'bg', r, '<svg viewBox="0 0 ' + GF.safe.w + ' ' + GF.safe.h + '">' + (book === 2
+        ? '<path d="' + d + '" fill="none" stroke="#8A5A3B" stroke-width="22" stroke-linecap="butt" stroke-linejoin="round" stroke-dasharray="4 16"/><path d="' + d + '" fill="none" stroke="#6B5F70" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>'
+        : '<path d="' + d + '" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 22" opacity=".95"/>') + '</svg>');
       NODES.forEach((n, i) => {
-        const open = chReady(i) && chOpen(i);
+        const num = off + i + 1, open = chReady(num) && chOpen(num);
         const b = el('button', 'card node' + (open ? '' : ' locked'), r); b.style.cssText += 'left:' + n[0] + 'px;top:' + n[1] + 'px;border-radius:50%';
-        const heroes = (GF.data.stages['ch' + (i + 1)] || {}).heroes || ['baby.good'];
+        const heroes = (GF.data.stages['ch' + num] || {}).heroes || ['baby.good'];
         b.appendChild(GF.img(heroes[0])); el('div', 'num', b, i + 1);
         if (!open) el('div', '', b, '<svg class="lock" viewBox="0 0 32 32">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
         b.onclick = () => {
           if (!open) { GF.sfx('no'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; }
-          GF.sfx('pick'); const ch = 'ch' + (i + 1);
+          GF.sfx('pick'); const ch = 'ch' + num;
           if (!GF.state.seen[ch]) GF.go('book', { ch, part: 'pro' }); else GF.go('stages', { ch });
         };
       });
+      bookArrows(r, book, 'map');
     },
   });
 
@@ -343,6 +408,7 @@
     note: '<svg viewBox="0 0 52 52"><path d="M20 38V12l22-5v26" fill="none" stroke="#6CCB8A" stroke-width="5" stroke-linejoin="round"/><circle cx="14" cy="38" r="8" fill="#6CCB8A"/><circle cx="36" cy="33" r="8" fill="#6CCB8A"/></svg>',
     sizes: '<svg viewBox="0 0 52 52"><circle cx="13" cy="28" r="11" fill="#F6C28B"/><circle cx="33" cy="31" r="8" fill="#8FD3F4"/><circle cx="46" cy="34" r="5" fill="#3B4A7A"/></svg>',
     question: '<svg viewBox="0 0 52 52"><path d="M16 18c0-7 6-11 11-11 6 0 10 4 10 9 0 8-9 8-10 15" fill="none" stroke="#8FD3F4" stroke-width="7" stroke-linecap="round"/><circle cx="26" cy="44" r="5" fill="#8FD3F4"/></svg>',
+    zzz: '<svg viewBox="0 0 52 52"><path d="M10 10h16L10 26h16" fill="none" stroke="#8FD3F4" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M30 26h12L30 38h12" fill="none" stroke="#8FD3F4" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg>',
     sparkle: '<svg viewBox="0 0 52 52"><path d="M26 4l5 17 17 5-17 5-5 17-5-17-17-5 17-5z" fill="#FFC933"/></svg>',
   };
   GF.screen('book', {
@@ -383,7 +449,7 @@
         }
         dots.innerHTML = cuts.map((_, k) => '<i class="' + (k === i ? 'on' : '') + '"></i>').join('');
         cap.style.display = GF.state.settings.captions && c.text ? 'block' : 'none'; cap.textContent = c.text || '';
-        GF.say(c.voice);
+        GF.say(c.voice); if (c.sfx) setTimeout(() => GF.sfx(c.sfx), 350);
       };
       const next = () => {
         GF.sfx('page');
@@ -528,10 +594,11 @@
   });
   GF.screen('album', {
     wide: () => true,
-    enter(r) {
+    enter(r, p) {
+      const book = p.book || 1, off = (book - 1) * 5;
       GF.bg('home', r);
       const a = el('div', 'album', r);
-      const chapters = [...new Set(GF.data.stickers.map((s) => s.ch))];
+      const chapters = [...new Set(GF.data.stickers.map((s) => s.ch))].filter((c) => c > off && c <= off + 5);
       chapters.forEach((ch, i) => {
         const row = el('div', 'albrow', a); el('div', 'ch', row, i + 1);
         GF.data.stickers.filter((s) => s.ch === ch).forEach((s) => {
@@ -539,6 +606,7 @@
           d.appendChild(GF.img(s.char));
         });
       });
+      bookArrows(r, book, 'album');
     },
   });
 

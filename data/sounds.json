@@ -66,6 +66,42 @@
    "vol": 1.0,
    "jitter": 0.05,
    "desc": "5장 문 열림 — 끼익 아닌 \"딩동\""
+  },
+  "note1": {
+   "file": "audio/note1.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "6장 따라 해요 패드1 — 도"
+  },
+  "note2": {
+   "file": "audio/note2.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "6장 패드2 — 레"
+  },
+  "note3": {
+   "file": "audio/note3.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "6장 패드3 — 미"
+  },
+  "note4": {
+   "file": "audio/note4.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "6장 패드4 — 솔"
+  },
+  "note5": {
+   "file": "audio/note5.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "6장 패드5 — 라"
+  },
+  "whistle": {
+   "file": "audio/whistle.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "6장 기차 기적 \"뿌우~\""
   }
  },
  "alias": {
@@ -74,17 +110,16 @@
  },
  "music": {
   "theme_main": {
-   "file": null,
-   "vol": 0.22,
+   "file": "audio/theme_main.wav",
+   "vol": 0.2,
    "loop": true,
-   "desc": "「기하학 가족」 테마 — 타이틀·홈 (60~90초 루프)",
-   "fallback": "theme_kids"
+   "desc": "「기하학 가족」 테마 — 타이틀·홈·지도 [임시: 시안 A 연결, 작가 판정 후 교체]"
   },
   "theme_kids": {
-   "file": "audio/bgm.wav",
-   "vol": 0.22,
+   "file": "audio/theme_main.wav",
+   "vol": 0.14,
    "loop": true,
-   "desc": "놀이 중 BGM — 테마의 자장가·뮤직박스 편곡 (60초 루프, 지금은 임시 자장가)"
+   "desc": "놀이 중 BGM [임시: 시안 A 를 낮은 음량으로, 판정 후 자장가 편곡으로 교체]"
   },
   "theme_short": {
    "file": null,
@@ -93,10 +128,10 @@
    "desc": "쇼츠·릴스 나레이션 밑 — 잔잔한 피아노, 말소리 대역 비움 (30초 루프)"
   },
   "logo_sting": {
-   "file": null,
+   "file": "audio/logo_sting.wav",
    "vol": 0.6,
    "loop": false,
-   "desc": "소리 로고 2초 — 테마 첫 네 음"
+   "desc": "소리 로고 2초 [임시: 시안 A]"
   },
   "night": {
    "file": null,
@@ -202,6 +237,30 @@
   "voice_c5_e2": {
    "file": null,
    "text": "세 가족이 한자리에 모였어요. 막둥이, 생일 축하해!"
+  },
+  "voice_c6_p1": {
+   "file": null,
+   "text": "어린이날 아침, 승강장에 세 가족이 모였어요."
+  },
+  "voice_c6_p2": {
+   "file": null,
+   "text": "기차가 곧 떠나요! 누가 먼저 도착할까요?"
+  },
+  "voice_c6_p3": {
+   "file": null,
+   "text": "세모 삼촌은 빨라요. 휘리릭! 동그라미 아저씨는 느릿느릿 뚜벅뚜벅."
+  },
+  "voice_c6_p4": {
+   "file": null,
+   "text": "막둥이가 응원할 순서를 따라 해 봐요!"
+  },
+  "voice_c6_e1": {
+   "file": null,
+   "text": "어? 세모 삼촌이 중간에 쿨쿨 낮잠을 잤어요."
+  },
+  "voice_c6_e2": {
+   "file": null,
+   "text": "동그라미 아저씨가 제일 먼저! 모두 박수~ 기차가 출발해요."
   }
  }
 }

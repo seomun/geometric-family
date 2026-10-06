@@ -83,6 +83,48 @@
   "bh": 0.892,
   "bw": 0.745
  },
+ "husband.good": {
+  "src": "assets/husband/good.png",
+  "w": 432,
+  "h": 540,
+  "bh": 0.89,
+  "bw": 0.712
+ },
+ "husband.joy": {
+  "src": "assets/husband/joy.png",
+  "w": 431,
+  "h": 540,
+  "bh": 0.89,
+  "bw": 0.712
+ },
+ "husband.love": {
+  "src": "assets/husband/love.png",
+  "w": 453,
+  "h": 540,
+  "bh": 0.885,
+  "bw": 0.707
+ },
+ "husband.surprise": {
+  "src": "assets/husband/surprise.png",
+  "w": 431,
+  "h": 540,
+  "bh": 0.892,
+  "bw": 0.712
+ },
+ "husband.wink": {
+  "src": "assets/husband/wink.png",
+  "w": 431,
+  "h": 540,
+  "bh": 0.89,
+  "bw": 0.708
+ },
+ "husband.worry": {
+  "src": "assets/husband/worry.png",
+  "w": 432,
+  "h": 540,
+  "bh": 0.892,
+  "bw": 0.712
+ },
  "dong_dad.good": {
   "src": "assets/dong_dad/good.png",
   "w": 431,

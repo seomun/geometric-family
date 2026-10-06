@@ -411,5 +411,109 @@
     ]
    }
   ]
+ },
+ "ch6": {
+  "mode": "sequence",
+  "bg": "station",
+  "heroes": [
+   "husband.joy",
+   "dong_dad.joy",
+   "baby.joy"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "pads": [
+       "wife.joy",
+       "husband.good",
+       "dong_dad.good"
+      ],
+      "len": 2
+     },
+     {
+      "pads": [
+       "wife.good",
+       "nemo_dad.good",
+       "baby.joy"
+      ],
+      "len": 2
+     },
+     {
+      "pads": [
+       "husband.joy",
+       "dong_dad.joy",
+       "nemo_mom.good"
+      ],
+      "len": 2
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "pads": [
+       "wife.joy",
+       "husband.good",
+       "dong_dad.good",
+       "baby.joy"
+      ],
+      "len": 3
+     },
+     {
+      "pads": [
+       "nemo_dad.good",
+       "nemo_mom.good",
+       "wife.good",
+       "husband.joy"
+      ],
+      "len": 3
+     },
+     {
+      "pads": [
+       "baby.good",
+       "husband.love",
+       "dong_dad.warm",
+       "wife.love"
+      ],
+      "len": 3
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "pads": [
+       "wife.joy",
+       "husband.good",
+       "dong_dad.good",
+       "nemo_dad.good",
+       "baby.joy"
+      ],
+      "len": 4
+     },
+     {
+      "pads": [
+       "nemo_mom.good",
+       "husband.wink",
+       "wife.good",
+       "dong_dad.joy",
+       "nemo_kids.kid1"
+      ],
+      "len": 4
+     },
+     {
+      "pads": [
+       "baby.joy",
+       "dong_dad.good",
+       "husband.joy",
+       "nemo_dad.joy",
+       "wife.wink"
+      ],
+      "len": 4
+     }
+    ]
+   }
+  ]
  }
 }

@@ -110,6 +110,21 @@ def s_page():
     b = np.pad(y, (0, int(0.4 * SR))); place(b, musicbox(hz('E5'), 0.5), 0.16, 0.6)
     return finish(reverb(b, 0.16), 0.6)
 
+def s_note(name):                   # 6호 따라 해요: 패드마다 고유 음(마림바 + 살짝 글로켄), 5음 = 도 레 미 솔 라 (어떤 순서로 눌러도 어울림)
+    def f():
+        b = buf(0.9); place(b, marimba(hz(name), 0.7), 0, 1); place(b, glock(hz(name) * 2, 0.8), 0.01, 0.18)
+        return finish(reverb(b, 0.16), 0.8)
+    return f
+def s_whistle():                    # 기차 기적 "뿌우~": 두 음이 겹친 부드러운 뿔피리(톱니 아닌 사인 합)
+    n = int(1.4 * SR); t = np.arange(n) / SR
+    glide = 1 - 0.07 * np.clip((t - 0.9) / 0.5, 0, 1)             # 끝에서 살짝 내려옴
+    y = np.zeros(n)
+    for f0, a in [(330.0, 1.0), (415.3, 0.8)]:
+        ph = 2 * np.pi * np.cumsum(f0 * glide) / SR
+        y += a * (np.sin(ph) + 0.35 * np.sin(2 * ph) + 0.15 * np.sin(3 * ph))
+    e = np.clip(t / 0.08, 0, 1) * np.clip((1.4 - t) / 0.35, 0, 1)
+    return finish(reverb(lp(y * e, 2600), 0.2, 0.55), 0.7, 0.05)
+
 def s_wind():                       # 바람 친구 "후~": 숨소리 같은 잡음이 부드럽게 커졌다 작아짐 + 아주 작은 휘파람
     n = int(1.6 * SR); t = np.arange(n) / SR
     env = np.sin(np.pi * np.clip(t / 1.6, 0, 1)) ** 1.6
@@ -155,6 +170,6 @@ def bgm():
     return b / (np.abs(b).max() + 1e-9) * 0.7
 
 if __name__ == '__main__':
-    for name, fn in [('tap', s_tap), ('pick', s_pick), ('drop', s_drop), ('ok', s_ok), ('celebrate', s_celebrate), ('hmm', s_hmm), ('flip', s_flip), ('star', s_star), ('page', s_page), ('wind', s_wind), ('door', s_door)]:
+    for name, fn in [('tap', s_tap), ('pick', s_pick), ('drop', s_drop), ('ok', s_ok), ('celebrate', s_celebrate), ('hmm', s_hmm), ('flip', s_flip), ('star', s_star), ('page', s_page), ('wind', s_wind), ('door', s_door), ('note1', s_note('C5')), ('note2', s_note('D5')), ('note3', s_note('E5')), ('note4', s_note('G5')), ('note5', s_note('A5')), ('whistle', s_whistle)]:
         save(name, fn())
     save('bgm', bgm(), 22050)

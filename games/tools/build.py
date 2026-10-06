@@ -45,7 +45,7 @@ for f in sorted(files):                      # 슬롯이 가리키는 파일만 
 data['audio'] = audio
 
 css = (G / 'engine' / 'gf.css').read_text(encoding='utf-8')
-js_files = ['engine/gf.js', 'engine/art.js'] + [f'engine/modes/{n}.js' for n in ['shadow', 'faces', 'puzzle', 'paint', 'shapes']]
+js_files = ['engine/gf.js', 'engine/art.js'] + [f'engine/modes/{n}.js' for n in ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence']]
 js = '\n'.join((G / f).read_text(encoding='utf-8') for f in js_files)
 
 src = (G / 'index.html').read_text(encoding='utf-8')

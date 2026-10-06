@@ -65,6 +65,14 @@ async function solvePaint(p, tag) {
   }
   return pts.length;
 }
+async function solveSequence(p) {
+  await p.waitForFunction(() => document.querySelector('.playarea').__ready === true, null, { timeout: 20000 });
+  const info = await p.evaluate(() => { const a = document.querySelector('.playarea'); const pads = [...a.querySelectorAll('.pad')].map((e) => { const r = e.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; }); return { seq: a.__seq, pads }; });
+  for (let k = 0; k < info.seq.length; k++) {
+    if (k === 0 && false) { /* 일부러 틀린 탭은 아래 별도 검증 */ }
+    const pd = info.pads[info.seq[k]]; await p.mouse.click(pd.x, pd.y); await wait(p, 450);
+  }
+}
 async function playStage(p, mode, tag) {
   for (let r = 0; r < 3; r++) {
     await wait(p, 500);
@@ -73,6 +81,7 @@ async function playStage(p, mode, tag) {
     else if (mode === 'faces') await solveFaces(p, r === 0 && tag.endsWith('A'));
     else if (mode === 'puzzle') await solvePuzzle(p);
     else if (mode === 'shapes') await solveShapes(p);
+    else if (mode === 'sequence') await solveSequence(p);
     else if (mode === 'paint') { await solvePaint(p, tag); await shot(p, tag + '_painted' + r); await p.click('.playarea .big', { force: true }); }
     if (r === 0 || (mode === 'paint' && r < 3)) await shot(p, tag + '_solved' + r);
     if (r === 0 && mode !== 'paint') { await wait(p, 1100); await shot(p, tag + '_celebrate'); }
@@ -89,11 +98,13 @@ async function playStage(p, mode, tag) {
   const p = await ctx.newPage(); const errs = [];
   p.on('pageerror', (e) => { errs.push(e.message); console.log('PAGEERR', e.message); }); p.on('console', (m) => { if (m.type() === 'error') errs.push(m.text()); });
   await p.goto(URL); await wait(p, 1200); await shot(p, 'home');
-  await p.click('.homebtns .card:nth-child(1)'); await wait(p, 500); await shot(p, 'map');
-  for (const ch of [1, 2, 3, 4, 5]) {
-    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes'][ch - 1];
+  await p.click('.homebtns .card:nth-child(1)'); await wait(p, 500); await shot(p, 'shelf');
+  await p.click('.cover[data-book="1"]'); await wait(p, 500); await shot(p, 'map');
+  for (const ch of [1, 2, 3, 4, 5, 6]) {
+    const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence'][ch - 1];
+    if (ch === 6) { await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.go('shelf'); GF.go('map', { book: 2 }); }); await wait(p, 600); await shot(p, 'map2'); }
     await wait(p, 400);
-    const nodes = await p.$$('.node'); await nodes[ch - 1].click(); await wait(p, 600);
+    const nodes = await p.$$('.node'); await nodes[(ch - 1) % 5].click(); await wait(p, 600);
     const np = await p.evaluate((c) => GF.data.story['ch' + c].pro.length, ch);
     for (let k = 0; k < np; k++) { if (k === 0) await shot(p, 'ch' + ch + '_book1'); await p.click('.nextbtn', { force: true }); await wait(p, 450); }
     await shot(p, 'ch' + ch + '_stages');

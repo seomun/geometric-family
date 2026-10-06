@@ -1,5 +1,5 @@
 {
- "version": 3,
+ "version": 4,
  "note": "사연 4컷. src=원문이면 작가 원문 그대로, src=각색이면 [제안] 문장(허브 확인 필요). 원문 위치는 source 필드. 동그라미네 아들·엄마·딸은 래스터가 올 때까지 src/characters.js 코드 캐릭터(code.*)를 쓴다.",
  "stories": [
   {
@@ -1998,6 +1998,419 @@
    "reward": {
     "laugh": 60
    }
+  },
+  {
+   "id": "e07a",
+   "title": "설 연휴",
+   "season": "설",
+   "months": [
+    1,
+    2
+   ],
+   "source": "content/episodes/EPISODES.md E07 (허브 초안)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "연휴 전날 밤. 네모네 트렁크에는 짐이 안 들어간다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_mom.worry",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "막둥이가 울고, 할머니가 웃는다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "baby.cry",
+      "nemo_grandma.good"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "세모 부부는 올해 여행이다. 공항에서 부모님 전화를 받고, 둘 다 조용해진다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.worry",
+      "wife.worry"
+     ]
+    },
+    {
+     "text": "동그라미네는 차례 없이 각자 쉰다. 저녁에 영상통화 10분.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_mom.good"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "이번 설, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "고향에 간다"
+     },
+     {
+      "k": "semo",
+      "t": "여행 가다 전화에 조용해진다"
+     },
+     {
+      "k": "dong",
+      "t": "영상통화만 한다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 60
+   }
+  },
+  {
+   "id": "e04",
+   "title": "어버이날",
+   "season": "어버이날",
+   "months": [
+    5
+   ],
+   "source": "content/episodes/EPISODES.md E04 (허브 초안)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "5월 8일, 어버이날이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "네모는 양가 합쳐 봉투가 여섯 개. 아이 넷 학원비도 이번 달이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_mom.worry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "세모네는 \"우리 집 먼저\" 대 \"우리 집 먼저\". 결국 둘 다 안 가고 통화만 한다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.worry",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미네는 미리 예약된 식당, 미리 준비된 선물. 식사 내내 조용하다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_mom.good",
+      "code.dong_son.good"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "question": {
+    "q": "어버이날, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "무리해서 다 챙긴다"
+     },
+     {
+      "k": "semo",
+      "t": "의논하다 지친다"
+     },
+     {
+      "k": "dong",
+      "t": "예약은 한 달 전에"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 60
+   }
+  },
+  {
+   "id": "e07b",
+   "title": "추석 잔소리",
+   "season": "추석",
+   "months": [
+    9,
+    10
+   ],
+   "source": "content/episodes/BANK_v2.md #38 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "추석 연휴, 잔소리 시간이 돌아왔다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "네모는 잔소리를 듣는 쪽이자, 하는 쪽이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_kids.kid1"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "세모네는 \"애는?\" 한마디에 전쟁이 난다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.surprise",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미네는 아무도 잔소리를 하지 않는다.\n\"잔소리도 관심이었다.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.warm",
+      "code.dong_mom.good"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "명절 잔소리, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "듣다가 나도 한다"
+     },
+     {
+      "k": "semo",
+      "t": "그 한마디에 싸운다"
+     },
+     {
+      "k": "dong",
+      "t": "아무도 하지 않아서 조용하다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 60
+   }
+  },
+  {
+   "id": "e40",
+   "title": "수능 아침",
+   "season": "수능",
+   "months": [
+    11
+   ],
+   "source": "content/episodes/BANK_v2.md #40 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "수능 아침. 네모네 큰딸이 시험장에 간다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_dad.worry",
+      "nemo_mom.worry"
+     ]
+    },
+    {
+     "text": "도시락 일곱 개를 싸던 손으로, 오늘은 도시락 하나를 싼다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_mom.joy"
+     ],
+     "bubble": "heart"
+    },
+    {
+     "text": "세모는 조카에게 응원 문자를 보낸다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "동그라미네 아들은 차 안이 조용하다.\n\"잘 다녀와.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.calm",
+      "code.dong_son.good"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "question": {
+    "q": "수능 아침, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "도시락을 싸고 배웅한다"
+     },
+     {
+      "k": "semo",
+      "t": "응원 문자를 보낸다"
+     },
+     {
+      "k": "dong",
+      "t": "차 안이 조용하다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 60
+   }
+  },
+  {
+   "id": "e28",
+   "title": "김장 주간",
+   "season": "김장",
+   "months": [
+    11,
+    12
+   ],
+   "source": "content/episodes/BANK_v2.md #28 (허브 초안, 전부 각색)",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "김장 주간. 현관에 택배 상자가 쌓인다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.surprise",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "text": "네모네 김치냉장고는 일곱 명 몫이다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_grandma.good",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "세모 부부는 올해 담그기로 했다. 배추 앞에서 벌써 싸운다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "husband.wink",
+      "wife.angry"
+     ]
+    },
+    {
+     "text": "동그라미는 혼자 먹기엔 많은 김치 통에 이웃 이름을 적는다.\n\"김치는 같이 먹어야.\"",
+     "src": "각색 [제안]",
+     "chars": [
+      "dong_dad.warm"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "김장철, 나는?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "온 가족이 모여 담근다"
+     },
+     {
+      "k": "semo",
+      "t": "담글까 사 먹을까 싸운다"
+     },
+     {
+      "k": "dong",
+      "t": "주문하고 나눠 준다"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 60
+   }
   }
- ]
+ ],
+ "ending": {
+  "id": "end",
+  "title": "세 식탁 한자리",
+  "bg": "indoor",
+  "source": "각색 [제안] — s30 「언제 밥 한번」에서 이어짐",
+  "cuts": [
+   {
+    "text": "해가 길던 어느 날, 세 집의 초대장이 한 식탁으로 모였다.",
+    "src": "각색 [제안]",
+    "chars": [
+     "nemo_dad.joy",
+     "husband.joy",
+     "dong_dad.good"
+    ],
+    "bubble": "sparkle"
+   },
+   {
+    "text": "네모는 아이들 손을 잡고 들어온다. 막둥이가 제일 먼저 의자에 올라앉는다.",
+    "src": "각색 [제안]",
+    "chars": [
+     "nemo_dad.joy",
+     "nemo_kids.kid1",
+     "nemo_kids.kid2",
+     "baby.joy"
+    ]
+   },
+   {
+    "text": "세모 부부는 온천 사진 대신 반찬통을 들고 왔다. 오늘은 싸우지 않는다.",
+    "src": "각색 [제안]",
+    "chars": [
+     "husband.joy",
+     "wife.joy"
+    ],
+    "bubble": "heart"
+   },
+   {
+    "text": "동그라미네 빈 의자 네 개가 다 찼다. 아무도 휴대폰을 보지 않는다.",
+    "src": "각색 [제안]",
+    "chars": [
+     "dong_dad.warm",
+     "code.dong_mom.good",
+     "code.dong_son.good"
+    ]
+   },
+   {
+    "text": "\"언제 밥 한번 먹자.\"\n언제가 오늘이 됐다.",
+    "src": "각색 [제안]",
+    "chars": [
+     "nemo_dad.joy",
+     "husband.love",
+     "dong_dad.joy"
+    ],
+    "bubble": "heart"
+   }
+  ],
+  "question": {
+   "q": "당신은 어느 도형인가요?",
+   "options": [
+    {
+     "k": "nemo",
+     "t": "북적이고 넘치는 네모"
+    },
+    {
+     "k": "semo",
+     "t": "티격태격 달달한 세모"
+    },
+    {
+     "k": "dong",
+     "t": "완벽한데 조용한 동그라미"
+    }
+   ]
+  },
+  "reward": {
+   "laugh": 300
+  }
+ }
 }

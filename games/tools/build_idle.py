@@ -9,9 +9,9 @@ def webp(path, max_h=420):
     if im.height > max_h: im = im.resize((round(im.width * max_h / im.height), max_h), Image.LANCZOS)
     buf = io.BytesIO(); im.save(buf, 'WEBP', quality=84, alpha_quality=95, method=6); return buf.getvalue()
 rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8'))
-bal, sto, chars, anchors, sounds = rd('idle_balance'), rd('idle_stories'), rd('chars'), rd('anchors'), rd('sounds')
+bal, sto, chars, anchors, sounds, props = rd('idle_balance'), rd('idle_stories'), rd('chars'), rd('anchors'), rd('sounds'), rd('idle_props')
 used = set(re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(bal) + json.dumps(sto)))
-data = {'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'base': ''}
+data = {'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'idle_props': props, 'base': ''}
 img = 0
 for k in sorted(used):
     if k not in chars: print('  ! 없는 캐릭터', k); continue

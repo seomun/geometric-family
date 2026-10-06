@@ -75,3 +75,7 @@
 
 .ribbon { position: absolute; left: 10px; right: 10px; top: 524px; height: 36px; border-radius: 19px; border: 0; background: #B04040; color: #fff; font-size: 18px; font-weight: 900; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 0 rgba(0,0,0,.2); z-index: 3; }
 .ribbon.done { background: #7A6F84; }
+.dexc .ic { font-size: 36px; line-height: 1.1; display: block; }
+.dexc.on { outline: 4px solid #E8870F; }
+.ribbon.gold { background: #B8860B; }
+.dexc { word-break: keep-all; }

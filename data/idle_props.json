@@ -1,0 +1,364 @@
+{
+ "version": 1,
+ "max": 3,
+ "props": [
+  {
+   "id": "p_mix",
+   "name": "믹스커피",
+   "icon": "☕",
+   "table": "nemo",
+   "cond": {
+    "t": "free"
+   },
+   "hint": "처음부터 있어요",
+   "premium": false
+  },
+  {
+   "id": "p_lunch",
+   "name": "도시락",
+   "icon": "🍱",
+   "table": "nemo",
+   "cond": {
+    "t": "tl",
+    "table": "nemo",
+    "lv": 3
+   },
+   "hint": "네모네 식탁 Lv3",
+   "premium": false
+  },
+  {
+   "id": "p_rice",
+   "name": "밥솥",
+   "icon": "🍚",
+   "table": "nemo",
+   "cond": {
+    "t": "gen",
+    "id": "n_pot",
+    "n": 3
+   },
+   "hint": "밥솥 늘리기 3번",
+   "premium": false
+  },
+  {
+   "id": "p_remote",
+   "name": "에어컨 리모컨",
+   "icon": "📺",
+   "table": "nemo",
+   "cond": {
+    "t": "story",
+    "id": "s12"
+   },
+   "hint": "사연 「에어컨 리모컨」",
+   "premium": false
+  },
+  {
+   "id": "p_points",
+   "name": "영수증",
+   "icon": "🧾",
+   "table": "nemo",
+   "cond": {
+    "t": "story",
+    "id": "s10"
+   },
+   "hint": "사연 「포인트 모으기」",
+   "premium": false
+  },
+  {
+   "id": "p_glass",
+   "name": "돋보기",
+   "icon": "🔍",
+   "table": "nemo",
+   "cond": {
+    "t": "story",
+    "id": "s08"
+   },
+   "hint": "사연 「돋보기」",
+   "premium": false
+  },
+  {
+   "id": "p_kimchi",
+   "name": "김장 김치",
+   "icon": "🥬",
+   "table": "nemo",
+   "cond": {
+    "t": "season",
+    "id": "e28"
+   },
+   "hint": "김장 주간 사건",
+   "premium": false
+  },
+  {
+   "id": "p_pill",
+   "name": "혈압약 통",
+   "icon": "💊",
+   "table": "nemo",
+   "cond": {
+    "t": "story",
+    "id": "s25"
+   },
+   "hint": "사연 「혈압약 첫날」",
+   "premium": false
+  },
+  {
+   "id": "p_photo",
+   "name": "가족사진",
+   "icon": "🖼️",
+   "table": "nemo",
+   "cond": {
+    "t": "gen",
+    "id": "n_baby"
+   },
+   "hint": "막둥이를 모시면",
+   "premium": false
+  },
+  {
+   "id": "p_pack1",
+   "name": "꽃무늬 식탁보",
+   "icon": "🌸",
+   "table": "nemo",
+   "cond": {
+    "t": "premium"
+   },
+   "hint": "꾸미기 팩(준비 중)",
+   "premium": true
+  },
+  {
+   "id": "p_tea",
+   "name": "온천 찻잔",
+   "icon": "🍵",
+   "table": "semo",
+   "cond": {
+    "t": "free"
+   },
+   "hint": "처음부터 있어요",
+   "premium": false
+  },
+  {
+   "id": "p_bagt",
+   "name": "여행 캐리어",
+   "icon": "🧳",
+   "table": "semo",
+   "cond": {
+    "t": "gen",
+    "id": "s_bag"
+   },
+   "hint": "여행 가방을 모시면",
+   "premium": false
+  },
+  {
+   "id": "p_pass",
+   "name": "여권",
+   "icon": "🛂",
+   "table": "semo",
+   "cond": {
+    "t": "tl",
+    "table": "semo",
+    "lv": 3
+   },
+   "hint": "세모네 식탁 Lv3",
+   "premium": false
+  },
+  {
+   "id": "p_globe",
+   "name": "지구본",
+   "icon": "🌍",
+   "table": "semo",
+   "cond": {
+    "t": "story",
+    "id": "s16"
+   },
+   "hint": "사연 「버킷리스트」",
+   "premium": false
+  },
+  {
+   "id": "p_ramen",
+   "name": "라면",
+   "icon": "🍜",
+   "table": "semo",
+   "cond": {
+    "t": "story",
+    "id": "s13"
+   },
+   "hint": "사연 「결혼기념일」",
+   "premium": false
+  },
+  {
+   "id": "p_phone",
+   "name": "읽은 메시지",
+   "icon": "💬",
+   "table": "semo",
+   "cond": {
+    "t": "story",
+    "id": "s28"
+   },
+   "hint": "사연 「읽씹」",
+   "premium": false
+  },
+  {
+   "id": "p_world",
+   "name": "세계일주 지도",
+   "icon": "🗺️",
+   "table": "semo",
+   "cond": {
+    "t": "season",
+    "id": "e14b"
+   },
+   "hint": "연말 사건 ② 술자리 세모",
+   "premium": false
+  },
+  {
+   "id": "p_pair",
+   "name": "커플 컵",
+   "icon": "🥂",
+   "table": "semo",
+   "cond": {
+    "t": "tl",
+    "table": "semo",
+    "lv": 8
+   },
+   "hint": "세모네 식탁 Lv8",
+   "premium": false
+  },
+  {
+   "id": "p_film",
+   "name": "넷플릭스 리모컨",
+   "icon": "🎬",
+   "table": "semo",
+   "cond": {
+    "t": "story",
+    "id": "s24"
+   },
+   "hint": "사연 「새벽 4시」",
+   "premium": false
+  },
+  {
+   "id": "p_pack2",
+   "name": "온천 포인트 카드",
+   "icon": "♨️",
+   "table": "semo",
+   "cond": {
+    "t": "premium"
+   },
+   "hint": "꾸미기 팩(준비 중)",
+   "premium": true
+  },
+  {
+   "id": "p_book",
+   "name": "책",
+   "icon": "📖",
+   "table": "dong",
+   "cond": {
+    "t": "free"
+   },
+   "hint": "처음부터 있어요",
+   "premium": false
+  },
+  {
+   "id": "p_flower",
+   "name": "배달 꽃",
+   "icon": "💐",
+   "table": "dong",
+   "cond": {
+    "t": "story",
+    "id": "s13"
+   },
+   "hint": "사연 「결혼기념일」",
+   "premium": false
+  },
+  {
+   "id": "p_label",
+   "name": "라벨 반찬통",
+   "icon": "🥡",
+   "table": "dong",
+   "cond": {
+    "t": "story",
+    "id": "s26"
+   },
+   "hint": "사연 「냉장고 정리」",
+   "premium": false
+  },
+  {
+   "id": "p_env",
+   "name": "부의 봉투",
+   "icon": "✉️",
+   "table": "dong",
+   "cond": {
+    "t": "story",
+    "id": "s04"
+   },
+   "hint": "사연 「상갓집」",
+   "premium": false
+  },
+  {
+   "id": "p_wreath",
+   "name": "화환 리본",
+   "icon": "🎀",
+   "table": "dong",
+   "cond": {
+    "t": "story",
+    "id": "s17"
+   },
+   "hint": "사연 「청첩장」",
+   "premium": false
+  },
+  {
+   "id": "p_ra",
+   "name": "테니스 라켓",
+   "icon": "🎾",
+   "table": "dong",
+   "cond": {
+    "t": "gen",
+    "id": "d_dau"
+   },
+   "hint": "동그라미 딸을 모시면",
+   "premium": false
+  },
+  {
+   "id": "p_vio",
+   "name": "바이올린",
+   "icon": "🎻",
+   "table": "dong",
+   "cond": {
+    "t": "gen",
+    "id": "d_son"
+   },
+   "hint": "동그라미 아들을 모시면",
+   "premium": false
+  },
+  {
+   "id": "p_chair",
+   "name": "네 번째 의자",
+   "icon": "🪑",
+   "table": "dong",
+   "cond": {
+    "t": "chairs",
+    "n": 4
+   },
+   "hint": "의자 네 개가 모두 차면",
+   "premium": false
+  },
+  {
+   "id": "p_clock",
+   "name": "벽시계",
+   "icon": "🕰️",
+   "table": "dong",
+   "cond": {
+    "t": "tot",
+    "v": 10000000000000.0
+   },
+   "hint": "누적 온기 10조",
+   "premium": false
+  },
+  {
+   "id": "p_pack3",
+   "name": "황금 식기",
+   "icon": "🍽️",
+   "table": "dong",
+   "cond": {
+    "t": "premium"
+   },
+   "hint": "꾸미기 팩(준비 중)",
+   "premium": true
+  }
+ ]
+}

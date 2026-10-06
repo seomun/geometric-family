@@ -55,6 +55,21 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     ok(broken === 0, id + ' 모든 컷 이미지 로드'); await pg.evaluate(() => GF.back());
   }
   // 8시간 가짜 시계: 오프라인 계산 (캡)
+  // 소품 30종·엔딩·시즌 도감
+  await D('give', 0); await D('checkProps');
+  const pc = await pg.evaluate(() => ({ n: Object.keys(IDLE.debug.S().pr).length, all: IDLE.debug.PR().length, prem: IDLE.debug.PR().filter((x) => x.premium).length }));
+  ok(pc.all === 30 && pc.n >= 3 && pc.prem <= 4, '소품 ' + pc.n + '/' + pc.all + ' (premium ' + pc.prem + ')');
+  await pg.evaluate(() => GF.go('iprops')); await pg.waitForSelector('.screen.on .dexc'); await shot('props');
+  await pg.click('.screen.on .dexc >> nth=0'); await pg.click('.screen.on .dexc.off >> nth=0'); await pg.waitForTimeout(300);
+  await pg.evaluate(() => GF.back());
+  await pg.evaluate(() => { const S = IDLE.debug.S(); S.sd.s30 = { k: 'nemo', t: 1 }; S.tl = { nemo: 15, semo: 15, dong: 15 }; S.chairs = 4; });
+  ok(await pg.evaluate(() => IDLE.debug.endingReady()), '엔딩 조건 충족 판정');
+  await pg.evaluate(() => GF.home && 0); await pg.evaluate(() => GF.go('itable')); await pg.waitForSelector('.screen.on .ribbon.gold', { timeout: 3000 }); await shot('ending_ribbon');
+  await pg.click('.screen.on .ribbon'); await pg.waitForSelector('.screen.on .cap');
+  for (let i = 0; i < 4; i++) { await pg.click('.screen.on .bigbtn:last-of-type'); await pg.waitForTimeout(250); } await shot('ending_last');
+  await pg.click('.screen.on .bigbtn:last-of-type'); await pg.waitForSelector('.screen.on .opt'); await pg.click('.screen.on .opt >> nth=0'); await pg.waitForSelector('.screen.on .ovp'); await shot('ending_done');
+  ok(await pg.evaluate(() => IDLE.debug.S().end > 0), '엔딩 도장'); await pg.click('.screen.on .ovp button'); await pg.waitForSelector('.tcard');
+  await pg.evaluate(() => GF.go('idex')); await pg.waitForSelector('.screen.on .dexg'); await shot('dex2'); await pg.evaluate(() => GF.back());
   // 8시간: (A) 12시간 부재 → 8시간 캡 한 번에 정산  (B) 같은 상태에서 3분씩 160번(=8시간) 가짜 시계로 진행 → 두 값이 같아야 한다
   const snap = await D('snap'), wBase = (await D('S')).w, rate0 = (await D('rates')).w;
   await D('awayHours', 12);

@@ -16,10 +16,13 @@ SFX = {
     'wind': ('5장 바람 친구 — 후~ 귀여운 바람', 1.0), 'door': ('5장 문 열림 — 끼익 아닌 "딩동"', 1.0),
     'note1': ('6장 따라 해요 패드1 — 도', 1.0), 'note2': ('6장 패드2 — 레', 1.0), 'note3': ('6장 패드3 — 미', 1.0), 'note4': ('6장 패드4 — 솔', 1.0), 'note5': ('6장 패드5 — 라', 1.0),
     'whistle': ('6장 기차 기적 "뿌우~"', 1.0),
+    'snd_swallow': ('7장 소리 찾기 — 제비 "찌르 찌르르"', 1.0), 'snd_bell': ('7장 — 종 "댕~ 댕~"', 1.0), 'snd_drum': ('7장 — 북 "둥~ 둥"', 1.0),
+    'snd_train': ('7장 — 기차 기적 (whistle.wav 재사용)', 1.0), 'snd_drop': ('7장 — 물방울 "똑~ 똑"', 1.0), 'snd_gourd': ('7장 — 박 "쩍!" + 반짝', 1.0),
+    'snd_wind': ('7장 — 바람 (wind.wav 재사용)', 1.0), 'snd_clap': ('7장 — 박수 짝짝짝', 1.0),
 }
 sfx = cur.setdefault('sfx', {})
 for k, (desc, vol) in SFX.items():
-    e = sfx.setdefault(k, {}); e.setdefault('file', f'audio/{k}.wav'); e.setdefault('vol', vol); e.setdefault('jitter', 0.05); e.setdefault('desc', desc)
+    e = sfx.setdefault(k, {}); e.setdefault('file', {'snd_train': 'audio/whistle.wav', 'snd_wind': 'audio/wind.wav'}.get(k, f'audio/{k}.wav')); e.setdefault('vol', vol); e.setdefault('jitter', 0.05); e.setdefault('desc', desc)
 cur.setdefault('alias', {'no': 'hmm', 'tada': 'celebrate'})
 mus = cur.setdefault('music', {})
 for k, (file, vol, loop, fb, desc) in {

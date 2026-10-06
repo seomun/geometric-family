@@ -239,3 +239,12 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .seqdots { position: absolute; left: 0; right: 0; top: 14px; display: flex; justify-content: center; gap: 12px; }
 .seqdots i { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,.7); border: 3px solid rgba(58,46,57,.25); }
 .seqdots i.on { background: #6CCB8A; border-color: #3E9B5F; }
+
+.padboard { position: absolute; border-radius: 36px; background: rgba(255,255,255,.55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 0 rgba(0,0,0,.08); }
+/* 폰 책장: 표지를 크게 한 권씩 넘긴다 */
+.shelfcar { position: absolute; left: 0; right: 0; display: flex; gap: 22px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; touch-action: pan-x; padding: 14px 0 22px; scrollbar-width: none; z-index: 2; }
+.shelfcar::-webkit-scrollbar { display: none; }
+.shelfcar .cover { position: relative; flex: none; scroll-snap-align: center; touch-action: pan-x; }
+.shelfdots { position: absolute; left: 0; right: 0; display: flex; justify-content: center; gap: 12px; z-index: 3; }
+.shelfdots i { width: 14px; height: 14px; border-radius: 50%; background: rgba(58,46,57,.25); }
+.shelfdots i.on { background: var(--pink); }

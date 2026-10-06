@@ -8,9 +8,10 @@ GF.mode('sequence', {
     const len = Math.max(2, Math.min(6, cfg.len + (ctx.level || 0)));
     const FAM = (id) => (/^(wife|husband)\./.test(id) ? '#8FD3F4' : /^dong_dad\./.test(id) ? '#3B4A7A' : '#F6C28B');   // 세모=하늘 · 동그라미=남색 · 네모=살구
     // ---- 배치: 가로는 한 줄, 세로는 3·4·5개를 (3) (2×2) (3+2) 로 ----
-    const top = wide ? 70 : 70, areaH = ctx.H - top - 16, gap = 14;
-    const cols = wide ? n : n <= 3 ? n : n === 4 ? 2 : 3, rows = Math.ceil(n / cols);
-    const size = Math.min((ctx.W - 70 - (cols - 1) * gap) / cols, (areaH - (rows - 1) * gap) / rows, wide ? 150 : 150);
+    const top = 78, areaH = ctx.H - top - 18, gap = 22;
+    const cols = wide ? n : 2, rows = Math.ceil(n / cols);        // 세로는 항상 2열(135px 안팎) — 3+2 일 때 마지막 줄은 가운데
+    const size = Math.min((ctx.W - 80 - (cols - 1) * gap) / cols, (areaH - (rows - 1) * gap) / rows, wide ? 150 : 150);
+    const board = GF.el('div', 'padboard', root);          // 배경 소품(기차·시계)과 패드를 분리하는 흐린 판
     const pads = cfg.pads.map((id, i) => {
       const r = Math.floor(i / cols), c = i % cols, inRow = r === rows - 1 ? n - r * cols : cols;
       const x = (ctx.W - (inRow * size + (inRow - 1) * gap)) / 2 + c * (size + gap), y = top + (areaH - (rows * size + (rows - 1) * gap)) / 2 + r * (size + gap);
@@ -19,6 +20,7 @@ GF.mode('sequence', {
       d.appendChild(ctx.img(id));
       return { el: d, id, i, cx: x + size / 2, cy: y + size / 2 };
     });
+    { const xs = pads.map((p) => p.cx), ys = pads.map((p) => p.cy), m = size / 2 + 18; board.style.cssText = `left:${Math.min(...xs) - m}px;top:${Math.min(...ys) - m}px;width:${Math.max(...xs) - Math.min(...xs) + 2 * m}px;height:${Math.max(...ys) - Math.min(...ys) + 2 * m}px`; }
     // ---- 순서 점(몇 번째까지 맞췄는지) ----
     const dotsEl = GF.el('div', 'seqdots', root); const dots = Array.from({ length: len }, () => GF.el('i', '', dotsEl));
     // ---- 순서 뽑기: 같은 패드가 연속으로 나오지 않게 ----

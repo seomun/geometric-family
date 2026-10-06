@@ -351,15 +351,30 @@
     wide: () => true,
     enter(r) {
       GF.bg('home', r);
-      const w = GF.safeWide, cw = w ? 168 : 104, chh = cw * 4 / 3, gapx = w ? 40 : 14, total = 3 * cw + 2 * gapx, x0 = (GF.safe.w - total) / 2, y0 = w ? 96 : 190;
-      const plank = el('div', 'abs', r); plank.style.cssText = 'left:-2000px;right:-2000px;top:' + (y0 + chh - 6) + 'px;height:30px;background:linear-gradient(#C98F5A,#A8703F);box-shadow:0 6px 0 rgba(0,0,0,.14);z-index:1';
-      [1, 2, 3].forEach((bk, i) => {
-        const open = bk <= 2, b = el('button', 'cover' + (open ? '' : ' locked'), r); b.dataset.book = bk;
-        b.style.cssText = 'left:' + (x0 + i * (cw + gapx)) + 'px;top:' + y0 + 'px;width:' + cw + 'px;height:' + chh + 'px';
+      const w = GF.safeWide, open = (bk) => bk <= 2;
+      const mk = (bk, host, cw, chh) => {
+        const b = el('button', 'cover' + (open(bk) ? '' : ' locked'), host); b.dataset.book = bk; b.style.width = cw + 'px'; b.style.height = chh + 'px';
         GF.cover(bk, b); el('div', 'bknum', b, bk);
-        if (!open) el('div', 'abs', b, '<svg class="lock" viewBox="0 0 32 32" style="width:44px;height:44px;right:8px;bottom:8px;position:absolute">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
-        b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('tilt'); setTimeout(() => b.classList.remove('tilt'), 700); return; } GF.sfx('pick'); GF.go('map', { book: bk }); };
-      });
+        if (!open(bk)) el('div', 'abs', b, '<svg class="lock" viewBox="0 0 32 32" style="width:44px;height:44px;right:8px;bottom:8px;position:absolute">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
+        return b;
+      };
+      const go = (bk, b) => { if (!open(bk)) { GF.sfx('hmm'); b.classList.add('tilt'); setTimeout(() => b.classList.remove('tilt'), 700); return; } GF.sfx('pick'); GF.go('map', { book: bk }); };
+      if (w) {                                                               // 태블릿 가로: 세 권을 나란히
+        const cw = 168, chh = cw * 4 / 3, gapx = 40, x0 = (GF.safe.w - (3 * cw + 2 * gapx)) / 2, y0 = 96;
+        const plank = el('div', 'abs', r); plank.style.cssText = 'left:-2000px;right:-2000px;top:' + (y0 + chh - 6) + 'px;height:30px;background:linear-gradient(#C98F5A,#A8703F);box-shadow:0 6px 0 rgba(0,0,0,.14);z-index:1';
+        [1, 2, 3].forEach((bk, i) => { const b = mk(bk, r, cw, chh); b.style.position = 'absolute'; b.style.left = x0 + i * (cw + gapx) + 'px'; b.style.top = y0 + 'px'; b.onclick = () => go(bk, b); });
+        return;
+      }
+      // 폰 세로: 표지 한 권이 화면 높이의 45% — 옆으로 밀어 넘긴다 (3편은 넘기면 나온다)
+      const cw = 216, chh = 288, y0 = 130;
+      const car = el('div', 'shelfcar', r); car.style.cssText += 'top:' + y0 + 'px;padding-left:' + (GF.safe.w - cw) / 2 + 'px;padding-right:' + (GF.safe.w - cw) / 2 + 'px';
+      const plank = el('div', 'abs', r); plank.style.cssText = 'left:-2000px;right:-2000px;top:' + (y0 + 14 + chh - 6) + 'px;height:30px;background:linear-gradient(#C98F5A,#A8703F);box-shadow:0 6px 0 rgba(0,0,0,.14);z-index:1';
+      const covers = [1, 2, 3].map((bk) => { const b = mk(bk, car, cw, chh); return b; });
+      const dots = el('div', 'shelfdots', r); dots.style.top = (y0 + chh + 70) + 'px'; const dd = covers.map(() => el('i', '', dots));
+      const idx = () => Math.max(0, Math.min(2, Math.round(car.scrollLeft / (cw + 22))));
+      const mark = () => dd.forEach((d, i) => d.classList.toggle('on', i === idx()));
+      car.addEventListener('scroll', mark); mark();
+      covers.forEach((b, i) => { b.onclick = () => { if (i === idx()) go(i + 1, b); else { GF.sfx('page'); car.scrollTo({ left: i * (cw + 22), behavior: 'smooth' }); } }; });
     },
   });
 

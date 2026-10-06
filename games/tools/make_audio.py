@@ -15,6 +15,9 @@ def hz(note):                      # 'C5' -> Hz
     n = names[note[0]] + (1 if '#' in note else 0); o = int(note[-1])
     return 440.0 * 2 ** ((n + 12 * (o + 1) - 69) / 12)
 
+def hp(x, fc, order=2):
+    b, a = butter(order, fc / (SR / 2), btype='high'); return lfilter(b, a, x)
+
 def lp(x, fc, order=2):
     b, a = butter(order, fc / (SR / 2)); return lfilter(b, a, x)
 
@@ -144,6 +147,48 @@ def s_door():                       # 문 열림 "딩동": 맑은 종 두 음(�
     place(b, glock(hz('C6'), 1.3), 0.30, 1.0); place(b, marimba(hz('C5'), 0.4), 0.30, 0.3)
     return finish(reverb(b, 0.24, 0.6), 0.8)
 
+# ---- 7장 소리 찾기: 8종 (제비·종·북·기적·물방울·박·바람·박수). 기적·바람은 기존 파일을 슬롯으로 재사용 ----
+def _bp(x, lo, hi, order=2):
+    b, a = butter(order, [lo / (SR / 2), hi / (SR / 2)], btype='band'); return lfilter(b, a, x)
+def _chirp(f0, f1, dur, vib=0.0):
+    n = int(dur * SR); t = np.arange(n) / SR; f = f0 + (f1 - f0) * (t / dur) ** 0.7
+    f = f * (1 + vib * np.sin(2 * np.pi * 38 * t)); ph = 2 * np.pi * np.cumsum(f) / SR
+    return (np.sin(ph) + 0.25 * np.sin(2 * ph)) * np.sin(np.pi * np.clip(t / dur, 0, 1)) ** 0.6
+def s_swallow():                    # 제비: 짧은 "찌르 찌르르 찌-" 세 마디
+    b = buf(1.5)
+    for t0, f0, f1, d in [(0.00, 2600, 3500, 0.10), (0.16, 2800, 3700, 0.09), (0.30, 3000, 3300, 0.22), (0.62, 2500, 3400, 0.10), (0.78, 3100, 3900, 0.14)]:
+        place(b, _chirp(f0, f1, d, vib=0.03) * 0.5, t0, 1)
+    return finish(reverb(b, 0.14, 0.4), 0.7)
+def s_bell():                       # 종: 댕~ 댕~ (낮은 종, 오래 울림)
+    b = buf(2.2)
+    place(b, glock(hz('A5'), 1.7), 0.0, 1.0); place(b, glock(hz('E6'), 1.2), 0.0, 0.25)
+    place(b, glock(hz('A5'), 1.7), 0.7, 0.8); place(b, glock(hz('E6'), 1.2), 0.7, 0.2)
+    return finish(reverb(b, 0.24, 0.7), 0.8)
+def s_drum():                       # 북: 둥~ 둥
+    def hit():
+        n = int(0.5 * SR); t = np.arange(n) / SR; f = 70 + 90 * np.exp(-t / 0.04)
+        y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.16) + lp(rng.standard_normal(n), 900) * np.exp(-t / 0.02) * 0.5
+        return y
+    b = buf(1.3); place(b, hit(), 0.0, 1.0); place(b, hit(), 0.45, 0.85); return finish(reverb(b, 0.14, 0.4), 0.85)
+def s_drop():                       # 물방울: 똑~ 똑
+    def d1():
+        n = int(0.16 * SR); t = np.arange(n) / SR; f = 1500 - 900 * (t / 0.16) ** 0.5
+        return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / 0.045)
+    b = buf(1.8); place(b, d1(), 0.0, 1.0); place(b, d1() * 0.8, 0.55, 1.0); return finish(reverb(b, 0.34, 0.9), 0.75)
+def s_gourd():                      # 박 쩍! + 반짝
+    n = int(0.12 * SR); t = np.arange(n) / SR
+    crack = hp(rng.standard_normal(n), 1800) * np.exp(-t / 0.018) * 0.9 + np.sin(2 * np.pi * 170 * t) * np.exp(-t / 0.05) * 0.6
+    b = buf(1.5); place(b, crack, 0.0, 1.0)
+    for i, nm in enumerate(['E6', 'G6', 'C7']): place(b, glock(hz(nm), 0.9), 0.12 + i * 0.09, 0.45)
+    return finish(reverb(b, 0.2, 0.5), 0.8)
+def s_clap():                       # 박수 짝짝짝짝
+    def clap():
+        n = int(0.09 * SR); t = np.arange(n) / SR
+        return _bp(rng.standard_normal(n), 900, 3800) * (np.exp(-t / 0.012) + 0.6 * np.exp(-np.clip(t - 0.012, 0, None) / 0.02))
+    b = buf(1.7)
+    for t0 in [0.0, 0.27, 0.54, 0.81, 1.08]: place(b, clap(), t0, 0.9)
+    return finish(reverb(b, 0.18, 0.4), 0.8)
+
 # ---- BGM: 자작 자장가 (뮤직박스, C 장조, 78 BPM, 16마디 ≈ 49초 루프) ----
 def bgm():
     bpm = 78; beat = 60 / bpm; bars = 16; total = bars * 4 * beat
@@ -170,6 +215,19 @@ def bgm():
     return b / (np.abs(b).max() + 1e-9) * 0.7
 
 if __name__ == '__main__':
-    for name, fn in [('tap', s_tap), ('pick', s_pick), ('drop', s_drop), ('ok', s_ok), ('celebrate', s_celebrate), ('hmm', s_hmm), ('flip', s_flip), ('star', s_star), ('page', s_page), ('wind', s_wind), ('door', s_door), ('note1', s_note('C5')), ('note2', s_note('D5')), ('note3', s_note('E5')), ('note4', s_note('G5')), ('note5', s_note('A5')), ('whistle', s_whistle)]:
+    for name, fn in [('tap', s_tap), ('pick', s_pick), ('drop', s_drop), ('ok', s_ok), ('celebrate', s_celebrate), ('hmm', s_hmm), ('flip', s_flip), ('star', s_star), ('page', s_page), ('wind', s_wind), ('door', s_door), ('note1', s_note('C5')), ('note2', s_note('D5')), ('note3', s_note('E5')), ('note4', s_note('G5')), ('note5', s_note('A5')), ('whistle', s_whistle), ('snd_swallow', s_swallow), ('snd_bell', s_bell), ('snd_drum', s_drum), ('snd_drop', s_drop), ('snd_gourd', s_gourd), ('snd_clap', s_clap)]:
         save(name, fn())
     save('bgm', bgm(), 22050)
+    try:                                                    # 7장 소리 8종 묶음(순서: 제비·종·북·기적·물방울·박·바람·박수, 각 두 번)
+        import lameenc, wave as _w
+        def _rd(n):
+            w = _w.open(str(OUT / (n + '.wav'))); return np.frombuffer(w.readframes(w.getnframes()), '<i2').astype(float) / 32768
+        order = ['snd_swallow', 'snd_bell', 'snd_drum', 'whistle', 'snd_drop', 'snd_gourd', 'wind', 'snd_clap']
+        parts = []
+        for nm in order:
+            x = _rd(nm); parts += [x, np.zeros(int(0.7 * SR)), x, np.zeros(int(1.8 * SR))]
+        allx = np.concatenate(parts); enc = lameenc.Encoder(); enc.set_bit_rate(128); enc.set_in_sample_rate(SR); enc.set_channels(1); enc.set_quality(2)
+        mp3 = enc.encode((np.clip(allx, -1, 1) * 32767).astype('<i2').tobytes()) + enc.flush()
+        (OUT.parent / 'media').mkdir(exist_ok=True); (OUT.parent / 'media' / 'soundfind_8.mp3').write_bytes(bytes(mp3)); print('soundfind_8.mp3', len(mp3) // 1024, 'KB')
+    except ImportError:
+        pass

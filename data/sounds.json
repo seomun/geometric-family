@@ -102,6 +102,54 @@
    "vol": 1.0,
    "jitter": 0.05,
    "desc": "6장 기차 기적 \"뿌우~\""
+  },
+  "snd_swallow": {
+   "file": "audio/snd_swallow.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "7장 소리 찾기 — 제비 \"찌르 찌르르\""
+  },
+  "snd_bell": {
+   "file": "audio/snd_bell.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "7장 — 종 \"댕~ 댕~\""
+  },
+  "snd_drum": {
+   "file": "audio/snd_drum.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "7장 — 북 \"둥~ 둥\""
+  },
+  "snd_train": {
+   "file": "audio/whistle.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "7장 — 기차 기적 (whistle.wav 재사용)"
+  },
+  "snd_drop": {
+   "file": "audio/snd_drop.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "7장 — 물방울 \"똑~ 똑\""
+  },
+  "snd_gourd": {
+   "file": "audio/snd_gourd.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "7장 — 박 \"쩍!\" + 반짝"
+  },
+  "snd_wind": {
+   "file": "audio/wind.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "7장 — 바람 (wind.wav 재사용)"
+  },
+  "snd_clap": {
+   "file": "audio/snd_clap.wav",
+   "vol": 1.0,
+   "jitter": 0.05,
+   "desc": "7장 — 박수 짝짝짝"
   }
  },
  "alias": {
@@ -113,7 +161,8 @@
    "file": "audio/theme_main.wav",
    "vol": 0.2,
    "loop": true,
-   "desc": "「기하학 가족」 테마 — 타이틀·홈·지도 [임시: 시안 A 연결, 작가 판정 후 교체]"
+   "desc": "「기하학 가족」 테마 — 타이틀·홈·지도 [임시: 시안 A 연결, 작가 판정 후 교체]",
+   "fallback": "theme_kids"
   },
   "theme_kids": {
    "file": "audio/theme_main.wav",

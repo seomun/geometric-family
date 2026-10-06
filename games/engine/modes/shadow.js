@@ -3,11 +3,11 @@ GF.mode('shadow', {
   setup(root, cfg, ctx) {
     const items = cfg.tokens.map((t) => ({ id: t.id, s: t.s || 1, key: t.id + '@' + (t.s || 1) }));
     const n = items.length, rows = n <= 3 ? 1 : 2, cols = Math.ceil(n / rows);
-    const cw = 340 / cols, ch = rows === 1 ? 250 : 135, base = Math.min(cw - 14, ch - 10, 150);
+    const AW = ctx.AW - 20, cw = AW / cols, ch = rows === 1 ? 250 : 135, base = Math.min(cw - 14, ch - 10, ctx.AW > 400 ? 175 : 150);
     const slots = [];
     const toks = [];
     let mistakes = 0, left = n, finger = null;
-    const rowX = (r, c) => { const inRow = r === rows - 1 ? n - r * cols : cols; return 10 + (340 - inRow * cw) / 2 + c * cw; };
+    const rowX = (r, c) => { const inRow = r === rows - 1 ? n - r * cols : cols; return ctx.AX + 10 + (AW - inRow * cw) / 2 + c * cw; };
 
     items.forEach((it, i) => {
       const r = Math.floor(i / cols), c = i % cols, x0 = rowX(r, c), y0 = 14 + r * ch;

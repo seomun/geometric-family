@@ -96,29 +96,44 @@
   GF.aspect = (id) => { if (GF.art && GF.art[id]) return GF.art[id].w / GF.art[id].h; const c = GF.data.chars[id] || GF.data.chars[id.split('.')[0] + '.good']; return c ? c.w / c.h : 1; };
 
   /* ---------------- 배경 (코드 SVG) ---------------- */
-  const sky = (a, b) => '<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + a + '"/><stop offset="1" stop-color="' + b + '"/></linearGradient></defs><rect width="360" height="640" fill="url(#sk)"/>';
+  // 배경은 360×640 안전 영역 기준 좌표로 그리되, 하늘·땅·언덕을 좌우 위아래로 끝없이 이어 화면 전체를 채운다.
+  let gid = 0;
+  const X0 = -2400, XW = 5160;
+  const sky = (a, b) => { const id = 'g' + ++gid; return '<defs><linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="640"><stop offset="0" stop-color="' + a + '"/><stop offset="1" stop-color="' + b + '"/></linearGradient></defs><rect x="' + X0 + '" y="-2400" width="' + XW + '" height="5400" fill="url(#' + id + ')"/>'; };
+  const band = (y, c, h) => '<rect x="' + X0 + '" y="' + y + '" width="' + XW + '" height="' + (h || 2400) + '" fill="' + c + '"/>';
+  const rep = (fn) => [-1080, -720, -360, 0, 360, 720, 1080].map((dx) => '<g transform="translate(' + dx + ' 0)">' + fn() + '</g>').join('');
   const hill = (y, c, r) => '<ellipse cx="' + r[0] + '" cy="' + y + '" rx="' + r[1] + '" ry="' + r[2] + '" fill="' + c + '"/>';
+  const cloud = (x, y, s) => '<g transform="translate(' + x + ' ' + y + ') scale(' + (s || 1) + ')" fill="#fff" opacity=".9"><ellipse cx="0" cy="0" rx="34" ry="16"/><ellipse cx="-22" cy="6" rx="22" ry="12"/><ellipse cx="24" cy="6" rx="24" ry="12"/></g>';
   const BG = {
-    home: () => sky('#FFE9C7', '#FFF6E5') + '<circle cx="300" cy="110" r="46" fill="#FFD36B"/>' + hill(660, '#BFE6A8', [90, 260, 150]) + hill(670, '#9BD98A', [290, 230, 130]),
-    stream: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="290" cy="90" r="38" fill="#FFE27A"/>' + hill(470, '#B6E6A0', [100, 240, 90]) + hill(480, '#9ADB88', [300, 200, 80]) + '<rect y="500" width="360" height="60" fill="#7CC8F0"/><path d="M0 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/><rect y="560" width="360" height="80" fill="#8FD67A"/>',
-    bridge: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="60" cy="90" r="34" fill="#FFE27A"/>' + hill(420, '#B6E6A0', [250, 260, 80]) + '<rect y="450" width="360" height="130" fill="#7CC8F0"/><path d="M0 480q30-10 60 0t60 0 60 0 60 0 60 0 60 0M0 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/><rect x="-10" y="430" width="380" height="26" rx="10" fill="#C98F5A"/><rect x="20" y="395" width="12" height="40" fill="#A8703F"/><rect x="330" y="395" width="12" height="40" fill="#A8703F"/><rect x="0" y="400" width="360" height="8" fill="#A8703F"/><rect y="580" width="360" height="60" fill="#8FD67A"/>',
-    hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90]) + '<rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/>',
-    field: () => sky('#CDEFFF', '#F7FCFF') + hill(500, '#B6E6A0', [180, 340, 100]) + '<rect y="520" width="360" height="120" fill="#C79A6B"/><path d="M0 560h360M0 600h360" stroke="#A97B4E" stroke-width="6"/>',
-    night: () => sky('#1F2A5C', '#4B5C9C') + [[40, 80], [120, 150], [250, 70], [320, 160], [200, 210], [60, 260], [310, 300]].map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#FFF3B0"/>').join('') + '<circle cx="270" cy="120" r="40" fill="#FFF3B0"/><circle cx="286" cy="110" r="36" fill="#2B3870"/>' + hill(660, '#2F4A6B', [180, 330, 160]),
-    house: () => sky('#BFE8FF', '#FFF6E5') + hill(560, '#B6E6A0', [180, 340, 120]) + '<rect y="560" width="360" height="80" fill="#8FD67A"/>',
+    home: () => sky('#FFE9C7', '#FFF6E5') + '<circle cx="300" cy="110" r="46" fill="#FFD36B"/>' + rep(() => hill(660, '#BFE6A8', [90, 260, 150]) + hill(670, '#9BD98A', [290, 230, 130])) + band(640, '#9BD98A'),
+    stream: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="290" cy="90" r="38" fill="#FFE27A"/>' + cloud(70, 80, 1) + cloud(200, 140, .8) + rep(() => hill(470, '#B6E6A0', [100, 240, 90]) + hill(480, '#9ADB88', [300, 200, 80])) + band(500, '#7CC8F0', 60) + rep(() => '<path d="M0 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/>') + band(560, '#8FD67A'),
+    bridge: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="60" cy="90" r="34" fill="#FFE27A"/>' + cloud(230, 70, 1) + cloud(130, 150, .7) + rep(() => hill(420, '#B6E6A0', [250, 260, 80])) + band(450, '#7CC8F0', 130) + rep(() => '<path d="M0 480q30-10 60 0t60 0 60 0 60 0 60 0 60 0M0 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/><rect x="20" y="395" width="12" height="40" fill="#A8703F"/><rect x="330" y="395" width="12" height="40" fill="#A8703F"/>') + band(430, '#C98F5A', 26) + band(400, '#A8703F', 8) + band(580, '#8FD67A'),
+    hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + rep(() => hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90])) + band(600, '#A9D36E') + '<rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/>',
+    field: () => sky('#CDEFFF', '#F7FCFF') + cloud(90, 90, 1) + cloud(260, 150, .8) + rep(() => hill(500, '#B6E6A0', [180, 340, 100])) + band(520, '#C79A6B') + band(558, '#A97B4E', 6) + band(598, '#A97B4E', 6),
+    night: () => sky('#1F2A5C', '#4B5C9C') + rep(() => [[40, 80], [120, 150], [250, 70], [320, 160], [200, 210], [60, 260], [310, 300]].map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#FFF3B0"/>').join('')) + '<circle cx="270" cy="120" r="40" fill="#FFF3B0"/><circle cx="286" cy="110" r="36" fill="#2B3870"/>' + rep(() => hill(660, '#2F4A6B', [180, 330, 160])) + band(640, '#2F4A6B'),
+    house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A'),
   };
-  GF.bg = function (name, parent) { const d = el('div', 'bg', parent); d.innerHTML = '<svg viewBox="0 0 360 640" preserveAspectRatio="none">' + (BG[name] || BG.home)() + '</svg>'; return d; };
+  GF.bg = function (name, parent) { const d = el('div', 'bg', parent); d.innerHTML = '<svg viewBox="0 0 360 640" preserveAspectRatio="none" style="overflow:visible">' + (BG[name] || BG.home)() + '</svg>'; return d; };
 
   /* ---------------- 코어: 화면 스택·레터박스·상단바 ---------------- */
-  let stage, topbar, scale = 1;
-  GF.pt = (e) => { const r = stage.getBoundingClientRect(); return { x: (e.clientX - r.left) / scale, y: (e.clientY - r.top) / scale }; };
+  let stage, topbar, scale = 1, safeEl;
+  GF.pt = (e) => { const r = safeEl.getBoundingClientRect(); return { x: (e.clientX - r.left) / scale, y: (e.clientY - r.top) / scale }; };
+  // 화면 전체(vw×vh)를 프레임으로 쓰고, 360×640 안전 영역을 시스템 바 안쪽 가운데에 둔다.
+  // 가로·세로·태블릿 모두 배경은 끝까지 채워지고 놀이 UI 만 안전 영역에 앵커된다.
   function fit() {
-    scale = Math.min(window.innerWidth / W, window.innerHeight / H);
-    stage.style.transform = 'scale(' + scale + ')';
-    stage.style.left = Math.round((window.innerWidth - W * scale) / 2) + 'px';
-    stage.style.top = Math.round((window.innerHeight - H * scale) / 2) + 'px';
+    const vw = window.innerWidth, vh = window.innerHeight, probe = $('inset');
+    const cs = getComputedStyle(probe), top = parseFloat(cs.paddingTop) || 0, bot = parseFloat(cs.paddingBottom) || 0;
+    const availH = vh - top - bot;
+    scale = Math.min(vw / W, availH / H);
+    const frame = $('frame'); frame.style.width = vw / scale + 'px'; frame.style.height = vh / scale + 'px'; frame.style.transform = 'scale(' + scale + ')';
+    $('topbar').style.top = top / scale + 'px';
+    GF.pad = 12;   // 상단 바는 화면 가장자리에 붙인다 (가로 태블릿도 엄지가 닿게)
+    $('topbar').style.paddingLeft = $('topbar').style.paddingRight = GF.pad + 'px';
+    safeEl.style.left = (vw / scale - W) / 2 + 'px'; safeEl.style.top = (top + (availH - H * scale) / 2) / scale + 'px';
+    GF.view = { vw, vh, lw: vw / scale, lh: vh / scale, landscape: vw > vh };
+    document.body.classList.toggle('land', vw > vh);
   }
-  GF.screen = function (name, def) { def.el = el('div', 'screen', $('stage')); def.name = name; GF.screens[name] = def; return def; };
+  GF.screen = function (name, def) { def.el = el('div', 'screen', $('safe')); def.name = name; GF.screens[name] = def; return def; };
   function show(name, params) {
     Object.values(GF.screens).forEach((s) => { s.el.classList.remove('on'); s.leave && s.leave(); });
     const s = GF.screens[name];
@@ -320,7 +335,7 @@
       const cfg = run.kind === 'story' ? def.stages[run.k].rounds[run.i] : mode.free(run.diff, run.i);
       hintCount = 0; let finished = false;
       const ctx = {
-        W: 360, H: 576, level: run.level, sfx: GF.sfx, img: GF.img, shuffle, rnd, say: GF.say,
+        W: 360, H: 576, AW: Math.min(GF.view.lw, 720), AX: (360 - Math.min(GF.view.lw, 720)) / 2, level: run.level, sfx: GF.sfx, img: GF.img, shuffle, rnd, say: GF.say,
         timeout(fn, ms) { const t = setTimeout(fn, ms); timers.push(t); return t; },
         setHint(fn) { hintFn = fn; armHint(); },
         done(res) { if (finished) return; finished = true; hintFn = null; hintT.forEach(clearTimeout); res.hints = hintCount; finish(r, res, def); },
@@ -419,7 +434,7 @@
     return out;
   }
   GF.boot = async function () {
-    stage = $('stage'); topbar = $('topbar');
+    stage = $('stage'); safeEl = $('safe'); topbar = $('topbar');
     GF.data = await loadData(); GF.data.voice = GF.data.voice || {};
     if (GF.data.base != null) GF.base = GF.data.base;
     GF.state = Store.load();
@@ -434,7 +449,7 @@
     };
     $('b-sound').onclick = () => { GF.state.settings.mute = !GF.state.settings.mute; Store.save(); refreshBar(); GF.sfx('tap'); };
     // 부모 패널
-    const p = el('div', 'parent', stage); el('div', 'panel', p); Gate.p = p;
+    const p = el('div', 'parent', safeEl); el('div', 'panel', p); Gate.p = p;
     document.addEventListener('pointerdown', ensureAudio, { once: true });
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') GF.back(); });
     window.addEventListener('popstate', () => GF.back());

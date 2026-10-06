@@ -11,10 +11,12 @@ const wait = (p, ms) => p.waitForTimeout(ms);
     const p = await (await b.newContext({ viewport: { width: w, height: h } })).newPage();
     const errs = []; p.on('pageerror', (e) => errs.push(e.message));
     const shot = (n) => p.screenshot({ path: path.join(OUT, `game_dev_${name}_${n}.png`) });
-    await p.goto(URL); await wait(p, 1000); await shot('home');
+    await p.goto(URL); await wait(p, 2600); await shot('home');
     await p.evaluate(() => { GF.state.seen.ch1 = 1; GF.go('book', { ch: 'ch1', part: 'pro', replay: true }); }); await wait(p, 700); await shot('book');
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch1', k: 1, id: 'c1B' }); }); await wait(p, 900); await shot('shadow');
     await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.Stage.start({ kind: 'story', ch: 'ch2', k: 2, id: 'c2C' }); }); await wait(p, 900); await shot('faces');
+    await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.go('map'); }); await wait(p, 600); await shot('map');
+    await p.evaluate(() => { GF.go('stages', { ch: 'ch1' }); }); await wait(p, 600); await shot('stages');
     console.log(name, w + 'x' + h, errs.length ? 'ERR ' + errs.join('|') : 'ok');
     await p.close();
   }

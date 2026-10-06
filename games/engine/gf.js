@@ -140,41 +140,48 @@
   const flowers = (y) => rep(() => [[24, 8, '#FF8FA8'], [88, 22, '#FFF3B0'], [150, 4, '#FFFFFF'], [212, 18, '#FF8FA8'], [280, 6, '#FFF3B0'], [334, 20, '#fff']].map((f) => '<g transform="translate(' + f[0] + ' ' + (y + f[1]) + ')"><circle r="5" fill="' + f[2] + '"/><circle r="2" fill="#FFC933"/></g>').join(''));
   const reeds = (y) => rep(() => [[30, 0], [44, 8], [318, 2], [332, 10]].map((r) => '<g class="sway" style="animation-delay:-' + (r[0] % 7) * 0.4 + 's"><path d="M' + r[0] + ' ' + (y + r[1]) + 'v-58" stroke="#7BAA55" stroke-width="4" stroke-linecap="round"/><ellipse cx="' + r[0] + '" cy="' + (y + r[1] - 64) + '" rx="5.5" ry="13" fill="#8A5A3B"/></g>').join(''));
   const lilies = () => rep(() => [[70, 505], [160, 548], [255, 515], [330, 556]].map((l) => '<g class="bob" style="animation-delay:-' + l[0] % 5 + 's"><ellipse cx="' + l[0] + '" cy="' + l[1] + '" rx="24" ry="9" fill="#5FB57B"/><circle cx="' + (l[0] + 6) + '" cy="' + (l[1] - 5) + '" r="5" fill="#FF8FA8"/></g>').join(''));
-  const butterfly = (y, c) => '<g class="fly"><g transform="translate(0 ' + y + ')"><g class="flap"><ellipse cx="-6" cy="0" rx="8" ry="11" fill="' + c + '"/><ellipse cx="6" cy="0" rx="8" ry="11" fill="' + c + '"/></g><rect x="-1.5" y="-8" width="3" height="16" rx="1.5" fill="#4A3030"/></g></g>';
+  const butterfly = (y, c, c2) => '<g class="fly"><g transform="translate(0 ' + y + ') scale(1.5)"><g class="flap"><ellipse cx="-9" cy="-2" rx="11" ry="14" fill="' + c + '" stroke="#4A3030" stroke-width="1.6"/><ellipse cx="9" cy="-2" rx="11" ry="14" fill="' + c + '" stroke="#4A3030" stroke-width="1.6"/><ellipse cx="-8" cy="8" rx="7" ry="8" fill="' + (c2 || '#fff') + '" stroke="#4A3030" stroke-width="1.4"/><ellipse cx="8" cy="8" rx="7" ry="8" fill="' + (c2 || '#fff') + '" stroke="#4A3030" stroke-width="1.4"/><circle cx="-9" cy="-4" r="3" fill="#fff"/><circle cx="9" cy="-4" r="3" fill="#fff"/></g><rect x="-2" y="-13" width="4" height="26" rx="2" fill="#4A3030"/><path d="M-1 -13q-6-8-10-8M1 -13q6-8 10-8" fill="none" stroke="#4A3030" stroke-width="1.6" stroke-linecap="round"/></g></g>';
+  const G = (s) => (GF.safeWide ? '<g transform="translate(0 -170)">' + s + '</g>' : s);
   const BG = {
-    home: () => sky('#FFE9C7', '#FFF6E5') + '<circle cx="300" cy="110" r="46" fill="#FFD36B"/>' + rep(() => hill(660, '#BFE6A8', [90, 260, 150]) + hill(670, '#9BD98A', [290, 230, 130])) + band(640, '#9BD98A'),
-    stream: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="290" cy="90" r="38" fill="#FFE27A"/>' + cloud(70, 80, 1) + cloud(200, 140, .8) + rep(() => hill(470, '#B6E6A0', [100, 240, 90]) + hill(480, '#9ADB88', [300, 200, 80])) + band(500, '#7CC8F0', 60) + rep(() => '<g class="wave"><path d="M-60 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/></g>') + band(560, '#8FD67A') + flowers(582) + butterfly(330, '#FFB3C7'),
-    bridge: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="60" cy="90" r="34" fill="#FFE27A"/>' + cloud(230, 70, 1) + cloud(130, 150, .7) + rep(() => hill(420, '#B6E6A0', [250, 260, 80])) + band(450, '#7CC8F0', 130) + rep(() => '<g class="wave"><path d="M-60 480q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0M-60 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/></g><rect x="20" y="395" width="12" height="40" fill="#A8703F"/><rect x="330" y="395" width="12" height="40" fill="#A8703F"/>') + band(430, '#C98F5A', 26) + band(400, '#A8703F', 8) + lilies() + band(580, '#8FD67A') + reeds(604) + flowers(612) + butterfly(300, '#FFD36B'),
-    hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + rep(() => hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90])) + band(600, '#A9D36E') + '<g class="sway"><rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/></g>' + butterfly(360, '#FFB3C7'),
-    field: () => sky('#CDEFFF', '#F7FCFF') + cloud(90, 90, 1) + cloud(260, 150, .8) + rep(() => hill(500, '#B6E6A0', [180, 340, 100])) + band(520, '#C79A6B') + band(558, '#A97B4E', 6) + band(598, '#A97B4E', 6) + butterfly(320, '#B197FC'),
-    night: () => sky('#1F2A5C', '#4B5C9C') + rep(() => [[40, 80], [120, 150], [250, 70], [320, 160], [200, 210], [60, 260], [310, 300]].map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#FFF3B0"/>').join('')) + '<circle cx="270" cy="120" r="40" fill="#FFF3B0"/><circle cx="286" cy="110" r="36" fill="#2B3870"/>' + rep(() => hill(660, '#2F4A6B', [180, 330, 160])) + band(640, '#2F4A6B'),
-    house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A'),
+    home: () => sky('#FFE9C7', '#FFF6E5') + (GF.safeWide ? '<circle cx="470" cy="104" r="46" fill="#FFD36B"/>' : '<circle cx="318" cy="180" r="34" fill="#FFD36B"/>') + G(rep(() => hill(660, '#BFE6A8', [90, 260, 150]) + hill(670, '#9BD98A', [290, 230, 130])) + band(640, '#9BD98A')),
+    stream: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="290" cy="90" r="38" fill="#FFE27A"/>' + cloud(70, 80, 1) + cloud(200, 140, .8) + G(rep(() => hill(470, '#B6E6A0', [100, 240, 90]) + hill(480, '#9ADB88', [300, 200, 80])) + band(500, '#7CC8F0', 60) + rep(() => '<g class="wave"><path d="M-60 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".7"/></g>') + band(560, '#8FD67A') + flowers(582)) + butterfly(330, '#FFB347', '#FFE27A'),
+    bridge: () => sky('#BFE8FF', '#F4FBFF') + '<circle cx="60" cy="90" r="34" fill="#FFE27A"/>' + cloud(230, 70, 1) + cloud(130, 150, .7) + G(rep(() => hill(420, '#B6E6A0', [250, 260, 80])) + band(450, '#7CC8F0', 130) + rep(() => '<g class="wave"><path d="M-60 480q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0M-60 520q30-10 60 0t60 0 60 0 60 0 60 0 60 0 60 0" fill="none" stroke="#fff" stroke-width="4" opacity=".6"/></g><rect x="20" y="395" width="12" height="40" fill="#A8703F"/><rect x="330" y="395" width="12" height="40" fill="#A8703F"/>') + band(430, '#C98F5A', 26) + band(400, '#A8703F', 8) + lilies() + band(580, '#8FD67A') + reeds(604) + flowers(612)) + butterfly(300, '#B197FC', '#FFFFFF'),
+    hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + G(rep(() => hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90])) + band(600, '#A9D36E') + '<g class="sway"><rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/></g>') + butterfly(360, '#FF8FA8', '#FFF3B0'),
+    field: () => sky('#CDEFFF', '#F7FCFF') + cloud(90, 90, 1) + cloud(260, 150, .8) + G(rep(() => hill(500, '#B6E6A0', [180, 340, 100])) + band(520, '#C79A6B') + band(558, '#A97B4E', 6) + band(598, '#A97B4E', 6)) + butterfly(320, '#B197FC', '#fff'),
+    night: () => sky('#1F2A5C', '#4B5C9C') + rep(() => [[40, 80], [120, 150], [250, 70], [320, 160], [200, 210], [60, 260], [310, 300]].map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#FFF3B0"/>').join('')) + '<circle cx="270" cy="120" r="40" fill="#FFF3B0"/><circle cx="286" cy="110" r="36" fill="#2B3870"/>' + G(rep(() => hill(660, '#2F4A6B', [180, 330, 160])) + band(640, '#2F4A6B')),
+    house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + G(rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A')),
   };
-  GF.bg = function (name, parent) { const d = el('div', 'bg', parent); d.innerHTML = '<svg viewBox="0 0 360 640" preserveAspectRatio="none" style="overflow:visible">' + (BG[name] || BG.home)() + '</svg>'; return d; };
+  GF.bg = function (name, parent) { const d = el('div', 'bg', parent); d.innerHTML = '<svg viewBox="' + (GF.safeWide ? '-0 0 720 440' : '0 0 360 640') + '" preserveAspectRatio="none" style="overflow:visible">' + (GF.safeWide ? '<g transform="translate(180 0)">' + (BG[name] || BG.home)() + '</g>' : (BG[name] || BG.home)()) + '</svg>'; return d; };
 
   /* ---------------- 코어: 화면 스택·레터박스·상단바 ---------------- */
   let stage, topbar, scale = 1, safeEl;
   GF.pt = (e) => { const r = safeEl.getBoundingClientRect(); return { x: (e.clientX - r.left) / scale, y: (e.clientY - r.top) / scale }; };
   // 화면 전체(vw×vh)를 프레임으로 쓰고, 360×640 안전 영역을 시스템 바 안쪽 가운데에 둔다.
   // 가로·세로·태블릿 모두 배경은 끝까지 채워지고 놀이 UI 만 안전 영역에 앵커된다.
+  let SW = W, SH = H;
   function fit() {
     const vw = window.innerWidth, vh = window.innerHeight, probe = $('inset');
     const cs = getComputedStyle(probe), top = parseFloat(cs.paddingTop) || 0, bot = parseFloat(cs.paddingBottom) || 0;
     const availH = vh - top - bot;
-    scale = Math.min(vw / W, availH / H);
+    scale = Math.min(vw / SW, availH / SH);
     const frame = $('frame'); frame.style.width = vw / scale + 'px'; frame.style.height = vh / scale + 'px'; frame.style.transform = 'scale(' + scale + ')';
     $('topbar').style.top = top / scale + 'px';
     GF.pad = 12;   // 상단 바는 화면 가장자리에 붙인다 (가로 태블릿도 엄지가 닿게)
     $('topbar').style.paddingLeft = $('topbar').style.paddingRight = GF.pad + 'px';
-    safeEl.style.left = (vw / scale - W) / 2 + 'px'; safeEl.style.top = (top + (availH - H * scale) / 2) / scale + 'px';
+    safeEl.style.width = SW + 'px'; safeEl.style.height = SH + 'px';
+    safeEl.style.left = (vw / scale - SW) / 2 + 'px'; safeEl.style.top = (top + (availH - SH * scale) / 2) / scale + 'px';
+    GF.safe = { w: SW, h: SH };
     GF.view = { vw, vh, lw: vw / scale, lh: vh / scale, landscape: vw > vh };
-    document.body.classList.toggle('land', vw > vh);
   }
+  // 화면이 가로 구도를 지원하면(screen.wide) 가로 화면에서 720×440 안전 영역을 쓴다. 지원 안 하는 화면은 세로 컬럼 그대로.
+  function setSafe(wide) { SW = wide ? 720 : W; SH = wide ? 440 : H; GF.safeWide = wide; safeEl.classList.toggle('wide', wide); fit(); }
+  const wantWide = (s, params) => { const v = { landscape: window.innerWidth > window.innerHeight }; return !!(v.landscape && s.wide && s.wide(params || {})); };
   GF.screen = function (name, def) { def.el = el('div', 'screen', $('safe')); def.name = name; GF.screens[name] = def; return def; };
   function show(name, params) {
     Object.values(GF.screens).forEach((s) => { s.el.classList.remove('on'); s.leave && s.leave(); });
     const s = GF.screens[name];
     s.el.innerHTML = ''; s.el.classList.add('on'); GF.cur = s; s.params = params || {};
+    setSafe(wantWide(s, s.params));
     topbar.classList.toggle('hidden', s.bare === true);
     $('b-home').style.visibility = name === 'home' ? 'hidden' : 'visible';
     refreshBar();
@@ -251,11 +258,18 @@
   /* ---------------- 홈 ---------------- */
   GF.screen('home', {
     bare: false,
+    wide: () => true,
+    leave() { clearInterval(GF._blink); },
     enter(r) {
+      const wide = GF.safeWide;
       GF.bg('home', r);
       const t = el('div', 'hometitle', r, '<div class="ttl"><span style="color:#E39B4B;animation-delay:.05s">기</span><span style="color:#4DABF7;animation-delay:.17s">하</span><span style="color:#3B4A7A;animation-delay:.29s">학</span> <span style="color:#FF8FA8;animation-delay:.41s">가</span><span style="color:#6CCB8A;animation-delay:.53s">족</span></div><div class="sub">놀이터</div>');
       const c = el('div', 'homechars', r);
-      [['wife.joy', 138], ['baby.joy', 96], ['dong_dad.good', 130]].forEach((a, i) => { const im = GF.img(a[0]); im.style.height = a[1] + 'px'; im.style.animation = 'bounceIn .6s ' + (i * 0.12) + 's backwards'; c.appendChild(im); });
+      const cast = wide ? [['wife', 190], ['baby', 126], ['dong_dad', 172]] : [['wife', 160], ['baby', 112], ['dong_dad', 148]];
+      const ims = cast.map((a, i) => { const im = GF.img(a[0] + '.good'); im.style.height = a[1] + 'px'; im.style.animation = 'bounceIn .6s ' + (i * 0.12) + 's backwards, homeidle 2.4s ' + (0.8 + i * 0.3) + 's ease-in-out infinite alternate'; c.appendChild(im); GF.img(a[0] + '.joy'); return [im, a[0]]; });
+      // 눈 깜빡임: 눈을 감은 표정(joy)으로 0.14초만 바꿨다가 돌아온다
+      clearInterval(GF._blink);
+      GF._blink = setInterval(() => { const [im, w] = GF.rnd(ims); const o = im.src; im.src = GF.src(w + '.joy'); setTimeout(() => { im.src = o; }, 140); }, 1700);
       if (!GF._intro) { GF._intro = 1; setTimeout(() => GF.sfx('star'), 650); }
       const row = el('div', 'homebtns', r);
       [['story', 'book', '#FFE0E8', () => GF.go('map')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album')]].forEach((b) => {
@@ -269,14 +283,16 @@
   });
 
   /* ---------------- 이야기 지도 ---------------- */
-  const NODES = [[80, 520], [250, 430], [100, 330], [250, 230], [110, 130]];
+  const NODES_P = [[80, 520], [250, 430], [100, 330], [250, 230], [110, 130]], NODES_W = [[90, 300], [230, 210], [370, 310], [510, 200], [640, 300]];
   const chOpen = (i) => i === 0 || (GF.state.stages['c' + i + 'C'] && GF.state.stages['c' + i + 'C'].done);
   const chReady = (i) => !!GF.data.stages['ch' + (i + 1)];
   GF.screen('map', {
+    wide: () => true,
     enter(r) {
       GF.bg('stream', r);
+      const NODES = GF.safeWide ? NODES_W : NODES_P;
       let d = 'M' + NODES.map((n) => n.join(' ')).join(' L');
-      el('div', 'bg', r, '<svg viewBox="0 0 360 640"><path d="' + d + '" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 22" opacity=".95"/></svg>');
+      el('div', 'bg', r, '<svg viewBox="0 0 ' + GF.safe.w + ' ' + GF.safe.h + '"><path d="' + d + '" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 22" opacity=".95"/></svg>');
       NODES.forEach((n, i) => {
         const open = chReady(i) && chOpen(i);
         const b = el('button', 'card node' + (open ? '' : ' locked'), r); b.style.cssText += 'left:' + n[0] + 'px;top:' + n[1] + 'px;border-radius:50%';
@@ -302,6 +318,7 @@
     sparkle: '<svg viewBox="0 0 52 52"><path d="M26 4l5 17 17 5-17 5-5 17-5-17-17-5 17-5z" fill="#FFC933"/></svg>',
   };
   GF.screen('book', {
+    wide: () => true,
     enter(r, p) {
       const cuts = GF.data.story[p.ch][p.part], hero = (GF.data.stages[p.ch] || {}).bg;
       let i = 0;
@@ -313,15 +330,29 @@
         stageEl.innerHTML = ''; const c = cuts[i];
         GF.bg(c.bg, stageEl);
         const role = (id) => (/^baby\./.test(id) || id === 'nemo_kids.baby' ? 'baby' : /^nemo_kids\./.test(id) ? 'kid' : /^art\./.test(id) ? 'art' : 'adult');
-        const list = c.chars || [], adults = list.filter((x) => role(x.id) === 'adult'), kids = list.filter((x) => role(x.id) === 'kid');
-        const A = adults.length ? Math.max(...adults.map((x) => x.h || 230)) : kids.length ? Math.max(...kids.map((x) => x.h || 220)) / 0.78 : null;
-        const H = { adult: null, kid: A && A * 0.78, baby: A && A * 0.45, art: null };   // 세계관 비율 고정: 어른 1 : 아이 .78 : 막둥이 .5
-        list.forEach((ch, k) => {
-          const d = el('div', 'cut-char in', stageEl); const hh = H[role(ch.id)] || ch.h || 230;
-          d.style.cssText = 'left:' + ch.x + 'px;top:' + (ch.y || 560) + 'px;height:' + hh + 'px;width:' + Math.round(hh * GF.aspect(ch.id)) + 'px;animation-delay:' + (k * 0.12) + 's';
-          d.appendChild(GF.img(ch.id)); d.firstChild.style.animationDelay = '-' + (k * 0.7) + 's';
+        const SW_ = GF.safe.w, SH_ = GF.safe.h, wide = GF.safeWide, dy = wide ? 170 : 0;
+        const list = (c.chars || []).map((ch, k) => ({ ch, k, role: role(ch.id), x: wide ? SW_ / 2 + (ch.x - 180) * 1.7 : ch.x, y: Math.min(SH_ - 6, (ch.y || 580) - dy), asp: GF.aspect(ch.id) }));
+        // 세계관 비율 고정: 어른 1 : 아이 .8 : 막둥이 .45 — 어른이 장면 높이의 절반 가까이 오게 키우고, 가로폭이 모자라면 같은 비율로 줄인다
+        const A = SH_ * 0.55, RATIO = { adult: 1, kid: 0.8, baby: 0.45 };
+        const hasRef = list.some((q) => q.role !== 'art');
+        list.forEach((q) => { q.h = q.role === 'art' ? (q.ch.h || 260) * (A / 270) : (hasRef ? A * RATIO[q.role] : q.ch.h || 230); q.w = q.h * q.asp; });
+        const tot = list.reduce((s, q) => s + q.w * (wide ? 1.05 : 0.74), 0), fit_ = Math.min(1, (SW_ + 24) / (tot || 1));
+        list.forEach((q) => { q.h *= fit_; q.w *= fit_; });
+        // 왼쪽→오른쪽으로 나란히 세운다. 세로 화면에서는 서로 조금 겹쳐 선다(.74), 가로는 간격을 둔다
+        const sorted = list.slice().sort((a_, b_) => a_.x - b_.x), ov = wide ? 1 : 0.74, gap = wide ? 14 : 0;
+        const span = sorted.reduce((s, q, i) => s + (i < sorted.length - 1 ? q.w * ov + gap : q.w), 0);
+        const cx = sorted.length ? sorted.reduce((s, q) => s + q.x, 0) / sorted.length : SW_ / 2;
+        let px = span > SW_ - 16 ? (SW_ - span) / 2 : Math.min(SW_ - 8 - span, Math.max(8, cx - span / 2));
+        sorted.forEach((q) => { q.cx = px + q.w / 2; px += q.w * ov + gap; });
+        list.forEach((q) => {
+          const d = el('div', 'cut-char in', stageEl);
+          d.style.cssText = 'left:' + Math.round(q.cx) + 'px;top:' + Math.round(q.y) + 'px;height:' + Math.round(q.h) + 'px;width:' + Math.round(q.w) + 'px;animation-delay:' + (q.k * 0.12) + 's';
+          d.appendChild(GF.img(q.ch.id)); d.firstChild.style.animationDelay = '-' + (q.k * 0.7) + 's';
         });
-        if (c.bubble) { const bb = el('div', 'bubble', stageEl, BUBBLE[c.bubble.type]); bb.style.left = c.bubble.x + 'px'; bb.style.top = c.bubble.y + 'px'; }
+        if (c.bubble) {
+          const q = list[c.bubble.at != null ? c.bubble.at : 0], bb = el('div', 'bubble', stageEl, BUBBLE[c.bubble.type]);
+          bb.style.left = Math.round(q ? q.cx : c.bubble.x) + 'px'; bb.style.top = Math.round(q ? q.y - q.h * 0.92 : c.bubble.y) + 'px';
+        }
         dots.innerHTML = cuts.map((_, k) => '<i class="' + (k === i ? 'on' : '') + '"></i>').join('');
         cap.style.display = GF.state.settings.captions && c.text ? 'block' : 'none'; cap.textContent = c.text || '';
         GF.say(c.voice);
@@ -341,12 +372,13 @@
   /* ---------------- 스테이지 선택 ---------------- */
   const stageDone = (id) => GF.state.stages[id] && GF.state.stages[id].done;
   GF.screen('stages', {
+    wide: () => true,
     enter(r, p) {
       const ch = p.ch, def = GF.data.stages[ch], n = ch.slice(2);
       GF.bg(def.bg, r);
       def.stages.forEach((s, k) => {
         const id = 'c' + n + 'ABC'[k], open = k === 0 || stageDone('c' + n + 'ABC'[k - 1]), rec = GF.state.stages[id];
-        const b = el('button', 'card stagebtn' + (open ? '' : ' locked'), r); b.style.top = (130 + k * 140) + 'px';
+        const b = el('button', 'card stagebtn' + (open ? '' : ' locked'), r); if (GF.safeWide) { b.style.top = '130px'; b.style.left = 'calc(50% + ' + ((k - 1) * 215) + 'px)'; } else b.style.top = (130 + k * 140) + 'px';
         el('div', 'badge', b, dotsHTML(k + 1));
         el('div', '', b, open ? starsHTML(rec ? rec.stars : 0) : IC.lock);
         b.onclick = () => { if (!open) { GF.sfx('no'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } GF.sfx('pick'); Stage.start({ kind: 'story', ch, k, id }); };
@@ -395,6 +427,7 @@
     hintT.push(setTimeout(() => { hintFn && hintFn(2); }, 10000));
   }
   GF.screen('round', {
+    wide: () => { const m = run.kind === 'story' ? GF.data.stages[run.ch].mode : run.mode; return !!(GF.modes[m] && GF.modes[m].land); },
     leave() { clearTimers(); },
     enter(r) {
       const def = run.kind === 'story' ? GF.data.stages[run.ch] : null;
@@ -404,7 +437,7 @@
       const cfg = run.kind === 'story' ? def.stages[run.k].rounds[run.i] : mode.free(run.diff, run.i);
       hintCount = 0; let finished = false;
       const ctx = {
-        W: 360, H: 576, AW: Math.min(GF.view.lw, 720), AX: (360 - Math.min(GF.view.lw, 720)) / 2, level: run.level, sfx: GF.sfx, img: GF.img, shuffle, rnd, say: GF.say,
+        W: GF.safe.w, H: GF.safe.h - 64, AW: GF.safe.w, AX: 0, level: run.level, sfx: GF.sfx, img: GF.img, shuffle, rnd, say: GF.say,
         timeout(fn, ms) { const t = setTimeout(fn, ms); timers.push(t); return t; },
         setHint(fn) { hintFn = fn; armHint(); },
         done(res) {
@@ -513,7 +546,7 @@
     if (GF.data.base != null) GF.base = GF.data.base;
     GF.state = Store.load();
     ensureAudio(); loadSounds();
-    fit(); window.addEventListener('resize', fit);
+    fit(); window.addEventListener('resize', () => { fit(); const s = GF.cur; if (s && wantWide(s, s.params) !== !!GF.safeWide) show(s.name, s.params); });
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     // 상단 바
     $('b-home').innerHTML = IC.home;

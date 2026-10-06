@@ -1,16 +1,18 @@
 /* 그림자 찾기 — 캐릭터를 같은 그림자 위로 끌어 놓는다. cfg: {tokens:[{id, s?}]}  s = 크기 배율(크기 순서 놀이) */
 GF.mode('shadow', {
+  land: true,
   setup(root, cfg, ctx) {
+    const K = ctx.H / 576;                        // 세로 높이에 맞춰 배치를 줄이고 늘린다
     const items = cfg.tokens.map((t) => ({ id: t.id, s: t.s || 1, key: t.id + '@' + (t.s || 1) }));
     const n = items.length, rows = n <= 3 ? 1 : 2, cols = Math.ceil(n / rows);
-    const AW = ctx.AW - 20, cw = AW / cols, ch = rows === 1 ? 250 : 135, base = Math.min(cw - 14, ch - 10, ctx.AW > 400 ? 175 : 150);
+    const AW = ctx.AW - 20, cw = AW / cols, ch = (rows === 1 ? 250 : 135) * K, base = Math.min(cw - 14, ch - 10, 150 * Math.max(1, K * 1.1));
     const slots = [];
     const toks = [];
     let mistakes = 0, left = n, finger = null;
     const rowX = (r, c) => { const inRow = r === rows - 1 ? n - r * cols : cols; return ctx.AX + 10 + (AW - inRow * cw) / 2 + c * cw; };
 
     items.forEach((it, i) => {
-      const r = Math.floor(i / cols), c = i % cols, x0 = rowX(r, c), y0 = 14 + r * ch;
+      const r = Math.floor(i / cols), c = i % cols, x0 = rowX(r, c), y0 = 14 * K + r * ch;
       const bh = base * it.s, bw = bh * GF.aspect(it.id);
       const ring = GF.el('div', 'slotring', root);
       ring.style.cssText = `left:${x0 + (cw - bw) / 2 - 6}px;top:${y0 + ch - bh - 12}px;width:${bw + 12}px;height:${bh + 12}px`;
@@ -28,7 +30,7 @@ GF.mode('shadow', {
     ctx.shuffle(items.map((_, i) => i)).forEach((idx, pos) => {
       const it = items[idx], r = Math.floor(pos / cols), c = pos % cols, x0 = rowX(r, c);
       const bh = base * it.s, bw = bh * GF.aspect(it.id);
-      const yb = rows === 1 ? 330 + 215 : 330 + r * 120 + 112;
+      const yb = (rows === 1 ? 330 + 215 : 330 + r * 120 + 112) * K;
       const t = GF.el('div', 'tok', root);
       t.style.cssText = `left:${x0 + (cw - bw) / 2}px;top:${yb - bh}px;width:${bw}px;height:${bh}px`;
       t.appendChild(ctx.img(it.id));

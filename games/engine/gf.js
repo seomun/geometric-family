@@ -125,6 +125,12 @@
     if (!c) { const who = id.split('.')[0]; c = GF.data.chars[who + '.good'] || GF.data.chars[who + '.kid1']; if (!c) console.warn('no char', id); }
     return c ? GF.base + c.src : '';
   };
+  // 다음 판에서 쓸 그림을 미리 내려받아 풀어 둔다(전환 직후 빈 카드가 보이지 않게)
+  GF.preload = function (obj) {
+    const ids = new Set();
+    (function walk(v) { if (typeof v === 'string') { if (GF.data.chars[v] || (GF.art && GF.art[v])) ids.add(v); } else if (v && typeof v === 'object') Object.values(v).forEach(walk); })(obj);
+    (obj && obj.pieces != null || true) && ids.forEach((id) => { const i = new Image(); i.src = GF.src(id); i.decode && i.decode().catch(() => {}); });
+  };
   GF.img = (id, cls) => { const i = new Image(); i.src = GF.src(id); i.draggable = false; if (cls) i.className = cls; return i; };
   GF.aspect = (id) => { if (GF.art && GF.art[id]) return GF.art[id].w / GF.art[id].h; const c = GF.data.chars[id] || GF.data.chars[id.split('.')[0] + '.good']; return c ? c.w / c.h : 1; };
 
@@ -420,7 +426,11 @@
   /* ---------------- 스테이지 러너 ---------------- */
   let run = null;
   const Stage = (GF.Stage = {
-    start(o) { run = Object.assign({ i: 0, res: [], level: 0, zero: 0 }, o); GF.go('round'); },
+    start(o) {
+      run = Object.assign({ i: 0, res: [], level: 0, zero: 0 }, o);
+      if (o.kind === 'story') GF.preload(GF.data.stages[o.ch].stages[o.k]);
+      GF.go('round');
+    },
   });
   const starsOf = (res) => (res.mistakes === 0 && !res.hints ? 3 : res.mistakes <= 2 ? 2 : 1);
   let timers = [], hintFn = null, hintT = [], hintCount = 0;

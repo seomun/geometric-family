@@ -16,12 +16,12 @@ GF.mode('paint', {
     const WW = Math.round(dw * K), HH = Math.round(dh * K), N = WW * HH;
 
     const wrap = GF.el('div', 'abs', root);
-    wrap.style.cssText = `left:${(X0 + (areaW - dw) / 2)}px;top:${top0 + (dh0() - dh) / 2}px;width:${dw}px;height:${dh}px;touch-action:none`;
+    wrap.style.cssText = `opacity:0;transition:opacity .18s;left:${(X0 + (areaW - dw) / 2)}px;top:${top0 + (dh0() - dh) / 2}px;width:${dw}px;height:${dh}px;touch-action:none`;
     function dh0() { return wide ? ctx.H - 28 : pal.length > 5 ? 370 : 410; }
     const fillC = GF.el('canvas', '', wrap), lineC = GF.el('canvas', '', wrap);
     [fillC, lineC].forEach((c) => { c.width = WW; c.height = HH; c.style.cssText = `position:absolute;left:0;top:0;width:${dw}px;height:${dh}px;pointer-events:none`; });
     const page = GF.el('div', 'abs', root);
-    page.style.cssText = `left:${(X0 + (areaW - dw) / 2) - 8}px;top:${top0 + (dh0() - dh) / 2 - 8}px;width:${dw + 16}px;height:${dh + 16}px;background:#fff;border-radius:22px;box-shadow:0 5px 0 rgba(0,0,0,.12)`;
+    page.style.cssText = `opacity:0;transition:opacity .18s;left:${(X0 + (areaW - dw) / 2) - 8}px;top:${top0 + (dh0() - dh) / 2 - 8}px;width:${dw + 16}px;height:${dh + 16}px;background:#fff;border-radius:22px;box-shadow:0 5px 0 rgba(0,0,0,.12)`;
     root.insertBefore(page, wrap);
 
     // 팔레트
@@ -75,7 +75,7 @@ GF.mode('paint', {
       for (let i = 0; i < N; i++) { const l = lab[i]; if (!l) continue; const x = i % WW, y = (i / WW) | 0, dd = (x - regs[l].cx) ** 2 + (y - regs[l].cy) ** 2; if (!best[l] || dd < best[l].d) best[l] = { d: dd, x, y }; }
       regs.forEach((r) => { if (r) { r.px = best[r.id].x; r.py = best[r.id].y; } });
       fctx = fillC.getContext('2d'); fillData = fctx.createImageData(WW, HH);
-      ready = true;
+      ready = true; page.style.opacity = 1; wrap.style.opacity = 1;
       root.__pts = (all) => { const rc = wrap.getBoundingClientRect(); return regs.filter((r) => r && (all || r.big)).sort((a, b) => b.area - a.area).map((r) => ({ x: rc.left + (r.px / WW) * rc.width, y: rc.top + (r.py / HH) * rc.height })); };
     };
     im.src = GF.src(cfg.id);

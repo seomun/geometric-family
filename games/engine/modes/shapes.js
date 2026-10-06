@@ -1,15 +1,17 @@
 /* 도형 맞추기 — 도형 조각을 끌어 집의 같은 모양 구멍에 넣는다. cfg: {house:'nemo'|'semo'|'dong', n:3|5|7, wind?:true}
    네모네 = 벽돌집, 세모네 = 뾰족집, 동그라미네 = 둥근집. 같은 모양·크기 구멍은 서로 바꿔 넣어도 된다. */
 GF.mode('shapes', {
+  land: true,
   setup(root, cfg, ctx) {
-    const SH = {
-      sq: '<rect x="3" y="3" width="94" height="94" rx="8"/>',
-      rect: '<rect x="2" y="12" width="96" height="76" rx="8"/>',
-      tall: '<rect x="12" y="2" width="76" height="96" rx="12"/>',
-      tri: '<path d="M50 4L97 96H3z" stroke-linejoin="round"/>',
-      circ: '<circle cx="50" cy="50" r="46"/>',
-      semi: '<path d="M4 96a46 46 0 0 1 92 0z"/>',
-      dia: '<path d="M50 3L97 50 50 97 3 50z"/>',
+    const wide = ctx.W > 400;
+    const SH = {                                       // 윤곽선(5)이 잘리지 않게 안쪽으로 여유를 둔다
+      sq: '<rect x="6" y="6" width="88" height="88" rx="8"/>',
+      rect: '<rect x="5" y="15" width="90" height="70" rx="8"/>',
+      tall: '<rect x="14" y="5" width="72" height="90" rx="12"/>',
+      tri: '<path d="M50 7L94 93H6z" stroke-linejoin="round"/>',
+      circ: '<circle cx="50" cy="50" r="43"/>',
+      semi: '<path d="M7 93a43 43 0 0 1 86 0z"/>',
+      dia: '<path d="M50 6L94 50 50 94 6 50z"/>',
     };
     const HOUSES = {
       nemo: [
@@ -30,11 +32,11 @@ GF.mode('shapes', {
     };
     const n = Math.max(3, Math.min(7, cfg.n + (ctx.level || 0) * 2));
     const parts = HOUSES[cfg.house].slice(0, n).map((p, i) => Object.assign({ i, key: p.k + '@' + p.w + 'x' + p.h }, p));
-    const S = 320 / 300, bx = 20, by = 10;                                           // 판: 300 → 320px
-    const svgOf = (p, hole) => `<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:100%;display:block"><g fill="${hole ? 'rgba(58,46,57,.22)' : p.c}" stroke="${hole ? 'none' : '#4A3030'}" stroke-width="5">${SH[p.k]}</g></svg>`;
+    const BS = wide ? ctx.H - 28 : 320, S = BS / 300, bx = wide ? 30 : 20, by = wide ? 14 : 10;   // 판: 300 → BS px
+    const svgOf = (p, hole) => `<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:100%;display:block"><g fill="${hole ? 'rgba(58,46,57,.22)' : p.c}" stroke="${hole ? 'none' : '#4A3030'}" stroke-width="4" stroke-linejoin="round">${SH[p.k]}</g></svg>`;
 
     const board = GF.el('div', 'abs', root);
-    board.style.cssText = `left:${bx - 6}px;top:${by - 6}px;width:332px;height:332px;background:#EAF7FF;border-radius:26px;box-shadow:0 5px 0 rgba(0,0,0,.12);overflow:hidden`;
+    board.style.cssText = `left:${bx - 6}px;top:${by - 6}px;width:${BS + 12}px;height:${BS + 12}px;background:#EAF7FF;border-radius:26px;box-shadow:0 5px 0 rgba(0,0,0,.12);overflow:hidden`;
     GF.el('div', 'abs', board).style.cssText = 'left:0;right:0;bottom:0;height:34px;background:#8FD67A';
     const holes = parts.map((p) => {
       const h = GF.el('div', 'abs', root); h.dataset.key = p.key; h.dataset.hole = 1;
@@ -43,26 +45,28 @@ GF.mode('shapes', {
     });
 
     // 트레이: 큰 조각부터 선반 쌓기, 안 들어가면 배율을 줄인다 (맞추면 제 크기로 커진다)
-    const trayTop = by + 332 + 14, trayH = 576 - trayTop - 8;
+    const trayL = wide ? bx + BS + 30 : 0, trayW = wide ? ctx.W - trayL - 12 : 360;
+    const trayTop = wide ? 14 : by + 332 + 14, trayH = wide ? ctx.H - 28 : 576 - trayTop - 8;
     const order = ctx.shuffle(parts.map((_, i) => i)).sort((a, b) => parts[b].h - parts[a].h);
     let t = 1, place;
     for (; t > 0.4; t -= 0.1) {
       let x = 8, y = 0, rowH = 0; place = [];
+      const maxX = trayW - 8;
       order.forEach((i) => {
         const w = parts[i].w * S * t, h = parts[i].h * S * t;
-        if (x + w > 352) { x = 8; y += rowH + 6; rowH = 0; }
+        if (x + w > maxX) { x = 8; y += rowH + 6; rowH = 0; }
         place.push({ i, x, y, w, h }); x += w + 8; rowH = Math.max(rowH, h);
       });
       if (y + rowH <= trayH) break;
     }
     // 가운데 정렬: 같은 줄끼리
     const rowsMap = {}; place.forEach((q) => (rowsMap[q.y] = rowsMap[q.y] || []).push(q));
-    Object.values(rowsMap).forEach((row) => { const wsum = row.reduce((a, q) => a + q.w, 0) + (row.length - 1) * 8, off = (360 - wsum) / 2 - row[0].x; row.forEach((q) => (q.x += off)); });
+    Object.values(rowsMap).forEach((row) => { const wsum = row.reduce((a, q) => a + q.w, 0) + (row.length - 1) * 8, off = (trayW - wsum) / 2 - row[0].x; row.forEach((q) => (q.x += off + trayL)); });
     let left = parts.length, mistakes = 0, finger = null;
     const toks = place.map((q) => {
       const p = parts[q.i], d = GF.el('div', 'tok', root); d.dataset.key = p.key;
-      d.style.cssText = `left:${q.x}px;top:${trayTop + q.y}px;width:${q.w}px;height:${q.h}px`; d.innerHTML = svgOf(p, false);
-      const tk = { el: d, p, home: { x: q.x, y: trayTop + q.y }, w: q.w, h: q.h, done: false };
+      d.style.cssText = `left:${q.x}px;top:${trayTop + q.y + (wide ? Math.max(0, (trayH - (Math.max(...place.map((z) => z.y + z.h)))) / 2) : 0)}px;width:${q.w}px;height:${q.h}px`; d.innerHTML = svgOf(p, false);
+      const tk = { el: d, p, home: { x: q.x, y: parseFloat(d.style.top) }, w: q.w, h: q.h, done: false };
       GF.drag(d, {
         start() { if (tk.done) return; d.classList.remove('back'); d.classList.add('drag'); ctx.sfx('tap'); },
         move(x, y) { if (!tk.done) { d.style.left = x + 'px'; d.style.top = y + 'px'; } },
@@ -79,7 +83,7 @@ GF.mode('shapes', {
               const h = target || same; h.filled = true; tk.done = true; h.el.style.visibility = 'hidden';
               d.classList.add('done', 'pop'); d.style.width = h.w + 'px'; d.style.height = h.h + 'px';
               d.style.left = h.cx - h.w / 2 + 'px'; d.style.top = h.cy - h.h / 2 + 'px'; d.style.zIndex = 3;
-              ctx.sfx('ok'); fingerOff();
+              ctx.sfx('ok'); fingerOff(); GF.snap(d); GF.burst(root, h.cx, h.cy, 10);
               if (--left === 0) finish(); return;
             }
             mistakes++; ctx.sfx('no'); d.classList.add('tilt'); setTimeout(() => d.classList.remove('tilt'), 700);

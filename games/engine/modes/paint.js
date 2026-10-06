@@ -2,31 +2,33 @@
    cfg: {id, colors: 3|5|8, fills: 칠해야 할 큰 칸 수}
    원리: 윤곽 색(#4A3030)과의 거리로 "선 층"을 만들고, 선이 아닌 연결 영역을 칸으로 라벨링한다. 칸을 톡 → 그 칸만 색 채움. */
 GF.mode('paint', {
+  land: true,
   setup(root, cfg, ctx) {
+    const wide = ctx.W > 400, X0 = wide ? 20 : 0, areaW = wide ? 520 : 360, top0 = wide ? 12 : 86;
     const COLORS = ['#FF6B6B', '#FFA94D', '#FFE066', '#69DB7C', '#4DABF7', '#B197FC', '#FFA8C5', '#A67C52'];
     const PICK = { 3: [0, 2, 4], 5: [0, 2, 3, 4, 6], 8: [0, 1, 2, 3, 4, 5, 6, 7] };
     const pal = PICK[cfg.colors].map((i) => COLORS[i]);
     let sel = 0, filledBig = 0, finger = null, ready = false, doneBtn = null, need = cfg.fills;
     const K = 1.5;                                                   // 작업 해상도 배율
     const asp = GF.aspect(cfg.id);
-    let dh = pal.length > 5 ? 370 : 410, dw = dh * asp;
-    if (dw > 330) { dw = 330; dh = dw / asp; }
+    let dh = wide ? ctx.H - 28 : pal.length > 5 ? 370 : 410, dw = dh * asp;
+    if (dw > (wide ? 500 : 330)) { dw = wide ? 500 : 330; dh = dw / asp; }
     const WW = Math.round(dw * K), HH = Math.round(dh * K), N = WW * HH;
 
     const wrap = GF.el('div', 'abs', root);
-    wrap.style.cssText = `left:${(360 - dw) / 2}px;top:${86 + (dh0() - dh) / 2}px;width:${dw}px;height:${dh}px;touch-action:none`;
-    function dh0() { return pal.length > 5 ? 370 : 410; }
+    wrap.style.cssText = `left:${(X0 + (areaW - dw) / 2)}px;top:${top0 + (dh0() - dh) / 2}px;width:${dw}px;height:${dh}px;touch-action:none`;
+    function dh0() { return wide ? ctx.H - 28 : pal.length > 5 ? 370 : 410; }
     const fillC = GF.el('canvas', '', wrap), lineC = GF.el('canvas', '', wrap);
     [fillC, lineC].forEach((c) => { c.width = WW; c.height = HH; c.style.cssText = `position:absolute;left:0;top:0;width:${dw}px;height:${dh}px;pointer-events:none`; });
     const page = GF.el('div', 'abs', root);
-    page.style.cssText = `left:${(360 - dw) / 2 - 8}px;top:${86 + (dh0() - dh) / 2 - 8}px;width:${dw + 16}px;height:${dh + 16}px;background:#fff;border-radius:22px;box-shadow:0 5px 0 rgba(0,0,0,.12)`;
+    page.style.cssText = `left:${(X0 + (areaW - dw) / 2) - 8}px;top:${top0 + (dh0() - dh) / 2 - 8}px;width:${dw + 16}px;height:${dh + 16}px;background:#fff;border-radius:22px;box-shadow:0 5px 0 rgba(0,0,0,.12)`;
     root.insertBefore(page, wrap);
 
     // 팔레트
-    const per = pal.length > 5 ? 4 : pal.length, prow = Math.ceil(pal.length / per), ps = pal.length > 5 ? 46 : 56;
+    const per = wide ? 2 : pal.length > 5 ? 4 : pal.length, prow = Math.ceil(pal.length / per), ps = wide ? 62 : pal.length > 5 ? 46 : 56;
     const swatches = pal.map((col, i) => {
       const r = Math.floor(i / per), c = i % per, inRow = r === prow - 1 ? pal.length - r * per : per;
-      const x = (360 - (inRow * (ps + 10) - 10)) / 2 + c * (ps + 10), y = (pal.length > 5 ? 468 : 500) + r * (ps + 8);
+      const x = wide ? 566 + c * (ps + 14) : (360 - (inRow * (ps + 10) - 10)) / 2 + c * (ps + 10), y = wide ? 26 + r * (ps + 12) : (pal.length > 5 ? 468 : 500) + r * (ps + 8);
       const s = GF.el('button', 'round-btn', root); s.style.cssText = `left:${x}px;top:${y}px;width:${ps}px;height:${ps}px;position:absolute;background:${col}`;
       s.onclick = () => { sel = i; ctx.sfx('tap'); mark(); }; return s;
     });
@@ -120,7 +122,7 @@ GF.mode('paint', {
       doneBtn = GF.el('button', 'big pop', root, GF.IC.play.replace('M10 5l16 11-16 11z', 'M6 17l7 7 14-15'));
       doneBtn.firstChild.setAttribute('fill', 'none'); doneBtn.firstChild.firstChild.setAttribute('fill', 'none');
       doneBtn.firstChild.firstChild.setAttribute('stroke', '#fff'); doneBtn.firstChild.firstChild.setAttribute('stroke-width', '5');
-      doneBtn.style.cssText = 'position:absolute;left:272px;top:2px;width:76px;height:76px;z-index:6';
+      doneBtn.style.cssText = wide ? 'position:absolute;left:588px;top:' + (ctx.H - 100) + 'px;width:80px;height:80px;z-index:6' : 'position:absolute;left:272px;top:2px;width:76px;height:76px;z-index:6';
       doneBtn.onclick = () => { ctx.sfx('pick'); doneBtn.remove(); ctx.done({ mistakes: 0 }); };
     }
     // 힌트: 아직 안 칠한 가장 큰 칸을 손가락이 가리킨다
@@ -129,7 +131,7 @@ GF.mode('paint', {
       const r = regs.filter((x) => x && x.big && x.color < 0).sort((a, b) => b.area - a.area)[0]; if (!r) return;
       if (finger) finger.remove();
       finger = GF.el('div', 'finger', root);
-      finger.style.left = (360 - dw) / 2 + (r.px / WW) * dw + 'px'; finger.style.top = 86 + (dh0() - dh) / 2 + (r.py / HH) * dh + 'px';
+      finger.style.left = (X0 + (areaW - dw) / 2) + (r.px / WW) * dw + 'px'; finger.style.top = top0 + (dh0() - dh) / 2 + (r.py / HH) * dh + 'px';
       if (lv === 2) finger.classList.add('glow');
     });
   },

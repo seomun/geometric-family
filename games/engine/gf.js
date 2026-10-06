@@ -107,7 +107,7 @@
     sync() {
       const e = this.el; if (!e) return;
       e.volume = Math.min(1, 0.22 * GF.state.settings.vol);
-      if (GF.state.settings.mute || document.hidden) e.pause(); else e.play().catch(() => {});
+      if (GF.state.settings.mute || document.hidden || GF.appHidden) e.pause(); else e.play().catch(() => {});
     },
   };
   let voiceEl = null;
@@ -171,6 +171,7 @@
     safeEl.style.width = SW + 'px'; safeEl.style.height = SH + 'px';
     safeEl.style.left = (vw / scale - SW) / 2 + 'px'; safeEl.style.top = (top + (availH - SH * scale) / 2) / scale + 'px';
     GF.safe = { w: SW, h: SH };
+    safeEl.style.setProperty('--hit', 64 / scale + 'px');
     GF.view = { vw, vh, lw: vw / scale, lh: vh / scale, landscape: vw > vh };
   }
   // 화면이 가로 구도를 지원하면(screen.wide) 가로 화면에서 720×440 안전 영역을 쓴다. 지원 안 하는 화면은 세로 컬럼 그대로.
@@ -251,6 +252,9 @@
 
   /* ---------------- 모드 등록 ---------------- */
   GF.mode = (name, def) => { GF.modes[name] = def; };
+  // 안드로이드 껍데기가 호출: 앱이 백그라운드로 가면 소리를 멈추고, 돌아오면 이어 간다 / 노치 인셋이 바뀌면 다시 맞춘다
+  GF.setHidden = (h) => { GF.appHidden = !!h; if (GF.bgm) GF.bgm.sync(); };
+  GF.refit = () => fit();
   const GAME_ICON = { shadow: 'gshadow', faces: 'gfaces', puzzle: 'gpuzzle', paint: 'gpaint', shapes: 'gshapes' };
   const GAME_HERO = { shadow: 'dong_dad.good', faces: 'wife.joy', puzzle: 'nemo_mom.good', paint: 'baby.joy', shapes: 'nemo_dad.good' };
   const GAME_ORDER = ['shadow', 'faces', 'puzzle', 'paint', 'shapes'];
@@ -390,13 +394,14 @@
 
   /* ---------------- 놀이방 ---------------- */
   GF.screen('playroom', {
+    wide: () => true,
     enter(r) {
       GF.bg('home', r);
       GAME_ORDER.forEach((g, i) => {
         const open = !!GF.modes[g] && GF.modes[g].free;
         const b = el('button', 'card' + (open ? '' : ' locked'), r);
         const col = i % 2, row = Math.floor(i / 2);
-        b.style.cssText += 'left:' + (20 + col * 170) + 'px;top:' + (84 + row * 180) + 'px;width:150px;height:160px';
+        b.style.cssText += GF.safeWide ? 'left:' + (24 + i * 134) + 'px;top:150px;width:124px;height:170px' : 'left:' + (20 + col * 170) + 'px;top:' + (84 + row * 180) + 'px;width:150px;height:160px';
         b.appendChild(GF.img(GAME_HERO[g]));
         const ic = el('div', '', b, IC[GAME_ICON[g]]); ic.style.cssText = 'position:absolute;left:8px;top:8px;width:40px;height:40px;background:#fff;border-radius:12px;padding:4px;box-shadow:0 2px 0 rgba(0,0,0,.12)';
         if (!open) el('div', '', b, '<svg class="lock" viewBox="0 0 32 32">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
@@ -494,6 +499,7 @@
     },
   });
   GF.screen('album', {
+    wide: () => true,
     enter(r) {
       GF.bg('home', r);
       const a = el('div', 'album', r);

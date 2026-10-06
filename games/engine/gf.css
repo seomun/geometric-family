@@ -4,16 +4,16 @@
   --ink: #3A2E39; --pink: #FF8FA8; --gold: #FFC933; --green: #6CCB8A;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { margin: 0; height: 100%; background: #2a2230; overflow: hidden; color: var(--ink);
+html, body { margin: 0; height: 100%; background: #FFF6E5; overflow: hidden; color: var(--ink);
   font-family: "Jua", "Noto Sans KR", "Malgun Gothic", sans-serif;
   user-select: none; -webkit-user-select: none; touch-action: none; overscroll-behavior: none; }
-#stage { position: fixed; inset: 0; overflow: hidden; background: #2a2230; }
+#stage { position: fixed; inset: 0; overflow: hidden; background: #FFF6E5; }
 #frame { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 #safe { position: absolute; width: 360px; height: 640px; }
-#inset { position: absolute; left: 0; top: 0; width: 0; height: 0; visibility: hidden; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+#inset { position: absolute; left: 0; top: 0; width: 0; height: 0; visibility: hidden; padding-top: max(env(safe-area-inset-top, 0px), var(--sat, 0px)); padding-bottom: env(safe-area-inset-bottom, 0px); }
 .screen { position: absolute; inset: 0; display: none; }
-.screen.on { display: block; animation: fadein .25s ease; }
-@keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
+.screen.on { display: block; animation: fadein .2s ease; }
+@keyframes fadein { from { opacity: .55 } to { opacity: 1 } }
 img { -webkit-user-drag: none; pointer-events: none; }
 .abs { position: absolute; }
 
@@ -22,7 +22,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
   align-items: center; justify-content: space-between; padding: 6px 10px; pointer-events: none; }
 #topbar.hidden { display: none; }
 #topbar > * { pointer-events: auto; }
-.round-btn { width: 52px; height: 52px; border-radius: 50%; border: 0; background: #fff;
+.round-btn { position: relative; width: 52px; height: 52px; border-radius: 50%; border: 0; background: #fff;
   box-shadow: 0 3px 0 rgba(0,0,0,.14); display: flex; align-items: center; justify-content: center; padding: 0; }
 .round-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,.14); }
 .round-btn svg { width: 30px; height: 30px; }
@@ -210,3 +210,14 @@ img { -webkit-user-drag: none; pointer-events: none; }
 #safe.wide .caption { bottom: 96px; }
 .homechars img { transform-origin: 50% 100%; }
 .homechars img + img { margin-left: -22px; }
+
+/* ---- 터치 판정: 보이는 크기와 무관하게 화면에서 64dp 이상 (--hit 는 fit() 이 배율에 맞춰 넣는다) ---- */
+.tok::before, .round-btn::before, .fcard::before, .card::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--hit, 64px)); height: max(100%, var(--hit, 64px)); transform: translate(-50%, -50%); }
+.card { overflow: visible; } .card img { border-radius: inherit; }
+
+#safe.wide .album { left: 24px; right: 24px; top: 70px; }
+#safe.wide .albrow { gap: 14px; padding: 10px 16px; }
+#safe.wide .albrow .sticker { width: 74px; height: 74px; }
+#safe.wide .albrow .ch { width: 36px; height: 36px; font-size: 22px; }
+
+.tok svg g > *, .abs svg g > * { vector-effect: non-scaling-stroke; }

@@ -1,14 +1,16 @@
 /* 퍼즐 조각 — 흩어진 조각을 끌어 그림을 완성한다. cfg: {id, pieces: 2|4|6}  (그림 = 캐릭터 PNG 또는 'art.*') */
 GF.mode('puzzle', {
+  land: true,
   setup(root, cfg, ctx) {
+    const wide = ctx.W > 400;
     const LAYOUT = { 2: [2, 1, 300], 4: [2, 2, 280], 6: [2, 3, 235] };       // [열, 행, 판 높이]
     const sizes = [2, 4, 6];
     const n = sizes[Math.max(0, Math.min(2, sizes.indexOf(cfg.pieces) + (ctx.level || 0)))];
     const [cols, rows, bh0] = LAYOUT[n];
     const asp = GF.aspect(cfg.id), src = GF.src(cfg.id);
-    let bh = bh0, bw = bh * asp;
-    if (bw > 320) { bw = 320; bh = bw / asp; }
-    const bx = (360 - bw) / 2, by = 16, cw = bw / cols, chh = bh / rows;
+    let bh = wide ? Math.min(ctx.H - 40, bh0 * 1.2) : bh0, bw = bh * asp;
+    if (bw > (wide ? 280 : 320)) { bw = wide ? 280 : 320; bh = bw / asp; }
+    const bx = wide ? 24 + (340 - bw) / 2 : (360 - bw) / 2, by = wide ? 16 + (ctx.H - 40 - bh) / 2 : 16, cw = bw / cols, chh = bh / rows;
 
     // 판 (흐린 그림 + 칸 선)
     const board = GF.el('div', 'abs', root);
@@ -23,14 +25,15 @@ GF.mode('puzzle', {
     }
 
     // 조각 트레이 (아래, 칸 크기 그대로)
-    const trayTop = by + bh + 40, trayH = 576 - trayTop - 12;
-    const perRow = Math.floor(340 / (cw + 8)) || 1, trows = Math.ceil(n / perRow);
-    const rowH = Math.min(chh + 10, trayH / trows);
+    const trayCx = wide ? 540 : 180, trayW = wide ? ctx.W - 420 : 340;
+    const trayTop = wide ? 20 : by + bh + 40, trayH = wide ? ctx.H - 40 : 576 - trayTop - 12;
+    const perRow = Math.floor(trayW / (cw + 8)) || 1, trows = Math.ceil(n / perRow);
+    const rowH = Math.min(chh + 10, trayH / trows), rowOff = wide ? Math.max(0, (trayH - trows * rowH) / 2) : 0;
     const order = ctx.shuffle(cells.map((c) => c.key));
     let left = n, mistakes = 0, finger = null;
     const pieces = order.map((key, pos) => {
       const cell = cells[key], row = Math.floor(pos / perRow), inRow = row === trows - 1 ? n - row * perRow : perRow;
-      const col = pos % perRow, x = (360 - (inRow * (cw + 8) - 8)) / 2 + col * (cw + 8), y = trayTop + row * rowH + Math.max(0, (rowH - chh) / 2);
+      const col = pos % perRow, x = trayCx - (inRow * (cw + 8) - 8) / 2 + col * (cw + 8), y = trayTop + rowOff + row * rowH + Math.max(0, (rowH - chh) / 2);
       const p = GF.el('div', 'tok', root); p.dataset.cell = key;
       p.style.cssText = `left:${x}px;top:${y}px;width:${cw}px;height:${chh}px;background:#fff url("${src}") ${-cell.c * cw}px ${-cell.r * chh}px/${bw}px ${bh}px no-repeat;border-radius:10px;box-shadow:0 0 0 3px #8FD3F4,0 4px 0 rgba(0,0,0,.15)`;
       const pc = { el: p, cell, home: { x, y }, done: false };
@@ -49,7 +52,7 @@ GF.mode('puzzle', {
               best.filled = true; pc.done = true; p.classList.add('done', 'pop');
               p.style.left = best.cx - cw / 2 + 'px'; p.style.top = best.cy - chh / 2 + 'px';
               p.style.boxShadow = 'none'; p.style.borderRadius = '0'; best.ring.style.borderColor = 'transparent';
-              ctx.sfx('ok'); fingerOff();
+              ctx.sfx('ok'); fingerOff(); GF.snap(p); GF.burst(root, best.cx, best.cy, 10);
               if (--left === 0) { board.style.background = '#FFF3C2'; ctx.timeout(() => ctx.done({ mistakes }), 800); }
               return;
             }

@@ -9,8 +9,8 @@ TAG = '<script src="../src/characters.js"></script>'
 dist = os.path.join(ROOT, "dist"); os.makedirs(dist, exist_ok=True)
 for fp in sorted(glob.glob(os.path.join(ROOT, "web/*.html"))):
     html = open(fp, encoding="utf-8").read()
-    assert TAG in html, fp
-    out = "<script>\n".join(html.split(TAG)[:1]) + "<script>\n" + js + "\n</script>" + html.split(TAG)[1]
+    # characters.js 를 쓰지 않는 페이지(스케치 등)는 그대로 복사
+    out = "<script>\n".join(html.split(TAG)[:1]) + "<script>\n" + js + "\n</script>" + html.split(TAG)[1] if TAG in html else html
     name = os.path.basename(fp)
     open(os.path.join(dist, name), "w", encoding="utf-8", newline="\n").write(out); print("built", name, len(out))
 print("index.html = web/index.html (목차)")

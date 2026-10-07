@@ -11,7 +11,8 @@
     "t": "free"
    },
    "hint": "처음부터 있어요",
-   "premium": false
+   "premium": false,
+   "item": "coffee"
   },
   {
    "id": "p_lunch",
@@ -49,7 +50,8 @@
     "id": "s12"
    },
    "hint": "사연 「에어컨 리모컨」",
-   "premium": false
+   "premium": false,
+   "item": "remote"
   },
   {
    "id": "p_points",
@@ -73,7 +75,8 @@
     "id": "s08"
    },
    "hint": "사연 「돋보기」",
-   "premium": false
+   "premium": false,
+   "item": "glasses2"
   },
   {
    "id": "p_kimchi",
@@ -97,7 +100,8 @@
     "id": "s25"
    },
    "hint": "사연 「혈압약 첫날」",
-   "premium": false
+   "premium": false,
+   "item": "pills"
   },
   {
    "id": "p_photo",
@@ -131,7 +135,8 @@
     "t": "free"
    },
    "hint": "처음부터 있어요",
-   "premium": false
+   "premium": false,
+   "item": "americano"
   },
   {
    "id": "p_bagt",
@@ -143,7 +148,8 @@
     "id": "s_bag"
    },
    "hint": "여행 가방을 모시면",
-   "premium": false
+   "premium": false,
+   "item": "bag"
   },
   {
    "id": "p_pass",
@@ -192,7 +198,8 @@
     "id": "s28"
    },
    "hint": "사연 「읽씹」",
-   "premium": false
+   "premium": false,
+   "item": "phone"
   },
   {
    "id": "p_world",
@@ -251,7 +258,8 @@
     "t": "free"
    },
    "hint": "처음부터 있어요",
-   "premium": false
+   "premium": false,
+   "item": "book"
   },
   {
    "id": "p_flower",
@@ -287,7 +295,8 @@
     "id": "s04"
    },
    "hint": "사연 「상갓집」",
-   "premium": false
+   "premium": false,
+   "item": "condolence"
   },
   {
    "id": "p_wreath",
@@ -311,7 +320,8 @@
     "id": "d_dau"
    },
    "hint": "동그라미 딸을 모시면",
-   "premium": false
+   "premium": false,
+   "item": "racket"
   },
   {
    "id": "p_vio",
@@ -323,7 +333,8 @@
     "id": "d_son"
    },
    "hint": "동그라미 아들을 모시면",
-   "premium": false
+   "premium": false,
+   "item": "violin"
   },
   {
    "id": "p_chair",

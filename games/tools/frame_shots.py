@@ -5,7 +5,9 @@
 import pathlib
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
-ROOT = pathlib.Path(__file__).resolve().parents[1] / 'store' / 'shots'
+import os
+IDLE = os.environ.get('IDLE') == '1'          # IDLE=1 이면 방치형 스크린샷(store/shots_idle)
+ROOT = pathlib.Path(__file__).resolve().parents[1] / 'store' / ('shots_idle' if IDLE else 'shots')
 RAW = ROOT / 'raw'
 FONT = 'C:/Windows/Fonts/malgunbd.ttf'
 CAPTIONS = {
@@ -16,6 +18,15 @@ CAPTIONS = {
     '5_faces': ('같은 얼굴을 찾아요', '#EADFFB'),
     '6_paint': ('마음대로 색칠해요', '#FFF3C2'),
 }
+if IDLE:
+    CAPTIONS = {
+        '1_home': ('세 식탁이 따뜻해져요', '#FFE0B5'),
+        '2_nemo': ('밥그릇은 모자라고 웃음은 넘쳐요', '#FFE3C2'),
+        '3_semo': ('공항에서 대판, 온천에서 화해', '#D6EEFF'),
+        '4_story': ('50대의 평범한 하루 사연', '#E3F6DC'),
+        '5_quest': ('당신은 어느 도형인가요?', '#EADFFB'),
+        '6_props': ('소품을 모아 식탁을 꾸며요', '#FFF3C2'),
+    }
 INK = '#3A2E39'
 
 def rounded_top(im, r):
@@ -31,6 +42,8 @@ def frame(kind, key):
         W, H, band, shot_w, size, rad = 1920, 1200, 215, 1660, 88, 54
     canvas = Image.new('RGB', (W, H), bg)
     d = ImageDraw.Draw(canvas); f = ImageFont.truetype(FONT, size)
+    while d.textlength(text, font=f) > W - 90 and size > 50:   # 긴 문구는 글자를 줄여 한 줄에 맞춘다
+        size -= 4; f = ImageFont.truetype(FONT, size)
     tw = d.textlength(text, font=f)
     d.text(((W - tw) / 2, (band - size) / 2 - 8), text, font=f, fill=INK)
     sh = raw.resize((shot_w, round(raw.height * shot_w / raw.width)), Image.LANCZOS)
@@ -42,7 +55,7 @@ def frame(kind, key):
     canvas.alpha_composite(sh, (x, y))
     canvas.convert('RGB').save(ROOT / f'{kind}_{key.split("_")[0]}.png', optimize=True)
 
-for kind in ('phone', 'tab'):
+for kind in (('phone',) if IDLE else ('phone', 'tab')):
     for key in CAPTIONS:
         frame(kind, key)
-print('framed 12')
+print('framed')

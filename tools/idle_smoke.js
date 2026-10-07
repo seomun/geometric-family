@@ -59,6 +59,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await D('give', 0); await D('checkProps');
   const pc = await pg.evaluate(() => ({ n: Object.keys(IDLE.debug.S().pr).length, all: IDLE.debug.PR().length, prem: IDLE.debug.PR().filter((x) => x.premium).length }));
   ok(pc.all === 30 && pc.n >= 3 && pc.prem <= 4, '소품 ' + pc.n + '/' + pc.all + ' (premium ' + pc.prem + ')');
+  ok(await pg.evaluate(() => IDLE.grant('prop:p_pack1') && IDLE.owns('prop:p_pack1') && !IDLE.hooks.adAvailable()), '수익 훅: premium 소품은 grant 로만, 광고 no-op');
   await pg.evaluate(() => GF.go('iprops')); await pg.waitForSelector('.screen.on .dexc'); await shot('props');
   await pg.click('.screen.on .dexc >> nth=0'); await pg.click('.screen.on .dexc.off >> nth=0'); await pg.waitForTimeout(300);
   await pg.evaluate(() => GF.back());

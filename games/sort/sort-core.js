@@ -36,6 +36,7 @@
     return { n, from, to, kind: items[0], done: isDone(S, to) };
   }
   function isWon(S) {
+    if (S.L && S.L.pair) return S.tubes.every((t, i) => !t.length || isDone(S, i));   // 짝 칸: 같은 그림이 두 칸에 가득 나뉘어 담김
     const seen = new Set();
     for (let i = 0; i < S.tubes.length; i++) { const t = S.tubes[i]; if (!t.length) continue; if (!t.every((k) => k === t[0])) return false; if (seen.has(t[0])) return false; seen.add(t[0]); }
     return true;

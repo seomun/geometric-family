@@ -30,7 +30,7 @@
 .sr-hd { top: 70px; } .sr-goals { top: 98px; height: 48px; align-items: center; }
 .sr-goal { height: 44px; padding: 0 12px 0 8px; gap: 6px; } .sr-gi { width: 30px; height: 30px; } .sr-gs { color: #E8A800; font-size: 24px; }
 .sr-bar { position: absolute; left: 0; right: 0; bottom: -8px; height: 6px; border-radius: 3px; background: rgba(0,0,0,.12); overflow: hidden; } .sr-bar i { display: block; height: 100%; background: var(--uk-green, #6CCB8A); transition: width .3s; }
-.sr-tip { position: absolute; left: 10px; right: 10px; top: 150px; height: 40px; line-height: 40px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
+.sr-tip { position: absolute; left: 10px; right: 10px; top: 102px; height: 40px; line-height: 40px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: #2E2430; color: #fff; border-radius: 22px; pointer-events: none; }
 .sr-grid .uk-btn, .sr-season .uk-btn { position: relative; padding: 0 10px; font-size: 18px; min-height: 56px; }
 .sr-btns { position: absolute; left: 24px; right: 24px; top: 300px; } .sr-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .sr-season { position: absolute; left: 24px; right: 24px; top: 506px; } .sr-foot { bottom: 18px; }
@@ -39,7 +39,7 @@
 .sr-badge { min-width: 28px; height: 28px; line-height: 28px; font-size: 18px; border-radius: 14px; padding: 0 6px; }
 /* ---- 정리의 달인 플레이 화면 ---- */
 .sr-info { position: absolute; left: 12px; right: 12px; top: 104px; height: 36px; line-height: 36px; font: 800 var(--uk-fs-cap)/36px var(--uk-font); color: var(--uk-ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sr-tip { position: absolute; left: 10px; right: 10px; top: 150px; height: 40px; line-height: 40px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; white-space: nowrap; }
+.sr-tip { position: absolute; left: 10px; right: 10px; top: 102px; height: 40px; line-height: 40px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: #2E2430; color: #fff; border-radius: 22px; pointer-events: none; white-space: nowrap; }
 .sr-area { position: absolute; left: 8px; right: 8px; top: 150px; height: 424px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; }
 .sr-row { display: flex; gap: 6px; justify-content: center; align-items: flex-end; width: 100%; padding-bottom: 6px; box-sizing: border-box; }
 .sr-tube { position: relative; flex: none; border: 0; padding: 0 0 6px; box-sizing: border-box; border-radius: 6px 6px 20px 20px; background: rgba(255,255,255,.55); box-shadow: 0 0 0 3px #8FA9C4 inset, 0 4px 0 #6C86A3; display: flex; flex-direction: column-reverse; align-items: center; justify-content: flex-start; gap: 3px; transition: transform .1s; touch-action: manipulation; }

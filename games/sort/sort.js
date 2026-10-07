@@ -1,12 +1,12 @@
 /* 정리의 달인 — UI. 규칙 sort-core.js · 생성기 sort-gen.js · 판 data/sort_levels.json · 사연·시즌 data/sort_extra.json · 집 engine/room · 모든 화면은 ui-kit(UK).
-   압박 없음: 시간 제한·하트·유료 이어하기 없음. 되돌리기 한 판 3번·칸 하나 더 1번(무료), 힌트는 언제든, 「다시」로 처음부터. 판 종류 5 + 공통 판 4. */
+   압박 없음: 시간 제한·하트·유료 이어하기 없음. 되돌리기 한 판 3번·칸 하나 더 1번(무료), 힌트는 언제든, 「다시」로 처음부터. 판 종류 6 + 공통 판 4. */
 (function () {
   'use strict';
   const el = UK.el, C = SortCore, G = SortGen;
   const SR = (window.SORT = { debug: {} });
   const KEY = 'gf:sort:v1';
   const REW = { 2: 'u_box', 4: 'u_basket', 6: 'u_label', 8: 'u_shoerack', 10: 'u_coffee', 12: 'u_shelf', 14: 'u_drawer', 16: 'u_socks', 18: 'u_fridge', 20: 'u_eggtray', 25: 'u_hanger', 30: 'u_closet', 36: 'u_crate', 42: 'u_umbrella', 50: 'u_pill', 58: 'u_bagrack', 66: 'u_toybox', 78: 'u_env', 90: 'u_sidedish', 100: 'u_cart' };
-  const TYPE_TIP = { sort: '같은 그림끼리 한 칸에 모아요', limit: '칸마다 들어가는 수가 달라요', locked: '한 칸을 채우면 자물쇠가 풀려요', hidden: '아래 물건은 옮기면 보여요', family: '가족끼리 한 칸에 담아요' };
+  const TYPE_TIP = { pair: '같은 그림을 두 칸에 나눠 담아요', sort: '같은 그림끼리 한 칸에 모아요', limit: '칸마다 들어가는 수가 달라요', locked: '한 칸을 채우면 자물쇠가 풀려요', hidden: '아래 물건은 옮기면 보여요', family: '가족끼리 한 칸에 담아요' };
   const RULE_TXT = [['네모 규칙', '빈 칸이 하나 더 있어요', 'nemo'], ['세모 규칙', '반짝이는 물건은 어떤 그림 위에도 얹어요', 'semo'], ['동그라미 규칙', '같은 그림은 한꺼번에 옮겨져요', 'dong']];
   const slow = (ms) => (SR.fast ? 0 : ms);
   const SYM = [['🧱', '벽돌'], ['🌾', '볏짚'], ['🪵', '나무'], ['🥁', '북'], ['🎺', '나팔'], ['🎻', '바이올린'], ['🐦', '까치'], ['🎋', '칠석'], ['🌌', '은하수'], ['🍲', '수프'], ['🪑', '의자'], ['🛏️', '침대'], ['🫘', '콩'], ['🥚', '황금알'], ['🪜', '사다리'], ['👟', '꽃신'], ['🐸', '두꺼비'], ['🪣', '독'], ['@art.gourd', '박'], ['@art.swallow', '제비'], ['🌾', '볏단'], ['🐌', '우렁'], ['🍚', '밥'], ['🏺', '항아리'], ['🪓@gold', '금도끼'], ['🪓@silver', '은도끼'], ['🪓', '쇠도끼'], ['🌾', '곡식'], ['🫙', '곳간'], ['🎻', '노래'], ['🌙', '달'], ['☀️', '해'], ['🪢', '동아줄'], ['🥕', '당근'], ['🏁', '결승선'], ['🐢', '거북이']];
@@ -35,7 +35,7 @@
   GF.home = () => { GF.stack = []; GF.go('shome'); }; GF.home2 = GF.home;
   GF.pill = () => UK.icon('star') + '<span>' + totalStars() + '</span>';
   const bar = () => GF.refreshBar && GF.refreshBar();
-  const DAILY = ['sort', 'limit', 'hidden', 'family', 'locked', 'sort', 'limit'];
+  const DAILY = ['sort', 'pair', 'hidden', 'family', 'locked', 'limit', 'pair'];
   const TOT = () => (D && D.total) || 120;
   function dailyLevel() { const d = +today(), L = G.make(8 + (d % 12), d, { type: DAILY[dayNum() % 7], tag: 'growth', total: TOT() }); if (L) { L.id = 'daily'; L.kind = 'daily'; } return L; }
   const seasonNow = () => X.seasons.filter((s) => s.months.includes(now().getMonth() + 1) || SR.season === s.id);
@@ -92,7 +92,7 @@
     enter(r, p) {
       r.classList.add('uk', 'sr'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:150px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:102px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
       el('div', 'sr-hd', r, `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'sort' ? `<em class="sr-type">${D.types[LV.type]}</em>` : ''));
       let S = C.newGame(LV), hist = [], sel = -1, busy = false, hintP = null, streak = 0; const gained = [];

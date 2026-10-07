@@ -68,7 +68,7 @@ const SCENES = {
     const play = async (n, k) => { await p.evaluate((nn) => { SORT.unlockAll = true; SORT.fast = true; GF.stack = []; GF.go('shome'); GF.go('splay', { n: nn }); }, n); await p.waitForSelector('.sr-tube'); await wait(p, 700); const L = await p.evaluate(() => SORT.debug.level()); for (const [a, b] of L.solution.slice(0, k)) { await p.evaluate(([x, y]) => { SORT.debug.tap(x); SORT.debug.tap(y); }, [a, b]); await wait(p, 160); } await wait(p, 500); };
     await p.waitForSelector('.sr-btns'); await wait(p, 900); await shot('1_home');
     await p.evaluate(() => { GF.go('slevels'); }); await p.waitForSelector('.sr-l'); await wait(p, 600); await shot('2_levels');
-    await play(8, 3); await shot('3_play'); await play(9, 5); await shot('4_lock'); await play(11, 3); await shot('5_hidden');
+    await play(7, 3); await shot('3_play'); await play(9, 5); await shot('4_lock'); await play(11, 3); await shot('5_hidden');
     await p.evaluate(() => { Object.values(SORT.debug.REW).slice(0, 7).forEach((id) => Room.grant(id)); GF.stack = []; GF.go('shome'); GF.go('shouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
   },
   async quiz(p, shot) {

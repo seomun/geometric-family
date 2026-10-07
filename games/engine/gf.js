@@ -268,7 +268,7 @@
   };
   GF.home = () => { GF.stack = []; GF.go('home'); };
   function refreshBar() {
-    $('b-stars').innerHTML = IC.star + '<span>' + totalStars() + '</span>';
+    $('b-stars').innerHTML = GF.pill ? GF.pill() : IC.star + '<span>' + totalStars() + '</span>';   // 앱마다 진행 알약(별·웃음 등)
     $('b-sound').innerHTML = GF.state.settings.mute ? IC.mute : IC.sound;
   }
   GF.refreshBar = refreshBar;

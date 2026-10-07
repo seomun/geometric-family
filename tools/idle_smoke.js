@@ -27,14 +27,14 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     await pg.click('.tcard[data-t=' + t + ']'); await pg.waitForSelector('.grow'); await pg.waitForTimeout(300);
     const bad = await pg.evaluate(() => { const o = []; document.querySelectorAll('.idle .grow *, .idle .panel2 *, .idle .mini *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent) { const f = parseFloat(getComputedStyle(e).fontSize) * (e.closest('#safe').getBoundingClientRect().width / 360); if (f < 17.5) o.push(e.textContent.trim().slice(0, 10) + ':' + f.toFixed(1)); } }); return o; });
     ok(bad.length === 0, t + ' 상세 글자 ≥18px (' + bad.join(',') + ')'); await shot('detail_' + t);
-    await pg.click('.screen.on .tb-back'); await pg.waitForSelector('.tcard');
+    await pg.click('#b-back'); await pg.waitForSelector('.tcard');
   }
   // 세모 지르기
   await pg.click('.tcard[data-t=semo]'); await pg.waitForSelector('.trip');
   await pg.click('.screen.on .trip >> nth=1'); await pg.waitForTimeout(300);
   const sr = await D('rates'); ok(sr.s.m === 0, '대판 싸움: 처음 10초 멈춤 (m=' + sr.s.m + ')');
   await D('skip', 15000); const sr2 = await D('rates'); ok(sr2.s.m > 4, '화해 후 ×4.2 (m=' + sr2.s.m + ')');
-  await pg.click('.screen.on .tb-back');
+  await pg.click('#b-back');
   // 사연
   const ready = await D('S'); ok(ready.tot > 120, '누적 온기가 1화 문턱 넘음');
   await pg.click('.screen.on .sbtn'); await pg.waitForSelector('.screen.on .caption'); await shot('story1');
@@ -43,7 +43,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await pg.click('.screen.on .uk-sheet .uk-btn'); await pg.waitForSelector('.tcard');
   const S2 = await D('S'); ok(Object.keys(S2.sd).length === 1, '도감 1칸'); await shot('home1');
   // 도감
-  await pg.click('.screen.on .dbtn'); await pg.waitForSelector('.dexg'); await shot('dex'); await pg.click('.screen.on .tb-back');
+  await pg.click('.screen.on .dbtn'); await pg.waitForSelector('.dexg'); await shot('dex'); await pg.click('#b-back');
   // 모든 사연: 컷마다 이미지가 실제로 그려지는지, 글자 ≥18px
   const ids = await pg.evaluate(() => IDLE.debug.B().storyThresholds.map((_, i) => GF.data.idle_stories.stories[i] && GF.data.idle_stories.stories[i].id).filter(Boolean));
   const sids = await pg.evaluate(() => GF.data.idle_stories.seasons.map((x) => x.id));

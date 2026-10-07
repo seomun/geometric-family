@@ -71,13 +71,11 @@
 
   /* ---------------- 화면 도우미 ---------------- */
   function toast(msg) { UK.toast(msg, GF.screens[GF.cur.name].el); }   // 키트 토스트(모든 게임 같은 모양)
-  /* 모든 화면 공통 상단 바(키트): ‹ · 집 · 웃음(하트 알약) · 소리 — 홈 화면만 ‹ 없음 */
-  GF.home2 = () => { GF.stack = []; GF.go('itable'); };
-  function bar(r, isHome) {
-    const tb = UK.topbar({ back: !isHome, home: true, stars: fmt(S.l), icon: 'heart', muted: GF.state.settings.mute, onBack: () => GF.back(), onHome: () => GF.home2(), onSound: () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); GF.sfx('tap'); } }, r);
-    tb.bar.style.cssText += ';position:absolute;left:0;right:0;top:0;z-index:30'; return tb;
-  }
-  function floatText(parent, x, y, text) { const f = el('div', 'float', parent, text); f.style.left = x + 'px'; f.style.top = y + 'px'; setTimeout(() => f.remove(), 1000); }
+  /* 모든 화면 공통 상단 바 = 엔진 상단 바(#topbar): ‹ · 집 · 진행 알약 · 소리 — 홈 화면만 ‹ 없음. 알약 값 = 웃음 누적(모든 화면 같은 값) */
+  GF.home = () => { GF.stack = []; GF.go('itable'); }; GF.home2 = GF.home;
+  GF.pill = () => UK.icon('heart') + '<span>' + fmt(S ? S.l : 0) + '</span>';
+  function bar() { UI.upd.push(() => GF.refreshBar()); }
+    function floatText(parent, x, y, text) { const f = el('div', 'float', parent, text); f.style.left = x + 'px'; f.style.top = y + 'px'; setTimeout(() => f.remove(), 1000); }
   const headChars = { nemo: ['nemo_dad.good', 'nemo_mom.good', 'nemo_grandma.good', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3', 'baby.joy'], semo: ['wife.joy', 'husband.joy'], dong: ['dong_dad.good', 'nemo_mom.wink', 'nemo_kids.kid3', 'nemo_kids.kid2'] };
   function scene(t, w, h) {                                      // 식탁 그림: 식탁 위에 지금 앉은 식구
     const d = el('div', 'sc'); d.style.cssText = `position:relative;width:${w}px;height:${h}px;overflow:hidden`;
@@ -131,13 +129,13 @@
 
   /* ---------------- 식탁(홈) ---------------- */
   GF.screen('itable', {
-    bare: true,
+    bare: false,
     enter(r) {
       r.classList.add('idle'); const sc = el('div', 'scr', r); UI.upd = [];
-      GF.bg('indoor', sc); bar(sc, true);
+      GF.bg('indoor', sc); bar();
       const hd = el('div', 'hd', sc, '<div class="w"><span id="iw">0</span><small id="iwr"></small></div><div class="row"><span>웃음 <b id="il">0</b></span><span>식탁 합계 Lv <b id="itl">3</b></span><span>도감 <b id="idx">0%</b></span></div>');
       ['nemo', 'semo', 'dong'].forEach((t, i) => {
-        const c = el('button', 'tcard', sc); c.style.top = 150 + i * 120 + 'px'; c.style.background = B.tables[t].color; c.dataset.t = t;
+        const c = el('button', 'tcard', sc); c.style.top = 160 + i * 118 + 'px'; c.style.background = B.tables[t].color; c.dataset.t = t;
         c.appendChild(scene(t, 132, 112));
         const tx = el('div', 'tx', c, `<div class="nm" style="color:${B.tables[t].ink}">${B.tables[t].name}</div><div class="lv"></div><div class="rt"></div><div class="st"></div>`);
         el('div', 'bar', c, '<i></i>'); const dot = el('div', 'dot', c); dot.style.display = 'none';
@@ -178,14 +176,14 @@
 
   /* ---------------- 식탁 상세 ---------------- */
   GF.screen('idetail', {
-    bare: true,
+    bare: false,
     enter(r, p) {
       r.classList.add('idle'); const t = p.t, T = B.tables[t], sc = el('div', 'scr', r); UI.upd = [];
       GF.bg('indoor', sc);
-      bar(sc, false);
+      bar();
       const tt = el('div', 'ttl', sc, `<b style="color:${T.ink}">${T.name}</b><span>${T.tag}</span>`); tt.style.cssText += ';top:64px;left:14px;height:48px';
-      const mini = el('div', 'mini', sc, '<span id="mw"></span><span id="mr"></span>'); mini.style.top = '114px';
-      const list = el('div', 'scroll', sc); list.style.cssText += ';top:166px;bottom:0;padding-top:4px;padding-bottom:16px';
+      const mini = el('div', 'mini', sc, '<span id="mw"></span><span id="mr"></span>'); mini.style.top = '120px';
+      const list = el('div', 'scroll', sc); list.style.cssText += ';top:172px;bottom:0;padding-top:4px;padding-bottom:16px';
       const sceneBox = el('div', '', list); sceneBox.style.cssText = 'margin:0 10px 10px;border-radius:22px;overflow:hidden;height:124px;box-shadow:0 4px 0 rgba(0,0,0,.12)'; const rebuildScene = () => { sceneBox.innerHTML = ''; const s_ = scene(t, 132, 124); s_.style.cssText += ';width:100%;'; sceneBox.appendChild(s_); }; rebuildScene();
       const special = el('div', '', list);
       const rows = el('div', '', list);
@@ -249,12 +247,12 @@
   /* ---------------- 사연 ---------------- */
   /* 사연: 공용 사연 컷 플레이어(GF.story) — ①그림책과 같은 액자·자막·넘김. 끝에 "당신은 어느 도형인가요?" 선택 */
   GF.screen('istory', {
-    bare: true,
+    bare: false,
     enter(r, p) {
       r.classList.add('idle', 'uk'); UI.upd = [];
       const st = p.ending ? ST.ending : (p.season ? ST.seasons : ST.stories).find((x) => x.id === p.id), seen = p.ending ? S.end : p.season ? S.ss[seasonKey(p.id)] : S.sd[st.id];
       const cuts = st.cuts.map((c) => ({ bg: st.bg || 'indoor', text: c.text, chars: c.chars.map((id, k, a) => ({ id, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 })), bubble: c.bubble ? { type: c.bubble, at: 0 } : null }));
-      bar(r, false);
+      bar();
       const hold = el('div', 'abs', r); hold.style.cssText = 'inset:0'; 
       GF.story(hold, cuts, () => { if (seen) { GF.back(); return; } question(); });
       function question() {
@@ -272,10 +270,10 @@
 
   /* ---------------- 도감 ---------------- */
   GF.screen('idex', {
-    bare: true,
+    bare: false,
     enter(r) {
       r.classList.add('idle'); const sc = el('div', 'scr', r); UI.upd = [];
-      GF.bg('indoor', sc); bar(sc, false);
+      GF.bg('indoor', sc); bar();
       const pct = Math.round(dexCount() / B.dexTotal * 100);
       const tt = el('div', 'ttl', sc, `<b>도감 ${dexCount()}/${B.dexTotal}</b><span>모은 사연 ${pct}%</span>`); tt.style.cssText += ';top:64px;left:14px;height:48px';
       const list = el('div', 'scroll', sc); list.style.cssText += ';top:116px;bottom:0;padding-top:4px';
@@ -304,16 +302,17 @@
 
   /* ---------------- 우리 집 (공유 룸 — 게임 안 별도 꾸미기 화면 없음) ---------------- */
   GF.screen('ihouse', {
-    bare: true,
+    bare: false,
     enter(r) {
       r.classList.add('idle', 'uk'); GF.bg('indoor', r); UI.upd = [];
-      bar(r, false);
+      bar();
       const sc = el('div', 'scroll', r); sc.style.cssText += ';top:70px;bottom:0'; Room.house(sc, { room: 'nemo' });
     },
   });
 
   /* ---------------- 루프·저장·부팅 ---------------- */
   function tick() {
+    if (UI.pause) return;   // 시험용: 가짜 부재 시간을 만든 뒤 정산 전까지 틱을 멈춘다
     const t = now(); advance(S.last, t); S.last = t; checkProps();
     UI.upd.forEach((f) => f());
     if (!document.hidden) { tick.n = (tick.n || 0) + 1; if (tick.n % 20 === 0) save(); }
@@ -330,11 +329,11 @@
   IDLE.debug = {
     S: () => S, B: () => B, PR: () => PR, checkProps, tlCost, endingReady, rates: () => rates(now()), fmt,
     skip(ms) { S.clock = (S.clock || 0) + ms; return offline(); },
-    awayHours(h) { S.last -= h * 3600000; save(); },
+    awayHours(h) { UI.pause = true; S.last -= h * 3600000; save(); },
     buy(id) { const t = Object.keys(B.tables).find((k) => B.tables[k].gens.some((g) => g.id === id) || (B.tables[k].pot && B.tables[k].pot.id === id)); const g = B.tables[t].gens.find((x) => x.id === id) || B.tables[t].pot; const c = genCost(g); if (S.w < c) return false; S.w -= c; S.g[id] = lvl(id) + 1; return true; },
     give(w) { S.w += w; S.tot += w; },
     snap() { return JSON.stringify(S); }, restore(j) { S = Object.assign(fresh(), JSON.parse(j)); S.last = now(); },
-    reloadOffline() { save(); const o = offline(); UI.welcome = o; return o; },
+    reloadOffline() { save(); const o = offline(); UI.welcome = o; UI.pause = false; return o; },
   };
 
   /* 동그라미 아들·엄마·딸: 래스터가 올 때까지 src/characters.js(읽기 전용)의 코드 그림을 GF.art 로 만든다. 엔진 GF 를 덮지 않도록 가짜 window 로 실행. */

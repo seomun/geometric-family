@@ -1349,6 +1349,60 @@
    "game": "playground",
    "season": null,
    "physical": null
+  },
+  {
+   "no": 61,
+   "id": "s_songpyeon",
+   "name": "송편 접시",
+   "set": "season",
+   "room": "yard",
+   "w": 38,
+   "h": 38,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🥮",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": "9·10",
+   "physical": null
+  },
+  {
+   "no": 62,
+   "id": "s_tteokguk",
+   "name": "떡국 한 그릇",
+   "set": "season",
+   "room": "yard",
+   "w": 38,
+   "h": 38,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍲",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": "1·2",
+   "physical": null
+  },
+  {
+   "no": 63,
+   "id": "s_carnation",
+   "name": "카네이션",
+   "set": "season",
+   "room": "yard",
+   "w": 38,
+   "h": 38,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌹",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": "5",
+   "physical": null
   }
  ]
 }

@@ -1,0 +1,421 @@
+{
+ "version": 1,
+ "note": "도형 합치기 공통 판 종류 데이터. stories = 사연 판(장 마지막 판 뒤 컷, 각색 [제안])",
+ "seasons": [
+  {
+   "id": "s_year",
+   "title": "연말 트리",
+   "months": [
+    12
+   ],
+   "type": "make",
+   "n": 36,
+   "seed": 1212,
+   "reward": "s_tree"
+  },
+  {
+   "id": "s_kim",
+   "title": "김장 주간",
+   "months": [
+    11,
+    12
+   ],
+   "type": "kimjang",
+   "n": 30,
+   "seed": 1111,
+   "reward": "p_kimchi"
+  },
+  {
+   "id": "s_chu",
+   "title": "추석 상차림",
+   "months": [
+    9,
+    10
+   ],
+   "type": "order",
+   "n": 44,
+   "seed": 909,
+   "reward": "s_songpyeon"
+  },
+  {
+   "id": "s_seol",
+   "title": "설 떡국",
+   "months": [
+    1,
+    2
+   ],
+   "type": "order",
+   "n": 44,
+   "seed": 101,
+   "reward": "s_tteokguk"
+  },
+  {
+   "id": "s_par",
+   "title": "어버이날 선물",
+   "months": [
+    5
+   ],
+   "type": "make",
+   "n": 30,
+   "seed": 505,
+   "reward": "s_carnation"
+  }
+ ],
+ "dailyItems": [
+  "w_frame",
+  "n_plate",
+  "t_bowl",
+  "k_train",
+  "b_bed",
+  "k_party"
+ ],
+ "shardsPerItem": 3,
+ "stories": [
+  {
+   "chapter": 1,
+   "title": "새집 첫날",
+   "cuts": [
+    {
+     "text": "새집에 첫 짐이 도착했다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "text": "상자를 열면 서랍장부터 나온다.",
+     "chars": [
+      "nemo_dad.good",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "오늘 밤은 일곱 식구가 한방에서 잔다.",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 2,
+   "title": "식탁 차리기",
+   "cuts": [
+    {
+     "text": "큰 상을 펴자 밥그릇이 모자랐다.",
+     "chars": [
+      "nemo_mom.worry",
+      "nemo_dad.worry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "할머니가 밥솥을 하나 더 꺼냈다.",
+     "chars": [
+      "nemo_grandma.good"
+     ]
+    },
+    {
+     "text": "모자라서 더 맛있는 저녁이다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy",
+      "nemo_kids.kid1"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  },
+  {
+   "chapter": 3,
+   "title": "이삿짐 정리",
+   "cuts": [
+    {
+     "text": "중고거래로 팔 것과 둘 것을 나눈다.",
+     "chars": [
+      "nemo_mom.good",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "남편이 몰래 내놓은 캠핑 장비가 걸렸다.",
+     "chars": [
+      "husband.surprise",
+      "wife.angry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "당근입니다.",
+     "chars": [
+      "nemo_dad.wink"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  },
+  {
+   "chapter": 4,
+   "title": "화장실 하나",
+   "cuts": [
+    {
+     "text": "아침 7시, 일곱 명, 화장실 하나.",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_mom.worry",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "text": "세모네는 화장실이 두 개다.",
+     "chars": [
+      "husband.good",
+      "wife.good"
+     ]
+    },
+    {
+     "text": "줄 서는 집이 웃는다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  },
+  {
+   "chapter": 5,
+   "title": "냉장고 정리",
+   "cuts": [
+    {
+     "text": "문을 열면 반찬통이 쏟아진다.",
+     "chars": [
+      "nemo_mom.surprise"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "세모네 냉장고는 텅 비었다.",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "반찬은 남는다.",
+     "chars": [
+      "nemo_mom.joy",
+      "nemo_grandma.good"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 6,
+   "title": "거실 꾸미기",
+   "cuts": [
+    {
+     "text": "거실에 소파가 들어왔다.",
+     "chars": [
+      "nemo_dad.joy"
+     ]
+    },
+    {
+     "text": "리모컨은 늘 할머니 몫이다.",
+     "chars": [
+      "nemo_grandma.good",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "좁아도 같이 앉으면 넓다.",
+     "chars": [
+      "nemo_dad.love",
+      "nemo_mom.love",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 7,
+   "title": "김장하는 날",
+   "cuts": [
+    {
+     "text": "김장하는 날, 현관에 상자가 쌓인다.",
+     "chars": [
+      "nemo_dad.surprise",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "text": "할머니 지휘 아래 일곱 명이 둘러앉는다.",
+     "chars": [
+      "nemo_grandma.good",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "김치는 같이 먹어야 맛있다.",
+     "chars": [
+      "nemo_dad.love",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 8,
+   "title": "손님이 온다",
+   "cuts": [
+    {
+     "text": "손님이 온다는 전화에 온 집이 바빠진다.",
+     "chars": [
+      "nemo_mom.surprise",
+      "nemo_dad.worry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "세모는 뷔페에서 전투를 벌인다.",
+     "chars": [
+      "husband.wink",
+      "wife.smug"
+     ]
+    },
+    {
+     "text": "동그라미는 화환만 보냈다.",
+     "chars": [
+      "dong_dad.calm"
+     ],
+     "bubble": "question"
+    }
+   ]
+  },
+  {
+   "chapter": 9,
+   "title": "큰 상 차리기",
+   "cuts": [
+    {
+     "text": "명절 상 위에 접시가 겹겹이다.",
+     "chars": [
+      "nemo_mom.joy",
+      "nemo_grandma.good"
+     ]
+    },
+    {
+     "text": "잔소리도 반찬처럼 올라온다.",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "잔소리도 관심이었다.",
+     "chars": [
+      "dong_dad.warm"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 10,
+   "title": "이사 가는 날",
+   "cuts": [
+    {
+     "text": "이삿날, 트럭에 짐이 안 들어간다.",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_mom.worry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "막둥이가 상자 위에서 웃는다.",
+     "chars": [
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "새집은 한 줄 더 넓다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  },
+  {
+   "chapter": 11,
+   "title": "동네 한 바퀴",
+   "cuts": [
+    {
+     "text": "옛 동창들이 동네에서 다시 만났다.",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.joy",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "왜 50대에 동창회가 잘 되는지 아냐?",
+     "chars": [
+      "husband.wink"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "건강하면 된다는 게 강해지니까.",
+     "chars": [
+      "dong_dad.warm",
+      "nemo_dad.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 12,
+   "title": "세 가족 한자리",
+   "cuts": [
+    {
+     "text": "세 가족이 한 상에 모였다.",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.joy",
+      "dong_dad.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "네모는 아이들 손을 잡고, 세모는 반찬통을 들고.",
+     "chars": [
+      "nemo_dad.good",
+      "husband.joy"
+     ]
+    },
+    {
+     "text": "\"언제 밥 한번 먹자.\" 언제가 오늘이 됐다.",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.love",
+      "dong_dad.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  }
+ ]
+}

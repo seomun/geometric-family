@@ -15,16 +15,30 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await pg.evaluate(() => { GF.stack = []; GF.go('mhome'); GF.go('mlevels'); }); await pg.waitForSelector('.screen.on .mg-lv');
   const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .mg-l.off').length, all: document.querySelectorAll('.screen.on .mg-l').length })); ok(lk.all >= 100 && lk.off === lk.all - 1, '새 게임: 레벨 1만 열리고 나머지 잠김 ' + lk.off + '/' + lk.all);
   for (let n = A; n <= B; n++) {
-    await pg.evaluate((n) => { GF.stack = []; GF.go('mhome'); GF.go('mplay', { n }); MERGE.unlockAll = true; }, n); await pg.waitForSelector('.screen.on .mg-board');
+    await pg.evaluate((n) => { GF.stack = []; GF.go('mhome'); GF.go('mplay', { n }); MERGE.unlockAll = true; MERGE.fast = true; }, n); await pg.waitForSelector('.screen.on .mg-board');
     const L = await pg.evaluate(() => MERGE.debug.level()); let i0 = 0;
     for (const i of L.solution) {
-      if (n === A && i0 < 3) { const r = await pg.evaluate((i) => { const e = MERGE.debug.cells[i].getBoundingClientRect(); return { x: e.x + e.width / 2, y: e.y + e.height / 2 }; }, i); await pg.touchscreen.tap(r.x, r.y); await pg.waitForTimeout(120); } else await pg.evaluate((i) => MERGE.debug.place(i), i); i0++;
+      if (n === A && i0 < 3) { const r = await pg.evaluate((i) => { const e = MERGE.debug.cells()[i].getBoundingClientRect(); return { x: e.x + e.width / 2, y: e.y + e.height / 2 }; }, i); await pg.touchscreen.tap(r.x, r.y); await pg.waitForTimeout(120); } else { await pg.evaluate((i) => MERGE.debug.place(i), i); await pg.waitForFunction(() => !MERGE.debug.busy() || !!document.querySelector('.screen.on .uk-sheet'), null, { timeout: 5000 }).catch(() => {}); } i0++;
       const done = await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet')); if (done) break;
     }
+    for (let g = 0; g < 8; g++) { if (await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet'))) break; await pg.waitForTimeout(400); if (await pg.evaluate(() => !!document.querySelector('.screen.on .nextbtn'))) await pg.click('.screen.on .nextbtn', { force: true }).catch(() => {}); }   // 사연 판: 장의 마지막 판 뒤 사연 컷을 넘긴다
     await pg.waitForSelector('.screen.on .uk-sheet', { timeout: 4000 }).catch(() => {}); const res = await pg.evaluate(() => { const s = document.querySelector('.screen.on .uk-sheet'); return s ? s.textContent.slice(0, 20) : null; });
     ok(!!res, '레벨 ' + n + ' 클리어(' + L.tag + ', ' + L.cols + '×' + L.rows + ', 조각 ' + L.queue.length + ')');
     if (n === A) await shot('result'); if (n === Math.min(B, A + 4)) { await pg.evaluate(() => document.querySelector('.screen.on .uk-sheet') && document.querySelector('.screen.on .uk-scrim').remove()); await shot('play'); }
   }
+  // 판 종류 7 + 공통 판(오늘의 한 판·시즌·세 가족): 풀이를 화면 조작으로 재생하고 종류별 캡처
+  const playLevel = async (goFn, label, shotName) => {
+    await pg.evaluate(goFn); await pg.waitForSelector('.screen.on .mg-board'); const L = await pg.evaluate(() => MERGE.debug.level()); let k = 0;
+    for (const i of L.solution) { await pg.evaluate((i) => MERGE.debug.place(i), i); await pg.waitForFunction(() => !MERGE.debug.busy() || !!document.querySelector('.screen.on .uk-sheet, .screen.on .nextbtn'), null, { timeout: 5000 }).catch(() => {}); if (++k === 3 && shotName) await shot(shotName); if (await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet, .screen.on .nextbtn'))) break; }
+    for (let g = 0; g < 8; g++) { if (await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet'))) break; await pg.waitForTimeout(400); if (await pg.evaluate(() => !!document.querySelector('.screen.on .nextbtn'))) await pg.click('.screen.on .nextbtn', { force: true }).catch(() => {}); }
+    const done = await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet')); ok(done, label + ' 클리어(' + L.type + ', ' + L.cols + '×' + L.rows + ', 조각 ' + L.queue.length + ')');
+  };
+  const types = await pg.evaluate(() => { const o = {}; MERGE.debug.D().levels.forEach((l) => { if (!o[l.type]) o[l.type] = l.id; }); return o; });
+  for (const [ty, id] of Object.entries(types)) await playLevel(new Function(`GF.stack = []; GF.go('mhome'); GF.go('mplay', { n: ${id} });`), '판 종류 ' + ty + ' (레벨 ' + id + ')', 'type_' + ty);
+  // 
+  await playLevel(() => { GF.stack = []; GF.go('mhome'); GF.go('mplay', { level: MERGE.debug.dailyLevel() }); }, '오늘의 한 판', 'daily');
+  await playLevel(() => { MERGE.season = 's_year'; GF.stack = []; GF.go('mhome'); GF.go('mplay', { level: MERGE.debug.seasonLevel(MERGE.debug.X().seasons[0]) }); }, '시즌 판(연말 트리)', 'season');
+  for (const rule of [0, 1, 2]) await playLevel(new Function(`GF.stack = []; GF.go('mhome'); GF.go('mplay', { level: MERGE.debug.trioLevels(10)[${rule}] });`), '세 가족 판 규칙 ' + rule, rule === 0 ? 'trio' : null);
   // 집 연결: 만든 가구가 집 인벤토리에 있다
   const own = await pg.evaluate(() => Room.ownedCount()); ok(own >= 1, '집에 가구가 쌓임: ' + own + '개');
   await pg.evaluate(() => { GF.stack = []; GF.go('mhome'); GF.go('mhouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');

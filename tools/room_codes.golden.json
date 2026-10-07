@@ -238,5 +238,17 @@
  "k_ch10": {
   "no": 60,
   "code": "1OBZQL"
+ },
+ "s_songpyeon": {
+  "no": 61,
+  "code": "1PC6H5"
+ },
+ "s_tteokguk": {
+  "no": 62,
+  "code": "1QCD88"
+ },
+ "s_carnation": {
+  "no": 63,
+  "code": "1RCKZ4"
  }
 }

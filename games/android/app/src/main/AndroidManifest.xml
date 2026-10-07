@@ -10,6 +10,7 @@
         <provider android:authorities="com.geometricfamily.quiz.share" />
         <provider android:authorities="com.geometricfamily.block.share" />
         <provider android:authorities="com.geometricfamily.spot.share" />
+        <provider android:authorities="com.geometricfamily.tile.share" />
     </queries>
     <application
         android:allowBackup="false"

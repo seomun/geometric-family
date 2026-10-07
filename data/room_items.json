@@ -94,6 +94,13 @@
    "game": "spot",
    "room": "nemo",
    "story": "달라진 곳을 찾을 때마다 사진이 한 장씩 모였어요. 벽에는 액자, 선반에는 앨범이 가득해요."
+  },
+  {
+   "id": "yardlife",
+   "name": "마당 살림 세트",
+   "game": "tile",
+   "room": "yard",
+   "story": "같은 그림을 세 개씩 모을 때마다 마당이 살림으로 채워졌어요. 평상, 장독대, 빨랫줄, 텃밭까지."
   }
  ],
  "items": [
@@ -2659,6 +2666,366 @@
     "#FFFFFF"
    ],
    "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 133,
+   "id": "m_bench",
+   "name": "평상",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 56,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛋️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 134,
+   "id": "m_flowerrow",
+   "name": "화분 줄",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 52,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌻",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 135,
+   "id": "m_jar",
+   "name": "큰 장독",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 40,
+   "h": 48,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🫙",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 136,
+   "id": "m_laundry",
+   "name": "빨랫줄",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 56,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "👕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 137,
+   "id": "m_garden",
+   "name": "텃밭",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 48,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🥬",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 138,
+   "id": "m_coop",
+   "name": "닭장",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 48,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐔",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 139,
+   "id": "m_alley",
+   "name": "골목 담",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 60,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🏘️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 140,
+   "id": "m_persimmon",
+   "name": "감나무",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 44,
+   "h": 64,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌳",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 141,
+   "id": "m_pepper",
+   "name": "고추 말리기",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 44,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌶️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 142,
+   "id": "m_bucket",
+   "name": "우물가 두레박",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 36,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪣",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 143,
+   "id": "m_mat",
+   "name": "멍석",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 56,
+   "h": 30,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 144,
+   "id": "m_rooster",
+   "name": "수탉",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 36,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐓",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 145,
+   "id": "m_cat",
+   "name": "마당 고양이",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 36,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐈",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 146,
+   "id": "m_bike",
+   "name": "자전거",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 52,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🚲",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 147,
+   "id": "m_chime",
+   "name": "풍경",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 32,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 148,
+   "id": "m_radish",
+   "name": "무 말리기",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 44,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🥕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 149,
+   "id": "m_pumpkin",
+   "name": "호박",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 40,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎃",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 150,
+   "id": "m_duck",
+   "name": "오리",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 34,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🦆",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 151,
+   "id": "m_butterfly",
+   "name": "나비",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 32,
+   "h": 32,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🦋",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 152,
+   "id": "m_sunflower",
+   "name": "해바라기",
+   "set": "yardlife",
+   "room": "yard",
+   "w": 36,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌻",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tile",
    "season": null,
    "physical": null
   }

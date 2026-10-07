@@ -1,0 +1,135 @@
+{
+ "version": 1,
+ "note": "⑨ 세 가족 짝 맞추기 사연(장 끝 4컷, ③과 같은 옛이야기 배역)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py",
+ "shardsPerItem": 3,
+ "dailyItems": [
+  "m_cat",
+  "m_rooster",
+  "m_duck"
+ ],
+ "seasons": [
+  {
+   "id": "chuseok",
+   "title": "추석 송편 한 판",
+   "months": [
+    9,
+    10
+   ],
+   "n": 12,
+   "seed": 821,
+   "type": "classic"
+  },
+  {
+   "id": "kimjang",
+   "title": "김장 목표 모으기",
+   "months": [
+    11
+   ],
+   "n": 14,
+   "seed": 822,
+   "type": "goal"
+  },
+  {
+   "id": "yeonmal",
+   "title": "연말 잠금 풀기",
+   "months": [
+    12,
+    1
+   ],
+   "n": 16,
+   "seed": 823,
+   "type": "lock"
+  }
+ ],
+ "stories": [
+  {
+   "chapter": 1,
+   "title": "아기돼지 삼형제",
+   "tale": "pigs",
+   "cuts": [
+    {
+     "text": "네모 엄마가 말했다. 「이제 각자 집을 지어 보렴.」 {kid1}는 볏짚으로, {kid2}는 나무로, {kid3}는 벽돌로.",
+     "chars": [
+      "nemo_mom.joy",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "text": "바람 친구가 휘이잉 찾아왔다. 「후— 불면 날아갈걸?」",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "후— 볏짚집도, 후— 나무집도 폴폴 날아갔다. 두 아이는 {kid3}네 벽돌집으로 달려갔다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "벽돌집은 끄떡없었다. 후후 불다 지친 바람 친구가 웃자, 모두 한 상에서 따끈한 수프를 먹었다.",
+     "chars": [
+      "nemo_kids.kid3",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 2,
+   "title": "브레멘 음악대",
+   "tale": "bremen",
+   "cuts": [
+    {
+     "text": "늙었다고 쫓겨난 네 친구 — 당나귀(네모 아빠), 개(세모 남편), 고양이(세모 아내), 수탉(동그라미 아빠).",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "wife.good",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "「브레멘에 가서 음악대를 하자!」 길을 가다 밤이 되자 불 켜진 집이 보였다.",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.joy",
+      "wife.joy",
+      "dong_dad.joy"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "네 친구가 탑처럼 올라서서 함께 노래하자 집 안의 허깨비 도둑들이 놀라 달아났다.",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.joy",
+      "wife.joy",
+      "dong_dad.joy"
+     ],
+     "bubble": "note"
+    },
+    {
+     "text": "빈집에서 따뜻한 밥을 먹고 푹 잤다. 집이 마음에 쏙 들어 브레멘 대신 거기서 오래오래 노래했다.",
+     "chars": [
+      "nemo_dad.love",
+      "husband.love",
+      "wife.love",
+      "dong_dad.warm"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  }
+ ]
+}

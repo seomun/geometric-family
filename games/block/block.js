@@ -100,7 +100,7 @@
     bare: false,
     enter(r, p) {
       r.classList.add('uk', 'bk'); GF.bg('indoor2', r);
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:98px;left:10px;right:10px;height:44px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;z-index:30;pointer-events:none'; return t; };   // 안내는 판 위 목표 칩 줄에 잠깐 뜬다(판·조각을 덮지 않게)
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:150px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;z-index:30;pointer-events:none'; return t; };   // 안내는 판 위 목표 칩 줄에 잠깐 뜬다(판·조각을 덮지 않게)
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hint = null, sel = -1, streak = 0; const gained = [];
       if (!p.level) { SV.last = LV.id; save(); }
       bar();

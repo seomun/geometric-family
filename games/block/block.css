@@ -49,7 +49,7 @@
 .bk-slot.sel { outline: 4px solid var(--uk-pink); } .bk-slot.lift > .bk-pc { opacity: .35; } .bk-slot.dead > .bk-pc { opacity: .45; filter: grayscale(.6); }
 .bk-pc { position: relative; pointer-events: none; } .bk-pc img { position: absolute; display: block; pointer-events: none; }
 .bk-btns2 { position: absolute; left: 24px; right: 24px; top: 596px; display: flex; gap: 12px; } .bk-btns2 .uk-btn { flex: 1; min-height: 40px; padding: 0 10px; font-size: 18px; border-radius: 14px; } .bk-btns2 .uk-btn svg { width: 22px; height: 22px; }
-.bk-tip { position: absolute; left: 10px; right: 10px; top: 98px; height: 44px; line-height: 44px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
+.bk-tip { position: absolute; left: 10px; right: 10px; top: 150px; height: 40px; line-height: 40px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
 .bk-grid .uk-btn, .bk-season .uk-btn { position: relative; padding: 0 10px; font-size: 18px; min-height: 56px; }
 .bk-btns { position: absolute; left: 24px; right: 24px; top: 300px; } .bk-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .bk-season { position: absolute; left: 24px; right: 24px; top: 506px; } .bk-foot { bottom: 18px; }

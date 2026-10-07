@@ -11,6 +11,7 @@
 | ⑤ 기하학 가족: 당신은 어느 도형? | 앱 quiz-release.apk | `play_quiz.html` | 만 13세↑ |
 | ⑦ 기하학 가족: 도형 블록 | 앱 block-release.apk | `play_block.html` | 만 13세↑ |
 | ⑥ 기하학 가족: 다른 그림 찾기 | 앱 spot-release.apk | `play_spot.html` | 만 13세↑ |
+| ⑨ 기하학 가족: 세 가족 짝 맞추기 | 앱 tile-release.apk | `play_tile.html` | 만 13세↑ |
 
 ## 방법 A — 파일로 옮겨 깔기 (케이블 없이)
 1. `apk/` 폴더의 APK 다섯 개(또는 `gf_phone_pack.zip` 하나)를 폰으로 보낸다(카톡 나에게 보내기·구글 드라이브·USB 모두 가능).

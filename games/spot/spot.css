@@ -30,7 +30,7 @@
 .sp-hd { top: 70px; } .sp-goals { top: 98px; height: 48px; align-items: center; }
 .sp-goal { height: 44px; padding: 0 12px 0 8px; gap: 6px; } .sp-gi { width: 30px; height: 30px; } .sp-gs { color: #E8A800; font-size: 24px; }
 .sp-bar { position: absolute; left: 0; right: 0; bottom: -8px; height: 6px; border-radius: 3px; background: rgba(0,0,0,.12); overflow: hidden; } .sp-bar i { display: block; height: 100%; background: var(--uk-green, #6CCB8A); transition: width .3s; }
-.sp-tip { position: absolute; left: 10px; right: 10px; top: 98px; height: 44px; line-height: 44px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
+.sp-tip { position: absolute; left: 10px; right: 10px; top: 146px; height: 40px; line-height: 40px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
 .sp-grid .uk-btn, .sp-season .uk-btn { position: relative; padding: 0 10px; font-size: 18px; min-height: 56px; }
 .sp-btns { position: absolute; left: 24px; right: 24px; top: 300px; } .sp-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .sp-season { position: absolute; left: 24px; right: 24px; top: 506px; } .sp-foot { bottom: 18px; }
@@ -49,7 +49,7 @@
 .sp-cov { position: absolute; inset: 0; background: rgba(255,246,229,.97); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font: 800 18px/1.4 var(--uk-font); color: var(--uk-ink2); padding: 12px; } .sp-cov .uk-btn { min-height: 52px; font-size: 20px; }
 .sp-x { position: absolute; z-index: 40; font: 900 26px/1 var(--uk-font); color: #E5334A; pointer-events: none; animation: spx .6s ease-out forwards; } @keyframes spx { from { transform: scale(.6); opacity: 1 } to { transform: scale(1.4) translateY(-10px); opacity: 0 } }
 .sp-btns2 { position: absolute; left: 24px; right: 24px; top: 586px; display: flex; gap: 12px; } .sp-btns2 .uk-btn { flex: 1; min-height: 44px; padding: 0 10px; font-size: 18px; border-radius: 14px; } .sp-btns2 .uk-btn svg { width: 22px; height: 22px; }
-.sp-tip { position: absolute; left: 10px; right: 10px; top: 98px; height: 44px; line-height: 44px; text-align: center; z-index: 30; font-size: 18px; font-weight: 700; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
+.sp-tip { position: absolute; left: 10px; right: 10px; top: 146px; height: 40px; line-height: 40px; text-align: center; z-index: 30; font-size: 18px; font-weight: 700; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
 .sp-goals { top: 98px; height: 44px; } .sp-hd { top: 70px; }
 .sp-dots { display: inline-flex; gap: 4px; } .sp-dots i { width: 14px; height: 14px; border-radius: 50%; background: #E7E1EC; border: 2px solid #6b5443; } .sp-dots i.on { background: #FF8FA8; }
 

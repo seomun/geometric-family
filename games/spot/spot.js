@@ -110,7 +110,7 @@
     enter(r, p) {
       r.classList.add('uk', 'sp'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:98px;left:10px;right:10px;height:44px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;z-index:30;pointer-events:none'; return t; };
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;z-index:30;pointer-events:none'; return t; };
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
       el('div', 'sp-hd', r, `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'diff' ? `<em class="sp-type">${D.types[LV.type]}</em>` : ''));
       const goals = el('div', 'sp-goals', r), area = el('div', 'sp-area', r), btns = el('div', 'sp-btns2', r), tip = el('div', 'sp-tip', r);

@@ -2096,6 +2096,104 @@
    "status": "[제안]"
   },
   {
+   "id": "tile_pigs",
+   "title": "아기돼지 삼형제 (짝 맞추기 사연)",
+   "origin": "영국 민담(공유 저작물)",
+   "apps": {
+    "tile": 1
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "첫째 돼지(볏짚집)",
+     "who": "네모네 하나",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "둘째 돼지(나무집)",
+     "who": "네모네 두리",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "셋째 돼지(벽돌집)",
+     "who": "네모네 세찌",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "엄마 돼지",
+     "who": "네모 엄마",
+     "kind": "helper",
+     "family": "nemo"
+    },
+    {
+     "role": "늑대 → 바람 친구",
+     "who": "바람 친구(가족 밖, 소리·바람)",
+     "kind": "villain",
+     "family": "outside"
+    }
+   ],
+   "line": "늑대 대신 바람 친구가 후— 불고, 지쳐서 웃는다. 벽돌집에서 모두 한 상에",
+   "kept": [
+    "세 형제가 각자 집을 짓는다",
+    "볏짚·나무집은 날아가고 벽돌집은 끄떡없다",
+    "세찌의 집으로 모인다(세찌 집)"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "tile_bremen",
+   "title": "브레멘 음악대 (짝 맞추기 사연)",
+   "origin": "그림 형제(공유 저작물)",
+   "apps": {
+    "tile": 2
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "당나귀",
+     "who": "네모 아빠",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "개",
+     "who": "세모 남편",
+     "kind": "lead",
+     "family": "semo"
+    },
+    {
+     "role": "고양이",
+     "who": "세모 아내",
+     "kind": "lead",
+     "family": "semo"
+    },
+    {
+     "role": "수탉",
+     "who": "동그라미 아빠",
+     "kind": "lead",
+     "family": "dong"
+    },
+    {
+     "role": "도둑들",
+     "who": "허깨비 도둑(가족 밖, 소리·그림자)",
+     "kind": "villain",
+     "family": "outside"
+    }
+   ],
+   "line": "늙었다고 쫓겨난 네 친구가 노래로 빈집을 얻는다 — 네 도형이 한 탑을 쌓음",
+   "kept": [
+    "쫓겨난 동물 넷이 브레멘으로",
+    "탑처럼 올라서서 함께 소리",
+    "도둑이 달아나고 집을 차지"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
    "id": "kid_brothers",
    "title": "의좋은 형제",
    "origin": "한국 전래동화(공유 저작물)",

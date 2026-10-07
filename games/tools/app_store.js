@@ -2,7 +2,7 @@
 // → games/store/shots_<app>/raw/phone_N_*.png → APP=<app> python games/tools/frame_shots.py 로 액자
 const { chromium } = require('playwright-core');
 const path = require('path'), fs = require('fs');
-const app = process.argv[2]; const URLS = { merge: 'merge/index.html', color: 'color/index.html', quiz: 'quiz/index.html', block: 'block/index.html', spot: 'spot/index.html' };
+const app = process.argv[2]; const URLS = { merge: 'merge/index.html', color: 'color/index.html', quiz: 'quiz/index.html', block: 'block/index.html', spot: 'spot/index.html', tile: 'tile/index.html' };
 const RAW = path.resolve(__dirname, '..', 'store', 'shots_' + app, 'raw'); fs.mkdirSync(RAW, { recursive: true });
 const wait = (p, ms) => p.waitForTimeout(ms);
 const SCENES = {
@@ -56,6 +56,13 @@ const SCENES = {
     const L2 = await p.evaluate(() => SPOT.debug.level()); for (const d of L2.rounds[0].diffs) { await p.evaluate(([x, y]) => SPOT.debug.tap(x, y), [d.x + d.w / 2, d.y + d.h / 2]); await wait(p, 120); }
     await wait(p, 900); await shot('5_story');
     await p.evaluate(() => { Object.values(SPOT.debug.REW).slice(0, 7).forEach((id) => Room.grant(id)); GF.stack = []; GF.go('phome'); GF.go('phouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
+  },
+  async tile(p, shot) {
+    const play = async (n, k) => { await p.evaluate((nn) => { TILE.unlockAll = true; TILE.fast = true; GF.stack = []; GF.go('thome'); GF.go('tplay', { n: nn }); }, n); await p.waitForSelector('.tl-board'); await wait(p, 700); const L = await p.evaluate(() => TILE.debug.level()); for (const i of L.solution.slice(0, k)) { await p.evaluate((ii) => TILE.debug.press(ii), i); await wait(p, 160); } await wait(p, 500); };
+    await p.waitForSelector('.tl-btns'); await wait(p, 900); await shot('1_home');
+    await p.evaluate(() => { GF.go('tlevels'); }); await p.waitForSelector('.tl-l'); await wait(p, 600); await shot('2_levels');
+    await play(4, 6); await shot('3_play'); await play(7, 5); await shot('4_lock'); await play(9, 4); await shot('5_trio');
+    await p.evaluate(() => { Object.values(TILE.debug.REW).slice(0, 7).forEach((id) => Room.grant(id)); GF.stack = []; GF.go('thome'); GF.go('thouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
   },
   async quiz(p, shot) {
     await p.waitForSelector('.qz-grid'); await wait(p, 900); await shot('1_home');

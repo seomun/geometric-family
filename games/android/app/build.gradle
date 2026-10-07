@@ -39,6 +39,7 @@ android {
         quiz    { dimension 'app'; applicationId 'com.geometricfamily.quiz';   resValue 'string', 'app_name', '기하학 가족: 당신은 어느 도형?' }
         block   { dimension 'app'; applicationId 'com.geometricfamily.block';  resValue 'string', 'app_name', '기하학 가족: 도형 블록' }
         spot    { dimension 'app'; applicationId 'com.geometricfamily.spot';   resValue 'string', 'app_name', '기하학 가족: 다른 그림 찾기' }
+        tile    { dimension 'app'; applicationId 'com.geometricfamily.tile';   resValue 'string', 'app_name', '기하학 가족: 세 가족 짝 맞추기' }
     }
     buildTypes {
         release {

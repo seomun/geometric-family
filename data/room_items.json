@@ -1838,5 +1838,40 @@
    "physical": null,
    "emoji": "🏅"
   }
- ]
+ ],
+ "meTypes": {
+  "nemo": {
+   "name": "네모",
+   "color": "#E8870F",
+   "bg": "#FFE3C2",
+   "char": "nemo_dad.joy",
+   "sub": [
+    "네모 아빠형",
+    "네모 엄마형",
+    "네모 막둥이형"
+   ]
+  },
+  "semo": {
+   "name": "세모",
+   "color": "#2F8FD0",
+   "bg": "#D8F0FF",
+   "char": "wife.joy",
+   "sub": [
+    "세모 남편형",
+    "세모 아내형",
+    "세모 화해형"
+   ]
+  },
+  "dong": {
+   "name": "동그라미",
+   "color": "#3B4A7A",
+   "bg": "#E2E6FA",
+   "char": "dong_dad.joy",
+   "sub": [
+    "동그라미 아빠형",
+    "동그라미 엄마형",
+    "동그라미 아들형"
+   ]
+  }
+ }
 }

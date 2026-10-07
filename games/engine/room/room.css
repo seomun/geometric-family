@@ -26,3 +26,4 @@
 .rm-more { display: block; width: 100%; margin: 12px 0 4px; min-height: 56px; border: 0; border-radius: var(--uk-r-m); background: rgba(255,255,255,.7); font: 800 var(--uk-fs-cap)/1 var(--uk-font); color: var(--uk-ink2); box-shadow: var(--uk-sh); }
 .rm-tools .uk-btn svg { display: none; } .rm-tools .uk-btn { font-size: 18px; }
 [data-uk="kid"] .rm-tools .uk-btn svg { display: block; }
+.rm-plate { display: inline-flex; align-items: center; gap: 8px; border: 3px dashed; border-radius: var(--uk-r-m); padding: 4px 14px 4px 8px; box-shadow: var(--uk-sh); font-family: var(--uk-font); } .rm-plate img { height: 44px; width: auto; } .rm-plate small { display: block; font: 700 14px/1 var(--uk-font); color: var(--uk-ink2); } .rm-plate b { font: 900 18px/1.2 var(--uk-font); color: var(--uk-ink); }

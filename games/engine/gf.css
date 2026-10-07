@@ -1,8 +1,5 @@
 /* 기하학 가족 놀이터 — 공통 UI. 기준 360×640 세로, 레터박스. 글자 없이 그림·소리로 안내. */
-:root {
-  --cream: #FFF6E5; --nemo: #F6C28B; --semo: #8FD3F4; --dong: #3B4A7A;
-  --ink: #3A2E39; --pink: #FF8FA8; --gold: #FFC933; --green: #6CCB8A;
-}
+:root { --cream: var(--uk-cream); --nemo: #F6C28B; --semo: #8FD3F4; --dong: var(--uk-dong); --ink: var(--uk-ink); --pink: var(--uk-pink); --gold: var(--uk-gold); --green: var(--uk-green); }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; height: 100%; background: #FFF6E5; overflow: hidden; color: var(--ink);
   font-family: "Jua", "Noto Sans KR", "Malgun Gothic", sans-serif;
@@ -24,26 +21,26 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .tgrp { display: flex; gap: 10px; align-items: center; }
 #topbar > * { pointer-events: auto; }
 .round-btn { position: relative; width: 52px; height: 52px; border-radius: 50%; border: 0; background: #fff;
-  box-shadow: 0 3px 0 rgba(0,0,0,.14); display: flex; align-items: center; justify-content: center; padding: 0; }
+  box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; padding: 0; }
 .round-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,.14); }
 .round-btn svg { width: 30px; height: 30px; }
 .round-btn.warn { animation: wob .4s; background: var(--gold); }
 @keyframes wob { 25% { transform: rotate(-12deg) } 75% { transform: rotate(12deg) } }
-.starpill { height: 44px; padding: 0 14px 0 8px; border-radius: 22px; background: #fff; box-shadow: 0 3px 0 rgba(0,0,0,.14);
+.starpill { height: 44px; padding: 0 14px 0 8px; border-radius: var(--uk-r-m); background: #fff; box-shadow: var(--uk-sh);
   display: flex; align-items: center; gap: 4px; font-size: 22px; }
 .starpill svg { width: 30px; height: 30px; }
 
 /* ---- 큰 버튼 ---- */
 .big { width: 84px; height: 84px; border-radius: 50%; border: 0; background: var(--green); color: #fff;
-  box-shadow: 0 5px 0 rgba(0,0,0,.18); display: flex; align-items: center; justify-content: center; padding: 0; }
+  box-shadow: var(--uk-sh-lg); display: flex; align-items: center; justify-content: center; padding: 0; }
 .big:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.18); }
 .big svg { width: 46px; height: 46px; }
 .big.pink { background: var(--pink); } .big.gold { background: var(--gold); } .big.gray { background: #b9b2c0; }
 
 /* ---- 카드 ---- */
-.card { position: absolute; border-radius: 28px; background: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.14);
+.card { position: absolute; border-radius: var(--uk-r-l); background: #fff; box-shadow: var(--uk-sh-lg);
   display: flex; align-items: center; justify-content: center; overflow: hidden; border: 0; padding: 0; }
-.card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,.14); }
+.card:active { transform: translateY(3px); box-shadow: var(--uk-sh); }
 .card img { position: absolute; width: 90%; height: 90%; object-fit: contain; }
 .card.locked img { filter: brightness(0) opacity(.28); }
 .card.locked { background: #e9e2ee; }
@@ -52,7 +49,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 /* ---- 홈 ---- */
 .hometitle { position: absolute; top: 84px; left: 0; right: 0; text-align: center; }
 .ttl { font-size: 50px; line-height: 1.1; font-weight: 900; letter-spacing: 2px; -webkit-text-stroke: 6px #fff; paint-order: stroke fill; text-shadow: 0 4px 0 rgba(0,0,0,.12); }
-.sub { display: inline-block; margin-top: 4px; background: #fff; border-radius: 16px; padding: 2px 18px; font-size: 22px; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+.sub { display: inline-block; margin-top: 4px; background: #fff; border-radius: 16px; padding: 2px 18px; font-size: 22px; box-shadow: var(--uk-sh); }
 .homechars { position: absolute; left: 0; right: 0; top: 230px; height: 170px; display: flex; justify-content: center; align-items: flex-end; gap: 6px; }
 .homechars img { position: static; height: 130px; width: auto; }
 .homebtns { position: absolute; left: 0; right: 0; bottom: 36px; display: flex; justify-content: center; gap: 18px; }
@@ -67,7 +64,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .cut-char.in { animation: bounceIn .5s ease; }
 @keyframes bounceIn { 0% { transform: translate(-50%, -80%) scale(.6); opacity: 0 } 70% { transform: translate(-50%, -104%) scale(1.04); opacity: 1 } 100% { transform: translate(-50%, -100%) scale(1) } }
 .caption { position: absolute; left: 14px; right: 14px; top: 84px; background: rgba(255,255,255,.92); border-radius: 18px;
-  padding: 12px 16px; font-size: 24px; font-weight: 800; color: #3A2E39; line-height: 1.35; word-break: keep-all; text-align: center; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+  padding: 12px 16px; font-size: 24px; font-weight: 800; color: #3A2E39; line-height: 1.35; word-break: keep-all; text-align: center; box-shadow: var(--uk-sh); }
 .nextbtn { position: absolute; right: 18px; bottom: 18px; animation: nudge 1.2s infinite; }
 @keyframes nudge { 50% { transform: translateX(6px) } }
 .dots { position: absolute; left: 0; right: 0; bottom: 36px; display: flex; justify-content: center; gap: 8px; }
@@ -90,7 +87,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .play { position: absolute; inset: 0; }
 .playarea { position: absolute; left: 0; right: 0; top: 64px; bottom: 0; }
 .shadowimg { position: absolute; object-fit: contain; filter: brightness(0) opacity(.4); }
-.slotring { position: absolute; border: 4px dashed rgba(58,46,57,.3); border-radius: 22px; background: rgba(255,255,255,.6); }
+.slotring { position: absolute; border: 4px dashed rgba(58,46,57,.3); border-radius: var(--uk-r-m); background: rgba(255,255,255,.6); }
 .tok { position: absolute; touch-action: none; cursor: grab; z-index: 5; }
 .tok img { width: 100%; height: 100%; object-fit: contain; }
 .tok.drag { z-index: 20; filter: drop-shadow(0 8px 6px rgba(0,0,0,.25)); }
@@ -109,7 +106,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .fcard { position: absolute; perspective: 600px; touch-action: none; }
 .fcard .in { position: absolute; inset: 0; transition: transform .35s; transform-style: preserve-3d; }
 .fcard.up .in { transform: rotateY(180deg); }
-.fcard .f, .fcard .b { position: absolute; inset: 0; border-radius: 22px; backface-visibility: hidden; box-shadow: 0 5px 0 rgba(0,0,0,.14); }
+.fcard .f, .fcard .b { position: absolute; inset: 0; border-radius: var(--uk-r-m); backface-visibility: hidden; box-shadow: var(--uk-sh-lg); }
 .fcard .b { background: var(--semo); display: flex; align-items: center; justify-content: center; }
 .fcard .b svg { width: 56%; height: 56%; }
 .fcard .f { background: #fff; transform: rotateY(180deg); }
@@ -119,7 +116,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 /* ---- 결과 오버레이 ---- */
 .overlay { position: absolute; inset: -3000px; z-index: 60; background: rgba(40,30,50,.55); display: none; align-items: center; justify-content: center; }
 .overlay.on { display: flex; }
-.panel { width: 300px; background: #fff; border-radius: 32px; padding: 20px 16px 22px; text-align: center; box-shadow: 0 8px 0 rgba(0,0,0,.2); animation: bounceUp .45s ease; position: relative; }
+.panel { width: 300px; background: #fff; border-radius: 32px; padding: 20px 16px 22px; text-align: center; box-shadow: var(--uk-sh-pop); animation: bounceUp .45s ease; position: relative; }
 @keyframes bounceUp { 0% { transform: translateY(60px) scale(.8); opacity: 0 } 100% { transform: none; opacity: 1 } }
 .panel .hero { height: 170px; position: relative; }
 .panel .hero img { height: 100%; }
@@ -128,15 +125,15 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .stars3.xl svg { width: 56px; height: 56px; }
 .stars3 svg.pop { animation: starpop .5s ease backwards; }
 @keyframes starpop { 0% { transform: scale(0) rotate(-60deg) } 70% { transform: scale(1.3) } }
-.sticker { position: relative; width: 120px; height: 120px; margin: 4px auto 0; background: #FFF3C2; border-radius: 26px; border: 4px solid var(--gold); box-shadow: 0 4px 0 rgba(0,0,0,.14); }
+.sticker { position: relative; width: 120px; height: 120px; margin: 4px auto 0; background: #FFF3C2; border-radius: 26px; border: 4px solid var(--gold); box-shadow: var(--uk-sh); }
 .sticker img { position: absolute; inset: 6px; width: calc(100% - 12px); height: calc(100% - 12px); object-fit: contain; }
-.sticker.shiny::after { content: ""; position: absolute; inset: 0; border-radius: 22px;
+.sticker.shiny::after { content: ""; position: absolute; inset: 0; border-radius: var(--uk-r-m);
   background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.85) 50%, transparent 70%); background-size: 250% 100%; animation: shine 1.6s infinite; }
 @keyframes shine { from { background-position: 120% 0 } to { background-position: -120% 0 } }
 
 /* ---- 앨범 ---- */
 .album { position: absolute; left: 10px; right: 10px; top: 72px; bottom: 10px; overflow-y: auto; touch-action: pan-y; }
-.albrow { display: flex; gap: 5px; margin-bottom: 8px; background: #fff; border-radius: 20px; padding: 8px; box-shadow: 0 3px 0 rgba(0,0,0,.1); align-items: center; }
+.albrow { display: flex; gap: 5px; margin-bottom: 8px; background: #fff; border-radius: 20px; padding: 8px; box-shadow: var(--uk-sh); align-items: center; }
 .albrow .ch { width: 28px; height: 28px; border-radius: 50%; background: var(--pink); color: #fff; font-size: 18px; display: flex; align-items: center; justify-content: center; flex: none; }
 .albrow .sticker { width: 52px; height: 52px; margin: 0; border-width: 3px; border-radius: 14px; flex: none; }
 .albrow .sticker img { inset: 3px; width: calc(100% - 6px); height: calc(100% - 6px); }
@@ -188,7 +185,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .cut-char img { transform-origin: 50% 100%; animation: idle 2.2s ease-in-out infinite alternate; }
 @keyframes idle { from { transform: scale(1, 1) } to { transform: scale(1.025, .975) rotate(.6deg) } }
 .bubble { position: absolute; width: 74px; height: 74px; transform: translate(-50%, -100%); background: #fff; border-radius: 50%;
-  box-shadow: 0 4px 0 rgba(0,0,0,.14); display: flex; align-items: center; justify-content: center; animation: bubbleIn .5s .35s cubic-bezier(.3,1.5,.5,1) backwards; z-index: 5; }
+  box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; animation: bubbleIn .5s .35s cubic-bezier(.3,1.5,.5,1) backwards; z-index: 5; }
 .bubble::after { content: ""; position: absolute; left: 50%; bottom: -10px; margin-left: -9px; border: 9px solid transparent; border-top-color: #fff; border-bottom: 0; }
 .bubble svg { width: 52px; height: 52px; }
 @keyframes bubbleIn { from { transform: translate(-50%, -60%) scale(0); opacity: 0 } to { transform: translate(-50%, -100%) scale(1); opacity: 1 } }
@@ -230,7 +227,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .coverart { position: absolute; inset: 0; overflow: hidden; }
 .bknum { position: absolute; left: 8px; top: 8px; width: 34px; height: 34px; border-radius: 50%; background: var(--pink); color: #fff; font-size: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 0 rgba(0,0,0,.2); }
 /* ---- 따라 해요 ---- */
-.pad { position: absolute; border-radius: 28px; background: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.16); transition: transform .12s, background .12s, box-shadow .12s; touch-action: none; }
+.pad { position: absolute; border-radius: var(--uk-r-l); background: #fff; box-shadow: var(--uk-sh-lg); transition: transform .12s, background .12s, box-shadow .12s; touch-action: none; }
 .pad img { position: absolute; left: 6%; top: 6%; width: 88%; height: 88%; object-fit: contain; }
 .pad.lit { transform: scale(1.14); background: #FFF3C2; box-shadow: 0 0 0 10px rgba(255,201,51,.85), 0 6px 0 rgba(0,0,0,.16); z-index: 3; }
 .pad.turn { animation: breathe 1.4s ease-in-out infinite alternate; }
@@ -251,7 +248,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .shelfdots i.on { background: var(--pink); }
 
 /* ---- 소리 찾기 ---- */
-.sfcard { position: absolute; border-radius: 28px; background: #fff; border: 5px solid #FFE0B5; box-shadow: 0 6px 0 rgba(0,0,0,.16); touch-action: none; transition: transform .12s, background .15s; }
+.sfcard { position: absolute; border-radius: var(--uk-r-l); background: #fff; border: 5px solid #FFE0B5; box-shadow: var(--uk-sh-lg); touch-action: none; transition: transform .12s, background .15s; }
 .sfcard::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--hit, 64px)); height: max(100%, var(--hit, 64px)); transform: translate(-50%, -50%); }
 .sfcard .sfsvg { position: absolute; left: 8%; top: 8%; width: 84%; height: 84%; pointer-events: none; }
 .sfcard.right { background: #FFF3C2; border-color: #6CCB8A; transform: scale(1.08); }
@@ -277,12 +274,12 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .sf.play .burst { animation: bst .19s ease-in-out 9 alternate; } @keyframes bst { to { opacity: 1 } }
 
 /* ---- 꾸미기 ---- */
-.dresscard { position: absolute; border-radius: 30px; overflow: hidden; box-shadow: 0 6px 0 rgba(0,0,0,.16); transition: transform .5s cubic-bezier(.3,1.4,.5,1), box-shadow .3s; border: 6px solid #fff; box-sizing: border-box; }
+.dresscard { position: absolute; border-radius: 30px; overflow: hidden; box-shadow: var(--uk-sh-lg); transition: transform .5s cubic-bezier(.3,1.4,.5,1), box-shadow .3s; border: 6px solid #fff; box-sizing: border-box; }
 .dresscard.photo { transform: scale(1.05) rotate(-2deg); box-shadow: 0 0 0 8px #fff, 0 14px 0 rgba(0,0,0,.18); }
 .dpring { position: absolute; border: 4px dashed rgba(255,143,168,.95); border-radius: 50%; animation: ringp 1.1s ease-in-out infinite alternate; pointer-events: none; z-index: 8; }
 @keyframes ringp { to { transform: scale(1.1); background: rgba(255,143,168,.16) } }
 .dpring.glow2 { background: rgba(255,201,51,.4); border-color: #FFC933; }
-.dpitem { position: absolute; border-radius: 26px; background: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.16); touch-action: none; transition: transform .12s, opacity .25s; z-index: 5; }
+.dpitem { position: absolute; border-radius: 26px; background: #fff; box-shadow: var(--uk-sh-lg); touch-action: none; transition: transform .12s, opacity .25s; z-index: 5; }
 .dpitem.drag { transform: scale(1.1); z-index: 20; } .dpitem.back { transition: left .45s cubic-bezier(.3,1.35,.5,1), top .45s cubic-bezier(.3,1.35,.5,1); }
 .dpitem::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--hit, 64px)); height: max(100%, var(--hit, 64px)); transform: translate(-50%, -50%); }
 .dpitem > * { pointer-events: none; }
@@ -290,7 +287,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .propin { animation: propin .45s cubic-bezier(.3,1.6,.5,1); } @keyframes propin { from { transform: scale(.3) rotate(-14deg); opacity: 0 } }
 
 /* ---- 기차 만들기 ---- */
-.trtray { position: absolute; border-radius: 26px; background: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.16); touch-action: none; transition: transform .12s; z-index: 5; }
+.trtray { position: absolute; border-radius: 26px; background: #fff; box-shadow: var(--uk-sh-lg); touch-action: none; transition: transform .12s; z-index: 5; }
 .trtray.drag { transform: scale(1.1); z-index: 20; } .trtray.back { transition: left .45s cubic-bezier(.3,1.35,.5,1), top .45s cubic-bezier(.3,1.35,.5,1); }
 .trtray::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--hit, 64px)); height: max(100%, var(--hit, 64px)); transform: translate(-50%, -50%); }
 .trtray.hintglow { box-shadow: 0 0 0 9px rgba(255,201,51,.85), 0 6px 0 rgba(0,0,0,.16); }
@@ -302,5 +299,5 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .flame { animation: flick .35s ease-in-out infinite alternate; } @keyframes flick { to { transform: scale(.88, 1.12) rotate(4deg) } }
 
 .homebtns { gap: 12px; } .homebtns .card { width: 78px; height: 104px; } .homebtns .card svg { width: 52px; height: 52px; }
-.kgift { position: absolute; left: 50%; top: 40%; width: 120px; height: 120px; margin: -60px 0 0 -60px; z-index: 95; background: #fff; border-radius: 28px; box-shadow: 0 8px 0 rgba(0,0,0,.2); display: flex; align-items: center; justify-content: center; animation: uk-pop .4s var(--uk-ease), uk-fade .3s 2.2s reverse forwards; pointer-events: none; } .kgift img { width: 80%; height: 80%; object-fit: contain; }
+.kgift { position: absolute; left: 50%; top: 40%; width: 120px; height: 120px; margin: -60px 0 0 -60px; z-index: 95; background: #fff; border-radius: var(--uk-r-l); box-shadow: var(--uk-sh-pop); display: flex; align-items: center; justify-content: center; animation: uk-pop .4s var(--uk-ease), uk-fade .3s 2.2s reverse forwards; pointer-events: none; } .kgift img { width: 80%; height: 80%; object-fit: contain; }
 .uk-sheet .hero { position: static; width: auto; height: 120px; margin: 0 0 4px; display: flex; justify-content: center; } .uk-sheet .hero img { position: static; height: 100%; width: auto; max-width: 100%; object-fit: contain; }

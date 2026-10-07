@@ -24,7 +24,7 @@ rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-
 chars, anchors, sounds, pages, room, extra = rd('chars'), rd('anchors'), rd('sounds'), rd('color_pages'), rd('room_items'), rd('merge_extra')
 import re as _re
 USED = sorted(set(['nemo_kids.kid1', 'baby.joy', 'wife.joy', 'dong_dad.good', 'nemo_dad.joy', 'nemo_mom.joy'] + _re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(extra))))
-data = {'chars': {}, 'anchors': {}, 'color_pages': pages, 'merge_extra': extra, 'room_items': room, 'base': '', 'art_slots': inline_slots(ROOT)}
+data = {'chars': {}, 'anchors': {}, 'color_pages': pages, 'merge_extra': extra, 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
 img = 0
 for k in USED:
     v = dict(chars[k]); raw = webp(ROOT / v['src']); img += len(raw); v['src'] = b64(raw, 'image/webp'); data['chars'][k] = v

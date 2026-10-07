@@ -28,7 +28,7 @@ def webp(path, max_h=420):
 rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8'))
 bal, sto, chars, anchors, sounds, props = rd('idle_balance'), rd('idle_stories'), rd('chars'), rd('anchors'), rd('sounds'), rd('room_items')
 used = set(re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(bal) + json.dumps(sto)))
-data = {'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'room_items': props, 'base': ''}
+data = {'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'room_items': props, 'names': rd('names'), 'base': ''}
 data['art_slots'] = inline_slots(ROOT)
 img = 0
 for k in sorted(used):

@@ -36,7 +36,7 @@ def webp(path, max_h=560):
     buf = io.BytesIO(); im.save(buf, 'WEBP', quality=86, alpha_quality=95, method=6)
     return buf.getvalue()
 
-data = {n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8')) for n in ['chars', 'stages', 'story', 'stickers', 'anchors', 'room_items']}
+data = {n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8')) for n in ['chars', 'stages', 'story', 'stickers', 'anchors', 'room_items', 'names']}
 img_bytes = 0
 for k, v in data['chars'].items():
     raw = webp(ROOT / v['src'])

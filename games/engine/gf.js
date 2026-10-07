@@ -495,6 +495,11 @@
   };
   /* 공용 사연 컷 플레이어 — ①그림책·②사연·③장 끝 컷이 같은 액자·자막·넘김을 쓴다(통일성 §0).
      cuts: [{bg, chars:[{id,x,y,h}], bubble:{type,at}, text, voice, sfx}] — 같은 비율(어른1:아이.8:막둥이.45)로 세운다. onEnd: 마지막 컷에서 넘길 때. */
+  /** 아이 호칭 변수: 글 속 {sib1} {kid1}… 를 data/names.json 값으로 바꾸고, 뒤의 은/는·이/가·을/를·과/와는 받침에 맞게 고친다 */
+  GF.name = (t) => {
+    if (!t || t.indexOf('{') < 0) return t; const N = (GF.data && GF.data.names) || {}, PR = { 은: ['은', '는'], 는: ['은', '는'], 이: ['이', '가'], 가: ['이', '가'], 을: ['을', '를'], 를: ['을', '를'], 과: ['과', '와'], 와: ['과', '와'] };
+    return t.replace(/\{(\w+)\}(은|는|이|가|을|를|과|와)?/g, (m, k, p) => { const v = N[k]; if (v == null) return m; if (!p) return v; const c = v.charCodeAt(v.length - 1), has = c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 !== 0; return v + PR[p][has ? 0 : 1]; });
+  };
   GF.story = function (r, cuts, onEnd, opt) {
       opt = opt || {}; let i = 0, tm = null, ended = false;                    // opt.auto: 컷당 ms 후 자동으로 넘김, opt.skipAll: 아무 데나 탭하면 바로 끝(첫 만남 인사)
       const finish = () => { if (ended) return; ended = true; clearTimeout(tm); onEnd && onEnd(); };
@@ -530,7 +535,7 @@
           bb.style.left = Math.round(q ? q.cx : c.bubble.x) + 'px'; bb.style.top = Math.round(q ? q.y - q.h * 0.92 : c.bubble.y) + 'px';
         }
         dots.innerHTML = cuts.map((_, k) => '<i class="' + (k === i ? 'on' : '') + '"></i>').join('');
-        cap.style.display = !GF.state.settings.capOff && c.text ? 'block' : 'none'; cap.textContent = c.text || '';   /* 자막은 기본 켜짐(부모 메뉴에서 끄기) */ cap.textContent = c.text || '';
+        cap.style.display = !GF.state.settings.capOff && c.text ? 'block' : 'none'; cap.textContent = GF.name(c.text) || '';   /* 자막은 기본 켜짐(부모 메뉴에서 끄기) */
         GF.say(c.voice); if (c.sfx) setTimeout(() => GF.sfx(c.sfx), 350);
         clearTimeout(tm); if (opt.auto) tm = setTimeout(() => { if (r.isConnected) next(); }, opt.auto);
       };
@@ -763,7 +768,7 @@
   /* ---------------- 부팅 ---------------- */
   async function loadData(namesOpt) {
     if (window.GF_DATA) return window.GF_DATA;
-    const names = namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items'], out = {};
+    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items']).concat(['names']), out = {};
     await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else if (n === 'room_items') out[n] = null; else throw e; } }));
     return out;
   }

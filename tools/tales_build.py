@@ -6,17 +6,32 @@
 cast 항목 = (원작 역, 우리 배역, 종류, 가족) / 종류: lead 주인공·helper 조력·funny 웃긴 실패역·villain 악역 / 가족: nemo·semo·dong·outside(가족 밖)"""
 import json, re, pathlib
 R = pathlib.Path(__file__).resolve().parents[1]
+NAMES = json.load(open(R / 'data/names.json', encoding='utf-8'))
+PAIR = {'은': '은는', '는': '은는', '이': '이가', '가': '이가', '을': '을를', '를': '을를', '과': '과와', '와': '과와'}
+
+
+def nm(t):
+    """{sib1} 같은 호칭 변수를 data/names.json 값으로(뒤 조사는 받침에 맞게). 화면(JS GF.name)과 같은 규칙. story.json·merge_extra.json 은 변수 그대로 두고 문서·tales.json 만 풀어 쓴다"""
+    def f(m):
+        v = NAMES.get(m.group(1)); p = m.group(2)
+        if v is None: return m.group(0)
+        if not p: return v
+        c = ord(v[-1]); has = 0xAC00 <= c <= 0xD7A3 and (c - 0xAC00) % 28 != 0
+        return v + PAIR[p][0 if has else 1]
+    return re.sub(r"\{(\w+)\}(은|는|이|가|을|를|과|와)?", f, t)
+
+
 KIND = {'lead': '주인공', 'helper': '조력', 'funny': '웃긴 실패역', 'villain': '악역'}
 FAM = {'nemo': '네모네', 'semo': '세모네', 'dong': '동그라미네', 'outside': '가족 밖'}
 
 # ---------------- ③·④ 성인 12장: "만들고 짓는" 옛이야기 (장당 4컷: 기·승·전·결) ----------------
 T12 = [
  dict(id='pigs', title='아기돼지 삼형제', origin='영국 민담(공유 저작물)',
-  cast=[('첫째 돼지(볏짚집)', '네모네 큰아이', 'lead', 'nemo'), ('둘째 돼지(나무집)', '네모네 둘째', 'lead', 'nemo'), ('셋째 돼지(벽돌집)', '네모네 셋째', 'lead', 'nemo'), ('엄마 돼지', '네모 엄마', 'helper', 'nemo'), ('늑대 → 바람 친구', '바람 친구(가족 밖, 소리·바람)', 'villain', 'outside')],
-  line='늑대 대신 바람 친구가 후— 불고, 지쳐서 웃는다. 벽돌집에서 모두 한 상에', kept=['세 형제가 각자 집을 짓는다', '볏짚·나무집은 날아가고 벽돌집은 끄떡없다', '셋째의 집으로 모인다(셋째 집)'],
-  cuts=[('네모 엄마가 말했다. 「이제 각자 집을 지어 보렴.」 큰아이는 볏짚으로, 둘째는 나무로, 셋째는 벽돌로.', ['nemo_mom.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3'], None),
+  cast=[('첫째 돼지(볏짚집)', '네모네 {kid1}', 'lead', 'nemo'), ('둘째 돼지(나무집)', '네모네 {kid2}', 'lead', 'nemo'), ('셋째 돼지(벽돌집)', '네모네 {kid3}', 'lead', 'nemo'), ('엄마 돼지', '네모 엄마', 'helper', 'nemo'), ('늑대 → 바람 친구', '바람 친구(가족 밖, 소리·바람)', 'villain', 'outside')],
+  line='늑대 대신 바람 친구가 후— 불고, 지쳐서 웃는다. 벽돌집에서 모두 한 상에', kept=['세 형제가 각자 집을 짓는다', '볏짚·나무집은 날아가고 벽돌집은 끄떡없다', '{kid3}의 집으로 모인다({kid3} 집)'],
+  cuts=[('네모 엄마가 말했다. 「이제 각자 집을 지어 보렴.」 {kid1}는 볏짚으로, {kid2}는 나무로, {kid3}는 벽돌로.', ['nemo_mom.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3'], None),
         ('바람 친구가 휘이잉 찾아왔다. 「후— 불면 날아갈걸?」', ['nemo_kids.kid1', 'nemo_kids.kid2'], 'bang'),
-        ('후— 볏짚집도, 후— 나무집도 폴폴 날아갔다. 두 아이는 셋째네 벽돌집으로 달려갔다.', ['nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3'], 'question'),
+        ('후— 볏짚집도, 후— 나무집도 폴폴 날아갔다. 두 아이는 {kid3}네 벽돌집으로 달려갔다.', ['nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3'], 'question'),
         ('벽돌집은 끄떡없었다. 후후 불다 지친 바람 친구가 웃자, 모두 한 상에서 따끈한 수프를 먹었다.', ['nemo_kids.kid3', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_mom.love'], 'heart')]),
  dict(id='bears', title='세 마리 곰', origin='영국 민담(사우디 1837, 공유 저작물)',
   cast=[('큰 곰', '동그라미 아빠', 'lead', 'dong'), ('중간 곰', '동그라미 엄마', 'lead', 'dong'), ('아기 곰', '동그라미 아들', 'lead', 'dong'), ('길 잃은 손님(소녀)', '세모 아내', 'funny', 'semo')],
@@ -34,11 +49,11 @@ T12 = [
         ('밤마다 구두는 뚝딱, 가죽은 네 켤레로. 부부가 몰래 지켜보니 작은 요정들이었다.', ['art.fairy', 'nemo_dad.surprise', 'nemo_mom.surprise'], 'question'),
         ('고마운 마음에 요정들에게 작은 옷과 신발을 지어 주었다. 요정들은 춤추며 떠났다.', ['art.fairy', 'nemo_dad.love', 'nemo_mom.love'], 'heart')]),
  dict(id='kongjwi', title='콩쥐팥쥐', origin='한국 전래동화(공유 저작물)',
-  cast=[('콩쥐', '네모네 큰아이', 'lead', 'nemo'), ('팥쥐', '네모네 둘째', 'funny', 'nemo'), ('도와주는 두꺼비', '동그라미 아빠', 'helper', 'dong'), ('꽃신 주인을 찾는 원님', '세모 남편', 'helper', 'semo'), ('일을 시키는 새엄마', '깐깐한 아주머니(가족 밖, 목소리만)', 'villain', 'outside')],
+  cast=[('콩쥐', '네모네 {kid1}', 'lead', 'nemo'), ('팥쥐', '네모네 {kid2}', 'funny', 'nemo'), ('도와주는 두꺼비', '동그라미 아빠', 'helper', 'dong'), ('꽃신 주인을 찾는 원님', '세모 남편', 'helper', 'semo'), ('일을 시키는 새엄마', '깐깐한 아주머니(가족 밖, 목소리만)', 'villain', 'outside')],
   line='새엄마는 가족 밖 아주머니, 두꺼비가 독 구멍을 막고 마지막엔 팥쥐도 박수', kept=['밑 빠진 독에 물 채우기', '두꺼비·새의 도움', '잔치에서 꽃신 한 짝을 잃는다', '원님이 꽃신 주인을 찾는다'],
-  cuts=[('깐깐한 아주머니가 콩쥐(큰아이)에게 밑 빠진 독에 물을 가득 채우라고 했다.', ['nemo_kids.kid1'], 'question'),
+  cuts=[('깐깐한 아주머니가 콩쥐({kid1})에게 밑 빠진 독에 물을 가득 채우라고 했다.', ['nemo_kids.kid1'], 'question'),
         ('붓고 부어도 줄줄줄. 두꺼비(동그라미 아빠)가 엉금엉금 나와 구멍을 막아 주었다.', ['nemo_kids.kid1', 'dong_dad.calm'], 'sparkle'),
-        ('잔치에 가려면 벼도 찧고 베도 짜야 했다. 새들이 벼를 까 주었고, 콩쥐는 꽃신을 신고 달려갔다. 팥쥐(둘째)는 투덜투덜.', ['nemo_kids.kid1', 'nemo_kids.kid2'], None),
+        ('잔치에 가려면 벼도 찧고 베도 짜야 했다. 새들이 벼를 까 주었고, 콩쥐는 꽃신을 신고 달려갔다. 팥쥐({kid2})는 투덜투덜.', ['nemo_kids.kid1', 'nemo_kids.kid2'], None),
         ('서두르다 꽃신 한 짝을 잃었다. 원님(세모 남편)이 신을 들고 주인을 찾았고, 팥쥐도 웃으며 박수쳤다.', ['husband.joy', 'nemo_kids.kid1', 'nemo_kids.kid2'], 'heart')]),
  dict(id='heungbu', title='흥부 박', origin='한국 전래동화(공유 저작물)',
   cast=[('흥부', '네모 아빠', 'lead', 'nemo'), ('흥부 아내', '네모 엄마', 'helper', 'nemo'), ('놀부', '세모 남편', 'funny', 'semo'), ('제비', '제비(art.swallow)', 'helper', 'outside')],
@@ -69,9 +84,9 @@ T12 = [
         ('쇠도끼가 나오자 「그건 제 것입니다.」 정직한 나무꾼은 금도끼와 은도끼까지 받았다.', ['nemo_dad.love', 'dong_dad.joy'], 'sparkle'),
         ('소문을 들은 이웃 네모 엄마가 거짓말하려다 웃음이 터져 쇠도끼만 받고 함께 웃었다.', ['nemo_mom.wink', 'dong_dad.joy', 'nemo_dad.joy'], 'heart')]),
  dict(id='sun', title='해님 달님', origin='한국 전래동화(공유 저작물)',
-  cast=[('오빠(달님)', '네모네 큰아이', 'lead', 'nemo'), ('동생(해님)', '네모네 둘째', 'lead', 'nemo'), ('떡 팔러 간 엄마', '네모 엄마', 'helper', 'nemo'), ('호랑이 → 바람 호랑이', '바람 호랑이(가족 밖, 소리·그림자)', 'villain', 'outside')],
+  cast=[('오빠(달님)', '네모네 {kid1}', 'lead', 'nemo'), ('동생(해님)', '네모네 {kid2}', 'lead', 'nemo'), ('떡 팔러 간 엄마', '네모 엄마', 'helper', 'nemo'), ('호랑이 → 바람 호랑이', '바람 호랑이(가족 밖, 소리·그림자)', 'villain', 'outside')],
   line='호랑이는 가족 밖 바람 호랑이, 엉덩방아만 찧고 웃는다 — 동아줄은 그대로', kept=['엄마 흉내를 내는 호랑이', '나무 위로 피함', '하늘에서 튼튼한 동아줄', '해님과 달님이 됨'],
-  cuts=[('떡 팔러 간 엄마를 기다리던 오누이(큰아이·둘째)는 문을 꼭 닫고 있었다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], None),
+  cuts=[('떡 팔러 간 엄마를 기다리던 오누이({kid1}·{kid2})는 문을 꼭 닫고 있었다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], None),
         ('바람 호랑이가 엄마 목소리를 흉내 내며 찾아왔다. 「문 열어라.」 문틈의 손이 이상했다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], 'question'),
         ('오누이는 뒷문으로 나가 나무 위로 올라갔다. 하늘에서 튼튼한 동아줄이 내려왔다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], 'sparkle'),
         ('오누이는 동아줄을 타고 올라가 해님과 달님이 되었다. 바람 호랑이는 엉덩방아를 찧고 허허 웃었다.', ['nemo_kids.kid2', 'nemo_kids.kid1', 'nemo_mom.joy'], 'heart')]),
@@ -90,9 +105,9 @@ T12 = [
         ('거짓말을 했더니 코가 쑥 길어졌다. 요정이 말했다. 「거짓말하면 코가 길어져요.」', ['baby.cry', 'art.fairy'], 'question'),
         ('인형이 용기를 내어 아빠를 도우니 요정이 소원을 들어주었다. 인형은 진짜 아이가 되어 아빠 품에 안겼다.', ['baby.love', 'nemo_dad.love', 'art.fairy'], 'heart')]),
  dict(id='jack', title='잭과 콩나무', origin='영국 민담(공유 저작물)',
-  cast=[('잭', '네모네 둘째', 'lead', 'nemo'), ('잭의 엄마', '네모 엄마', 'helper', 'nemo'), ('구름 위 거인', '구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)', 'villain', 'outside'), ('잔치 손님', '세모 남편·동그라미 아빠', 'helper', 'semo')],
+  cast=[('잭', '네모네 {kid2}', 'lead', 'nemo'), ('잭의 엄마', '네모 엄마', 'helper', 'nemo'), ('구름 위 거인', '구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)', 'villain', 'outside'), ('잔치 손님', '세모 남편·동그라미 아빠', 'helper', 'semo')],
   line='콩나무는 하늘까지, 거인은 구름 위에서 손을 흔든다 — 마지막엔 세 가족이 큰 상에', kept=['소를 팔고 마법의 콩을 받음', '하룻밤에 자란 콩나무', '구름 위 거인의 성과 황금알 거위', '콩나무를 베어 내려옴'],
-  cuts=[('소를 팔러 간 잭(둘째)이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.', ['nemo_kids.kid2', 'nemo_mom.worry'], 'question'),
+  cuts=[('소를 팔러 간 잭({kid2})이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.', ['nemo_kids.kid2', 'nemo_mom.worry'], 'question'),
         ('하룻밤 사이 콩나무가 하늘까지! 잭이 올라가 보니 구름 위에 거인의 큰 성이 있었다.', ['nemo_kids.kid2'], 'bang'),
         ('황금알을 낳는 거위를 안고 달아나는 잭. 구름 거인이 쿵쿵쿵 쫓아왔다.', ['nemo_kids.kid2'], 'sparkle'),
         ('내려온 잭이 콩나무를 베자 거인은 구름 위에서 손을 흔들었다. 세 가족이 큰 상에 모여 황금알 오믈렛을 먹었다.', ['nemo_kids.kid2', 'nemo_mom.joy', 'husband.joy', 'dong_dad.joy'], 'heart')]),
@@ -101,11 +116,11 @@ T12 = [
 # ---------------- ① 3권 11~15장 (유아, 막둥이 시점) ----------------
 K = [
  dict(ch=11, id='brothers', title='의좋은 형제', origin='한국 전래동화(공유 저작물)', bg='hill', mode='꽃 심기(수 세기 — 볏단 세기)',
-  cast=[('형', '네모 형', 'lead', 'nemo'), ('아우', '막둥이', 'lead', 'nemo')], line='밤마다 몰래 볏단을 옮기다 달밤에 딱 마주쳐요. 몇 단인지 세어 보며 놀아요.', kept=['볏단을 똑같이 나눔', '밤마다 몰래 서로에게 볏단을 옮김', '아침마다 수가 그대로여서 이상해함', '달밤에 길에서 마주침'],
-  pro=[('옛날 옛날, 형과 막둥이가 볏단을 똑같이 나눴어요.', [('nemo_kids.kid1', 230), ('baby.joy', 150)], None),
-       ('형이 생각했어요. 「막둥이네는 식구가 많으니…」 밤마다 몰래 볏단을 막둥이네로 옮겨요.', [('nemo_kids.kid1', 230), ('baby.surprise', 150)], 'sparkle'),
+  cast=[('형', '네모 {sib1}', 'lead', 'nemo'), ('아우', '막둥이', 'lead', 'nemo')], line='밤마다 몰래 볏단을 옮기다 달밤에 딱 마주쳐요. 몇 단인지 세어 보며 놀아요.', kept=['볏단을 똑같이 나눔', '밤마다 몰래 서로에게 볏단을 옮김', '아침마다 수가 그대로여서 이상해함', '달밤에 길에서 마주침'],
+  pro=[('옛날 옛날, {sib1}과 막둥이가 볏단을 똑같이 나눴어요.', [('nemo_kids.kid1', 230), ('baby.joy', 150)], None),
+       ('{sib1}이 생각했어요. 「막둥이네는 식구가 많으니…」 밤마다 몰래 볏단을 막둥이네로 옮겨요.', [('nemo_kids.kid1', 230), ('baby.surprise', 150)], 'sparkle'),
        ('그런데 아침마다 볏단 수가 그대로! 몇 단일까요? 세어 봐요.', [('baby.surprise', 190)], 'question')],
-  epi=[('막둥이도 몰래 형네로 볏단을 옮기고 있었어요.', [('baby.joy', 190)], 'sparkle'),
+  epi=[('막둥이도 몰래 {sib1}네로 볏단을 옮기고 있었어요.', [('baby.joy', 190)], 'sparkle'),
        ('달밤에 길에서 딱 마주쳤어요! 볏단을 안고 깜짝!', [('nemo_kids.kid1', 230), ('baby.surprise', 150)], 'bang'),
        ('둘은 볏단을 안고 깔깔 웃었어요. 의좋은 형제예요.', [('nemo_kids.kid1', 230), ('baby.love', 150)], 'heart')]),
  dict(ch=12, id='ant', title='개미와 베짱이', origin='이솝(공유 저작물)', bg='field', mode='똑같이 나눠요(나눔)',
@@ -125,27 +140,27 @@ K = [
        ('정직한 아빠에게 금도끼도 은도끼도 선물!', [('nemo_dad.love', 250), ('baby.joy', 150)], 'heart'),
        ('따라 한 세모 삼촌은 거짓말하려다 웃음이 터져 모두 깔깔깔.', [('husband.wink', 250), ('baby.joy', 150)], 'heart')]),
  dict(ch=14, id='snowqueen', title='눈의 여왕(순한 판)', origin='안데르센(공유 저작물)', bg='night', mode='눈송이 잡기(색 고르기)',
-  cast=[('카이', '네모 형', 'lead', 'nemo'), ('게르다', '막둥이', 'lead', 'nemo'), ('눈의 여왕(순한 판)', '동그라미 아주머니', 'helper', 'dong')], art_pending=['동그라미 아주머니 시트(임시: 그림 없이 글로만)'],
+  cast=[('카이', '네모 {sib1}', 'lead', 'nemo'), ('게르다', '막둥이', 'lead', 'nemo'), ('눈의 여왕(순한 판)', '동그라미 아주머니', 'helper', 'dong')], art_pending=['동그라미 아주머니 시트(임시: 그림 없이 글로만)'],
   line='얼음 궁전은 포근한 눈 궁전, 막둥이의 따뜻한 눈물에 눈송이가 녹아요.', kept=['눈송이(거울 조각)가 눈에 들어감', '눈의 여왕이 카이를 데려감', '게르다가 찾아가 눈물로 녹임'],
   pro=[('첫눈이 내리는 날, 눈송이 하나가 형 눈에 쏙 들어갔어요.', [('nemo_kids.kid1', 230), ('baby.surprise', 150)], 'bang'),
-       ('형은 눈의 여왕 동그라미 아주머니를 따라 눈 궁전으로 갔어요.', [('nemo_kids.kid1', 230)], None),
+       ('{sib1}은 눈의 여왕 동그라미 아주머니를 따라 눈 궁전으로 갔어요.', [('nemo_kids.kid1', 230)], None),
        ('막둥이가 따라가 같은 색 눈송이를 톡톡 잡아요!', [('baby.joy', 190)], 'sparkle')],
   epi=[('막둥이의 따뜻한 눈물에 눈송이가 사르르 녹았어요.', [('baby.cry', 190)], 'heart'),
-       ('형이 눈을 비비며 「막둥이!」 하고 안았어요.', [('nemo_kids.kid1', 230), ('baby.love', 150)], 'heart'),
+       ('{sib1}이 눈을 비비며 「막둥이!」 하고 안았어요.', [('nemo_kids.kid1', 230), ('baby.love', 150)], 'heart'),
        ('눈의 여왕 아주머니도 손을 흔들어 주었어요. 함께 집으로!', [('nemo_kids.kid1', 230), ('baby.joy', 150)], 'sparkle')]),
  dict(ch=15, id='kongjwi', title='콩쥐팥쥐 독 채우기', origin='한국 전래동화(공유 저작물)', bg='house', mode='박자 맞추기',
-  cast=[('콩쥐', '막둥이', 'lead', 'nemo'), ('팥쥐', '네모 형', 'funny', 'nemo'), ('도와주는 두꺼비', '할머니', 'helper', 'nemo'), ('꽃신 주인을 찾는 원님', '세모 삼촌', 'helper', 'semo')], line='구멍 난 독은 두꺼비 할머니와 박자를 맞춰 채워요. 꽃신을 찾아 준 원님 앞에서 형도 함께 웃어요.', kept=['밑 빠진 독에 물 채우기', '두꺼비의 도움', '꽃신 한 짝을 잃고 원님이 찾아 줌'],
+  cast=[('콩쥐', '막둥이', 'lead', 'nemo'), ('팥쥐', '네모 {sib1}', 'funny', 'nemo'), ('도와주는 두꺼비', '할머니', 'helper', 'nemo'), ('꽃신 주인을 찾는 원님', '세모 삼촌', 'helper', 'semo')], line='구멍 난 독은 두꺼비 할머니와 박자를 맞춰 채워요. 꽃신을 찾아 준 원님 앞에서 {sib1}도 함께 웃어요.', kept=['밑 빠진 독에 물 채우기', '두꺼비의 도움', '꽃신 한 짝을 잃고 원님이 찾아 줌'],
   pro=[('막둥이 콩쥐는 커다란 독에 물을 가득 채워야 해요.', [('baby.joy', 190)], None),
        ('그런데 독에 구멍이 퐁! 물이 줄줄줄.', [('baby.cry', 190)], 'bang'),
        ('두꺼비 할머니가 와서 박자에 맞춰 톡톡 도와줘요.', [('nemo_grandma.good', 250), ('baby.joy', 150)], 'note')],
   epi=[('독이 가득 찼어요! 잔치에 갈 수 있어요.', [('baby.joy', 190), ('nemo_grandma.good', 250)], 'sparkle'),
        ('서둘러 가다가 꽃신 한 짝이 쏙 빠졌어요.', [('baby.surprise', 190)], 'question'),
-       ('세모 삼촌 원님이 꽃신을 찾아 주었어요. 형도 함께 짝짝짝!', [('husband.joy', 250), ('baby.love', 150), ('nemo_kids.kid1', 230)], 'heart')]),
+       ('세모 삼촌 원님이 꽃신을 찾아 주었어요. {sib1}도 함께 짝짝짝!', [('husband.joy', 250), ('baby.love', 150), ('nemo_kids.kid1', 230)], 'heart')]),
 ]
 
 # ---------------- ⑤ 「동화 속 당신은?」 5종 — 선택지는 인물 동일시가 아니라 "장면 속 내 반응"(문항은 tools/quiz_gen.py) ----------------
 Q5 = [
- dict(id='heungbu', title='흥부와 놀부', origin='한국 전래동화(공유 저작물)', scenes=['다친 제비', '박씨', '박 타기', '쌀이 쏟아짐', '형이 찾아옴', '잔치 뒤 밤'], line='장면마다 세 가지 반응(예: 박을 탈 때 하나씩 천천히 / 한 번에 다 / 순서대로 정확히) 중 내 쪽을 고른다', kept=['제비를 고쳐 준 흥부', '박 타기', '형제의 방문']),
+ dict(id='heungbu', title='흥부와 놀부', origin='한국 전래동화(공유 저작물)', scenes=['다친 제비', '박씨', '박 타기', '쌀이 쏟아짐', '{sib1}이 찾아옴', '잔치 뒤 밤'], line='장면마다 세 가지 반응(예: 박을 탈 때 하나씩 천천히 / 한 번에 다 / 순서대로 정확히) 중 내 쪽을 고른다', kept=['제비를 고쳐 준 흥부', '박 타기', '형제의 방문']),
  dict(id='hare', title='토끼와 거북이', origin='이솝(공유 저작물)', scenes=['출발 신호', '그늘', '낮잠 든 친구', '결승선', '경주가 끝남', '저녁'], line='경주·낮잠·결승선 장면에서 내 반응을 고른다', kept=['느린 쪽과 빠른 쪽의 경주', '낮잠']),
  dict(id='ant', title='개미와 베짱이', origin='이솝(공유 저작물)', scenes=['여름 한낮', '놀자는 친구', '곳간 채우기', '겨울', '배고픈 이웃', '봄'], line='여름·겨울·곳간 장면에서 내 반응을 고른다', kept=['여름의 일과 놀이', '겨울에 문을 두드림']),
  dict(id='pigs', title='아기돼지 삼형제', origin='영국 민담(공유 저작물)', scenes=['집 짓기', '바람', '날아간 이웃집', '벽돌집', '지친 바람', '완성된 밤'], line='집 짓기·바람·벽돌집 장면에서 내 반응을 고른다', kept=['세 형제 세 집', '벽돌집은 끄떡없음']),
@@ -194,7 +209,7 @@ if __name__ == '__main__':
         tales.append(ent(k, id='kid_' + k['id'], apps={'playground': k['ch'], 'mode': k['mode']}, aud='kid'))
     for q in Q5:
         tales.append(dict(id='quiz_' + q['id'], title=q['title'], origin=q['origin'], apps={'quiz': True}, audience='adult', cast=[], scenes=q['scenes'], line=q['line'], kept=q['kept'], art_pending=[], status='[제안]'))
-    json.dump({'version': 2, 'principle': 'docs/20 D13 — 구조·모티브·상징물은 원작 그대로, 배역과 무서운 수위만 바꾼다. 진짜 악역은 가족 밖. 공유 저작물 원전만. 세모네는 아이 없음.', 'tales': tales}, open(R / 'data/tales.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    open(R / 'data/tales.json', 'w', encoding='utf-8').write(nm(json.dumps({'version': 2, 'principle': 'docs/20 D13 — 구조·모티브·상징물은 원작 그대로, 배역과 무서운 수위만 바꾼다. 진짜 악역은 가족 밖. 공유 저작물 원전만. 세모네는 아이 없음.', 'tales': tales}, ensure_ascii=False, indent=1)))
     p = R / 'data/merge_extra.json'; X = json.load(open(p, encoding='utf-8'))
     X['stories'] = [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(T12)]
     json.dump(X, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -216,7 +231,7 @@ if __name__ == '__main__':
     json.dump(S, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     # ① 11장 영웅(지도 원) — 의좋은 형제
     p = R / 'data/stages.json'; ST = json.load(open(p, encoding='utf-8')); ST['ch11']['heroes'] = ['nemo_kids.kid1', 'baby.joy']; json.dump(ST, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    md = ['# 10. 옛이야기 배역표 (D13) — 모든 항목 [제안]', '', '허브 QA 대기. 생성: `python tools/tales_build.py` (원천은 이 스크립트, 가족 악역 0 · 세모 웃긴 실패역 ≤3 단언 포함). 원칙은 docs/20: 구조·모티브·상징물은 원작 그대로, 바꾸는 것은 배역과 무서운 수위뿐, **진짜 악역은 가족 밖 캐릭터**. 그림은 임시.', '']
+    md = ['# 10. 옛이야기 배역표 (D13) — 모든 항목 [제안]', '', '허브 QA 대기. 생성: `python tools/tales_build.py` (원천은 이 스크립트, 가족 악역 0 · 세모 웃긴 실패역 ≤3 단언 포함). 원칙은 docs/20: 구조·모티브·상징물은 원작 그대로, 바꾸는 것은 배역과 무서운 수위뿐, **진짜 악역은 가족 밖 캐릭터**. 그림은 임시.', '', '**아이 호칭 변수**: 글 속 변수 sib1(형/누나/언니/오빠)·kid1~kid3·baby 는 중괄호로 감싸 쓰며(예: 중괄호 안에 sib1) `data/names.json` 값으로 화면에 풀린다(은/는·이/가·을/를·과/와 자동). 작가 결정이 나오면 그 파일만 고치고 이 스크립트를 다시 돌린다. 지금 값: sib1=' + NAMES['sib1'] + ', kid1/2/3=' + '/'.join(NAMES[k] for k in ('kid1', 'kid2', 'kid3')) + ', baby=' + NAMES['baby'] + '.', '']
     md += table(tally(T12), '③④ 12장 가족별 역할 횟수') + ['', '(세모의 웃긴 실패역·악역: %d회 / 가족 악역: 0)' % semo_funny, ''] + table(tally(K), '① 3권 11~15장 가족별 역할 횟수') + ['', '## ③ 도형 합치기 12장 · ④ 옛이야기 색칠 12장 (같은 이야기, 장당 4컷 기승전결)', '']
     for i, t in enumerate(T12):
         md += ['### %d장 %s — %s' % (i + 1, t['title'], t['origin']), '- 배역: ' + ' / '.join('%s → %s [%s·%s]' % (a, b, KIND[c], FAM[d]) for a, b, c, d in t['cast']), '- 우리 버전: ' + t['line'], '- 원작에서 유지: ' + ' · '.join(t['kept'])] + (['- 그림 대기: ' + ', '.join(t['art_pending'])] if t.get('art_pending') else []) + ['']
@@ -227,5 +242,5 @@ if __name__ == '__main__':
     for q in Q5:
         md += ['### %s — %s' % (q['title'], q['origin']), '- 장면: ' + ' → '.join(q['scenes']), '- 방식: ' + q['line'], '- 원작에서 유지: ' + ' · '.join(q['kept']), '']
     md += ['## ② 세 가족 식탁', '웹툰 사연 유지(변경 없음, D13 ②).']
-    open(R / 'games/10_TALES_CAST.md', 'w', encoding='utf-8').write('\n'.join(md) + '\n')
+    open(R / 'games/10_TALES_CAST.md', 'w', encoding='utf-8').write(nm('\n'.join(md) + '\n'))
     print('tales', len(tales), '| 세모 웃긴 실패역', semo_funny, '| 가족 악역 0 확인')

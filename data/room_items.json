@@ -311,11 +311,11 @@
   {
    "no": 13,
    "id": "w_frame",
-   "name": "그림 액자",
+   "name": "내 그림 액자",
    "set": "wall",
    "room": "kid",
-   "w": 52,
-   "h": 60,
+   "w": 56,
+   "h": 64,
    "slot": "wall",
    "art": "frame",
    "colors": [
@@ -1403,6 +1403,137 @@
    "game": "all",
    "season": "5",
    "physical": null
+  },
+  {
+   "no": 64,
+   "id": "w_frame_gold",
+   "name": "황금 액자",
+   "set": "wall",
+   "room": "kid",
+   "w": 60,
+   "h": 70,
+   "slot": "wall",
+   "art": "frame",
+   "colors": [
+    "#FFC933"
+   ],
+   "game": "coloring",
+   "season": null,
+   "physical": null,
+   "needPages": 5
+  },
+  {
+   "no": 65,
+   "id": "w_frame_pink",
+   "name": "분홍 액자",
+   "set": "wall",
+   "room": "kid",
+   "w": 60,
+   "h": 70,
+   "slot": "wall",
+   "art": "frame",
+   "colors": [
+    "#FF8FA8"
+   ],
+   "game": "coloring",
+   "season": null,
+   "physical": null,
+   "needPages": 10
+  },
+  {
+   "no": 66,
+   "id": "w_garland",
+   "name": "깃발 줄",
+   "set": "wall",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "coloring",
+   "season": null,
+   "physical": null,
+   "needPages": 15,
+   "emoji": "🎏"
+  },
+  {
+   "no": 67,
+   "id": "w_balloons",
+   "name": "풍선",
+   "set": "wall",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "coloring",
+   "season": null,
+   "physical": null,
+   "needPages": 20,
+   "emoji": "🎈"
+  },
+  {
+   "no": 68,
+   "id": "w_stars",
+   "name": "별 모빌",
+   "set": "wall",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "coloring",
+   "season": null,
+   "physical": null,
+   "needPages": 30,
+   "emoji": "⭐"
+  },
+  {
+   "no": 69,
+   "id": "w_rainbow",
+   "name": "무지개",
+   "set": "wall",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "coloring",
+   "season": null,
+   "physical": null,
+   "needPages": 45,
+   "emoji": "🌈"
+  },
+  {
+   "no": 70,
+   "id": "w_crown",
+   "name": "왕관 걸이",
+   "set": "wall",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "coloring",
+   "season": null,
+   "physical": null,
+   "needPages": 60,
+   "emoji": "👑"
   }
  ]
 }

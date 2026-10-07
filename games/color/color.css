@@ -1,0 +1,32 @@
+/* 막둥이 색칠북(유아) — 키트 토큰만. 놀이 UI 에는 글자 없음(아이콘·색·소리). */
+.cl { position: absolute; inset: 0; }
+.cl-ttl { position: absolute; top: 96px; left: 0; right: 0; text-align: center; }
+.cl-fam { position: absolute; left: 0; right: 0; top: 214px; height: 170px; display: flex; justify-content: center; align-items: flex-end; gap: 6px; }
+.cl-fam img { height: 128px; width: auto; animation: uk-float 2.6s ease-in-out infinite; } .cl-fam img:nth-child(2) { animation-delay: .4s; height: 100px; } .cl-fam img:nth-child(3) { animation-delay: .8s; }
+.cl-cards { position: absolute; left: 0; right: 0; bottom: 36px; display: flex; justify-content: center; gap: 22px; }
+.cl-card { width: 120px; height: 132px; border: 0; border-radius: 30px; box-shadow: var(--uk-sh-lg); display: flex; align-items: center; justify-content: center; } .cl-card:active { transform: translateY(3px); }
+.cl-card svg { width: 76px; height: 76px; }
+.cl-tabs { position: absolute; left: 6px; right: 6px; top: 70px; display: flex; gap: 6px; justify-content: center; }
+.cl-tab { flex: none; width: 52px; height: 52px; border: 0; border-radius: 18px; background: #fff; box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; } .cl-tab svg { width: 34px; height: 34px; } .cl-tab.on { outline: 4px solid var(--uk-pink); background: #FFF3F6; }
+.cl-grid { position: absolute; left: 0; right: 0; top: 134px; bottom: 0; overflow-y: auto; touch-action: pan-y; padding: 0 12px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; align-content: start; scrollbar-width: none; }
+.cl-grid::-webkit-scrollbar { display: none; }
+.cl-th { position: relative; height: 104px; border: 0; border-radius: var(--uk-r-m); background: #fff; box-shadow: var(--uk-sh); padding: 6px; display: flex; align-items: center; justify-content: center; } .cl-th:active { transform: translateY(2px); }
+.cl-th > svg, .cl-th > img { max-width: 100%; max-height: 100%; width: auto; height: 100%; pointer-events: none; }
+.cl-th .ck { position: absolute; right: 4px; top: 4px; width: 28px; height: 28px; }
+.cl-art { position: absolute; left: 12px; right: 12px; top: 74px; height: 336px; background: #fff; border-radius: var(--uk-r-l); box-shadow: var(--uk-sh-lg); display: flex; align-items: center; justify-content: center; touch-action: none; }
+.cl-art svg { width: 100%; height: 100%; touch-action: none; } .cl-art svg [data-r] { cursor: pointer; transition: fill .15s; }
+.cl-art .num { font: 900 15px sans-serif; fill: #3A2E39; paint-order: stroke; stroke: #fff; stroke-width: 3px; pointer-events: none; }
+.cl-pal { position: absolute; left: 12px; right: 12px; top: 424px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.cl-sw { width: 52px; height: 52px; border-radius: 50%; border: 4px solid #fff; box-shadow: var(--uk-sh); position: relative; font: 900 22px/44px var(--uk-font); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.5); text-align: center; padding: 0; } .cl-sw.on { outline: 4px solid var(--uk-ink); transform: scale(1.1); } .cl-sw.white { color: var(--uk-ink); text-shadow: none; }
+.cl-acts { position: absolute; left: 0; right: 0; bottom: 18px; display: flex; justify-content: center; gap: 20px; align-items: center; }
+.cl-acts .uk-round { width: 60px; height: 60px; } .cl-acts .uk-round.lg { width: 84px; height: 84px; } .cl-acts .dim { opacity: .4; }
+.cl-shake { animation: uk-wob .4s; }
+.cl-scene { position: absolute; inset: 0; touch-action: none; } .cl-st { position: absolute; width: 72px; height: 72px; margin: -36px 0 0 -36px; touch-action: none; } .cl-st.sel { outline: 4px dashed var(--uk-pink); border-radius: 16px; } .cl-st img, .cl-st svg { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.cl-tray { position: absolute; left: 0; right: 0; bottom: 0; height: 100px; background: rgba(255,255,255,.88); border-radius: 26px 26px 0 0; box-shadow: 0 -4px 0 rgba(0,0,0,.08); display: flex; gap: 8px; overflow-x: auto; padding: 14px 10px; touch-action: pan-x; scrollbar-width: none; align-items: center; } .cl-tray::-webkit-scrollbar { display: none; }
+.cl-tk { flex: none; width: 68px; height: 68px; border: 0; border-radius: 18px; background: #fff; box-shadow: var(--uk-sh); padding: 4px; touch-action: none; } .cl-tk img, .cl-tk svg { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.cl-wp { position: absolute; left: 12px; right: 12px; top: 74px; height: 250px; border-radius: var(--uk-r-l); box-shadow: var(--uk-sh-lg); }
+.cl-pat { position: absolute; left: 0; right: 0; top: 338px; display: flex; justify-content: center; gap: 12px; align-items: center; } .cl-pat .cl-tab { width: 56px; height: 56px; }
+.cl-hang { position: relative; width: 300px; height: 330px; border-radius: 28px; overflow: hidden; box-shadow: var(--uk-sh-pop); }
+.cl-hang .fr { position: absolute; left: 50%; top: 50%; width: 150px; margin: -85px 0 0 -75px; animation: clhang 1.1s var(--uk-ease) both; } .cl-hang .fr img { width: 100%; }
+@keyframes clhang { 0% { transform: translateY(-260px) rotate(-14deg) scale(.6); opacity: 0 } 55% { transform: translateY(8px) rotate(3deg) scale(1.08); opacity: 1 } 100% { transform: none } }
+.cl-hang .acts { position: absolute; left: 0; right: 0; bottom: 12px; display: flex; justify-content: center; gap: 18px; }

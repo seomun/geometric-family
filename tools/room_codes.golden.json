@@ -250,5 +250,33 @@
  "s_carnation": {
   "no": 63,
   "code": "1RCKZ4"
+ },
+ "w_frame_gold": {
+  "no": 64,
+  "code": "1SCRQ0"
+ },
+ "w_frame_pink": {
+  "no": 65,
+  "code": "1TCYGW"
+ },
+ "w_garland": {
+  "no": 66,
+  "code": "1UD57G"
+ },
+ "w_balloons": {
+  "no": 67,
+  "code": "1VDCYJ"
+ },
+ "w_stars": {
+  "no": 68,
+  "code": "1WDJPF"
+ },
+ "w_rainbow": {
+  "no": 69,
+  "code": "1XDQGB"
+ },
+ "w_crown": {
+  "no": 70,
+  "code": "1YDX77"
  }
 }

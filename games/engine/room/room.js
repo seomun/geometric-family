@@ -50,6 +50,9 @@
     },
     src(it, c, o) { const sl = Room.cfg.slot && Room.cfg.slot('room', it.id); if (sl) return sl; return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(RoomArt.make(it.art, c || it.colors[0], Object.assign({ emoji: it.emoji }, o))); },
     visibleSet(it) { return Room.family || Room.cfg.mode === 'adult' || Room.set(it.set).game === Room.cfg.game || Room.set(it.set).game === 'all'; },
+    /** 벽지: 방마다 "무늬+두 색" 설명 하나만 저장(그림 데이터 아님). 도형 무늬 타일을 CSS 배경으로 */
+    wallStyle(d) { const c = d.fg, body = d.pat === 0 ? `<rect x="12" y="12" width="36" height="36" rx="9" fill="${c}"/>` : d.pat === 1 ? `<path d="M30 10L52 50H8z" fill="${c}"/>` : `<circle cx="30" cy="30" r="19" fill="${c}"/>`; const face = `<circle cx="23" cy="${d.pat === 1 ? 38 : 28}" r="2.4" fill="#4A3030"/><circle cx="37" cy="${d.pat === 1 ? 38 : 28}" r="2.4" fill="#4A3030"/><path d="M25 ${d.pat === 1 ? 44 : 35}q5 4 10 0" fill="none" stroke="#4A3030" stroke-width="2" stroke-linecap="round"/>`; return `background-color:${d.bg};background-image:url("data:image/svg+xml;charset=utf-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">' + body + face + '</svg>')}");background-size:54px 54px`; },
+    setWall(room, d) { Room.S.wall = Room.S.wall || {}; Room.S.wall[room] = d; Room.save(); },
     placedIn: (r) => (Room.S.placed[r] = Room.S.placed[r] || []),
     place(id, room, x, y) {
       const it = Room.item(id), L = Room.placedIn(room), k = L.length;
@@ -69,10 +72,10 @@
         tabs.innerHTML = ''; rooms.forEach((r) => { const b = el('button', 'rm-tab' + (r.id === cur ? ' on' : ''), tabs, `<img src="${imgSrc(r)}" alt=""><span>${kid && !Room.family ? '' : r.name}</span>`); b.style.setProperty('--c', r.wall); b.onclick = () => { cur = r.id; sel = null; draw(); }; });
         if (kid && !Room.family) { const g = el('button', 'rm-tab fam', tabs, (window.UK ? UK.icon('lock') : '') + '<span></span>'); g.setAttribute('aria-label', '가족 집(보호자)'); g.onclick = () => Room.cfg.guard(() => { Room.family = true; Room.house(parent, { room: cur }); }); }
         stage.innerHTML = ''; stage.style.cssText = `--wall:${R.wall};--floor:${R.floor}`;
-        const roomEl = el('div', 'rm-room', stage); el('div', 'rm-wall', roomEl); el('div', 'rm-floor', roomEl);
+        const roomEl = el('div', 'rm-room', stage); const wl = el('div', 'rm-wall', roomEl); if (Room.S.wall && Room.S.wall[cur]) wl.style.cssText += ';' + Room.wallStyle(Room.S.wall[cur]); el('div', 'rm-floor', roomEl);
         Room.placedIn(cur).forEach((p, i) => {
           const it = Room.item(p.id); if (!it) return;
-          const d = el('img', 'rm-it' + (sel === i ? ' sel' : ''), roomEl); d.src = Room.src(it, p.c); d.style.cssText = `left:${p.x}px;top:${p.y}px;width:${it.w}px;height:${it.h}px;z-index:${Math.round(p.y + it.h)};transform:scaleX(${p.flip ? -1 : 1})`;
+          const d = el('img', 'rm-it' + (sel === i ? ' sel' : ''), roomEl); d.src = Room.src(it, p.c, p.img && Room.cfg.imageFor ? { image: Room.cfg.imageFor(p.img) } : null); d.style.cssText = `left:${p.x}px;top:${p.y}px;width:${it.w}px;height:${it.h}px;z-index:${Math.round(p.y + it.h)};transform:scaleX(${p.flip ? -1 : 1})`;
           d.style.pointerEvents = 'auto'; d.draggable = false;
           d.addEventListener('pointerdown', (e) => {
             e.preventDefault(); sel = i; roomEl.querySelectorAll('.rm-it').forEach((x) => x.classList.remove('sel')); d.classList.add('sel');

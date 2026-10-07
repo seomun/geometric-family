@@ -212,6 +212,7 @@
   };
   /* 그림 슬롯(docs/18): data/art_slots.json 의 {bg,props,cover,room,icons}[id] 에 SVG 경로(또는 data URI)를 넣으면 코드 그림 대신 쓴다. 받은 SVG 를 넣기만 하면 교체. */
   GF.slot = (kind, id) => { const m = GF.data && GF.data.art_slots && GF.data.art_slots[kind], v = m && m[id]; return v ? (/^(data:|https?:|\/)/.test(v) ? v : (GF.base || '') + v) : null; };
+  GF.bgSVG = (name) => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 640" width="360" height="640">' + (BG[name] || BG.home)() + '</svg>';   // 배경 한 장을 SVG 문자열로(스티커 장면 액자용)
   GF.bg = function (name, parent) {
     const sl = GF.slot('bg', name);
     if (sl) { const d0 = el('div', 'bg', parent); const im0 = el('img', '', d0); im0.alt = ''; im0.src = sl; im0.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none'; return d0; }

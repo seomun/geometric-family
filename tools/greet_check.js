@@ -1,6 +1,6 @@
 // 첫 만남 인사 점검: node tools/greet_check.js  — 새 저장소로 ?greet=1 로 열어 인사가 뜨고, 자동으로 넘어가며(또는 탭 건너뛰기), 두 번째 실행엔 안 뜨는지 확인
 const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
-const APPS = [['② 식탁', 'idle/index.html', '.tcard'], ['③ 합치기', 'merge/index.html', '.mg-btns'], ['④ 색칠북', 'color/index.html', '.cl-cards'], ['⑤ 어느 도형', 'quiz/index.html', '.qz-grid'], ['⑦ 도형 블록', 'block/index.html', '.bk-btns'], ['⑥ 다른 그림 찾기', 'spot/index.html', '.sp-btns'], ['⑨ 짝 맞추기', 'tile/index.html', '.tl-btns'], ['⑧ 정리의 달인', 'sort/index.html', '.sr-btns']];
+const APPS = [['② 식탁', 'idle/index.html', '.tcard'], ['③ 합치기', 'merge/index.html', '.mg-btns'], ['④ 색칠북', 'color/index.html', '.cl-cards'], ['⑤ 어느 도형', 'quiz/index.html', '.qz-grid'], ['⑦ 도형 블록', 'block/index.html', '.bk-btns'], ['⑥ 다른 그림 찾기', 'spot/index.html', '.sp-btns'], ['⑨ 짝 맞추기', 'tile/index.html', '.tl-btns'], ['⑧ 정리의 달인', 'sort/index.html', '.sr-btns'], ['⑩ 막둥이의 하루', 'day/index.html', '.dy-cards']];
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
   for (const [n, u, home] of APPS) {

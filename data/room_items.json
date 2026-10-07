@@ -108,6 +108,13 @@
    "game": "sort",
    "room": "nemo",
    "story": "뒤섞였던 물건이 자리를 찾았어요. 냉장고, 옷장, 신발장, 서랍장까지 한 칸씩 정리가 끝났어요."
+  },
+  {
+   "id": "daybath",
+   "name": "욕실·침실 세트",
+   "game": "day",
+   "room": "kid",
+   "story": "막둥이가 이도 닦고 옷도 입고 밥도 꼭꼭 먹었어요. 하루가 끝나면 방에 소품이 하나씩 놓여요."
   }
  ],
  "items": [
@@ -3393,6 +3400,366 @@
     "#FFFFFF"
    ],
    "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 173,
+   "id": "y_cup",
+   "name": "칫솔 컵",
+   "set": "daybath",
+   "room": "kid",
+   "w": 40,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🪥",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 174,
+   "id": "y_paste",
+   "name": "치약",
+   "set": "daybath",
+   "room": "kid",
+   "w": 28,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧴",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 175,
+   "id": "y_hanger",
+   "name": "옷걸이",
+   "set": "daybath",
+   "room": "kid",
+   "w": 44,
+   "h": 52,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🧥",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 176,
+   "id": "y_hat",
+   "name": "모자걸이",
+   "set": "daybath",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🧢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 177,
+   "id": "y_bowl",
+   "name": "밥그릇",
+   "set": "daybath",
+   "room": "kid",
+   "w": 44,
+   "h": 36,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍚",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 178,
+   "id": "y_spoon",
+   "name": "수저 통",
+   "set": "daybath",
+   "room": "kid",
+   "w": 32,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🥄",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 179,
+   "id": "y_toybox",
+   "name": "장난감 상자",
+   "set": "daybath",
+   "room": "kid",
+   "w": 56,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 180,
+   "id": "y_ball",
+   "name": "공 바구니",
+   "set": "daybath",
+   "room": "kid",
+   "w": 48,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "⚽",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 181,
+   "id": "y_moon",
+   "name": "달 전등",
+   "set": "daybath",
+   "room": "kid",
+   "w": 44,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🌙",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 182,
+   "id": "y_pillow",
+   "name": "베개",
+   "set": "daybath",
+   "room": "kid",
+   "w": 56,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛏️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 183,
+   "id": "y_towel",
+   "name": "수건",
+   "set": "daybath",
+   "room": "kid",
+   "w": 36,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🧻",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 184,
+   "id": "y_mat",
+   "name": "욕실 발판",
+   "set": "daybath",
+   "room": "kid",
+   "w": 56,
+   "h": 24,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🟦",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 185,
+   "id": "y_duck",
+   "name": "목욕 오리",
+   "set": "daybath",
+   "room": "kid",
+   "w": 36,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🦆",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 186,
+   "id": "y_soap",
+   "name": "비누",
+   "set": "daybath",
+   "room": "kid",
+   "w": 32,
+   "h": 28,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧼",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 187,
+   "id": "y_boots",
+   "name": "장화",
+   "set": "daybath",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🥾",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 188,
+   "id": "y_book",
+   "name": "잠자리 책",
+   "set": "daybath",
+   "room": "kid",
+   "w": 36,
+   "h": 32,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "📖",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 189,
+   "id": "y_quilt",
+   "name": "이불",
+   "set": "daybath",
+   "room": "kid",
+   "w": 64,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛌",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 190,
+   "id": "y_clock",
+   "name": "아침 시계",
+   "set": "daybath",
+   "room": "kid",
+   "w": 36,
+   "h": 36,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "⏰",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 191,
+   "id": "y_cup2",
+   "name": "물컵",
+   "set": "daybath",
+   "room": "kid",
+   "w": 28,
+   "h": 36,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🥛",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 192,
+   "id": "y_star",
+   "name": "별 스티커",
+   "set": "daybath",
+   "room": "kid",
+   "w": 32,
+   "h": 32,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "⭐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "day",
    "season": null,
    "physical": null
   }

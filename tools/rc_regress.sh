@@ -13,6 +13,8 @@ for r in 1-10 11-20; do run "⑨ tile LV=$r" env LV=$r node tools/tile_smoke.js;
 run "⑨ tile_sim" node tools/tile_sim.js
 for r in 1-10 11-20; do run "⑧ sort LV=$r" env LV=$r node tools/sort_smoke.js; done
 run "⑧ sort_sim" node tools/sort_sim.js
+run "⑩ day LV=1-20" env LV=1-20 node tools/day_smoke.js
+run "⑩ day_sim" node tools/day_sim.js
 run "④ color" node tools/color_smoke.js
 run "⑤ quiz" node tools/quiz_smoke.js
 run "② idle" node tools/idle_smoke.js

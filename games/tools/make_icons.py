@@ -6,7 +6,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]; STORE = ROOT / 'games' / 'st
 S = 1024
 APPS = {  # flavor: (스토어 이름, 캐릭터 PNG, 배경, 위쪽 비율)
     'toddler': ('toddler', 'wife/good.png', '#BFE8FF', 0.83), 'color': ('color', 'baby/good.png', '#FFD9A8', 0.74),
-    'tables': ('tables', 'nemo_mom/good.png', '#FFE3C2', 0.8), 'merge': ('merge', 'nemo_kids/kid1.png', '#FFD9C0', 0.9), 'quiz': ('quiz', 'dong_dad/good.png', '#DDE2FA', 0.8), 'block': ('block', 'nemo_dad/good.png', '#FFE9B8', 0.8), 'spot': ('spot', 'nemo_mom/good.png', '#E6F4FF', 0.8), 'tile': ('tile', 'baby/good.png', '#FFF0B8', 0.74), 'sort': ('sort', 'wife/good.png', '#DDEBFF', 0.8)}
+    'tables': ('tables', 'nemo_mom/good.png', '#FFE3C2', 0.8), 'merge': ('merge', 'nemo_kids/kid1.png', '#FFD9C0', 0.9), 'quiz': ('quiz', 'dong_dad/good.png', '#DDE2FA', 0.8), 'block': ('block', 'nemo_dad/good.png', '#FFE9B8', 0.8), 'spot': ('spot', 'nemo_mom/good.png', '#E6F4FF', 0.8), 'tile': ('tile', 'baby/good.png', '#FFF0B8', 0.74), 'sort': ('sort', 'wife/good.png', '#DDEBFF', 0.8), 'day': ('day', 'baby/joy.png', '#FFF0C8', 0.74)}
 def face_icon(png, bg, top_frac, fill=0.84):
     im = Image.open(ROOT / 'assets' / png).convert('RGBA'); bb = im.getchannel('A').point(lambda a: 255 if a > 20 else 0).getbbox()
     im = im.crop((bb[0], bb[1], bb[2], bb[1] + round((bb[3] - bb[1]) * top_frac)))

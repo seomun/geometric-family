@@ -1,0 +1,188 @@
+{
+ "version": 1,
+ "note": "⑩ 막둥이의 하루 사연(장 끝 4컷, 막둥이 시점 호칭, 다른 앱과 같은 옛이야기 배역표 tools/tales_cast.py). [제안] 각색.",
+ "shardsPerItem": 3,
+ "dailyItems": [
+  "y_pillow",
+  "y_moon",
+  "y_ball"
+ ],
+ "stories": [
+  {
+   "chapter": 1,
+   "title": "금도끼 은도끼",
+   "tale": "axe",
+   "cuts": [
+    {
+     "text": "아빠가 도끼를 연못에 퐁당! 아빠는 깜짝 놀랐어요.",
+     "chars": [
+      "nemo_dad.worry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "동그라미 아저씨가 금도끼를 들고 물었어요. 「이게 아빠 도끼예요?」 아빠는 고개를 저었어요.",
+     "chars": [
+      "dong_dad.warm",
+      "nemo_dad.good"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "은도끼도 아니래요. 「제 도끼는 쇠도끼예요.」",
+     "chars": [
+      "nemo_dad.good",
+      "dong_dad.joy"
+     ]
+    },
+    {
+     "text": "정직한 아빠는 반짝이는 도끼를 모두 받았어요. {baby}도 이를 반짝반짝 닦아요!",
+     "chars": [
+      "nemo_dad.love",
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  },
+  {
+   "chapter": 2,
+   "title": "세 마리 곰",
+   "tale": "bears",
+   "cuts": [
+    {
+     "text": "곰 세 식구의 옷이 걸려 있어요. 큰 옷, 중간 옷, 작은 옷.",
+     "chars": [
+      "dong_dad.joy"
+     ]
+    },
+    {
+     "text": "손님 세모 이모가 큰 옷을 입어 봤어요. 어머나, 너무 커요!",
+     "chars": [
+      "wife.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "중간 옷도 헐렁헐렁. 작은 옷은 딱 맞아요!",
+     "chars": [
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "아기 곰이 웃었어요. 「나한테 맞는 옷이 제일 좋아요.」 {baby}도 날씨에 맞는 옷을 입어요.",
+     "chars": [
+      "baby.joy",
+      "dong_dad.warm"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 3,
+   "title": "토끼와 거북이",
+   "tale": "hare",
+   "cuts": [
+    {
+     "text": "토끼는 빨리빨리, 거북이 아빠는 천천히 걸어요.",
+     "chars": [
+      "dong_dad.joy",
+      "nemo_dad.joy"
+     ]
+    },
+    {
+     "text": "토끼는 깡충깡충 앞서가다 낮잠을 쿨쿨 잤어요.",
+     "chars": [
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "text": "거북이 아빠는 한 걸음, 한 걸음. 세모 삼촌이 결승선에서 기다려요.",
+     "chars": [
+      "nemo_dad.good",
+      "husband.joy"
+     ]
+    },
+    {
+     "text": "천천히 가던 아빠가 먼저 도착! {baby}도 밥을 천천히 꼭꼭 씹어요.",
+     "chars": [
+      "nemo_dad.love",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 4,
+   "title": "우렁 각시",
+   "tale": "ureng",
+   "cuts": [
+    {
+     "text": "아빠가 집에 오니 방이 깨끗해요. 누가 정리했을까요?",
+     "chars": [
+      "nemo_dad.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "숨어 있던 세모 이모가 방긋 웃으며 나왔어요.",
+     "chars": [
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "이모가 말했어요. 「정리는 제자리에 놓으면 끝!」",
+     "chars": [
+      "wife.good",
+      "nemo_dad.joy"
+     ]
+    },
+    {
+     "text": "아빠와 이모와 {baby}가 함께 장난감을 제자리에 놓았어요.",
+     "chars": [
+      "baby.joy",
+      "nemo_dad.love",
+      "wife.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 5,
+   "title": "해님 달님",
+   "tale": "sun",
+   "cuts": [
+    {
+     "text": "해님이 졌어요. 하늘에 달님이 떴어요.",
+     "chars": [
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "{sib1}과 {kid2}는 이불 속에서 엄마를 기다렸어요.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "엄마가 돌아와 토닥토닥. 「잘 자렴.」",
+     "chars": [
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    },
+    {
+     "text": "달님이 창문으로 환하게 웃어요. {baby}도 새근새근 잘 자요.",
+     "chars": [
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 // 키트 버튼 글자 줄 꺾임 점검: node tools/btn_wrap_check.js — 앱 8종의 홈·첫 판·집에서 .uk-btn 글자가 두 줄 이상이거나 버튼 밖으로 넘치면 알린다
 const { chromium } = require('playwright-core');
-const APPS = [['② idle', 'idle/index.html', ['itable']], ['③ merge', 'merge/index.html', ['mhome', ['mplay', { n: 1 }], 'mtrio']], ['④ color', 'color/index.html', ['chome']], ['⑤ quiz', 'quiz/index.html', ['qhome', 'qtests']], ['⑥ spot', 'spot/index.html', ['phome', ['pplay', { n: 1 }], 'ptrio']], ['⑦ block', 'block/index.html', ['bhome', ['bplay', { n: 1 }], 'btrio']], ['⑨ tile', 'tile/index.html', ['thome', ['tplay', { n: 1 }], ['tplay', { n: 8 }], 'ttrio']], ['⑧ sort', 'sort/index.html', ['shome', ['splay', { n: 1 }], ['splay', { n: 9 }], 'strio']]];
+const APPS = [['② idle', 'idle/index.html', ['itable']], ['③ merge', 'merge/index.html', ['mhome', ['mplay', { n: 1 }], 'mtrio']], ['④ color', 'color/index.html', ['chome']], ['⑤ quiz', 'quiz/index.html', ['qhome', 'qtests']], ['⑥ spot', 'spot/index.html', ['phome', ['pplay', { n: 1 }], 'ptrio']], ['⑦ block', 'block/index.html', ['bhome', ['bplay', { n: 1 }], 'btrio']], ['⑨ tile', 'tile/index.html', ['thome', ['tplay', { n: 1 }], ['tplay', { n: 8 }], 'ttrio']], ['⑧ sort', 'sort/index.html', ['shome', ['splay', { n: 1 }], ['splay', { n: 9 }], 'strio']], ['⑩ day', 'day/index.html', ['dhome', 'dmap']]];
 let bad = 0;
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });

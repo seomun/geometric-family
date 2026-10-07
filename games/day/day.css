@@ -1,0 +1,42 @@
+/* 막둥이의 하루(유아) — 키트 토큰만. 놀이 UI 에는 글자 없음(그림·점·손가락·소리). */
+.dy { position: absolute; inset: 0; }
+.dy-ttl { position: absolute; top: 96px; left: 0; right: 0; text-align: center; }
+.dy-fam { position: absolute; left: 0; right: 0; top: 214px; height: 170px; display: flex; justify-content: center; align-items: flex-end; gap: 6px; }
+.dy-fam img { height: 128px; width: auto; animation: uk-float 2.6s ease-in-out infinite; } .dy-fam img:nth-child(2) { animation-delay: .4s; height: 100px; } .dy-fam img:nth-child(3) { animation-delay: .8s; }
+.dy-cards { position: absolute; left: 0; right: 0; bottom: 36px; display: flex; justify-content: center; gap: 22px; }
+.dy-card { width: 120px; height: 132px; border: 0; border-radius: 30px; box-shadow: var(--uk-sh-lg); display: flex; align-items: center; justify-content: center; } .dy-card:active { transform: translateY(3px); }
+.dy-card svg { width: 76px; height: 76px; }
+/* 하루 길: 장면 그림 5개가 구불구불 이어짐 */
+.dy-path { position: absolute; left: 0; right: 0; top: 80px; bottom: 20px; }
+.dy-scene { position: absolute; width: 132px; height: 112px; border: 0; border-radius: 40px; background: #fff; box-shadow: var(--uk-sh-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.dy-scene:nth-child(1) { left: 20px; top: 4px; } .dy-scene:nth-child(2) { right: 20px; top: 116px; } .dy-scene:nth-child(3) { left: 20px; top: 228px; } .dy-scene:nth-child(4) { right: 20px; top: 340px; } .dy-scene:nth-child(5) { left: 20px; top: 452px; }
+.dy-scene.cur { outline: 6px solid var(--uk-pink); animation: dybob 1.2s ease-in-out infinite alternate; } @keyframes dybob { to { transform: translateY(-6px); } }
+.dy-scene.full { background: #DDF6E5; } .dy-scene.off { background: #E7E1EC; filter: grayscale(.6); } .dy-scene .lk { position: absolute; right: 6px; bottom: 6px; font-style: normal; font-size: 30px; }
+.dy-scene .dy-em { position: static; font-size: 54px; line-height: 1; } .dy-dots { display: flex; gap: 8px; } .dy-dots i { width: 14px; height: 14px; border-radius: 50%; background: #D9CDD3; } .dy-dots i.on { background: #6CCB8A; }
+.dy-scene.shake { animation: dyshake .4s; } @keyframes dyshake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+/* 놀이 화면 공통 */
+.dy-stage { position: absolute; inset: 0; touch-action: none; user-select: none; -webkit-user-select: none; }
+.dy-em { position: absolute; line-height: 1; pointer-events: none; }
+.dy-pips { position: absolute; left: 0; right: 0; top: 84px; display: flex; justify-content: center; gap: 10px; z-index: 5; pointer-events: none; flex-wrap: wrap; padding: 0 20px; }
+.dy-pips i { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.85); box-shadow: inset 0 0 0 3px #D9CDD3; } .dy-pips i.on { background: #FFC933; box-shadow: inset 0 0 0 3px #E0A800; }
+.dy-mouth { position: absolute; left: 44px; top: 240px; width: 272px; height: 204px; border-radius: 60px 60px 90px 90px; background: #fff; box-shadow: 0 0 0 14px #FF9AA8, 0 10px 0 14px #E5778A; }
+.dy-spot { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #B98A55, #7A5230); transition: opacity .15s, transform .4s; } .dy-spot.gone { opacity: 0 !important; transform: scale(1.5); }
+.dy-brush { z-index: 6; transition: left .25s, top .25s; }
+.dy-sky { position: absolute; left: 0; right: 0; top: 118px; height: 90px; } .dy-sky.sun { background: linear-gradient(#FFF1B8, rgba(255,255,255,0)); } .dy-sky.cold { background: linear-gradient(#D6EEFF, rgba(255,255,255,0)); } .dy-sky.rain { background: linear-gradient(#B8C6DB, rgba(255,255,255,0)); }
+.dy-wx { left: 20px; top: 124px; font-size: 60px !important; }
+.dy-kid { position: absolute; left: 100px; top: 196px; width: 160px; height: 250px; display: flex; align-items: flex-end; justify-content: center; pointer-events: none; } .dy-kid img { height: 230px; width: auto; }
+.dy-kid.small { left: 90px; top: 360px; height: 200px; width: 180px; } .dy-kid.small img { height: 160px; } .dy-kid.bed { left: 100px; top: 360px; height: 190px; width: 160px; } .dy-kid.bed img { height: 150px; }
+.dy-cloth { pointer-events: auto; touch-action: none; z-index: 4; transition: left .25s, top .25s, font-size .2s; } .dy-cloth.lift { z-index: 9; transition: none; filter: drop-shadow(0 6px 4px rgba(0,0,0,.25)); } .dy-cloth.worn { pointer-events: none; z-index: 3; }
+.dy-cloth.shake, .dy-toy.shake { animation: dyshake .4s; }
+.dy-food { transition: transform .2s; } .dy-turtle { z-index: 3; } .dy-turtle.wiggle { animation: dyshake .5s; }
+.dy-spoon { position: absolute; left: 130px; top: 500px; width: 100px; height: 100px; border: 0; border-radius: 50%; background: #fff; box-shadow: var(--uk-sh-lg); font-size: 56px; display: flex; align-items: center; justify-content: center; z-index: 5; } .dy-spoon.chew { transform: scale(.92); }
+.dy-ring { position: absolute; inset: -8px; border-radius: 50%; box-shadow: 0 0 0 6px rgba(105,219,124,.55); animation: dyring 1.3s ease-in-out infinite; pointer-events: none; } @keyframes dyring { 50% { transform: scale(1.08); opacity: .5; } }
+.dy-marks { position: absolute; left: 0; right: 0; top: 190px; display: flex; justify-content: center; gap: 10px; } .dy-marks i { width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 4px #D9CDD3; } .dy-marks i.on { background: #FF8FA8; box-shadow: inset 0 0 0 4px #E5778A; }
+.dy-box { position: absolute; border-radius: 22px; background: #FFE3C2; box-shadow: inset 0 0 0 5px #C98F5A, var(--uk-sh); display: flex; align-items: center; justify-content: center; } .dy-boxico { position: static; opacity: .35; }
+.dy-toy { pointer-events: auto; touch-action: none; z-index: 4; transition: left .25s, top .25s, opacity .3s, transform .3s; } .dy-toy.lift { z-index: 9; transition: none; filter: drop-shadow(0 6px 4px rgba(0,0,0,.25)); } .dy-toy.in { transform: scale(.7); pointer-events: none; }
+.dy-night { position: absolute; inset: 0; background: #1F2A52; opacity: 1; transition: opacity .5s; pointer-events: none; z-index: 1; mix-blend-mode: multiply; }
+.dy-light { position: absolute; width: 64px; height: 64px; border: 0; border-radius: 50%; background: rgba(255,240,170,.9); font-size: 40px; display: flex; align-items: center; justify-content: center; z-index: 3; box-shadow: 0 0 24px 10px rgba(255,230,120,.75); } .dy-light:not(.on) { background: transparent; box-shadow: none; color: transparent; }
+.dy-moon { z-index: 2; transition: transform .6s; } .dy-moon.big { transform: scale(1.5); }
+.dy-blanket { position: absolute; left: 70px; top: 470px; width: 220px; height: 130px; border-radius: 40px 40px 0 0; background: repeating-linear-gradient(90deg, #FF8FA8 0 26px, #FFB3C4 26px 52px); box-shadow: var(--uk-sh-lg); z-index: 4; transition: transform .6s; display: flex; justify-content: center; align-items: flex-start; } .dy-blanket.up { transform: translateY(-110px); }
+.dy-pull { position: static; margin-top: 12px; pointer-events: auto; touch-action: none; }
+.dy-quilt { display: none; }

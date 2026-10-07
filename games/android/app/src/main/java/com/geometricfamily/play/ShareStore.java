@@ -18,7 +18,7 @@ import org.json.JSONArray;
  * 유아 그룹(놀이터·색칠북)과 성인 그룹(식탁·합치기·어느 도형)은 서로 읽지 않는다. 유아↔성인은 보호자 잠금 뒤 6자리 코드로만 잇는다.
  */
 public class ShareStore extends ContentProvider {
-    static final String[] KID = {"com.geometricfamily.play", "com.geometricfamily.color"};
+    static final String[] KID = {"com.geometricfamily.play", "com.geometricfamily.color", "com.geometricfamily.day"};
     static final String[] ADULT = {"com.geometricfamily.tables", "com.geometricfamily.merge", "com.geometricfamily.quiz", "com.geometricfamily.block", "com.geometricfamily.spot", "com.geometricfamily.tile", "com.geometricfamily.sort"};
     static final String PREFS = "gfshare";
 

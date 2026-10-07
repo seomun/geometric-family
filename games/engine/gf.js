@@ -153,6 +153,12 @@
     (function walk(v) { if (typeof v === 'string') { if (GF.data.chars[v] || (GF.art && GF.art[v])) ids.add(v); } else if (v && typeof v === 'object') Object.values(v).forEach(walk); })(obj);
     (obj && obj.pieces != null || true) && ids.forEach((id) => { const i = new Image(); i.src = GF.src(id); i.decode && i.decode().catch(() => {}); });
   };
+  /** 다음 화면에서 쓸 캐릭터 그림을 미리 디코딩(전환 끊김 줄이기): 한 장씩 틈틈이, 실패는 무시 */
+  GF.predecode = (ids) => {
+    const q = [...new Set(ids || [])].filter(Boolean);
+    const step = () => { const id = q.shift(); if (!id) return; let p; try { const im = new Image(); im.src = GF.src(id); p = im.decode ? im.decode() : null; } catch (e) { p = null; } (p || Promise.resolve()).catch(() => {}).then(() => setTimeout(step, 40)); };
+    setTimeout(step, 60);
+  };
   GF.img = (id, cls) => { const i = new Image(); i.src = GF.src(id); i.draggable = false; if (cls) i.className = cls; return i; };
   // 원본 PNG 의 실제 가로/세로(자리표·자르기는 이 기준). 캐릭터 PNG 는 600×600 캔버스 안에 몸이 들어 있다.
   GF.aspectN = (id) => { const c = GF.data.chars[id] || GF.data.chars[id.split('.')[0] + '.good']; return c && c.nw ? c.nw / c.nh : GF.aspect(id); };
@@ -346,6 +352,7 @@
       /* 첫 실행 30초: 타이틀에서 한 번 눌러 바로 첫 판(이야기는 판 사이·장 끝에서 이어진다). 처음이면 손가락이 알려 준다 */
       const nx = GF.quickStage();
       if (nx) {
+        const chIds = []; ((GF.data.story[nx.ch] || {}).pro || []).forEach((c) => (c.chars || []).forEach((q) => chIds.push(q.id))); GF.predecode(chIds.concat((GF.data.stages[nx.ch] || {}).heroes || []));   // 홈이 뜬 직후 첫 판·프롤로그 그림을 백그라운드로
         const go = el('button', 'homeplay', r, IC.play); go.setAttribute('aria-label', '놀이 시작');
         go.onclick = () => {
           GF.sfx('pick'); const st = () => Stage.start({ kind: 'story', ch: nx.ch, k: nx.k, id: nx.id });
@@ -550,7 +557,10 @@
     'gf:quiz:ui:v1': [{ bg: 'indoor2', text: '네모, 세모, 동그라미. 오늘 하루, 당신은 누구와 닮았나요?', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
   };
   GF.maybeGreet = () => {
-    const cuts = GREET[KEY]; if (!cuts || GF.state.greeted) return;
+    const cuts = GREET[KEY]; if (!cuts) return;
+    const ids = cuts.flatMap((c) => c.chars.map((q) => q.id)); try { if (GF.data.idle_balance) ids.push(...(JSON.stringify(GF.data.idle_balance).match(/"[a-z_]+\.[a-z0-9]+"/g) || []).map((x) => x.slice(1, -1)).filter((x) => !/^art\./.test(x))); } catch (e) { /* 미리 읽기 실패는 무시 */ }
+    GF.predecode(ids);                                                         // 인사가 떠 있는 동안(없어도 홈 직후) 다음 화면 그림을 디코딩
+    if (GF.state.greeted) return;
     if (navigator.webdriver && !/[?&]greet=1/.test(location.search)) return;       // 자동 시험(smoke)은 건너뜀. 인사 확인은 ?greet=1
     GF.go('greet', { cuts });
   };

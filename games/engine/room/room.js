@@ -43,9 +43,9 @@
     refresh() { if (!Room.data) return; const v = Room.cfg.store.get(); if (v && v.v === 1) { Room.S = v; if (Room.mount && Room.mount.isConnected && Room._redraw) Room._redraw(); } },
     item: (id) => Room.data.items.find((x) => x.id === id),
     set: (id) => Room.data.sets.find((x) => x.id === id),
-    has: (id) => Room.S.items.includes(id),
-    owned: () => Room.S.items.slice(),
-    ownedCount: () => Room.S.items.length,
+    has: (id) => !!Room.S && Room.S.items.includes(id),                 // init 전에 불려도 터지지 않게(간헐 오류 방어)
+    owned: () => (Room.S ? Room.S.items.slice() : []),
+    ownedCount: () => (Room.S ? Room.S.items.length : 0),
     /** 아이템을 얻는다(진행·코드·시즌). 처음이면 true, 세트가 완성되면 사연 컷 팝업. */
     grant(id) {
       const it = Room.item(id); if (!it || Room.has(id)) return false;

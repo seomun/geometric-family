@@ -150,7 +150,7 @@ async function playStage(p, mode, tag) {
   if (ONLY.length) await p.evaluate(() => { for (let c = 1; c <= 10; c++) for (const l of 'ABC') GF.state.stages['c' + c + l] = { done: true, stars: 3 }; GF.Store.save(); });
   for (const ch of (ONLY.length ? ONLY : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])) {
     const mode = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence', 'soundfind', 'dress', 'train', 'cake'][ch - 1];
-    if (ch === 6 || (ONLY.length && ch === ONLY[0] && ch >= 6)) { await p.evaluate(() => { GF.stack = []; GF.go('home'); GF.go('shelf'); GF.go('map', { book: 2 }); }); await wait(p, 600); await shot(p, 'map2'); }
+    if (ch === 6 || (ONLY.length && ch === ONLY[0])) { await p.evaluate((bk) => { GF.stack = []; GF.go('home'); GF.go('shelf'); GF.go('map', { book: bk }); }, ch >= 6 ? 2 : 1); await wait(p, 600); if (ch >= 6) await shot(p, 'map2'); }   // ONLY 는 앞 장을 완료로 채운 뒤 지도를 다시 그려야 열린다
     await wait(p, 400);
     const nodes = await p.$$('.node'); await nodes[(ch - 1) % 5].click(); await wait(p, 600);
     const np = await p.evaluate((c) => GF.data.story['ch' + c].pro.length, ch);

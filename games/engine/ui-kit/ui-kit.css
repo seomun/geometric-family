@@ -76,7 +76,7 @@ button.uk-card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0
 .uk-sheet { width: min(330px, 92%); background: #fff; border-radius: var(--uk-r-l); padding: 18px 16px 16px; text-align: center; box-shadow: var(--uk-sh-pop); animation: uk-pop var(--uk-t-slow) var(--uk-ease); }
 .uk-sheet h2 { margin: 0 0 6px; font: 900 var(--uk-fs-h)/1.15 var(--uk-font); }
 .uk-sheet .body { margin: 6px 0; font: 600 var(--uk-fs-body)/1.4 var(--uk-font); color: var(--uk-ink2); }
-.uk-sheet .big { font: 900 var(--uk-fs-num)/1.1 var(--uk-font); color: var(--uk-ink); margin: 6px 0; }
+.uk-sheet .uk-big { font: 900 var(--uk-fs-num)/1.1 var(--uk-font); color: var(--uk-ink); margin: 6px 0; }
 .uk-sheet .acts { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; } .uk-sheet .acts.row { flex-direction: row; } .uk-sheet .acts.row .uk-btn { flex: 1; padding: 0 8px; }
 .uk-stars { display: flex; justify-content: center; gap: 8px; margin: 6px 0 10px; }
 .uk-stars svg { width: 56px; height: 56px; filter: grayscale(1) opacity(.35); }

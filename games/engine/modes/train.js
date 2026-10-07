@@ -69,7 +69,7 @@ GF.mode('train', {
         ctx.sfx('ok'); fingerOff(); back(); GF.burst(root, tx0 + g.c.x + cwid / 2, ty + g.c.y + chh * 0.45, 10); mark();
         if (left === 0) ctx.timeout(depart, 500);
       } else {
-        mistakes++; ctx.sfx('no'); tk.el.classList.add('tilt'); ctx.timeout(() => tk.el.classList.remove('tilt'), 700); back();
+        mistakes++; ctx.sfx('hmm'); tk.el.classList.add('tilt'); ctx.timeout(() => tk.el.classList.remove('tilt'), 700); back();
       }
     }
     function depart() {                                            // 완성! 기차가 칙칙폭폭 출발

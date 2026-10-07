@@ -51,7 +51,7 @@ GF.mode('cake', {
       phase = 'layers';
       const order = ctx.shuffle(sizes.slice());
       mkTray(order, (i) => layerSVG(i, Math.round(WID[i] * (wide ? 0.4 : 0.34))), (tk, back) => {
-        if (tk.it !== stacked) { mistakes++; ctx.sfx('no'); tk.el.classList.add('tilt'); ctx.timeout(() => tk.el.classList.remove('tilt'), 700); back(); return; }
+        if (tk.it !== stacked) { mistakes++; ctx.sfx('hmm'); tk.el.classList.add('tilt'); ctx.timeout(() => tk.el.classList.remove('tilt'), 700); back(); return; }
         const i = tk.it, el = GF.el('div', 'abs trin', stage, layerSVG(i, WID[i])); el.style.left = cx - WID[i] / 2 + 'px'; el.style.top = plateY - 20 - (stacked + 1) * LH - 6 + 'px';
         stacked++; tk.el.style.opacity = 0; tk.el.style.pointerEvents = 'none'; ctx.sfx('ok'); fingerOff(); GF.burst(root, cx, topY() + 10, 8);
         if (stacked === L.length) ctx.timeout(startDeco, 600);

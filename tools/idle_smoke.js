@@ -27,23 +27,23 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     await pg.click('.tcard[data-t=' + t + ']'); await pg.waitForSelector('.grow'); await pg.waitForTimeout(300);
     const bad = await pg.evaluate(() => { const o = []; document.querySelectorAll('.idle .grow *, .idle .panel2 *, .idle .mini *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent) { const f = parseFloat(getComputedStyle(e).fontSize) * (e.closest('#safe').getBoundingClientRect().width / 360); if (f < 17.5) o.push(e.textContent.trim().slice(0, 10) + ':' + f.toFixed(1)); } }); return o; });
     ok(bad.length === 0, t + ' 상세 글자 ≥18px (' + bad.join(',') + ')'); await shot('detail_' + t);
-    await pg.click('.screen.on .back'); await pg.waitForSelector('.tcard');
+    await pg.click('.screen.on .ib'); await pg.waitForSelector('.tcard');
   }
   // 세모 지르기
   await pg.click('.tcard[data-t=semo]'); await pg.waitForSelector('.trip');
   await pg.click('.screen.on .trip >> nth=1'); await pg.waitForTimeout(300);
   const sr = await D('rates'); ok(sr.s.m === 0, '대판 싸움: 처음 10초 멈춤 (m=' + sr.s.m + ')');
   await D('skip', 15000); const sr2 = await D('rates'); ok(sr2.s.m > 4, '화해 후 ×4.2 (m=' + sr2.s.m + ')');
-  await pg.click('.screen.on .back');
+  await pg.click('.screen.on .ib');
   // 사연
   const ready = await D('S'); ok(ready.tot > 120, '누적 온기가 1화 문턱 넘음');
-  await pg.click('.screen.on .sbtn'); await pg.waitForSelector('.cap'); await shot('story1');
-  for (let i = 0; i < 4; i++) { await pg.click('.screen.on .bigbtn:last-of-type'); await pg.waitForTimeout(250); }
-  await pg.waitForSelector('.opt'); await shot('story_q'); await pg.click('.screen.on .opt >> nth=1'); await pg.waitForSelector('.ovp'); await shot('story_done');
-  await pg.click('.screen.on .ovp button'); await pg.waitForSelector('.tcard');
+  await pg.click('.screen.on .sbtn'); await pg.waitForSelector('.screen.on .caption'); await shot('story1');
+  for (let i = 0; i < 4; i++) { await pg.click('.screen.on .nextbtn', { force: true }); await pg.waitForTimeout(250); }
+  await pg.click('.screen.on .nextbtn', { force: true }); await pg.waitForSelector('.screen.on .uk-sheet'); await shot('story_q'); await pg.click('.screen.on .uk-sheet .uk-btn >> nth=1'); await pg.waitForSelector('.screen.on .uk-sheet'); await shot('story_done');
+  await pg.click('.screen.on .uk-sheet .uk-btn'); await pg.waitForSelector('.tcard');
   const S2 = await D('S'); ok(Object.keys(S2.sd).length === 1, '도감 1칸'); await shot('home1');
   // 도감
-  await pg.click('.screen.on .dbtn'); await pg.waitForSelector('.dexg'); await shot('dex'); await pg.click('.screen.on .back');
+  await pg.click('.screen.on .dbtn'); await pg.waitForSelector('.dexg'); await shot('dex'); await pg.click('.screen.on .ib');
   // 모든 사연: 컷마다 이미지가 실제로 그려지는지, 글자 ≥18px
   const ids = await pg.evaluate(() => IDLE.debug.B().storyThresholds.map((_, i) => GF.data.idle_stories.stories[i] && GF.data.idle_stories.stories[i].id).filter(Boolean));
   const sids = await pg.evaluate(() => GF.data.idle_stories.seasons.map((x) => x.id));
@@ -51,25 +51,25 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     const season = sids.includes(id);
     await pg.evaluate(([id, season]) => GF.go('istory', { id, season }), [id, season]); await pg.waitForTimeout(250);
     const n = await pg.evaluate(([id, season]) => (season ? GF.data.idle_stories.seasons : GF.data.idle_stories.stories).find((x) => x.id === id).cuts.length, [id, season]); let broken = 0;
-    for (let i = 0; i < n; i++) { await pg.waitForTimeout(150); broken += await pg.evaluate(() => [...document.querySelectorAll('.screen.on .cut-char img')].filter((m) => !m.complete || !m.naturalWidth).length); if (i < n - 1) await pg.click('.screen.on .bigbtn:last-of-type'); }
+    for (let i = 0; i < n; i++) { await pg.waitForTimeout(150); broken += await pg.evaluate(() => [...document.querySelectorAll('.screen.on .cut-char img')].filter((m) => !m.complete || !m.naturalWidth).length); if (i < n - 1) await pg.click('.screen.on .nextbtn', { force: true }); }
     ok(broken === 0, id + ' 모든 컷 이미지 로드'); await pg.evaluate(() => GF.back());
   }
   // 8시간 가짜 시계: 오프라인 계산 (캡)
   // 소품 30종·엔딩·시즌 도감
   await D('give', 0); await D('checkProps');
-  const pc = await pg.evaluate(() => ({ n: Object.keys(IDLE.debug.S().pr).length, all: IDLE.debug.PR().length, prem: IDLE.debug.PR().filter((x) => x.premium).length }));
+  const pc = await pg.evaluate(() => ({ n: Room.owned().filter((id) => Room.item(id).set === 'kitchen').length, all: IDLE.debug.PR().length, prem: IDLE.debug.PR().filter((x) => x.premium).length }));
   ok(pc.all === 30 && pc.n >= 3 && pc.prem <= 4, '소품 ' + pc.n + '/' + pc.all + ' (premium ' + pc.prem + ')');
   ok(await pg.evaluate(() => IDLE.grant('prop:p_pack1') && IDLE.owns('prop:p_pack1') && !IDLE.hooks.adAvailable()), '수익 훅: premium 소품은 grant 로만, 광고 no-op');
-  await pg.evaluate(() => GF.go('iprops')); await pg.waitForSelector('.screen.on .dexc'); await shot('props');
-  await pg.click('.screen.on .dexc >> nth=0'); await pg.click('.screen.on .dexc.off >> nth=0'); await pg.waitForTimeout(300);
+  await pg.evaluate(() => GF.go('ihouse')); await pg.waitForSelector('.screen.on .rm-room'); await shot('props');
+  await pg.click('.screen.on .rm-cell >> nth=0'); await pg.waitForTimeout(300);
   await pg.evaluate(() => GF.back());
   await pg.evaluate(() => { const S = IDLE.debug.S(); S.sd.s30 = { k: 'nemo', t: 1 }; S.tl = { nemo: 15, semo: 15, dong: 15 }; S.chairs = 4; });
   ok(await pg.evaluate(() => IDLE.debug.endingReady()), '엔딩 조건 충족 판정');
   await pg.evaluate(() => GF.home && 0); await pg.evaluate(() => GF.go('itable')); await pg.waitForSelector('.screen.on .ribbon.gold', { timeout: 3000 }); await shot('ending_ribbon');
-  await pg.click('.screen.on .ribbon'); await pg.waitForSelector('.screen.on .cap');
-  for (let i = 0; i < 4; i++) { await pg.click('.screen.on .bigbtn:last-of-type'); await pg.waitForTimeout(250); } await shot('ending_last');
-  await pg.click('.screen.on .bigbtn:last-of-type'); await pg.waitForSelector('.screen.on .opt'); await pg.click('.screen.on .opt >> nth=0'); await pg.waitForSelector('.screen.on .ovp'); await shot('ending_done');
-  ok(await pg.evaluate(() => IDLE.debug.S().end > 0), '엔딩 도장'); await pg.click('.screen.on .ovp button'); await pg.waitForSelector('.tcard');
+  await pg.click('.screen.on .ribbon'); await pg.waitForSelector('.screen.on .caption');
+  for (let i = 0; i < 4; i++) { await pg.click('.screen.on .nextbtn', { force: true }); await pg.waitForTimeout(250); } await shot('ending_last');
+  await pg.click('.screen.on .nextbtn', { force: true }); await pg.waitForSelector('.screen.on .uk-sheet'); await pg.click('.screen.on .uk-sheet .uk-btn >> nth=0'); await pg.waitForSelector('.screen.on .uk-sheet'); await shot('ending_done');
+  ok(await pg.evaluate(() => IDLE.debug.S().end > 0), '엔딩 도장'); await pg.click('.screen.on .uk-sheet .uk-btn'); await pg.waitForSelector('.tcard');
   await pg.evaluate(() => GF.go('idex')); await pg.waitForSelector('.screen.on .dexg'); await shot('dex2'); await pg.evaluate(() => GF.back());
   // 8시간: (A) 12시간 부재 → 8시간 캡 한 번에 정산  (B) 같은 상태에서 3분씩 160번(=8시간) 가짜 시계로 진행 → 두 값이 같아야 한다
   const snap = await D('snap'), wBase = (await D('S')).w, rate0 = (await D('rates')).w;

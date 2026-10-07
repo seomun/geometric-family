@@ -40,7 +40,7 @@ GF.mode('soundfind', {
           ctx.timeout(() => ctx.sfx('snd_' + target), 500);
           ctx.timeout(() => ctx.done({ mistakes }), 1700);
         } else {
-          mistakes++; wrongs++; ctx.sfx('no'); els[id].el.classList.add('tilt'); ctx.timeout(() => els[id].el.classList.remove('tilt'), 700);
+          mistakes++; wrongs++; ctx.sfx('hmm'); els[id].el.classList.add('tilt'); ctx.timeout(() => els[id].el.classList.remove('tilt'), 700);
           ctx.timeout(() => sayIt(wrongs >= 2), 1000);                     // 두 번 틀리면 다시 들려줄 때 정답 그림이 같이 움직인다
         }
       });

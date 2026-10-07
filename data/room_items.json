@@ -487,6 +487,868 @@
    "game": "merge",
    "season": null,
    "physical": null
+  },
+  {
+   "no": 23,
+   "id": "p_mix",
+   "name": "믹스커피",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "☕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "처음부터 있어요",
+   "cond": {
+    "t": "free"
+   }
+  },
+  {
+   "no": 24,
+   "id": "p_lunch",
+   "name": "도시락",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "네모네 식탁 Lv3",
+   "cond": {
+    "t": "tl",
+    "table": "nemo",
+    "lv": 3
+   }
+  },
+  {
+   "no": 25,
+   "id": "p_rice",
+   "name": "밥솥",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍚",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "밥솥 늘리기 3번",
+   "cond": {
+    "t": "gen",
+    "id": "n_pot",
+    "n": 3
+   }
+  },
+  {
+   "no": 26,
+   "id": "p_remote",
+   "name": "에어컨 리모컨",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "📺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「에어컨 리모컨」",
+   "cond": {
+    "t": "story",
+    "id": "s12"
+   }
+  },
+  {
+   "no": 27,
+   "id": "p_points",
+   "name": "영수증",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧾",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「포인트 모으기」",
+   "cond": {
+    "t": "story",
+    "id": "s10"
+   }
+  },
+  {
+   "no": 28,
+   "id": "p_glass",
+   "name": "돋보기",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🔍",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「돋보기」",
+   "cond": {
+    "t": "story",
+    "id": "s08"
+   }
+  },
+  {
+   "no": 29,
+   "id": "p_kimchi",
+   "name": "김장 김치",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🥬",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "김장 주간 사건",
+   "cond": {
+    "t": "season",
+    "id": "e28"
+   }
+  },
+  {
+   "no": 30,
+   "id": "p_pill",
+   "name": "혈압약 통",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "💊",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「혈압약 첫날」",
+   "cond": {
+    "t": "story",
+    "id": "s25"
+   }
+  },
+  {
+   "no": 31,
+   "id": "p_photo",
+   "name": "가족사진",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🖼️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "막둥이를 모시면",
+   "cond": {
+    "t": "gen",
+    "id": "n_baby"
+   }
+  },
+  {
+   "no": 32,
+   "id": "p_pack1",
+   "name": "꽃무늬 식탁보",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🌸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": true,
+   "hint": "꾸미기 팩(준비 중)",
+   "cond": {
+    "t": "premium"
+   }
+  },
+  {
+   "no": 33,
+   "id": "p_tea",
+   "name": "온천 찻잔",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍵",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "처음부터 있어요",
+   "cond": {
+    "t": "free"
+   }
+  },
+  {
+   "no": 34,
+   "id": "p_bagt",
+   "name": "여행 캐리어",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧳",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "여행 가방을 모시면",
+   "cond": {
+    "t": "gen",
+    "id": "s_bag"
+   }
+  },
+  {
+   "no": 35,
+   "id": "p_pass",
+   "name": "여권",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🛂",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "세모네 식탁 Lv3",
+   "cond": {
+    "t": "tl",
+    "table": "semo",
+    "lv": 3
+   }
+  },
+  {
+   "no": 36,
+   "id": "p_globe",
+   "name": "지구본",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🌍",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「버킷리스트」",
+   "cond": {
+    "t": "story",
+    "id": "s16"
+   }
+  },
+  {
+   "no": 37,
+   "id": "p_ramen",
+   "name": "라면",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍜",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「결혼기념일」",
+   "cond": {
+    "t": "story",
+    "id": "s13"
+   }
+  },
+  {
+   "no": 38,
+   "id": "p_phone",
+   "name": "읽은 메시지",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "💬",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「읽씹」",
+   "cond": {
+    "t": "story",
+    "id": "s28"
+   }
+  },
+  {
+   "no": 39,
+   "id": "p_world",
+   "name": "세계일주 지도",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🗺️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "연말 사건 ② 술자리 세모",
+   "cond": {
+    "t": "season",
+    "id": "e14b"
+   }
+  },
+  {
+   "no": 40,
+   "id": "p_pair",
+   "name": "커플 컵",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🥂",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "세모네 식탁 Lv8",
+   "cond": {
+    "t": "tl",
+    "table": "semo",
+    "lv": 8
+   }
+  },
+  {
+   "no": 41,
+   "id": "p_film",
+   "name": "넷플릭스 리모컨",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🎬",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「새벽 4시」",
+   "cond": {
+    "t": "story",
+    "id": "s24"
+   }
+  },
+  {
+   "no": 42,
+   "id": "p_pack2",
+   "name": "온천 포인트 카드",
+   "set": "kitchen",
+   "room": "semo",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "♨️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": true,
+   "hint": "꾸미기 팩(준비 중)",
+   "cond": {
+    "t": "premium"
+   }
+  },
+  {
+   "no": 43,
+   "id": "p_book",
+   "name": "책",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "📖",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "처음부터 있어요",
+   "cond": {
+    "t": "free"
+   }
+  },
+  {
+   "no": 44,
+   "id": "p_flower",
+   "name": "배달 꽃",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "💐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「결혼기념일」",
+   "cond": {
+    "t": "story",
+    "id": "s13"
+   }
+  },
+  {
+   "no": 45,
+   "id": "p_label",
+   "name": "라벨 반찬통",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🥡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「냉장고 정리」",
+   "cond": {
+    "t": "story",
+    "id": "s26"
+   }
+  },
+  {
+   "no": 46,
+   "id": "p_env",
+   "name": "부의 봉투",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "✉️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「상갓집」",
+   "cond": {
+    "t": "story",
+    "id": "s04"
+   }
+  },
+  {
+   "no": 47,
+   "id": "p_wreath",
+   "name": "화환 리본",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🎀",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "사연 「청첩장」",
+   "cond": {
+    "t": "story",
+    "id": "s17"
+   }
+  },
+  {
+   "no": 48,
+   "id": "p_ra",
+   "name": "테니스 라켓",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🎾",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "동그라미 딸을 모시면",
+   "cond": {
+    "t": "gen",
+    "id": "d_dau"
+   }
+  },
+  {
+   "no": 49,
+   "id": "p_vio",
+   "name": "바이올린",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🎻",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "동그라미 아들을 모시면",
+   "cond": {
+    "t": "gen",
+    "id": "d_son"
+   }
+  },
+  {
+   "no": 50,
+   "id": "p_chair",
+   "name": "네 번째 의자",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🪑",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "의자 네 개가 모두 차면",
+   "cond": {
+    "t": "chairs",
+    "n": 4
+   }
+  },
+  {
+   "no": 51,
+   "id": "p_clock",
+   "name": "벽시계",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🕰️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": false,
+   "hint": "누적 온기 10조",
+   "cond": {
+    "t": "tot",
+    "v": 10000000000000.0
+   }
+  },
+  {
+   "no": 52,
+   "id": "p_pack3",
+   "name": "황금 식기",
+   "set": "kitchen",
+   "room": "dong",
+   "w": 34,
+   "h": 34,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍽️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "premium": true,
+   "hint": "꾸미기 팩(준비 중)",
+   "cond": {
+    "t": "premium"
+   }
+  },
+  {
+   "no": 53,
+   "id": "k_ch3",
+   "name": "무 인형",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🥕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 54,
+   "id": "k_ch4",
+   "name": "달 램프",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌙",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 55,
+   "id": "k_ch5",
+   "name": "도형 블록",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧩",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 56,
+   "id": "k_ch6",
+   "name": "기차표",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎫",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 57,
+   "id": "k_ch7",
+   "name": "소리 나팔",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 58,
+   "id": "k_ch8",
+   "name": "밀짚모자 걸이",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👒",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 59,
+   "id": "k_ch9",
+   "name": "기차 레일",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛤️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 60,
+   "id": "k_ch10",
+   "name": "생일 케이크",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎂",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
   }
  ]
 }

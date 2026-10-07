@@ -58,7 +58,7 @@
       const sc = el('div', 'uk-scrim', o.parent || host()), sh = el('div', 'uk-sheet', sc);
       if (o.title) el('h2', '', sh, o.title);
       if (o.stars != null) sh.appendChild(UK.stars(o.stars, o.max || 3));
-      if (o.big) el('div', 'big', sh, o.big);
+      if (o.big) el('div', 'uk-big', sh, o.big);
       if (o.body) el('div', 'body', sh, o.body);
       if (o.chips) { const c = el('div', 'uk-chips', sh); o.chips.forEach((x) => el('span', 'uk-chip', c, (ICONS[x.icon] || '') + '<span>' + x.text + '</span>')); }
       const close = () => sc.remove();

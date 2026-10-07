@@ -86,5 +86,157 @@
  "b_dong_study": {
   "no": 22,
   "code": "0M4LX8"
+ },
+ "p_mix": {
+  "no": 23,
+  "code": "0N4SO4"
+ },
+ "p_lunch": {
+  "no": 24,
+  "code": "0O4ZF0"
+ },
+ "p_rice": {
+  "no": 25,
+  "code": "0P565K"
+ },
+ "p_remote": {
+  "no": 26,
+  "code": "0Q5DWN"
+ },
+ "p_points": {
+  "no": 27,
+  "code": "0R5KNJ"
+ },
+ "p_glass": {
+  "no": 28,
+  "code": "0S5REF"
+ },
+ "p_kimchi": {
+  "no": 29,
+  "code": "0T5Y5B"
+ },
+ "p_pill": {
+  "no": 30,
+  "code": "0U65VV"
+ },
+ "p_photo": {
+  "no": 31,
+  "code": "0V6CMY"
+ },
+ "p_pack1": {
+  "no": 32,
+  "code": "0W6JDU"
+ },
+ "p_tea": {
+  "no": 33,
+  "code": "0X6Q4Q"
+ },
+ "p_bagt": {
+  "no": 34,
+  "code": "0Y6XVM"
+ },
+ "p_pass": {
+  "no": 35,
+  "code": "0Z74M6"
+ },
+ "p_globe": {
+  "no": 36,
+  "code": "107BGX"
+ },
+ "p_ramen": {
+  "no": 37,
+  "code": "117I7T"
+ },
+ "p_phone": {
+  "no": 38,
+  "code": "127PYP"
+ },
+ "p_world": {
+  "no": 39,
+  "code": "137WPL"
+ },
+ "p_pair": {
+  "no": 40,
+  "code": "1483G5"
+ },
+ "p_film": {
+  "no": 41,
+  "code": "158A78"
+ },
+ "p_pack2": {
+  "no": 42,
+  "code": "168HY4"
+ },
+ "p_book": {
+  "no": 43,
+  "code": "178OP0"
+ },
+ "p_flower": {
+  "no": 44,
+  "code": "188VFW"
+ },
+ "p_label": {
+  "no": 45,
+  "code": "19926G"
+ },
+ "p_env": {
+  "no": 46,
+  "code": "1A9947"
+ },
+ "p_wreath": {
+  "no": 47,
+  "code": "1B9GVA"
+ },
+ "p_ra": {
+  "no": 48,
+  "code": "1C9NM6"
+ },
+ "p_vio": {
+  "no": 49,
+  "code": "1D9UD2"
+ },
+ "p_chair": {
+  "no": 50,
+  "code": "1EA19N"
+ },
+ "p_clock": {
+  "no": 51,
+  "code": "1FA80J"
+ },
+ "p_pack3": {
+  "no": 52,
+  "code": "1GAFRM"
+ },
+ "k_ch3": {
+  "no": 53,
+  "code": "1HAMII"
+ },
+ "k_ch4": {
+  "no": 54,
+  "code": "1IAT9E"
+ },
+ "k_ch5": {
+  "no": 55,
+  "code": "1JB0ZY"
+ },
+ "k_ch6": {
+  "no": 56,
+  "code": "1KB7QU"
+ },
+ "k_ch7": {
+  "no": 57,
+  "code": "1LBEHX"
+ },
+ "k_ch8": {
+  "no": 58,
+  "code": "1MBL8T"
+ },
+ "k_ch9": {
+  "no": 59,
+  "code": "1NBSZP"
+ },
+ "k_ch10": {
+  "no": 60,
+  "code": "1OBZQL"
  }
 }

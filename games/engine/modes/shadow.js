@@ -55,7 +55,7 @@ GF.mode('shadow', {
               if (--left === 0) ctx.timeout(() => ctx.done({ mistakes }), 700);
               return;
             }
-            mistakes++; ctx.sfx('no'); t.classList.add('tilt'); setTimeout(() => t.classList.remove('tilt'), 700);
+            mistakes++; ctx.sfx('hmm'); t.classList.add('tilt'); setTimeout(() => t.classList.remove('tilt'), 700);
           }
           t.classList.add('back'); t.style.left = tk.home.x + 'px'; t.style.top = tk.home.y + 'px';
         },

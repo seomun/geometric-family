@@ -39,7 +39,7 @@ GF.mode('faces', {
           if (left === 0) ctx.timeout(() => ctx.done({ mistakes }), 1300);
         } else {
           mistakes++; lock = true;
-          ctx.timeout(() => { ctx.sfx('no'); a.up = cd.up = false; a.c.classList.remove('up'); cd.c.classList.remove('up'); lock = false; }, 950);
+          ctx.timeout(() => { ctx.sfx('hmm'); a.up = cd.up = false; a.c.classList.remove('up'); cd.c.classList.remove('up'); lock = false; }, 950);
         }
       });
     });

@@ -141,7 +141,7 @@ GF.mode('shapes', {
               ctx.sfx('ok'); fingerOff(); GF.snap(d); GF.burst(root, h.cx, h.cy, 10); react('joy', 900);
               if (--left === 0) ctx.timeout(finish, 450); return;
             }
-            mistakes++; ctx.sfx('no'); d.classList.add('tilt'); setTimeout(() => d.classList.remove('tilt'), 700); react('worry', 900);
+            mistakes++; ctx.sfx('hmm'); d.classList.add('tilt'); setTimeout(() => d.classList.remove('tilt'), 700); react('worry', 900);
           }
           d.classList.add('back'); d.style.left = tk.home.x + 'px'; d.style.top = tk.home.y + 'px';
         },

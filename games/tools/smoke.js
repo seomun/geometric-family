@@ -110,7 +110,7 @@ async function solveCake(p, wrongFirst) {
   for (let guard = 0; guard < 12; guard++) {                        // 장식·초: 트레이 첫 항목을 계속 누르면 개수가 차면 끝난다
     const t = await p.$('.playarea .trtray'); if (!t) break;
     const b = await t.boundingBox(); await p.mouse.click(b.x + b.width / 2, b.y + b.height / 2); await wait(p, 450);
-    const st = await p.evaluate(() => document.querySelector('.overlay.on') ? 'ov' : '');
+    const st = await p.evaluate(() => document.querySelector('.overlay.on, .uk-scrim') ? 'ov' : '');
     if (st) break;
   }
 }
@@ -133,7 +133,7 @@ async function playStage(p, mode, tag) {
     await wait(p, mode === 'shapes' ? 8200 : 3400);
     if (r === 0) await shot(p, tag + '_result1');
     if (r === 2) await shot(p, tag + '_stageresult');
-    await p.click('.overlay .big:last-child'); await wait(p, 500);
+    await p.click('.uk-scrim .uk-round:last-child', { force: true }); await wait(p, 500);
   }
 }
 

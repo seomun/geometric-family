@@ -206,7 +206,7 @@
     hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + G(rep(() => hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90])) + band(600, '#A9D36E') + '<g class="sway"><rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/></g>') + butterfly(360, '#FF8FA8', '#FFF3B0'),
     field: () => sky('#CDEFFF', '#F7FCFF') + cloud(90, 90, 1) + cloud(260, 150, .8) + G(rep(() => hill(500, '#B6E6A0', [180, 340, 100])) + band(520, '#C79A6B') + band(558, '#A97B4E', 6) + band(598, '#A97B4E', 6)) + butterfly(320, '#B197FC', '#fff'),
     night: () => sky('#1F2A5C', '#4B5C9C') + rep(() => [[40, 80], [120, 150], [250, 70], [320, 160], [200, 210], [60, 260], [310, 300]].map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#FFF3B0"/>').join('')) + '<circle cx="270" cy="120" r="40" fill="#FFF3B0"/><circle cx="286" cy="110" r="36" fill="#2B3870"/>' + G(rep(() => hill(660, '#2F4A6B', [180, 330, 160])) + band(640, '#2F4A6B')),
-    indoor: () => '<rect width="360" height="640" fill="#FFEBCB"/><rect y="0" width="360" height="380" fill="#FFE1B8"/><g><rect x="244" y="70" width="96" height="104" rx="10" fill="#BFE8FF" stroke="#8A5A3B" stroke-width="6"/><path d="M292 70v104M244 122h96" stroke="#8A5A3B" stroke-width="4"/></g><g><path d="M30 60q30-30 60 0" fill="none" stroke="#E7B77E" stroke-width="5"/><circle cx="60" cy="56" r="6" fill="#FFC933"/></g>' + band(470, '#D9A66B', 170) + band(470, '#B98550', 6) + '<rect x="0" y="476" width="360" height="164" fill="#E3B27F" opacity=".5"/>',
+    indoor: () => '<rect x="-1500" y="-1500" width="3360" height="1880" fill="#FFE1B8"/><g><rect x="244" y="70" width="96" height="104" rx="10" fill="#BFE8FF" stroke="#8A5A3B" stroke-width="6"/><path d="M292 70v104M244 122h96" stroke="#8A5A3B" stroke-width="4"/></g>' + band(470, '#D9A66B', 1700) + band(470, '#B98550', 6) + '<rect x="-1500" y="476" width="3360" height="1700" fill="#E3B27F" opacity=".5"/>',
     house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + G(rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A')),
   };
   /* 그림 슬롯(docs/18): data/art_slots.json 의 {bg,props,cover,room,icons}[id] 에 SVG 경로(또는 data URI)를 넣으면 코드 그림 대신 쓴다. 받은 SVG 를 넣기만 하면 교체. */
@@ -340,13 +340,21 @@
       GF._blink = setInterval(() => { const [im, w] = GF.rnd(ims); const o = im.src; im.src = GF.src(w + '.joy'); setTimeout(() => { im.src = o; }, 140); }, 1700);
       if (!GF._intro) { GF._intro = 1; setTimeout(() => GF.sting(), 650); }
       const row = el('div', 'homebtns', r);
-      [['story', 'book', '#FFE0E8', () => GF.go('shelf')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album', { book: 1 })]].forEach((b) => {
+      [['story', 'book', '#FFE0E8', () => GF.go('shelf')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album', { book: 1 })], ['house', 'home', '#FFE3C2', () => GF.go('khouse')]].forEach((b) => {
         const k = el('button', 'card', row, IC[b[1]]); k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
       });
       // 부모 메뉴: 로고를 3초 길게
       let pt = null; const logo = t;
       logo.addEventListener('pointerdown', () => { pt = setTimeout(() => Gate.open(), 3000); });
       ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => logo.addEventListener(ev, () => clearTimeout(pt)));
+    },
+  });
+
+  GF.screen('khouse', {
+    wide: () => false,
+    enter(r) {
+      GF.bg('indoor', r); r.classList.add('uk');
+      const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house(sc, { room: 'kid' });
     },
   });
 
@@ -441,7 +449,7 @@
         b.appendChild(GF.img(heroes[0])); el('div', 'num', b, i + 1);
         if (!open) el('div', '', b, '<svg class="lock" viewBox="0 0 32 32">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
         b.onclick = () => {
-          if (!open) { GF.sfx('no'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; }
+          if (!open) { GF.sfx('hmm'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; }
           GF.sfx('pick'); const ch = 'ch' + num;
           if (!GF.state.seen[ch]) GF.go('book', { ch, part: 'pro' }); else GF.go('stages', { ch });
         };
@@ -460,10 +468,9 @@
     zzz: '<svg viewBox="0 0 52 52"><path d="M10 10h16L10 26h16" fill="none" stroke="#8FD3F4" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M30 26h12L30 38h12" fill="none" stroke="#8FD3F4" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg>',
     sparkle: '<svg viewBox="0 0 52 52"><path d="M26 4l5 17 17 5-17 5-5 17-5-17-17-5 17-5z" fill="#FFC933"/></svg>',
   };
-  GF.screen('book', {
-    wide: () => true,
-    enter(r, p) {
-      const cuts = GF.data.story[p.ch][p.part], hero = (GF.data.stages[p.ch] || {}).bg;
+  /* 공용 사연 컷 플레이어 — ①그림책·②사연·③장 끝 컷이 같은 액자·자막·넘김을 쓴다(통일성 §0).
+     cuts: [{bg, chars:[{id,x,y,h}], bubble:{type,at}, text, voice, sfx}] — 같은 비율(어른1:아이.8:막둥이.45)로 세운다. onEnd: 마지막 컷에서 넘길 때. */
+  GF.story = function (r, cuts, onEnd) {
       let i = 0;
       const stageEl = el('div', 'bg', r);
       const dots = el('div', 'dots', r);
@@ -503,12 +510,20 @@
       const next = () => {
         GF.sfx('page');
         if (i < cuts.length - 1) { i++; render(); return; }
-        if (p.part === 'pro') { GF.state.seen[p.ch] = 1; Store.save(); if (p.replay) GF.back(); else GF.replace('stages', { ch: p.ch }); }
-        else { Reward.sticker(p.ch + '_book'); GF.popTo('map'); }
+        onEnd && onEnd();
       };
       nb.onclick = (e) => { e.stopPropagation(); next(); };
       r.addEventListener('pointerup', (e) => { if (e.target === r || e.target.closest('.bg')) next(); });
       render();
+  };
+  GF.screen('book', {
+    wide: () => true,
+    enter(r, p) {
+      const cuts = GF.data.story[p.ch][p.part];
+      GF.story(r, cuts, () => {
+        if (p.part === 'pro') { GF.state.seen[p.ch] = 1; Store.save(); if (p.replay) GF.back(); else GF.replace('stages', { ch: p.ch }); }
+        else { Reward.sticker(p.ch + '_book'); GF.popTo('map'); }
+      });
     },
   });
 
@@ -524,7 +539,7 @@
         const b = el('button', 'card stagebtn' + (open ? '' : ' locked'), r); if (GF.safeWide) { b.style.top = '130px'; b.style.left = 'calc(50% + ' + ((k - 1) * 215) + 'px)'; } else b.style.top = (130 + k * 140) + 'px';
         el('div', 'badge', b, dotsHTML(k + 1));
         el('div', '', b, open ? starsHTML(rec ? rec.stars : 0) : IC.lock);
-        b.onclick = () => { if (!open) { GF.sfx('no'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } GF.sfx('pick'); Stage.start({ kind: 'story', ch, k, id }); };
+        b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } GF.sfx('pick'); Stage.start({ kind: 'story', ch, k, id }); };
       });
       const bk = el('button', 'round-btn', r, IC.book.replace('viewBox="0 0 64 64"', 'viewBox="0 0 64 64" width="34" height="34"')); bk.style.cssText = 'position:absolute;left:14px;bottom:18px;width:64px;height:64px';
       bk.onclick = () => GF.go('book', { ch, part: 'pro', replay: true });
@@ -544,7 +559,7 @@
         b.appendChild(GF.img(GAME_HERO[g]));
         const ic = el('div', '', b, IC[GAME_ICON[g]]); ic.style.cssText = 'position:absolute;left:8px;top:8px;width:40px;height:40px;background:#fff;border-radius:12px;padding:4px;box-shadow:0 2px 0 rgba(0,0,0,.12)';
         if (!open) el('div', '', b, '<svg class="lock" viewBox="0 0 32 32">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
-        b.onclick = () => { if (!open) { GF.sfx('no'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } GF.sfx('pick'); pickLevel(r, g); };
+        b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } GF.sfx('pick'); pickLevel(r, g); };
       });
     },
   });
@@ -606,14 +621,13 @@
     run.level = res.mistakes >= 3 ? -1 : run.zero >= 2 ? 1 : 0;
     const total = run.kind === 'story' ? def.stages[run.k].rounds.length : Infinity, last = run.i + 1 >= total;
     const heroes = run.kind === 'story' ? def.heroes : [GAME_HERO[run.mode].replace('.good', '.joy')];
-    const ov = el('div', 'overlay on', r), pn = el('div', 'panel', ov);
+    const ov = el('div', 'uk-scrim', r), pn = el('div', 'uk-sheet', ov);          // 결과 = 키트 팝업(모든 게임 같은 모양)
     const hero = el('div', 'hero', pn); hero.appendChild(GF.img(rnd(heroes)));
-    const sv = el('div', '', pn, starsHTML(stars, 'xl')); sv.style.cssText = 'display:flex;justify-content:center';
-    sv.querySelectorAll('svg').forEach((s, k) => { if (!s.classList.contains('off')) { s.classList.add('pop'); s.style.animationDelay = (0.15 + k * 0.18) + 's'; } });
+    pn.appendChild(UK.stars(stars, 3));
     setTimeout(() => GF.sfx('star'), 150);
-    const row = el('div', 'row', pn);
+    const row = el('div', 'acts row', pn); row.style.justifyContent = 'center';
     if (!last) {
-      const nb = el('button', 'big', row, IC.play); nb.onclick = () => { GF.sfx('pick'); run.i++; clearTimers(); r.innerHTML = ''; GF.screens.round.enter(r); };
+      const nb = el('button', 'uk-round lg', row, IC.play); nb.onclick = () => { GF.sfx('pick'); run.i++; clearTimers(); r.innerHTML = ''; GF.screens.round.enter(r); };
       return;
     }
     // 스테이지 완료
@@ -621,10 +635,11 @@
     const rec = GF.state.stages[run.id] || {}; rec.done = true; rec.stars = Math.max(rec.stars || 0, avg); GF.state.stages[run.id] = rec; Store.save(); refreshBar();
     const gain = Reward.sticker(run.ch + '_' + 'ABC'[run.k], avg === 3);
     const n = run.ch.slice(2);
+    if (run.k === 2 && window.Room && Room.data) { const gi = { ch1: 'k_party', ch2: 'k_train' }[run.ch] || 'k_' + run.ch; if (Room.grant(gi)) { GF.sfx('star'); const it = Room.item(gi), gf = el('div', 'kgift', r); const im = el('img', '', gf); im.src = Room.src(it, it.colors[0]); setTimeout(() => gf.remove(), 2600); } }   // 장을 끝내면 아이 방에 장난감 하나
     if (run.k === 2 && ['A', 'B', 'C'].every((l) => (GF.state.stages['c' + n + l] || {}).stars === 3)) Reward.sticker(run.ch + '_star');
     if (gain) { const s = Reward.stickerEl(run.ch + '_' + 'ABC'[run.k]); pn.insertBefore(s, row); setTimeout(() => GF.sfx('star'), 500); }
-    const again = el('button', 'big gold', row, IC.again); again.onclick = () => { GF.sfx('pick'); const o = run; GF.stack.pop(); Stage.start({ kind: 'story', ch: o.ch, k: o.k, id: o.id }); };
-    const nxt = el('button', 'big', row, IC.play);
+    const again = el('button', 'uk-round lg gold', row, IC.again); again.onclick = () => { GF.sfx('pick'); const o = run; GF.stack.pop(); Stage.start({ kind: 'story', ch: o.ch, k: o.k, id: o.id }); };
+    const nxt = el('button', 'uk-round lg', row, IC.play);
     nxt.onclick = () => { GF.sfx('pick'); if (run.k < 2) GF.popTo('stages', { ch: run.ch }); else GF.replace('book', { ch: run.ch, part: 'epi' }); };
   }
   // 놀이방(자유) 모드에서는 라운드가 끝없이 이어진다 (finish 의 total = Infinity)
@@ -692,8 +707,8 @@
   /* ---------------- 부팅 ---------------- */
   async function loadData(namesOpt) {
     if (window.GF_DATA) return window.GF_DATA;
-    const names = namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots'], out = {};
-    await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else throw e; } }));
+    const names = namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items'], out = {};
+    await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else if (n === 'room_items') out[n] = null; else throw e; } }));
     return out;
   }
   // opts: {base:데이터 경로, audioBase:소리 경로, dataNames:[…], storeKey, start:()=>첫 화면}  — 방치형 등 다른 앱이 같은 엔진을 쓴다
@@ -706,6 +721,9 @@
     if (GF.props && GF.data.art_slots && GF.data.art_slots.props) Object.keys(GF.data.art_slots.props).forEach((k) => { if (GF.props[k]) GF.props[k].src = GF.slot('props', k); });   // 소품 슬롯
     if (GF.data.base != null) GF.base = GF.data.base;
     GF.state = Store.load();
+    if (window.Room && GF.data.room_items && !opts.dataNames) {   // ① 놀이터: 유아 그룹 집(아이 방만 보임, 가족 집은 보호자 잠금 뒤)
+      Room.init({ data: GF.data.room_items, game: 'playground', mode: 'kid', autoPlace: true, guard: (cb) => Gate.ask(cb), store: { key: 'gf:house:kid:v1', get() { try { return JSON.parse(localStorage.getItem(this.key)); } catch (e) { return null; } }, set(v) { try { localStorage.setItem(this.key, JSON.stringify(v)); } catch (e) {} } }, charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+    }
     ensureAudio(); loadSounds();
     fit(); window.addEventListener('resize', () => { fit(); const s = GF.cur; if (s && wantWide(s, s.params) !== !!GF.safeWide) show(s.name, s.params); });
     document.addEventListener('contextmenu', (e) => e.preventDefault());

@@ -50,7 +50,7 @@ GF.mode('sequence', {
             ctx.timeout(() => ctx.done({ mistakes }), 1300);
           }
         } else {                                                   // 틀림: 갸웃 → 순서를 다시 천천히 보여 준다
-          mistakes++; ready = false; root.__ready = false; ctx.sfx('no');
+          mistakes++; ready = false; root.__ready = false; ctx.sfx('hmm');
           p.el.classList.add('tilt'); ctx.timeout(() => p.el.classList.remove('tilt'), 700);
           slow = Math.min(1.5, slow + 0.2); ctx.timeout(show, 1100);
         }

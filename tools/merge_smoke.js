@@ -12,6 +12,8 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   // 글자 크기(성인 18px↑) — 홈
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent) { const f = parseFloat(getComputedStyle(e).fontSize) * (e.closest('#safe').getBoundingClientRect().width / 360); if (f < 13.5) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈 글자 크기 (13.5px↓ 없음) ' + small.join(','));
+  await pg.evaluate(() => { GF.stack = []; GF.go('mhome'); GF.go('mlevels'); }); await pg.waitForSelector('.screen.on .mg-lv');
+  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .mg-l.off').length, all: document.querySelectorAll('.screen.on .mg-l').length })); ok(lk.all >= 100 && lk.off === lk.all - 1, '새 게임: 레벨 1만 열리고 나머지 잠김 ' + lk.off + '/' + lk.all);
   for (let n = A; n <= B; n++) {
     await pg.evaluate((n) => { GF.stack = []; GF.go('mhome'); GF.go('mplay', { n }); MERGE.unlockAll = true; }, n); await pg.waitForSelector('.screen.on .mg-board');
     const L = await pg.evaluate(() => MERGE.debug.level()); let i0 = 0;

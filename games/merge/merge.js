@@ -84,12 +84,13 @@
       const tb = UK.topbar({ stars: totalStars(), onBack: () => GF.back(), onHome: () => GF.home2(), muted: GF.state.settings.mute, onSound: () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); } }, r); tb.bar.style.cssText += ';position:absolute;left:0;right:0;top:0;z-index:5';
       const hd = el('div', 'mg-hd', r), goals = el('div', 'mg-goals', r), board = el('div', 'mg-board', r), dock = el('div', 'mg-dock', r), tip = el('div', 'uk-caption mg-tip', r);
       hd.innerHTML = `<b>레벨 ${LV.id}</b><span>${D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>`;
-      const W = LV.cols * 62 + 8, cs = 62; board.style.cssText = `width:${W}px;height:${LV.rows * cs + 8}px`;
+      const cs = Math.max(52, Math.min(80, Math.floor(Math.min(336 / LV.cols, 372 / LV.rows)))), W = LV.cols * cs + 8, H = LV.rows * cs + 8;   // 판을 키워 세로를 채운다
+      board.style.cssText = `width:${W}px;height:${H}px;top:${176 + Math.max(0, Math.round((384 - H) / 2))}px`;
       const cells = []; for (let i = 0; i < LV.cols * LV.rows; i++) { const c = el('button', 'mg-cell', board); c.style.cssText = `left:${(i % LV.cols) * cs + 4}px;top:${((i / LV.cols) | 0) * cs + 4}px;width:${cs - 4}px;height:${cs - 4}px`; c.setAttribute('aria-label', '칸 ' + (i + 1)); c.onclick = () => doPlace(i); cells.push(c); }
       const cur = el('div', 'mg-cur', dock), nxt = el('div', 'mg-next', dock), btns = el('div', 'mg-btns3', dock);
-      const bu = UK.round({ icon: 'replay', cls: 'sm', label: '되돌리기', onclick: undo }, btns), bh = UK.round({ icon: 'info', cls: 'sm', label: '힌트', onclick: hint }, btns), br = UK.round({ icon: 'close', cls: 'sm', label: '다시', onclick: () => GF.screens.mplay.enter(r.firstChild ? (r.innerHTML = '', r) : r, { n: LV.id }) }, btns);
+      const bu = UK.btn({ text: '되돌리기', icon: 'replay', cls: 'ghost sm', onclick: undo }, btns), bh = UK.btn({ text: '힌트', icon: 'info', cls: 'sky sm', onclick: hint }, btns);
       let hintCell = null, busy = false, undone = 0;
-      function goalChips() { goals.innerHTML = ''; S.goals.forEach((g) => { const have = Math.min(g.n, S.made[M.key(g.c, g.t)] || 0), ch = el('div', 'mg-goal' + (have >= g.n ? ' ok' : ''), goals); ch.appendChild(pieceEl(g.c, g.t, 0)); el('span', '', ch, have + '/' + g.n); }); const left = el('div', 'mg-left', goals, '<b>' + M.left(S) + '</b><span>남은 조각</span>'); }
+      function goalChips() { goals.innerHTML = ''; S.goals.forEach((g) => { const have = Math.min(g.n, S.made[M.key(g.c, g.t)] || 0), ch = el('div', 'mg-goal' + (have >= g.n ? ' ok' : ''), goals); ch.appendChild(pieceEl(g.c, g.t, 0)); el('span', '', ch, have + '/' + g.n); }); el('span', 'uk-chip mg-left', goals, UK.icon('gift') + '<span>남은 조각 <b>' + M.left(S) + '</b></span>'); }
       function draw(ev) {
         cells.forEach((c, i) => { c.innerHTML = ''; c.classList.toggle('hint', i === hintCell); const q = S.cells[i]; if (q) { const pe = pieceEl(q.c, q.t, q.s); if (ev && ev.some((e) => e.at === i)) pe.classList.add('pop'); c.appendChild(pe); c.classList.add('full'); } else c.classList.remove('full'); });
         cur.innerHTML = ''; nxt.innerHTML = ''; const q = S.q[S.qi]; if (q) { cur.appendChild(pieceEl(q.c, q.t, q.s)); el('em', '', cur, '지금'); }
@@ -102,7 +103,7 @@
         hist.push(M.clone(S)); tip.style.display = 'none'; hintCell = null;
         const before = Object.assign({}, S.made), ev = M.place(S, i); GF.sfx(ev.length ? 'ok' : 'drop'); draw(ev);
         if (ev.some((e) => e.jackpot)) UK.toast('대박! 두 단계 껑충', r); if (ev.some((e) => e.refund)) UK.toast('조각 하나를 돌려받았어요', r);
-        ev.forEach((e) => { const T = TIER[e.c + ':' + e.t]; if (T && T.item && roomOK) { if (Room.grant(T.item)) UK.toast('새 가구 · ' + NAME[T.item], r); } });
+        ev.forEach((e) => { const T = TIER[e.c + ':' + e.t]; if (T && T.item && roomOK) { if (Room.grant(T.item)) { UK.toast('새 가구 · ' + NAME[T.item], r); GF.sfx('star'); } } });
         if (ev.length) { const rc = cells[i].getBoundingClientRect(); try { GF.burst(r, 0, 0, 0); } catch (e) {} }
         if (M.won(S)) finish(); else if (M.lost(S)) lose();
       }

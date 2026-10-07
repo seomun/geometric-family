@@ -56,7 +56,7 @@ GF.mode('puzzle', {
               if (--left === 0) { board.style.background = '#FFF3C2'; ctx.timeout(() => ctx.done({ mistakes }), 800); }
               return;
             }
-            mistakes++; ctx.sfx('no'); p.classList.add('tilt'); setTimeout(() => p.classList.remove('tilt'), 700);
+            mistakes++; ctx.sfx('hmm'); p.classList.add('tilt'); setTimeout(() => p.classList.remove('tilt'), 700);
           }
           p.classList.add('back'); p.style.left = pc.home.x + 'px'; p.style.top = pc.home.y + 'px';
         },

@@ -6,18 +6,30 @@
   const TL = (window.TILE = { debug: {} });
   const KEY = 'gf:tile:v1';
   const REW = { 2: 'm_bench', 5: 'm_flowerrow', 8: 'm_jar', 10: 'm_laundry', 13: 'm_garden', 15: 'm_coop', 18: 'm_alley', 20: 'm_persimmon', 25: 'm_pepper', 30: 'm_bucket', 36: 'm_mat', 42: 'm_rooster', 50: 'm_cat', 58: 'm_bike', 66: 'm_chime', 76: 'm_radish', 88: 'm_pumpkin', 100: 'm_duck', 110: 'm_butterfly', 120: 'm_sunflower' };
-  const TYPE_TIP = { classic: '아래 바구니에 같은 그림 세 개를 모으면 사라져요', pair: '같은 그림 두 개만 모으면 사라져요', goal: '목표 그림 두 묶음을 먼저 모으면 클리어!', lock: '열쇠 그림 세 개를 지우면 자물쇠가 풀려요', narrow: '바구니가 좁아요. 아껴서 모아요', trio: '같은 얼굴 세 개를 모아요' };
+  const TYPE_TIP = { classic: '같은 그림 세 개를 모아요', pair: '같은 그림 두 개를 모아요', goal: '목표 그림 두 묶음을 모아요', lock: '열쇠 세 개를 지우면 풀려요', narrow: '바구니가 좁아요', trio: '같은 얼굴 세 개를 모아요' };
   const RULE_TXT = [['네모 규칙', '바구니가 8칸으로 넉넉해요', 'nemo'], ['세모 규칙', '반짝 타일은 어떤 그림 대신이든 써요', 'semo'], ['동그라미 규칙', '같은 그림이 바구니에서 정확히 나란히 세 개여야 해요', 'dong']];
   const slow = (ms) => (TL.fast ? 0 : ms);
-  const EMO = ['🍎', '🍞', '🍡', '🥟', '🍊', '🍇', '🐟', '🥕', '🧅', '🥔', '🍄', '🌽', '🍚', '🥚', '🍵', '🍜', '🍠', '🍑'];
-  const FACE = ['nemo_dad.joy', 'nemo_mom.joy', 'husband.joy', 'wife.joy', 'dong_dad.joy', 'baby.joy'];
+  /* 타일 그림: 세계관 소품 위주(방 아이템 p_*: 믹스커피·도시락·혈압약·돋보기·부의 봉투…) + 이야기 장마다 상징 타일 3종(k0~k2). 그림 슬롯 GF.slot('tile', 키) 가 있으면 그 그림. 임시: 이모지·방 아이템 그림 */
+  const SYM = [['🧱', '벽돌'], ['🌾', '볏짚'], ['🪵', '나무'], ['🥁', '북'], ['🎺', '나팔'], ['🎻', '바이올린'], ['🐦', '까치'], ['🎋', '칠석'], ['🌌', '은하수'], ['🍲', '수프'], ['🪑', '의자'], ['🛏️', '침대'], ['🫘', '콩'], ['🥚', '황금알'], ['🪜', '사다리'], ['👟', '꽃신'], ['🐸', '두꺼비'], ['🪣', '독'], ['@art.gourd', '박'], ['@art.swallow', '제비'], ['🌾', '볏단'], ['🐌', '우렁'], ['🍚', '밥'], ['🏺', '항아리'], ['🪓@gold', '금도끼'], ['🪓@silver', '은도끼'], ['🪓', '쇠도끼'], ['🌾', '곡식'], ['🫙', '곳간'], ['🎻', '노래'], ['🌙', '달'], ['☀️', '해'], ['🪢', '동아줄'], ['🥕', '당근'], ['🏁', '결승선'], ['🐢', '거북이']];   // 장 1~12 × 3종
+  const WORLD = ['p_mix', 'p_lunch', 'p_rice', 'p_remote', 'p_points', 'p_glass', 'p_kimchi', 'p_pill', 'p_photo', 'p_tea', 'p_bagt', 'p_pass', 'p_globe', 'p_ramen', 'p_phone', 'p_pair', 'p_book', 'p_flower', 'p_label', 'p_env', 'p_wreath', 'p_ra', 'p_vio', 'p_chair', 'p_clock', 's_songpyeon', 'k_ch4', 'k_ch12'];   // 세계관 소품(아이템 id)
+  const FACE = ['nemo_dad.joy', 'nemo_mom.joy', 'husband.joy', 'wife.joy', 'dong_dad.joy', 'baby.joy'];   // 세 가족 얼굴 타일(기존 캐릭터 PNG 얼굴 크롭)
+  const EMO_FX = { gold: 'filter:sepia(1) saturate(5) hue-rotate(-12deg) brightness(1.1)', silver: 'filter:grayscale(1) brightness(1.25) contrast(1.1)' };
+  /** 판의 그림 종류 k0.. → 소품 정의: k0~k2 = 이야기 상징, 그다음은 세계관 소품 */
+  function def(kind) {
+    if (kind === 'key') return { e: '🔑', key: 'key' };
+    const n = +kind.slice(1), ch = ((window.TILE && TL._ch) || 1) - 1;
+    if (n < 3) { const s = SYM[(ch % 12) * 3 + n]; return { e: s[0], name: s[1], key: 'sym:' + (ch % 12) + ':' + n }; }
+    const id = WORLD[(n - 3 + ch * 5) % WORLD.length]; return { item: id, key: 'item:' + id };
+  }
   function art(kind, parent) {
     const d = el('div', 'tl-art', parent);
-    if (kind === 'key') d.textContent = '🔑';
-    else if (kind[0] === 'f') { d.classList.add('face'); d.style.backgroundImage = 'url("' + GF.src(FACE[+kind.slice(1)] || FACE[0]) + '")'; }
-    else if (kind === 'wild') { d.textContent = '✨'; d.classList.add('wild'); }
-    else d.textContent = EMO[+kind.slice(1) % EMO.length];
-    return d;
+    if (kind[0] === 'f') { d.classList.add('face'); d.style.backgroundImage = 'url("' + GF.src(FACE[+kind.slice(1)] || FACE[0]) + '")'; return d; }
+    if (kind === 'wild') { d.textContent = '✨'; d.classList.add('wild'); return d; }
+    const df = def(kind), sl = GF.slot('tile', df.key);
+    if (sl) { const i = el('img', '', d); i.src = sl; return d; }
+    if (df.item) { const it = Room.item(df.item); if (it) { const i = el('img', '', d); i.src = Room.src(it, it.colors[0]); return d; } d.textContent = '⭐'; return d; }
+    if (df.e[0] === '@') { const i = GF.img(df.e.slice(1)); d.appendChild(i); i.style.cssText = 'width:100%;height:100%;object-fit:contain'; return d; }
+    const [em, fx] = df.e.split('@'); d.textContent = em; if (fx) d.style.cssText += ';' + EMO_FX[fx]; return d;
   }
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
@@ -87,12 +99,12 @@
     enter(r, p) {
       r.classList.add('uk', 'tl'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;z-index:30;pointer-events:none'; return t; };
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
       el('div', 'tl-hd', r, `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'classic' ? `<em class="tl-type">${D.types[LV.type]}</em>` : ''));
-      let S = C.newGame(LV), hist = [], busy = false, hintI = -1, streak = 0; const gained = [], rng = G.mulberry(LV.id === 'daily' ? 5 : (typeof LV.id === 'number' ? LV.id : 9) * 13 + 7);
+      TL._ch = typeof LV.chapter === 'number' ? LV.chapter : 1; let S = C.newGame(LV), hist = [], busy = false, hintI = -1, streak = 0; const gained = [], rng = G.mulberry(LV.id === 'daily' ? 5 : (typeof LV.id === 'number' ? LV.id : 9) * 13 + 7);
       const goals = el('div', 'tl-goals', r), boardW = el('div', 'tl-boardw', r), board = el('div', 'tl-board', boardW), trayW = el('div', 'tl-trayw', r), btns = el('div', 'tl-btns2', r), tip = el('div', 'tl-tip', r);
-      const u = 22; board.style.width = G.GW * u + 'px'; board.style.height = G.GH * u + 'px';
+      const u = 27; board.style.width = G.GW * u + 'px'; board.style.height = G.GH * u + 'px';   // 타일 한 변 = 54(화면 폭 360 기준 15%, 실제 기기에서 56dp 안팎 이상)
       const bu = UK.btn({ text: '되돌리기', icon: 'replay', cls: 'ghost sm', onclick: undo }, btns), bs = UK.btn({ text: '섞기', icon: 'shapes', cls: 'ghost sm', onclick: doShuffle }, btns); UK.btn({ text: '힌트', icon: 'info', cls: 'sky sm', onclick: hint }, btns);
       const tiles = LV.tiles.map((t, i) => { const d = el('button', 'tl-t', board); d.dataset.i = i; d.style.cssText = `left:${t.x * u}px;top:${t.y * u}px;width:${2 * u}px;height:${2 * u}px;z-index:${t.z * 40 + (t.y | 0)}`; d.setAttribute('aria-label', '타일 ' + (i + 1)); d.onclick = () => tap(i); return d; });
       function goalChips() {
@@ -103,8 +115,8 @@
         el('div', 'tl-bar', goals, `<i style="width:${Math.round((1 - C.left(S) / LV.tiles.length) * 100)}%"></i>`);
       }
       function drawTray() {
-        trayW.innerHTML = ''; const tray = el('div', 'tl-tray', trayW), w = Math.min(44, Math.floor(316 / S.cap));
-        for (let k = 0; k < S.cap; k++) { const sl = el('div', 'tl-slot' + (S.tray[k] ? ' on' : ''), tray); sl.style.cssText = `width:${w - 3}px;height:${w - 3}px`; if (S.tray[k]) { const q = art(S.tray[k].kind, sl); if (k === S.tray.length - 1 && TL._new) q.classList.add('new'); } }
+        trayW.innerHTML = ''; const per = S.cap > 6 ? Math.ceil(S.cap / 2) : S.cap, tray = el('div', 'tl-tray', trayW), w = 54; tray.style.width = per * (w + 3) + 'px'; trayW.style.height = (S.cap > 6 ? 2 * (w + 3) + 8 : w + 14) + 'px';   // 바구니 칸도 타일과 같은 크기(칸이 많으면 두 줄)
+        for (let k = 0; k < S.cap; k++) { const sl = el('div', 'tl-slot' + (S.tray[k] ? ' on' : ''), tray); sl.style.cssText = `width:${w}px;height:${w}px`; if (S.tray[k]) { const q = art(S.tray[k].kind, sl); if (k === S.tray.length - 1 && TL._new) q.classList.add('new'); } }
         if (S.tray.length >= S.cap - 1 && !S.won) trayW.classList.add('warn'); else trayW.classList.remove('warn');
       }
       function draw() {
@@ -121,8 +133,8 @@
         } else streak = 0;
         if (S.won) { busy = true; setTimeout(finish, slow(700)); } else if (ev.lose || C.lost(S)) { busy = true; setTimeout(lose, slow(500)); }
       }
-      function undo() { if (busy || !hist.length || S.used.undo >= 1) { if (S.used.undo >= 1) say('되돌리기는 한 판에 한 번이에요'); return; } const u0 = S.used.undo + 1, sh = S.used.shuffle, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.shuffle = sh; S.used.hint = hn; hist = []; hintI = -1; streak = 0; TL._new = false; GF.sfx('tap'); draw(); }
-      function doShuffle() { if (busy || S.won || S.used.shuffle >= 1) { if (S.used.shuffle >= 1) say('섞기는 한 판에 한 번이에요'); return; } if (C.shuffle(S, rng)) { S.used.shuffle++; hist = []; hintI = -1; GF.sfx('star'); draw(); say('타일을 다시 섞었어요'); } }
+      function undo() { if (busy || !hist.length || S.used.undo >= 1) { if (S.used.undo >= 1) say('되돌리기는 한 판 한 번'); return; } const u0 = S.used.undo + 1, sh = S.used.shuffle, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.shuffle = sh; S.used.hint = hn; hist = []; hintI = -1; streak = 0; TL._new = false; GF.sfx('tap'); draw(); }
+      function doShuffle() { if (busy || S.won || S.used.shuffle >= 1) { if (S.used.shuffle >= 1) say('섞기는 한 판 한 번'); return; } if (C.shuffle(S, rng)) { S.used.shuffle++; hist = []; hintI = -1; GF.sfx('star'); draw(); say('다시 섞었어요'); } }
       function hint() { if (busy || S.won) return; const i = C.hintTile(S); if (i < 0) return; S.used.hint++; hintI = i; GF.sfx('pick'); draw(); setTimeout(() => { if (hintI === i) { hintI = -1; if (board.isConnected) draw(); } }, slow(2600)); }
       function result(stars) {
         const tools = S.used.undo + S.used.shuffle + S.used.hint, chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '도움 ' + tools + '번' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
@@ -142,10 +154,10 @@
           else result(st);
         }, slow(650));
       }
-      function lose() { busy = true; say('바구니가 가득 찼어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
+      function lose() { busy = true; say('가득 찼어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
       TL.debug.level = () => LV; TL.debug.state = () => S; TL.debug.press = (i) => tap(i); TL.debug.undo = undo; TL.debug.shuffle = doShuffle; TL.debug.hint = hint; TL.debug.busy = () => busy; TL.debug.tiles = () => tiles;
       draw();
-      const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '가려지지 않은 그림을 눌러 바구니에 모아요' : '같은 그림이 모이면 사라져요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
+      const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '눌러서 바구니에 모아요' : '같은 그림이 모이면 톡!'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));
       if (LV.id <= 2 && !LV.kind) setTimeout(() => { const i = LV.solution[0], d = tiles[i]; if (d && d.isConnected && !hist.length) UK.finger(r, d, { tap: true, ms: 6000 }); }, slow(1300));   // 처음 두 판: 눌러도 되는 타일 하나를 손가락이 알려 준다
     },

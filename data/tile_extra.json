@@ -130,6 +130,391 @@
      "bubble": "heart"
     }
    ]
+  },
+  {
+   "chapter": 3,
+   "title": "견우와 직녀",
+   "tale": "gyeonwoo",
+   "cuts": [
+    {
+     "text": "하늘나라에서 소를 키우는 견우(세모 남편)와 베를 짜는 직녀(세모 아내)가 서로 반했다. 둘은 일은 잊고 놀기만 했다.",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ],
+     "bubble": "heart"
+    },
+    {
+     "text": "하늘 어른이 말했다. 「은하수를 사이에 두고 떨어져 지내거라.」 둘은 강 이쪽저쪽에서 손만 흔들었다.",
+     "chars": [
+      "husband.worry",
+      "wife.cry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "까치와 까마귀들이 날아와 날개를 이었다. 줄을 잇듯 한 칸 한 칸 오작교가 이어졌다.",
+     "chars": [
+      "husband.surprise",
+      "wife.surprise"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "칠월 칠석, 두 사람은 오작교에서 만났다. 일 년에 하루지만 환하게 웃었다.",
+     "chars": [
+      "husband.love",
+      "wife.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 4,
+   "title": "세 마리 곰",
+   "tale": "bears",
+   "cuts": [
+    {
+     "text": "곰 세 식구(동그라미 아빠·엄마·아들)가 수프를 식히러 산책을 나갔다. 식탁엔 큰 그릇, 중간 그릇, 작은 그릇.",
+     "chars": [
+      "dong_dad.joy"
+     ]
+    },
+    {
+     "text": "길 잃은 손님(세모 아내)이 들어와 맛봤다. 큰 것은 너무 뜨겁고, 중간 것은 너무 차갑고, 작은 것은 딱!",
+     "chars": [
+      "wife.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "의자도 침대도 세 번 시도. 작은 침대에서 손님이 꾸벅꾸벅 잠들었다.",
+     "chars": [
+      "wife.tired"
+     ]
+    },
+    {
+     "text": "돌아온 곰들이 깜짝! 놀란 손님에게 아기 곰이 웃었다. 「같이 먹어요!」 모두 한 상에 앉았다.",
+     "chars": [
+      "dong_dad.warm",
+      "wife.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 5,
+   "title": "잭과 콩나무",
+   "tale": "jack",
+   "cuts": [
+    {
+     "text": "소를 팔러 간 잭({kid2})이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.",
+     "chars": [
+      "nemo_kids.kid2",
+      "nemo_mom.worry"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "하룻밤 사이 콩나무가 하늘까지! 잭이 올라가 보니 구름 위에 거인의 큰 성이 있었다.",
+     "chars": [
+      "nemo_kids.kid2"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "황금알을 낳는 거위를 안고 달아나는 잭. 구름 거인이 쿵쿵쿵 쫓아왔다.",
+     "chars": [
+      "nemo_kids.kid2"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "내려온 잭이 콩나무를 베자 거인은 구름 위에서 손을 흔들었다. 세 가족이 큰 상에 모여 황금알 오믈렛을 먹었다.",
+     "chars": [
+      "nemo_kids.kid2",
+      "nemo_mom.joy",
+      "husband.joy",
+      "dong_dad.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 6,
+   "title": "콩쥐팥쥐",
+   "tale": "kongjwi",
+   "cuts": [
+    {
+     "text": "깐깐한 아주머니가 콩쥐({kid1})에게 밑 빠진 독에 물을 가득 채우라고 했다.",
+     "chars": [
+      "nemo_kids.kid1"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "붓고 부어도 줄줄줄. 두꺼비(동그라미 아빠)가 엉금엉금 나와 구멍을 막아 주었다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "dong_dad.calm"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "잔치에 가려면 벼도 찧고 베도 짜야 했다. 새들이 벼를 까 주었고, 콩쥐는 꽃신을 신고 달려갔다. 팥쥐({kid2})는 투덜투덜.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "서두르다 꽃신 한 짝을 잃었다. 원님(세모 남편)이 신을 들고 주인을 찾았고, 팥쥐도 웃으며 박수쳤다.",
+     "chars": [
+      "husband.joy",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 7,
+   "title": "흥부 박",
+   "tale": "heungbu",
+   "cuts": [
+    {
+     "text": "다리를 다친 제비를 흥부(네모 아빠)가 정성껏 싸매 주었다.",
+     "chars": [
+      "nemo_dad.love",
+      "art.swallow"
+     ],
+     "bubble": "heart"
+    },
+    {
+     "text": "이듬해 제비가 박씨 하나를 물어 왔다. 흥부네 식구들이 마당에 심었다.",
+     "chars": [
+      "art.swallow",
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "text": "박이 주렁주렁. 슬근슬근 톱질하자 박 속에서 쌀과 가구와 비단이 와르르!",
+     "chars": [
+      "art.gourd",
+      "nemo_dad.surprise",
+      "nemo_mom.joy"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "놀부(세모 남편)도 따라 박을 탔지만 풍물패가 쏟아져 한바탕 춤판! 놀부는 웃으며 흥부네와 잔치를 벌였다.",
+     "chars": [
+      "husband.wink",
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  },
+  {
+   "chapter": 8,
+   "title": "우렁 각시",
+   "tale": "ureng",
+   "cuts": [
+    {
+     "text": "혼자 농사짓는 네모 아빠가 논에서 큰 우렁이를 주워 항아리에 넣어 두었다.",
+     "chars": [
+      "nemo_dad.joy"
+     ]
+    },
+    {
+     "text": "다음 날부터 집에 오면 밥상이 차려져 있었다. 몰래 지켜보니 항아리에서 우렁 각시(세모 아내)가 나왔다.",
+     "chars": [
+      "nemo_dad.surprise",
+      "wife.joy"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "욕심쟁이 원님이 각시를 탐내 내기를 걸었다. 각시의 꾀로 네모 아빠가 내기에서 이겼다.",
+     "chars": [
+      "nemo_dad.good",
+      "wife.wink"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "원님은 머쓱해져 물러났다. 두 사람은 오래오래 한집에서 밥상을 둘러앉아 살았다.",
+     "chars": [
+      "nemo_dad.love",
+      "wife.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 9,
+   "title": "금도끼 은도끼",
+   "tale": "axe",
+   "cuts": [
+    {
+     "text": "나무꾼 네모 아빠가 도끼를 연못에 빠뜨렸다.",
+     "chars": [
+      "nemo_dad.worry"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "산신령(동그라미 아빠)이 금도끼를 들고 물었다. 「이게 네 도끼냐?」 「아닙니다.」 은도끼도 「아닙니다.」",
+     "chars": [
+      "dong_dad.warm",
+      "nemo_dad.good"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "쇠도끼가 나오자 「그건 제 것입니다.」 정직한 나무꾼은 금도끼와 은도끼까지 받았다.",
+     "chars": [
+      "nemo_dad.love",
+      "dong_dad.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "소문을 들은 이웃 네모 엄마가 거짓말하려다 웃음이 터져 쇠도끼만 받고 함께 웃었다.",
+     "chars": [
+      "nemo_mom.wink",
+      "dong_dad.joy",
+      "nemo_dad.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 10,
+   "title": "개미와 베짱이",
+   "tale": "ant",
+   "cuts": [
+    {
+     "text": "더운 여름, 네모 엄마는 곡식을 나르고 세모 남편은 나무 그늘에서 노래만 불렀다.",
+     "chars": [
+      "nemo_mom.joy",
+      "husband.joy"
+     ],
+     "bubble": "note"
+    },
+    {
+     "text": "「좀 쉬어요!」 베짱이가 불러도 개미는 부지런히 곡식을 날랐다.",
+     "chars": [
+      "nemo_mom.joy",
+      "husband.wink"
+     ]
+    },
+    {
+     "text": "겨울이 오자 베짱이는 배가 고파 개미네 문을 똑똑 두드렸다.",
+     "chars": [
+      "husband.worry",
+      "nemo_mom.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "개미는 한숨을 쉬었지만 곡식 한 줌을 내밀었다. 「내년 여름엔 같이 일하자.」 둘은 한솥밥에 노래를 얹었다.",
+     "chars": [
+      "nemo_mom.love",
+      "husband.love",
+      "dong_dad.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 11,
+   "title": "해님 달님",
+   "tale": "sun",
+   "cuts": [
+    {
+     "text": "떡 팔러 간 엄마를 기다리던 오누이({kid1}·{kid2})는 문을 꼭 닫고 있었다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "바람 호랑이가 엄마 목소리를 흉내 내며 찾아왔다. 「문 열어라.」 문틈의 손이 이상했다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "오누이는 뒷문으로 나가 나무 위로 올라갔다. 하늘에서 튼튼한 동아줄이 내려왔다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "오누이는 동아줄을 타고 올라가 해님과 달님이 되었다. 바람 호랑이는 엉덩방아를 찧고 허허 웃었다.",
+     "chars": [
+      "nemo_kids.kid2",
+      "nemo_kids.kid1",
+      "nemo_mom.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 12,
+   "title": "토끼와 거북이",
+   "tale": "hare",
+   "cuts": [
+    {
+     "text": "토끼(동그라미 아빠)가 느림보 거북이(네모 아빠)에게 경주를 하자고 했다.",
+     "chars": [
+      "dong_dad.joy",
+      "nemo_dad.good"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "토끼는 쌩쌩 앞서 가다 그늘에서 낮잠. 거북이는 한 칸 한 칸 꾸준히 걸었다.",
+     "chars": [
+      "dong_dad.joy",
+      "nemo_dad.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "결승선 앞에서 눈을 뜬 토끼는 깜짝! 거북이는 이미 결승선에 닿아 있었다.",
+     "chars": [
+      "dong_dad.surprise",
+      "nemo_dad.love"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "심판(세모 남편)이 손을 들어 올렸다. 토끼가 껄껄 웃으며 거북이에게 박수를 쳤다.",
+     "chars": [
+      "husband.joy",
+      "dong_dad.joy",
+      "nemo_dad.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
   }
  ]
 }

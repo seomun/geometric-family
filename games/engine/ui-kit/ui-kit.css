@@ -123,3 +123,6 @@ button.uk-card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0
 @keyframes ukTap { 0%, 100% { transform: scale(1) } 40% { transform: scale(.82) } }
 @keyframes ukRing { 0% { transform: scale(.7); opacity: .9 } 70%, 100% { transform: scale(1.7); opacity: 0 } }
 @keyframes ukDrag { 0% { transform: translate(0, 0) scale(1) } 15% { transform: translate(0, 0) scale(.85) } 80% { transform: translate(var(--dx), var(--dy)) scale(.85) } 100% { transform: translate(var(--dx), var(--dy)) scale(1) } }
+
+.uk-btn { white-space: nowrap; }   /* 버튼 글자는 줄 바꿈 없이 한 줄(폭이 모자라면 버튼을 넓힌다) */
+.uk-btn small { white-space: normal; }

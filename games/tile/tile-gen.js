@@ -6,23 +6,25 @@
   'use strict';
   const C = typeof module !== 'undefined' ? require('./tile-core.js') : root.TileCore;
   const mulberry = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대'];
+  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이'];
   const TYPE_NAME = { classic: '전부 지우기', pair: '짝 맞추기', goal: '목표 모으기', lock: '자물쇠', narrow: '좁은 바구니', trio: '세 가족 얼굴' };
-  const A = ['pair', 'pair', 'classic', 'classic', 'classic', 'goal', 'lock', 'narrow', 'trio', 'classic'], B = ['classic', 'goal', 'narrow', 'lock', 'classic', 'trio', 'goal', 'classic', 'narrow', 'classic'];
-  const SEQ = (() => { const q = []; for (let n = 1; n <= 400; n++) q.push(((((n - 1) / 10) | 0) % 2 ? B : A)[(n - 1) % 10]); for (let i = 3; i < q.length; i++) if (q[i] === q[i - 1] && q[i] === q[i - 2] && q[i] === q[i - 3]) q[i] = 'goal'; return q; })();
+  const A = ['pair', 'pair', 'classic', 'classic', 'classic', 'goal', 'lock', 'narrow', 'trio', 'classic'], B = ['classic', 'goal', 'narrow', 'lock', 'classic', 'trio', 'goal', 'classic', 'narrow', 'classic'], Cc = ['classic', 'lock', 'goal', 'narrow', 'classic', 'goal', 'trio', 'lock', 'classic', 'classic'];
+  const SEQ = (() => { const q = []; for (let n = 1; n <= 400; n++) q.push([A, B, Cc][(((n - 1) / 10) | 0) % 3][(n - 1) % 10]); for (let i = 3; i < q.length; i++) if (q[i] === q[i - 1] && q[i] === q[i - 2] && q[i] === q[i - 3]) q[i] = 'goal'; return q; })();
   const typeOf = (n) => SEQ[n - 1] || 'classic';
   const tagOf = (n) => (n <= 3 ? 'tutorial' : n % 5 === 0 ? 'rest' : n <= 12 ? 'intro' : 'growth');
   const pick = (rng, a) => a[(rng() * a.length) | 0];
-  const GW = 14, GH = 13;   // 격자 단위(타일 한 변 = 2)
+  const GW = 12, GH = 11;   // 격자 단위(타일 한 변 = 2): 가로 6칸·세로 5.5칸 — 타일을 크게(화면 폭의 1/6.5) 쓰려고
   /** 층별 타일 자리(가운데가 두툼한 모양) */
   function layout(rng, layers, N) {
-    const w = [0.42, 0.28, 0.17, 0.09, 0.04].slice(0, layers), sum = w.reduce((a, b) => a + b, 0), cnt = w.map((x) => Math.max(2, Math.round(N * x / sum))); let diff = N - cnt.reduce((a, b) => a + b, 0); for (let i = 0; diff !== 0; i = (i + 1) % layers) { const d = diff > 0 ? 1 : -1; if (cnt[i] + d >= 2) { cnt[i] += d; diff -= d; } else if (i === layers - 1 && cnt.every((c) => c <= 2)) break; }
-    const tiles = [];
+    const w = [0.34, 0.26, 0.18, 0.12, 0.07, 0.03].slice(0, layers), sum = w.reduce((x, y) => x + y, 0), cells = [];
     for (let l = 0; l < layers; l++) {
-      const ox = (l % 2) * 1, oy = (l % 2) * 1, cells = [];
-      for (let x = ox; x + 2 <= GW; x += 2) for (let y = oy; y + 2 <= GH; y += 2) { const dx = (x + 1 - GW / 2) / (GW / 2), dy = (y + 1 - GH / 2) / (GH / 2), s = 1 - (dx * dx + dy * dy) * (0.55 + 0.1 * l) + rng() * 0.5; cells.push({ x, y, s }); }
-      cells.sort((a, b) => b.s - a.s); cells.slice(0, Math.min(cnt[l], cells.length)).forEach((c) => tiles.push({ x: c.x, y: c.y, z: l }));
+      const ox = (l % 2) * 1, oy = (l % 2) * 1, cs = [];
+      for (let x = ox; x + 2 <= GW; x += 2) for (let y = oy; y + 2 <= GH; y += 2) { const dx = (x + 1 - GW / 2) / (GW / 2), dy = (y + 1 - GH / 2) / (GH / 2), sc = 1 - (dx * dx + dy * dy) * (0.5 + 0.1 * l) + rng() * 0.5; cs.push({ x, y, s: sc }); }
+      cs.sort((p, q) => q.s - p.s); cells.push(cs);
     }
+    const cap = cells.map((c) => c.length); let cnt = w.map((x, i) => Math.min(cap[i], Math.max(2, Math.round(N * x / sum)))), diff = N - cnt.reduce((x, y) => x + y, 0);
+    for (let guard = 0; diff !== 0 && guard < 400; guard++) { const i = guard % layers, d = diff > 0 ? 1 : -1; if (cnt[i] + d >= 2 && cnt[i] + d <= cap[i]) { cnt[i] += d; diff -= d; } }
+    const tiles = []; for (let l = 0; l < layers; l++) cells[l].slice(0, cnt[l]).forEach((c) => tiles.push({ x: c.x, y: c.y, z: l }));
     return tiles;
   }
   /** 가려짐·잠금 규칙으로 만든 제거 순서(잠긴 타일은 처음 3개가 빠진 뒤에 풀림) */
@@ -55,7 +57,7 @@
       const rng = mulberry((seed || n * 6151) + k * 9973 + n), need = type === 'pair' ? 2 : 3, cap = tag === 'rest' ? 9 : type === 'narrow' ? 5 : 7;
       let N = tag === 'tutorial' ? 12 : tag === 'rest' ? 24 + Math.round(prog * 50) : 30 + Math.round(prog * 84); if (type === 'narrow') N = Math.round(N * 0.6); if (type === 'goal') N = Math.round(N * 0.75); if (type === 'pair') N = Math.min(N, 24); if (opts.N) N = opts.N;
       N = Math.max(need * 4, Math.round(N / need) * need);
-      const layers = type === 'pair' || tag === 'tutorial' ? 2 : Math.min(5, 2 + Math.floor(prog * 3.6) + (tag === 'rest' ? 0 : 1)), tiles = layout(rng, layers, N); if (tiles.length % need) tiles.length -= tiles.length % need;
+      const layers = type === 'pair' || tag === 'tutorial' ? 2 : Math.min(6, 2 + Math.floor(prog * 4.2) + (tag === 'rest' ? 0 : 1)), tiles = layout(rng, layers, N); if (tiles.length % need) tiles.length -= tiles.length % need;
       const nLock = type === 'lock' ? 3 + (n > 12 ? 2 : 0) : 0;
       if (nLock) { const cand = tiles.map((t, i) => i).filter((i) => tiles[i].z >= 1); for (let q = 0; q < nLock && cand.length; q++) { const idx = cand.splice((rng() * cand.length) | 0, 1)[0]; tiles[idx].lock = true; } }
       const ord = order(tiles, rng, 3); if (!ord) continue;

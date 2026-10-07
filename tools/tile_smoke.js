@@ -1,6 +1,6 @@
 // 세 가족 짝 맞추기 smoke: node tools/tile_smoke.js (URL=… 로 빌드본, LV=1-10 구간). 풀이(제거 순서)를 실제 화면 클릭(첫 판)·디버그 누르기로 재생한다.
 const { chromium } = require('playwright-core'), path = require('path');
-const URL = process.env.URL || 'http://localhost:8765/games/tile/index.html', [A, B] = (process.env.LV || '1-20').split('-').map(Number);
+const URL = process.env.URL || 'http://localhost:8765/games/tile/index.html', [A, B] = (process.env.LV || '1-120').split('-').map(Number);
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 const solveLevel = async (pg) => {
   const L = await pg.evaluate(() => TILE.debug.level());
@@ -22,20 +22,20 @@ const solveLevel = async (pg) => {
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent && !/^[★☆✔]+$/.test(e.textContent.trim())) { const f = parseFloat(getComputedStyle(e).fontSize); if (f < 17) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈 글자 크기 17px 이상 ' + small.slice(0, 4).join(','));
   await pg.evaluate(() => { GF.stack = []; GF.go('thome'); GF.go('tlevels'); }); await pg.waitForSelector('.screen.on .tl-l'); await shot('levels');
-  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .tl-l.off').length, all: document.querySelectorAll('.screen.on .tl-l').length })); ok(lk.all === 20 && lk.off === 19, '레벨 목록 20개(처음엔 1만 열림)');
+  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .tl-l.off').length, all: document.querySelectorAll('.screen.on .tl-l').length })); ok(lk.all === 120 && lk.off === 119, '레벨 목록 120개(처음엔 1만 열림)');
   for (let n = A; n <= B; n++) {
     await pg.evaluate((nn) => { GF.stack = []; GF.go('thome'); GF.go('tplay', { n: nn }); TILE.unlockAll = true; TILE.fast = true; }, n); await pg.waitForSelector('.screen.on .tl-board');
     if (n === A || [4, 7, 9].includes(n)) await shot('play' + n);
     const { L, done } = await solveLevel(pg);
     ok(done, '레벨 ' + n + ' 클리어(' + L.type + ', 타일 ' + L.tiles.length + ')');
     if (n === A) await shot('result');
-    if (n === 10 || n === 20) { const rw = await pg.evaluate(() => Room.owned().filter((id) => id.startsWith('m_')).length); ok(rw >= 1, '레벨 ' + n + ' 까지 마당 살림 소품 ' + rw + '개'); }
+    if (n === 10 || n === 120) { const rw = await pg.evaluate(() => Room.owned().filter((id) => id.startsWith('m_')).length); ok(rw >= 1, '레벨 ' + n + ' 까지 마당 살림 소품 ' + rw + '개'); }
   }
   if (A === 1) {
     // 실제 클릭: 첫 판의 눌러도 되는 타일, 가려진 타일은 흔들리며 안 눌림
     await pg.evaluate(() => { GF.stack = []; GF.go('thome'); GF.go('tplay', { n: 4 }); TILE.fast = false; }); await pg.waitForSelector('.screen.on .tl-board'); await pg.waitForTimeout(500);
     const info = await pg.evaluate(() => { const S = TILE.debug.state(), L = TILE.debug.level(), free = S.L.tiles.map((t, i) => i).filter((i) => TileCore.isFree(S, i)), cov = S.L.tiles.map((t, i) => i).filter((i) => !TileCore.isFree(S, i)); return { f: free[0], c: cov[0] }; });
-    await pg.click('.screen.on .tl-t[data-i="' + info.c + '"]', { force: true }); await pg.waitForTimeout(200); ok(await pg.evaluate(() => TILE.debug.state().presses === 0), '가려진 타일은 눌러도 바구니에 안 들어감');
+    await pg.evaluate((ci) => document.querySelector('.screen.on .tl-t[data-i="' + ci + '"]').click(), info.c); await pg.waitForTimeout(200); ok(await pg.evaluate(() => TILE.debug.state().presses === 0), '가려진 타일은 눌러도 바구니에 안 들어감');
     await pg.click('.screen.on .tl-t[data-i="' + info.f + '"]', { force: true }); await pg.waitForTimeout(300); ok(await pg.evaluate(() => TILE.debug.state().presses === 1 && TILE.debug.state().tray.length === 1), '실제 클릭으로 타일이 바구니에 들어감');
     await pg.evaluate(() => TILE.debug.undo()); await pg.waitForTimeout(200); ok(await pg.evaluate(() => TILE.debug.state().presses === 0 && TILE.debug.state().used.undo === 1), '되돌리기(1회)');
     await pg.evaluate(() => TILE.debug.shuffle()); await pg.waitForTimeout(200); ok(await pg.evaluate(() => TILE.debug.state().used.shuffle === 1), '섞기(무료 1회)');

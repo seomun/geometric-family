@@ -1,5 +1,546 @@
 {
- "version": 2,
+ "version": 3,
+ "casting": {
+  "pigs": [
+   {
+    "role": "첫째 돼지(볏짚집)",
+    "adult": "네모네 하나",
+    "kid": "형",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "둘째 돼지(나무집)",
+    "adult": "네모네 두리",
+    "kid": "두리",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "셋째 돼지(벽돌집)",
+    "adult": "네모네 세찌",
+    "kid": "세찌",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "엄마 돼지",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "늑대 → 바람 친구",
+    "adult": "바람 친구(가족 밖, 소리·바람)",
+    "kid": "바람 친구(가족 밖, 소리·바람)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "bears": [
+   {
+    "role": "큰 곰",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "lead",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "중간 곰",
+    "adult": "동그라미 엄마",
+    "kid": "동그라미 아주머니",
+    "kind": "lead",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "아기 곰",
+    "adult": "동그라미 아들",
+    "kid": "동그라미 아들",
+    "kind": "lead",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "길 잃은 손님(소녀)",
+    "adult": "세모 아내",
+    "kid": "세모 이모",
+    "kind": "funny",
+    "family": "semo",
+    "only": null
+   }
+  ],
+  "shoes": [
+   {
+    "role": "가난한 구두장이",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "구두장이 아내",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "밤의 작은 요정들",
+    "adult": "요정(art.fairy)",
+    "kid": "요정(art.fairy)",
+    "kind": "helper",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "kongjwi": [
+   {
+    "role": "콩쥐",
+    "adult": "네모네 하나",
+    "kid": "형",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "팥쥐",
+    "adult": "네모네 두리",
+    "kid": "두리",
+    "kind": "funny",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "도와주는 두꺼비",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "helper",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "꽃신 주인을 찾는 원님",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
+    "kind": "helper",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "일을 시키는 새엄마",
+    "adult": "깐깐한 아주머니(가족 밖, 목소리만)",
+    "kid": "깐깐한 아주머니(가족 밖, 목소리만)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   },
+   {
+    "role": "벼를 까 주는 새(유아 앱)",
+    "adult": "네모 막둥이",
+    "kid": "막둥이",
+    "kind": "helper",
+    "family": "nemo",
+    "only": "kid"
+   }
+  ],
+  "heungbu": [
+   {
+    "role": "흥부",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "흥부 아내",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "놀부",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
+    "kind": "funny",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "제비",
+    "adult": "제비(art.swallow)",
+    "kid": "제비(art.swallow)",
+    "kind": "helper",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "bremen": [
+   {
+    "role": "당나귀",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "개",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
+    "kind": "lead",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "고양이",
+    "adult": "세모 아내",
+    "kid": "세모 이모",
+    "kind": "lead",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "수탉",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "lead",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "도둑들",
+    "adult": "허깨비 도둑(가족 밖, 소리·그림자)",
+    "kid": "허깨비 도둑(가족 밖, 소리·그림자)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "hok": [
+   {
+    "role": "혹부리 영감",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "도깨비",
+    "adult": "도깨비(art.dokkaebi, 순한 판)",
+    "kid": "도깨비(art.dokkaebi, 순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   },
+   {
+    "role": "따라 하는 욕심쟁이 영감",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "funny",
+    "family": "dong",
+    "only": null
+   }
+  ],
+  "axe": [
+   {
+    "role": "나무꾼",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "산신령",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "helper",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "욕심쟁이 이웃",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "funny",
+    "family": "nemo",
+    "only": null
+   }
+  ],
+  "sun": [
+   {
+    "role": "오빠(달님)",
+    "adult": "네모네 하나",
+    "kid": "형",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "동생(해님)",
+    "adult": "네모네 두리",
+    "kid": "두리",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "떡 팔러 간 엄마",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "호랑이 → 바람 호랑이",
+    "adult": "바람 호랑이(가족 밖, 소리·그림자)",
+    "kid": "바람 호랑이(가족 밖, 소리·그림자)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "ant": [
+   {
+    "role": "개미",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "베짱이",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
+    "kind": "funny",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "지켜보는 이웃",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "helper",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "열매를 함께 모으는 막내 개미(유아 앱)",
+    "adult": "네모 막둥이",
+    "kid": "막둥이",
+    "kind": "helper",
+    "family": "nemo",
+    "only": "kid"
+   }
+  ],
+  "pino": [
+   {
+    "role": "제페토(목수)",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "피노키오(나무 인형)",
+    "adult": "네모 막둥이",
+    "kid": "막둥이",
+    "kind": "funny",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "파란 요정",
+    "adult": "요정(art.fairy)",
+    "kid": "요정(art.fairy)",
+    "kind": "helper",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "jack": [
+   {
+    "role": "잭",
+    "adult": "네모네 두리",
+    "kid": "두리",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "잭의 엄마",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "구름 위 거인",
+    "adult": "구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)",
+    "kid": "구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   },
+   {
+    "role": "잔치 손님",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
+    "kind": "helper",
+    "family": "semo",
+    "only": null
+   }
+  ],
+  "gyeonwoo": [
+   {
+    "role": "견우",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
+    "kind": "lead",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "직녀",
+    "adult": "세모 아내",
+    "kid": "세모 이모",
+    "kind": "lead",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "오작교를 놓는 까치와 까마귀",
+    "adult": "까치 떼(가족 밖)",
+    "kid": "까치 떼(가족 밖)",
+    "kind": "helper",
+    "family": "outside",
+    "only": null
+   },
+   {
+    "role": "둘을 갈라놓는 하늘 어른",
+    "adult": "하늘 어른(가족 밖, 목소리·순한 판)",
+    "kid": "하늘 어른(가족 밖, 목소리·순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "ureng": [
+   {
+    "role": "혼자 농사짓는 총각",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "우렁 각시",
+    "adult": "세모 아내",
+    "kid": "세모 이모",
+    "kind": "helper",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "각시를 탐내는 원님",
+    "adult": "욕심쟁이 원님(가족 밖, 목소리·순한 판)",
+    "kid": "욕심쟁이 원님(가족 밖, 목소리·순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "hare": [
+   {
+    "role": "거북이",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "토끼",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "funny",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "심판",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
+    "kind": "helper",
+    "family": "semo",
+    "only": null
+   }
+  ],
+  "brothers": [
+   {
+    "role": "형",
+    "adult": "네모네 하나",
+    "kid": "형",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "아우",
+    "adult": "네모 막둥이",
+    "kid": "막둥이",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   }
+  ],
+  "snowqueen": [
+   {
+    "role": "카이",
+    "adult": "네모네 하나",
+    "kid": "형",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "게르다",
+    "adult": "네모 막둥이",
+    "kid": "막둥이",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "눈의 여왕(순한 판)",
+    "adult": "동그라미 엄마",
+    "kid": "동그라미 아주머니",
+    "kind": "helper",
+    "family": "dong",
+    "only": null
+   }
+  ]
+ },
+ "casting_note": "이야기 id 기준 단일 배역표(원천 tools/tales_cast.py). 모든 앱이 같은 배역을 쓴다. adult=성인 앱(웹툰 호칭), kid=유아 앱(막둥이 시점 호칭).",
  "principle": "docs/20 D13 — 구조·모티브·상징물은 원작 그대로, 배역과 무서운 수위만 바꾼다. 진짜 악역은 가족 밖. 공유 저작물 원전만. 세모네는 아이 없음.",
  "tales": [
   {
@@ -507,7 +1048,7 @@
     },
     {
      "role": "잔치 손님",
-     "who": "세모 남편·동그라미 아빠",
+     "who": "세모 남편",
      "kind": "helper",
      "family": "semo"
     }
@@ -738,7 +1279,7 @@
     },
     {
      "role": "잔치 손님",
-     "who": "세모 남편·동그라미 아빠",
+     "who": "세모 남편",
      "kind": "helper",
      "family": "semo"
     }
@@ -826,9 +1367,9 @@
     },
     {
      "role": "놀부",
-     "who": "동그라미 아빠",
+     "who": "세모 남편",
      "kind": "funny",
-     "family": "dong"
+     "family": "semo"
     },
     {
      "role": "제비",
@@ -837,7 +1378,7 @@
      "family": "outside"
     }
    ],
-   "line": "식구 많은 흥부가 제비를 도와 박씨를 받는다, 놀부(동그라미 아빠)는 따라 하다 풍물패가 쏟아져 함께 잔치",
+   "line": "식구 많은 흥부가 제비를 도와 박씨를 받는다, 놀부는 따라 하다 풍물패가 쏟아져 함께 잔치",
    "kept": [
     "다친 제비를 고쳐 줌",
     "박씨 → 박 타기",
@@ -949,11 +1490,10 @@
      "family": "dong"
     }
    ],
-   "line": "여름에 곳간을 한 칸씩 채우는 개미, 겨울엔 노래만 남은 베짱이 — 개미는 곡식 한 줌과 「내년엔 같이」를 건넨다",
+   "line": "여름엔 노래, 겨울엔 빈 곳간 — 개미는 곡식 한 줌과 「내년엔 같이」를 건넨다",
    "kept": [
     "여름에 일하는 개미 / 노는 베짱이",
-    "겨울에 베짱이가 문을 두드림",
-    "곳간 채우기"
+    "겨울에 베짱이가 문을 두드림"
    ],
    "art_pending": [],
    "status": "[제안]"
@@ -1019,22 +1559,120 @@
     },
     {
      "role": "토끼",
-     "who": "세모 남편",
+     "who": "동그라미 아빠",
      "kind": "funny",
-     "family": "semo"
+     "family": "dong"
     },
     {
      "role": "심판",
-     "who": "동그라미 아빠",
+     "who": "세모 남편",
      "kind": "helper",
-     "family": "dong"
+     "family": "semo"
     }
    ],
-   "line": "느림보 거북이가 한 칸씩 꾸준히, 낮잠 든 토끼는 웃으며 박수 — 심판은 동그라미 아빠",
+   "line": "느림보 거북이가 한 칸씩 꾸준히, 낮잠 든 토끼(동그라미 아빠)는 웃으며 박수 — 심판은 세모 남편",
    "kept": [
     "토끼와 거북이의 경주",
     "토끼의 낮잠",
     "꾸준한 거북이의 승리"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "spot_pigs",
+   "title": "아기돼지 삼형제 (다른 그림 찾기 사연)",
+   "origin": "영국 민담(공유 저작물)",
+   "apps": {
+    "spot": 1
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "첫째 돼지(볏짚집)",
+     "who": "네모네 하나",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "둘째 돼지(나무집)",
+     "who": "네모네 두리",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "셋째 돼지(벽돌집)",
+     "who": "네모네 세찌",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "엄마 돼지",
+     "who": "네모 엄마",
+     "kind": "helper",
+     "family": "nemo"
+    },
+    {
+     "role": "늑대 → 바람 친구",
+     "who": "바람 친구(가족 밖, 소리·바람)",
+     "kind": "villain",
+     "family": "outside"
+    }
+   ],
+   "line": "늑대 대신 바람 친구가 후— 불고, 지쳐서 웃는다. 벽돌집에서 모두 한 상에",
+   "kept": [
+    "세 형제가 각자 집을 짓는다",
+    "볏짚·나무집은 날아가고 벽돌집은 끄떡없다",
+    "세찌의 집으로 모인다(세찌 집)"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "spot_bremen",
+   "title": "브레멘 음악대 (다른 그림 찾기 사연)",
+   "origin": "그림 형제(공유 저작물)",
+   "apps": {
+    "spot": 2
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "당나귀",
+     "who": "네모 아빠",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "개",
+     "who": "세모 남편",
+     "kind": "lead",
+     "family": "semo"
+    },
+    {
+     "role": "고양이",
+     "who": "세모 아내",
+     "kind": "lead",
+     "family": "semo"
+    },
+    {
+     "role": "수탉",
+     "who": "동그라미 아빠",
+     "kind": "lead",
+     "family": "dong"
+    },
+    {
+     "role": "도둑들",
+     "who": "허깨비 도둑(가족 밖, 소리·그림자)",
+     "kind": "villain",
+     "family": "outside"
+    }
+   ],
+   "line": "늙었다고 쫓겨난 네 친구가 노래로 빈집을 얻는다 — 네 도형이 한 탑을 쌓음",
+   "kept": [
+    "쫓겨난 동물 넷이 브레멘으로",
+    "탑처럼 올라서서 함께 소리",
+    "도둑이 달아나고 집을 차지"
    ],
    "art_pending": [],
    "status": "[제안]"
@@ -1051,7 +1689,7 @@
    "cast": [
     {
      "role": "형",
-     "who": "네모 형",
+     "who": "형",
      "kind": "lead",
      "family": "nemo"
     },
@@ -1084,15 +1722,27 @@
    "cast": [
     {
      "role": "개미",
-     "who": "엄마·막둥이",
+     "who": "엄마",
      "kind": "lead",
      "family": "nemo"
     },
     {
      "role": "베짱이",
-     "who": "동그라미 아저씨",
+     "who": "세모 삼촌",
      "kind": "funny",
+     "family": "semo"
+    },
+    {
+     "role": "지켜보는 이웃",
+     "who": "동그라미 아저씨",
+     "kind": "helper",
      "family": "dong"
+    },
+    {
+     "role": "열매를 함께 모으는 막내 개미(유아 앱)",
+     "who": "막둥이",
+     "kind": "helper",
+     "family": "nemo"
     }
    ],
    "line": "겨울이 오기 전에 열매를 똑같이 나눠요. 겨울에 베짱이가 문을 똑똑, 개미는 나눠 줘요.",
@@ -1127,12 +1777,12 @@
     },
     {
      "role": "욕심쟁이 이웃",
-     "who": "세모 삼촌",
+     "who": "엄마",
      "kind": "funny",
-     "family": "semo"
+     "family": "nemo"
     }
    ],
-   "line": "정직한 아빠는 금도끼 은도끼를 모두 받고, 따라 한 세모 삼촌은 웃음이 터져요.",
+   "line": "정직한 아빠는 금도끼 은도끼를 모두 받고, 따라 한 엄마는 웃음이 터져요.",
    "kept": [
     "도끼가 연못에 빠짐",
     "금도끼·은도끼·쇠도끼를 차례로 물음",
@@ -1153,7 +1803,7 @@
    "cast": [
     {
      "role": "카이",
-     "who": "네모 형",
+     "who": "형",
      "kind": "lead",
      "family": "nemo"
     },
@@ -1193,33 +1843,45 @@
    "cast": [
     {
      "role": "콩쥐",
-     "who": "막둥이",
+     "who": "형",
      "kind": "lead",
      "family": "nemo"
     },
     {
      "role": "팥쥐",
-     "who": "네모 형",
+     "who": "두리",
      "kind": "funny",
      "family": "nemo"
     },
     {
      "role": "도와주는 두꺼비",
-     "who": "할머니",
+     "who": "동그라미 아저씨",
      "kind": "helper",
-     "family": "nemo"
+     "family": "dong"
     },
     {
      "role": "꽃신 주인을 찾는 원님",
      "who": "세모 삼촌",
      "kind": "helper",
      "family": "semo"
+    },
+    {
+     "role": "일을 시키는 새엄마",
+     "who": "깐깐한 아주머니(가족 밖, 목소리만)",
+     "kind": "villain",
+     "family": "outside"
+    },
+    {
+     "role": "벼를 까 주는 새(유아 앱)",
+     "who": "막둥이",
+     "kind": "helper",
+     "family": "nemo"
     }
    ],
-   "line": "구멍 난 독은 두꺼비 할머니와 박자를 맞춰 채워요. 꽃신을 찾아 준 원님 앞에서 형도 함께 웃어요.",
+   "line": "구멍 난 독은 두꺼비 동그라미 아저씨, 벼는 막둥이 새와 박자를 맞춰 채워요. 꽃신을 찾아 준 세모 삼촌 원님 앞에서 두리도 함께 웃어요.",
    "kept": [
     "밑 빠진 독에 물 채우기",
-    "두꺼비의 도움",
+    "두꺼비·새의 도움",
     "꽃신 한 짝을 잃고 원님이 찾아 줌"
    ],
    "art_pending": [],

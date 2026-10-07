@@ -87,6 +87,13 @@
    "game": "block",
    "room": "yard",
    "story": "벽돌을 한 줄 한 줄 맞춰 쌓았더니 집 바깥이 완성됐어요. 지붕, 굴뚝, 담장, 대문, 우체통까지."
+  },
+  {
+   "id": "photo",
+   "name": "사진·앨범 세트",
+   "game": "spot",
+   "room": "nemo",
+   "story": "달라진 곳을 찾을 때마다 사진이 한 장씩 모였어요. 벽에는 액자, 선반에는 앨범이 가득해요."
   }
  ],
  "items": [
@@ -2292,6 +2299,150 @@
     "#FFFFFF"
    ],
    "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 113,
+   "id": "a_frame",
+   "name": "벽 액자",
+   "set": "photo",
+   "room": "nemo",
+   "w": 44,
+   "h": 48,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🖼️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 114,
+   "id": "a_photo",
+   "name": "가족 사진",
+   "set": "photo",
+   "room": "nemo",
+   "w": 48,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🏞️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 115,
+   "id": "a_album",
+   "name": "앨범",
+   "set": "photo",
+   "room": "nemo",
+   "w": 40,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "📖",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 116,
+   "id": "a_cork",
+   "name": "코르크 사진판",
+   "set": "photo",
+   "room": "nemo",
+   "w": 52,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "📌",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 117,
+   "id": "a_camera",
+   "name": "필름 카메라",
+   "set": "photo",
+   "room": "nemo",
+   "w": 40,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "📷",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 118,
+   "id": "a_film",
+   "name": "필름 줄",
+   "set": "photo",
+   "room": "nemo",
+   "w": 56,
+   "h": 28,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎞️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 119,
+   "id": "a_polaroid",
+   "name": "즉석 사진",
+   "set": "photo",
+   "room": "nemo",
+   "w": 36,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "📸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 120,
+   "id": "a_shelf",
+   "name": "앨범장",
+   "set": "photo",
+   "room": "nemo",
+   "w": 52,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🗂️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
    "season": null,
    "physical": null
   }

@@ -38,6 +38,7 @@ android {
         merge   { dimension 'app'; applicationId 'com.geometricfamily.merge';  resValue 'string', 'app_name', '기하학 가족: 도형 합치기' }
         quiz    { dimension 'app'; applicationId 'com.geometricfamily.quiz';   resValue 'string', 'app_name', '기하학 가족: 당신은 어느 도형?' }
         block   { dimension 'app'; applicationId 'com.geometricfamily.block';  resValue 'string', 'app_name', '기하학 가족: 도형 블록' }
+        spot    { dimension 'app'; applicationId 'com.geometricfamily.spot';   resValue 'string', 'app_name', '기하학 가족: 다른 그림 찾기' }
     }
     buildTypes {
         release {

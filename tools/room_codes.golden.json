@@ -446,5 +446,37 @@
  "o_swing": {
   "no": 112,
   "code": "34M3XA"
+ },
+ "a_frame": {
+  "no": 113,
+  "code": "35MAOD"
+ },
+ "a_photo": {
+  "no": 114,
+  "code": "36MHF9"
+ },
+ "a_album": {
+  "no": 115,
+  "code": "37MO65"
+ },
+ "a_cork": {
+  "no": 116,
+  "code": "38MVX1"
+ },
+ "a_camera": {
+  "no": 117,
+  "code": "39N2NL"
+ },
+ "a_film": {
+  "no": 118,
+  "code": "3AN9LC"
+ },
+ "a_polaroid": {
+  "no": 119,
+  "code": "3BNGCF"
+ },
+ "a_shelf": {
+  "no": 120,
+  "code": "3CNN3B"
  }
 }

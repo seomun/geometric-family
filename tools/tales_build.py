@@ -126,19 +126,19 @@ K = [
  dict(ch=12, id='ant', title='개미와 베짱이', origin='이솝(공유 저작물)', bg='field', mode='똑같이 나눠요(나눔)',
   cast=[('개미', '엄마·막둥이', 'lead', 'nemo'), ('베짱이', '동그라미 아저씨', 'funny', 'dong')], line='겨울이 오기 전에 열매를 똑같이 나눠요. 겨울에 베짱이가 문을 똑똑, 개미는 나눠 줘요.', kept=['여름에 일하는 개미와 노는 베짱이', '겨울에 베짱이가 문을 두드림'],
   pro=[('여름이에요. 엄마 개미와 막둥이는 달콤한 열매를 모아요.', [('nemo_mom.joy', 250), ('baby.joy', 150)], None),
-       ('동그라미 아저씨 베짱이는 노래만 불러요. 룰루랄라!', [('dong_dad.joy', 260)], 'note'),
+       ('세모 삼촌 베짱이는 노래만 불러요. 룰루랄라!', [('husband.joy', 250)], 'note'),
        ('겨울이 오기 전에 똑같이 나눠요. 몇 개씩 나눌까요?', [('baby.surprise', 190)], 'question')],
-  epi=[('겨울이 왔어요. 베짱이가 배가 고파 문을 똑똑똑.', [('dong_dad.trouble', 260), ('baby.surprise', 150)], 'question'),
-       ('엄마 개미가 열매를 나눠 주며 말했어요. 「내년 여름엔 같이 모아요.」', [('nemo_mom.love', 250), ('dong_dad.joy', 260)], 'heart'),
-       ('베짱이가 노래하고 개미들은 춤춰요. 따뜻한 겨울이에요.', [('dong_dad.warm', 260), ('baby.joy', 150)], 'note')]),
+  epi=[('겨울이 왔어요. 베짱이가 배가 고파 문을 똑똑똑.', [('husband.worry', 250), ('baby.surprise', 150)], 'question'),
+       ('엄마 개미가 열매를 나눠 주며 말했어요. 「내년 여름엔 같이 모아요.」', [('nemo_mom.love', 250), ('husband.joy', 250)], 'heart'),
+       ('베짱이가 노래하고 개미들은 춤춰요. 따뜻한 겨울이에요.', [('husband.love', 250), ('baby.joy', 150)], 'note')]),
  dict(ch=13, id='axe', title='금도끼 은도끼', origin='한국 전래동화(공유 저작물)', bg='forest', mode='숨은 그림 찾기',
-  cast=[('나무꾼', '아빠', 'lead', 'nemo'), ('산신령', '동그라미 아저씨', 'helper', 'dong'), ('욕심쟁이 이웃', '세모 삼촌', 'funny', 'semo')], line='정직한 아빠는 금도끼 은도끼를 모두 받고, 따라 한 세모 삼촌은 웃음이 터져요.', kept=['도끼가 연못에 빠짐', '금도끼·은도끼·쇠도끼를 차례로 물음', '정직하면 모두 받음'],
+  cast=[('나무꾼', '아빠', 'lead', 'nemo'), ('산신령', '동그라미 아저씨', 'helper', 'dong'), ('욕심쟁이 이웃', '세모 삼촌', 'funny', 'semo')], line='정직한 아빠는 금도끼 은도끼를 모두 받고, 따라 한 엄마는 웃음이 터져요.', kept=['도끼가 연못에 빠짐', '금도끼·은도끼·쇠도끼를 차례로 물음', '정직하면 모두 받음'],
   pro=[('가을 숲에서 아빠가 도끼를 연못에 퐁당!', [('nemo_dad.worry', 250), ('baby.surprise', 150)], 'bang'),
        ('동그라미 아저씨 산신령이 나타났어요. 「금도끼가 네 거니?」 아빠는 고개를 저어요.', [('dong_dad.warm', 260), ('nemo_dad.good', 250)], 'question'),
        ('「낙엽 속에 숨은 친구들을 찾아 보렴.」 같이 찾아봐요!', [('dong_dad.joy', 260), ('baby.joy', 150)], 'sparkle')],
   epi=[('다 찾았어요! 산신령이 쇠도끼를 돌려주었어요.', [('dong_dad.joy', 260), ('nemo_dad.joy', 250)], 'sparkle'),
        ('정직한 아빠에게 금도끼도 은도끼도 선물!', [('nemo_dad.love', 250), ('baby.joy', 150)], 'heart'),
-       ('따라 한 세모 삼촌은 거짓말하려다 웃음이 터져 모두 깔깔깔.', [('husband.wink', 250), ('baby.joy', 150)], 'heart')]),
+       ('따라 한 엄마는 거짓말하려다 웃음이 터져 모두 깔깔깔.', [('nemo_mom.wink', 250), ('baby.joy', 150)], 'heart')]),
  dict(ch=14, id='snowqueen', title='눈의 여왕(순한 판)', origin='안데르센(공유 저작물)', bg='night', mode='눈송이 잡기(색 고르기)',
   cast=[('카이', '네모 {sib1}', 'lead', 'nemo'), ('게르다', '막둥이', 'lead', 'nemo'), ('눈의 여왕(순한 판)', '동그라미 아주머니', 'helper', 'dong')], art_pending=['동그라미 아주머니 시트(임시: 그림 없이 글로만)'],
   line='얼음 궁전은 포근한 눈 궁전, 막둥이의 따뜻한 눈물에 눈송이가 녹아요.', kept=['눈송이(거울 조각)가 눈에 들어감', '눈의 여왕이 카이를 데려감', '게르다가 찾아가 눈물로 녹임'],
@@ -149,13 +149,13 @@ K = [
        ('{sib1}이 눈을 비비며 「막둥이!」 하고 안았어요.', [('nemo_kids.kid1', 230), ('baby.love', 150)], 'heart'),
        ('눈의 여왕 아주머니도 손을 흔들어 주었어요. 함께 집으로!', [('nemo_kids.kid1', 230), ('baby.joy', 150)], 'sparkle')]),
  dict(ch=15, id='kongjwi', title='콩쥐팥쥐 독 채우기', origin='한국 전래동화(공유 저작물)', bg='house', mode='박자 맞추기',
-  cast=[('콩쥐', '막둥이', 'lead', 'nemo'), ('팥쥐', '네모 {sib1}', 'funny', 'nemo'), ('도와주는 두꺼비', '할머니', 'helper', 'nemo'), ('꽃신 주인을 찾는 원님', '세모 삼촌', 'helper', 'semo')], line='구멍 난 독은 두꺼비 할머니와 박자를 맞춰 채워요. 꽃신을 찾아 준 원님 앞에서 {sib1}도 함께 웃어요.', kept=['밑 빠진 독에 물 채우기', '두꺼비의 도움', '꽃신 한 짝을 잃고 원님이 찾아 줌'],
-  pro=[('막둥이 콩쥐는 커다란 독에 물을 가득 채워야 해요.', [('baby.joy', 190)], None),
-       ('그런데 독에 구멍이 퐁! 물이 줄줄줄.', [('baby.cry', 190)], 'bang'),
-       ('두꺼비 할머니가 와서 박자에 맞춰 톡톡 도와줘요.', [('nemo_grandma.good', 250), ('baby.joy', 150)], 'note')],
-  epi=[('독이 가득 찼어요! 잔치에 갈 수 있어요.', [('baby.joy', 190), ('nemo_grandma.good', 250)], 'sparkle'),
-       ('서둘러 가다가 꽃신 한 짝이 쏙 빠졌어요.', [('baby.surprise', 190)], 'question'),
-       ('세모 삼촌 원님이 꽃신을 찾아 주었어요. {sib1}도 함께 짝짝짝!', [('husband.joy', 250), ('baby.love', 150), ('nemo_kids.kid1', 230)], 'heart')]),
+  line='구멍 난 독은 두꺼비 동그라미 아저씨, 벼는 막둥이 새와 박자를 맞춰 채워요. 꽃신을 찾아 준 세모 삼촌 원님 앞에서 {kid2}도 함께 웃어요.', kept=['밑 빠진 독에 물 채우기', '두꺼비·새의 도움', '꽃신 한 짝을 잃고 원님이 찾아 줌'],
+  pro=[('{sib1}은 콩쥐예요. 커다란 독에 물을 가득 채워야 해요.', [('nemo_kids.kid1', 230)], None),
+       ('그런데 독에 구멍이 퐁! 물이 줄줄줄.', [('nemo_kids.kid1', 230)], 'bang'),
+       ('동그라미 아저씨 두꺼비가 와서 박자에 맞춰 톡톡 도와줘요. 막둥이 새도 톡톡!', [('dong_dad.calm', 260), ('baby.joy', 150)], 'note')],
+  epi=[('독이 가득 찼어요! 막둥이 새가 벼도 톡톡 까 주었어요. 이제 잔치에 갈 수 있어요.', [('nemo_kids.kid1', 230), ('baby.joy', 150)], 'sparkle'),
+       ('서둘러 가다가 꽃신 한 짝이 쏙 빠졌어요. {kid2}는 투덜투덜.', [('nemo_kids.kid1', 230), ('nemo_kids.kid2', 230)], 'question'),
+       ('세모 삼촌 원님이 꽃신을 찾아 주었어요. {kid2}도 함께 짝짝짝!', [('husband.joy', 250), ('nemo_kids.kid1', 230), ('nemo_kids.kid2', 230)], 'heart')]),
 ]
 
 # ---------------- ⑤ 「동화 속 당신은?」 5종 — 선택지는 인물 동일시가 아니라 "장면 속 내 반응"(문항은 tools/quiz_gen.py) ----------------
@@ -170,15 +170,22 @@ Q5 = [
 
 # ---------------- ⑦ 도형 블록 사연(장 끝 4컷, 12장) — 원천은 tools/tales_block.py ----------------
 from tales_block import TB
+SPOT_SEASONS = [dict(id='chuseok', title='추석 달라진 곳 찾기', months=[9, 10], n=12, seed=811, type='diff'), dict(id='kimjang', title='김장 숨은 물건', months=[11], n=14, seed=812, type='hidden'), dict(id='yeonmal', title='연말 기억 한 판', months=[12, 1], n=16, seed=813, type='memory')]
 BLOCK_SEASONS = [dict(id='chuseok', title='추석 송편 빚기', months=[9, 10], n=14, seed=901, type='family'), dict(id='kimjang', title='김장 한 판', months=[11], n=16, seed=902, type='lines'), dict(id='yeonmal', title='연말 별 모으기', months=[12, 1], n=18, seed=903, type='star')]
+
+
+from tales_cast import cast_for, audit, ACTORS, CAST
+for _t in T12: _t['cast'] = cast_for(_t['id'], 'adult')
+for _k in K: _k['cast'] = cast_for(_k['id'], 'kid')
 
 
 def block_tale(t):
     """⑦ 사연의 배역표 항목(cast=None 이면 ③의 같은 이야기 배역표)"""
     base = next((x for x in T12 if x['id'] == t['base']), None)
-    if t.get('cast') is None:
-        return dict(base, title=t['title'] + ' (도형 블록 사연)', cuts=t['cuts'])
-    return dict(title=t['title'] + ' (도형 블록 사연)', origin=t.get('origin', base['origin'] if base else ''), cast=t['cast'], line=t['line'], kept=t['kept'], cuts=t['cuts'])
+    cast = cast_for(t['base'], 'adult')
+    if base is not None:
+        return dict(base, title=t['title'] + ' (도형 블록 사연)', cast=cast, cuts=t['cuts'])
+    return dict(title=t['title'] + ' (도형 블록 사연)', origin=t.get('origin', ''), cast=cast, line=t['line'], kept=t['kept'], cuts=t['cuts'], art_pending=[])
 
 
 def tally(items):
@@ -198,25 +205,40 @@ def table(c, title):
 
 
 def check():
-    """가족 악역 0, 세모의 웃긴 실패역 ≤3(③④ 12장), 호칭 규칙(세모네 아이 없음)"""
-    for t in T12 + K:
+    """단일 배역표(tales_cast.CAST) 단언 + 글 속 「역(배우)」 표기가 배역표와 같은지 + 12장 4컷"""
+    semo = audit()
+    for t in T12 + K + [block_tale(t) for t in TB]:
         for role, who, kind, fam in t['cast']:
-            assert not (kind == 'villain' and fam != 'outside'), '가족이 악역: %s / %s → %s' % (t['title'], role, who)
             assert fam in FAM and kind in KIND, (t['title'], role)
-            assert not (fam == 'semo' and re.search(r'아들|딸|아이|막둥이', who)), '세모네에는 아이가 없다: %s' % who
-    semo = sum(1 for t in T12 for _, _, k, f in t['cast'] if f == 'semo' and k in ('funny', 'villain'))
-    assert semo <= 3, '세모의 웃긴 실패역/악역 3회 초과: %d' % semo
     for t in T12:
         assert len(t['cuts']) == 4, t['title'] + ' 4컷(기승전결)이어야 한다'
-    bl = [block_tale(t) for t in TB]
-    for t in bl:
-        for role, who, kind, fam in t['cast']:
-            assert not (kind == 'villain' and fam != 'outside'), '⑦ 가족이 악역: %s / %s' % (t['title'], role)
-            assert not (fam == 'semo' and re.search(r'아들|딸|아이|막둥이', who)), '세모네에는 아이가 없다: %s' % who
+    for t in TB:
         assert len(t['cuts']) == 4, t['title']
-    semo_b = sum(1 for t in bl for _, _, k, f in t['cast'] if f == 'semo' and k in ('funny', 'villain'))
-    assert semo_b <= 3, '⑦ 세모의 웃긴 실패역/악역 3회 초과: %d' % semo_b
     assert len(TB) == 12
+    # 글 속 표기 검증: 「역할(배우)」 가 배역표의 성인 표기와 같아야 한다
+    def short(role):
+        r = role.split('(')[0].split('→')[-1].strip(); return r.split()[-1]
+    def texts(t, aud):
+        for c in t['cuts']: yield c[0]
+    bad = []
+    for t in T12:
+        tid = t['id']; rows = CAST[tid]
+        for row in rows:
+            key = row[1]
+            if key.startswith('out:') or (len(row) > 3 and row[3] == 'kid'): continue
+            sr = short(row[0]); want = ACTORS[key][0]
+            for tx in texts(t, 'adult'):
+                for m in re.finditer(re.escape(sr) + r'\(([^)]+)\)', tx):
+                    if m.group(1) not in (want, want.replace('네모네 ', '').replace('네모 ', '')): bad.append('%s: %s(%s) ≠ %s' % (t['title'], sr, m.group(1), want))
+    for t in TB:
+        for row in CAST[t['base']]:
+            key = row[1]
+            if key.startswith('out:') or (len(row) > 3 and row[3] == 'kid'): continue
+            sr = short(row[0]); want = ACTORS[key][0]
+            for tx in texts(t, 'adult'):
+                for m in re.finditer(re.escape(sr) + r'\(([^)]+)\)', tx):
+                    if m.group(1) not in (want, want.replace('네모네 ', '').replace('네모 ', '')): bad.append('⑦ %s: %s(%s) ≠ %s' % (t['title'], sr, m.group(1), want))
+    assert not bad, '글 속 배역 표기가 단일 배역표와 다름: ' + ' | '.join(bad)
     return semo
 
 
@@ -229,11 +251,20 @@ if __name__ == '__main__':
         tales.append(ent(t, id=t['id'], apps={'merge': i + 1, 'color': i + 1}, aud='adult'))
     for i, t in enumerate(TB):
         tales.append(ent(block_tale(t), id='block_' + t['base'], apps={'block': i + 1}, aud='adult'))
+    for i, t in enumerate([x for x in T12 if x['id'] in ('pigs', 'bremen')]):
+        tales.append(ent(dict(t, title=t['title'] + ' (다른 그림 찾기 사연)'), id='spot_' + t['id'], apps={'spot': i + 1}, aud='adult'))
     for k in K:
         tales.append(ent(k, id='kid_' + k['id'], apps={'playground': k['ch'], 'mode': k['mode']}, aud='kid'))
     for q in Q5:
         tales.append(dict(id='quiz_' + q['id'], title=q['title'], origin=q['origin'], apps={'quiz': True}, audience='adult', cast=[], scenes=q['scenes'], line=q['line'], kept=q['kept'], art_pending=[], status='[제안]'))
-    open(R / 'data/tales.json', 'w', encoding='utf-8').write(nm(json.dumps({'version': 2, 'principle': 'docs/20 D13 — 구조·모티브·상징물은 원작 그대로, 배역과 무서운 수위만 바꾼다. 진짜 악역은 가족 밖. 공유 저작물 원전만. 세모네는 아이 없음.', 'tales': tales}, ensure_ascii=False, indent=1)))
+    CAST_OUT = {}
+    for tid, rows in CAST.items():
+        CAST_OUT[tid] = []
+        for row in rows:
+            key = row[1]; only = row[3] if len(row) > 3 else None
+            if key.startswith('out:'): CAST_OUT[tid].append(dict(role=row[0], adult=key[4:], kid=key[4:], kind=row[2], family='outside', only=only))
+            else: a, k, fam = ACTORS[key]; CAST_OUT[tid].append(dict(role=row[0], adult=a, kid=k, kind=row[2], family=fam, only=only))
+    open(R / 'data/tales.json', 'w', encoding='utf-8').write(nm(json.dumps({'version': 3, 'casting': CAST_OUT, 'casting_note': '이야기 id 기준 단일 배역표(원천 tools/tales_cast.py). 모든 앱이 같은 배역을 쓴다. adult=성인 앱(웹툰 호칭), kid=유아 앱(막둥이 시점 호칭).', 'principle': 'docs/20 D13 — 구조·모티브·상징물은 원작 그대로, 배역과 무서운 수위만 바꾼다. 진짜 악역은 가족 밖. 공유 저작물 원전만. 세모네는 아이 없음.', 'tales': tales}, ensure_ascii=False, indent=1)))
     p = R / 'data/merge_extra.json'; X = json.load(open(p, encoding='utf-8'))
     X['stories'] = [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(T12)]
     json.dump(X, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -246,6 +277,8 @@ if __name__ == '__main__':
         assert len(t['cuts']) == 4
     json.dump({'version': 1, 'note': '⑦ 도형 블록 사연(장 끝 4컷)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['o_lantern', 'o_mailbox', 'o_doghouse'], 'seasons': BLOCK_SEASONS,
                'stories': [dict(chapter=i + 1, title=t['title'], tale=t['base'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(TB)]}, open(R / 'data/block_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump({'version': 1, 'note': '⑥ 다른 그림 찾기 사연(장 끝 4컷, ③과 같은 옛이야기 배역)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['a_polaroid', 'a_film', 'a_camera'], 'seasons': SPOT_SEASONS,
+               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate([x for x in T12 if x['id'] in ('pigs', 'bremen')])]}, open(R / 'data/spot_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     p = R / 'games/block/block-gen.js'; g = open(p, encoding='utf-8').read()
     g = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + t['title'] + "'" for t in TB) + "];", g, count=1); open(p, 'w', encoding='utf-8').write(g)
     p = R / 'data/story.json'; S = json.load(open(p, encoding='utf-8'))

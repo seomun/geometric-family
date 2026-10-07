@@ -310,9 +310,9 @@
      "bubble": "bang"
     },
     {
-     "text": "놀부(동그라미 아빠)도 따라 박을 탔지만 풍물패가 쏟아져 한바탕 춤판! 놀부는 머쓱히 웃으며 잔치에 끼었다.",
+     "text": "놀부(세모 남편)도 따라 박을 탔지만 풍물패가 쏟아져 한바탕 춤판! 놀부는 웃으며 흥부네 잔치에 끼었다.",
      "chars": [
-      "dong_dad.trouble",
+      "husband.wink",
       "nemo_dad.joy",
       "nemo_mom.joy"
      ],
@@ -481,9 +481,9 @@
    "tale": "hare",
    "cuts": [
     {
-     "text": "토끼(세모 남편)가 느림보 거북이(네모 아빠)에게 경주를 하자고 했다.",
+     "text": "토끼(동그라미 아빠)가 느림보 거북이(네모 아빠)에게 경주를 하자고 했다.",
      "chars": [
-      "husband.wink",
+      "dong_dad.joy",
       "nemo_dad.good"
      ],
      "bubble": "question"
@@ -491,7 +491,7 @@
     {
      "text": "토끼는 쌩쌩 앞서 가다 그늘에서 낮잠. 거북이는 한 칸 한 칸 꾸준히 걸었다.",
      "chars": [
-      "husband.joy",
+      "dong_dad.joy",
       "nemo_dad.joy"
      ],
      "bubble": "sparkle"
@@ -499,16 +499,16 @@
     {
      "text": "결승선 앞에서 눈을 뜬 토끼는 깜짝! 거북이는 이미 결승선에 닿아 있었다.",
      "chars": [
-      "husband.surprise",
+      "dong_dad.surprise",
       "nemo_dad.love"
      ],
      "bubble": "bang"
     },
     {
-     "text": "심판(동그라미 아빠)이 손을 들어 올렸다. 토끼가 껄껄 웃으며 거북이에게 박수를 쳤다.",
+     "text": "심판(세모 남편)이 손을 들어 올렸다. 토끼가 껄껄 웃으며 거북이에게 박수를 쳤다.",
      "chars": [
-      "dong_dad.joy",
       "husband.joy",
+      "dong_dad.joy",
       "nemo_dad.joy"
      ],
      "bubble": "heart"

@@ -7,6 +7,8 @@ for c in 11 12 13 14 15; do run "① 3권 ch$c" env ONLY=$c node games/tools/boo
 for r in 1-5 6-10 11-15 16-20; do run "③ merge LV=$r" env LV=$r node tools/merge_smoke.js; done
 for r in 1-10 11-20 21-30 31-40 41-50 51-60 61-70 71-80 81-90 91-100 101-110 111-120; do run "⑦ block LV=$r" env LV=$r node tools/block_smoke.js; done
 run "⑦ block_sim" node tools/block_sim.js
+for r in 1-10 11-20; do run "⑥ spot LV=$r" env LV=$r node tools/spot_smoke.js; done
+run "⑥ spot_sim" node tools/spot_sim.js
 run "④ color" node tools/color_smoke.js
 run "⑤ quiz" node tools/quiz_smoke.js
 run "② idle" node tools/idle_smoke.js

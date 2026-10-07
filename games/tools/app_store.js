@@ -2,7 +2,7 @@
 // → games/store/shots_<app>/raw/phone_N_*.png → APP=<app> python games/tools/frame_shots.py 로 액자
 const { chromium } = require('playwright-core');
 const path = require('path'), fs = require('fs');
-const app = process.argv[2]; const URLS = { merge: 'merge/index.html', color: 'color/index.html', quiz: 'quiz/index.html', block: 'block/index.html' };
+const app = process.argv[2]; const URLS = { merge: 'merge/index.html', color: 'color/index.html', quiz: 'quiz/index.html', block: 'block/index.html', spot: 'spot/index.html' };
 const RAW = path.resolve(__dirname, '..', 'store', 'shots_' + app, 'raw'); fs.mkdirSync(RAW, { recursive: true });
 const wait = (p, ms) => p.waitForTimeout(ms);
 const SCENES = {
@@ -44,6 +44,18 @@ const SCENES = {
     for (let g = 0; g < 8; g++) { if (await p.evaluate(() => !!document.querySelector('.screen.on .uk-sheet'))) break; const nb = await p.$('.screen.on .nextbtn'); if (nb) await nb.click({ force: true }).catch(() => {}); await wait(p, 400); }
     await wait(p, 800); await shot('5_clear');
     await p.evaluate(() => { Object.values(BLOCK.debug.REW).slice(0, 7).forEach((id) => Room.grant(id)); GF.stack = []; GF.go('bhome'); GF.go('bhouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
+  },
+  async spot(p, shot) {
+    await p.waitForSelector('.sp-btns'); await wait(p, 900); await shot('1_home');
+    await p.evaluate(() => { GF.go('plevels'); }); await p.waitForSelector('.sp-l'); await wait(p, 600); await shot('2_levels');
+    await p.evaluate(() => { SPOT.unlockAll = true; GF.stack = []; GF.go('phome'); GF.go('pplay', { n: 5 }); }); await p.waitForSelector('.sp-area'); await wait(p, 1500);
+    const L = await p.evaluate(() => SPOT.debug.level()); for (const d of L.rounds[0].diffs.slice(0, 2)) { await p.evaluate(([x, y]) => SPOT.debug.tap(x, y), [d.x + d.w / 2, d.y + d.h / 2]); await wait(p, 250); }
+    await wait(p, 4200); await shot('3_play');
+    await p.evaluate(() => { GF.stack = []; GF.go('phome'); GF.go('pplay', { n: 6 }); }); await p.waitForSelector('.sp-area'); await wait(p, 4600); await shot('4_hidden');
+    await p.evaluate(() => { GF.stack = []; GF.go('phome'); GF.go('pplay', { n: 10 }); SPOT.fast = true; }); await p.waitForSelector('.sp-area'); await wait(p, 400);
+    const L2 = await p.evaluate(() => SPOT.debug.level()); for (const d of L2.rounds[0].diffs) { await p.evaluate(([x, y]) => SPOT.debug.tap(x, y), [d.x + d.w / 2, d.y + d.h / 2]); await wait(p, 120); }
+    await wait(p, 900); await shot('5_story');
+    await p.evaluate(() => { Object.values(SPOT.debug.REW).slice(0, 7).forEach((id) => Room.grant(id)); GF.stack = []; GF.go('phome'); GF.go('phouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
   },
   async quiz(p, shot) {
     await p.waitForSelector('.qz-grid'); await wait(p, 900); await shot('1_home');

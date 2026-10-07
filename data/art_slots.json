@@ -1,6 +1,6 @@
 {
  "version": 1,
- "note": "그림 슬롯. 값=SVG 경로(앱 기준, 예 assets/_generated/bg/stream.svg) 또는 data URI. 비어 있으면 코드 그림을 쓴다. 키: bg[장면id] · props[소품id] · cover['book1'..] · room[아이템id] · icons[이름] · hero[앱id](playground·merge·coloring·quiz·block): 타이틀 캐릭터 뒤 대표 그림",
+ "note": "그림 슬롯. 값=SVG 경로(앱 기준, 예 assets/_generated/bg/stream.svg) 또는 data URI. 비어 있으면 코드 그림을 쓴다. 키: bg[장면id] · props[소품id] · cover['book1'..] · room[아이템id] · icons[이름] · hero[앱id](playground·merge·coloring·quiz·block·spot): 타이틀 캐릭터 뒤 대표 그림",
  "bg": {},
  "props": {},
  "cover": {},

@@ -19,7 +19,7 @@ import org.json.JSONArray;
  */
 public class ShareStore extends ContentProvider {
     static final String[] KID = {"com.geometricfamily.play", "com.geometricfamily.color"};
-    static final String[] ADULT = {"com.geometricfamily.tables", "com.geometricfamily.merge", "com.geometricfamily.quiz", "com.geometricfamily.block"};
+    static final String[] ADULT = {"com.geometricfamily.tables", "com.geometricfamily.merge", "com.geometricfamily.quiz", "com.geometricfamily.block", "com.geometricfamily.spot"};
     static final String PREFS = "gfshare";
 
     static boolean okKey(String k) { return k != null && (k.equals("gf:house:kid:v1") || k.equals("gf:house:adult:v1")); }

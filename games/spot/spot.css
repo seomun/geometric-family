@@ -1,0 +1,60 @@
+.sp { position: absolute; inset: 0; }
+.sp-ttl { position: absolute; top: 76px; left: 0; right: 0; text-align: center; }
+.sp-sub { display: inline-block; margin-top: 8px; background: #fff; border-radius: 16px; padding: 4px 16px; font: 700 var(--uk-fs-cap)/1.3 var(--uk-font); box-shadow: var(--uk-sh); }
+.sp-fam { position: absolute; left: 0; right: 0; top: 172px; height: 124px; display: flex; justify-content: center; align-items: flex-end; gap: 8px; }
+.sp-fam img { height: 104px; width: auto; }
+.sp-btns { position: absolute; left: 24px; right: 24px; top: 300px; }
+.sp-foot { position: absolute; left: 0; right: 0; bottom: 24px; text-align: center; font: 800 var(--uk-fs-cap)/1 var(--uk-font); color: var(--uk-ink2); }
+.sp-scroll { position: absolute; left: 0; right: 0; top: 70px; bottom: 0; overflow-y: auto; touch-action: pan-y; padding: 0 10px 24px; scrollbar-width: none; }
+.sp-scroll::-webkit-scrollbar { display: none; }
+.sp-ch { display: flex; justify-content: space-between; align-items: baseline; margin: 14px 4px 6px; font: 900 var(--uk-fs-body)/1.2 var(--uk-font); } .sp-ch span { font-size: var(--uk-fs-cap); color: var(--uk-ink2); }
+.sp-lv { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.sp-l { height: 64px; border: 0; border-radius: var(--uk-r-m); background: #fff; box-shadow: var(--uk-sh); display: flex; flex-direction: column; align-items: center; justify-content: center; font: 900 20px/1 var(--uk-font); color: var(--uk-ink); }
+.sp-l i { font-style: normal; font-size: 14px; color: #C99A00; letter-spacing: -1px; margin-top: 2px; }
+.sp-l.rest { background: #E3F6DC; } .sp-l.off { background: #E7E1EC; color: #8B8092; } .sp-l.off i { color: #B9B2C0; }
+.sp-hd { position: absolute; left: 12px; top: 72px; display: flex; gap: 8px; align-items: baseline; font: 900 var(--uk-fs-body)/1 var(--uk-font); } .sp-hd span { font-size: var(--uk-fs-cap); font-weight: 700; color: var(--uk-ink2); }
+.sp-goals { position: absolute; left: 10px; right: 10px; top: 104px; height: 64px; display: flex; gap: 8px; align-items: center; }
+.sp-goal { position: relative; display: flex; align-items: center; gap: 4px; height: 56px; padding: 0 10px 0 4px; border-radius: var(--uk-r-m); background: #fff; box-shadow: var(--uk-sh); font: 900 var(--uk-fs-body)/1 var(--uk-font); }
+.sp-goal .sp-pc { width: 48px; height: 48px; } .sp-goal.ok { background: #DDF6E5; outline: 3px solid var(--uk-green); }
+.sp-tip { position: absolute; left: 12px; right: 12px; top: 74px; z-index: 6; font-size: 18px !important; }
+.sp-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sp-grid .uk-btn { position: relative; padding: 0 10px; font-size: 18px; min-height: 56px; }
+.sp-badge { position: absolute; right: -4px; top: -6px; min-width: 24px; height: 24px; border-radius: 12px; background: #E5334A; color: #fff; font: 900 15px/24px var(--uk-font); text-align: center; font-style: normal; }
+.sp-trio { position: absolute; left: 20px; right: 20px; top: 170px; display: flex; flex-direction: column; gap: 14px; } .sp-trio .uk-btn { flex-direction: column; min-height: 92px; } .sp-trio small { font-size: 16px; font-weight: 700; opacity: .95; line-height: 1.25; text-align: center; }
+.sp-type { margin-left: 8px; font-style: normal; background: var(--uk-gold); color: var(--uk-ink); border-radius: 12px; padding: 2px 10px; font: 900 16px/1.4 var(--uk-font); }
+.sp-l.sp { outline: 3px solid var(--uk-pink); outline-offset: -3px; }
+.sp-season { position: absolute; left: 24px; right: 24px; top: 506px; } .sp-season .uk-btn { position: relative; min-height: 56px; font-size: 18px; } .sp-season .sp-badge { right: 10px; top: -8px; padding: 0 10px; width: auto; }
+.sp-foot { bottom: 18px !important; }
+.sp-goals { gap: 6px; flex-wrap: nowrap; } .sp-goal { height: 46px; padding: 0 10px 0 2px; font-size: 18px; gap: 2px; } .sp-goal .sp-pc { width: 38px; height: 38px; }
+.sp-line { position: absolute; left: 16px; right: 16px; text-align: center; font-size: 18px; font-weight: 700; color: var(--uk-sub, #7A6B73); z-index: 5; }
+.sp-hd { top: 70px; } .sp-goals { top: 98px; height: 48px; align-items: center; }
+.sp-goal { height: 44px; padding: 0 12px 0 8px; gap: 6px; } .sp-gi { width: 30px; height: 30px; } .sp-gs { color: #E8A800; font-size: 24px; }
+.sp-bar { position: absolute; left: 0; right: 0; bottom: -8px; height: 6px; border-radius: 3px; background: rgba(0,0,0,.12); overflow: hidden; } .sp-bar i { display: block; height: 100%; background: var(--uk-green, #6CCB8A); transition: width .3s; }
+.sp-tip { position: absolute; left: 10px; right: 10px; top: 98px; height: 44px; line-height: 44px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
+.sp-grid .uk-btn, .sp-season .uk-btn { position: relative; padding: 0 10px; font-size: 18px; min-height: 56px; }
+.sp-btns { position: absolute; left: 24px; right: 24px; top: 300px; } .sp-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sp-season { position: absolute; left: 24px; right: 24px; top: 506px; } .sp-foot { bottom: 18px; }
+.sp-trio { position: absolute; left: 20px; right: 20px; display: flex; flex-direction: column; gap: 14px; } .sp-trio .uk-btn { flex-direction: column; min-height: 92px; } .sp-trio small { font-size: 16px; font-weight: 700; opacity: .95; line-height: 1.25; text-align: center; }
+.sp-l.sp { outline: 3px solid var(--uk-pink); outline-offset: -3px; }
+.sp-badge { min-width: 28px; height: 28px; line-height: 28px; font-size: 18px; border-radius: 14px; padding: 0 6px; }
+/* ---- 다른 그림 찾기 플레이 화면 ---- */
+.sp-area { position: absolute; left: 12px; top: 146px; width: 336px; height: 430px; display: flex; flex-direction: column; gap: 10px; touch-action: none; }
+.sp-area.zoom { overflow: auto; touch-action: pan-x pan-y; border-radius: 16px; display: block; } .sp-area.zoom .sp-pic { margin-bottom: 8px; }
+.sp-pic { position: relative; flex: none; width: 336px; height: 210px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: var(--uk-sh-lg); }
+.sp-area.odd .sp-pic, .sp-area.hidden .sp-pic { height: 430px; }
+.sp-svg, .sp-ov { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.sp-lab { position: absolute; left: 8px; top: 6px; font: 900 16px/1 var(--uk-font); font-style: normal; background: rgba(255,255,255,.9); border-radius: 12px; padding: 4px 10px; color: var(--uk-ink); }
+.sp-ring { animation: spring .5s ease-out; } @keyframes spring { from { stroke-dasharray: 0 300; opacity: .2 } to { stroke-dasharray: 300 0; opacity: 1 } }
+.sp-pulse { stroke-dasharray: 8 6; animation: sppulse .8s ease-in-out infinite alternate; } @keyframes sppulse { from { opacity: .35 } to { opacity: 1 } }
+.sp-cov { position: absolute; inset: 0; background: rgba(255,246,229,.97); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font: 800 18px/1.4 var(--uk-font); color: var(--uk-ink2); padding: 12px; } .sp-cov .uk-btn { min-height: 52px; font-size: 20px; }
+.sp-x { position: absolute; z-index: 40; font: 900 26px/1 var(--uk-font); color: #E5334A; pointer-events: none; animation: spx .6s ease-out forwards; } @keyframes spx { from { transform: scale(.6); opacity: 1 } to { transform: scale(1.4) translateY(-10px); opacity: 0 } }
+.sp-btns2 { position: absolute; left: 24px; right: 24px; top: 586px; display: flex; gap: 12px; } .sp-btns2 .uk-btn { flex: 1; min-height: 44px; padding: 0 10px; font-size: 18px; border-radius: 14px; } .sp-btns2 .uk-btn svg { width: 22px; height: 22px; }
+.sp-tip { position: absolute; left: 10px; right: 10px; top: 98px; height: 44px; line-height: 44px; text-align: center; z-index: 30; font-size: 18px; font-weight: 700; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
+.sp-goals { top: 98px; height: 44px; } .sp-hd { top: 70px; }
+.sp-dots { display: inline-flex; gap: 4px; } .sp-dots i { width: 14px; height: 14px; border-radius: 50%; background: #E7E1EC; border: 2px solid #6b5443; } .sp-dots i.on { background: #FF8FA8; }
+.sp-names { display: flex; gap: 4px; margin-left: 4px; } .sp-names b { font: 800 16px/1 var(--uk-font); background: #fff; border-radius: 10px; padding: 4px 6px; box-shadow: var(--uk-sh); } .sp-names b.on { background: #DDF6E5; text-decoration: line-through; opacity: .7; }
+.sp-badge { min-width: 28px; height: 28px; line-height: 28px; font-size: 18px; border-radius: 14px; padding: 0 6px; }
+.sp-btns { position: absolute; left: 24px; right: 24px; top: 300px; } .sp-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sp-season { position: absolute; left: 24px; right: 24px; top: 506px; } .sp-foot { bottom: 18px; }
+
+.sp-names b { white-space: nowrap; font-size: 17px; padding: 4px 8px; } .sp-goal { white-space: nowrap; }

@@ -43,7 +43,7 @@ code = (ROOT / 'src' / 'characters.js').read_text(encoding='utf-8')
 html = f'''<!DOCTYPE html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>세 가족 식탁</title><link rel="icon" href="data:,"><style>{css}</style></head>
+<title>기하학 가족: 세 가족 식탁</title><link rel="icon" href="data:,"><style>{css}</style></head>
 <body>{body}
 <script>window.GF_DATA = {json.dumps(data, ensure_ascii=False, separators=(',', ':'))};window.GF_CODECHARS = {json.dumps(code)};</script>
 <script>{js}</script>

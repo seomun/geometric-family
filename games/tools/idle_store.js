@@ -31,12 +31,12 @@ async function setup(p) {      // 중반 진행 상태
     console.log('shots ok');
   } else {
     const ctx = await b.newContext({ viewport: { width: 540, height: 960 }, recordVideo: { dir: MEDIA, size: { width: 720, height: 1280 } } }), p = await ctx.newPage();
-    await p.goto(URL); await p.waitForSelector('.tcard'); await setup(p); await p.evaluate(() => GF.go('itable')); await wait(p, 3200);   // 홈: 숫자가 올라간다
-    await p.click('.screen.on .tcard[data-t=nemo]'); await wait(p, 1800);
-    await p.click('.screen.on .grow .buy >> nth=2'); await wait(p, 1200); await p.click('.screen.on .grow .buy >> nth=3'); await wait(p, 1500); await p.click('.screen.on .back'); await wait(p, 900);
-    await p.click('.screen.on .tcard[data-t=semo]'); await wait(p, 1500); await p.click('.screen.on .trip >> nth=1'); await wait(p, 2600); await p.click('.screen.on .back'); await wait(p, 900);
+    await p.goto(URL); await p.waitForSelector('.tcard'); await setup(p); await p.evaluate(() => GF.go('itable')); await wait(p, 2400);   // 홈: 숫자가 올라간다
+    await p.click('.screen.on .tcard[data-t=nemo]'); await wait(p, 1400);
+    await p.click('.screen.on .grow .buy >> nth=2'); await wait(p, 900); await p.click('.screen.on .grow .buy >> nth=3'); await wait(p, 1100); await p.click('.screen.on .back'); await wait(p, 900);
+    await p.click('.screen.on .tcard[data-t=semo]'); await wait(p, 1500); await p.click('.screen.on .trip >> nth=1'); await wait(p, 2000); await p.click('.screen.on .back'); await wait(p, 700);
     await p.click('.screen.on .sbtn'); await wait(p, 1200);
-    for (let i = 0; i < 4; i++) { await p.click('.screen.on .bigbtn:last-of-type'); await wait(p, 2200); }
+    for (let i = 0; i < 4; i++) { await p.click('.screen.on .bigbtn:last-of-type'); await wait(p, 1500); }
     await p.click('.screen.on .bigbtn:last-of-type'); await wait(p, 1600); await p.click('.screen.on .opt >> nth=1'); await wait(p, 2600);
     await p.click('.screen.on .ovp button'); await wait(p, 1500);
     await p.evaluate(() => GF.go('iprops')); await wait(p, 2200);

@@ -20,6 +20,10 @@ DOTS = {
  'boat': [[40,160],[260,160],[225,240],[75,240]],
  'flower': [[150,40],[190,90],[250,100],[210,150],[240,215],[150,185],[60,215],[90,150],[50,100],[110,90]],
  'car': [[40,190],[40,140],[90,130],[120,80],[200,80],[235,130],[265,140],[265,190],[230,190],[225,215],[175,215],[170,190],[130,190],[125,215],[75,215],[70,190]],
+ 'moon': [[190,40],[130,80],[100,150],[130,220],[190,260],[160,210],[150,150],[160,90]],
+ 'tree': [[150,30],[210,110],[180,110],[235,185],[170,185],[170,255],[130,255],[130,185],[65,185],[120,110],[90,110]],
+ 'kite': [[150,30],[235,130],[150,230],[65,130]],
+ 'umbrella': [[40,150],[80,80],[150,50],[220,80],[260,150],[205,130],[150,150],[95,130]],
  'cake': [[60,120],[240,120],[250,240],[50,240],[60,170],[100,150],[150,170],[200,150],[240,170]],
 }
 def spread(pts, minD=52):
@@ -39,12 +43,15 @@ for k,v in DOTS.items():
     sp=spread(v)
     md=min(((sp[i][0]-sp[j][0])**2+(sp[i][1]-sp[j][1])**2)**0.5 for i in range(len(sp)) for j in range(i+1,len(sp)))
     add('trace','t_'+k,dots=sp,minGap=round(md))
+# 2-2) 번호 색칠 추가분
+for a in ['lamp','table','plant']:
+    add('number', 'n_'+a, art=a)
 # 4) 스티커 장면 — 배경 위에 가족·가구 스티커
 STK = ['chr:baby.joy','chr:nemo_kids.kid1','chr:wife.joy','chr:dong_dad.good','chr:nemo_dad.joy','chr:nemo_mom.joy','art:plant','art:lamp','art:sofa','art:table','art:tree','art:train','shp:0:2','shp:1:2','shp:2:2','art:globe']
-DECO = {'home':[('tree',50,330,90),('party',255,340,110)], 'stream':[('tree',300,300,100),('train',90,420,130)], 'night':[('tree',60,360,100),('lamp',290,380,50),('globe',180,420,50)], 'house':[('party',90,330,120),('plant',280,370,50),('tree',320,310,90)], 'seaside':[('bowl',90,430,60),('tree',300,330,90),('suitcase',200,440,60)], 'hill':[('tree',70,320,100),('tree',290,340,110),('sofa',180,470,120)]}
-for bg in ['home','stream','night','house','seaside','hill']: add('sticker','s_'+bg,bg=bg,tray=STK,deco=[dict(art=a,x=x,y=y,w=w) for a,x,y,w in DECO[bg]])
+DECO = {'rails':[('train',60,400,150),('tree',290,310,90)], 'field':[('tree',60,330,100),('plant',280,380,50),('party',180,420,90)], 'home':[('tree',50,330,90),('party',255,340,110)], 'stream':[('tree',300,300,100),('train',90,420,130)], 'night':[('tree',60,360,100),('lamp',290,380,50),('globe',180,420,50)], 'house':[('party',90,330,120),('plant',280,370,50),('tree',320,310,90)], 'seaside':[('bowl',90,430,60),('tree',300,330,90),('suitcase',200,440,60)], 'hill':[('tree',70,320,100),('tree',290,340,110),('sofa',180,470,120)]}
+for bg in ['home','stream','night','house','seaside','hill','rails','field']: add('sticker','s_'+bg,bg=bg,tray=STK,deco=[dict(art=a,x=x,y=y,w=w) for a,x,y,w in DECO[bg]])
 # 5) 벽지 만들기 — 도형 무늬 두 색으로 아이 방 벽지
-for i,(bg,fg,shp) in enumerate([('#FFE3C2','#FF8FA8',0),('#D8F0FF','#4DABF7',1),('#E2E6FA','#9775FA',2),('#FFF0B8','#69DB7C',0),('#FFE0E8','#FFD43B',1),('#E3F6DC','#FFA94D',2)]):
+for i,(bg,fg,shp) in enumerate([('#FFE3C2','#FF8FA8',0),('#D8F0FF','#4DABF7',1),('#E2E6FA','#9775FA',2),('#FFF0B8','#69DB7C',0),('#FFE0E8','#FFD43B',1),('#E3F6DC','#FFA94D',2),('#FFF6E5','#F06595',0),('#E7F5FF','#339AF0',2),('#F3F0FF','#845EF4',1)]):
     add('wall','w_%d'%(i+1),pat=shp,bg=bg,fg=fg)
 # 6) 웹툰 컷 색칠 — 장마다 한 장면(네모·세모·동그라미 도형 인물 + 가구) [제안]
 def S(*items): return [list(x) for x in items]

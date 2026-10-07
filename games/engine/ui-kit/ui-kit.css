@@ -72,7 +72,7 @@ button.uk-card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0
 .uk-caption { background: rgba(255,255,255,.94); border-radius: 18px; padding: 12px 16px; font: 800 var(--uk-fs-cap)/1.35 var(--uk-font); color: var(--uk-ink); text-align: center; word-break: keep-all; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
 
 /* ---- 팝업(모달)·결과 ---- */
-.uk-scrim { position: absolute; inset: -3000px; z-index: 90; background: var(--uk-scrim); display: flex; align-items: center; justify-content: center; animation: uk-fade var(--uk-t) ease; }
+.uk-scrim { position: absolute; inset: -3000px; z-index: 1000; background: var(--uk-scrim); display: flex; align-items: center; justify-content: center; animation: uk-fade var(--uk-t) ease; }
 .uk-sheet { width: min(330px, 92%); background: #fff; border-radius: var(--uk-r-l); padding: 18px 16px 16px; text-align: center; box-shadow: var(--uk-sh-pop); animation: uk-pop var(--uk-t-slow) var(--uk-ease); }
 .uk-sheet h2 { margin: 0 0 6px; font: 900 var(--uk-fs-h)/1.15 var(--uk-font); }
 .uk-sheet .body { margin: 6px 0; font: 600 var(--uk-fs-body)/1.4 var(--uk-font); color: var(--uk-ink2); }
@@ -87,7 +87,7 @@ button.uk-card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0
 .uk-chip svg { width: 24px; height: 24px; }
 
 /* ---- 토스트 ---- */
-.uk-toast { position: absolute; left: 20px; right: 20px; top: 84px; z-index: 95; background: rgba(46,36,48,.94); color: #fff; border-radius: 18px; padding: 12px 14px; text-align: center;
+.uk-toast { position: absolute; left: 20px; right: 20px; top: 84px; z-index: 1010; background: rgba(46,36,48,.94); color: #fff; border-radius: 18px; padding: 12px 14px; text-align: center;
   font: 800 var(--uk-fs-cap)/1.3 var(--uk-font); pointer-events: none; animation: uk-toast 2.2s ease forwards; }
 
 /* ---- 설정 위젯 ---- */

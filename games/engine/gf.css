@@ -151,7 +151,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .parent .nums button { height: 56px; border-radius: 12px; border: 0; background: #eee8f1; font-size: 22px; font-weight: 800; }
 .parent small { color: #7a6f80; display: block; line-height: 1.4; margin-top: 6px; }
 
-#toast { position: absolute; left: 50%; top: 80px; transform: translateX(-50%); z-index: 90; background: rgba(58,46,57,.9); color: #fff; padding: 8px 16px; border-radius: 999px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; white-space: nowrap; }
+#toast { position: absolute; left: 50%; top: 80px; transform: translateX(-50%); z-index: 1010; background: rgba(58,46,57,.9); color: #fff; padding: 8px 16px; border-radius: 999px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; white-space: nowrap; }
 #toast.on { opacity: 1; }
 
 .stagebtn > div > svg { width: 44px; height: 44px; }
@@ -299,7 +299,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .flame { animation: flick .35s ease-in-out infinite alternate; } @keyframes flick { to { transform: scale(.88, 1.12) rotate(4deg) } }
 
 .homebtns { gap: 12px; } .homebtns .card { width: 78px; height: 104px; } .homebtns .card svg { width: 52px; height: 52px; }
-.kgift { position: absolute; left: 50%; top: 40%; width: 120px; height: 120px; margin: -60px 0 0 -60px; z-index: 95; background: #fff; border-radius: var(--uk-r-l); box-shadow: var(--uk-sh-pop); display: flex; align-items: center; justify-content: center; animation: uk-pop .4s var(--uk-ease), uk-fade .3s 2.2s reverse forwards; pointer-events: none; } .kgift img { width: 80%; height: 80%; object-fit: contain; }
+.kgift { position: absolute; left: 50%; top: 40%; width: 120px; height: 120px; margin: -60px 0 0 -60px; z-index: 1005; background: #fff; border-radius: var(--uk-r-l); box-shadow: var(--uk-sh-pop); display: flex; align-items: center; justify-content: center; animation: uk-pop .4s var(--uk-ease), uk-fade .3s 2.2s reverse forwards; pointer-events: none; } .kgift img { width: 80%; height: 80%; object-fit: contain; }
 .uk-sheet .hero { position: static; width: auto; height: 120px; margin: 0 0 4px; display: flex; justify-content: center; } .uk-sheet .hero img { position: static; height: 100%; width: auto; max-width: 100%; object-fit: contain; }
 
 /* ---- 3편 새 놀이 5종: 꽃 심기·나눠요·숨은 그림·눈송이·박자 ---- */

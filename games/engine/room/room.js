@@ -56,7 +56,7 @@
     },
     setComplete(st) {
       if (Room.cfg.onSetComplete) return Room.cfg.onSetComplete(st);
-      if (window.UK) UK.modal({ title: '세트 완성!', body: st.name + '<br><br>' + st.story, actions: [{ text: '확인' }], parent: Room.mount });
+      if (window.UK) UK.modal({ title: '세트 완성!', body: st.name + '<br><br>' + st.story, actions: [{ text: '확인' }], parent: (Room.mount && Room.mount.closest('.screen')) || Room.mount });
     },
     /** 코드(선물·굿즈): 6자리 = 아이템 번호 2 + 잡음 2 + 검사 2. 서버 없이 확인 — 보안이 아니라 오타·장난 방지용. */
     _chk(a) { let h = 7; for (const ch of a) h = (h * 31 + ch.charCodeAt(0)) % 1296; return h.toString(36).toUpperCase().padStart(2, '0'); },

@@ -506,6 +506,158 @@
    "minGap": 51
   },
   {
+   "id": "t_moon",
+   "type": "trace",
+   "dots": [
+    [
+     190,
+     40
+    ],
+    [
+     120,
+     77
+    ],
+    [
+     98,
+     150
+    ],
+    [
+     120,
+     223
+    ],
+    [
+     190,
+     260
+    ],
+    [
+     170,
+     207
+    ],
+    [
+     152,
+     150
+    ],
+    [
+     170,
+     93
+    ]
+   ],
+   "minGap": 52
+  },
+  {
+   "id": "t_tree",
+   "type": "trace",
+   "dots": [
+    [
+     150,
+     30
+    ],
+    [
+     229,
+     110
+    ],
+    [
+     176,
+     110
+    ],
+    [
+     235,
+     185
+    ],
+    [
+     176,
+     185
+    ],
+    [
+     176,
+     255
+    ],
+    [
+     124,
+     255
+    ],
+    [
+     124,
+     185
+    ],
+    [
+     65,
+     185
+    ],
+    [
+     124,
+     110
+    ],
+    [
+     71,
+     110
+    ]
+   ],
+   "minGap": 52
+  },
+  {
+   "id": "t_kite",
+   "type": "trace",
+   "dots": [
+    [
+     150,
+     30
+    ],
+    [
+     235,
+     130
+    ],
+    [
+     150,
+     230
+    ],
+    [
+     65,
+     130
+    ]
+   ],
+   "minGap": 131
+  },
+  {
+   "id": "t_umbrella",
+   "type": "trace",
+   "dots": [
+    [
+     40,
+     150
+    ],
+    [
+     80,
+     80
+    ],
+    [
+     150,
+     50
+    ],
+    [
+     220,
+     80
+    ],
+    [
+     260,
+     150
+    ],
+    [
+     205,
+     130
+    ],
+    [
+     150,
+     150
+    ],
+    [
+     95,
+     130
+    ]
+   ],
+   "minGap": 52
+  },
+  {
    "id": "t_cake",
    "type": "trace",
    "dots": [
@@ -547,6 +699,21 @@
     ]
    ],
    "minGap": 52
+  },
+  {
+   "id": "n_lamp",
+   "type": "number",
+   "art": "lamp"
+  },
+  {
+   "id": "n_table",
+   "type": "number",
+   "art": "table"
+  },
+  {
+   "id": "n_plant",
+   "type": "number",
+   "art": "plant"
   },
   {
    "id": "s_home",
@@ -795,6 +962,86 @@
    ]
   },
   {
+   "id": "s_rails",
+   "type": "sticker",
+   "bg": "rails",
+   "tray": [
+    "chr:baby.joy",
+    "chr:nemo_kids.kid1",
+    "chr:wife.joy",
+    "chr:dong_dad.good",
+    "chr:nemo_dad.joy",
+    "chr:nemo_mom.joy",
+    "art:plant",
+    "art:lamp",
+    "art:sofa",
+    "art:table",
+    "art:tree",
+    "art:train",
+    "shp:0:2",
+    "shp:1:2",
+    "shp:2:2",
+    "art:globe"
+   ],
+   "deco": [
+    {
+     "art": "train",
+     "x": 60,
+     "y": 400,
+     "w": 150
+    },
+    {
+     "art": "tree",
+     "x": 290,
+     "y": 310,
+     "w": 90
+    }
+   ]
+  },
+  {
+   "id": "s_field",
+   "type": "sticker",
+   "bg": "field",
+   "tray": [
+    "chr:baby.joy",
+    "chr:nemo_kids.kid1",
+    "chr:wife.joy",
+    "chr:dong_dad.good",
+    "chr:nemo_dad.joy",
+    "chr:nemo_mom.joy",
+    "art:plant",
+    "art:lamp",
+    "art:sofa",
+    "art:table",
+    "art:tree",
+    "art:train",
+    "shp:0:2",
+    "shp:1:2",
+    "shp:2:2",
+    "art:globe"
+   ],
+   "deco": [
+    {
+     "art": "tree",
+     "x": 60,
+     "y": 330,
+     "w": 100
+    },
+    {
+     "art": "plant",
+     "x": 280,
+     "y": 380,
+     "w": 50
+    },
+    {
+     "art": "party",
+     "x": 180,
+     "y": 420,
+     "w": 90
+    }
+   ]
+  },
+  {
    "id": "w_1",
    "type": "wall",
    "pat": 0,
@@ -835,6 +1082,27 @@
    "pat": 2,
    "bg": "#E3F6DC",
    "fg": "#FFA94D"
+  },
+  {
+   "id": "w_7",
+   "type": "wall",
+   "pat": 0,
+   "bg": "#FFF6E5",
+   "fg": "#F06595"
+  },
+  {
+   "id": "w_8",
+   "type": "wall",
+   "pat": 2,
+   "bg": "#E7F5FF",
+   "fg": "#339AF0"
+  },
+  {
+   "id": "w_9",
+   "type": "wall",
+   "pat": 1,
+   "bg": "#F3F0FF",
+   "fg": "#845EF4"
   },
   {
    "id": "x_1",

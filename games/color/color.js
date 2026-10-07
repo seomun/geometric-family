@@ -75,7 +75,7 @@
     enter(r) {
       r.classList.add('uk', 'cl'); GF.bg('home', r);
       el('div', 'cl-ttl', r, '<div class="uk-title">막둥이 색칠북</div>');
-      const fam = el('div', 'cl-fam', r); ['nemo_kids.kid1', 'baby.joy', 'wife.joy'].forEach((id) => fam.appendChild(GF.img(id)));
+      GF.hero(r, 'coloring'); const fam = el('div', 'cl-fam', r); ['nemo_kids.kid1', 'baby.joy', 'wife.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const row = el('div', 'cl-cards', r);
       const first = !SV.intro;
       const c1 = el('button', 'cl-card', row, UK.icon('brush')); c1.style.background = '#FFE0E8'; c1.onclick = () => { GF.sfx('pick'); GF.go('cbook'); };

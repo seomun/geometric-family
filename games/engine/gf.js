@@ -219,6 +219,17 @@
     house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + G(rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A')),
   };
   /* 그림 슬롯(docs/18): data/art_slots.json 의 {bg,props,cover,room,icons}[id] 에 SVG 경로(또는 data URI)를 넣으면 코드 그림 대신 쓴다. 받은 SVG 를 넣기만 하면 교체. */
+  /** 타이틀 대표 그림 슬롯: 캐릭터 뒤에 깔리는 한 장. 슬롯(data/art_slots.json hero[id])이 있으면 그 그림, 없으면 임시 코드 SVG. 아트 패스 때 교체 */
+  const HS = (b) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200"><g stroke="#6b5443" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">' + b + '</g></svg>');
+  const HERO = {
+    block: HS('<rect x="70" y="92" width="220" height="92" rx="8" fill="#FFE9B8"/><path d="M52 96L180 22l128 74z" fill="#E8870F"/><rect x="236" y="30" width="26" height="46" fill="#B98550"/><rect x="92" y="112" width="34" height="34" rx="7" fill="#F6C28B"/><path d="M148 146l17-34 17 34z" fill="#8FD3F4"/><circle cx="225" cy="130" r="17" fill="#B7C2F2"/><rect x="92" y="150" width="34" height="34" rx="7" fill="#8FD3F4"/><rect x="190" y="152" width="34" height="30" rx="7" fill="#F6C28B"/><rect x="236" y="152" width="34" height="30" rx="7" fill="#B7C2F2"/><path d="M30 186h300"/>'),
+    merge: HS('<rect x="40" y="20" width="90" height="80" rx="6" fill="#BFE8FF"/><path d="M85 20v80M40 60h90"/><rect x="150" y="100" width="170" height="70" rx="16" fill="#FF8FA8"/><rect x="138" y="116" width="34" height="56" rx="12" fill="#FF8FA8"/><rect x="298" y="116" width="34" height="56" rx="12" fill="#FF8FA8"/><path d="M60 186h260"/><path d="M60 170v-40M44 130h32" /><circle cx="60" cy="122" r="14" fill="#FFE27A"/>'),
+    tables: HS('<ellipse cx="180" cy="130" rx="130" ry="38" fill="#C98F5A"/><ellipse cx="180" cy="124" rx="112" ry="28" fill="#E3B27F"/><ellipse cx="120" cy="120" rx="30" ry="10" fill="#fff"/><ellipse cx="190" cy="132" rx="30" ry="10" fill="#fff"/><ellipse cx="248" cy="118" rx="26" ry="9" fill="#fff"/><path d="M140 92q-6-18 6-28M180 96q-6-18 6-28" fill="none"/>'),
+    coloring: HS('<ellipse cx="170" cy="110" rx="120" ry="74" fill="#FFE3C2"/><circle cx="110" cy="92" r="16" fill="#FF6B6B"/><circle cx="150" cy="70" r="16" fill="#FFD43B"/><circle cx="200" cy="72" r="16" fill="#69DB7C"/><circle cx="240" cy="98" r="16" fill="#4DABF7"/><ellipse cx="190" cy="140" rx="22" ry="14" fill="#FFF"/><path d="M270 40l50 90" stroke-width="9"/><path d="M320 130l-12 28" stroke="#FF8FA8" stroke-width="12"/>'),
+    quiz: HS('<circle cx="90" cy="110" r="60" fill="#F6C28B"/><path d="M180 44l64 112H116z" fill="#8FD3F4"/><circle cx="270" cy="110" r="60" fill="#B7C2F2"/><text x="90" y="132" font-size="64" font-weight="900" text-anchor="middle" fill="#fff" stroke="none">?</text><text x="180" y="142" font-size="56" font-weight="900" text-anchor="middle" fill="#fff" stroke="none">?</text><text x="270" y="132" font-size="64" font-weight="900" text-anchor="middle" fill="#fff" stroke="none">?</text>'),
+    playground: HS('<path d="M20 160h320"/><rect x="40" y="96" width="80" height="56" rx="10" fill="#FFB347"/><rect x="96" y="70" width="20" height="30" fill="#6B5F70"/><rect x="130" y="108" width="80" height="44" rx="10" fill="#8FD3F4"/><rect x="220" y="108" width="80" height="44" rx="10" fill="#FF8FA8"/><circle cx="70" cy="158" r="12" fill="#4A3030"/><circle cx="170" cy="158" r="12" fill="#4A3030"/><circle cx="260" cy="158" r="12" fill="#4A3030"/><circle cx="310" cy="48" r="26" fill="#FFE27A"/>'),
+  };
+  GF.hero = (parent, id) => { const d = el('div', 'hero-art', parent); d.style.backgroundImage = 'url("' + (GF.slot('hero', id) || HERO[id] || '') + '")'; return d; };
   GF.slot = (kind, id) => { const m = GF.data && GF.data.art_slots && GF.data.art_slots[kind], v = m && m[id]; return v ? (/^(data:|https?:|\/)/.test(v) ? v : (GF.base || '') + v) : null; };
   GF.bgSVG = (name) => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 640" width="360" height="640">' + (BG[name] || BG.home)() + '</svg>';   // 배경 한 장을 SVG 문자열로(스티커 장면 액자용)
   GF.bg = function (name, parent) {
@@ -342,7 +353,7 @@
       const wide = GF.safeWide;
       GF.bg('home', r);
       const t = el('div', 'hometitle', r, '<div class="ttl"><span style="color:#E39B4B;animation-delay:.05s">기</span><span style="color:#4DABF7;animation-delay:.17s">하</span><span style="color:#3B4A7A;animation-delay:.29s">학</span> <span style="color:#FF8FA8;animation-delay:.41s">가</span><span style="color:#6CCB8A;animation-delay:.53s">족</span></div><div class="sub">놀이터</div>');
-      const c = el('div', 'homechars', r);
+      GF.hero(r, 'playground'); const c = el('div', 'homechars', r);
       const cast = wide ? [['wife', 190], ['baby', 126], ['dong_dad', 172]] : [['wife', 160], ['baby', 112], ['dong_dad', 148]];
       const ims = cast.map((a, i) => { const im = GF.img(a[0] + '.good'); im.style.height = a[1] + 'px'; im.style.animation = 'bounceIn .6s ' + (i * 0.12) + 's backwards, homeidle 2.4s ' + (0.8 + i * 0.3) + 's ease-in-out infinite alternate'; c.appendChild(im); GF.img(a[0] + '.joy'); return [im, a[0]]; });
       // 눈 깜빡임: 눈을 감은 표정(joy)으로 0.14초만 바꿨다가 돌아온다

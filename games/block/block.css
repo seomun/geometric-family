@@ -36,7 +36,7 @@
 .bk-goal { height: 44px; padding: 0 12px 0 8px; gap: 6px; } .bk-gi { width: 30px; height: 30px; } .bk-gs { color: #E8A800; font-size: 24px; }
 .bk-left { position: static; margin-left: 4px; padding: 4px 10px; font-size: 18px; } .bk-left b { font-size: 20px; }
 .bk-bar { position: absolute; left: 0; right: 0; bottom: -8px; height: 6px; border-radius: 3px; background: rgba(0,0,0,.12); overflow: hidden; } .bk-bar i { display: block; height: 100%; background: var(--uk-green, #6CCB8A); transition: width .3s; }
-.bk-board { position: absolute; left: 50%; top: 158px; transform: translateX(-50%); background: rgba(90,70,60,.22); border-radius: 16px; box-shadow: var(--uk-sh-lg); touch-action: none; }
+.bk-board { position: absolute; left: 50%; top: 150px; transform: translateX(-50%); background: rgba(90,70,60,.22); border-radius: 16px; box-shadow: var(--uk-sh-lg); touch-action: none; }
 .bk-cell { position: absolute; border: 0; padding: 0; border-radius: 8px; background: rgba(255,255,255,.82); box-shadow: inset 0 -3px 0 rgba(0,0,0,.08); display: flex; align-items: center; justify-content: center; }
 .bk-cell.full { background: transparent; box-shadow: none; } .bk-cell img { width: 100%; height: 100%; display: block; pointer-events: none; }
 .bk-cell.st::before { content: ''; position: absolute; inset: 2px; border-radius: 8px; border: 3px dashed #FFC933; pointer-events: none; } .bk-star { position: absolute; font-size: 24px; color: #E8A800; text-shadow: 0 0 4px #fff, 0 0 4px #fff; pointer-events: none; font-style: normal; line-height: 1; }
@@ -44,12 +44,12 @@
 .bk-cell.pv { background: #D9F5DF; outline: 3px solid var(--uk-green, #6CCB8A); outline-offset: -3px; } .bk-cell.pvx { background: #FFD9DE; outline: 3px solid #E5334A; outline-offset: -3px; }
 .bk-cell.pl { animation: bkpl .5s ease-in-out infinite alternate; } @keyframes bkpl { to { filter: brightness(1.25) saturate(1.3); outline: 3px solid #FFC933; outline-offset: -3px; } }
 .bk-out { position: absolute; pointer-events: none; z-index: 5; animation: bkout .42s ease-out forwards; } @keyframes bkout { 0% { transform: scale(1); opacity: 1 } 60% { transform: scale(1.25); opacity: .9 } 100% { transform: scale(.2); opacity: 0 } }
-.bk-tray { position: absolute; left: 10px; right: 10px; top: 488px; height: 100px; display: flex; gap: 8px; }
-.bk-slot { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; border-radius: 16px; background: rgba(255,255,255,.6); box-shadow: var(--uk-sh); touch-action: none; }
+.bk-tray { position: absolute; left: 8px; right: 8px; top: 462px; height: 128px; display: flex; gap: 6px; }
+.bk-slot { position: relative; flex: 2; display: flex; align-items: center; justify-content: center; border-radius: 16px; background: rgba(255,255,255,.6); box-shadow: var(--uk-sh); touch-action: none; }
 .bk-slot.sel { outline: 4px solid var(--uk-pink); } .bk-slot.lift > .bk-pc { opacity: .35; } .bk-slot.dead > .bk-pc { opacity: .45; filter: grayscale(.6); }
 .bk-pc { position: relative; pointer-events: none; } .bk-pc img { position: absolute; display: block; pointer-events: none; }
-.bk-btns2 { position: absolute; left: 24px; right: 24px; top: 594px; display: flex; gap: 12px; } .bk-btns2 .uk-btn { flex: 1; min-height: 40px; padding: 0 10px; font-size: 18px; border-radius: 14px; } .bk-btns2 .uk-btn svg { width: 22px; height: 22px; }
-.bk-tip { position: absolute; left: 12px; right: 12px; top: 470px; text-align: center; z-index: 6; font-size: 18px !important; display: none; }
+.bk-btns2 { position: absolute; left: 24px; right: 24px; top: 596px; display: flex; gap: 12px; } .bk-btns2 .uk-btn { flex: 1; min-height: 40px; padding: 0 10px; font-size: 18px; border-radius: 14px; } .bk-btns2 .uk-btn svg { width: 22px; height: 22px; }
+.bk-tip { position: absolute; left: 10px; right: 10px; top: 98px; height: 44px; line-height: 44px; text-align: center; z-index: 30; font-size: 18px !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
 .bk-grid .uk-btn, .bk-season .uk-btn { position: relative; padding: 0 10px; font-size: 18px; min-height: 56px; }
 .bk-btns { position: absolute; left: 24px; right: 24px; top: 300px; } .bk-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .bk-season { position: absolute; left: 24px; right: 24px; top: 506px; } .bk-foot { bottom: 18px; }
@@ -57,3 +57,8 @@
 .bk-l.sp { outline: 3px solid var(--uk-pink); outline-offset: -3px; }
 
 .bk-badge { min-width: 28px; height: 28px; line-height: 28px; font-size: 18px; border-radius: 14px; padding: 0 6px; }
+
+/* 세모 규칙의 반짝 칸: 칸 전체가 은은히 빛나는 테두리 + 반짝 애니메이션 */
+.bk-cell.sh::after, .bk-pc img.sh { }
+.bk-cell.sh { animation: bksh 1.2s ease-in-out infinite; } @keyframes bksh { 0%, 100% { box-shadow: 0 0 0 2px #FFE27A, 0 0 8px 2px rgba(255,201,51,.55); filter: brightness(1) } 50% { box-shadow: 0 0 0 3px #FFC933, 0 0 16px 5px rgba(255,201,51,.9); filter: brightness(1.18) } }
+.bk-pc img.sh { animation: bksh2 1.2s ease-in-out infinite; border-radius: 9px; } @keyframes bksh2 { 0%, 100% { filter: drop-shadow(0 0 2px #FFC933) } 50% { filter: drop-shadow(0 0 7px #FFC933) brightness(1.15) } }

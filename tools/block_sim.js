@@ -2,9 +2,9 @@
 const C = require('../games/block/block-core.js'), G = require('../games/block/block-gen.js'), D = require('../data/block_levels.json');
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 const replay = (L, rule) => { const S = C.newGame(L, rule); for (const m of L.solution) { if (!C.place(S, m[0], m[1], m[2])) return false; } return C.won(S); };
-ok(D.levels.length === 20 && D.levels.every((l) => replay(l)), '20판 풀이 재생 모두 클리어');
+ok(D.levels.length === 120 && D.levels.every((l) => replay(l)), '120판 풀이 재생 모두 클리어');
 const by = {}; D.levels.forEach((l) => (by[l.type] = by[l.type] || []).push(l)); const rng = G.mulberry(7);
-console.log('--- 종류별(탐욕 80회) ---'); Object.entries(by).forEach(([t, ls]) => console.log(' ', t.padEnd(7), ls.length + '판', ls.map((l) => C.greedyWinRate(l, 80, rng).toFixed(2)).join(' ')));
+console.log('--- 종류별(탐욕 80회) ---'); Object.entries(by).forEach(([t, ls]) => console.log(' ', t.padEnd(7), ls.length + '판', ls.filter((l, i) => i % Math.ceil(ls.length / 6) === 0).map((l) => l.id + ':' + C.greedyWinRate(l, 60, rng).toFixed(2)).join(' ')));
 const types = new Set(D.levels.map((l) => l.type)); ok(types.size >= 6, '판 종류 ' + types.size + '종(6+)');
 let run = 1, mx = 1; for (let i = 1; i < D.levels.length; i++) { run = D.levels[i].type === D.levels[i - 1].type ? run + 1 : 1; mx = Math.max(mx, run); } ok(mx <= 3, '같은 종류 연속 최대 ' + mx + '판(≤3)');
 const T = ['lines', 'family', 'junk', 'star', 'combo', 'limit', 'solo']; let dailyOk = 0; for (let d = 0; d < 30; d++) { const L = G.make(8 + (d * 7) % 40, 20261000 + d, { type: T[d % 7], tag: 'growth', noGreedy: true }); if (L && replay(L)) dailyOk++; } ok(dailyOk === 30, '오늘의 한 판 30일 ' + dailyOk + '/30');

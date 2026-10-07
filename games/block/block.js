@@ -7,7 +7,7 @@
   const BK = (window.BLOCK = { debug: {} });
   const KEY = 'gf:block:v1', N = 8;
   const CC = ['#F6C28B', '#8FD3F4', '#B7C2F2'], CD = ['#E8870F', '#2F8FD0', '#6B76C8'];
-  const REW = { 2: 'o_bricks', 4: 'o_roof', 6: 'o_chimney', 8: 'o_fence', 10: 'o_gate', 12: 'o_mailbox', 15: 'o_doghouse', 18: 'o_lantern' };   // 이 판을 처음 깨면 받는 집 바깥 소품
+  const REW = { 2: 'o_bricks', 4: 'o_roof', 6: 'o_chimney', 8: 'o_fence', 10: 'o_gate', 12: 'o_mailbox', 15: 'o_doghouse', 18: 'o_lantern', 22: 'o_flowerpot', 28: 'o_window', 34: 'o_flag', 40: 'o_sign', 48: 'o_bench', 56: 'o_jar', 64: 'o_hay', 72: 'o_well', 84: 'o_cart', 96: 'o_lamp', 108: 'o_pond', 120: 'o_swing' };   // 이 판을 처음 깨면 받는 집 바깥 소품
   const TYPE_TIP = { lines: '가로나 세로 줄을 가득 채우면 지워져요', family: '목표 도형 색 칸이 든 줄을 지워요', junk: '갈색 짐이 든 줄을 지우면 짐이 사라져요', combo: '두 줄 이상을 한꺼번에 지워 보세요', star: '반짝 별이 든 줄을 지워 별을 모아요', limit: '정해진 조각 수 안에 끝내요', solo: '한 가족의 조각만 나와요' };
   const RULE_TXT = [['네모 규칙', '두 줄 이상 한꺼번에 지우면 점 조각을 돌려받아요', 'nemo'], ['세모 규칙', '반짝 조각이 든 줄을 지우면 옆 줄까지 껑충 지워져요', 'semo'], ['동그라미 규칙', '4×4 방도 가득 차면 지워져요', 'dong']];
   const slow = (ms) => (BK.fast ? 0 : ms);
@@ -46,7 +46,7 @@
     enter(r) {
       r.classList.add('uk', 'bk'); GF.bg('indoor2', r); bar();
       const tt = el('div', 'bk-ttl', r, '<div class="uk-title">도형 블록</div><div class="bk-sub">줄을 채워 지우고 집을 지어요</div>'); const pl = Room.mePlate(tt); if (pl) { tt.querySelector('.bk-sub').style.display = 'none'; pl.style.marginTop = '6px'; }
-      const fam = el('div', 'bk-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
+      GF.hero(r, 'block'); const fam = el('div', 'bk-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));
       const cont = UK.btn({ text: '이어서 하기 · 레벨 ' + last, icon: 'play', cls: 'block', onclick: () => GF.go('bplay', { n: last }) }, el('div', 'bk-btns', r));
       if (!Object.keys(SV.stars).length) setTimeout(() => { if (cont.isConnected) UK.finger(r, cont); }, 900);
@@ -100,14 +100,14 @@
     bare: false,
     enter(r, p) {
       r.classList.add('uk', 'bk'); GF.bg('indoor2', r);
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:468px;left:24px;right:24px;padding:6px 12px;font-size:18px'; return t; };
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:98px;left:10px;right:10px;height:44px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;z-index:30;pointer-events:none'; return t; };   // 안내는 판 위 목표 칩 줄에 잠깐 뜬다(판·조각을 덮지 않게)
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hint = null, sel = -1, streak = 0; const gained = [];
       if (!p.level) { SV.last = LV.id; save(); }
       bar();
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
       el('div', 'bk-hd', r, `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'lines' ? `<em class="bk-type">${D.types[LV.type]}</em>` : ''));
       const goals = el('div', 'bk-goals', r), board = el('div', 'bk-board', r), tray = el('div', 'bk-tray', r), tip = el('div', 'uk-caption bk-tip', r), btns = el('div', 'bk-btns2', r);
-      const cs = 38, gap = 2, pitch = cs + gap; board.style.width = board.style.height = N * pitch + gap + 'px';
+      const cs = 36, gap = 2, pitch = cs + gap; board.style.width = board.style.height = N * pitch + gap + 'px';
       const cells = []; for (let i = 0; i < 64; i++) { const c = el('button', 'bk-cell', board); c.dataset.i = i; c.style.cssText = `left:${(i % N) * pitch + gap}px;top:${((i / N) | 0) * pitch + gap}px;width:${cs}px;height:${cs}px`; c.setAttribute('aria-label', '칸 ' + (i + 1)); cells.push(c); }
       const bu = UK.btn({ text: '되돌리기', icon: 'replay', cls: 'ghost sm', onclick: undo }, btns); UK.btn({ text: '힌트', icon: 'info', cls: 'sky sm', onclick: showHint }, btns);
       const lbl = { lines: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, solo: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, limit: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, combo: () => `한꺼번에 ${S.got.combo}/${LV.goal.n}`, junk: () => `짐 ${M.junkLeft(S)}`, star: () => `별 ${S.got.stars}/${LV.stars.length}`, family: () => `${Math.min(S.got.fam[LV.goal.f], LV.goal.n)}/${LV.goal.n}` };
@@ -120,19 +120,21 @@
       }
       function pieceEl(t, size) {
         const cells2 = M.PIECES[t.p], w = Math.max(...cells2.map((c) => c[1])) + 1, h = Math.max(...cells2.map((c) => c[0])) + 1, d = el('div', 'bk-pc'); d.style.cssText = `width:${w * size}px;height:${h * size}px`;
-        cells2.forEach(([dr, dc], k) => { const i = el('img', '', d); i.src = tile(t.c, t.sh && k === 0); i.style.cssText = `left:${dc * size}px;top:${dr * size}px;width:${size - 1}px;height:${size - 1}px`; i.draggable = false; });
+        cells2.forEach(([dr, dc], k) => { const i = el('img', '', d); i.src = tile(t.c, t.sh && k === 0); if (t.sh && k === 0) i.className = 'sh'; i.style.cssText = `left:${dc * size}px;top:${dr * size}px;width:${size - 1}px;height:${size - 1}px`; i.draggable = false; });
         d.dataset.p = t.p; return d;
       }
       function draw(clearing) {
         cells.forEach((c, i) => {
-          c.className = 'bk-cell'; c.innerHTML = ''; const f = S.fam[i]; if (f >= 0) { const im = el('img', '', c); im.src = tile(f, S.shiny[i]); c.classList.add('full'); }
+          c.className = 'bk-cell'; c.innerHTML = ''; const f = S.fam[i]; if (f >= 0) { const im = el('img', '', c); im.src = tile(f, S.shiny[i]); c.classList.add('full'); if (S.shiny[i]) c.classList.add('sh'); }
           if (S.star.indexOf(i) >= 0) { c.classList.add('st'); el('b', 'bk-star', c, '★'); }
           if (hint && hint.cells.includes(i)) c.classList.add('hint');
         });
         tray.innerHTML = '';
+        const ws = S.tray.map((t) => (t ? Math.max(...M.PIECES[t.p].map((c) => c[1])) + 1 : 0)), hs = S.tray.map((t) => (t ? Math.max(...M.PIECES[t.p].map((c) => c[0])) + 1 : 0)), live = ws.filter((w) => w).length || 1;
+        const ts = Math.max(18, Math.min(27, Math.floor((330 - 8 * live) / Math.max(1, ws.reduce((a, b) => a + b, 0))), Math.floor(122 / Math.max(1, ...hs))));   // 조각 칸 크기: 판 칸의 70%(25px) 이상을 목표로, 모자라면 맞춰 줄인다
         S.tray.forEach((t, k) => {
-          const slot = el('div', 'bk-slot' + (sel === k ? ' sel' : ''), tray);
-          if (!t) return; const pe = pieceEl(t, 20); slot.appendChild(pe); slot.dataset.k = k;
+          const slot = el('div', 'bk-slot' + (sel === k ? ' sel' : ''), tray); slot.style.flex = t ? String(Math.max(2, ws[k])) : '2';
+          if (!t) return; const pe = pieceEl(t, ts); slot.appendChild(pe); slot.dataset.k = k;
           if (!M.moves({ L: S.L, fam: S.fam, shiny: S.shiny, star: S.star, qi: S.qi, tray: [t, null, null], got: S.got, used: S.used, bonus: S.bonus, rule: S.rule }).length) slot.classList.add('dead');
           slot.addEventListener('pointerdown', (e) => dragStart(e, k, slot));
         });
@@ -172,7 +174,7 @@
       }
       function dragStart(e, k, slot) {
         if (busy || !S.tray[k]) return; e.preventDefault(); const t = S.tray[k], scale = r.getBoundingClientRect().width / 360, gs = cs * scale, ghost = pieceEl(t, gs);
-        const w = parseFloat(ghost.style.width), h = parseFloat(ghost.style.height); ghost.style.cssText += `;position:fixed;pointer-events:none;z-index:200;opacity:.95;left:${e.clientX - w / 2}px;top:${e.clientY - h - gs * 1.1}px`; document.body.appendChild(ghost); GF.sfx('pick'); slot.classList.add('lift'); const prevSel = sel; sel = k;
+        const w = parseFloat(ghost.style.width), h = parseFloat(ghost.style.height); ghost.style.cssText += `;position:fixed;pointer-events:none;z-index:200;opacity:.97;left:${e.clientX - w / 2}px;top:${e.clientY - h - gs * 1.1}px;transform-origin:50% 100%;transform:scale(${(slot.firstChild ? slot.firstChild.offsetWidth / (w / scale) : 0.7).toFixed(3)}) ;transition:transform .14s ease-out`; document.body.appendChild(ghost); requestAnimationFrame(() => requestAnimationFrame(() => { ghost.style.transform = 'scale(1)'; })); GF.sfx('pick'); slot.classList.add('lift'); const prevSel = sel; sel = k;
         let tr = -1, tc = -1; const place = (ev) => { const br = board.getBoundingClientRect(), left = ev.clientX - w / 2, top = ev.clientY - h - gs * 1.1; tc = Math.round((left - br.left) / (pitch * scale)); tr = Math.round((top - br.top) / (pitch * scale)); };
         const mv = (ev) => { if (Math.hypot(ev.clientX - x0, ev.clientY - y0) >= 8) moved = true; ghost.style.left = ev.clientX - w / 2 + 'px'; ghost.style.top = ev.clientY - h - gs * 1.1 + 'px'; place(ev); preview(k, tr, tc); };
         const x0 = e.clientX, y0 = e.clientY; let moved = false;

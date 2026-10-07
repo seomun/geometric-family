@@ -121,7 +121,7 @@
       }
       function drawInv() {
         inv.innerHTML = ''; const sets = Room.data.sets.filter((s) => Room.data.items.some((i) => i.set === s.id && Room.visibleSet(i)));
-        const mineSets = sets.filter((s) => s.game === Room.cfg.game || s.game === 'all'), others = sets.filter((s) => !mineSets.includes(s));   // 그 게임이 주는 세트가 맨 위, 나머지는 접어 둔다
+        const mineSets = sets.filter((s) => s.game === Room.cfg.game).concat(sets.filter((s) => s.game === 'all')), others = sets.filter((s) => !mineSets.includes(s));   // 그 게임이 주는 세트가 맨 위, 나머지는 접어 둔다
         const block = (s, into) => {
           const its = Room.data.items.filter((i) => i.set === s.id && Room.visibleSet(i)), got = its.filter((i) => Room.has(i.id)).length;
           const h = el('div', 'rm-sh', into, `<b>${kid && !Room.family ? '' : s.name}</b><span>${got}/${its.length}</span>`);

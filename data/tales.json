@@ -621,6 +621,425 @@
    "status": "[제안]"
   },
   {
+   "id": "block_gyeonwoo",
+   "title": "견우와 직녀 (도형 블록 사연)",
+   "origin": "한국 전래동화(공유 저작물)",
+   "apps": {
+    "block": 3
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "견우",
+     "who": "세모 남편",
+     "kind": "lead",
+     "family": "semo"
+    },
+    {
+     "role": "직녀",
+     "who": "세모 아내",
+     "kind": "lead",
+     "family": "semo"
+    },
+    {
+     "role": "오작교를 놓는 까치와 까마귀",
+     "who": "까치 떼(가족 밖)",
+     "kind": "helper",
+     "family": "outside"
+    },
+    {
+     "role": "둘을 갈라놓는 하늘 어른",
+     "who": "하늘 어른(가족 밖, 목소리·순한 판)",
+     "kind": "villain",
+     "family": "outside"
+    }
+   ],
+   "line": "은하수 양쪽에 떨어진 두 사람을 까치가 줄 잇듯 오작교로 이어 준다 — 일 년에 한 번, 환한 웃음",
+   "kept": [
+    "소 먹이는 견우와 베 짜는 직녀",
+    "은하수로 갈라짐",
+    "까치와 까마귀의 오작교",
+    "칠월 칠석에 만남"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_bears",
+   "title": "세 마리 곰 (도형 블록 사연)",
+   "origin": "영국 민담(사우디 1837, 공유 저작물)",
+   "apps": {
+    "block": 4
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "큰 곰",
+     "who": "동그라미 아빠",
+     "kind": "lead",
+     "family": "dong"
+    },
+    {
+     "role": "중간 곰",
+     "who": "동그라미 엄마",
+     "kind": "lead",
+     "family": "dong"
+    },
+    {
+     "role": "아기 곰",
+     "who": "동그라미 아들",
+     "kind": "lead",
+     "family": "dong"
+    },
+    {
+     "role": "길 잃은 손님(소녀)",
+     "who": "세모 아내",
+     "kind": "funny",
+     "family": "semo"
+    }
+   ],
+   "line": "동그라미네가 곰 가족. 크기가 다른 그릇·의자·침대, 아기 곰 것이 딱 맞는다 — 마지막엔 같이 한 상",
+   "kept": [
+    "큰 것·중간 것·작은 것 세 번 시도",
+    "아기 곰의 것이 딱 맞음",
+    "곰이 돌아와 발견"
+   ],
+   "art_pending": [
+    "동그라미 엄마·아들 시트(임시: 동그라미 아빠 그림만 보임)"
+   ],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_jack",
+   "title": "잭과 콩나무 (도형 블록 사연)",
+   "origin": "영국 민담(공유 저작물)",
+   "apps": {
+    "block": 5
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "잭",
+     "who": "네모네 두리",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "잭의 엄마",
+     "who": "네모 엄마",
+     "kind": "helper",
+     "family": "nemo"
+    },
+    {
+     "role": "구름 위 거인",
+     "who": "구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)",
+     "kind": "villain",
+     "family": "outside"
+    },
+    {
+     "role": "잔치 손님",
+     "who": "세모 남편·동그라미 아빠",
+     "kind": "helper",
+     "family": "semo"
+    }
+   ],
+   "line": "콩나무는 하늘까지, 거인은 구름 위에서 손을 흔든다 — 마지막엔 세 가족이 큰 상에",
+   "kept": [
+    "소를 팔고 마법의 콩을 받음",
+    "하룻밤에 자란 콩나무",
+    "구름 위 거인의 성과 황금알 거위",
+    "콩나무를 베어 내려옴"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_kongjwi",
+   "title": "콩쥐팥쥐 (도형 블록 사연)",
+   "origin": "한국 전래동화(공유 저작물)",
+   "apps": {
+    "block": 6
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "콩쥐",
+     "who": "네모네 하나",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "팥쥐",
+     "who": "네모네 두리",
+     "kind": "funny",
+     "family": "nemo"
+    },
+    {
+     "role": "도와주는 두꺼비",
+     "who": "동그라미 아빠",
+     "kind": "helper",
+     "family": "dong"
+    },
+    {
+     "role": "꽃신 주인을 찾는 원님",
+     "who": "세모 남편",
+     "kind": "helper",
+     "family": "semo"
+    },
+    {
+     "role": "일을 시키는 새엄마",
+     "who": "깐깐한 아주머니(가족 밖, 목소리만)",
+     "kind": "villain",
+     "family": "outside"
+    }
+   ],
+   "line": "새엄마는 가족 밖 아주머니, 두꺼비가 독 구멍을 막고 마지막엔 팥쥐도 박수",
+   "kept": [
+    "밑 빠진 독에 물 채우기",
+    "두꺼비·새의 도움",
+    "잔치에서 꽃신 한 짝을 잃는다",
+    "원님이 꽃신 주인을 찾는다"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_heungbu",
+   "title": "흥부 박 (도형 블록 사연)",
+   "origin": "한국 전래동화(공유 저작물)",
+   "apps": {
+    "block": 7
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "흥부",
+     "who": "네모 아빠",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "흥부 아내",
+     "who": "네모 엄마",
+     "kind": "helper",
+     "family": "nemo"
+    },
+    {
+     "role": "놀부",
+     "who": "동그라미 아빠",
+     "kind": "funny",
+     "family": "dong"
+    },
+    {
+     "role": "제비",
+     "who": "제비(art.swallow)",
+     "kind": "helper",
+     "family": "outside"
+    }
+   ],
+   "line": "식구 많은 흥부가 제비를 도와 박씨를 받는다, 놀부(동그라미 아빠)는 따라 하다 풍물패가 쏟아져 함께 잔치",
+   "kept": [
+    "다친 제비를 고쳐 줌",
+    "박씨 → 박 타기",
+    "놀부의 따라 하기와 박"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_ureng",
+   "title": "우렁 각시 (도형 블록 사연)",
+   "origin": "한국 전래동화(공유 저작물)",
+   "apps": {
+    "block": 8
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "혼자 농사짓는 총각",
+     "who": "네모 아빠",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "우렁 각시",
+     "who": "세모 아내",
+     "kind": "helper",
+     "family": "semo"
+    },
+    {
+     "role": "각시를 탐내는 원님",
+     "who": "욕심쟁이 원님(가족 밖, 목소리·순한 판)",
+     "kind": "villain",
+     "family": "outside"
+    }
+   ],
+   "line": "항아리 속 우렁에서 각시가 나와 밥상을 차려 준다. 원님은 내기에서 지고 물러난다",
+   "kept": [
+    "논에서 큰 우렁이를 얻음",
+    "몰래 밥상을 차려 줌",
+    "항아리에서 각시가 나옴",
+    "원님의 욕심"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_axe",
+   "title": "금도끼 은도끼 (도형 블록 사연)",
+   "origin": "한국 전래동화(공유 저작물)",
+   "apps": {
+    "block": 9
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "나무꾼",
+     "who": "네모 아빠",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "산신령",
+     "who": "동그라미 아빠",
+     "kind": "helper",
+     "family": "dong"
+    },
+    {
+     "role": "욕심쟁이 이웃",
+     "who": "네모 엄마",
+     "kind": "funny",
+     "family": "nemo"
+    }
+   ],
+   "line": "정직한 나무꾼은 금·은·쇠 도끼를 모두 받고, 따라 한 이웃은 웃음이 터져 쇠도끼만 받는다",
+   "kept": [
+    "도끼가 연못에 빠짐",
+    "금도끼·은도끼·쇠도끼 세 번 물음",
+    "정직하면 모두 받음"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_ant",
+   "title": "개미와 베짱이 (도형 블록 사연)",
+   "origin": "이솝(공유 저작물)",
+   "apps": {
+    "block": 10
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "개미",
+     "who": "네모 엄마",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "베짱이",
+     "who": "세모 남편",
+     "kind": "funny",
+     "family": "semo"
+    },
+    {
+     "role": "지켜보는 이웃",
+     "who": "동그라미 아빠",
+     "kind": "helper",
+     "family": "dong"
+    }
+   ],
+   "line": "여름에 곳간을 한 칸씩 채우는 개미, 겨울엔 노래만 남은 베짱이 — 개미는 곡식 한 줌과 「내년엔 같이」를 건넨다",
+   "kept": [
+    "여름에 일하는 개미 / 노는 베짱이",
+    "겨울에 베짱이가 문을 두드림",
+    "곳간 채우기"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_sun",
+   "title": "해님 달님 (도형 블록 사연)",
+   "origin": "한국 전래동화(공유 저작물)",
+   "apps": {
+    "block": 11
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "오빠(달님)",
+     "who": "네모네 하나",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "동생(해님)",
+     "who": "네모네 두리",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "떡 팔러 간 엄마",
+     "who": "네모 엄마",
+     "kind": "helper",
+     "family": "nemo"
+    },
+    {
+     "role": "호랑이 → 바람 호랑이",
+     "who": "바람 호랑이(가족 밖, 소리·그림자)",
+     "kind": "villain",
+     "family": "outside"
+    }
+   ],
+   "line": "호랑이는 가족 밖 바람 호랑이, 엉덩방아만 찧고 웃는다 — 동아줄은 그대로",
+   "kept": [
+    "엄마 흉내를 내는 호랑이",
+    "나무 위로 피함",
+    "하늘에서 튼튼한 동아줄",
+    "해님과 달님이 됨"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
+   "id": "block_hare",
+   "title": "토끼와 거북이 (도형 블록 사연)",
+   "origin": "이솝(공유 저작물)",
+   "apps": {
+    "block": 12
+   },
+   "audience": "adult",
+   "cast": [
+    {
+     "role": "거북이",
+     "who": "네모 아빠",
+     "kind": "lead",
+     "family": "nemo"
+    },
+    {
+     "role": "토끼",
+     "who": "세모 남편",
+     "kind": "funny",
+     "family": "semo"
+    },
+    {
+     "role": "심판",
+     "who": "동그라미 아빠",
+     "kind": "helper",
+     "family": "dong"
+    }
+   ],
+   "line": "느림보 거북이가 한 칸씩 꾸준히, 낮잠 든 토끼는 웃으며 박수 — 심판은 동그라미 아빠",
+   "kept": [
+    "토끼와 거북이의 경주",
+    "토끼의 낮잠",
+    "꾸준한 거북이의 승리"
+   ],
+   "art_pending": [],
+   "status": "[제안]"
+  },
+  {
    "id": "kid_brothers",
    "title": "의좋은 형제",
    "origin": "한국 전래동화(공유 저작물)",

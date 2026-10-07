@@ -168,20 +168,17 @@ Q5 = [
 ]
 
 
-# ---------------- ⑦ 도형 블록 사연(장 끝 4컷): 같은 옛이야기를 "줄을 맞춰 쌓는" 눈으로 ----------------
-TB = [
- dict(base='pigs', title='아기돼지 삼형제', cuts=[
-  ('네모 엄마가 세 아이에게 벽돌 한 상자씩을 주었다. 「줄을 맞춰 쌓으면 튼튼한 집이 된단다.」', ['nemo_mom.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3'], None),
-  ('{kid1}와 {kid2}는 쉬운 볏짚·나무 조각으로 뚝딱뚝딱 먼저 지었다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], 'sparkle'),
-  ('바람 친구가 후— 불자 볏짚집과 나무집은 폴폴. {kid3}는 벽돌을 한 줄 한 줄 맞춰 쌓았다.', ['nemo_kids.kid3'], 'bang'),
-  ('벽돌집은 끄떡없어 모두 모였다. 줄을 맞춘 집 한 채가 마당 가득 환했다.', ['nemo_kids.kid3', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_mom.love'], 'heart')]),
- dict(base='bremen', title='브레멘 음악대', cuts=[
-  ('늙었다고 쫓겨난 네 친구 — 당나귀(네모 아빠), 개(세모 남편), 고양이(세모 아내), 수탉(동그라미 아빠).', ['nemo_dad.good', 'husband.good', 'wife.good', 'dong_dad.good'], None),
-  ('길 끝에 불 켜진 집이 보였지만 창문이 높았다. 네 친구는 발판 삼아 차곡차곡 쌓기로 했다.', ['nemo_dad.joy', 'husband.joy', 'wife.joy', 'dong_dad.joy'], 'question'),
-  ('당나귀 위에 개, 그 위에 고양이, 그 위에 수탉. 줄 맞춘 탑이 완성되자 함께 노래했다.', ['nemo_dad.joy', 'husband.joy', 'wife.joy', 'dong_dad.joy'], 'note'),
-  ('허깨비 도둑들이 놀라 달아나고, 빈집은 네 친구의 음악당이 되었다.', ['nemo_dad.love', 'husband.love', 'wife.love', 'dong_dad.warm'], 'heart')]),
-]
+# ---------------- ⑦ 도형 블록 사연(장 끝 4컷, 12장) — 원천은 tools/tales_block.py ----------------
+from tales_block import TB
 BLOCK_SEASONS = [dict(id='chuseok', title='추석 송편 빚기', months=[9, 10], n=14, seed=901, type='family'), dict(id='kimjang', title='김장 한 판', months=[11], n=16, seed=902, type='lines'), dict(id='yeonmal', title='연말 별 모으기', months=[12, 1], n=18, seed=903, type='star')]
+
+
+def block_tale(t):
+    """⑦ 사연의 배역표 항목(cast=None 이면 ③의 같은 이야기 배역표)"""
+    base = next((x for x in T12 if x['id'] == t['base']), None)
+    if t.get('cast') is None:
+        return dict(base, title=t['title'] + ' (도형 블록 사연)', cuts=t['cuts'])
+    return dict(title=t['title'] + ' (도형 블록 사연)', origin=t.get('origin', base['origin'] if base else ''), cast=t['cast'], line=t['line'], kept=t['kept'], cuts=t['cuts'])
 
 
 def tally(items):
@@ -211,6 +208,15 @@ def check():
     assert semo <= 3, '세모의 웃긴 실패역/악역 3회 초과: %d' % semo
     for t in T12:
         assert len(t['cuts']) == 4, t['title'] + ' 4컷(기승전결)이어야 한다'
+    bl = [block_tale(t) for t in TB]
+    for t in bl:
+        for role, who, kind, fam in t['cast']:
+            assert not (kind == 'villain' and fam != 'outside'), '⑦ 가족이 악역: %s / %s' % (t['title'], role)
+            assert not (fam == 'semo' and re.search(r'아들|딸|아이|막둥이', who)), '세모네에는 아이가 없다: %s' % who
+        assert len(t['cuts']) == 4, t['title']
+    semo_b = sum(1 for t in bl for _, _, k, f in t['cast'] if f == 'semo' and k in ('funny', 'villain'))
+    assert semo_b <= 3, '⑦ 세모의 웃긴 실패역/악역 3회 초과: %d' % semo_b
+    assert len(TB) == 12
     return semo
 
 
@@ -222,7 +228,7 @@ if __name__ == '__main__':
     for i, t in enumerate(T12):
         tales.append(ent(t, id=t['id'], apps={'merge': i + 1, 'color': i + 1}, aud='adult'))
     for i, t in enumerate(TB):
-        base = next(x for x in T12 if x['id'] == t['base']); tales.append(ent(dict(base, title=base['title'] + ' (도형 블록 사연)'), id='block_' + t['base'], apps={'block': i + 1}, aud='adult'))
+        tales.append(ent(block_tale(t), id='block_' + t['base'], apps={'block': i + 1}, aud='adult'))
     for k in K:
         tales.append(ent(k, id='kid_' + k['id'], apps={'playground': k['ch'], 'mode': k['mode']}, aud='kid'))
     for q in Q5:
@@ -240,6 +246,8 @@ if __name__ == '__main__':
         assert len(t['cuts']) == 4
     json.dump({'version': 1, 'note': '⑦ 도형 블록 사연(장 끝 4컷)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['o_lantern', 'o_mailbox', 'o_doghouse'], 'seasons': BLOCK_SEASONS,
                'stories': [dict(chapter=i + 1, title=t['title'], tale=t['base'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(TB)]}, open(R / 'data/block_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    p = R / 'games/block/block-gen.js'; g = open(p, encoding='utf-8').read()
+    g = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + t['title'] + "'" for t in TB) + "];", g, count=1); open(p, 'w', encoding='utf-8').write(g)
     p = R / 'data/story.json'; S = json.load(open(p, encoding='utf-8'))
     def cuts(bg, lst):
         out = []
@@ -258,6 +266,11 @@ if __name__ == '__main__':
     md += table(tally(T12), '③④ 12장 가족별 역할 횟수') + ['', '(세모의 웃긴 실패역·악역: %d회 / 가족 악역: 0)' % semo_funny, ''] + table(tally(K), '① 3권 11~15장 가족별 역할 횟수') + ['', '## ③ 도형 합치기 12장 · ④ 옛이야기 색칠 12장 (같은 이야기, 장당 4컷 기승전결)', '']
     for i, t in enumerate(T12):
         md += ['### %d장 %s — %s' % (i + 1, t['title'], t['origin']), '- 배역: ' + ' / '.join('%s → %s [%s·%s]' % (a, b, KIND[c], FAM[d]) for a, b, c, d in t['cast']), '- 우리 버전: ' + t['line'], '- 원작에서 유지: ' + ' · '.join(t['kept'])] + (['- 그림 대기: ' + ', '.join(t['art_pending'])] if t.get('art_pending') else []) + ['']
+    md += ['## ⑦ 도형 블록 12장 (장 끝 4컷, 120판 목표 — 슬라이스는 1~2장)', '']
+    for i, t0 in enumerate(TB):
+        t = block_tale(t0)
+        md += ['### %d장 %s — %s' % (i + 1, t0['title'], t['origin']), '- 배역: ' + ' / '.join('%s → %s [%s·%s]' % (a, b, KIND[c], FAM[d]) for a, b, c, d in t['cast']), '- 우리 버전: ' + t['line'], '- 원작에서 유지: ' + ' · '.join(t['kept']), '']
+    md += table(tally([block_tale(t) for t in TB]), '⑦ 12장 가족별 역할 횟수') + ['']
     md += ['## ① 놀이터 3권 11~15장 (막둥이 시점)', '']
     for k in K:
         md += ['### %d장 %s — %s (놀이: %s)' % (k['ch'], k['title'], k['origin'], k['mode']), '- 배역: ' + ' / '.join('%s → %s [%s·%s]' % (a, b, KIND[c], FAM[d]) for a, b, c, d in k['cast']), '- 우리 버전: ' + k['line'], '- 원작에서 유지: ' + ' · '.join(k['kept'])] + (['- 그림 대기: ' + ', '.join(k['art_pending'])] if k.get('art_pending') else []) + ['']

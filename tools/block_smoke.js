@@ -1,6 +1,6 @@
 // 도형 블록 smoke: node tools/block_smoke.js  (URL=… 로 빌드본, LV=1-10 구간). 풀이를 실제 화면(디버그 place)·끌기·탭으로 재생한다.
 const { chromium } = require('playwright-core'), path = require('path');
-const URL = process.env.URL || 'http://localhost:8765/games/block/index.html', [A, B] = (process.env.LV || '1-20').split('-').map(Number);
+const URL = process.env.URL || 'http://localhost:8765/games/block/index.html', [A, B] = (process.env.LV || '1-120').split('-').map(Number);
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 const solveLevel = async (pg) => {
   const L = await pg.evaluate(() => BLOCK.debug.level());
@@ -23,14 +23,14 @@ const solveLevel = async (pg) => {
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent && !/^[★☆✔]+$/.test(e.textContent.trim())) { const f = parseFloat(getComputedStyle(e).fontSize); if (f < 17) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈 글자 크기 17px 이상 ' + small.slice(0, 4).join(','));
   await pg.evaluate(() => { GF.stack = []; GF.go('bhome'); GF.go('blevels'); }); await pg.waitForSelector('.screen.on .bk-l'); await shot('levels');
-  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .bk-l.off').length, all: document.querySelectorAll('.screen.on .bk-l').length })); ok(lk.all === 20 && lk.off === 19, '레벨 목록 20개(처음엔 1만 열림)');
+  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .bk-l.off').length, all: document.querySelectorAll('.screen.on .bk-l').length })); ok(lk.all === 120 && lk.off === 119, '레벨 목록 120개(처음엔 1만 열림)');
   for (let n = A; n <= B; n++) {
     await pg.evaluate((nn) => { GF.stack = []; GF.go('bhome'); GF.go('bplay', { n: nn }); BLOCK.unlockAll = true; BLOCK.fast = true; }, n); await pg.waitForSelector('.screen.on .bk-board');
     if (n === A) await shot('play0');
     const { L, done } = await solveLevel(pg);
     ok(done, '레벨 ' + n + ' 클리어(' + L.type + ', 조각 ' + L.queue.length + ', 최소 ' + L.par + ')');
     if (n === A) await shot('result');
-    if (n === 10 || n === 20) { const rw = await pg.evaluate(() => Room.owned().filter((id) => id.startsWith('o_')).length); ok(rw >= 1, '레벨 ' + n + ' 까지 집 소품 ' + rw + '개'); }
+    if (n === 10 || n === 120) { const rw = await pg.evaluate(() => Room.owned().filter((id) => id.startsWith('o_')).length); ok(rw >= 1, '레벨 ' + n + ' 까지 집 소품 ' + rw + '개'); }
   }
   if (A === 1) {
     // 끌어서 놓기(실제 포인터) + 되돌리기 + 탭 놓기
@@ -38,7 +38,7 @@ const solveLevel = async (pg) => {
     const mv = await pg.evaluate(() => BLOCK.debug.level().solution[0]);
     const pos = await pg.evaluate((m) => {
       const s = document.querySelector('.screen.on .bk-slot[data-k="' + m[0] + '"]').getBoundingClientRect(), c = BLOCK.debug.cells()[m[1] * 8 + m[2]].getBoundingClientRect(), t = BLOCK.debug.state().tray[m[0]], sh = BlockCore.PIECES[t.p];
-      const h = Math.max(...sh.map((x) => x[0])) + 1, w = Math.max(...sh.map((x) => x[1])) + 1, k = document.getElementById('safe').getBoundingClientRect().width / 360, g = 38 * k;
+      const h = Math.max(...sh.map((x) => x[0])) + 1, w = Math.max(...sh.map((x) => x[1])) + 1, k = document.getElementById('safe').getBoundingClientRect().width / 360, g = 36 * k;
       return { sx: s.x + s.width / 2, sy: s.y + s.height / 2, tx: c.x + (w * g) / 2, ty: c.y + h * g + g * 1.1 };
     }, mv);
     await pg.mouse.move(pos.sx, pos.sy); await pg.mouse.down(); await pg.mouse.move(pos.tx, pos.ty, { steps: 8 });

@@ -41,7 +41,7 @@
     enter(r) {
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r);
       el('div', 'qz-ttl', r, '<div class="uk-title" style="font-size:32px">당신은 어느 도형?</div><div class="qz-sub">웹툰 속 하루로 알아보는 나</div>');
-      const m = me(), fam = el('div', 'qz-fam', r);
+      GF.hero(r, 'quiz'); const m = me(), fam = el('div', 'qz-fam', r);
       if (m) { const T = D.types[m.f], card = el('button', 'qz-mine', fam, `<img src="${GF.src(T.char)}"><div><small>내 도형</small><b>${tsub(m.f, m.s).n}</b></div>`); card.style.background = T.bg; card.onclick = () => GF.go('qcard'); }
       else ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const nxt = D.tests.find((t) => !SV.res[t.id]) || D.tests[0], go = UK.btn({ text: doneN() ? '다음 테스트 · ' + nxt.title : '바로 시작 · ' + nxt.title, icon: 'play', cls: 'block', onclick: () => GF.go('qplay', { id: nxt.id }) }, el('div', 'qz-go', r));   // 한 번 눌러 첫 문항까지

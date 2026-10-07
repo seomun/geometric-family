@@ -2078,6 +2078,222 @@
    "game": "block",
    "season": null,
    "physical": null
+  },
+  {
+   "no": 101,
+   "id": "o_flowerpot",
+   "name": "창가 화분",
+   "set": "outer",
+   "room": "yard",
+   "w": 36,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪴",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 102,
+   "id": "o_window",
+   "name": "네모 창문",
+   "set": "outer",
+   "room": "yard",
+   "w": 44,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪟",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 103,
+   "id": "o_flag",
+   "name": "깃대",
+   "set": "outer",
+   "room": "yard",
+   "w": 32,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🚩",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 104,
+   "id": "o_sign",
+   "name": "가게 간판",
+   "set": "outer",
+   "room": "yard",
+   "w": 44,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪧",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 105,
+   "id": "o_bench",
+   "name": "평상",
+   "set": "outer",
+   "room": "yard",
+   "w": 56,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪑",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 106,
+   "id": "o_jar",
+   "name": "장독대",
+   "set": "outer",
+   "room": "yard",
+   "w": 40,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🏺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 107,
+   "id": "o_hay",
+   "name": "볏단",
+   "set": "outer",
+   "room": "yard",
+   "w": 40,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌾",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 108,
+   "id": "o_well",
+   "name": "우물",
+   "set": "outer",
+   "room": "yard",
+   "w": 48,
+   "h": 52,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "⛲",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 109,
+   "id": "o_cart",
+   "name": "손수레",
+   "set": "outer",
+   "room": "yard",
+   "w": 48,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛒",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 110,
+   "id": "o_lamp",
+   "name": "가로등",
+   "set": "outer",
+   "room": "yard",
+   "w": 32,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "💡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 111,
+   "id": "o_pond",
+   "name": "작은 연못",
+   "set": "outer",
+   "room": "yard",
+   "w": 56,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪷",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 112,
+   "id": "o_swing",
+   "name": "그네",
+   "set": "outer",
+   "room": "yard",
+   "w": 52,
+   "h": 52,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎠",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
   }
  ],
  "meTypes": {

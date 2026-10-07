@@ -1,6 +1,6 @@
 // 도형 블록 판 생성: node tools/block_gen.js [개수=20] → data/block_levels.json (생성기 games/block/block-gen.js)
 const fs = require('fs'), path = require('path'), C = require('../games/block/block-core.js'), G = require('../games/block/block-gen.js');
-const N = +process.argv[2] || 20, OUT = path.join(__dirname, '..', 'data', 'block_levels.json');
+const N = +process.argv[2] || 120, OUT = path.join(__dirname, '..', 'data', 'block_levels.json');
 const levels = []; let fail = 0; const t0 = Date.now();
 for (let n = 1; n <= N; n++) {
   const L = G.make(n, n * 7919); if (!L) { fail++; console.log('FAIL', n); continue; }

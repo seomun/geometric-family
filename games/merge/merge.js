@@ -61,7 +61,7 @@
     enter(r) {
       r.classList.add('uk', 'mg'); GF.bg('indoor2', r); bar();
       const tt = el('div', 'mg-ttl', r, '<div class="uk-title">도형 합치기</div><div class="mg-sub">같은 도형을 합쳐 집을 채워요</div>'); const pl = Room.mePlate(tt); if (pl) { tt.querySelector('.mg-sub').style.display = 'none'; pl.style.marginTop = '6px'; }   // 내 도형 문패(⑤ 결과)
-      const fam = el('div', 'mg-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
+      GF.hero(r, 'merge'); const fam = el('div', 'mg-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));
       const cont = UK.btn({ text: '이어서 하기 · 레벨 ' + last, icon: 'play', cls: 'block', onclick: () => GF.go('mplay', { n: last }) }, el('div', 'mg-btns', r));   // 첫 실행: 한 번 눌러 첫 판
       if (!Object.keys(SV.stars).length) setTimeout(() => { if (cont.isConnected) UK.finger(r, cont); }, 900);

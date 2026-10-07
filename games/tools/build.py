@@ -15,7 +15,7 @@ def inline_slots(root):
     p = root / 'data' / 'art_slots.json'
     if not p.exists(): return {}
     d = json.loads(p.read_text(encoding='utf-8')); n = 0
-    for kind in ('bg', 'props', 'cover', 'room', 'icons'):
+    for kind in ('bg', 'props', 'cover', 'room', 'icons', 'hero'):
         for k, v in list(d.get(kind, {}).items()):
             f = root / v
             if v.startswith(('data:', '<svg')) or not f.exists():

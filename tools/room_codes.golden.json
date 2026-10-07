@@ -398,5 +398,53 @@
  "o_lantern": {
   "no": 100,
   "code": "2SJRVK"
+ },
+ "o_flowerpot": {
+  "no": 101,
+  "code": "2TJYMG"
+ },
+ "o_window": {
+  "no": 102,
+  "code": "2UK5D0"
+ },
+ "o_flag": {
+  "no": 103,
+  "code": "2VKC43"
+ },
+ "o_sign": {
+  "no": 104,
+  "code": "2WKJUZ"
+ },
+ "o_bench": {
+  "no": 105,
+  "code": "2XKQLV"
+ },
+ "o_jar": {
+  "no": 106,
+  "code": "2YKXCR"
+ },
+ "o_hay": {
+  "no": 107,
+  "code": "2ZL43B"
+ },
+ "o_well": {
+  "no": 108,
+  "code": "30LBY2"
+ },
+ "o_cart": {
+  "no": 109,
+  "code": "31LIOY"
+ },
+ "o_lamp": {
+  "no": 110,
+  "code": "32LPFU"
+ },
+ "o_pond": {
+  "no": 111,
+  "code": "33LW6Q"
+ },
+ "o_swing": {
+  "no": 112,
+  "code": "34M3XA"
  }
 }

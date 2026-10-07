@@ -322,3 +322,5 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .homeplay svg { width: 46px; height: 46px; margin-left: 5px; } .homeplay:active { transform: translateY(3px); }
 @keyframes homeplay { 50% { transform: scale(1.07) } }
 #safe.wide .homeplay { left: 24px; margin-left: 122px; top: auto; bottom: 168px; }
+
+.hero-art { position: absolute; left: 14px; right: 14px; top: 150px; height: 210px; background-size: contain; background-repeat: no-repeat; background-position: center; opacity: .5; pointer-events: none; }

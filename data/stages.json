@@ -959,8 +959,7 @@
   "mode": "plant",
   "bg": "hill",
   "heroes": [
-   "nemo_mom.joy",
-   "nemo_dad.joy",
+   "nemo_kids.kid1",
    "baby.joy"
   ],
   "stages": [

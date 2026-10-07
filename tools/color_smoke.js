@@ -25,9 +25,11 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     const good = p.type === 'wall' ? await pg.waitForSelector('.screen.on .rm-room', { timeout: 3000 }).then(() => true).catch(() => false) : await pg.waitForSelector('.screen.on .cl-hang', { timeout: 3000 }).then(() => true).catch(() => false);
     if (!good) ok(false, '완성 흐름 ' + p.id); else if (p.type === 'free' && !seen.hang) { seen.hang = 1; await shot('hang'); }
   }
+  const wall = await pg.evaluate(() => ({ hung: Room.placedIn('kid').filter((x) => x.img && !x.drawer).length, drawer: Room.placedIn('kid').filter((x) => x.img && x.drawer).length })); ok(wall.hung === 6 && wall.drawer === 56, '벽 액자 최대 6 + 서랍 ' + wall.drawer + ' (벽 ' + wall.hung + ')');
   const st = await pg.evaluate(() => ({ done: Object.keys(COLOR.debug.SV().done).length, frames: Room.placedIn('kid').filter((x) => x.img).length, items: Room.owned().length }));
   ok(st.done === pages.length, '모든 페이지 완성 ' + st.done + '/' + pages.length + ' · 액자 ' + st.frames + ' · 아이템 ' + st.items);
   await pg.evaluate(() => { GF.stack = []; GF.go('chome'); GF.go('chouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');
+  await pg.click('.screen.on .tb-x, .screen.on .uk-round.gold').catch(() => {}); await pg.waitForSelector('.screen.on .cl-dr .cl-th'); await shot('drawer');
   ok(errs.length === 0, '콘솔 오류 없음 ' + errs.slice(0, 3).join(' | '));
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
 })();

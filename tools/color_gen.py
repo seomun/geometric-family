@@ -22,10 +22,27 @@ DOTS = {
  'car': [[40,190],[40,140],[90,130],[120,80],[200,80],[235,130],[265,140],[265,190],[230,190],[225,215],[175,215],[170,190],[130,190],[125,215],[75,215],[70,190]],
  'cake': [[60,120],[240,120],[250,240],[50,240],[60,170],[100,150],[150,170],[200,150],[240,170]],
 }
-for k,v in DOTS.items(): add('trace','t_'+k,dots=v)
+def spread(pts, minD=52):
+    pts=[list(map(float,p)) for p in pts]
+    for _ in range(80):
+        moved=False
+        for i in range(len(pts)):
+            for j in range(i+1,len(pts)):
+                dx=pts[j][0]-pts[i][0]; dy=pts[j][1]-pts[i][1]; d=(dx*dx+dy*dy)**0.5 or 0.01
+                if d<minD:
+                    push=(minD-d)/2+0.5; ux,uy=dx/d,dy/d
+                    pts[i][0]-=ux*push; pts[i][1]-=uy*push; pts[j][0]+=ux*push; pts[j][1]+=uy*push; moved=True
+        for p in pts: p[0]=min(272,max(28,p[0])); p[1]=min(272,max(28,p[1]))
+        if not moved: break
+    return [[round(x),round(y)] for x,y in pts]
+for k,v in DOTS.items():
+    sp=spread(v)
+    md=min(((sp[i][0]-sp[j][0])**2+(sp[i][1]-sp[j][1])**2)**0.5 for i in range(len(sp)) for j in range(i+1,len(sp)))
+    add('trace','t_'+k,dots=sp,minGap=round(md))
 # 4) 스티커 장면 — 배경 위에 가족·가구 스티커
 STK = ['chr:baby.joy','chr:nemo_kids.kid1','chr:wife.joy','chr:dong_dad.good','chr:nemo_dad.joy','chr:nemo_mom.joy','art:plant','art:lamp','art:sofa','art:table','art:tree','art:train','shp:0:2','shp:1:2','shp:2:2','art:globe']
-for bg in ['home','stream','night','house','seaside','hill']: add('sticker','s_'+bg,bg=bg,tray=STK)
+DECO = {'home':[('tree',50,330,90),('party',255,340,110)], 'stream':[('tree',300,300,100),('train',90,420,130)], 'night':[('tree',60,360,100),('lamp',290,380,50),('globe',180,420,50)], 'house':[('party',90,330,120),('plant',280,370,50),('tree',320,310,90)], 'seaside':[('bowl',90,430,60),('tree',300,330,90),('suitcase',200,440,60)], 'hill':[('tree',70,320,100),('tree',290,340,110),('sofa',180,470,120)]}
+for bg in ['home','stream','night','house','seaside','hill']: add('sticker','s_'+bg,bg=bg,tray=STK,deco=[dict(art=a,x=x,y=y,w=w) for a,x,y,w in DECO[bg]])
 # 5) 벽지 만들기 — 도형 무늬 두 색으로 아이 방 벽지
 for i,(bg,fg,shp) in enumerate([('#FFE3C2','#FF8FA8',0),('#D8F0FF','#4DABF7',1),('#E2E6FA','#9775FA',2),('#FFF0B8','#69DB7C',0),('#FFE0E8','#FFD43B',1),('#E3F6DC','#FFA94D',2)]):
     add('wall','w_%d'%(i+1),pat=shp,bg=bg,fg=fg)

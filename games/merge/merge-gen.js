@@ -16,7 +16,8 @@
     let cg = n < 8 ? 1 : n < 100 ? 2 : 3, cols = n <= 20 ? 4 : 5, rows = n <= 20 ? 4 : n <= 50 ? 5 : 6; if (n > 90) cols = 6;
     const p = { tutorial: 0.97, intro: 0.9, rest: 0.98, growth: 0.85 - 0.2 * f, challenge: 0.78 }[t], d = n < 60 ? 0 : { tutorial: 0, intro: 0.05, rest: 0.03, growth: 0.06 + 0.06 * f, challenge: 0.1 }[t];
     let extra = { tutorial: 0.8, intro: 0.6, rest: 0.8, growth: 0.45 - 0.12 * f, challenge: 0.25 }[t], goalT = T, nGoal = 1, moveAt = 0, clear = 0, solo = false, junkT = 2;
-    if (type === 'order') { cg = Math.min(3, Math.max(2, cg)); nGoal = n > 40 ? 2 : 1; }
+    if (t === 'rest') { rows = Math.min(6, rows + 1); }   // 쉬어 가기: 판을 한 단계 키워 숨통을 틔운다
+    if (type === 'order') { cg = Math.min(3, Math.max(2, cg)); nGoal = n > 80 ? 2 : 1; }
     if (type === 'tight') { cols = Math.max(3, cols - 1); rows = Math.max(3, rows - 1); goalT = Math.max(2, T - 1); extra += 0.2; }
     if (type === 'solo') { cg = 1; solo = true; goalT = Math.min(5, T + 1); extra += 0.1; }
     if (type === 'clear') { cg = Math.max(1, Math.min(cg, 2)); clear = 2 + (n > 60 ? 1 : 0) + (n > 100 ? 1 : 0); junkT = n > 50 ? 3 : 2; goalT = Math.max(2, T - 1); extra += 0.15; }
@@ -29,7 +30,7 @@
     opts = opts || {};
     const solo = P.solo ? [(n * 2) % 3] : null, avail = solo || (n < 4 ? [0] : n < 8 ? [0, 1] : [0, 1, 2]);
     let chs = n < 4 ? [0] : n < 8 ? [1] : []; if (solo) chs = solo.slice(); else if (!chs.length) [(n * 2) % 3, (n * 2 + 1) % 3, (n * 2 + 2) % 3].forEach((c) => { if (chs.length < P.cg && avail.includes(c)) chs.push(c); });
-    const goals = chs.map((c, i) => ({ c, t: Math.max(2, P.T - i), n: (P.type === 'kimjang' ? P.nGoal : P.nGoal) + (n > 105 && i === 0 && P.type !== 'kimjang' ? 1 : 0) }));
+    const goals = chs.map((c, i) => ({ c, t: Math.max(2, P.T - i), n: (P.type === 'kimjang' ? P.nGoal : P.nGoal) + (n > 105 && i === 0 && P.type === 'make' ? 1 : 0) }));
     const pre = [], used = new Set();
     if (P.clear) for (let j = 0; j < P.clear; j++) { const i = (rng() * P.cols * P.rows) | 0; if (!used.has(i)) { used.add(i); pre.push({ i, c: chs[(rng() * chs.length) | 0], t: P.junkT, k: 1 }); } }
     else if (n > 70 && (P.t === 'challenge' || n % 4 === 0)) { const k = 1 + Math.min(2, ((n - 70) / 25) | 0); for (let j = 0; j < k; j++) { const i = (rng() * P.cols * P.rows) | 0; if (!used.has(i)) { used.add(i); pre.push({ i, c: avail[(rng() * avail.length) | 0], t: 4 }); } } }
@@ -46,21 +47,27 @@
       S.q.push(piece); orig.push(piece); const c = M.candidates(S, 1); if (!c.length) return null; M.place(S, c[0]); path.push(c[0]);
     }
     if (!M.won(S)) return null;
-    const base = orig.length, ex = Math.max(1, Math.round(base * P.extra)), tail = []; for (let i = 0; i < ex; i++) tail.push({ c: gc[(rng() * gc.length) | 0], t: 1, s: 0 });
+    const base = orig.length; if (P.t === 'challenge' && base > 52) return null;   // 도전판 조각 상한(60 = 풀이 + 여유)
+    const ex = Math.max(1, Math.round(base * P.extra)), tail = []; for (let i = 0; i < ex; i++) tail.push({ c: gc[(rng() * gc.length) | 0], t: 1, s: 0 });
+    if (P.t === 'challenge') { while (orig.length + tail.length > 60 && tail.length > 1) tail.pop(); }
     L.queue = orig.concat(tail).map((q) => ({ c: q.c, t: q.t, s: q.s ? 1 : 0 })); L.solution = path; L.stars = [Math.floor(ex / 2), Math.max(1, ex)];
     return L;
   }
-  const greedyTarget = (P, n, N) => ({ tutorial: 0.95, intro: 0.85, rest: 0.92, growth: 0.74 - 0.26 * Math.min(1, n / ((N || 120) * 0.8)), challenge: 0.4 }[P.t]);
+  const greedyTarget = (P, n, N) => ({ tutorial: 0.95, intro: 0.85, rest: 0.85, growth: 0.74 - 0.26 * Math.min(1, n / ((N || 120) * 0.8)), challenge: 0.4 }[P.t]);
   /** 한 판 생성(목표 탐욕 성공률에 맞춰 여유 조각을 늘려 가며). seedBase 로 같은 입력 = 같은 판. */
   function make(n, N, seedBase, opts) {
-    opts = opts || {}; const P0 = params(n, N, opts.type); let L = null;
-    for (let tries = 0; tries < 14 && !L; tries++) {
-      const P = Object.assign({}, P0, { T: tries > 6 ? Math.max(2, P0.T - 1) : P0.T });
+    opts = opts || {}; const P0 = params(n, N, opts.type), want = greedyTarget(P0, n, N); let L = null, best = null, bestG = -1, hit = false;
+    const tries = P0.t === 'challenge' ? 30 : 14;
+    for (let t = 0; t < tries && !hit; t++) {
+      const P = Object.assign({}, P0, { T: t > tries / 2 ? Math.max(2, P0.T - 1) : P0.T });
       for (let ex = P.extra; ex <= (P0.t === 'rest' ? 2.6 : P0.t === 'challenge' ? 1.5 : 1.2); ex += 0.2) {
-        const l = build(n, Object.assign({}, P, { extra: ex }), mulberry((seedBase || n * 7919) + tries * 101), opts); if (!l) break;
-        L = l; if (opts.noGreedy || M.greedyWinRate(l, P0.t === 'rest' ? 40 : 24, mulberry(n + 5)) >= greedyTarget(P0, n, N)) break;
+        const l = build(n, Object.assign({}, P, { extra: ex }), mulberry((seedBase || n * 7919) + t * 101), opts); if (!l) break;
+        L = l; if (opts.noGreedy) { hit = true; break; }
+        const g = M.greedyWinRate(l, P0.t === 'rest' ? 40 : 24, mulberry(n + 5)); if (g > bestG) { bestG = g; best = l; }
+        if (g >= want) { hit = true; break; }
       }
     }
+    L = hit ? L : (best || L);   // 목표를 못 맞추면 가장 쉬웠던 후보(도전판은 하한 0.40 을 위해 시도를 더 한다)
     if (!L && (opts.type || typeOf(n)) !== 'make') return make(n, N, seedBase, Object.assign({}, opts, { type: 'make' }));   // 안 만들어지면 만들기로 대체
     return L;
   }

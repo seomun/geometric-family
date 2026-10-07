@@ -59,8 +59,8 @@
   function paintedURI(pg, fills) { const root = baseSVG(pg), R = regionize(root); Object.keys(fills || {}).forEach((i) => R.regions[i] && R.regions[i].setAttribute('fill', fills[i])); return svgURI(root); }
   function stickerSrc(key) { const [k, a, b] = key.split(':'); if (k === 'chr') return GF.src(a); if (k === 'art') return uri(RoomArt.make(a, '#F6C28B', {})); return uri(shapeStr(+a, +b)); }
   function sceneImage(pg, desc) {
-    const bg = uri(GF.bgSVG(pg.bg)), st = (desc.stickers || []).map((s) => `<image href="${stickerSrc(s.k)}" x="${s.x - 36}" y="${s.y - 36}" width="72" height="72" preserveAspectRatio="xMidYMid meet"/>`).join('');
-    return uri(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="30 150 300 330" width="300" height="330"><image href="${bg}" x="0" y="0" width="360" height="640"/>${st}</svg>`);
+    const bg = uri(GF.bgSVG(pg.bg)), deco = (pg.deco || []).map((d) => `<image href="${uri(RoomArt.make(d.art, '#F6C28B', {}))}" x="${d.x - d.w / 2}" y="${d.y - d.w / 2}" width="${d.w}" height="${d.w}" preserveAspectRatio="xMidYMid meet"/>`).join(''), st = (desc.stickers || []).map((s) => `<image href="${stickerSrc(s.k)}" x="${s.x - 36}" y="${s.y - 36}" width="72" height="72" preserveAspectRatio="xMidYMid meet"/>`).join('');
+    return uri(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="30 150 300 330" width="300" height="330"><image href="${bg}" x="0" y="0" width="360" height="640"/>${deco}${st}</svg>`);
   }
   /** 집 액자에 들어갈 그림(완성한 페이지 id → 이미지). 저장된 색/스티커 위치로 다시 그린다 */
   function imageFor(id) {
@@ -124,8 +124,15 @@
       const need = () => (num ? target.size : Math.max(2, Math.ceil(R.regions.length * 0.5)));
       const refresh = () => { done.classList.toggle('dim', filled() < need()); };
       refresh();
-      setTimeout(() => { if (!num) return; const sr = root.getBoundingClientRect(), vb = root.viewBox.baseVal, k = Math.min(sr.width / vb.width, sr.height / vb.height), ox = sr.left + (sr.width - vb.width * k) / 2, oy = sr.top + (sr.height - vb.height * k) / 2;   // 번호 표시: 칸 가운데
-        colorable.forEach((i) => { const b = R.regions[i].getBoundingClientRect(), t = document.createElementNS('http://www.w3.org/2000/svg', 'text'); t.setAttribute('class', 'num'); t.setAttribute('text-anchor', 'middle'); t.setAttribute('x', ((b.left + b.width / 2 - ox) / k).toFixed(1)); t.setAttribute('y', ((b.top + b.height / 2 - oy) / k + 5).toFixed(1)); t.textContent = nums.indexOf(R.orig[i]) + 1; root.appendChild(t); }); }, 60);
+      setTimeout(() => { if (!num) return;   // 번호 표시: 칸 안쪽에서 가장 넓은 지점, 칸 크기에 비례한 글자
+        const rc = root.getScreenCTM(); if (!rc) return; const inv = rc.inverse();
+        colorable.forEach((i) => {
+          const n = R.regions[i], bb = n.getBBox(), ctm = n.getScreenCTM(); if (!ctm) return; let best = null, N = 12, step = Math.max(bb.width, bb.height) / 28;
+          for (let a = 0; a < N; a++) for (let b = 0; b < N; b++) { const x = bb.x + (a + 0.5) * bb.width / N, y = bb.y + (b + 0.5) * bb.height / N; if (!n.isPointInFill(new DOMPoint(x, y))) continue; let rad = 1e9; for (let k = 0; k < 8; k++) { const dx = Math.cos(k * Math.PI / 4), dy = Math.sin(k * Math.PI / 4); let d = 0; while (d < 400 && n.isPointInFill(new DOMPoint(x + dx * d, y + dy * d))) d += step; rad = Math.min(rad, d); if (best && rad <= best.r) break; } if (!best || rad > best.r) best = { x, y, r: rad }; }
+          if (!best) return; const p = new DOMPoint(best.x, best.y).matrixTransform(ctm).matrixTransform(inv), rootR = best.r * (ctm.a / rc.a), fs = Math.max(9, Math.min(22, rootR * 1.15));
+          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text'); t.setAttribute('class', 'num'); t.setAttribute('text-anchor', 'middle'); t.setAttribute('x', p.x.toFixed(1)); t.setAttribute('y', (p.y + fs * 0.35).toFixed(1)); t.setAttribute('font-size', fs.toFixed(1)); t.style.fontSize = fs + 'px'; t.style.strokeWidth = Math.max(2, fs / 5) + 'px'; t.textContent = nums.indexOf(R.orig[i]) + 1; root.appendChild(t);
+        });
+      }, 80);
       root.addEventListener('pointerdown', (e) => {
         const n = e.target.closest && e.target.closest('[data-r]'); if (!n) return; const i = +n.getAttribute('data-r'); e.preventDefault();
         if (num) { if (R.orig[i] !== color) { GF.sfx('hmm'); n.classList.add('cl-shake'); setTimeout(() => n.classList.remove('cl-shake'), 420); return; } }
@@ -146,7 +153,7 @@
     let newItems = [];
     if (roomOK) {
       Room.grant('w_frame');
-      const L = Room.placedIn('kid').filter((x) => x.img), k = L.length % 8, p = Room.place('w_frame', 'kid', 10 + (k % 4) * 80, 8 + ((k / 4) | 0) * 70); p.img = pg.id; Room.save();     // 새 액자 = 이 그림
+      const hung = Room.placedIn('kid').filter((x) => x.img && !x.drawer), used = new Set(hung.map((x) => x.slot)), k = [0, 1, 2, 3, 4, 5].find((s) => !used.has(s)); let p; if (k != null) { p = Room.place('w_frame', 'kid', 14 + (k % 3) * 104, 6 + ((k / 3) | 0) * 72); p.slot = k; } else { p = Room.place('w_frame', 'kid', 0, 0); p.drawer = 1; } p.img = pg.id; Room.save();   // 벽에는 최대 6개, 나머지는 액자 서랍     // 새 액자 = 이 그림
       Room.data.items.filter((x) => x.needPages && x.needPages <= doneCount()).forEach((x) => { if (Room.grant(x.id)) newItems.push(x); });
     }
     GF.sfx('celebrate');
@@ -165,8 +172,8 @@
       const pg = page(p.id), art = el('div', 'cl-art', r), dots = pg.dots, svgNS = 'http://www.w3.org/2000/svg'; let idx = 0;
       const root = parse('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"></svg>'); art.appendChild(root);
       const path = document.createElementNS(svgNS, 'path'); path.setAttribute('fill', 'none'); path.setAttribute('stroke', '#FF6B6B'); path.setAttribute('stroke-width', 7); path.setAttribute('stroke-linecap', 'round'); path.setAttribute('stroke-linejoin', 'round'); root.appendChild(path);
-      const cs = dots.map((d, i) => { const g = document.createElementNS(svgNS, 'g'); const c = document.createElementNS(svgNS, 'circle'), t = document.createElementNS(svgNS, 'text'); c.setAttribute('cx', d[0]); c.setAttribute('cy', d[1]); c.setAttribute('r', 17); c.setAttribute('fill', ['#FF8FA8', '#FFC933', '#8FD3F4', '#B197FC', '#6CCB8A'][i % 5]); c.setAttribute('stroke', '#fff'); c.setAttribute('stroke-width', 3); t.setAttribute('x', d[0]); t.setAttribute('y', d[1] + 6); t.setAttribute('text-anchor', 'middle'); t.setAttribute('font-size', 17); t.setAttribute('font-weight', 900); t.setAttribute('fill', '#fff'); t.textContent = i + 1; g.appendChild(c); g.appendChild(t); g.dataset.i = i; root.appendChild(g); return g; });
-      const hint = () => { cs.forEach((g, i) => g.firstChild.setAttribute('r', i === idx ? 21 : 17)); }; hint();
+      const cs = dots.map((d, i) => { const g = document.createElementNS(svgNS, 'g'); const c = document.createElementNS(svgNS, 'circle'), t = document.createElementNS(svgNS, 'text'); c.setAttribute('cx', d[0]); c.setAttribute('cy', d[1]); c.setAttribute('r', 15); c.setAttribute('fill', ['#FF8FA8', '#FFC933', '#8FD3F4', '#B197FC', '#6CCB8A'][i % 5]); c.setAttribute('stroke', '#fff'); c.setAttribute('stroke-width', 3); t.setAttribute('x', d[0]); t.setAttribute('y', d[1] + 6); t.setAttribute('text-anchor', 'middle'); t.setAttribute('font-size', 16); t.setAttribute('font-weight', 900); t.setAttribute('fill', '#fff'); t.textContent = i + 1; g.appendChild(c); g.appendChild(t); g.dataset.i = i; root.appendChild(g); return g; });
+      const hint = () => { cs.forEach((g, i) => g.firstChild.setAttribute('r', i === idx ? 19 : 15)); }; hint();
       const draw = () => { path.setAttribute('d', 'M' + dots.slice(0, idx).map((d) => d.join(' ')).join('L') + (idx === dots.length ? 'z' : '')); };
       root.addEventListener('pointerdown', (e) => {
         const g = e.target.closest && e.target.closest('g[data-i]'); if (!g) return; const i = +g.dataset.i; e.preventDefault();
@@ -184,6 +191,7 @@
     enter(r, p) {
       r.classList.add('uk', 'cl'); const pg = page(p.id); GF.bg(pg.bg, r);
       const scene = el('div', 'cl-scene', r), tray = el('div', 'cl-tray', r), placed = []; let sel = null;
+      (pg.deco || []).forEach((d) => { const im = el('img', 'cl-deco', scene); im.src = uri(RoomArt.make(d.art, '#F6C28B', {})); im.style.cssText = `position:absolute;left:${d.x - d.w / 2}px;top:${d.y - d.w / 2}px;width:${d.w}px;height:${d.w}px;object-fit:contain;pointer-events:none`; });   // 배경에 깔리는 고정 장식
       const SW = () => r.getBoundingClientRect().width / 360;
       const done = UK.round({ icon: 'check', cls: 'lg dim', label: '완성', onclick: () => complete() }, r); done.style.cssText += ';position:absolute;right:14px;bottom:112px;z-index:7';
       const bin = UK.round({ icon: 'close', cls: 'gray', label: '지우기', onclick: () => { if (sel != null) { placed[sel].el.remove(); placed.splice(sel, 1); sel = null; GF.sfx('hmm'); refresh(); } } }, r); bin.style.cssText += ';position:absolute;left:14px;bottom:112px;z-index:7';
@@ -222,8 +230,25 @@
     enter(r) {
       r.classList.add('uk', 'cl'); GF.bg('indoor2', r);
       const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house(sc, { room: 'kid' });
+      const dr = UK.round({ icon: 'book', cls: 'gold', label: '액자 서랍', onclick: () => drawer(r) }, r); dr.style.cssText += ';position:absolute;right:12px;top:72px;z-index:12';
     },
   });
+  /* 액자 서랍(앨범): 지금까지 완성한 그림 전부. 벽에는 최대 6개 — 눌러서 걸고 내린다 */
+  function drawer(r) {
+    const sc = el('div', 'uk-scrim', r), sh = el('div', 'uk-sheet', sc), grid = el('div', 'cl-dr', sh), acts = el('div', 'acts row', sh); acts.style.justifyContent = 'center';
+    const L = () => Room.placedIn('kid').filter((x) => x.img);
+    const draw = () => {
+      grid.innerHTML = ''; L().forEach((e) => { const b = el('button', 'cl-th' + (e.drawer ? ' off' : ' on'), grid), i = el('img', '', b); i.src = imageFor(e.img) || ''; if (!e.drawer) el('div', 'ck', b, UK.icon('check')).style.cssText = 'background:#fff;border-radius:50%;box-shadow:var(--uk-sh)';
+        b.onclick = () => {
+          GF.sfx('pick'); const hung = L().filter((x) => !x.drawer);
+          if (!e.drawer) { e.drawer = 1; delete e.slot; }
+          else { const used = new Set(hung.map((x) => x.slot)); let k = [0, 1, 2, 3, 4, 5].find((s2) => !used.has(s2)); if (k == null) { const o = hung[0]; o.drawer = 1; k = o.slot; delete o.slot; } e.drawer = 0; e.slot = k; e.x = 14 + (k % 3) * 104; e.y = 6 + ((k / 3) | 0) * 72; }
+          Room.save(); draw();
+        }; });
+      if (!L().length) el('div', 'uk-text', grid, '아직 그림이 없어요');
+    };
+    draw(); UK.round({ icon: 'close', cls: 'lg', onclick: () => { sc.remove(); GF.screens.chouse.enter(GF.screens.chouse.el.firstChild ? (GF.screens.chouse.el.innerHTML = '', GF.screens.chouse.el) : GF.screens.chouse.el); } }, acts);
+  }
 
   /* ---------------- 부팅 ---------------- */
   CL.start = async function (opts) {

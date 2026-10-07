@@ -74,7 +74,7 @@
         stage.innerHTML = ''; stage.style.cssText = `--wall:${R.wall};--floor:${R.floor}`;
         const roomEl = el('div', 'rm-room', stage); const wl = el('div', 'rm-wall', roomEl); if (Room.S.wall && Room.S.wall[cur]) wl.style.cssText += ';' + Room.wallStyle(Room.S.wall[cur]); el('div', 'rm-floor', roomEl);
         Room.placedIn(cur).forEach((p, i) => {
-          const it = Room.item(p.id); if (!it) return;
+          const it = Room.item(p.id); if (!it || p.drawer) return;
           const d = el('img', 'rm-it' + (sel === i ? ' sel' : ''), roomEl); d.src = Room.src(it, p.c, p.img && Room.cfg.imageFor ? { image: Room.cfg.imageFor(p.img) } : null); d.style.cssText = `left:${p.x}px;top:${p.y}px;width:${it.w}px;height:${it.h}px;z-index:${Math.round(p.y + it.h)};transform:scaleX(${p.flip ? -1 : 1})`;
           d.style.pointerEvents = 'auto'; d.draggable = false;
           d.addEventListener('pointerdown', (e) => {

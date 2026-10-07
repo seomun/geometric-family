@@ -1,0 +1,5 @@
+c1_ch1 rc=0 no errors
+c1_ch2 rc=0 ?
+c1_ch3 rc=0 no errors
+c1_ch4 rc=0 no errors
+c1_ch5 rc=0 no errors

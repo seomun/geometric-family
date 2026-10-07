@@ -52,6 +52,8 @@
     visibleSet(it) { return Room.family || Room.cfg.mode === 'adult' || Room.set(it.set).game === Room.cfg.game || Room.set(it.set).game === 'all'; },
     /** 벽지: 방마다 "무늬+두 색" 설명 하나만 저장(그림 데이터 아님). 도형 무늬 타일을 CSS 배경으로 */
     wallStyle(d) { const c = d.fg, body = d.pat === 0 ? `<rect x="12" y="12" width="36" height="36" rx="9" fill="${c}"/>` : d.pat === 1 ? `<path d="M30 10L52 50H8z" fill="${c}"/>` : `<circle cx="30" cy="30" r="19" fill="${c}"/>`; const face = `<circle cx="23" cy="${d.pat === 1 ? 38 : 28}" r="2.4" fill="#4A3030"/><circle cx="37" cy="${d.pat === 1 ? 38 : 28}" r="2.4" fill="#4A3030"/><path d="M25 ${d.pat === 1 ? 44 : 35}q5 4 10 0" fill="none" stroke="#4A3030" stroke-width="2" stroke-linecap="round"/>`; return `background-color:${d.bg};background-image:url("data:image/svg+xml;charset=utf-8,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">' + body + face + '</svg>')}");background-size:54px 54px`; },
+    /** 내 도형(⑤ 결과): {f:가족, s:세부 타입} 설명 하나만 — 성인 그룹 앱들이 문패·말투 힌트로 쓴다 */
+    setMe(d) { Room.S.me = d; Room.save(); }, me: () => Room.S.me || null,
     setWall(room, d) { Room.S.wall = Room.S.wall || {}; Room.S.wall[room] = d; Room.save(); },
     placedIn: (r) => (Room.S.placed[r] = Room.S.placed[r] || []),
     place(id, room, x, y) {

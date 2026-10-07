@@ -1534,6 +1534,309 @@
    "physical": null,
    "needPages": 60,
    "emoji": "👑"
+  },
+  {
+   "no": 71,
+   "id": "q_plate_nemo",
+   "name": "네모 문패",
+   "set": "badge",
+   "room": "yard",
+   "w": 60,
+   "h": 30,
+   "slot": "wall",
+   "art": "nameplate",
+   "colors": [
+    "#E8870F"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 72,
+   "id": "q_plate_semo",
+   "name": "세모 문패",
+   "set": "badge",
+   "room": "yard",
+   "w": 60,
+   "h": 30,
+   "slot": "wall",
+   "art": "nameplate",
+   "colors": [
+    "#2F8FD0"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 73,
+   "id": "q_plate_dong",
+   "name": "동그라미 문패",
+   "set": "badge",
+   "room": "yard",
+   "w": 60,
+   "h": 30,
+   "slot": "wall",
+   "art": "nameplate",
+   "colors": [
+    "#3B4A7A"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 74,
+   "id": "q_type_nemo0",
+   "name": "네모 아빠형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "🧮"
+  },
+  {
+   "no": 75,
+   "id": "q_type_nemo1",
+   "name": "네모 엄마형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "🥘"
+  },
+  {
+   "no": 76,
+   "id": "q_type_nemo2",
+   "name": "네모 막둥이형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "😄"
+  },
+  {
+   "no": 77,
+   "id": "q_type_semo0",
+   "name": "세모 남편형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "🧳"
+  },
+  {
+   "no": 78,
+   "id": "q_type_semo1",
+   "name": "세모 아내형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "💬"
+  },
+  {
+   "no": 79,
+   "id": "q_type_semo2",
+   "name": "세모 화해형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "🍜"
+  },
+  {
+   "no": 80,
+   "id": "q_type_dong0",
+   "name": "동그라미 아빠형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "📋"
+  },
+  {
+   "no": 81,
+   "id": "q_type_dong1",
+   "name": "동그라미 엄마형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "👀"
+  },
+  {
+   "no": 82,
+   "id": "q_type_dong2",
+   "name": "동그라미 아들형 배지",
+   "set": "badge",
+   "room": "yard",
+   "w": 34,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "📚"
+  },
+  {
+   "no": 83,
+   "id": "q_game_1",
+   "name": "반응 트로피",
+   "set": "badge",
+   "room": "yard",
+   "w": 36,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "⚡"
+  },
+  {
+   "no": 84,
+   "id": "q_game_2",
+   "name": "기억 트로피",
+   "set": "badge",
+   "room": "yard",
+   "w": 36,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "🧠"
+  },
+  {
+   "no": 85,
+   "id": "q_game_3",
+   "name": "선택 트로피",
+   "set": "badge",
+   "room": "yard",
+   "w": 36,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "⚖️"
+  },
+  {
+   "no": 86,
+   "id": "q_game_4",
+   "name": "그림 트로피",
+   "set": "badge",
+   "room": "yard",
+   "w": 36,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "🖼️"
+  },
+  {
+   "no": 87,
+   "id": "q_game_5",
+   "name": "가족 맞히기 트로피",
+   "set": "badge",
+   "room": "yard",
+   "w": 36,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null,
+   "emoji": "🏅"
   }
  ]
 }

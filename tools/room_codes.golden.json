@@ -278,5 +278,73 @@
  "w_crown": {
   "no": 70,
   "code": "1YDX77"
+ },
+ "q_plate_nemo": {
+  "no": 71,
+  "code": "1ZE4XR"
+ },
+ "q_plate_semo": {
+  "no": 72,
+  "code": "20EBSI"
+ },
+ "q_plate_dong": {
+  "no": 73,
+  "code": "21EIJE"
+ },
+ "q_type_nemo0": {
+  "no": 74,
+  "code": "22EPAA"
+ },
+ "q_type_nemo1": {
+  "no": 75,
+  "code": "23EW16"
+ },
+ "q_type_nemo2": {
+  "no": 76,
+  "code": "24F3RQ"
+ },
+ "q_type_semo0": {
+  "no": 77,
+  "code": "25FAIT"
+ },
+ "q_type_semo1": {
+  "no": 78,
+  "code": "26FH9P"
+ },
+ "q_type_semo2": {
+  "no": 79,
+  "code": "27FO0L"
+ },
+ "q_type_dong0": {
+  "no": 80,
+  "code": "28FVRH"
+ },
+ "q_type_dong1": {
+  "no": 81,
+  "code": "29G2I1"
+ },
+ "q_type_dong2": {
+  "no": 82,
+  "code": "2AG9FS"
+ },
+ "q_game_1": {
+  "no": 83,
+  "code": "2BGG6V"
+ },
+ "q_game_2": {
+  "no": 84,
+  "code": "2CGNXR"
+ },
+ "q_game_3": {
+  "no": 85,
+  "code": "2DGUON"
+ },
+ "q_game_4": {
+  "no": 86,
+  "code": "2EH1F7"
+ },
+ "q_game_5": {
+  "no": 87,
+  "code": "2FH863"
  }
 }

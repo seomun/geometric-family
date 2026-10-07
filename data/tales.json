@@ -14,19 +14,19 @@
    "cast": [
     {
      "role": "첫째 돼지(볏짚집)",
-     "who": "네모네 큰아이",
+     "who": "네모네 하나",
      "kind": "lead",
      "family": "nemo"
     },
     {
      "role": "둘째 돼지(나무집)",
-     "who": "네모네 둘째",
+     "who": "네모네 두리",
      "kind": "lead",
      "family": "nemo"
     },
     {
      "role": "셋째 돼지(벽돌집)",
-     "who": "네모네 셋째",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },
@@ -47,7 +47,7 @@
    "kept": [
     "세 형제가 각자 집을 짓는다",
     "볏짚·나무집은 날아가고 벽돌집은 끄떡없다",
-    "셋째의 집으로 모인다(셋째 집)"
+    "세찌의 집으로 모인다(세찌 집)"
    ],
    "art_pending": [],
    "status": "[제안]"
@@ -148,13 +148,13 @@
    "cast": [
     {
      "role": "콩쥐",
-     "who": "네모네 큰아이",
+     "who": "네모네 하나",
      "kind": "lead",
      "family": "nemo"
     },
     {
      "role": "팥쥐",
-     "who": "네모네 둘째",
+     "who": "네모네 두리",
      "kind": "funny",
      "family": "nemo"
     },
@@ -369,13 +369,13 @@
    "cast": [
     {
      "role": "오빠(달님)",
-     "who": "네모네 큰아이",
+     "who": "네모네 하나",
      "kind": "lead",
      "family": "nemo"
     },
     {
      "role": "동생(해님)",
-     "who": "네모네 둘째",
+     "who": "네모네 두리",
      "kind": "lead",
      "family": "nemo"
     },
@@ -489,7 +489,7 @@
    "cast": [
     {
      "role": "잭",
-     "who": "네모네 둘째",
+     "who": "네모네 두리",
      "kind": "lead",
      "family": "nemo"
     },

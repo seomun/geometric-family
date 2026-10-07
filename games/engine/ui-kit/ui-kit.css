@@ -114,3 +114,12 @@ button.uk-card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0
 .uk-in { animation: uk-slide var(--uk-t-slow) var(--uk-ease) both; } .uk-wob { animation: uk-wob .4s; } .uk-float { animation: uk-float 2.4s ease-in-out infinite; }
 .uk-confetti i { position: absolute; top: -12px; width: 10px; height: 14px; border-radius: 3px; animation: uk-fall 1.6s ease-in forwards; }
 @keyframes uk-fall { to { transform: translateY(700px) rotate(540deg); opacity: .9 } }
+
+/* 튜토리얼 손가락: 5앱 공통(분홍 동그라미 + 퍼지는 고리). 톡톡(.tap) / 끌기(.drag) */
+.uk-finger { position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; z-index: 1100; pointer-events: none; background: rgba(255,143,168,.55); box-shadow: 0 0 0 8px rgba(255,143,168,.25); }   /* ①의 .finger(gf.css)와 같은 모양 */
+.uk-finger i { position: absolute; inset: -4px; border-radius: 50%; border: 5px solid rgba(255,143,168,.75); opacity: 0; }
+.uk-finger.tap { animation: ukTap 1.1s ease-in-out infinite; } .uk-finger.tap i { animation: ukRing 1.1s ease-out infinite; }
+.uk-finger.drag { animation: ukDrag 1.8s ease-in-out infinite; } .uk-finger.drag i { animation: ukRing 1.8s ease-out infinite; }
+@keyframes ukTap { 0%, 100% { transform: scale(1) } 40% { transform: scale(.82) } }
+@keyframes ukRing { 0% { transform: scale(.7); opacity: .9 } 70%, 100% { transform: scale(1.7); opacity: 0 } }
+@keyframes ukDrag { 0% { transform: translate(0, 0) scale(1) } 15% { transform: translate(0, 0) scale(.85) } 80% { transform: translate(var(--dx), var(--dy)) scale(.85) } 100% { transform: translate(var(--dx), var(--dy)) scale(1) } }

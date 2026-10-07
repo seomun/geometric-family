@@ -52,6 +52,16 @@
       const snd = UK.round({ icon: o.muted ? 'mute' : 'sound', onclick: o.onSound }, bar);
       return { bar, stars, sound: snd };
     },
+    /** 튜토리얼 손가락(5앱 공통 모양): 대상 위에서 톡톡(tap) 하거나 to 로 끌어다 놓는 시늉(drag). 아무 데나 누르면 사라진다. 반환: 지우는 함수 */
+    finger(parent, target, o) {
+      o = o || {}; const pr = parent.getBoundingClientRect(), k = pr.width / (parent.offsetWidth || pr.width) || 1;
+      const pos = (t) => { const r = t.getBoundingClientRect(); return { x: (r.left + r.width / 2 - pr.left) / k, y: (r.top + r.height / 2 - pr.top) / k }; };
+      const a = pos(target), f = el('div', 'uk-finger' + (o.to ? ' drag' : ' tap'), parent, '<i></i>');
+      f.style.left = a.x + 'px'; f.style.top = a.y + 'px';
+      if (o.to) { const b = pos(o.to); f.style.setProperty('--dx', (b.x - a.x) + 'px'); f.style.setProperty('--dy', (b.y - a.y) + 'px'); }
+      const off = () => { f.remove(); document.removeEventListener('pointerdown', off, true); }; setTimeout(() => document.addEventListener('pointerdown', off, true), 300); setTimeout(off, o.ms || 9000);
+      return off;
+    },
     toast(msg, parent) { const t = el('div', 'uk-toast', parent || host(), msg); setTimeout(() => t.remove(), 2300); return t; },
     /** 팝업: UK.modal({title, body, big, chips:[{icon,text}], actions:[{text,cls,onclick,keep}], row, dismiss}) */
     modal(o) {

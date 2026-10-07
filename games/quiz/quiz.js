@@ -44,6 +44,8 @@
       const m = me(), fam = el('div', 'qz-fam', r);
       if (m) { const T = D.types[m.f], card = el('button', 'qz-mine', fam, `<img src="${GF.src(T.char)}"><div><small>내 도형</small><b>${tsub(m.f, m.s).n}</b></div>`); card.style.background = T.bg; card.onclick = () => GF.go('qcard'); }
       else ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
+      const nxt = D.tests.find((t) => !SV.res[t.id]) || D.tests[0], go = UK.btn({ text: doneN() ? '다음 테스트 · ' + nxt.title : '바로 시작 · ' + nxt.title, icon: 'play', cls: 'block', onclick: () => GF.go('qplay', { id: nxt.id }) }, el('div', 'qz-go', r));   // 한 번 눌러 첫 문항까지
+      if (!doneN()) setTimeout(() => { if (go.isConnected) UK.finger(r, go); }, 900);
       const g = el('div', 'qz-grid', r), b = (t, icon, cls, fn) => UK.btn({ text: t, icon, cls, onclick: fn }, g);
       b('테스트 ' + doneN() + '/' + D.tests.length, 'star', 'gold', () => GF.go('qtests')); b('미니게임', 'play', 'sky', () => GF.go('qgames'));
       b('내 도형 카드', 'heart', 'pink', () => { if (m) GF.go('qcard'); else { GF.sfx('hmm'); UK.toast('테스트를 하나 끝내면 카드가 생겨요', r); } }); b('우리 집', 'home', 'dong', () => GF.go('qhouse'));

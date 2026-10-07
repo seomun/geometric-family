@@ -59,8 +59,9 @@
     if (!ac && A) { try { ac = new A(); } catch (e) {} }
     if (ac && ac.state === 'suspended') ac.resume();
   }
+  let pitch = 1;                                               // GF.sfx(id, {st}) 가 합성음 대체에도 적용되도록 한 번만 쓰는 배율
   function tone(f, t, d, type, v) {
-    if (!ac || GF.state.settings.mute) return;
+    if (!ac || GF.state.settings.mute) return; f *= pitch;
     const o = ac.createOscillator(), g = ac.createGain(), t0 = ac.currentTime + t;
     o.type = type || 'sine'; o.frequency.setValueAtTime(f, t0);
     const vol = (v || 0.25) * GF.state.settings.vol;
@@ -89,13 +90,14 @@
       fetch(u).then((r) => r.arrayBuffer()).then((a) => new Promise((ok, no) => ac.decodeAudioData(a, ok, no))).then((b) => { bufs[id] = b; }).catch(() => {});
     });
   }
-  GF.sfx = function (n) {
+  /** GF.sfx(id, {st}) — st: 반음 단위 음높이 이동(연쇄 콤보처럼 오를수록 높아지게). 같은 id 라도 파일은 하나, 재생 속도로만 바꾼다. */
+  GF.sfx = function (n, opt) {
     ensureAudio(); loadSounds(); n = (snd().alias || {})[n] || n;
     if (!ac || GF.state.settings.mute) return;
-    const b = bufs[n], e = snd().sfx[n];
-    if (!b) { if (SFX[n]) SFX[n](); return; }                 // 파일이 없거나 아직 못 읽었으면 합성음으로 대신
+    const b = bufs[n], e = snd().sfx[n], st = opt && opt.st ? opt.st : 0, mul = Math.pow(2, st / 12);
+    if (!b) { if (SFX[n]) { pitch = mul; try { SFX[n](); } finally { pitch = 1; } } return; }                 // 파일이 없거나 아직 못 읽었으면 합성음으로 대신
     const s = ac.createBufferSource(), g = ac.createGain(), j = e && e.jitter != null ? e.jitter : 0.05;
-    s.buffer = b; s.playbackRate.value = 1 + (Math.random() - 0.5) * j;     // 같은 소리가 반복돼도 지루하지 않게
+    s.buffer = b; s.playbackRate.value = mul * (1 + (Math.random() - 0.5) * (st ? j * 0.2 : j));     // 같은 소리가 반복돼도 지루하지 않게
     g.gain.value = GF.state.settings.vol * ((e && e.vol) != null ? e.vol : 1); s.connect(g); g.connect(ac.destination); s.start();
   };
   // 음악: 슬롯(theme_main·theme_kids·night …)을 id 로 틀고, file 이 비어 있으면 fallback 슬롯을 쓴다. 같은 파일이면 끊지 않고 이어 간다.
@@ -341,6 +343,13 @@
       clearInterval(GF._blink);
       GF._blink = setInterval(() => { const [im, w] = GF.rnd(ims); const o = im.src; im.src = GF.src(w + '.joy'); setTimeout(() => { im.src = o; }, 140); }, 1700);
       if (!GF._intro) { GF._intro = 1; setTimeout(() => GF.sting(), 650); }
+      /* 첫 실행 30초: 타이틀에서 한 번 눌러 바로 첫 판(이야기는 판 사이·장 끝에서 이어진다). 처음이면 손가락이 알려 준다 */
+      const nx = GF.quickStage();
+      if (nx) {
+        const go = el('button', 'homeplay', r, IC.play); go.setAttribute('aria-label', '놀이 시작');
+        go.onclick = () => { GF.sfx('pick'); Stage.start({ kind: 'story', ch: nx.ch, k: nx.k, id: nx.id }); };
+        if (!GF.state.stages.c1A && window.UK) setTimeout(() => { if (go.isConnected) UK.finger(r, go, { tap: true }); }, 900);
+      }
       const row = el('div', 'homebtns', r);
       [['story', 'book', '#FFE0E8', () => GF.go('shelf')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album', { book: 1 })], ['house', 'home', '#FFE3C2', () => GF.go('khouse')]].forEach((b) => {
         const k = el('button', 'card', row, IC[b[1]]); k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
@@ -533,6 +542,14 @@
 
   /* ---------------- 스테이지 선택 ---------------- */
   const stageDone = (id) => GF.state.stages[id] && GF.state.stages[id].done;
+  /** 다음에 할 첫 판: 열려 있는 장에서 아직 안 깬 첫 단계(없으면 null) */
+  GF.quickStage = () => {
+    for (let n = 1; n <= 40; n++) {
+      const ch = 'ch' + n, def = GF.data.stages[ch]; if (!def) continue; if (!(n === 1 || n === 6 || n === 11 || stageDone('c' + (n - 1) + 'C'))) continue;
+      for (let k = 0; k < def.stages.length; k++) { const id = 'c' + n + 'ABC'[k]; if (!stageDone(id)) return { ch, k, id }; }
+    }
+    return null;
+  };
   GF.screen('stages', {
     wide: () => true,
     enter(r, p) {

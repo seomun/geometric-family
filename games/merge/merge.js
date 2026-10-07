@@ -63,7 +63,8 @@
       const tt = el('div', 'mg-ttl', r, '<div class="uk-title">도형 합치기</div><div class="mg-sub">같은 도형을 합쳐 집을 채워요</div>'); const pl = Room.mePlate(tt); if (pl) { tt.querySelector('.mg-sub').style.display = 'none'; pl.style.marginTop = '6px'; }   // 내 도형 문패(⑤ 결과)
       const fam = el('div', 'mg-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));
-      UK.btn({ text: '이어서 하기 · 레벨 ' + last, icon: 'play', cls: 'block', onclick: () => GF.go('mplay', { n: last }) }, el('div', 'mg-btns', r));
+      const cont = UK.btn({ text: '이어서 하기 · 레벨 ' + last, icon: 'play', cls: 'block', onclick: () => GF.go('mplay', { n: last }) }, el('div', 'mg-btns', r));   // 첫 실행: 한 번 눌러 첫 판
+      if (!Object.keys(SV.stars).length) setTimeout(() => { if (cont.isConnected) UK.finger(r, cont); }, 900);
       const g = el('div', 'mg-grid', r), dailyDone = SV.daily.date === today() && SV.daily.done;
       const b = (t, icon, cls, fn, badge) => { const x = UK.btn({ text: t, icon, cls, onclick: fn }, g); if (badge) el('i', 'mg-badge', x, badge); return x; };
       b('레벨', 'shapes', 'sky', () => GF.go('mlevels'));
@@ -161,7 +162,7 @@
           setTimeout(() => {
             if (e.type === 'move') { say('이사! 판이 한 줄 넓어졌어요'); GF.sfx('star'); draw(frame, []); return; }
             chain++; e.from.forEach((j) => { if (j !== e.at) fly(prev.cells[j], j, e.at); });
-            setTimeout(() => { draw(frame, [e.at]); GF.sfx('ok'); try { const c = center(cells[e.at]); GF.burst(document.getElementById('safe'), c.x, c.y, e.t >= 5 ? 14 : 8); } catch (x) {} }, slow(190));
+            setTimeout(() => { draw(frame, [e.at]); GF.sfx('ok', { st: [0, 2, 4, 7, 9, 12, 14, 16][Math.min(chain - 1, 7)] }); try { const c = center(cells[e.at]); GF.burst(document.getElementById('safe'), c.x, c.y, e.t >= 5 ? 14 : 8); } catch (x) {} }, slow(190));
             if (chain >= 2) say('연쇄 ×' + chain);
             if (e.jackpot) { say('대박! 두 단계 껑충'); GF.sfx('star'); } if (e.refund) say('조각 하나를 돌려받았어요');
             if (e.cleared) say('짐을 치웠어요');
@@ -201,6 +202,7 @@
       function lose() { busy = true; say('한 번 더!'); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
       MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
       buildBoard(); draw(); showTip();
+      if (!LV.kind && LV.id <= 2 && !hist.length) setTimeout(() => { const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }, 1200);   // 처음 두 판: 첫 칸을 손가락이 알려 준다
     },
   });
 

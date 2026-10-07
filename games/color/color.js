@@ -2,6 +2,7 @@
    완성작은 집(아이 방) 액자가 된다(대표 장면: 액자가 벽에 걸리는 순간). 키트(UK)·공유 룸·GF.story·공통 소리 id 를 처음부터 쓴다. 놀이 UI 에는 글자 없음. */
 (function () {
   'use strict';
+  let bloomId = 0;
   const el = UK.el, CL = (window.COLOR = { debug: {} });
   const KEY = 'gf:color:v1', INK = '#4A3030';
   const PAL = ['#FF6B6B', '#FFA94D', '#FFD43B', '#69DB7C', '#4DABF7', '#9775FA', '#F783AC', '#A9744F', '#FFFFFF', '#868E96'];
@@ -76,9 +77,10 @@
       el('div', 'cl-ttl', r, '<div class="uk-title">막둥이 색칠북</div>');
       const fam = el('div', 'cl-fam', r); ['nemo_kids.kid1', 'baby.joy', 'wife.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const row = el('div', 'cl-cards', r);
+      const first = !SV.intro;
       const c1 = el('button', 'cl-card', row, UK.icon('brush')); c1.style.background = '#FFE0E8'; c1.onclick = () => { GF.sfx('pick'); GF.go('cbook'); };
       const c2 = el('button', 'cl-card', row, UK.icon('home')); c2.style.background = '#FFE3C2'; c2.onclick = () => { GF.sfx('pick'); GF.go('chouse'); };
-      if (!SV.intro) { SV.intro = 1; save(); }
+      if (first) { SV.intro = 1; save(); setTimeout(() => { if (c1.isConnected) UK.finger(r, c1); }, 900); }   // 첫 실행: 붓 → 그림 하나 = 두 번 누르면 색칠
     },
   });
 
@@ -101,6 +103,7 @@
         grid.innerHTML = ''; D.pages.filter((p) => p.type === SV.tab).forEach((pg) => { const b = el('button', 'cl-th', grid); thumb(pg, b); b.onclick = () => { GF.sfx('pick'); GF.go(pg.type === 'trace' && !SV.done[pg.id] ? 'ctrace' : pg.type === 'sticker' ? 'csticker' : pg.type === 'wall' ? 'cwall' : 'cpaint', { id: pg.id }); }; });
       };
       draw();
+      if (!Object.keys(SV.done).length) setTimeout(() => { const t0 = grid.querySelector('.cl-th'); if (t0 && t0.isConnected) UK.finger(r, t0); }, 700);
     },
   });
 
@@ -133,10 +136,22 @@
           const t = document.createElementNS('http://www.w3.org/2000/svg', 'text'); t.setAttribute('class', 'num'); t.setAttribute('text-anchor', 'middle'); t.setAttribute('x', p.x.toFixed(1)); t.setAttribute('y', (p.y + fs * 0.35).toFixed(1)); t.setAttribute('font-size', fs.toFixed(1)); t.style.fontSize = fs + 'px'; t.style.strokeWidth = Math.max(2, fs / 5) + 'px'; t.textContent = nums.indexOf(R.orig[i]) + 1; root.appendChild(t);
         });
       }, 80);
+      let streak = 0, lastFill = 0;
+      /* 번짐: 누른 자리에서 색이 동그랗게 퍼져 칸을 채운다(칸 모양으로 잘라서). 끝나면 칸 색이 바뀌고 덮개는 사라진다 */
+      const NS = 'http://www.w3.org/2000/svg';
+      function bloom(n, ev, col) {
+        try {
+          const par = n.parentNode, ctm = n.getScreenCTM(); if (!ctm || !par) return; const p = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(ctm.inverse()), bb = n.getBBox(), R0 = Math.hypot(bb.width, bb.height) + 6;
+          const id = 'bl' + (++bloomId), cp = document.createElementNS(NS, 'clipPath'); cp.setAttribute('id', id); const cl = n.cloneNode(false); cl.removeAttribute('data-r'); cl.removeAttribute('fill'); cp.appendChild(cl);
+          const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('r', 1); c.setAttribute('fill', col); c.setAttribute('clip-path', 'url(#' + id + ')'); c.style.pointerEvents = 'none';
+          par.insertBefore(cp, n.nextSibling); par.insertBefore(c, cp.nextSibling);
+          const t0 = performance.now(), D = 240, step = (t) => { const k = Math.min(1, (t - t0) / D); c.setAttribute('r', (R0 * (1 - Math.pow(1 - k, 3))).toFixed(1)); if (k < 1) requestAnimationFrame(step); else { c.remove(); cp.remove(); } }; requestAnimationFrame(step);
+        } catch (x) { /* 번짐 효과 실패는 칠하기에 영향 없음 */ }
+      }
       root.addEventListener('pointerdown', (e) => {
         const n = e.target.closest && e.target.closest('[data-r]'); if (!n) return; const i = +n.getAttribute('data-r'); e.preventDefault();
         if (num) { if (R.orig[i] !== color) { GF.sfx('hmm'); n.classList.add('cl-shake'); setTimeout(() => n.classList.remove('cl-shake'), 420); return; } }
-        hist.push({ i, prev: fills[i] }); fills[i] = color; n.setAttribute('fill', color); GF.sfx(num ? 'ok' : 'drop'); refresh();
+        hist.push({ i, prev: fills[i] }); fills[i] = color; bloom(n, e, color); n.setAttribute('fill', color); const nowT = performance.now(); streak = nowT - lastFill < 900 ? Math.min(streak + 1, 5) : 0; lastFill = nowT; GF.sfx(num ? 'ok' : 'drop', { st: [0, 2, 4, 7, 9, 12][streak] }); refresh();   // 이어서 칠하면 소리가 한 음씩 올라간다
         if (num && filled() >= target.size) complete(true);
       });
       function complete(auto) {

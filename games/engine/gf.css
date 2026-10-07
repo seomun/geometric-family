@@ -313,3 +313,12 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .ctcue { position: absolute; right: 14px; top: 8px; width: 60px; height: 60px; z-index: 6; background: rgba(255,255,255,.9); border-radius: 50%; padding: 6px; box-shadow: 0 3px 0 rgba(0,0,0,.12); } .ctflake { position: absolute; touch-action: none; z-index: 4; } .ctflake.hl { filter: drop-shadow(0 0 10px #FFC933); }
 .rhpad { position: absolute; border: 0; background: none; padding: 0; z-index: 3; touch-action: none; } .rhring { position: absolute; border: 6px solid #FFC933; border-radius: 50%; pointer-events: none; opacity: .75; } .rhring.hl { border-color: #FF8FA8; animation: blinkk .5s 3; }
 .rhgrow { position: absolute; border: 6px solid #FF8FA8; border-radius: 50%; pointer-events: none; transform: scale(.1); opacity: .9; animation: rhgrow linear forwards; } @keyframes rhgrow { to { transform: scale(1); opacity: .5 } }
+
+.ctflake::before, .hdfind::before, .plhole::before { content: ''; position: absolute; inset: -10px; }   /* 손가락이 굵어도 잡히는 터치 여백 */
+.rhpad, .ctflake, .shplate, .plhole, .hdfind, .hdleaf { touch-action: none; -webkit-tap-highlight-color: transparent; }
+
+/* 홈의 큰 시작 버튼(첫 실행 30초: 한 번에 첫 판) */
+.homeplay { position: absolute; left: 50%; top: 408px; width: 86px; height: 86px; margin-left: -43px; border-radius: 50%; border: 0; background: var(--uk-green, #6CCB8A); box-shadow: var(--uk-sh-lg, 0 6px 0 rgba(0,0,0,.16)); display: flex; align-items: center; justify-content: center; animation: homeplay 1.6s ease-in-out infinite; }
+.homeplay svg { width: 46px; height: 46px; margin-left: 5px; } .homeplay:active { transform: translateY(3px); }
+@keyframes homeplay { 50% { transform: scale(1.07) } }
+#safe.wide .homeplay { left: 24px; margin-left: 122px; top: auto; bottom: 168px; }

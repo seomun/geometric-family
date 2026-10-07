@@ -140,6 +140,7 @@
         const tx = el('div', 'tx', c, `<div class="nm" style="color:${B.tables[t].ink}">${B.tables[t].name}</div><div class="lv"></div><div class="rt"></div><div class="st"></div>`);
         el('div', 'bar', c, '<i></i>'); const dot = el('div', 'dot', c); dot.style.display = 'none';
         c.onclick = () => { GF.sfx('pick'); GF.go('idetail', { t }); };
+        if (t === 'nemo' && !S.tot && !Object.keys(S.g).length) setTimeout(() => { if (c.isConnected) UK.finger(r, c); }, 900);   // 첫 실행: 네모네 식탁 → 첫 식구 사기
         UI.upd.push(() => {
           const r_ = rates(now()), tn = { nemo: r_.n.w + r_.n.l, semo: r_.s.w, dong: r_.d.w }[t];
           $q(c, '.lv').textContent = '식탁 Lv ' + S.tl[t]; $q(c, '.rt').textContent = fmtRate(tn);
@@ -240,6 +241,7 @@
         }
       }
       renderAll();
+      if (!S.tot && !Object.keys(S.g).length) setTimeout(() => { const bt = list.querySelector('.buy:not([disabled])') || list.querySelector('.buy'); if (bt && bt.isConnected) UK.finger(sc, bt); }, 700);
       UI.upd.push(() => { const r_ = rates(now()); $q(mini, '#mw').textContent = '온기 ' + fmt(S.w); $q(mini, '#mr').textContent = fmtRate(r_.w); upd(); rowEls.forEach((f) => f()); });
       UI.upd.forEach((f) => f());
     },

@@ -9,9 +9,9 @@ GF.mode('rhythm', {
     pad.innerHTML = '<svg viewBox="0 0 220 220" style="width:100%;height:100%"><ellipse cx="110" cy="170" rx="96" ry="34" fill="#C98F5A" stroke="#4A3030" stroke-width="4"/><path d="M30 150a80 76 0 0 1 160 0z" fill="#FFF6C8" stroke="#4A3030" stroke-width="4"/><path d="M60 140q0-40 50-60q50 20 50 60" fill="#BFE8A0" stroke="#4A3030" stroke-width="3"/><path d="M110 64q-16 20-8 56M110 64q18 18 10 56" fill="none" stroke="#6CCB8A" stroke-width="5"/><circle cx="95" cy="118" r="4" fill="#4A3030"/><circle cx="125" cy="118" r="4" fill="#4A3030"/><path d="M98 130q12 8 24 0" fill="none" stroke="#4A3030" stroke-width="3.4" stroke-linecap="round"/></svg>';
     const ring = GF.el('div', 'rhring', root); ring.style.cssText += `;left:${cx - 120}px;top:${cy - 120}px;width:240px;height:240px`;
     const mkRing = () => { const r = GF.el('div', 'rhgrow', root); r.style.cssText += `;left:${cx - 120}px;top:${cy - 120}px;width:240px;height:240px;animation-duration:${P * 2}ms`; ctx.timeout(() => r.remove(), P * 2 + 100); };
-    const t0 = performance.now(); const sched = () => { if (finished) return; mkRing(); ctx.timeout(sched, P); }; sched();
+    const t0 = performance.now(); let k = 0; const sched = () => { if (finished) return; mkRing(); k++; ctx.timeout(sched, Math.max(0, t0 + k * P - performance.now())); }; sched();   // 박자는 처음 시각 기준 절대 간격(setTimeout 오차가 쌓이지 않게)
     pad.addEventListener('pointerdown', (e) => {
-      e.preventDefault(); if (finished) return; const now = performance.now(), idx = Math.round((now - t0) / P) - 2, d = Math.abs(now - (t0 + (idx + 2) * P));
+      e.preventDefault(); if (finished) return; const ts = e.timeStamp, now = ts > 0 && Math.abs(ts - performance.now()) < 400 ? ts : performance.now(), idx = Math.round((now - t0) / P) - 2, d = Math.abs(now - (t0 + (idx + 2) * P));
       if (idx >= 0 && d < P * 0.34 && idx !== last) { last = idx; hits++; ctx.sfx('note' + (1 + (hits % 5))); dd[hits - 1].classList.add('on'); GF.jump(pad); GF.burst(root, cx, cy - 30, 6); if (hits >= need) { finished = true; ctx.sfx('ok'); ctx.timeout(() => ctx.done({ mistakes: Math.floor(offs / 2) }), 900); } }
       else { offs++; ctx.sfx('tap'); pad.classList.add('tilt'); ctx.timeout(() => pad.classList.remove('tilt'), 300); }
     });

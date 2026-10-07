@@ -71,6 +71,12 @@
 
   /* ---------------- 화면 도우미 ---------------- */
   function toast(msg) { UK.toast(msg, GF.screens[GF.cur.name].el); }   // 키트 토스트(모든 게임 같은 모양)
+  /* 모든 화면 공통 상단 바(키트): ‹ · 집 · 웃음(하트 알약) · 소리 — 홈 화면만 ‹ 없음 */
+  GF.home2 = () => { GF.stack = []; GF.go('itable'); };
+  function bar(r, isHome) {
+    const tb = UK.topbar({ back: !isHome, home: true, stars: fmt(S.l), icon: 'heart', muted: GF.state.settings.mute, onBack: () => GF.back(), onHome: () => GF.home2(), onSound: () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); GF.sfx('tap'); } }, r);
+    tb.bar.style.cssText += ';position:absolute;left:0;right:0;top:0;z-index:30'; return tb;
+  }
   function floatText(parent, x, y, text) { const f = el('div', 'float', parent, text); f.style.left = x + 'px'; f.style.top = y + 'px'; setTimeout(() => f.remove(), 1000); }
   const headChars = { nemo: ['nemo_dad.good', 'nemo_mom.good', 'nemo_grandma.good', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3', 'baby.joy'], semo: ['wife.joy', 'husband.joy'], dong: ['dong_dad.good', 'nemo_mom.wink', 'nemo_kids.kid3', 'nemo_kids.kid2'] };
   function scene(t, w, h) {                                      // 식탁 그림: 식탁 위에 지금 앉은 식구
@@ -128,11 +134,11 @@
     bare: true,
     enter(r) {
       r.classList.add('idle'); const sc = el('div', 'scr', r); UI.upd = [];
-      GF.bg('indoor', sc);
+      GF.bg('indoor', sc); bar(sc, true);
       const hd = el('div', 'hd', sc, '<div class="w"><span id="iw">0</span><small id="iwr"></small></div><div class="row"><span>웃음 <b id="il">0</b></span><span>식탁 합계 Lv <b id="itl">3</b></span><span>도감 <b id="idx">0%</b></span></div>');
       ['nemo', 'semo', 'dong'].forEach((t, i) => {
-        const c = el('button', 'tcard', sc); c.style.top = 128 + i * 134 + 'px'; c.style.background = B.tables[t].color; c.dataset.t = t;
-        c.appendChild(scene(t, 132, 124));
+        const c = el('button', 'tcard', sc); c.style.top = 150 + i * 120 + 'px'; c.style.background = B.tables[t].color; c.dataset.t = t;
+        c.appendChild(scene(t, 132, 112));
         const tx = el('div', 'tx', c, `<div class="nm" style="color:${B.tables[t].ink}">${B.tables[t].name}</div><div class="lv"></div><div class="rt"></div><div class="st"></div>`);
         el('div', 'bar', c, '<i></i>'); const dot = el('div', 'dot', c); dot.style.display = 'none';
         c.onclick = () => { GF.sfx('pick'); GF.go('idetail', { t }); };
@@ -176,10 +182,10 @@
     enter(r, p) {
       r.classList.add('idle'); const t = p.t, T = B.tables[t], sc = el('div', 'scr', r); UI.upd = [];
       GF.bg('indoor', sc);
-      const bk = UK.round({ icon: 'back', onclick: () => GF.back() }, sc); bk.classList.add('ib'); bk.style.cssText += ';position:absolute;left:10px;top:10px;z-index:6';
-      el('div', 'ttl', sc, `<b style="color:${T.ink}">${T.name}</b><span>${T.tag}</span>`);
-      const mini = el('div', 'mini', sc, '<span id="mw"></span><span id="mr"></span>');
-      const list = el('div', 'scroll', sc); list.style.cssText += ';top:136px;bottom:0;padding-top:4px;padding-bottom:16px';
+      bar(sc, false);
+      const tt = el('div', 'ttl', sc, `<b style="color:${T.ink}">${T.name}</b><span>${T.tag}</span>`); tt.style.cssText += ';top:64px;left:14px;height:48px';
+      const mini = el('div', 'mini', sc, '<span id="mw"></span><span id="mr"></span>'); mini.style.top = '114px';
+      const list = el('div', 'scroll', sc); list.style.cssText += ';top:166px;bottom:0;padding-top:4px;padding-bottom:16px';
       const sceneBox = el('div', '', list); sceneBox.style.cssText = 'margin:0 10px 10px;border-radius:22px;overflow:hidden;height:124px;box-shadow:0 4px 0 rgba(0,0,0,.12)'; const rebuildScene = () => { sceneBox.innerHTML = ''; const s_ = scene(t, 132, 124); s_.style.cssText += ';width:100%;'; sceneBox.appendChild(s_); }; rebuildScene();
       const special = el('div', '', list);
       const rows = el('div', '', list);
@@ -248,7 +254,7 @@
       r.classList.add('idle', 'uk'); UI.upd = [];
       const st = p.ending ? ST.ending : (p.season ? ST.seasons : ST.stories).find((x) => x.id === p.id), seen = p.ending ? S.end : p.season ? S.ss[seasonKey(p.id)] : S.sd[st.id];
       const cuts = st.cuts.map((c) => ({ bg: st.bg || 'indoor', text: c.text, chars: c.chars.map((id, k, a) => ({ id, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 })), bubble: c.bubble ? { type: c.bubble, at: 0 } : null }));
-      const tb = UK.topbar({ home: false, stars: null, muted: GF.state.settings.mute, onBack: () => { GF.sfx('tap'); GF.back(); }, onSound: () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); } }, r); tb.bar.style.cssText += ';position:absolute;left:0;right:0;top:0;z-index:30';
+      bar(r, false);
       const hold = el('div', 'abs', r); hold.style.cssText = 'inset:0'; 
       GF.story(hold, cuts, () => { if (seen) { GF.back(); return; } question(); });
       function question() {
@@ -269,10 +275,10 @@
     bare: true,
     enter(r) {
       r.classList.add('idle'); const sc = el('div', 'scr', r); UI.upd = [];
-      GF.bg('indoor', sc); const bk = UK.round({ icon: 'back', onclick: () => GF.back() }, sc); bk.classList.add('ib'); bk.style.cssText += ';position:absolute;left:10px;top:10px;z-index:6';
+      GF.bg('indoor', sc); bar(sc, false);
       const pct = Math.round(dexCount() / B.dexTotal * 100);
-      el('div', 'ttl', sc, `<b>도감 ${dexCount()}/${B.dexTotal}</b><span>모은 사연 ${pct}%</span>`);
-      const list = el('div', 'scroll', sc); list.style.cssText += ';top:84px;bottom:0;padding-top:4px';
+      const tt = el('div', 'ttl', sc, `<b>도감 ${dexCount()}/${B.dexTotal}</b><span>모은 사연 ${pct}%</span>`); tt.style.cssText += ';top:64px;left:14px;height:48px';
+      const list = el('div', 'scroll', sc); list.style.cssText += ';top:116px;bottom:0;padding-top:4px';
       const cnt = { nemo: 0, semo: 0, dong: 0 }; Object.values(S.sd).forEach((x) => cnt[x.k]++); const tot = Math.max(1, cnt.nemo + cnt.semo + cnt.dong);
       const tp = el('div', 'panel2', list, '<h4>나는 어느 도형일까?</h4>');
       ['nemo', 'semo', 'dong'].forEach((k) => { const pc = Math.round(cnt[k] / tot * 100); tp.insertAdjacentHTML('beforeend', `<p style="color:${B.tables[k].ink};font-weight:800">${{ nemo: '🟦', semo: '🔺', dong: '⚪' }[k]} ${FAM[k]} ${Object.keys(S.sd).length ? pc + '%' : '-'}</p><div class="bar2"><i style="width:${Object.keys(S.sd).length ? pc : 0}%;background:${B.tables[k].ink}"></i></div>`); });
@@ -301,7 +307,7 @@
     bare: true,
     enter(r) {
       r.classList.add('idle', 'uk'); GF.bg('indoor', r); UI.upd = [];
-      const tb = UK.topbar({ home: false, stars: null, muted: GF.state.settings.mute, onBack: () => GF.back(), onSound: () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); } }, r); tb.bar.style.cssText += ';position:absolute;left:0;right:0;top:0;z-index:5';
+      bar(r, false);
       const sc = el('div', 'scroll', r); sc.style.cssText += ';top:70px;bottom:0'; Room.house(sc, { room: 'nemo' });
     },
   });

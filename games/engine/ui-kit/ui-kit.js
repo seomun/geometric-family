@@ -46,9 +46,9 @@
     /** 상단 바 한 벌: 왼쪽 [뒤로·홈], 가운데 별 알약, 오른쪽 소리. 반환 {bar, stars, sound} */
     topbar(o, parent) {
       o = o || {}; const bar = el('div', 'uk-topbar', parent), l = el('div', 'uk-grp', bar);
-      if (o.back !== false) UK.round({ icon: 'back', onclick: o.onBack }, l);
-      if (o.home !== false) UK.round({ icon: 'home', onclick: o.onHome }, l);
-      const stars = o.stars != null ? UK.pill('star', o.stars, bar) : el('span', '', bar);
+      if (o.back !== false) UK.round({ icon: 'back', cls: 'tb-back', onclick: o.onBack || (() => window.GF && GF.back && GF.back()) }, l);
+      if (o.home !== false) UK.round({ icon: 'home', cls: 'tb-home', onclick: o.onHome || (() => window.GF && GF.home2 && GF.home2()) }, l);
+      const stars = o.stars != null ? UK.pill(o.icon || 'star', o.stars, bar) : el('span', '', bar);
       const snd = UK.round({ icon: o.muted ? 'mute' : 'sound', onclick: o.onSound }, bar);
       return { bar, stars, sound: snd };
     },

@@ -42,7 +42,7 @@
     bare: true,
     enter(r) {
       r.classList.add('uk', 'mg'); GF.bg('indoor', r);
-      const tb = UK.topbar({ back: false, home: false, stars: totalStars(), muted: GF.state.settings.mute, onSound: () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); GF.screens.mhome.enter(r); } }, r); tb.bar.style.cssText += ';position:absolute;left:0;right:0;top:0;z-index:5';
+      const tb = UK.topbar({ back: false, home: true, stars: totalStars(), onHome: () => GF.home2(), muted: GF.state.settings.mute, onSound: () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); GF.screens.mhome.enter(r); } }, r); tb.bar.style.cssText += ';position:absolute;left:0;right:0;top:0;z-index:5';
       const t = el('div', 'mg-ttl', r, '<div class="uk-title">도형 합치기</div><div class="mg-sub">같은 도형을 합쳐 집을 채워요</div>');
       const fam = el('div', 'mg-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));

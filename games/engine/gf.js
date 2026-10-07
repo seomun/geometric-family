@@ -247,7 +247,7 @@
     s.el.innerHTML = ''; s.el.classList.add('on'); GF.cur = s; s.params = params || {};
     setSafe(wantWide(s, s.params));
     topbar.classList.toggle('hidden', s.bare === true);
-    $('b-home').style.visibility = name === 'home' ? 'hidden' : 'visible'; if ($('b-back')) $('b-back').style.visibility = GF.stack.length > 1 ? 'visible' : 'hidden';
+    $('b-home').style.visibility = 'visible'; if ($('b-back')) $('b-back').style.visibility = GF.stack.length > 1 ? 'visible' : 'hidden';
     refreshBar();
     s.enter(s.el, s.params);
     GF.bgm.play(name === 'round' ? ((run && run.ch === 'ch4') ? 'night' : 'theme_kids') : name === 'book' ? (s.params.ch === 'ch4' ? 'night' : 'theme_kids') : 'theme_main');

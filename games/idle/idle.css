@@ -6,14 +6,14 @@
 .idle .scroll::-webkit-scrollbar { display: none; }
 .idle * { touch-action: manipulation; }
 .idle .scroll, .idle .scroll * { touch-action: pan-y; }
-.hd { position: absolute; left: 10px; right: 10px; top: 10px; background: #fff; border-radius: 22px; padding: 10px 14px 10px; box-shadow: 0 4px 0 rgba(0,0,0,.12); z-index: 4; }
+.hd { position: absolute; left: 10px; right: 10px; top: 68px; background: #fff; border-radius: 22px; padding: 10px 14px 10px; box-shadow: 0 4px 0 rgba(0,0,0,.12); z-index: 4; }
 .hd .w { font-size: 34px; font-weight: 900; line-height: 1.1; letter-spacing: -.5px; }
 .hd .w small { font-size: 18px; font-weight: 700; color: #C9531A; margin-left: 6px; letter-spacing: 0; }
 .hd .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 18px; font-weight: 700; color: var(--sub); margin-top: 4px; }
 .hd b { color: var(--ink); }
-.tcard { position: absolute; left: 10px; right: 10px; height: 124px; border-radius: 24px; padding: 0; border: 0; text-align: left; box-shadow: 0 5px 0 rgba(0,0,0,.14); overflow: hidden; display: block; }
+.tcard { position: absolute; left: 10px; right: 10px; height: 112px; border-radius: 24px; padding: 0; border: 0; text-align: left; box-shadow: 0 5px 0 rgba(0,0,0,.14); overflow: hidden; display: block; }
 .tcard:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.14); }
-.tcard .sc { position: absolute; left: 0; top: 0; width: 132px; height: 124px; }
+.tcard .sc { position: absolute; left: 0; top: 0; width: 132px; height: 112px; }
 .tcard .tx { position: absolute; left: 136px; right: 10px; top: 5px; }
 .tcard .nm { font-size: 22px; font-weight: 900; line-height: 1.15; }
 .tcard .lv { font-size: 18px; font-weight: 800; }
@@ -21,7 +21,7 @@
 .tcard .st { font-size: 18px; font-weight: 700; color: var(--sub); line-height: 1.15; }
 .tcard .bar { position: absolute; left: 136px; right: 12px; bottom: 5px; height: 7px; border-radius: 6px; background: rgba(0,0,0,.14); overflow: hidden; }
 .tcard .bar i { display: block; height: 100%; border-radius: 6px; background: rgba(0,0,0,.45); width: 0%; transition: width .3s; }
-.dot { position: absolute; right: 10px; top: 76px; min-width: 24px; height: 24px; border-radius: 12px; background: #E5334A; color: #fff; font-size: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; padding: 0 6px; animation: dotp 1.2s ease-in-out infinite alternate; z-index: 2; }
+.dot { position: absolute; right: 10px; top: 64px; min-width: 24px; height: 24px; border-radius: 12px; background: #E5334A; color: #fff; font-size: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; padding: 0 6px; animation: dotp 1.2s ease-in-out infinite alternate; z-index: 2; }
 @keyframes dotp { to { transform: scale(1.18) } }
 .bigbtn { position: absolute; height: 64px; border: 0; border-radius: 20px; font-size: 22px; font-weight: 900; color: #fff; box-shadow: 0 5px 0 rgba(0,0,0,.2); display: flex; align-items: center; justify-content: center; gap: 8px; }
 .bigbtn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,.2); }
@@ -73,7 +73,7 @@
 .float { position: absolute; font-size: 22px; font-weight: 900; color: #C9531A; pointer-events: none; z-index: 30; animation: floatup 1s ease-out forwards; text-shadow: 0 2px 0 #fff; }
 @keyframes floatup { from { opacity: 1; transform: translateY(0) } to { opacity: 0; transform: translateY(-46px) } }
 
-.ribbon { position: absolute; left: 10px; right: 10px; top: 524px; height: 36px; border-radius: 19px; border: 0; background: #B04040; color: #fff; font-size: 18px; font-weight: 900; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 0 rgba(0,0,0,.2); z-index: 3; }
+.ribbon { position: absolute; left: 10px; right: 10px; top: 512px; height: 36px; border-radius: 19px; border: 0; background: #B04040; color: #fff; font-size: 18px; font-weight: 900; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 0 rgba(0,0,0,.2); z-index: 3; }
 .ribbon.done { background: #7A6F84; }
 .dexc .ic { font-size: 36px; line-height: 1.1; display: block; }
 .dexc.on { outline: 4px solid #E8870F; }

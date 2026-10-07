@@ -60,7 +60,8 @@
     house(parent, opts) {
       opts = opts || {}; Room.mount = parent; parent.innerHTML = ''; parent.classList.add('rm');
       const kid = Room.cfg.mode === 'kid', rooms = Room.data.rooms.filter((r) => !kid || Room.family || r.id === 'kid');
-      let cur = opts.room && rooms.find((r) => r.id === opts.room) ? opts.room : rooms[0].id, sel = null;
+      const mine = Room.data.sets.find((s) => s.game === Room.cfg.game), start = opts.room || (mine && mine.room) || rooms[0].id;   // 집에 들어가면 그 게임의 방이 열린다
+      let cur = rooms.find((r) => r.id === start) ? start : rooms[0].id, sel = null, more = false;
       const tabs = el('div', 'rm-tabs', parent), stage = el('div', 'rm-stage', parent), tools = el('div', 'rm-tools', parent), inv = el('div', 'rm-inv', parent);
       const imgSrc = (r) => (Room.cfg.charSrc ? Room.cfg.charSrc(r.char) : '');
       function draw() {
@@ -90,17 +91,23 @@
         B('치우기', 'close', 'ghost', () => { Room.placedIn(cur).splice(sel, 1); sel = null; Room.save(); draw(); });
       }
       function drawInv() {
-        inv.innerHTML = ''; const R = cur, sets = Room.data.sets.filter((s) => Room.data.items.some((i) => i.set === s.id && Room.visibleSet(i)));
-        sets.forEach((s) => {
+        inv.innerHTML = ''; const sets = Room.data.sets.filter((s) => Room.data.items.some((i) => i.set === s.id && Room.visibleSet(i)));
+        const mineSets = sets.filter((s) => s.game === Room.cfg.game || s.game === 'all'), others = sets.filter((s) => !mineSets.includes(s));   // 그 게임이 주는 세트가 맨 위, 나머지는 접어 둔다
+        const block = (s, into) => {
           const its = Room.data.items.filter((i) => i.set === s.id && Room.visibleSet(i)), got = its.filter((i) => Room.has(i.id)).length;
-          const h = el('div', 'rm-sh', inv, `<b>${kid && !Room.family ? '' : s.name}</b><span>${got}/${its.length}</span>`);
+          const h = el('div', 'rm-sh', into, `<b>${kid && !Room.family ? '' : s.name}</b><span>${got}/${its.length}</span>`);
           const pg = el('div', 'uk-progress gold', h); pg.innerHTML = `<i style="width:${got / its.length * 100}%"></i>`;
-          const g = el('div', 'rm-grid', inv);
+          const g = el('div', 'rm-grid', into);
           its.forEach((it) => {
             const own = Room.has(it.id), b = el('button', 'rm-cell' + (own ? '' : ' off'), g, `<img src="${Room.src(it)}" alt="">${own ? '' : (window.UK ? UK.icon('lock') : '')}`); b.setAttribute('aria-label', own ? it.name : '잠김');
             b.onclick = () => { if (!own) { window.UK && UK.toast(it.season ? '시즌 아이템이에요 (' + it.season + '월)' : (kid ? '아직 못 얻었어요' : '아직 못 얻었어요 · ' + Room.set(it.set).name), parent); return; } const p = Room.place(it.id, it.room === cur || true ? cur : it.room); sel = Room.placedIn(cur).length - 1; window.GF && GF.sfx && GF.sfx('drop'); draw(); };
           });
-        });
+        };
+        mineSets.forEach((s) => block(s, inv));
+        if (others.length) {
+          const tog = el('button', 'rm-more', inv, (kid && !Room.family ? '' : '다른 게임 세트 ' + others.length + '개 ') + (more ? '▲' : '▼')); tog.setAttribute('aria-expanded', more ? 'true' : 'false'); tog.onclick = () => { more = !more; GF.sfx && GF.sfx('tap'); drawInv(); };
+          if (more) others.forEach((s) => block(s, inv));
+        }
       }
       draw(); return { redraw: draw };
     },

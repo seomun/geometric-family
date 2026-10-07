@@ -2,3 +2,6 @@
 audio/_drafts/
 demo/*.html
 demo/*.apk
+demo/*.zip
+demo/apk/
+demo/play_*.html

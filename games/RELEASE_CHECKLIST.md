@@ -95,3 +95,19 @@ cd games\android
 - 소리·음성(작가 녹음) 도착 시 `data` 의 `voice` 슬롯 연결 → versionCode 2 → 업데이트.
 - 2편(막둥이 아이콘 시안 보관)은 같은 앱에 장을 추가하는 업데이트로.
 - 구글 플레이를 겸하면 targetSdk 36 으로 올리고 데이터 보안 양식 작성.
+
+---
+## 부록 — 앱 5종 납품 상태 (2026-10-07)
+| 앱 | 패키지 | 스토어 문서 | 스크린샷 6장 | APK |
+|---|---|---|---|---|
+| ① 놀이터 | com.geometricfamily.play | LISTING_ko / PRIVACY_ko | store/shots (폰+태블릿) | demo/apk/toddler-release.apk |
+| ② 세 가족 식탁 | com.geometricfamily.tables | *_idle_ko | store/shots_idle | tables |
+| ③ 도형 합치기 | com.geometricfamily.merge | LISTING·PRIVACY·RATING_merge_ko | store/shots_merge | merge |
+| ④ 막둥이 색칠북 | com.geometricfamily.color | *_color_ko | store/shots_color | color |
+| ⑤ 당신은 어느 도형? | com.geometricfamily.quiz | *_quiz_ko | store/shots_quiz | quiz |
+
+- ③④⑤ 문서는 `python games/tools/make_store_docs.py` 로 한 틀에서 만든다. 스크린샷: `node games/tools/app_store.js <merge|color|quiz>` → `APP=<앱> python games/tools/frame_shots.py`.
+- APK 5개: `python games/tools/build_apk.py release` (flavor 5개, 같은 키로 서명해야 집 공유가 된다). 키는 `~/.gradle/gradle.properties` 의 GF_STORE_* 로 지정하고, 없으면 `TESTKEY=경로` 테스트 키(저장소 밖 `~/gftestkey`). **다섯 앱은 반드시 같은 정식 키 하나**로 서명 — 키를 앱마다 달리하면 공유가 끊긴다.
+- 집 공유(D12): 같은 그룹(유아 ①④ / 성인 ②③⑤)의 형제 앱만 `ShareStore`(콘텐츠 제공자, 권한 선언 없음, 호출자 서명 비교)로 서로 읽는다. 다른 그룹 키는 요청도 응답도 거부. 에뮬레이터에서 ③→⑤·②, ①→④ 공유와 유아↔성인 격리 확인.
+- ⑤ 이미지 저장: `SaveBridge`(MediaStore, 권한 없음, Android 10+). 9 이하 기기는 저장 실패 안내(minSdk 24 유지).
+- 출시 전 사람 확인: 개인정보 처리자 줄, 방침 URL, 정식 서명 키, 퍼블리셔가 요구하는 영상·기타 규격, 실기기(`demo/INSTALL_ko.md`).

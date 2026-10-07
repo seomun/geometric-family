@@ -1,0 +1,20 @@
+OK   ① 놀이터 — 첫 판까지 1탭 · 첫 화면 손가락 있음
+OK   ① 놀이터 — 첫 실행 손가락 안내
+OK   ② 세 가족 식탁 — 첫 판까지 2탭 · 첫 화면 손가락 있음
+OK   ② 세 가족 식탁 — 첫 실행 손가락 안내
+OK   ③ 도형 합치기 — 첫 판까지 1탭 · 첫 화면 손가락 있음
+OK   ③ 도형 합치기 — 첫 실행 손가락 안내
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.waitForSelector: Timeout 5000ms exceeded.
+Call log:
+[2m  - waiting for locator('.screen.on .cl-card') to be visible[22m
+
+    at C:\projects\geometric-family\tools\first30_check.js:22:48 {
+  log: [ "  - waiting for locator('.screen.on .cl-card') to be visible" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.12.0

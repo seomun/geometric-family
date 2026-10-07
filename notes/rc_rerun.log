@@ -1,0 +1,33 @@
+=== ① 3권 ch14
+no errors
+=== ③ merge 1-5
+ALL PASS
+=== ⑦ block 31-40
+ALL PASS
+=== ⑦ block 81-90
+ALL PASS
+=== ⑨ tile 21-30
+ALL PASS
+=== ⑨ tile 31-40
+ALL PASS
+=== ⑧ sort 31-60
+ALL PASS
+=== ⑧ sort 91-120
+ALL PASS
+=== ⑩ day
+ALL PASS
+=== ② idle
+ALL PASS
+=== first30
+ALL PASS
+=== greet
+FAIL ③ 합치기 첫 실행 인사 컷(세 가족 + 자막) 표시
+FAIL ③ 합치기 탭 한 번에 건너뛰고 홈
+FAIL ③ 합치기 두 번째 실행엔 인사 없음
+FAIL ③ 합치기 오류 없음 UK is not defined
+=== btn_wrap
+ALL PASS
+=== room codes
+=== merge_sim
+=== idle_sim
+=== DONE2

@@ -1,0 +1,57 @@
+OK   식탁 카드 글줄·막대·문패 겹침/밖 없음 
+OK   홈 글자 ≥18px ()
+OK   아빠 모시기
+OK   생산량 > 0: 0.16
+OK   nemo 상세 글자 ≥18px ()
+OK   semo 상세 글자 ≥18px ()
+OK   dong 상세 글자 ≥18px ()
+OK   대판 싸움: 처음 10초 멈춤 (m=0)
+OK   화해 후 ×4.2 (m=4.2)
+OK   누적 온기가 1화 문턱 넘음
+OK   도감 1칸
+FAIL s01 모든 컷 이미지 로드
+OK   s02 모든 컷 이미지 로드
+OK   s03 모든 컷 이미지 로드
+OK   s04 모든 컷 이미지 로드
+OK   s05 모든 컷 이미지 로드
+OK   s06 모든 컷 이미지 로드
+FAIL s07 모든 컷 이미지 로드
+OK   s08 모든 컷 이미지 로드
+OK   s09 모든 컷 이미지 로드
+OK   s10 모든 컷 이미지 로드
+OK   s11 모든 컷 이미지 로드
+FAIL s12 모든 컷 이미지 로드
+FAIL s13 모든 컷 이미지 로드
+FAIL s14 모든 컷 이미지 로드
+OK   s15 모든 컷 이미지 로드
+OK   s16 모든 컷 이미지 로드
+OK   s17 모든 컷 이미지 로드
+OK   s18 모든 컷 이미지 로드
+FAIL s19 모든 컷 이미지 로드
+OK   s20 모든 컷 이미지 로드
+OK   s21 모든 컷 이미지 로드
+OK   s22 모든 컷 이미지 로드
+OK   s23 모든 컷 이미지 로드
+OK   s24 모든 컷 이미지 로드
+OK   s25 모든 컷 이미지 로드
+FAIL s26 모든 컷 이미지 로드
+OK   s27 모든 컷 이미지 로드
+OK   s28 모든 컷 이미지 로드
+OK   s29 모든 컷 이미지 로드
+OK   s30 모든 컷 이미지 로드
+OK   e14a 모든 컷 이미지 로드
+OK   e14b 모든 컷 이미지 로드
+FAIL e07a 모든 컷 이미지 로드
+FAIL e04 모든 컷 이미지 로드
+FAIL e07b 모든 컷 이미지 로드
+FAIL e40 모든 컷 이미지 로드
+OK   e28 모든 컷 이미지 로드
+OK   소품 4/30 (premium 3)
+OK   수익 훅: premium 소품은 grant 로만, 광고 no-op
+OK   엔딩 조건 충족 판정
+OK   엔딩 도장
+OK   12시간 부재 → 8시간 캡
+OK   8시간 정산 = 3분×160 진행: 2.706e+10 vs 2.706e+10
+OK   오프라인 = 현재속도 선형×0.8, 웃음 없음: 0.80배
+FAIL 콘솔 오류 없음 Failed to load resource: net::ERR_CONNECTION_REFUSED | Failed to load resource: net::ERR_CONNECTION_REFUSED | Failed to load resource: net::ERR_CONNECTION_REFUSED
+FAILED 12

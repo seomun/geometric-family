@@ -40,7 +40,8 @@ android {
         block   { dimension 'app'; applicationId 'com.geometricfamily.block';  resValue 'string', 'app_name', '기하학 가족: 도형 블록' }
         spot    { dimension 'app'; applicationId 'com.geometricfamily.spot';   resValue 'string', 'app_name', '기하학 가족: 다른 그림 찾기' }
         tile    { dimension 'app'; applicationId 'com.geometricfamily.tile';   resValue 'string', 'app_name', '기하학 가족: 세 가족 짝 맞추기' }
-        sort    { dimension 'app'; applicationId 'com.geometricfamily.sort';   resValue 'string', 'app_name', '기하학 가족: 정리의 달인' }
+        // `sort` 는 Groovy 컨테이너의 내장 메서드 이름이라 create() 로 만든다
+        create('sort') { dimension 'app'; applicationId 'com.geometricfamily.sort'; resValue 'string', 'app_name', '기하학 가족: 정리의 달인' }
         day     { dimension 'app'; applicationId 'com.geometricfamily.day';    resValue 'string', 'app_name', '기하학 가족: 막둥이의 하루' }
     }
     buildTypes {

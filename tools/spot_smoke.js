@@ -1,6 +1,6 @@
 // 다른 그림 찾기 smoke: node tools/spot_smoke.js (URL=… 로 빌드본, LV=1-10 구간). 정답 좌표를 실제 화면 조작(포인터 한 번 + 디버그 탭)으로 재생한다.
 const { chromium } = require('playwright-core'), path = require('path');
-const URL = process.env.URL || 'http://localhost:8765/games/spot/index.html', [A, B] = (process.env.LV || '1-20').split('-').map(Number);
+const URL = process.env.URL || 'http://localhost:8765/games/spot/index.html', [A, B] = (process.env.LV || '1-120').split('-').map(Number);
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 const solveLevel = async (pg) => {
   const L = await pg.evaluate(() => SPOT.debug.level());
@@ -23,14 +23,14 @@ const solveLevel = async (pg) => {
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent && !/^[★☆✔]+$/.test(e.textContent.trim())) { const f = parseFloat(getComputedStyle(e).fontSize); if (f < 17) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈 글자 크기 17px 이상 ' + small.slice(0, 4).join(','));
   await pg.evaluate(() => { GF.stack = []; GF.go('phome'); GF.go('plevels'); }); await pg.waitForSelector('.screen.on .sp-l'); await shot('levels');
-  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .sp-l.off').length, all: document.querySelectorAll('.screen.on .sp-l').length })); ok(lk.all === 20 && lk.off === 19, '레벨 목록 20개(처음엔 1만 열림)');
+  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .sp-l.off').length, all: document.querySelectorAll('.screen.on .sp-l').length })); ok(lk.all === 120 && lk.off === 119, '레벨 목록 120개(처음엔 1만 열림)');
   for (let n = A; n <= B; n++) {
     await pg.evaluate((nn) => { GF.stack = []; GF.go('phome'); GF.go('pplay', { n: nn }); SPOT.unlockAll = true; SPOT.fast = true; }, n); await pg.waitForSelector('.screen.on .sp-area');
     if (n === A || n === 4 || n === 6 || n === 9) await shot('play' + n);
     const { L, done } = await solveLevel(pg);
     ok(done, '레벨 ' + n + ' 클리어(' + L.type + ', ' + L.goalN + '곳)');
     if (n === A) await shot('result');
-    if (n === 10 || n === 20) { const rw = await pg.evaluate(() => Room.owned().filter((id) => id.startsWith('a_')).length); ok(rw >= 1, '레벨 ' + n + ' 까지 사진·앨범 소품 ' + rw + '개'); }
+    if (n === 10 || n === 120) { const rw = await pg.evaluate(() => Room.owned().filter((id) => id.startsWith('a_')).length); ok(rw >= 1, '레벨 ' + n + ' 까지 사진·앨범 소품 ' + rw + '개'); }
   }
   if (A === 1) {
     // 실제 포인터로 한 곳 누르기 + 틀린 탭 + 힌트

@@ -8,13 +8,16 @@
   function bbox(e) {
     if (e.k === 'chr') { const w = e.h * ASP; return { x: e.x - w / 2, y: e.y - e.h, w, h: e.h }; }
     if (e.k === 'item') return { x: e.x - e.w / 2, y: e.y - e.h, w: e.w, h: e.h };
-    return { x: e.x - e.s / 2, y: e.y - e.s / 2, w: e.s, h: e.s };   // blk · deco: 가운데 기준
+    return { x: e.x - e.s / 2, y: e.y - e.s / 2, w: e.s, h: e.s };   // blk · deco · emo: 가운데 기준
   }
+  /** 그리는 순서(뒤층 0 → 중간 1 → 앞 2, 같은 층에서는 아래쪽이 앞) */
+  const orderKey = (e) => (e.z || 0) * 1000 + (e.k === 'chr' || e.k === 'item' ? e.y : e.y + (e.s || 0) / 2);
+  const drawOrder = (els) => els.slice().sort((a, b) => orderKey(a) - orderKey(b) || (a.u < b.u ? -1 : 1));
   const cx = (b) => b.x + b.w / 2, cy = (b) => b.y + b.h / 2;
   const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   /** A·B 의 차이 요소 id 목록(없애기·추가·바뀜) */
   function changed(A, B) {
-    const ma = Object.fromEntries(A.map((e) => [e.id, e])), mb = Object.fromEntries(B.map((e) => [e.id, e])), out = [];
+    const ma = Object.fromEntries(A.map((e) => [e.u, e])), mb = Object.fromEntries(B.map((e) => [e.u, e])), out = [];
     Object.keys(ma).forEach((id) => { if (!mb[id] || !same(ma[id], mb[id])) out.push(id); });
     Object.keys(mb).forEach((id) => { if (!ma[id]) out.push(id); });
     return out.sort();
@@ -23,7 +26,7 @@
   function verify(L) {
     const errs = []; let total = 0;
     L.rounds.forEach((R, ri) => {
-      const ids = R.diffs.map((d) => d.id).sort(), real = changed(R.A, R.B);
+      const ids = R.diffs.map((d) => d.u).sort(), real = changed(R.A, R.B);
       if (!same(ids, real)) errs.push(`r${ri}: 틀린 곳 목록(${ids}) ≠ 실제 차이(${real})`);
       R.diffs.forEach((d, i) => {
         total++; const min = L.type === 'hidden' ? 16 : 20;
@@ -32,6 +35,7 @@
         for (let j = 0; j < i; j++) { const e = R.diffs[j]; if (Math.hypot(cx(d) - cx(e), cy(d) - cy(e)) < 40) errs.push(`r${ri}.${i}: ${j} 와 너무 가까움`); }
       });
     });
+    L.rounds.forEach((R, ri) => [R.A, R.B].forEach((els, w) => els.forEach((e) => { const b = bbox(e); if (b.x < -1 || b.y < -1 || b.x + b.w > R.w + 1 || b.y + b.h > R.h + 1) errs.push(`r${ri}.${w ? 'B' : 'A'} ${e.u}: 요소가 화면 밖/잘림`); })));
     if (total !== L.goalN) errs.push('목표 수 불일치');
     return errs;
   }
@@ -47,6 +51,6 @@
   /** 초보 탭 모델(난이도 지표): 차이마다 눈에 띄는 정도 → 힌트 없이 끝낼 확률 */
   const OPW = { remove: 1, add: 1, hue: 0.9, flip: 0.45, move: 0.6, size: 0.55, expr: 0.7, color: 0.85 };
   function easeScore(L) { let p = 1; L.rounds.forEach((R) => R.diffs.forEach((d) => { const size = Math.min(1, Math.min(d.w, d.h) / 46); p *= Math.min(0.99, 0.35 + 0.65 * size * (OPW[d.op] || 0.6)); })); return p; }
-  const api = { ASP, bbox, changed, verify, hit, stars, solution, easeScore };
+  const api = { ASP, bbox, orderKey, drawOrder, changed, verify, hit, stars, solution, easeScore };
   if (typeof module !== 'undefined') module.exports = api; else root.SpotCore = api;
 })(typeof window !== 'undefined' ? window : globalThis);

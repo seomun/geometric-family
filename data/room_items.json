@@ -2445,6 +2445,222 @@
    "game": "spot",
    "season": null,
    "physical": null
+  },
+  {
+   "no": 121,
+   "id": "a_postcard",
+   "name": "엽서",
+   "set": "photo",
+   "room": "nemo",
+   "w": 36,
+   "h": 30,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "✉️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 122,
+   "id": "a_map",
+   "name": "옛 지도",
+   "set": "photo",
+   "room": "nemo",
+   "w": 52,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🗺️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 123,
+   "id": "a_trophy",
+   "name": "상장 트로피",
+   "set": "photo",
+   "room": "nemo",
+   "w": 36,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🏆",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 124,
+   "id": "a_medal",
+   "name": "메달",
+   "set": "photo",
+   "room": "nemo",
+   "w": 30,
+   "h": 34,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🏅",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 125,
+   "id": "a_ribbon",
+   "name": "리본 장식",
+   "set": "photo",
+   "room": "nemo",
+   "w": 34,
+   "h": 30,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎀",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 126,
+   "id": "a_calendar",
+   "name": "달력",
+   "set": "photo",
+   "room": "nemo",
+   "w": 40,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "📅",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 127,
+   "id": "a_scrapbook",
+   "name": "스크랩북",
+   "set": "photo",
+   "room": "nemo",
+   "w": 38,
+   "h": 38,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "📒",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 128,
+   "id": "a_magnifier",
+   "name": "돋보기",
+   "set": "photo",
+   "room": "nemo",
+   "w": 34,
+   "h": 34,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🔍",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 129,
+   "id": "a_diary",
+   "name": "일기장",
+   "set": "photo",
+   "room": "nemo",
+   "w": 36,
+   "h": 38,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "📔",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 130,
+   "id": "a_carp",
+   "name": "잉어 깃발",
+   "set": "photo",
+   "room": "nemo",
+   "w": 40,
+   "h": 52,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎏",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 131,
+   "id": "a_wallclock",
+   "name": "벽시계",
+   "set": "photo",
+   "room": "nemo",
+   "w": 40,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🕰️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 132,
+   "id": "a_garland",
+   "name": "가랜드",
+   "set": "photo",
+   "room": "nemo",
+   "w": 56,
+   "h": 32,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎉",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "spot",
+   "season": null,
+   "physical": null
   }
  ],
  "meTypes": {

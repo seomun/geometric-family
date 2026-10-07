@@ -5,7 +5,7 @@
   const el = UK.el, C = SpotCore, G = SpotGen;
   const SP = (window.SPOT = { debug: {} });
   const KEY = 'gf:spot:v1';
-  const REW = { 2: 'a_frame', 5: 'a_photo', 8: 'a_album', 10: 'a_cork', 13: 'a_camera', 15: 'a_film', 18: 'a_polaroid', 20: 'a_shelf' };   // 이 판을 처음 깨면 앨범·벽 사진 세트 한 점
+  const REW = { 2: 'a_frame', 5: 'a_photo', 8: 'a_album', 10: 'a_cork', 13: 'a_camera', 15: 'a_film', 18: 'a_polaroid', 20: 'a_shelf', 25: 'a_postcard', 30: 'a_map', 36: 'a_trophy', 42: 'a_medal', 50: 'a_ribbon', 58: 'a_calendar', 66: 'a_scrapbook', 76: 'a_magnifier', 88: 'a_diary', 100: 'a_carp', 110: 'a_wallclock', 120: 'a_garland' };   // 이 판을 처음 깨면 앨범·벽 사진 세트 한 점
   const TYPE_TIP = { diff: '위아래 그림에서 다른 곳을 눌러요', odd: '아홉 개 중 다른 하나를 눌러요', hidden: '그림 속에 숨은 물건을 눌러 찾아요', three: '네모네·세모네 두 장면의 다른 곳을 찾아요', memory: '위 그림을 잘 보고 「다 봤어요」를 눌러요', zoom: '확대해서 작은 다른 곳을 찾아요' };
   const RULE_TXT = [['네모 규칙', '틀린 곳이 많아요. 여러 곳을 느긋하게 찾아요', 'nemo'], ['세모 규칙', '틀린 곳이 크고 색이 확 달라요', 'semo'], ['동그라미 규칙', '틀린 곳이 작아요. 한 곳씩 정확하게', 'dong']];
   const slow = (ms) => (SP.fast ? 0 : ms);
@@ -16,6 +16,8 @@
     hut: (e) => { const col = { straw: ['#E8C34A', '#C99A2E'], wood: ['#C98F5A', '#8A5A3B'], brick: ['#D9765B', '#A34B3A'] }[e.v] || ['#E8C34A', '#C99A2E']; return `<rect x="-20" y="-4" width="40" height="28" rx="3" fill="${col[0]}" ${ST}/><path d="M-25 -2L0 -24L25 -2z" fill="${col[1]}" ${ST}/><rect x="-5" y="8" width="10" height="16" rx="2" fill="#FFF3C2" ${ST}/>` + (e.v === 'brick' ? '<path d="M-20 6h40M-20 14h40M-8 -4v10M8 6v8" fill="none" stroke="#6b5443" stroke-width="1.4"/>' : ''); },
     house: () => `<rect x="-24" y="-8" width="48" height="32" rx="3" fill="#FFE9B8" ${ST}/><path d="M-28 -6L0 -26L28 -6z" fill="#E8870F" ${ST}/><rect x="-14" y="2" width="12" height="12" fill="#FFF3A0" ${ST}/><rect x="4" y="8" width="10" height="16" fill="#C98F5A" ${ST}/>`,
     wind: () => `<path d="M-22 -8q14-12 24 0t14 4M-22 4q16-8 28 2" fill="none" stroke="#8FD3F4" stroke-width="4" stroke-linecap="round"/><circle cx="14" cy="-2" r="7" fill="#E6F6FF" ${ST}/><circle cx="12" cy="-4" r="1.2" fill="#4A3030"/><circle cx="16" cy="-4" r="1.2" fill="#4A3030"/>`,
+    bridge: () => `<path d="M-60 20q60-70 120 0" fill="none" stroke="#6b5443" stroke-width="12" stroke-linecap="round"/><path d="M-60 20q60-70 120 0" fill="none" stroke="#FFD9A8" stroke-width="7" stroke-linecap="round"/><g fill="#4A3030" stroke="#fff" stroke-width="1.5">${[-40, -14, 14, 40].map((x) => `<ellipse cx="${x}" cy="${-8 - Math.abs(x) * -0.1 - 20 + Math.abs(x) * 0.5}" rx="7" ry="4"/>`).join('')}</g>`,
+    beanstalk: () => `<path d="M0 25C-24 10 24 -5 0 -20C-20 -34 18 -42 0 -48" fill="none" stroke="#4A9B5A" stroke-width="7" stroke-linecap="round"/><g fill="#6CCB8A" ${ST}><path d="M-4 14c-20-4-24-16-24-16c18-2 22 8 24 16z"/><path d="M4 -6c20-4 24-14 24-14c-18-2-22 8-24 14z"/><path d="M-4 -26c-18-4-22-14-22-14c16-2 20 6 22 14z"/><path d="M4 -42c16-3 20-12 20-12c-14-2-18 6-20 12z"/></g>`,
     sun: () => `<circle r="12" fill="#FFE27A" ${ST}/><path d="M0 -22v-3M0 22v3M-22 0h-3M22 0h3M-15 -15l-2 -2M15 15l2 2M15 -15l2 -2M-15 15l-2 2" stroke="#E8A800" stroke-width="2.4" stroke-linecap="round"/>`,
     moon: () => `<path d="M8 -20a20 20 0 1 0 8 36a16 16 0 0 1 -8 -36z" fill="#FFE27A" ${ST}/>`,
     cloud: () => `<path d="M-20 8a10 10 0 0 1 4-18a12 12 0 0 1 22-2a9 9 0 0 1 12 20z" fill="#fff" ${ST}/>`,
@@ -34,10 +36,11 @@
   function elSVG(e) {
     const f = e.hue ? `filter:hue-rotate(${e.hue}deg) saturate(1.1)` : '';
     if (e.k === 'chr') { const w = e.h * (GF.aspect(e.id) || C.ASP); return `<image href="${GF.src(e.id)}" x="${(e.x - w / 2).toFixed(1)}" y="${e.y - e.h}" width="${w.toFixed(1)}" height="${e.h}" style="${f}" ${e.flip ? `transform="translate(${2 * e.x} 0) scale(-1 1)"` : ''}/>`; }
-    if (e.k === 'item') { const it = Room.item(e.id); return `<image href="${Room.src(it, it.colors[0])}" x="${e.x - e.w / 2}" y="${e.y - e.h}" width="${e.w}" height="${e.h}" style="${f}" preserveAspectRatio="xMidYMax meet"/>`; }
+    if (e.k === 'item') { const it = Room.item(e.id); if (!it) return ''; return `<image href="${Room.src(it, it.colors[0])}" x="${e.x - e.w / 2}" y="${e.y - e.h}" width="${e.w}" height="${e.h}" style="${f}" preserveAspectRatio="xMidYMax meet" ${e.flip ? `transform="translate(${2 * e.x} 0) scale(-1 1)"` : ''}/>`; }
+    if (e.k === 'emo') return `<text x="${e.x}" y="${e.y}" font-size="${(e.s * 0.92).toFixed(1)}" text-anchor="middle" dominant-baseline="central" style="${f}" ${e.flip ? `transform="translate(${2 * e.x} 0) scale(-1 1)"` : ''}>${e.e}</text>`;
     const d = DECO[e.d] || DECO.star; return `<g transform="translate(${e.x} ${e.y}) scale(${(e.s / 50).toFixed(3)})" style="${f}">${d(e)}</g>`;
   }
-  const sceneSVG = (R, els) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${R.w} ${R.h}" class="sp-svg"><rect width="${R.w}" height="${R.h}" fill="#CFEFFF"/><image href="${bgUri(R.bg)}" x="${-(R.w * 0.04)}" y="${-(R.w * 1.78 * 0.54 - R.h / 2)}" width="${R.w * 1.08}" height="${R.w * 1.78 * 1.08}"/>${els.map(elSVG).join('')}</svg>`;
+  const sceneSVG = (R, els) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${R.w} ${R.h}" class="sp-svg"><rect width="${R.w}" height="${R.h}" fill="#CFEFFF"/><svg x="0" y="0" width="${R.w}" height="${R.h}" viewBox="0 392 360 ${R.h > 300 ? 248 : 226}" preserveAspectRatio="none"><image href="${bgUri(R.bg)}" x="0" y="0" width="360" height="640"/></svg>${C.drawOrder(els).map(elSVG).join('')}</svg>`;   // 배경은 아래쪽(언덕·땅)만 잘라 쓴다: 하늘의 큰 장식(나비·해)이 가장자리에 잘려 보이지 않게
 
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
@@ -119,7 +122,6 @@
         if (LV.type !== 'hidden') { const dots = el('span', 'sp-dots', ch); for (let i = 0; i < LV.goalN; i++) el('i', i < foundN() ? 'on' : '', dots); }
         el('span', '', ch, LV.type === 'hidden' ? foundN() + '/' + LV.goalN : '남은 곳 ' + (LV.goalN - foundN()));
         if (LV.type === 'odd') el('span', 'uk-chip', goals, '그림 ' + Math.min(ri + 1, LV.rounds.length) + '/' + LV.rounds.length);
-        if (LV.type === 'hidden') { const names = el('div', 'sp-names', goals); LV.targets.forEach((nm, i) => el('b', found[0][i] ? 'on' : '', names, nm)); }
         el('div', 'sp-bar', goals, `<i style="width:${Math.round(foundN() / LV.goalN * 100)}%"></i>`);
       }
       function mark(R, i, fl) { const d = R.diffs[i]; return `<circle cx="${d.x + d.w / 2}" cy="${d.y + d.h / 2}" r="${Math.max(d.w, d.h) / 2 + 5}" fill="none" stroke="${fl ? '#FF4D6D' : '#FF8FA8'}" stroke-width="4" class="${fl ? 'sp-pulse' : 'sp-ring'}"/>`; }
@@ -134,7 +136,8 @@
       }
       function draw() {
         const R = R0(); area.innerHTML = ''; area.className = 'sp-area ' + LV.type + (zoomed ? ' zoom' : ''); goalChips();
-        if (LV.type === 'odd' || LV.type === 'hidden') pic(R, R.B, null, null);
+        if (LV.type === 'odd') pic(R, R.B, null, null);
+        else if (LV.type === 'hidden') { pic(R, R.B, null, null); const names = el('div', 'sp-names', area); LV.targets.forEach((nm, i) => { const c = el('b', found[0][i] ? 'on' : '', names); c.innerHTML = `<svg viewBox="-26 -26 52 52" width="22" height="22">${(DECO[LV.targetIcons[i]] || DECO.star)({ c: '#C98F5A' })}</svg><span>${nm}</span>`; }); }
         else if (LV.type === 'memory') {
           if (phase === 'study') { pic(R, R.A, '원본', null); const w = pic(R, R.B, null, '<div class="sp-covtxt">위 그림을 잘 보고<br>준비되면 눌러요</div>'); const b = UK.btn({ text: '다 봤어요', icon: 'play', cls: 'block', onclick: () => { phase = 'find'; GF.sfx('pick'); draw(); } }, w.querySelector('.sp-cov')); b.style.marginTop = '8px'; }
           else { pic(R, R.A, null, '<div class="sp-covtxt">원본은 가렸어요</div>'); pic(R, R.B, null, null); }

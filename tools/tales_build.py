@@ -251,8 +251,8 @@ if __name__ == '__main__':
         tales.append(ent(t, id=t['id'], apps={'merge': i + 1, 'color': i + 1}, aud='adult'))
     for i, t in enumerate(TB):
         tales.append(ent(block_tale(t), id='block_' + t['base'], apps={'block': i + 1}, aud='adult'))
-    for i, t in enumerate([x for x in T12 if x['id'] in ('pigs', 'bremen')]):
-        tales.append(ent(dict(t, title=t['title'] + ' (다른 그림 찾기 사연)'), id='spot_' + t['id'], apps={'spot': i + 1}, aud='adult'))
+    for i, tid in enumerate(['pigs', 'bremen', 'gyeonwoo', 'bears', 'jack', 'kongjwi', 'heungbu', 'ureng', 'axe', 'ant', 'sun', 'hare']):
+        b0 = next(y for y in TB if y['base'] == tid); tales.append(ent(dict(block_tale(b0), title=b0['title'] + ' (다른 그림 찾기 사연)'), id='spot_' + tid, apps={'spot': i + 1}, aud='adult'))
     for k in K:
         tales.append(ent(k, id='kid_' + k['id'], apps={'playground': k['ch'], 'mode': k['mode']}, aud='kid'))
     for q in Q5:
@@ -277,8 +277,10 @@ if __name__ == '__main__':
         assert len(t['cuts']) == 4
     json.dump({'version': 1, 'note': '⑦ 도형 블록 사연(장 끝 4컷)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['o_lantern', 'o_mailbox', 'o_doghouse'], 'seasons': BLOCK_SEASONS,
                'stories': [dict(chapter=i + 1, title=t['title'], tale=t['base'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(TB)]}, open(R / 'data/block_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    SPOT_ORDER = ['pigs', 'bremen', 'gyeonwoo', 'bears', 'jack', 'kongjwi', 'heungbu', 'ureng', 'axe', 'ant', 'sun', 'hare']
+    SPOT_STORIES = [next((x for x in T12 if x['id'] == tid), None) or next(dict(id=tid, title=y['title'], cuts=y['cuts']) for y in TB if y['base'] == tid) for tid in SPOT_ORDER]
     json.dump({'version': 1, 'note': '⑥ 다른 그림 찾기 사연(장 끝 4컷, ③과 같은 옛이야기 배역)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['a_polaroid', 'a_film', 'a_camera'], 'seasons': SPOT_SEASONS,
-               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate([x for x in T12 if x['id'] in ('pigs', 'bremen')])]}, open(R / 'data/spot_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(SPOT_STORIES)]}, open(R / 'data/spot_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     p = R / 'games/block/block-gen.js'; g = open(p, encoding='utf-8').read()
     g = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + t['title'] + "'" for t in TB) + "];", g, count=1); open(p, 'w', encoding='utf-8').write(g)
     p = R / 'data/story.json'; S = json.load(open(p, encoding='utf-8'))

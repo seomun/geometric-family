@@ -478,5 +478,53 @@
  "a_shelf": {
   "no": 120,
   "code": "3CNN3B"
+ },
+ "a_postcard": {
+  "no": 121,
+  "code": "3DNUU7"
+ },
+ "a_map": {
+  "no": 122,
+  "code": "3EO1KR"
+ },
+ "a_trophy": {
+  "no": 123,
+  "code": "3FO8BN"
+ },
+ "a_medal": {
+  "no": 124,
+  "code": "3GOF2Q"
+ },
+ "a_ribbon": {
+  "no": 125,
+  "code": "3HOMTM"
+ },
+ "a_calendar": {
+  "no": 126,
+  "code": "3IOTKI"
+ },
+ "a_scrapbook": {
+  "no": 127,
+  "code": "3JP0B2"
+ },
+ "a_magnifier": {
+  "no": 128,
+  "code": "3KP71Y"
+ },
+ "a_diary": {
+  "no": 129,
+  "code": "3LPET1"
+ },
+ "a_carp": {
+  "no": 130,
+  "code": "3MPLJX"
+ },
+ "a_wallclock": {
+  "no": 131,
+  "code": "3NPSAT"
+ },
+ "a_garland": {
+  "no": 132,
+  "code": "3OPZ1P"
  }
 }

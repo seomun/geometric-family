@@ -6,3 +6,4 @@ app/src/main/assets/index.html
 *.apk
 *.aab
 *.jks
+app/src/*/assets/index.html

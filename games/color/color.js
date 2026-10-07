@@ -254,7 +254,7 @@
   CL.start = async function (opts) {
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'color_pages', 'merge_extra', 'room_items', 'art_slots'], storeKey: 'gf:color:ui:v1', async start() {
       D = GF.data.color_pages; X = GF.data.merge_extra;
-      Room.init({ data: GF.data.room_items, game: 'coloring', mode: 'kid', autoPlace: false, guard: (cb) => GF.gate(cb), store: { key: 'gf:house:kid:v1', get() { try { return JSON.parse(localStorage.getItem(this.key)); } catch (e) { return null; } }, set(v) { try { localStorage.setItem(this.key, JSON.stringify(v)); } catch (e) {} } }, charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), imageFor });
+      Room.init({ data: GF.data.room_items, game: 'coloring', mode: 'kid', autoPlace: false, guard: (cb) => GF.gate(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), imageFor });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('chome');
       CL.debug.D = () => D; CL.debug.SV = () => SV; CL.debug.reset = () => { SV = blank(); save(); }; CL.debug.page = page;
     } }, opts || {}));

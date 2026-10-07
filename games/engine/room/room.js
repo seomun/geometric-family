@@ -21,7 +21,26 @@
       if (Room.cfg.mode === 'kid' && window.GF && GF.gate && !(o && o.guard)) Room.cfg.guard = GF.gate;   // 유아 앱: 가족 집·코드 입력은 보호자 잠금(구구단) 뒤
       Room.family = false; return Room;
     },
-    save() { Room.cfg.store.set(Room.S); },
+    save() { Room.S.ts = Date.now(); Room.cfg.store.set(Room.S); },
+    /** 같은 서명의 형제 앱(APK 단계, 같은 D12 그룹)이 올려 둔 집과 합친다: 얻은 것·완성 세트는 합집합, 놓은 위치·벽·문패는 더 늦게 저장한 쪽. 서버·권한 없음. */
+    merge(a, b) {
+      if (!b || b.v !== 1) return a; if (!a || a.v !== 1) return b;
+      const nw = (b.ts || 0) > (a.ts || 0), base = JSON.parse(JSON.stringify(nw ? b : a)), oth = nw ? a : b, un = (x, y) => [...new Set([...(x || []), ...(y || [])])];
+      base.items = un(base.items, oth.items); base.done = un(base.done, oth.done);
+      base.placed = base.placed || {}; Object.keys(oth.placed || {}).forEach((r) => { const have = new Set((base.placed[r] || []).map((q) => q.id)); (oth.placed[r] || []).forEach((q) => { if (!have.has(q.id) && !Object.values(base.placed).some((L) => L.some((z) => z.id === q.id))) (base.placed[r] = base.placed[r] || []).push(q); }); });
+      base.ts = Math.max(a.ts || 0, b.ts || 0); return base;
+    },
+    /** 공유 저장소 어댑터: localStorage + (APK 에서만) 네이티브 다리 GFShare. 웹·단독 실행에서는 그냥 localStorage. */
+    sharedStore(key) {
+      const ls = () => { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } };
+      return {
+        key,
+        get() { let v = ls(); try { if (window.GFShare) JSON.parse(GFShare.peers(key) || '[]').forEach((t) => { try { v = Room.merge(v, JSON.parse(t)); } catch (e) {} }); } catch (e) {} return v; },
+        set(v) { const t = JSON.stringify(v); try { localStorage.setItem(key, t); } catch (e) {} try { window.GFShare && GFShare.put(key, t); } catch (e) {} },
+      };
+    },
+    /** 앱이 다시 앞으로 올 때: 다른 앱에서 바뀐 집을 불러온다. */
+    refresh() { if (!Room.data) return; const v = Room.cfg.store.get(); if (v && v.v === 1) { Room.S = v; if (Room.mount && Room.mount.isConnected && Room._redraw) Room._redraw(); } },
     item: (id) => Room.data.items.find((x) => x.id === id),
     set: (id) => Room.data.sets.find((x) => x.id === id),
     has: (id) => Room.S.items.includes(id),
@@ -119,6 +138,7 @@
           if (more) others.forEach((s) => block(s, inv));
         }
       }
+      Room._redraw = () => { sel = null; draw(); };
       draw(); return { redraw: draw };
     },
   });

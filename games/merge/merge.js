@@ -218,7 +218,7 @@
     UK.mode('adult');
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'merge_levels', 'merge_extra', 'room_items', 'art_slots'], storeKey: 'gf:merge:ui:v1', async start() {
       D = GF.data.merge_levels; X = GF.data.merge_extra; const RD = GF.data.room_items; D.roomTotal = RD.items.length;
-      Room.init({ data: RD, game: 'merge', mode: 'adult', autoPlace: true, store: { key: 'gf:house:adult:v1', get() { try { return JSON.parse(localStorage.getItem(this.key)); } catch (e) { return null; } }, set(v) { try { localStorage.setItem(this.key, JSON.stringify(v)); } catch (e) {} } }, charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      Room.init({ data: RD, game: 'merge', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('mhome');
       MG.debug.D = () => D; MG.debug.SV = () => SV; MG.debug.reset = () => { SV = blank(); save(); }; MG.debug.dailyLevel = dailyLevel; MG.debug.seasonLevel = seasonLevel; MG.debug.trioLevels = trioLevels; MG.debug.X = () => X;
     } }, opts || {}));

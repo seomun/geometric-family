@@ -360,7 +360,7 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'idle_balance', 'idle_stories', 'room_items', 'art_slots'], storeKey: 'gf:idle:ui:v1', async start() {
       await loadCodeChars();
       B = GF.data.idle_balance; ST = GF.data.idle_stories; S = load();
-      Room.init({ data: GF.data.room_items, game: 'tables', mode: 'adult', autoPlace: true, store: { key: 'gf:house:adult:v1', get() { try { return JSON.parse(localStorage.getItem(this.key)); } catch (e) { return null; } }, set(v) { try { localStorage.setItem(this.key, JSON.stringify(v)); } catch (e) {} } }, charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), onGrant: (it) => { if (UI.toastOk) { toast('새 소품 · ' + it.name); GF.sfx('star'); } } });
+      Room.init({ data: GF.data.room_items, game: 'tables', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), onGrant: (it) => { if (UI.toastOk) { toast('새 소품 · ' + it.name); GF.sfx('star'); } } });
       PR = GF.data.room_items.items.filter((x) => x.set === 'kitchen' && x.cond);
       Object.keys(S.pr || {}).forEach((id) => { if (Room.item(id)) Room.grant(id); });   // 예전 저장(S.pr)을 집으로 옮긴다
       checkProps(); UI.toastOk = true; S.last = S.last || Date.now();

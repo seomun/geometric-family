@@ -30,6 +30,7 @@
   }
   async function savePNG(res, title) {   // 결과 이미지 저장: 기기 안에서 PNG 로 만들어 내려받기(서버·SNS SDK 없음)
     const svg = cardSVG(res, title), img = new Image(); img.src = uri(svg); await img.decode(); const c = document.createElement('canvas'); c.width = 640; c.height = 880; c.getContext('2d').drawImage(img, 0, 0, 640, 880);
+    if (window.GFSave && GFSave.image) { const nm = 'my-shape-' + res.f + res.s + '.png'; if (!GFSave.image(c.toDataURL('image/png'), nm)) throw new Error('save'); return 1; }   // APK: 권한 없는 MediaStore 저장(Pictures/기하학 가족)
     const blob = await new Promise((r) => c.toBlob(r, 'image/png')); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'my-shape-' + res.f + res.s + '.png'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); return blob.size;
   }
   QZ.debug.savePNG = async () => { const r = Object.values(SV.res)[0]; return savePNG({ f: r.f, s: r.s, cnt: r.cnt }, 'test'); };
@@ -161,7 +162,7 @@
   QZ.start = async function (opts) {
     UK.mode('adult');
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'quiz_tests', 'room_items', 'art_slots'], storeKey: 'gf:quiz:ui:v1', async start() {
-      D = GF.data.quiz_tests; Room.init({ data: GF.data.room_items, game: 'quiz', mode: 'adult', autoPlace: true, store: { key: 'gf:house:adult:v1', get() { try { return JSON.parse(localStorage.getItem(this.key)); } catch (e) { return null; } }, set(v) { try { localStorage.setItem(this.key, JSON.stringify(v)); } catch (e) {} } }, charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      D = GF.data.quiz_tests; Room.init({ data: GF.data.room_items, game: 'quiz', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('qhome');
       QZ.debug.D = () => D; QZ.debug.SV = () => SV; QZ.debug.reset = () => { SV = blank(); save(); }; QZ.debug.me = me; QZ.debug.cardSVG = cardSVG;
     } }, opts || {}));

@@ -3,6 +3,23 @@
 import base64, io, json, pathlib, re
 from PIL import Image
 ROOT = pathlib.Path(__file__).resolve().parents[2]; G = ROOT / 'games'; OUT = G / 'app'; OUT.mkdir(exist_ok=True)
+
+def inline_slots(root):
+    """data/art_slots.json: 경로가 가리키는 SVG 를 빌드 때 data URI(아이콘은 SVG 텍스트)로 인라인한다. 파일이 없으면 코드 그림을 쓴다."""
+    p = root / 'data' / 'art_slots.json'
+    if not p.exists(): return {}
+    d = json.loads(p.read_text(encoding='utf-8')); n = 0
+    for kind in ('bg', 'props', 'cover', 'room', 'icons'):
+        for k, v in list(d.get(kind, {}).items()):
+            f = root / v
+            if v.startswith(('data:', '<svg')) or not f.exists():
+                if not (v.startswith(('data:', '<svg'))): d[kind].pop(k)
+                continue
+            raw = f.read_bytes()
+            d[kind][k] = raw.decode('utf-8') if kind == 'icons' else 'data:image/svg+xml;base64,' + base64.b64encode(raw).decode(); n += 1
+    if n: print('  art slots inlined:', n)
+    return d
+
 b64 = lambda d, m: f'data:{m};base64,' + base64.b64encode(d).decode()
 def webp(path, max_h=420):
     im = Image.open(path).convert('RGBA')
@@ -12,6 +29,7 @@ rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-
 bal, sto, chars, anchors, sounds, props = rd('idle_balance'), rd('idle_stories'), rd('chars'), rd('anchors'), rd('sounds'), rd('idle_props')
 used = set(re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(bal) + json.dumps(sto)))
 data = {'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'idle_props': props, 'base': ''}
+data['art_slots'] = inline_slots(ROOT)
 img = 0
 for k in sorted(used):
     if k not in chars: print('  ! 없는 캐릭터', k); continue

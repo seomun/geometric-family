@@ -18,6 +18,7 @@
       Object.assign(Room.cfg, o || {}); Room.data = o.data;
       const s = Room.cfg.store.get();
       Room.S = s && s.v === 1 ? s : { v: 1, items: [], placed: {}, done: [] };
+      if (Room.cfg.mode === 'kid' && window.GF && GF.gate && !(o && o.guard)) Room.cfg.guard = GF.gate;   // 유아 앱: 가족 집·코드 입력은 보호자 잠금(구구단) 뒤
       Room.family = false; return Room;
     },
     save() { Room.cfg.store.set(Room.S); },
@@ -47,7 +48,7 @@
       const i = parseInt(a.slice(0, 2), 36), it = Room.data.items[i]; if (!it || Room.codeFor(it.id) !== code) return { ok: false, why: 'item' };
       return { ok: true, item: it, isNew: Room.grant(it.id) };
     },
-    src(it, c, o) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(RoomArt.make(it.art, c || it.colors[0], o)); },
+    src(it, c, o) { const sl = Room.cfg.slot && Room.cfg.slot('room', it.id); if (sl) return sl; return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(RoomArt.make(it.art, c || it.colors[0], o)); },
     visibleSet(it) { return Room.family || Room.cfg.mode === 'adult' || Room.set(it.set).game === Room.cfg.game || Room.set(it.set).game === 'all'; },
     placedIn: (r) => (Room.S.placed[r] = Room.S.placed[r] || []),
     place(id, room, x, y) {
@@ -97,7 +98,7 @@
           const g = el('div', 'rm-grid', inv);
           its.forEach((it) => {
             const own = Room.has(it.id), b = el('button', 'rm-cell' + (own ? '' : ' off'), g, `<img src="${Room.src(it)}" alt="">${own ? '' : (window.UK ? UK.icon('lock') : '')}`); b.setAttribute('aria-label', own ? it.name : '잠김');
-            b.onclick = () => { if (!own) { window.UK && UK.toast(it.season ? '시즌 아이템이에요 (' + it.season + '월)' : '아직 못 얻었어요 · ' + Room.set(it.set).name, parent); return; } const p = Room.place(it.id, it.room === cur || true ? cur : it.room); sel = Room.placedIn(cur).length - 1; window.GF && GF.sfx && GF.sfx('pop'); draw(); };
+            b.onclick = () => { if (!own) { window.UK && UK.toast(it.season ? '시즌 아이템이에요 (' + it.season + '월)' : (kid ? '아직 못 얻었어요' : '아직 못 얻었어요 · ' + Room.set(it.set).name), parent); return; } const p = Room.place(it.id, it.room === cur || true ? cur : it.room); sel = Room.placedIn(cur).length - 1; window.GF && GF.sfx && GF.sfx('pop'); draw(); };
           });
         });
       }

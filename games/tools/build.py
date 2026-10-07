@@ -10,6 +10,22 @@ G = ROOT / 'games'
 OUT = G / 'app'
 OUT.mkdir(exist_ok=True)
 
+def inline_slots(root):
+    """data/art_slots.json: 경로가 가리키는 SVG 를 빌드 때 data URI(아이콘은 SVG 텍스트)로 인라인한다. 파일이 없으면 코드 그림을 쓴다."""
+    p = root / 'data' / 'art_slots.json'
+    if not p.exists(): return {}
+    d = json.loads(p.read_text(encoding='utf-8')); n = 0
+    for kind in ('bg', 'props', 'cover', 'room', 'icons'):
+        for k, v in list(d.get(kind, {}).items()):
+            f = root / v
+            if v.startswith(('data:', '<svg')) or not f.exists():
+                if not (v.startswith(('data:', '<svg'))): d[kind].pop(k)
+                continue
+            raw = f.read_bytes()
+            d[kind][k] = raw.decode('utf-8') if kind == 'icons' else 'data:image/svg+xml;base64,' + base64.b64encode(raw).decode(); n += 1
+    if n: print('  art slots inlined:', n)
+    return d
+
 def b64(data, mime):
     return f'data:{mime};base64,' + base64.b64encode(data).decode()
 
@@ -27,6 +43,7 @@ for k, v in data['chars'].items():
     img_bytes += len(raw)
     v['src'] = b64(raw, 'image/webp')
 data['base'] = ''
+data['art_slots'] = inline_slots(ROOT)
 sounds = json.loads((ROOT / 'data' / 'sounds.json').read_text(encoding='utf-8'))
 data['sounds'] = sounds
 audio = {}

@@ -33,6 +33,8 @@
   const UK = (window.UK = {
     icons: ICONS,
     icon: (name) => ICONS[name] || '',
+    /** 아이콘 슬롯: UK.useIcons({home:'<svg…>', …}) — 받은 SVG 문자열로 같은 이름의 코드 아이콘을 교체 */
+    useIcons(map) { Object.keys(map || {}).forEach((k) => { ICONS[k] = map[k]; }); },
     /** 모드 전환: 'kid' | 'adult' (html[data-uk]) */
     mode(m) { if (m) document.documentElement.setAttribute('data-uk', m); return document.documentElement.getAttribute('data-uk') || 'kid'; },
     el,

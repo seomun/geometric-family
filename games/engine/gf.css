@@ -150,8 +150,8 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .parent h3 { margin: 0 0 8px; font-size: 18px; }
 .parent .line { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid #eee; }
 .parent button.t { border: 0; background: var(--pink); color: #fff; border-radius: 12px; padding: 8px 14px; font-size: 14px; }
-.parent .nums { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 8px; }
-.parent .nums button { height: 44px; border-radius: 10px; border: 0; background: #eee8f1; font-size: 18px; }
+.parent .nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+.parent .nums button { height: 56px; border-radius: 12px; border: 0; background: #eee8f1; font-size: 22px; font-weight: 800; }
 .parent small { color: #7a6f80; display: block; line-height: 1.4; margin-top: 6px; }
 
 #toast { position: absolute; left: 50%; top: 80px; transform: translateX(-50%); z-index: 90; background: rgba(58,46,57,.9); color: #fff; padding: 8px 16px; border-radius: 999px; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; white-space: nowrap; }

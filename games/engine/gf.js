@@ -209,7 +209,12 @@
     indoor: () => '<rect width="360" height="640" fill="#FFEBCB"/><rect y="0" width="360" height="380" fill="#FFE1B8"/><g><rect x="244" y="70" width="96" height="104" rx="10" fill="#BFE8FF" stroke="#8A5A3B" stroke-width="6"/><path d="M292 70v104M244 122h96" stroke="#8A5A3B" stroke-width="4"/></g><g><path d="M30 60q30-30 60 0" fill="none" stroke="#E7B77E" stroke-width="5"/><circle cx="60" cy="56" r="6" fill="#FFC933"/></g>' + band(470, '#D9A66B', 170) + band(470, '#B98550', 6) + '<rect x="0" y="476" width="360" height="164" fill="#E3B27F" opacity=".5"/>',
     house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + G(rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A')),
   };
-  GF.bg = function (name, parent) { const d = el('div', 'bg', parent); d.innerHTML = '<svg viewBox="' + (GF.safeWide ? '-0 0 720 440' : '0 0 360 640') + '" preserveAspectRatio="none" style="overflow:visible">' + (GF.safeWide ? '<g transform="translate(180 0)">' + (BG[name] || BG.home)() + '</g>' : (BG[name] || BG.home)()) + '</svg>'; return d; };
+  /* 그림 슬롯(docs/18): data/art_slots.json 의 {bg,props,cover,room,icons}[id] 에 SVG 경로(또는 data URI)를 넣으면 코드 그림 대신 쓴다. 받은 SVG 를 넣기만 하면 교체. */
+  GF.slot = (kind, id) => { const m = GF.data && GF.data.art_slots && GF.data.art_slots[kind], v = m && m[id]; return v ? (/^(data:|https?:|\/)/.test(v) ? v : (GF.base || '') + v) : null; };
+  GF.bg = function (name, parent) {
+    const sl = GF.slot('bg', name);
+    if (sl) { const d0 = el('div', 'bg', parent); const im0 = el('img', '', d0); im0.alt = ''; im0.src = sl; im0.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none'; return d0; }
+    const d = el('div', 'bg', parent); d.innerHTML = '<svg viewBox="' + (GF.safeWide ? '-0 0 720 440' : '0 0 360 640') + '" preserveAspectRatio="none" style="overflow:visible">' + (GF.safeWide ? '<g transform="translate(180 0)">' + (BG[name] || BG.home)() + '</g>' : (BG[name] || BG.home)()) + '</svg>'; return d; };
 
   /* ---------------- 코어: 화면 스택·레터박스·상단바 ---------------- */
   let stage, topbar, scale = 1, safeEl;
@@ -364,7 +369,8 @@
     3: { title: '다음 이야기', sky: ['#E9E3F0', '#F6F2FA'], svg: '<ellipse cx="150" cy="380" rx="220" ry="80" fill="#DCD4E6"/>', chars: [], locked: true },
   };
   GF.cover = function (book, parent) {
-    const c = COVER[book], d = el('div', 'coverart', parent), id = 'cg' + (++gid);
+    const c = COVER[book], d = el('div', 'coverart', parent), id = 'cg' + (++gid), csl = GF.slot('cover', 'book' + book);
+    if (csl) { const imc = el('img', '', d); imc.alt = ''; imc.src = csl; imc.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover'; return d; }
     d.innerHTML = '<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%"><defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + c.sky[0] + '"/><stop offset="1" stop-color="' + c.sky[1] + '"/></linearGradient></defs><rect width="300" height="400" fill="url(#' + id + ')"/>' + c.svg
       + (c.lines ? c.lines.map((t, i) => '<text x="150" y="' + (c.ty + i * 38) + '" font-size="31" text-anchor="middle" font-weight="900" font-family="Jua,Malgun Gothic,sans-serif" fill="#fff" stroke="#3A2E39" stroke-width="7" stroke-linejoin="round" paint-order="stroke">' + t + '</text>').join('') : '')
       + (c.locked ? '<text x="150" y="250" font-size="150" text-anchor="middle" fill="#fff" font-weight="900" font-family="sans-serif">?</text>' : '') + '</svg>';
@@ -656,13 +662,16 @@
 
   /* ---------------- 부모 잠금·메뉴 ---------------- */
   const Gate = {
-    open() {
-      const a = 2 + Math.floor(Math.random() * 4), b = 2 + Math.floor(Math.random() * 4), ans = a + b;
-      const p = Gate.p, pn = p.firstChild; pn.innerHTML = '<h3>' + a + ' + ' + b + ' = ?</h3>';
+    /* 보호자 잠금: 3~7세가 못 푸는 구구단(6~9단) 4지선다. 풀면 cb(), 틀리면 닫힘. 설정·가족 집·코드 입력·외부로 나가는 모든 것이 이 문을 지난다. */
+    ask(cb) {
+      const R = (n) => Math.floor(Math.random() * n), a = 6 + R(4), b = 6 + R(4), ans = a * b, opts = new Set([ans]);
+      while (opts.size < 4) { const d = [a, b, 10, 1, 2][R(5)] * (R(2) ? 1 : -1); if (ans + d > 0) opts.add(ans + d); }
+      const list = [...opts].sort(() => Math.random() - 0.5), p = Gate.p, pn = p.firstChild; pn.innerHTML = '<h3>보호자 확인: ' + a + ' × ' + b + ' = ?</h3>';
       const nums = el('div', 'nums', pn);
-      for (let n = 3; n <= 12; n++) { const bt = el('button', '', nums, n); bt.onclick = () => (n === ans ? Gate.menu() : Gate.close()); }
+      list.forEach((n) => { const bt = el('button', '', nums, n); bt.onclick = () => (n === ans ? (cb(), 0) : Gate.close()); });
       p.classList.add('on');
     },
+    open() { Gate.ask(() => Gate.menu()); },
     close() { Gate.p.classList.remove('on'); },
     menu() {
       const s = GF.state.settings, pn = Gate.p.firstChild;
@@ -677,13 +686,14 @@
       const c = el('div', 'line', pn); const cb = el('button', 't', c, '닫기'); cb.onclick = Gate.close;
     },
   };
+  GF.gate = (cb) => Gate.ask(cb);                   // 다른 화면(가족 집·코드 입력)도 같은 잠금을 쓴다
   GF.overlayOpen = () => { if (Gate.p.classList.contains('on')) { Gate.close(); return true; } return false; };
 
   /* ---------------- 부팅 ---------------- */
   async function loadData(namesOpt) {
     if (window.GF_DATA) return window.GF_DATA;
-    const names = namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors'], out = {};
-    await Promise.all(names.map(async (n) => { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); }));
+    const names = namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots'], out = {};
+    await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else throw e; } }));
     return out;
   }
   // opts: {base:데이터 경로, audioBase:소리 경로, dataNames:[…], storeKey, start:()=>첫 화면}  — 방치형 등 다른 앱이 같은 엔진을 쓴다
@@ -692,6 +702,8 @@
     if (opts.base != null) GF.base = opts.base; if (opts.audioBase != null) GF.audioBase = opts.audioBase; if (opts.storeKey) KEY = opts.storeKey; GF.opts = opts;
     stage = $('stage'); safeEl = $('safe'); topbar = $('topbar');
     GF.data = await loadData(opts.dataNames);
+    if (window.UK && GF.data.art_slots && GF.data.art_slots.icons) UK.useIcons(GF.data.art_slots.icons);   // 아이콘 슬롯(SVG 텍스트)
+    if (GF.props && GF.data.art_slots && GF.data.art_slots.props) Object.keys(GF.data.art_slots.props).forEach((k) => { if (GF.props[k]) GF.props[k].src = GF.slot('props', k); });   // 소품 슬롯
     if (GF.data.base != null) GF.base = GF.data.base;
     GF.state = Store.load();
     ensureAudio(); loadSounds();

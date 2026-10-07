@@ -7,7 +7,7 @@
   const KEY = 'gf:day:v1';
   const REW = { 2: 'y_cup', 4: 'y_paste', 6: 'y_hanger', 8: 'y_hat', 10: 'y_bowl', 12: 'y_spoon', 14: 'y_toybox', 16: 'y_ball', 18: 'y_moon', 20: 'y_pillow' };
   const slow = (ms) => (DY.fast ? 0 : ms);
-  const SCENE_BG = ['indoor2', 'indoor2', 'indoor', 'indoor', 'indoor2'];
+  const SCENE_BG = ['indoor2', 'indoor2', 'indoor2', 'indoor2', 'indoor2'];
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 1, done: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, intro: 0, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x); } catch (e) {} return blank(); })();
@@ -85,7 +85,7 @@
       const ACT = {};
       /* 1) 양치: 칫솔을 끌어 문질러 이의 얼룩을 지운다 */
       ACT.brush = () => {
-        const mouth = el('div', 'dy-mouth', stage); const brush = em(stage, '🪥', 64, 'dy-brush'); at(brush, 262, 504); const rest = { x: 262, y: 504 };
+        const face = el('div', 'dy-face', stage); face.innerHTML = '<svg viewBox="0 0 360 640"><rect x="30" y="170" width="300" height="340" rx="96" fill="#F9D9A6" stroke="#6b5443" stroke-width="5"/><path d="M92 252q22-24 44 0M224 252q22-24 44 0" fill="none" stroke="#6b5443" stroke-width="6" stroke-linecap="round"/><circle cx="70" cy="300" r="22" fill="#FF9AA8" opacity=".8"/><circle cx="290" cy="300" r="22" fill="#FF9AA8" opacity=".8"/><ellipse cx="180" cy="380" rx="124" ry="92" fill="#8E3040" stroke="#6b5443" stroke-width="5"/><ellipse cx="180" cy="452" rx="62" ry="26" fill="#E8707E"/>' + [[99, 330], [153, 330], [207, 330], [261, 330], [99, 430], [153, 430], [207, 430], [261, 430]].map((t) => '<rect x="' + (t[0] - 25) + '" y="' + (t[1] - 25) + '" width="50" height="50" rx="14" fill="#fff" stroke="#E4DDE0" stroke-width="3"/>').join('') + '</svg>'; const brush = em(stage, '🪥', 64, 'dy-brush'); at(brush, 262, 504); const rest = { x: 262, y: 504 };
         const spots = LV.spots.map((s) => { const d = el('div', 'dy-spot', stage); d.style.cssText = `left:${s.x - s.r}px;top:${s.y - s.r}px;width:${2 * s.r}px;height:${2 * s.r}px`; return { d, s, dist: 0, clean: false }; });
         setGoal(spots.length); let down = false, last = null;
         const clean = (o) => { o.clean = true; o.d.classList.add('gone'); GF.sfx('ok', { st: [0, 2, 4, 7, 9, 12, 14][Math.min(got, 6)] }); sparkle(o.s.x, o.s.y); pip(got + 1); if (got >= goalN) finish(); };

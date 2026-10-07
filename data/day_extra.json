@@ -85,14 +85,14 @@
    "tale": "hare",
    "cuts": [
     {
-     "text": "토끼는 빨리빨리, 거북이 아빠는 천천히 걸어요.",
+     "text": "토끼 동그라미 아저씨는 빨리빨리, 거북이 아빠는 천천히 걸어요.",
      "chars": [
       "dong_dad.joy",
       "nemo_dad.joy"
      ]
     },
     {
-     "text": "토끼는 깡충깡충 앞서가다 낮잠을 쿨쿨 잤어요.",
+     "text": "토끼 동그라미 아저씨는 깡충깡충 앞서가다 낮잠을 쿨쿨 잤어요.",
      "chars": [
       "dong_dad.calm"
      ]
@@ -167,6 +167,14 @@
       "nemo_kids.kid1",
       "nemo_kids.kid2"
      ]
+    },
+    {
+     "text": "바람 호랑이가 문을 똑똑. 「엄마 목소리가 아니네!」 문은 열지 않고 이불 속에서 꼭 안고 있었어요.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "question"
     },
     {
      "text": "엄마가 돌아와 토닥토닥. 「잘 자렴.」",

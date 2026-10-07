@@ -17,9 +17,10 @@
 /* 놀이 화면 공통 */
 .dy-stage { position: absolute; inset: 0; touch-action: none; user-select: none; -webkit-user-select: none; }
 .dy-em { position: absolute; line-height: 1; pointer-events: none; }
-.dy-pips { position: absolute; left: 0; right: 0; top: 84px; display: flex; justify-content: center; gap: 10px; z-index: 5; pointer-events: none; flex-wrap: wrap; padding: 0 20px; }
+.dy-pips { position: absolute; left: 50%; transform: translateX(-50%); top: 78px; display: flex; justify-content: center; gap: 10px; z-index: 8; pointer-events: none; flex-wrap: wrap; padding: 8px 16px; max-width: 320px; border-radius: 24px; background: rgba(255,255,255,.92); box-shadow: var(--uk-sh); }
 .dy-pips i { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.85); box-shadow: inset 0 0 0 3px #D9CDD3; } .dy-pips i.on { background: #FFC933; box-shadow: inset 0 0 0 3px #E0A800; }
-.dy-mouth { position: absolute; left: 44px; top: 240px; width: 272px; height: 204px; border-radius: 60px 60px 90px 90px; background: #fff; box-shadow: 0 0 0 14px #FF9AA8, 0 10px 0 14px #E5778A; }
+.dy-face { position: absolute; inset: 0; pointer-events: none; } .dy-face svg { width: 100%; height: 100%; }
+.dy-mouth-old { position: absolute; left: 44px; top: 240px; width: 272px; height: 204px; border-radius: 60px 60px 90px 90px; background: #fff; box-shadow: 0 0 0 14px #FF9AA8, 0 10px 0 14px #E5778A; }
 .dy-spot { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #B98A55, #7A5230); transition: opacity .15s, transform .4s; } .dy-spot.gone { opacity: 0 !important; transform: scale(1.5); }
 .dy-brush { z-index: 6; transition: left .25s, top .25s; }
 .dy-sky { position: absolute; left: 0; right: 0; top: 118px; height: 90px; } .dy-sky.sun { background: linear-gradient(#FFF1B8, rgba(255,255,255,0)); } .dy-sky.cold { background: linear-gradient(#D6EEFF, rgba(255,255,255,0)); } .dy-sky.rain { background: linear-gradient(#B8C6DB, rgba(255,255,255,0)); }
@@ -34,9 +35,11 @@
 .dy-marks { position: absolute; left: 0; right: 0; top: 190px; display: flex; justify-content: center; gap: 10px; } .dy-marks i { width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 4px #D9CDD3; } .dy-marks i.on { background: #FF8FA8; box-shadow: inset 0 0 0 4px #E5778A; }
 .dy-box { position: absolute; border-radius: 22px; background: #FFE3C2; box-shadow: inset 0 0 0 5px #C98F5A, var(--uk-sh); display: flex; align-items: center; justify-content: center; } .dy-boxico { position: static; opacity: .35; }
 .dy-toy { pointer-events: auto; touch-action: none; z-index: 4; transition: left .25s, top .25s, opacity .3s, transform .3s; } .dy-toy.lift { z-index: 9; transition: none; filter: drop-shadow(0 6px 4px rgba(0,0,0,.25)); } .dy-toy.in { transform: scale(.7); pointer-events: none; }
-.dy-night { position: absolute; inset: 0; background: #1F2A52; opacity: 1; transition: opacity .5s; pointer-events: none; z-index: 1; mix-blend-mode: multiply; }
+.dy-night { position: absolute; inset: 0; background: #2B3A72; opacity: .8; transition: opacity .5s; pointer-events: none; z-index: 0; }   /* 방만 어둡게(캐릭터·이불은 그 위에서 밝게) */
 .dy-light { position: absolute; width: 64px; height: 64px; border: 0; border-radius: 50%; background: rgba(255,240,170,.9); font-size: 40px; display: flex; align-items: center; justify-content: center; z-index: 3; box-shadow: 0 0 24px 10px rgba(255,230,120,.75); } .dy-light:not(.on) { background: transparent; box-shadow: none; color: transparent; }
 .dy-moon { z-index: 2; transition: transform .6s; } .dy-moon.big { transform: scale(1.5); }
-.dy-blanket { position: absolute; left: 70px; top: 470px; width: 220px; height: 130px; border-radius: 40px 40px 0 0; background: repeating-linear-gradient(90deg, #FF8FA8 0 26px, #FFB3C4 26px 52px); box-shadow: var(--uk-sh-lg); z-index: 4; transition: transform .6s; display: flex; justify-content: center; align-items: flex-start; } .dy-blanket.up { transform: translateY(-110px); }
+.dy-blanket { position: absolute; left: 70px; top: 530px; width: 220px; height: 130px; border-radius: 40px 40px 0 0; background: repeating-linear-gradient(90deg, #FF8FA8 0 26px, #FFB3C4 26px 52px); box-shadow: var(--uk-sh-lg); z-index: 4; transition: transform .6s; display: flex; justify-content: center; align-items: flex-start; } .dy-blanket.up { transform: translateY(-90px); }
 .dy-pull { position: static; margin-top: 12px; pointer-events: auto; touch-action: none; }
 .dy-quilt { display: none; }
+.dy-kid.bed, .dy-blanket, .dy-pull { z-index: 3; } .dy-kid.bed img { filter: none; }
+.dy-spot { box-shadow: 0 0 0 2px rgba(60,35,20,.35); }

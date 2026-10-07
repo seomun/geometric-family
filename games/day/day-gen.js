@@ -7,6 +7,7 @@
   const CHAPTERS = [['아침 양치', 'brush', '🪥', '금도끼 은도끼'], ['옷 입기', 'dress', '👕', '세 마리 곰'], ['아침밥', 'chew', '🍚', '토끼와 거북이'], ['장난감 정리', 'tidy', '🧸', '우렁 각시'], ['잠자리', 'sleep', '🌙', '해님 달님']];
   const PER = 4;   // 장당 판 수(슬라이스). 확장은 허브 결정
   const AREA = { x0: 24, x1: 336, y0: 170, y1: 560 };
+  const TEETH = [[99, 330], [153, 330], [207, 330], [261, 330], [99, 430], [153, 430], [207, 430], [261, 430]];   // 막둥이가 벌린 입 속 이 8개(그림 좌표)
   const WEATHER = ['sun', 'cold', 'rain'];
   const CLOTH = { sun: { head: '🧢', body: '👕', feet: '🩴' }, cold: { head: '🧣', body: '🧥', feet: '🧦' }, rain: { head: '☂️', body: '🧥', feet: '🥾' } };
   const FOODS = ['🍚', '🥕', '🍎', '🥦', '🍌'];
@@ -20,7 +21,7 @@
   }
   function make(n, seed) {
     const ch = ((n - 1) / PER) | 0, idx = ((n - 1) % PER), [name, type] = CHAPTERS[ch % CHAPTERS.length], rng = mulberry((seed || n) * 7919 + n * 13), L = { id: n, chapter: ch + 1, idx: idx + 1, type, last: idx === PER - 1 };
-    if (type === 'brush') { const N = [2, 3, 5, 7][idx], r = [34, 30, 26, 23][idx]; L.spots = scatter(rng, N, 56 + r, 250 + r, 304 - r, 436 - r, 2 * r + 8).map((p) => Object.assign(p, { r })); }
+    if (type === 'brush') { const N = [2, 3, 5, 7][idx], pick = shuf(rng, TEETH).slice(0, N); L.spots = pick.map((t) => ({ x: t[0], y: t[1], r: 22 })); }
     else if (type === 'dress') {
       const w = WEATHER[(idx + (seed || 0)) % 3], K = [1, 2, 3, 3][idx], slots = shuf(rng, ['head', 'body', 'feet']).slice(0, K); L.weather = w;
       L.slots = slots.map((s) => { const ok = CLOTH[w][s], others = WEATHER.filter((x) => x !== w).map((x) => CLOTH[x][s]).filter((e) => e !== ok); return { slot: s, ok, opts: shuf(rng, [ok].concat([...new Set(others)].slice(0, 2))) }; });
@@ -40,6 +41,6 @@
     if (L.type === 'sleep') { L.lights.forEach((p, i) => { if (!inside(p, 30)) errs.push('불 화면 밖 ' + i); L.lights.forEach((q, j) => { if (j > i && Math.hypot(p.x - q.x, p.y - q.y) < 70) errs.push('불 겹침 ' + i + ',' + j); }); }); if (L.lights.length < [2, 3, 4, 5][L.idx - 1]) errs.push('불 부족'); }
     return errs;
   }
-  const api = { mulberry, CHAPTERS, PER, AREA, CLOTH, FOODS, TOYS, make, verify };
+  const api = { TEETH, mulberry, CHAPTERS, PER, AREA, CLOTH, FOODS, TOYS, make, verify };
   if (typeof module !== 'undefined') module.exports = api; else root.DayGen = api;
 })(typeof window !== 'undefined' ? window : globalThis);

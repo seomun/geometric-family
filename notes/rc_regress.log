@@ -2,68 +2,12 @@
 no errors
 assert ok (별 규칙)
 === ① ch2
-  name: 'TimeoutError'
+no errors
+assert ok (별 규칙)
 === ① ch3
-  name: 'TimeoutError'
+no errors
+assert ok (별 규칙)
 === ① ch4
-  name: 'TimeoutError'
+no errors
+assert ok (별 규칙)
 === ① ch5
-  name: 'TimeoutError'
-=== ① ch6
-no errors
-assert ok (별 규칙)
-=== ① ch7
-no errors
-assert ok (별 규칙)
-=== ① ch8
-no errors
-assert ok (별 규칙)
-=== ① ch9
-no errors
-assert ok (별 규칙)
-=== ① ch10
-no errors
-assert ok (별 규칙)
-=== ① 3권 ch11
-ch11 plant {"st":[{"done":true,"stars":2},{"done":true,"stars":3},{"done":true,"stars":3}],"toy":true}
-no errors
-=== ① 3권 ch12
-ch12 share {"st":[{"done":true,"stars":2},{"done":true,"stars":3},{"done":true,"stars":3}],"toy":true}
-no errors
-=== ① 3권 ch13
-ch13 hidden {"st":[{"done":true,"stars":3},{"done":true,"stars":3},{"done":true,"stars":3}],"toy":true}
-no errors
-=== ① 3권 ch14
-ch14 catch {"st":[{"done":true,"stars":2},{"done":true,"stars":3},{"done":true,"stars":3}],"toy":true}
-no errors
-=== ① 3권 ch15
-ch15 rhythm {"st":[{"done":true,"stars":2},{"done":true,"stars":3},{"done":true,"stars":3}],"toy":true}
-no errors
-=== ③ merge LV=1-5
-ALL PASS
-=== ③ merge LV=6-10
-ALL PASS
-=== ③ merge LV=11-15
-ALL PASS
-=== ③ merge LV=16-20
-ALL PASS
-=== ④ color
-ALL PASS
-=== ⑤ quiz
-ALL PASS
-=== ② idle
-ALL PASS
-=== first30
-ALL PASS
-=== greet
-FAIL ② 식탁 첫 실행 인사 컷(세 가족 + 자막) 표시
-FAIL ② 식탁 탭 한 번에 건너뛰고 홈
-FAIL ② 식탁 두 번째 실행엔 인사 없음
-FAIL ② 식탁 오류 없음 Cannot read properties of null (reading 'items')
-FAILED 4
-=== room codes
-=== merge_sim
-=== quiz_sim
-ALL PASS
-=== idle_sim
-=== DONE

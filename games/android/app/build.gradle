@@ -15,8 +15,8 @@ android {
     defaultConfig {
         minSdk 24
         targetSdk 35          // Galaxy Store 요구는 33 이상. 구글 플레이를 겸하면 36 으로 올린다
-        versionCode 2
-        versionName '1.0.0-rc2'
+        versionCode 3
+        versionName '1.0.0-rc3'
     }
     if (gfStore) {
         signingConfigs {

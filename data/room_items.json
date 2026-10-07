@@ -1,6 +1,6 @@
 {
  "version": 1,
- "note": "아이템은 id 목록만 저장된다(개인정보 없음). physical = 실물 짝 상품 id(코드 카드), season = 열리는 달.",
+ "note": "아이템은 id 목록만 저장된다(개인정보 없음). physical = 실물 짝 상품 id(코드 카드), season = 열리는 달. · no = 불변 번호(코드·굿즈의 기준). 순서를 바꾸거나 중간에 끼워도 no 는 바꾸지 않는다. 새 아이템은 가장 큰 no+1.",
  "rooms": [
   {
    "id": "nemo",
@@ -84,6 +84,7 @@
  ],
  "items": [
   {
+   "no": 1,
    "id": "b_sofa",
    "name": "도형 블록 소파",
    "set": "build",
@@ -103,6 +104,7 @@
    "physical": "note_sofa"
   },
   {
+   "no": 2,
    "id": "b_shelf",
    "name": "세모 지붕 책장",
    "set": "build",
@@ -121,6 +123,7 @@
    "physical": null
   },
   {
+   "no": 3,
    "id": "b_window",
    "name": "동그라미 창문",
    "set": "build",
@@ -138,6 +141,7 @@
    "physical": null
   },
   {
+   "no": 4,
    "id": "b_table",
    "name": "네모 식탁",
    "set": "build",
@@ -156,6 +160,7 @@
    "physical": null
   },
   {
+   "no": 5,
    "id": "b_lamp",
    "name": "세모 램프",
    "set": "build",
@@ -174,6 +179,7 @@
    "physical": null
   },
   {
+   "no": 6,
    "id": "b_rug",
    "name": "동그라미 러그",
    "set": "build",
@@ -193,6 +199,7 @@
    "physical": null
   },
   {
+   "no": 7,
    "id": "b_tv",
    "name": "네모 TV장",
    "set": "build",
@@ -210,6 +217,7 @@
    "physical": null
   },
   {
+   "no": 8,
    "id": "b_plant",
    "name": "세모 화분",
    "set": "build",
@@ -227,6 +235,7 @@
    "physical": null
   },
   {
+   "no": 9,
    "id": "b_clock",
    "name": "동그라미 벽시계",
    "set": "build",
@@ -245,6 +254,7 @@
    "physical": null
   },
   {
+   "no": 10,
    "id": "b_bed",
    "name": "네모 침대",
    "set": "build",
@@ -263,6 +273,7 @@
    "physical": null
   },
   {
+   "no": 11,
    "id": "k_train",
    "name": "기차 장난감",
    "set": "kid",
@@ -281,6 +292,7 @@
    "physical": null
   },
   {
+   "no": 12,
    "id": "k_party",
    "name": "잔칫집 미니어처",
    "set": "kid",
@@ -297,6 +309,7 @@
    "physical": null
   },
   {
+   "no": 13,
    "id": "w_frame",
    "name": "그림 액자",
    "set": "wall",
@@ -315,6 +328,7 @@
    "physical": null
   },
   {
+   "no": 14,
    "id": "t_bowl",
    "name": "밥그릇",
    "set": "kitchen",
@@ -332,6 +346,7 @@
    "physical": null
   },
   {
+   "no": 15,
    "id": "n_plate",
    "name": "도형 문패",
    "set": "badge",
@@ -350,6 +365,7 @@
    "physical": null
   },
   {
+   "no": 16,
    "id": "s_tree",
    "name": "연말 트리",
    "set": "season",
@@ -363,6 +379,113 @@
    ],
    "game": "all",
    "season": "12",
+   "physical": null
+  },
+  {
+   "no": 17,
+   "id": "b_drawer",
+   "name": "네모 서랍장",
+   "set": "build",
+   "room": "nemo",
+   "w": 64,
+   "h": 56,
+   "slot": "floor",
+   "art": "drawer",
+   "colors": [
+    "#F6C28B",
+    "#FF8FA8",
+    "#8FD3F4"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 18,
+   "id": "b_suitcase",
+   "name": "세모 여행 가방",
+   "set": "build",
+   "room": "semo",
+   "w": 50,
+   "h": 48,
+   "slot": "floor",
+   "art": "suitcase",
+   "colors": [
+    "#8FD3F4",
+    "#FF8FA8",
+    "#FFC933"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 19,
+   "id": "b_globe",
+   "name": "동그라미 지구본",
+   "set": "build",
+   "room": "dong",
+   "w": 40,
+   "h": 56,
+   "slot": "floor",
+   "art": "globe",
+   "colors": [
+    "#6CCB8A",
+    "#8FD3F4"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 20,
+   "id": "b_nemo_living",
+   "name": "네모네 거실 한 벌",
+   "set": "build",
+   "room": "nemo",
+   "w": 150,
+   "h": 84,
+   "slot": "floor",
+   "art": "set_living",
+   "colors": [
+    "#F6C28B"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 21,
+   "id": "b_semo_home",
+   "name": "세모네 신혼집 한 벌",
+   "set": "build",
+   "room": "semo",
+   "w": 150,
+   "h": 84,
+   "slot": "floor",
+   "art": "set_home",
+   "colors": [
+    "#8FD3F4"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 22,
+   "id": "b_dong_study",
+   "name": "동그라미네 서재 한 벌",
+   "set": "build",
+   "room": "dong",
+   "w": 150,
+   "h": 84,
+   "slot": "floor",
+   "art": "set_study",
+   "colors": [
+    "#B7C2F2"
+   ],
+   "game": "merge",
+   "season": null,
    "physical": null
   }
  ]

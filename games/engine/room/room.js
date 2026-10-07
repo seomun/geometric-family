@@ -30,7 +30,7 @@
     /** 아이템을 얻는다(진행·코드·시즌). 처음이면 true, 세트가 완성되면 사연 컷 팝업. */
     grant(id) {
       const it = Room.item(id); if (!it || Room.has(id)) return false;
-      Room.S.items.push(id); Room.save(); Room.cfg.onGrant && Room.cfg.onGrant(it);
+      Room.S.items.push(id); if (Room.cfg.autoPlace) Room.place(id, it.room); Room.save(); Room.cfg.onGrant && Room.cfg.onGrant(it);   // 보상의 끝은 "집에 놓기": autoPlace 면 얻자마자 방에 놓인다
       const st = Room.set(it.set), all = Room.data.items.filter((x) => x.set === it.set);
       if (all.every((x) => Room.has(x.id)) && !Room.S.done.includes(it.set)) { Room.S.done.push(it.set); Room.save(); Room.setComplete(st); }
       return true;
@@ -41,11 +41,11 @@
     },
     /** 코드(선물·굿즈): 6자리 = 아이템 번호 2 + 잡음 2 + 검사 2. 서버 없이 확인 — 보안이 아니라 오타·장난 방지용. */
     _chk(a) { let h = 7; for (const ch of a) h = (h * 31 + ch.charCodeAt(0)) % 1296; return h.toString(36).toUpperCase().padStart(2, '0'); },
-    codeFor(id) { const i = Room.data.items.findIndex((x) => x.id === id); if (i < 0) return null; const a = i.toString(36).toUpperCase().padStart(2, '0') + ((i * 7 + 11) % 1296).toString(36).toUpperCase().padStart(2, '0'); return a + Room._chk(a); },
+    codeFor(id) { const it = Room.item(id); if (!it || !it.no) return null; const n = it.no, a = n.toString(36).toUpperCase().padStart(2, '0') + ((n * 7 + 11) % 1296).toString(36).toUpperCase().padStart(2, '0'); return a + Room._chk(a); },   // 불변 번호 no 기준(배열 순서와 무관)
     redeem(code) {
       code = String(code || '').trim().toUpperCase().replace(/[^0-9A-Z]/g, ''); if (code.length !== 6) return { ok: false, why: 'len' };
       const a = code.slice(0, 4); if (Room._chk(a) !== code.slice(4)) return { ok: false, why: 'check' };
-      const i = parseInt(a.slice(0, 2), 36), it = Room.data.items[i]; if (!it || Room.codeFor(it.id) !== code) return { ok: false, why: 'item' };
+      const n = parseInt(a.slice(0, 2), 36), it = Room.data.items.find((x) => x.no === n); if (!it || Room.codeFor(it.id) !== code) return { ok: false, why: 'item' };
       return { ok: true, item: it, isNew: Room.grant(it.id) };
     },
     src(it, c, o) { const sl = Room.cfg.slot && Room.cfg.slot('room', it.id); if (sl) return sl; return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(RoomArt.make(it.art, c || it.colors[0], o)); },

@@ -1,0 +1,90 @@
+{
+ "b_sofa": {
+  "no": 1,
+  "code": "010I29"
+ },
+ "b_shelf": {
+  "no": 2,
+  "code": "020PT5"
+ },
+ "b_window": {
+  "no": 3,
+  "code": "030WK1"
+ },
+ "b_table": {
+  "no": 4,
+  "code": "0413AL"
+ },
+ "b_lamp": {
+  "no": 5,
+  "code": "051A1O"
+ },
+ "b_rug": {
+  "no": 6,
+  "code": "061HSK"
+ },
+ "b_tv": {
+  "no": 7,
+  "code": "071OJG"
+ },
+ "b_plant": {
+  "no": 8,
+  "code": "081VAC"
+ },
+ "b_clock": {
+  "no": 9,
+  "code": "09220W"
+ },
+ "b_bed": {
+  "no": 10,
+  "code": "0A29YN"
+ },
+ "k_train": {
+  "no": 11,
+  "code": "0B2GPQ"
+ },
+ "k_party": {
+  "no": 12,
+  "code": "0C2NGM"
+ },
+ "w_frame": {
+  "no": 13,
+  "code": "0D2U7I"
+ },
+ "t_bowl": {
+  "no": 14,
+  "code": "0E31Y2"
+ },
+ "n_plate": {
+  "no": 15,
+  "code": "0F38OY"
+ },
+ "s_tree": {
+  "no": 16,
+  "code": "0G3FG1"
+ },
+ "b_drawer": {
+  "no": 17,
+  "code": "0H3M6X"
+ },
+ "b_suitcase": {
+  "no": 18,
+  "code": "0I3TXT"
+ },
+ "b_globe": {
+  "no": 19,
+  "code": "0J40OD"
+ },
+ "b_nemo_living": {
+  "no": 20,
+  "code": "0K47F9"
+ },
+ "b_semo_home": {
+  "no": 21,
+  "code": "0L4E6C"
+ },
+ "b_dong_study": {
+  "no": 22,
+  "code": "0M4LX8"
+ }
+}

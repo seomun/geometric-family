@@ -1,0 +1,35 @@
+/* 도형 합치기 — 화면 고유 스타일. 색·모서리·글자는 ui-kit 토큰만 쓴다. */
+.mg { position: absolute; inset: 0; }
+.mg-ttl { position: absolute; top: 96px; left: 0; right: 0; text-align: center; }
+.mg-sub { display: inline-block; margin-top: 8px; background: #fff; border-radius: 16px; padding: 4px 16px; font: 700 var(--uk-fs-cap)/1.3 var(--uk-font); box-shadow: var(--uk-sh); }
+.mg-fam { position: absolute; left: 0; right: 0; top: 250px; height: 150px; display: flex; justify-content: center; align-items: flex-end; gap: 8px; }
+.mg-fam img { height: 128px; width: auto; }
+.mg-btns { position: absolute; left: 24px; right: 24px; top: 430px; }
+.mg-btns2 { position: absolute; left: 24px; right: 24px; top: 508px; display: flex; gap: 12px; }
+.mg-btns2 .uk-btn { flex: 1; }
+.mg-foot { position: absolute; left: 0; right: 0; bottom: 24px; text-align: center; font: 800 var(--uk-fs-cap)/1 var(--uk-font); color: var(--uk-ink2); }
+.mg-scroll { position: absolute; left: 0; right: 0; top: 70px; bottom: 0; overflow-y: auto; touch-action: pan-y; padding: 0 10px 24px; scrollbar-width: none; }
+.mg-scroll::-webkit-scrollbar { display: none; }
+.mg-ch { display: flex; justify-content: space-between; align-items: baseline; margin: 14px 4px 6px; font: 900 var(--uk-fs-body)/1.2 var(--uk-font); } .mg-ch span { font-size: var(--uk-fs-cap); color: var(--uk-ink2); }
+.mg-lv { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.mg-l { height: 64px; border: 0; border-radius: var(--uk-r-m); background: #fff; box-shadow: var(--uk-sh); display: flex; flex-direction: column; align-items: center; justify-content: center; font: 900 20px/1 var(--uk-font); color: var(--uk-ink); }
+.mg-l i { font-style: normal; font-size: 14px; color: #C99A00; letter-spacing: -1px; margin-top: 2px; }
+.mg-l.rest { background: #E3F6DC; } .mg-l.off { background: #E7E1EC; color: #8B8092; } .mg-l.off i { color: #B9B2C0; }
+.mg-hd { position: absolute; left: 12px; top: 72px; display: flex; gap: 8px; align-items: baseline; font: 900 var(--uk-fs-body)/1 var(--uk-font); } .mg-hd span { font-size: var(--uk-fs-cap); font-weight: 700; color: var(--uk-ink2); }
+.mg-goals { position: absolute; left: 10px; right: 10px; top: 100px; height: 64px; display: flex; gap: 8px; align-items: center; }
+.mg-goal { position: relative; display: flex; align-items: center; gap: 4px; height: 56px; padding: 0 10px 0 4px; border-radius: var(--uk-r-m); background: #fff; box-shadow: var(--uk-sh); font: 900 var(--uk-fs-body)/1 var(--uk-font); }
+.mg-goal .mg-pc { width: 48px; height: 48px; } .mg-goal.ok { background: #DDF6E5; outline: 3px solid var(--uk-green); }
+.mg-left { margin-left: auto; text-align: center; font: 700 14px/1.1 var(--uk-font); color: var(--uk-ink2); } .mg-left b { display: block; font-size: 28px; color: var(--uk-ink); font-weight: 900; }
+.mg-board { position: absolute; left: 50%; top: 170px; transform: translateX(-50%); background: rgba(255,255,255,.55); border-radius: var(--uk-r-l); box-shadow: var(--uk-sh-lg); }
+.mg-cell { position: absolute; border: 0; border-radius: 14px; background: rgba(255,255,255,.85); box-shadow: inset 0 -3px 0 rgba(0,0,0,.08); padding: 0; display: flex; align-items: center; justify-content: center; }
+.mg-cell:not(.full):active { background: #FFF3B0; } .mg-cell.hint { outline: 4px dashed var(--uk-pink); animation: uk-float 1s ease-in-out infinite; }
+.mg-pc { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.mg-pc img { display: block; object-fit: contain; pointer-events: none; }
+.mg-pc.top { filter: drop-shadow(0 0 6px #FFC933); }
+.mg-pc.pop { animation: mgpop .45s var(--uk-ease); } @keyframes mgpop { 0% { transform: scale(.3) } 60% { transform: scale(1.2) } 100% { transform: scale(1) } }
+.mg-dock { position: absolute; left: 0; right: 0; bottom: 12px; height: 92px; display: flex; align-items: center; justify-content: center; gap: 14px; }
+.mg-cur { position: relative; width: 84px; height: 84px; border-radius: var(--uk-r-l); background: #fff; box-shadow: var(--uk-sh-lg); outline: 4px solid var(--uk-pink); }
+.mg-cur em { position: absolute; left: 0; right: 0; bottom: -20px; text-align: center; font: 800 14px/1 var(--uk-font); font-style: normal; color: var(--uk-ink2); }
+.mg-next { display: flex; gap: 8px; } .mg-next .mg-pc { width: 52px; height: 52px; background: rgba(255,255,255,.7); border-radius: var(--uk-r-m); }
+.mg-btns3 { display: flex; flex-direction: column; gap: 8px; } .mg-btns3 .uk-round { width: 46px; height: 46px; } .mg-btns3 .uk-round svg { width: 26px; height: 26px; }
+.mg-tip { position: absolute; left: 12px; right: 12px; top: 74px; z-index: 6; font-size: 18px !important; }

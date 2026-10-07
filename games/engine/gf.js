@@ -21,6 +21,7 @@
   const STAR = '<path d="M16 2l4.2 9 9.8 1-7.3 6.6 2.1 9.7L16 23.4 7.2 28.3l2.1-9.7L2 12l9.8-1z" fill="#FFC933" stroke="#E0A200" stroke-width="1.5" stroke-linejoin="round"/>';
   const IC = {
     home: '<svg viewBox="0 0 32 32"><path d="M4 16 16 5l12 11v11h-8v-8h-8v8H4z" fill="#FF8FA8"/></svg>',
+    back: '<svg viewBox="0 0 32 32"><path d="M19 5 8 16l11 11" fill="none" stroke="#FF8FA8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     star: '<svg viewBox="0 0 32 32">' + STAR + '</svg>',
     sound: '<svg viewBox="0 0 32 32"><path d="M5 12h5l7-6v20l-7-6H5z" fill="#3A2E39"/><path d="M21 11a7 7 0 0 1 0 10M24 7a12 12 0 0 1 0 18" fill="none" stroke="#3A2E39" stroke-width="2.5" stroke-linecap="round"/></svg>',
     mute: '<svg viewBox="0 0 32 32"><path d="M5 12h5l7-6v20l-7-6H5z" fill="#9a8fa0"/><path d="M21 12l8 8M29 12l-8 8" stroke="#E5566D" stroke-width="3" stroke-linecap="round"/></svg>',
@@ -42,7 +43,7 @@
 
   /* ---------------- 저장 (localStorage 한 키) ---------------- */
   let KEY = 'gf:v1';                                          // 앱마다 다른 저장 키(방치형은 gf:idle:v1)
-  const fresh = () => ({ v: 1, stages: {}, stickers: {}, seen: {}, settings: { vol: 0.8, mute: false, captions: false }, avatar: null });
+  const fresh = () => ({ v: 1, stages: {}, stickers: {}, seen: {}, settings: { vol: 0.8, mute: false, captions: false, capOff: false }, avatar: null });
   const Store = {
     load() { try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.v === 1) return Object.assign(fresh(), s, { settings: Object.assign(fresh().settings, s.settings) }); } catch (e) {} return fresh(); },
     save() { try { localStorage.setItem(KEY, JSON.stringify(GF.state)); } catch (e) {} },
@@ -100,7 +101,8 @@
   // 음악: 슬롯(theme_main·theme_kids·night …)을 id 로 틀고, file 이 비어 있으면 fallback 슬롯을 쓴다. 같은 파일이면 끊지 않고 이어 간다.
   GF.bgm = {
     el: null, started: false, want: null, file: null, duck: false, vol: 0.22,
-    resolve(id) { const m = snd().music; let e = m[id], guard = 0; while (e && !e.file && e.fallback && guard++ < 5) e = m[e.fallback]; return e && e.file ? e : null; },
+    resolve(id) { if (snd().musicEnabled === false) return null;   // 합성 BGM 전면 교체 전까지 무음(효과음만)
+      const m = snd().music; let e = m[id], guard = 0; while (e && !e.file && e.fallback && guard++ < 5) e = m[e.fallback]; return e && e.file ? e : null; },
     play(id) { this.want = id; if (this.started) this.apply(); },
     start() { this.started = true; this.apply(); },
     apply() {
@@ -119,6 +121,7 @@
     },
   };
   GF.sting = function () {                                     // 소리 로고(2초). 파일이 없으면 별 소리
+    if (snd().musicEnabled === false) return;                   // 음원 교체 전까지 무음
     const e = snd().music.logo_sting, u = e && urlOf(e.file);
     if (!u || GF.state.settings.mute) { GF.sfx('star'); return; }
     try { const a = new Audio(u); a.volume = Math.min(1, (e.vol || 0.6) * GF.state.settings.vol); a.play().catch(() => {}); } catch (x) {}
@@ -239,7 +242,7 @@
     s.el.innerHTML = ''; s.el.classList.add('on'); GF.cur = s; s.params = params || {};
     setSafe(wantWide(s, s.params));
     topbar.classList.toggle('hidden', s.bare === true);
-    $('b-home').style.visibility = name === 'home' ? 'hidden' : 'visible';
+    $('b-home').style.visibility = name === 'home' ? 'hidden' : 'visible'; if ($('b-back')) $('b-back').style.visibility = GF.stack.length > 1 ? 'visible' : 'hidden';
     refreshBar();
     s.enter(s.el, s.params);
     GF.bgm.play(name === 'round' ? ((run && run.ch === 'ch4') ? 'night' : 'theme_kids') : name === 'book' ? (s.params.ch === 'ch4' ? 'night' : 'theme_kids') : 'theme_main');
@@ -488,7 +491,7 @@
           bb.style.left = Math.round(q ? q.cx : c.bubble.x) + 'px'; bb.style.top = Math.round(q ? q.y - q.h * 0.92 : c.bubble.y) + 'px';
         }
         dots.innerHTML = cuts.map((_, k) => '<i class="' + (k === i ? 'on' : '') + '"></i>').join('');
-        cap.style.display = GF.state.settings.captions && c.text ? 'block' : 'none'; cap.textContent = c.text || '';
+        cap.style.display = !GF.state.settings.capOff && c.text ? 'block' : 'none'; cap.textContent = c.text || '';   /* 자막은 기본 켜짐(부모 메뉴에서 끄기) */ cap.textContent = c.text || '';
         GF.say(c.voice); if (c.sfx) setTimeout(() => GF.sfx(c.sfx), 350);
       };
       const next = () => {
@@ -666,8 +669,8 @@
       pn.innerHTML = '<h3>부모 메뉴</h3>';
       const l1 = el('div', 'line', pn, '<span>소리 크기</span>'), rg = el('input', '', l1); rg.type = 'range'; rg.min = 0; rg.max = 1; rg.step = 0.1; rg.value = s.vol;
       rg.oninput = () => { s.vol = +rg.value; Store.save(); GF.bgm.sync(); GF.sfx('tap'); };
-      const l2 = el('div', 'line', pn, '<span>자막 보기</span>'), b2 = el('button', 't', l2, s.captions ? '켜짐' : '꺼짐');
-      b2.onclick = () => { s.captions = !s.captions; b2.textContent = s.captions ? '켜짐' : '꺼짐'; Store.save(); };
+      const l2 = el('div', 'line', pn, '<span>자막 보기</span>'), b2 = el('button', 't', l2, !s.capOff ? '켜짐' : '꺼짐');
+      b2.onclick = () => { s.capOff = !s.capOff; b2.textContent = !s.capOff ? '켜짐' : '꺼짐'; Store.save(); };
       const l3 = el('div', 'line', pn, '<span>진행 지우기</span>'), b3 = el('button', 't', l3, '지우기'); let armed = false;
       b3.onclick = () => { if (!armed) { armed = true; b3.textContent = '한 번 더'; return; } Store.reset(); Gate.close(); GF.home(); };
       el('small', '', pn, '이 앱은 이름·사진·위치·기기 정보를 수집하지 않고, 광고와 결제가 없으며, 인터넷에 연결하지 않습니다. 진행 기록은 이 기기 안에만 저장됩니다.');
@@ -696,11 +699,9 @@
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     // 상단 바
     $('b-home').innerHTML = IC.home;
-    let armed = false;
-    $('b-home').onclick = function () {
-      if (!armed) { armed = true; this.classList.add('warn'); GF.sfx('tap'); setTimeout(() => { armed = false; this.classList.remove('warn'); }, 1500); return; }
-      armed = false; this.classList.remove('warn'); GF.home();
-    };
+    // 홈·뒤로: 한 번 탭으로 바로(실기기에서 두 번 탭 설계가 '안 먹는다'로 느껴짐). 우발 종료는 앱을 닫지 않으므로 문제없음, 설정은 부모 잠금.
+    $('b-home').onclick = () => { GF.sfx('tap'); GF.home(); };
+    if ($('b-back')) { $('b-back').innerHTML = IC.back || IC.home; $('b-back').onclick = () => { GF.sfx('tap'); GF.back(); }; }
     $('b-sound').onclick = () => { GF.state.settings.mute = !GF.state.settings.mute; Store.save(); refreshBar(); GF.bgm.sync(); GF.sfx('tap'); };
     // 부모 패널
     const p = el('div', 'parent', safeEl); el('div', 'panel', p); Gate.p = p;

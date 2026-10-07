@@ -383,5 +383,7 @@
    "file": null,
    "text": "후후 불어 호호! 모두 모여 맛있게 냠냠."
   }
- }
+ },
+ "musicEnabled": false,
+ "musicNote": "2026-10-07 작가 판정: 합성 BGM 조잡 → 고품질 상업 이용 가능 음원으로 교체 전까지 BGM·소리 로고 무음. 교체 시 true."
 }

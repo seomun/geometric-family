@@ -17,7 +17,8 @@ for k in sorted(used):
     if k not in chars: print('  ! 없는 캐릭터', k); continue
     v = dict(chars[k]); raw = webp(ROOT / v['src']); img += len(raw); v['src'] = b64(raw, 'image/webp'); data['chars'][k] = v
 SFX = ['tap', 'pick', 'ok', 'hmm', 'page', 'star', 'celebrate', 'wind']
-snd = {'sfx': {k: sounds['sfx'][k] for k in SFX if k in sounds['sfx']}, 'music': {'theme_main': sounds['music']['theme_main']}, 'voice': {}}
+MUSIC_ON = sounds.get('musicEnabled', True)     # False 면 BGM 슬롯 자체를 넣지 않는다(용량도 줄어듦)
+snd = {'sfx': {k: sounds['sfx'][k] for k in SFX if k in sounds['sfx']}, 'music': {'theme_main': sounds['music']['theme_main']} if MUSIC_ON else {}, 'voice': {}, 'musicEnabled': MUSIC_ON}
 for key in ('alias',):
     if key in sounds: snd[key] = sounds[key]
 data['sounds'] = snd; audio = {}; aud = 0

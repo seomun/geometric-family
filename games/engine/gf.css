@@ -10,7 +10,7 @@ html, body { margin: 0; height: 100%; background: #FFF6E5; overflow: hidden; col
 #stage { position: fixed; inset: 0; overflow: hidden; background: #FFF6E5; }
 #frame { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 #safe { position: absolute; width: 360px; height: 640px; }
-#inset { position: absolute; left: 0; top: 0; width: 0; height: 0; visibility: hidden; padding-top: max(env(safe-area-inset-top, 0px), var(--sat, 0px)); padding-bottom: env(safe-area-inset-bottom, 0px); }
+#inset { position: absolute; left: 0; top: 0; width: 0; height: 0; visibility: hidden; padding-top: max(env(safe-area-inset-top, 0px), var(--sat, 0px)); padding-bottom: max(env(safe-area-inset-bottom, 0px), var(--sab, 0px)); }
 .screen { position: absolute; inset: 0; display: none; }
 .screen.on { display: block; animation: fadein .2s ease; }
 @keyframes fadein { from { opacity: .55 } to { opacity: 1 } }
@@ -21,6 +21,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 #topbar { position: absolute; left: 0; right: 0; top: 0; height: 64px; box-sizing: border-box; z-index: 40; display: flex;
   align-items: center; justify-content: space-between; padding: 6px 10px; pointer-events: none; }
 #topbar.hidden { display: none; }
+.tgrp { display: flex; gap: 10px; align-items: center; }
 #topbar > * { pointer-events: auto; }
 .round-btn { position: relative; width: 52px; height: 52px; border-radius: 50%; border: 0; background: #fff;
   box-shadow: 0 3px 0 rgba(0,0,0,.14); display: flex; align-items: center; justify-content: center; padding: 0; }
@@ -65,8 +66,8 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .cut-char img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .cut-char.in { animation: bounceIn .5s ease; }
 @keyframes bounceIn { 0% { transform: translate(-50%, -80%) scale(.6); opacity: 0 } 70% { transform: translate(-50%, -104%) scale(1.04); opacity: 1 } 100% { transform: translate(-50%, -100%) scale(1) } }
-.caption { position: absolute; left: 14px; right: 14px; bottom: 112px; background: rgba(255,255,255,.92); border-radius: 18px;
-  padding: 10px 14px; font-size: 19px; line-height: 1.35; text-align: center; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+.caption { position: absolute; left: 14px; right: 14px; top: 84px; background: rgba(255,255,255,.92); border-radius: 18px;
+  padding: 12px 16px; font-size: 24px; font-weight: 800; color: #3A2E39; line-height: 1.35; word-break: keep-all; text-align: center; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
 .nextbtn { position: absolute; right: 18px; bottom: 18px; animation: nudge 1.2s infinite; }
 @keyframes nudge { 50% { transform: translateX(6px) } }
 .dots { position: absolute; left: 0; right: 0; bottom: 36px; display: flex; justify-content: center; gap: 8px; }
@@ -207,7 +208,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 #safe.wide .homebtns { left: 24px; right: auto; width: 330px; bottom: 34px; gap: 12px; }
 #safe.wide .homebtns .card { width: 100px; height: 112px; }
 #safe.wide .stagebtn { width: 200px; height: 176px; margin-left: -100px; flex-direction: column; justify-content: center; gap: 8px; padding: 0 10px; }
-#safe.wide .caption { bottom: 96px; }
+#safe.wide .caption { top: 80px; }
 .homechars img { transform-origin: 50% 100%; }
 .homechars img + img { margin-left: -22px; }
 

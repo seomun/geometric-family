@@ -166,7 +166,7 @@ async function playStage(p, mode, tag) {
     await wait(p, 400); await shot(p, 'after_ch' + ch);
     if (ch === 1) { /* 지도에서 2장 진입 */ }
   }
-  await p.click('#b-home'); await p.click('#b-home'); await wait(p, 500);
+  await p.click('#b-home'); await wait(p, 500);
   await p.click('.homebtns .card:nth-child(3)'); await wait(p, 500); await shot(p, 'album');
   console.log(errs.length ? 'ERRORS:\n' + errs.join('\n') : 'no errors');
   const st = await p.evaluate(() => JSON.stringify(GF.state.stages) + ' ' + JSON.stringify(GF.state.stickers));

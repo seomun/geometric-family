@@ -4,7 +4,7 @@
 .mg-sub { display: inline-block; margin-top: 8px; background: #fff; border-radius: 16px; padding: 4px 16px; font: 700 var(--uk-fs-cap)/1.3 var(--uk-font); box-shadow: var(--uk-sh); }
 .mg-fam { position: absolute; left: 0; right: 0; top: 172px; height: 124px; display: flex; justify-content: center; align-items: flex-end; gap: 8px; }
 .mg-fam img { height: 104px; width: auto; }
-.mg-btns { position: absolute; left: 24px; right: 24px; top: 346px; }
+.mg-btns { position: absolute; left: 24px; right: 24px; top: 300px; }
 .mg-btns2 { position: absolute; left: 24px; right: 24px; top: 508px; display: flex; gap: 12px; }
 .mg-btns2 .uk-btn { flex: 1; }
 .mg-foot { position: absolute; left: 0; right: 0; bottom: 24px; text-align: center; font: 800 var(--uk-fs-cap)/1 var(--uk-font); color: var(--uk-ink2); }
@@ -34,7 +34,7 @@
 .mg-btns3 { display: flex; flex-direction: column; gap: 8px; } .mg-btns3 .uk-btn.sm { min-height: 44px; padding: 0 12px; font-size: 18px; border-radius: 16px; width: 124px; } .mg-btns3 .uk-btn svg { width: 24px; height: 24px; }
 .mg-tip { position: absolute; left: 12px; right: 12px; top: 74px; z-index: 6; font-size: 18px !important; }
 
-.mg-grid { position: absolute; left: 24px; right: 24px; top: 424px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mg-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .mg-grid .uk-btn { position: relative; padding: 0 10px; font-size: 18px; min-height: 56px; }
 .mg-badge { position: absolute; right: -4px; top: -6px; min-width: 24px; height: 24px; border-radius: 12px; background: #E5334A; color: #fff; font: 900 15px/24px var(--uk-font); text-align: center; font-style: normal; }
 .mg-ribbon { position: absolute; left: 24px; right: 24px; top: 304px; height: 34px; border: 0; border-radius: 17px; background: #B04040; color: #fff; font: 900 18px/1 var(--uk-font); box-shadow: var(--uk-sh); z-index: 3; } .mg-ribbon.done { background: #7A6F84; }
@@ -44,3 +44,7 @@
 .mg-pc.junk { filter: saturate(.7) brightness(.92); } .mg-pc .jk { position: absolute; right: 2%; bottom: 2%; width: 44%; height: 44%; }
 .mg-cell.over { background: #FFF3B0; outline: 4px solid var(--uk-gold); outline-offset: -4px; } .mg-cur.lift { opacity: .55; }
 .mg-cur { touch-action: none; }
+
+.mg-season { position: absolute; left: 24px; right: 24px; top: 506px; } .mg-season .uk-btn { position: relative; min-height: 56px; font-size: 18px; } .mg-season .mg-badge { right: 10px; top: -8px; padding: 0 10px; width: auto; }
+.mg-foot { bottom: 18px !important; }
+.mg-goals { gap: 6px; flex-wrap: nowrap; } .mg-goal { height: 46px; padding: 0 10px 0 2px; font-size: 18px; gap: 2px; } .mg-goal .mg-pc { width: 38px; height: 38px; }

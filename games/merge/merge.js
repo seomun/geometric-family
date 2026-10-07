@@ -59,7 +59,7 @@
   GF.screen('mhome', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'mg'); GF.bg('indoor', r); bar();
+      r.classList.add('uk', 'mg'); GF.bg('indoor2', r); bar();
       el('div', 'mg-ttl', r, '<div class="uk-title">도형 합치기</div><div class="mg-sub">같은 도형을 합쳐 집을 채워요</div>');
       const fam = el('div', 'mg-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));
@@ -70,7 +70,7 @@
       b('오늘의 한 판', 'gift', 'gold', () => { const L = dailyLevel(); if (L) GF.go('mplay', { level: L }); }, dailyDone ? '✔' : '1');
       b('세 가족 판', 'heart', 'pink', () => GF.go('mtrio'));
       b('우리 집', 'home', 'dong', () => GF.go('mhouse'));
-      const ss = seasonNow(); if (ss.length) { const s = ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0], done = SV.seasonDone[seasonKey(s)]; const rb = el('button', 'mg-ribbon' + (done ? ' done' : ''), r, s.title + ' · ' + (done ? '다시 해 보기' : '시즌 판')); rb.onclick = () => { GF.sfx('pick'); const L = seasonLevel(s); if (L) GF.go('mplay', { level: L }); }; }
+      const ss = seasonNow(); if (ss.length) { const s = ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0], done = SV.seasonDone[seasonKey(s)]; const sb = UK.btn({ text: s.title, icon: 'star', cls: 'block ' + (done ? 'gray' : 'danger'), onclick: () => { const L = seasonLevel(s); if (L) GF.go('mplay', { level: L }); } }, el('div', 'mg-season', r)); el('i', 'mg-badge', sb, done ? '다시' : '시즌'); }   // 시즌은 배지 카드
       el('div', 'mg-foot', r, '별 ' + totalStars() + ' · 가구 ' + Room.ownedCount() + '/' + D.roomTotal);
     },
   });
@@ -113,18 +113,19 @@
   GF.screen('mplay', {
     bare: false,
     enter(r, p) {
-      r.classList.add('uk', 'mg'); GF.bg('indoor', r);
+      r.classList.add('uk', 'mg'); GF.bg('indoor2', r);   // 플레이 화면은 창문 없는 배경(HUD 가독)
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:514px;left:24px;right:24px;padding:6px 12px;font-size:18px'; return t; };   // 토스트는 판 아래·조각 줄 위
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hintCell = null; const gained = [];
       if (!p.level) { SV.last = LV.id; save(); }
       bar();
       const hd = el('div', 'mg-hd', r), leftChip = el('span', 'uk-chip mg-left', r), goals = el('div', 'mg-goals', r), board = el('div', 'mg-board', r), dock = el('div', 'mg-dock', r), tip = el('div', 'uk-caption mg-tip', r);
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
       hd.innerHTML = `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type && LV.type !== 'make' ? `<em class="mg-type">${D.types[LV.type]}</em>` : '');
-      const finalRows = LV.rows + (LV.moveAt ? 1 : 0), cs = Math.max(50, Math.min(80, Math.floor(Math.min(336 / LV.cols, 372 / finalRows))));
+      const finalRows = LV.rows + (LV.moveAt ? 1 : 0), cs = Math.max(48, Math.min(76, Math.floor(Math.min(336 / LV.cols, 330 / finalRows))));
       let cells = [];
       function buildBoard() {
         board.innerHTML = ''; cells = []; const W = LV.cols * cs + 8, H = S.rows * cs + 8, H2 = finalRows * cs + 8;
-        board.style.cssText = `width:${W}px;height:${H}px;top:${176 + Math.max(0, Math.round((384 - H2) / 2))}px`;
+        board.style.cssText = `width:${W}px;height:${H}px;top:${170 + Math.max(0, Math.round((338 - H2) / 2))}px`;
         for (let i = 0; i < LV.cols * S.rows; i++) { const c = el('button', 'mg-cell', board); c.dataset.i = i; c.style.cssText = `left:${(i % LV.cols) * cs + 4}px;top:${((i / LV.cols) | 0) * cs + 4}px;width:${cs - 4}px;height:${cs - 4}px`; c.setAttribute('aria-label', '칸 ' + (i + 1)); c.onclick = () => doPlace(i); cells.push(c); }
       }
       const cur = el('div', 'mg-cur', dock), nxt = el('div', 'mg-next', dock), btns = el('div', 'mg-btns3', dock);
@@ -158,18 +159,18 @@
         ev.forEach((e, k) => {
           const frame = trace[k + 1], prev = trace[k]; t += slow(280);
           setTimeout(() => {
-            if (e.type === 'move') { UK.toast('이사! 판이 한 줄 넓어졌어요', r); GF.sfx('star'); draw(frame, []); return; }
+            if (e.type === 'move') { say('이사! 판이 한 줄 넓어졌어요'); GF.sfx('star'); draw(frame, []); return; }
             chain++; e.from.forEach((j) => { if (j !== e.at) fly(prev.cells[j], j, e.at); });
             setTimeout(() => { draw(frame, [e.at]); GF.sfx('ok'); try { const c = center(cells[e.at]); GF.burst(document.getElementById('safe'), c.x, c.y, e.t >= 5 ? 14 : 8); } catch (x) {} }, slow(190));
-            if (chain >= 2) UK.toast('연쇄 ×' + chain, r);
-            if (e.jackpot) { UK.toast('대박! 두 단계 껑충', r); GF.sfx('star'); } if (e.refund) UK.toast('조각 하나를 돌려받았어요', r);
-            if (e.cleared) UK.toast('짐을 치웠어요', r);
-            const T = TIER[e.c + ':' + e.t]; if (T && T.item && roomOK) { if (Room.grant(T.item)) { gained.push(T.item); setTimeout(() => { UK.toast('새 가구 · ' + NAME[T.item], r); GF.sfx('star'); }, 300); } }
+            if (chain >= 2) say('연쇄 ×' + chain);
+            if (e.jackpot) { say('대박! 두 단계 껑충'); GF.sfx('star'); } if (e.refund) say('조각 하나를 돌려받았어요');
+            if (e.cleared) say('짐을 치웠어요');
+            const T = TIER[e.c + ':' + e.t]; if (T && T.item && roomOK) { if (Room.grant(T.item)) { gained.push(T.item); setTimeout(() => { say('새 가구 · ' + NAME[T.item]); GF.sfx('star'); }, 300); } }
           }, t);
         });
         setTimeout(() => { busy = false; draw(); if (M.won(S)) finish(); else if (M.lost(S)) lose(); }, t + slow(520));
       }
-      function undo() { if (!hist.length || busy || undone >= 1) { if (undone >= 1) UK.toast('되돌리기는 한 판에 한 번이에요', r); return; } undone++; S = hist.pop(); hintCell = null; GF.sfx('tap'); buildBoard(); draw(); }
+      function undo() { if (!hist.length || busy || undone >= 1) { if (undone >= 1) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hintCell = null; GF.sfx('tap'); buildBoard(); draw(); }
       function hint() { if (busy) return; const c = M.candidates(S, 1); if (!c.length) return; hintCell = c[0]; GF.sfx('pick'); draw(); }
       /* 끌어서 놓기: 지금 조각을 잡아 빈 칸 위에서 놓는다(탭도 그대로 동작) */
       cur.addEventListener('pointerdown', (e) => {
@@ -197,7 +198,7 @@
           else result(st);
         }, 650);
       }
-      function lose() { busy = true; UK.toast('한 번 더!', r); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
+      function lose() { busy = true; say('한 번 더!'); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
       MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
       buildBoard(); draw(); showTip();
     },

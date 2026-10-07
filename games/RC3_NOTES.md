@@ -25,13 +25,20 @@
 - ⑨ 타일 54px·바구니 같은 크기, 안내 토스트는 목표 줄 아래·한 줄, ⑧ 토스트는 정보 줄 자리에 불투명
 - ⑩ 유아 점검 `games/KIDS_COMPLIANCE.md §7`(글자 없음 단언·권한 0·보호자 잠금)
 
-## 검증 (이 RC 에서 실제로 돌린 것) — `bash tools/rc_regress.sh`, 로그 `notes/rc_regress.log`
-- ① 1~10장·3권 11~15장, ③ 1~20, ⑥ 120판(6구간)+sim, ⑦ 120판(12구간)+sim, ⑧ 120판(4구간)+sim, ⑨ 120판(12구간)+sim, ⑩ 20판(장마다 첫 판은 실제 포인터 끌기·문지르기·탭)+sim
-- ④ color_smoke, ⑤ quiz_smoke, ② idle_smoke, first30(10앱), greet_check(10앱), btn_wrap_check(10앱), room_codes, merge/quiz/idle sim
-- (결과표는 아래 「회귀 결과」)
+## 검증 (실제 결과 — 통과·실패 그대로)
+- **전체 회귀 1회(한 파일에 여러 실행이 섞여 로그가 불완전)**: `notes/rc_regress.log` 는 메모리 부족 강제 종료·중복 실행 때문에 ALL PASS 로 읽을 수 없다. 그 안에서 ALL PASS 60건은 확인했지만 신뢰 근거로 쓰지 않고, 아래 재실행을 정본으로 한다.
+- **재실행(구간마다 로그 한 파일, `notes/rc3/*.log`, 서버 1개·한 번에 한 작업)** 통과: ① 3권 14장(no errors) · ③ merge 1-5 · ⑦ block 31-40·81-90 · ⑨ tile 21-30·31-40 · ⑧ sort 31-60·91-120 · ⑩ day 1-20(장마다 첫 판 실제 포인터) · ④ color · ⑤ quiz · btn_wrap(10앱) · quiz_sim · merge_sim · idle_sim · room_codes · block/spot/tile/sort/day sim
+- **첫 실행 때 실패했다가 같은 코드로 재실행 통과(하네스·부하 문제로 판단)**: ② idle_smoke 「모든 컷 이미지 로드」 다수, greet ③ 합치기(「UK is not defined」 포함 4항목), first30(TimeoutError). 재실행: idle_smoke ALL PASS, greet_check 단독 4회 연속 ALL PASS, first30 ALL PASS. 원인은 메모리 압박 중 스크립트·이미지 로드 지연으로 보이나 **부하 없이 재현은 못 했고**, 원인 확정은 못 함.
+- **재실행하지 않은 구간**: 처음 섞인 로그에서 통과로 보였던 나머지 구간(① 1~13장, ③ 6~20, ⑥ 전판, ⑦ 나머지, ⑨ 나머지, ⑧ 1-30·61-90, ② idle_sim 외)은 이번 RC 에서 **한 번 더 돌리지 않았다**. 실기기 피드백 뒤 다시 전체를 돌릴 것.
+- 10앱 첫 30초(first30), 첫 인사(greet) 단독 통과, 통일성 10×3 캡처 `notes/snapshots/unity_10x3_rc3.png`(열 앱 홈·결과·집, 같은 키트·상단 바·집 화면)
+
+## 이번 RC 에서 찾아 고친 것
+- **⑧ APK 빌드 실패**: flavor 이름 `sort` 가 Groovy 컨테이너의 내장 메서드(`sort`)와 겹쳐 `Could not find method dimension()` → `create('sort') { ... }` 로 선언(메모리 문제 아님). 
+- 에뮬레이터를 끄고(adb emu kill) gradle 메모리를 `-Xmx1g` 로 낮춤(`games/android/gradle.properties`).
+- ⑩ 허브 QA 4건(잠자리 밝기·양치 얼굴과 이·진행 점 알약·토끼=동그라미 아저씨·해님 달님 호랑이 컷)
 
 ## 알려진 문제 / 한계
-1. **실기기 미확인**: 소리 판정, 끌기·문지르기 체감, 설치·공유·저장 — 작가 폰 결과 대기(`demo/INSTALL_ko.md`)
+1. **실기기·에뮬레이터 설치 미확인(이번 RC)**: 소리 판정, 끌기·문지르기 체감, 설치·공유·저장 — 작가 폰 결과 대기(`demo/INSTALL_ko.md`)
 2. 서명 키가 테스트 키 — 스토어 제출 불가 상태. 사업자 정보·방침 URL·정식 키 필요
 3. ⑩은 **20판 슬라이스**(허브 QA 전, 확장 시 장당 판 수는 허브 결정). ⑦ 레벨 104 콤보 탐욕 승률 0.28(기준 0.35 미달, 실기기 피드백 후 재조정)
 4. 그림·소리·음악은 임시(이모지·방 아이템·코드 SVG, ASSET_LIST·sounds.json 슬롯 목록 최신), 아트 패스(Recraft)·음악(Suno)은 나중에 일괄
@@ -40,8 +47,18 @@
 7. 이력에 APK·옛 문서 메일이 남아 있음(허브가 처리)
 
 ## 산출물 (games/demo/, git 미추적)
-- `apk/*-release.apk` 10개, `gf_phone_pack.zip`, `install_all.bat`, `INSTALL_ko.md`, `play_*.html`, 스크린샷·아이콘
-- (APK 해시는 아래 「APK」)
+- `apk/*-release.apk` 10개(같은 테스트 키 서명, `gf_phone_pack.zip` 에 INSTALL_ko.md 와 함께 11파일), `install_all.bat`, `INSTALL_ko.md`, `play_*.html`, `screens_*`, `icon_*.png`
+- `toddler-release.apk` 35d8a9e1ceffeeea… (4352 KB)
+- `tables-release.apk` beddcde4e941c57e… (956 KB)
+- `merge-release.apk` 4a13297db6bc376e… (832 KB)
+- `color-release.apk` 7272c022bff027c3… (812 KB)
+- `quiz-release.apk` 0237564e4768693d… (572 KB)
+- `spot-release.apk` 980daed15d0d4264… (860 KB)
+- `block-release.apk` f9a086c2ce7ed83f… (812 KB)
+- `sort-release.apk` ef341496b39bea52… (804 KB)
+- `tile-release.apk` 3b18ad93394f3fec… (824 KB)
+- `day-release.apk` a814c79daf155918… (532 KB)
+- 에뮬레이터에서의 10앱 설치·공유·격리 확인은 이번에 **하지 않음**(메모리 때문에 에뮬레이터를 끔). 실기기/에뮬레이터 설치 확인은 다음 단계.
 
 ## 동결 규칙
 이후 실기기 피드백·작가 결정 전까지 **기능 추가 없음, 버그 수정만**(⑩ 확장·⑧~⑨ 아트 패스는 허브 지시 후). 재현: `bash tools/rc_regress.sh`, `python games/tools/make_demo.py --apk`.

@@ -1212,5 +1212,633 @@
     "sfx": "celebrate"
    }
   ]
+ },
+ "ch11": {
+  "pro": [
+   {
+    "bg": "hill",
+    "text": "봄이에요! 오늘은 어버이날이에요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
+    ]
+   },
+   {
+    "bg": "hill",
+    "text": "엄마, 아빠께 꽃을 드릴 거예요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 120,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 250,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "field",
+    "text": "꽃밭에 꽃을 몇 송이 심을까요?",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 180,
+      "y": 600,
+      "h": 200
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "hill",
+    "text": "와! 예쁜 꽃밭이 됐어요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 210,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_dad.joy",
+      "x": 310,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "hill",
+    "text": "엄마 아빠가 활짝 웃었어요.",
+    "chars": [
+     {
+      "id": "nemo_mom.love",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_dad.love",
+      "x": 260,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "hill",
+    "text": "봄바람에 꽃이 살랑살랑!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 180,
+      "y": 600,
+      "h": 210
+     }
+    ]
+   }
+  ]
+ },
+ "ch12": {
+  "pro": [
+   {
+    "bg": "seaside",
+    "text": "여름이에요! 바닷가에 수박이 있어요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "wife.joy",
+      "x": 250,
+      "y": 600,
+      "h": 260
+     }
+    ]
+   },
+   {
+    "bg": "seaside",
+    "text": "세모 이모가 수박을 잘랐어요.",
+    "chars": [
+     {
+      "id": "wife.joy",
+      "x": 130,
+      "y": 600,
+      "h": 260
+     },
+     {
+      "id": "husband.joy",
+      "x": 250,
+      "y": 600,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "seaside",
+    "text": "똑같이 나눠 줄 수 있을까요?",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 180,
+      "y": 600,
+      "h": 200
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "seaside",
+    "text": "똑같이 나눴어요! 모두 하나씩!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 100,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "wife.joy",
+      "x": 200,
+      "y": 600,
+      "h": 260
+     },
+     {
+      "id": "husband.joy",
+      "x": 300,
+      "y": 600,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "seaside",
+    "text": "세모 삼촌이 수박씨를 후후 불었어요.",
+    "chars": [
+     {
+      "id": "husband.joy",
+      "x": 140,
+      "y": 600,
+      "h": 260
+     },
+     {
+      "id": "baby.joy",
+      "x": 250,
+      "y": 600,
+      "h": 190
+     }
+    ],
+    "bubble": {
+     "type": "note",
+     "at": 0
+    }
+   },
+   {
+    "bg": "seaside",
+    "text": "달콤한 여름이에요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 180,
+      "y": 600,
+      "h": 210
+     }
+    ]
+   }
+  ]
+ },
+ "ch13": {
+  "pro": [
+   {
+    "bg": "field",
+    "text": "가을이에요! 낙엽이 소복소복.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
+    ]
+   },
+   {
+    "bg": "field",
+    "text": "낙엽 속에 도형 친구들이 숨었어요.",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 150,
+      "y": 600,
+      "h": 200
+     },
+     {
+      "id": "dong_dad.good",
+      "x": 270,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   },
+   {
+    "bg": "field",
+    "text": "동그라미 아저씨와 같이 찾아봐요!",
+    "chars": [
+     {
+      "id": "dong_dad.warm",
+      "x": 180,
+      "y": 610,
+      "h": 280
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "field",
+    "text": "다 찾았어요! 숨바꼭질 끝!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 210,
+      "y": 600,
+      "h": 230
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 310,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "field",
+    "text": "동그라미 아저씨가 낙엽 비를 뿌렸어요.",
+    "chars": [
+     {
+      "id": "dong_dad.joy",
+      "x": 180,
+      "y": 610,
+      "h": 280
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 0
+    }
+   },
+   {
+    "bg": "field",
+    "text": "가을은 숨바꼭질하기 좋아요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 180,
+      "y": 600,
+      "h": 210
+     }
+    ]
+   }
+  ]
+ },
+ "ch14": {
+  "pro": [
+   {
+    "bg": "night",
+    "text": "첫눈이 내려요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "wife.joy",
+      "x": 250,
+      "y": 600,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "night",
+    "text": "하늘에서 눈송이가 내려와요.",
+    "chars": [
+     {
+      "id": "baby.surprise",
+      "x": 180,
+      "y": 600,
+      "h": 210
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   },
+   {
+    "bg": "night",
+    "text": "같은 색 눈송이를 톡 잡아요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 120,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "bang",
+     "at": 0
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "night",
+    "text": "눈송이를 한가득 잡았어요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "wife.joy",
+      "x": 210,
+      "y": 600,
+      "h": 260
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 310,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "night",
+    "text": "첫눈 오면 만나자고 했어요.",
+    "chars": [
+     {
+      "id": "wife.love",
+      "x": 140,
+      "y": 600,
+      "h": 260
+     },
+     {
+      "id": "husband.joy",
+      "x": 250,
+      "y": 600,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 0
+    }
+   },
+   {
+    "bg": "night",
+    "text": "손이 시려도 마음은 따뜻해요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 180,
+      "y": 600,
+      "h": 210
+     }
+    ]
+   }
+  ]
+ },
+ "ch15": {
+  "pro": [
+   {
+    "bg": "house",
+    "text": "겨울이에요. 오늘은 김장하는 날!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_grandma.good",
+      "x": 250,
+      "y": 610,
+      "h": 270
+     }
+    ]
+   },
+   {
+    "bg": "house",
+    "text": "할머니가 배추를 버무려요.",
+    "chars": [
+     {
+      "id": "nemo_grandma.good",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 260,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "note",
+     "at": 0
+    }
+   },
+   {
+    "bg": "house",
+    "text": "박자를 맞춰서 같이 버무려요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 180,
+      "y": 600,
+      "h": 210
+     }
+    ],
+    "bubble": {
+     "type": "bang",
+     "at": 0
+    }
+   }
+  ],
+  "epi": [
+   {
+    "bg": "house",
+    "text": "김치가 맛있게 익어 가요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 100,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_grandma.good",
+      "x": 200,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 300,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "house",
+    "text": "온 가족이 한자리에 모였어요.",
+    "chars": [
+     {
+      "id": "nemo_dad.joy",
+      "x": 100,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "wife.joy",
+      "x": 190,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 280,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 1
+    }
+   },
+   {
+    "bg": "house",
+    "text": "사계절 내내 함께라서 좋아요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 180,
+      "y": 600,
+      "h": 220
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 0
+    }
+   }
+  ]
  }
 }

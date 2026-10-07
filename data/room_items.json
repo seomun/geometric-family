@@ -1837,6 +1837,96 @@
    "season": null,
    "physical": null,
    "emoji": "🏅"
+  },
+  {
+   "no": 88,
+   "id": "k_ch11",
+   "name": "카네이션 화분",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌷",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 89,
+   "id": "k_ch12",
+   "name": "수박 방석",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍉",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 90,
+   "id": "k_ch13",
+   "name": "낙엽 책갈피",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍁",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 91,
+   "id": "k_ch14",
+   "name": "눈사람 인형",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "⛄",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 92,
+   "id": "k_ch15",
+   "name": "김치 항아리",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🏺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
   }
  ],
  "meTypes": {

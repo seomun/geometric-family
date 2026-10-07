@@ -954,5 +954,416 @@
     ]
    }
   ]
+ },
+ "ch11": {
+  "mode": "plant",
+  "bg": "hill",
+  "heroes": [
+   "nemo_mom.joy",
+   "nemo_dad.joy",
+   "baby.joy"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "n": 1
+     },
+     {
+      "n": 2
+     },
+     {
+      "n": 3
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "n": 3
+     },
+     {
+      "n": 4
+     },
+     {
+      "n": 5
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "n": 4
+     },
+     {
+      "n": 5
+     },
+     {
+      "n": 6
+     }
+    ]
+   }
+  ]
+ },
+ "ch12": {
+  "mode": "share",
+  "bg": "seaside",
+  "heroes": [
+   "wife.joy",
+   "husband.joy",
+   "baby.joy"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "pieces": 4,
+      "plates": 2,
+      "heroes": [
+       "baby.joy",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "pieces": 4,
+      "plates": 2,
+      "heroes": [
+       "wife.joy",
+       "husband.joy"
+      ]
+     },
+     {
+      "pieces": 6,
+      "plates": 2,
+      "heroes": [
+       "nemo_mom.joy",
+       "nemo_dad.joy"
+      ]
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "pieces": 6,
+      "plates": 3,
+      "heroes": [
+       "baby.joy",
+       "nemo_kids.kid1",
+       "wife.joy"
+      ]
+     },
+     {
+      "pieces": 6,
+      "plates": 2,
+      "heroes": [
+       "dong_dad.joy",
+       "baby.joy"
+      ]
+     },
+     {
+      "pieces": 6,
+      "plates": 3,
+      "heroes": [
+       "nemo_mom.joy",
+       "husband.joy",
+       "baby.joy"
+      ]
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "pieces": 8,
+      "plates": 2,
+      "heroes": [
+       "wife.joy",
+       "dong_dad.joy"
+      ]
+     },
+     {
+      "pieces": 9,
+      "plates": 3,
+      "heroes": [
+       "baby.joy",
+       "nemo_kids.kid1",
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "pieces": 8,
+      "plates": 4,
+      "heroes": [
+       "baby.joy",
+       "nemo_kids.kid1",
+       "wife.joy",
+       "husband.joy"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "ch13": {
+  "mode": "hidden",
+  "bg": "field",
+  "heroes": [
+   "baby.joy",
+   "nemo_kids.kid1",
+   "dong_dad.joy"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "find": [
+       {
+        "c": 0
+       }
+      ],
+      "leaves": 10,
+      "seed": 3
+     },
+     {
+      "find": [
+       {
+        "c": 1
+       }
+      ],
+      "leaves": 12,
+      "seed": 4
+     },
+     {
+      "find": [
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 12,
+      "seed": 5
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "find": [
+       {
+        "c": 0
+       },
+       {
+        "c": 1
+       }
+      ],
+      "leaves": 16,
+      "seed": 6
+     },
+     {
+      "find": [
+       {
+        "c": 1
+       },
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 18,
+      "seed": 7
+     },
+     {
+      "find": [
+       {
+        "c": 0
+       },
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 18,
+      "seed": 8
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "find": [
+       {
+        "c": 0
+       },
+       {
+        "c": 1
+       },
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 20,
+      "seed": 9
+     },
+     {
+      "find": [
+       {
+        "c": 2
+       },
+       {
+        "c": 1
+       },
+       {
+        "c": 0
+       }
+      ],
+      "leaves": 22,
+      "seed": 10
+     },
+     {
+      "find": [
+       {
+        "c": 0
+       },
+       {
+        "c": 0
+       },
+       {
+        "c": 1
+       },
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 24,
+      "seed": 11
+     }
+    ]
+   }
+  ]
+ },
+ "ch14": {
+  "mode": "catch",
+  "bg": "night",
+  "heroes": [
+   "baby.joy",
+   "nemo_kids.kid1",
+   "wife.joy"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "target": 0,
+      "need": 3,
+      "speed": 6200
+     },
+     {
+      "target": 1,
+      "need": 3,
+      "speed": 6000
+     },
+     {
+      "target": 2,
+      "need": 3,
+      "speed": 5800
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "target": 0,
+      "need": 4,
+      "speed": 5400
+     },
+     {
+      "target": 2,
+      "need": 4,
+      "speed": 5200
+     },
+     {
+      "target": 1,
+      "need": 5,
+      "speed": 5000
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "target": 1,
+      "need": 5,
+      "speed": 4600
+     },
+     {
+      "target": 0,
+      "need": 6,
+      "speed": 4400
+     },
+     {
+      "target": 2,
+      "need": 6,
+      "speed": 4200
+     }
+    ]
+   }
+  ]
+ },
+ "ch15": {
+  "mode": "rhythm",
+  "bg": "house",
+  "heroes": [
+   "nemo_mom.joy",
+   "nemo_grandma.good",
+   "baby.joy"
+  ],
+  "stages": [
+   {
+    "rounds": [
+     {
+      "beats": 3,
+      "period": 1100
+     },
+     {
+      "beats": 4,
+      "period": 1100
+     },
+     {
+      "beats": 4,
+      "period": 1000
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "beats": 5,
+      "period": 1000
+     },
+     {
+      "beats": 5,
+      "period": 900
+     },
+     {
+      "beats": 6,
+      "period": 900
+     }
+    ]
+   },
+   {
+    "rounds": [
+     {
+      "beats": 6,
+      "period": 850
+     },
+     {
+      "beats": 7,
+      "period": 800
+     },
+     {
+      "beats": 8,
+      "period": 800
+     }
+    ]
+   }
+  ]
  }
 }

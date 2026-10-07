@@ -248,5 +248,130 @@
   "id": "ch10_book",
   "ch": 10,
   "char": "baby.cry"
+ },
+ {
+  "id": "ch11_A",
+  "ch": 11,
+  "char": "nemo_mom.love"
+ },
+ {
+  "id": "ch11_B",
+  "ch": 11,
+  "char": "nemo_dad.joy"
+ },
+ {
+  "id": "ch11_C",
+  "ch": 11,
+  "char": "baby.joy"
+ },
+ {
+  "id": "ch11_star",
+  "ch": 11,
+  "char": "nemo_kids.kid1"
+ },
+ {
+  "id": "ch11_book",
+  "ch": 11,
+  "char": "baby.love"
+ },
+ {
+  "id": "ch12_A",
+  "ch": 12,
+  "char": "wife.joy"
+ },
+ {
+  "id": "ch12_B",
+  "ch": 12,
+  "char": "husband.joy"
+ },
+ {
+  "id": "ch12_C",
+  "ch": 12,
+  "char": "baby.joy"
+ },
+ {
+  "id": "ch12_star",
+  "ch": 12,
+  "char": "dong_dad.joy"
+ },
+ {
+  "id": "ch12_book",
+  "ch": 12,
+  "char": "nemo_mom.joy"
+ },
+ {
+  "id": "ch13_A",
+  "ch": 13,
+  "char": "dong_dad.warm"
+ },
+ {
+  "id": "ch13_B",
+  "ch": 13,
+  "char": "nemo_kids.kid2"
+ },
+ {
+  "id": "ch13_C",
+  "ch": 13,
+  "char": "baby.surprise"
+ },
+ {
+  "id": "ch13_star",
+  "ch": 13,
+  "char": "nemo_dad.good"
+ },
+ {
+  "id": "ch13_book",
+  "ch": 13,
+  "char": "dong_dad.joy"
+ },
+ {
+  "id": "ch14_A",
+  "ch": 14,
+  "char": "wife.love"
+ },
+ {
+  "id": "ch14_B",
+  "ch": 14,
+  "char": "nemo_kids.kid3"
+ },
+ {
+  "id": "ch14_C",
+  "ch": 14,
+  "char": "baby.joy"
+ },
+ {
+  "id": "ch14_star",
+  "ch": 14,
+  "char": "husband.love"
+ },
+ {
+  "id": "ch14_book",
+  "ch": 14,
+  "char": "nemo_mom.wink"
+ },
+ {
+  "id": "ch15_A",
+  "ch": 15,
+  "char": "nemo_grandma.good"
+ },
+ {
+  "id": "ch15_B",
+  "ch": 15,
+  "char": "nemo_mom.joy"
+ },
+ {
+  "id": "ch15_C",
+  "ch": 15,
+  "char": "nemo_dad.love"
+ },
+ {
+  "id": "ch15_star",
+  "ch": 15,
+  "char": "dong_dad.joy"
+ },
+ {
+  "id": "ch15_book",
+  "ch": 15,
+  "char": "baby.joy"
  }
 ]

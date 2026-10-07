@@ -376,7 +376,9 @@
         + '<path d="M70 176q-14-26 10-40M86 154q-6-22 14-34" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".85"/>'
         + '<g fill="#fff" opacity=".95"><ellipse cx="62" cy="170" rx="34" ry="13"/><ellipse cx="44" cy="177" rx="22" ry="10"/><ellipse cx="86" cy="177" rx="24" ry="10"/><ellipse cx="226" cy="150" rx="36" ry="13"/><ellipse cx="206" cy="157" rx="22" ry="10"/><ellipse cx="250" cy="157" rx="24" ry="10"/></g><g fill="none" stroke="#4A3030" stroke-width="3" stroke-linecap="round"><path d="M150 140q6-8 12 0q6-8 12 0"/><path d="M186 120q5-7 10 0q5-7 10 0"/></g>',
       windows: [[102, 240, 40, 56, 'wife.joy'], [148, 240, 40, 56, 'baby.joy'], [206, 240, 40, 56, 'husband.good'], [250, 240, 40, 56, 'dong_dad.good']], chars: [] },
-    3: { title: '다음 이야기', sky: ['#E9E3F0', '#F6F2FA'], svg: '<ellipse cx="150" cy="380" rx="220" ry="80" fill="#DCD4E6"/>', chars: [], locked: true },
+    3: { title: '막둥이의 사계절', lines: ['막둥이의', '사계절'], ty: 78, sky: ['#FFE9D6', '#E6F4FF'],
+      svg: '<ellipse cx="70" cy="350" rx="190" ry="80" fill="#F6B25C"/><ellipse cx="250" cy="366" rx="170" ry="76" fill="#F4F8FF"/><circle cx="240" cy="64" r="28" fill="#FFE27A"/>'
+        + '<g fill="#FF8FA8" stroke="#4A3030" stroke-width="3"><circle cx="46" cy="300" r="12"/><circle cx="78" cy="312" r="12"/></g><g fill="#E8870F" stroke="#4A3030" stroke-width="3"><path d="M150 290c20 10 30 30 0 56c-30-26-20-46 0-56z"/></g><g stroke="#8FD3F4" stroke-width="5" stroke-linecap="round"><path d="M230 150v28M216 158l28 12M216 170l28-12"/><path d="M262 210v22M251 216l22 10M251 226l22-10"/></g>', chars: [['baby.joy', 24, 99, 26], ['nemo_grandma.good', 78, 99, 30]] },
   };
   GF.cover = function (book, parent) {
     const c = COVER[book], d = el('div', 'coverart', parent), id = 'cg' + (++gid), csl = GF.slot('cover', 'book' + book);
@@ -395,7 +397,7 @@
     wide: () => true,
     enter(r) {
       GF.bg('home', r);
-      const w = GF.safeWide, open = (bk) => bk <= 2;
+      const w = GF.safeWide, open = (bk) => bk <= 2 || !!GF.data.stages.ch11;
       const mk = (bk, host, cw, chh) => {
         const b = el('button', 'cover' + (open(bk) ? '' : ' locked'), host); b.dataset.book = bk; b.style.width = cw + 'px'; b.style.height = chh + 'px';
         GF.cover(bk, b); el('div', 'bknum', b, bk);
@@ -424,11 +426,11 @@
 
   /* ---------------- 이야기 지도 (책 한 권 = 장 5개) ---------------- */
   const NODES_P = [[80, 520], [250, 430], [100, 330], [250, 230], [110, 130]], NODES_W = [[90, 300], [230, 210], [370, 310], [510, 200], [640, 300]];
-  const chOpen = (n) => n === 1 || n === 6 || (GF.state.stages['c' + (n - 1) + 'C'] && GF.state.stages['c' + (n - 1) + 'C'].done);   // 2편(6장)은 처음부터 열려 있다
+  const chOpen = (n) => n === 1 || n === 6 || n === 11 || (GF.state.stages['c' + (n - 1) + 'C'] && GF.state.stages['c' + (n - 1) + 'C'].done);   // 2편(6장)은 처음부터 열려 있다
   const chReady = (n) => !!GF.data.stages['ch' + n];
   function bookArrows(r, book, name) {                                        // 책 넘기기 ◀ ▶ (지도·앨범 공통)
     [[-1, 14], [1, null]].forEach(([dir, left]) => {
-      const nb = book + dir; if (nb < 1 || nb > 2) return;
+      const nb = book + dir; if (nb < 1 || nb > (GF.data.stages.ch11 ? 3 : 2)) return;
       const b = el('button', 'round-btn', r, dir < 0 ? '<svg viewBox="0 0 32 32"><path d="M22 5L6 16l16 11z" fill="#3A2E39"/></svg>' : '<svg viewBox="0 0 32 32"><path d="M10 5l16 11-16 11z" fill="#3A2E39"/></svg>');
       b.style.cssText = 'position:absolute;bottom:18px;width:64px;height:64px;' + (left != null ? 'left:' + left + 'px' : 'right:14px');
       b.onclick = () => { GF.sfx('page'); GF.replace(name, { book: nb }); };

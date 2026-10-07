@@ -161,7 +161,7 @@
       const rb = el('button', 'ribbon', sc, ''); rb.style.display = 'none';
       rb.onclick = () => { if (endingReady() && !S.end) { GF.sfx('pick'); GF.go('istory', { id: 'end', ending: true }); return; } const t = seasonTodo()[0] || seasonList()[0]; if (t) { GF.sfx('pick'); GF.go('istory', { id: t.id, season: true }); } };
       UI.upd.push(() => { const l = seasonList(), todo = seasonTodo(), en = endingReady() && !S.end; rb.style.display = l.length || en ? 'flex' : 'none'; rb.classList.toggle('gold', en); if (en) rb.textContent = '세 식탁 한자리 · 초대장이 왔어요'; else if (l.length) rb.textContent = todo.length ? todo[0].season + ' 사건 · ' + todo[0].title : l[0].season + ' 사건 · 다시 보기'; rb.classList.toggle('done', !en && !todo.length); });
-      { const pl = Room.mePlate(hd); if (pl) { pl.style.cssText += ';position:absolute;right:8px;top:-4px;transform:scale(.82);transform-origin:right top;'; } }   // 내 도형 문패(⑤ 결과)
+      { const pl = Room.mePlate(hd); if (pl) { pl.style.cssText += ';position:absolute;right:6px;top:6px;transform:scale(.74);transform-origin:right top;'; } }   // 내 도형 문패(⑤ 결과)
       UI.upd.forEach((f) => f());
       if (UI.welcome) { const w = UI.welcome; UI.welcome = null; welcomeBack(sc, w); }
     },

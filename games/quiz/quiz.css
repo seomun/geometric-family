@@ -7,7 +7,7 @@
 .qz-foot { position: absolute; left: 0; right: 0; bottom: 22px; text-align: center; font: 700 18px var(--uk-font); color: var(--uk-ink2); }
 .qz-scroll { position: absolute; left: 0; right: 0; top: 72px; bottom: 0; overflow-y: auto; touch-action: pan-y; padding: 0 12px 24px; scrollbar-width: none; } .qz-scroll::-webkit-scrollbar { display: none; }
 .qz-test { position: relative; display: flex; align-items: center; gap: 12px; width: 100%; margin-bottom: 10px; min-height: 84px; border: 0; border-radius: var(--uk-r-l); background: #fff; box-shadow: var(--uk-sh); padding: 8px 12px; text-align: left; }
-.qz-test .th { display: flex; align-items: flex-end; width: 92px; gap: 0; flex: none; justify-content: center; } .qz-test .th img { height: 60px; width: auto; } .qz-test .th svg { width: 46px; height: 46px; }
+.qz-test .th { display: flex; align-items: flex-end; width: 104px; gap: 0; margin-right: 6px; flex: none; justify-content: center; } .qz-test .th img { height: 60px; width: auto; } .qz-test .th svg { width: 46px; height: 46px; }
 .qz-test .tx b { display: block; font: 900 22px/1.15 var(--uk-font); color: var(--uk-ink); } .qz-test .tx span { font: 700 18px/1.2 var(--uk-font); color: var(--uk-ink2); }
 .qz-test em { margin-left: auto; font-style: normal; font: 800 18px/1.2 var(--uk-font); border-radius: 14px; padding: 4px 10px; color: var(--uk-ink); }
 .qz-scene { position: absolute; left: 12px; right: 12px; top: 72px; height: 186px; border-radius: var(--uk-r-l); background: rgba(255,255,255,.65); box-shadow: var(--uk-sh); overflow: hidden; }
@@ -26,3 +26,5 @@
 .qz-art { width: 220px; height: 200px; background: #fff; border-radius: var(--uk-r-l); box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; margin-top: 14px; } .qz-art img { width: 70%; height: 70%; object-fit: contain; }
 .qz-bub { margin-top: 24px; width: 100%; background: #fff; border-radius: 26px; box-shadow: var(--uk-sh-lg); padding: 24px 18px; font: 900 24px/1.35 var(--uk-font); text-align: center; word-break: keep-all; }
 .qz-mh { display: none; }
+
+.qz-acts .uk-btn { white-space: nowrap; } .qz-res .hang { color: var(--uk-green); font-weight: 800; margin-top: 4px; } .qz-test .th img + img { margin-left: -14px; } .qz-test .th img { height: 54px; }

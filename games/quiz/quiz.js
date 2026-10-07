@@ -22,7 +22,7 @@
   function cardSVG(res, title) {
     const T = D.types[res.f], S = T.sub[res.s], tot = res.cnt.nemo + res.cnt.semo + res.cnt.dong || 1, W = 320, H = 440;
     const wrap = (t, n) => { const o = []; let cur = ''; for (const ch of t) { cur += ch; if (cur.length >= n) { o.push(cur); cur = ''; } } if (cur) o.push(cur); return o; };
-    const bars = FAMS.map((f, i) => { const p = res.cnt[f] / tot, y = 330 + i * 22; return `<text x="24" y="${y + 12}" font-size="13" font-weight="700" fill="#3A2E39">${D.types[f].name}</text><rect x="92" y="${y}" width="200" height="14" rx="7" fill="#fff" opacity=".7"/><rect x="92" y="${y}" width="${Math.max(6, 200 * p).toFixed(0)}" height="14" rx="7" fill="${D.types[f].color}"/>`; }).join('');
+    const mx = Math.max(res.cnt.nemo, res.cnt.semo, res.cnt.dong, 1), bars = FAMS.map((f, i) => { const p = res.cnt[f] / mx, y = 330 + i * 22; return `<text x="24" y="${y + 12}" font-size="13" font-weight="700" fill="#3A2E39">${D.types[f].name}</text><rect x="92" y="${y}" width="180" height="14" rx="7" fill="#fff" opacity=".7"/><rect x="92" y="${y}" width="${Math.max(6, 180 * p).toFixed(0)}" height="14" rx="7" fill="${D.types[f].color}"/><text x="296" y="${y + 12}" font-size="13" font-weight="800" text-anchor="end" fill="#3A2E39">${res.cnt[f]}</text>`; }).join('');   // 막대 길이 = 고른 개수(가장 많은 쪽이 가득)
     const lines = wrap(S.line, 17).map((l, i) => `<text x="160" y="${252 + i * 20}" font-size="15" font-weight="700" text-anchor="middle" fill="#3A2E39">${l}</text>`).join('');
     return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><rect width="${W}" height="${H}" rx="26" fill="${T.bg}"/><rect x="8" y="8" width="${W - 16}" height="${H - 16}" rx="20" fill="none" stroke="${T.color}" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>`
       + `<text x="160" y="34" font-size="14" font-weight="800" text-anchor="middle" fill="${T.color}">당신은 어느 도형인가요?</text><image href="${GF.src(T.char)}" x="95" y="46" width="130" height="150" preserveAspectRatio="xMidYMid meet"/>`
@@ -88,11 +88,10 @@
     enter(r, p) {
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r); const t = D.tests.find((x) => x.id === p.id), res = SV.res[t.id], T = D.types[res.f], S = tsub(res.f, res.s);
       const box = el('div', 'qz-card', r), im = el('img', '', box); im.src = uri(cardSVG(res, t.title));
-      const txt = el('div', 'qz-res', r, `<p>${S.plus}</p><p class="st">${S.step}</p>`);
+      const txt = el('div', 'qz-res', r, `<p>${S.plus}</p><p class="st">${S.step}</p>` + (p.first ? '<p class="hang">문패와 배지가 집에 걸렸어요</p>' : ''));
       const acts = el('div', 'qz-acts', r);
       UK.btn({ text: '이미지 저장', icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, t.title); GF.sfx('star'); UK.toast('이미지로 저장했어요', r); } catch (e) { GF.sfx('hmm'); UK.toast('저장하지 못했어요', r); } } }, acts);
       UK.btn({ text: '집에 걸기', icon: 'home', cls: 'dong', onclick: () => GF.go('qhouse') }, acts);
-      if (p.first) setTimeout(() => UK.toast('문패와 배지가 집에 걸렸어요', r), 600);
     },
   });
   GF.screen('qcard', {
@@ -101,7 +100,7 @@
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r); const m = me(), rs = Object.values(SV.res), cnt = { nemo: 0, semo: 0, dong: 0 }; rs.forEach((x) => FAMS.forEach((f) => { cnt[f] += x.cnt[f]; }));
       const res = { f: m.f, s: m.s, cnt }; const box = el('div', 'qz-card', r), im = el('img', '', box); im.src = uri(cardSVG(res, '내 도형 · 테스트 ' + rs.length + '개'));
       el('div', 'qz-res', r, `<p>${tsub(m.f, m.s).plus}</p><p class="st">${tsub(m.f, m.s).step}</p>`);
-      const acts = el('div', 'qz-acts', r); UK.btn({ text: '이미지 저장', icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, '내 도형'); GF.sfx('star'); UK.toast('이미지로 저장했어요', r); } catch (e) { GF.sfx('hmm'); } } }, acts); UK.btn({ text: '테스트 더 하기', icon: 'star', cls: 'sky', onclick: () => GF.go('qtests') }, acts);
+      const acts = el('div', 'qz-acts', r); UK.btn({ text: '이미지 저장', icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, '내 도형'); GF.sfx('star'); UK.toast('이미지로 저장했어요', r); } catch (e) { GF.sfx('hmm'); } } }, acts); UK.btn({ text: '다른 테스트', icon: 'star', cls: 'sky', onclick: () => GF.go('qtests') }, acts);
     },
   });
 

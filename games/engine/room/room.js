@@ -76,7 +76,7 @@
       const imgSrc = (r) => (Room.cfg.charSrc ? Room.cfg.charSrc(r.char) : '');
       function draw() {
         const R = Room.data.rooms.find((r) => r.id === cur);
-        tabs.innerHTML = ''; rooms.forEach((r) => { const b = el('button', 'rm-tab' + (r.id === cur ? ' on' : ''), tabs, `<img src="${imgSrc(r)}" alt=""><span>${kid && !Room.family ? '' : r.name}</span>`); b.style.setProperty('--c', r.wall); b.onclick = () => { cur = r.id; sel = null; draw(); }; });
+        tabs.innerHTML = ''; let on = null; rooms.forEach((r) => { const b = el('button', 'rm-tab' + (r.id === cur ? ' on' : ''), tabs, `<img src="${imgSrc(r)}" alt=""><span>${kid && !Room.family ? '' : r.name}</span>`); b.style.setProperty('--c', r.wall); b.onclick = () => { cur = r.id; sel = null; draw(); }; if (r.id === cur) on = b; }); if (on) setTimeout(() => { try { tabs.scrollLeft = Math.max(0, on.offsetLeft - (tabs.clientWidth - on.offsetWidth) / 2); } catch (e) { /* 스크롤 불가는 무시 */ } }, 0);
         if (kid && !Room.family) { const g = el('button', 'rm-tab fam', tabs, (window.UK ? UK.icon('lock') : '') + '<span></span>'); g.setAttribute('aria-label', '가족 집(보호자)'); g.onclick = () => Room.cfg.guard(() => { Room.family = true; Room.house(parent, { room: cur }); }); }
         stage.innerHTML = ''; stage.style.cssText = `--wall:${R.wall};--floor:${R.floor}`;
         const roomEl = el('div', 'rm-room', stage); const wl = el('div', 'rm-wall', roomEl); if (Room.S.wall && Room.S.wall[cur]) wl.style.cssText += ';' + Room.wallStyle(Room.S.wall[cur]); el('div', 'rm-floor', roomEl);

@@ -8,7 +8,10 @@
   const CHAPTERS = ['새집 첫날', '식탁 차리기', '이삿짐 정리', '화장실 하나', '냉장고 정리', '거실 꾸미기', '김장하는 날', '손님이 온다', '큰 상 차리기', '이사 가는 날', '동네 한 바퀴', '세 가족 한자리'];
   const FEATURED = ['make', 'order', 'tight', 'solo', 'clear', 'move', 'kimjang', 'order', 'clear', 'move', 'solo', 'tight'];   // 장마다 새 판 종류 1개를 소개
   const TYPE_NAME = { make: '만들기', order: '주문', tight: '좁은 집', solo: '한 가족만', clear: '짐 치우기', move: '이사', kimjang: '김장' };
-  const typeOf = (n) => { const ch = ((n - 1) / 10 | 0), pos = (n - 1) % 10 + 1; if (n <= 3 || pos === 5 || pos === 10) return 'make'; if (pos === 3 || pos === 7) return FEATURED[ch]; if (pos === 2 && ch > 0) return FEATURED[ch - 1]; if (pos === 8 && ch > 3) return FEATURED[ch - 3]; return pos === 9 && ch > 0 ? 'order' : 'make'; };
+  const typeOf0 = (n) => { const ch = ((n - 1) / 10 | 0), pos = (n - 1) % 10 + 1; if (n <= 3 || pos === 5 || pos === 10) return 'make'; if (pos === 3 || pos === 7) return FEATURED[ch]; if (pos === 2 && ch > 0) return FEATURED[ch - 1]; if (pos === 8 && ch > 3) return FEATURED[ch - 3]; return pos === 9 && ch > 0 ? 'order' : 'make'; };
+  // 같은 판 종류가 3판을 넘게 이어지지 않게 한다(손맛 단조로움 방지): 4번째가 같으면 주문(만들기였다면) / 만들기(주문이었다면)로 바꾼다
+  const SEQ = (() => { const q = []; for (let n = 1; n <= 400; n++) q.push(typeOf0(n)); for (let i = 3; i < q.length; i++) if (q[i] === q[i - 1] && q[i] === q[i - 2] && q[i] === q[i - 3]) q[i] = q[i] === 'order' ? 'make' : 'order'; return q; })();
+  const typeOf = (n) => SEQ[n - 1] || typeOf0(n);
   const tagOf = (n, N) => (n <= 3 ? 'tutorial' : n % 5 === 0 && n > 5 ? 'rest' : n <= 12 ? 'intro' : n > N * 0.8 ? 'challenge' : 'growth');
   function params(n, N, type) {
     N = N || 120; const t = tagOf(n, N), f = Math.min(1, n / (N * 0.85)); type = type || typeOf(n);

@@ -347,7 +347,12 @@
       const nx = GF.quickStage();
       if (nx) {
         const go = el('button', 'homeplay', r, IC.play); go.setAttribute('aria-label', '놀이 시작');
-        go.onclick = () => { GF.sfx('pick'); Stage.start({ kind: 'story', ch: nx.ch, k: nx.k, id: nx.id }); };
+        go.onclick = () => {
+          GF.sfx('pick'); const st = () => Stage.start({ kind: 'story', ch: nx.ch, k: nx.k, id: nx.id });
+          const pro = GF.data.story[nx.ch] && GF.data.story[nx.ch].pro;
+          if (!GF.state.seen[nx.ch] && pro && !(navigator.webdriver && !/[?&]greet=1/.test(location.search))) { GF.state.seen[nx.ch] = 1; Store.save(); GF.go('greet', { cuts: pro, auto: 3200, then: () => { GF.stack.pop(); st(); } }); }   // 첫 실행 1회: 프롤로그 3컷
+          else st();
+        };
         if (!GF.state.stages.c1A && window.UK) setTimeout(() => { if (go.isConnected) UK.finger(r, go, { tap: true }); }, 900);
       }
       const row = el('div', 'homebtns', r);
@@ -483,8 +488,9 @@
   };
   /* 공용 사연 컷 플레이어 — ①그림책·②사연·③장 끝 컷이 같은 액자·자막·넘김을 쓴다(통일성 §0).
      cuts: [{bg, chars:[{id,x,y,h}], bubble:{type,at}, text, voice, sfx}] — 같은 비율(어른1:아이.8:막둥이.45)로 세운다. onEnd: 마지막 컷에서 넘길 때. */
-  GF.story = function (r, cuts, onEnd) {
-      let i = 0;
+  GF.story = function (r, cuts, onEnd, opt) {
+      opt = opt || {}; let i = 0, tm = null, ended = false;                    // opt.auto: 컷당 ms 후 자동으로 넘김, opt.skipAll: 아무 데나 탭하면 바로 끝(첫 만남 인사)
+      const finish = () => { if (ended) return; ended = true; clearTimeout(tm); onEnd && onEnd(); };
       const stageEl = el('div', 'bg', r);
       const dots = el('div', 'dots', r);
       const cap = el('div', 'caption', r); cap.style.display = 'none';
@@ -519,15 +525,34 @@
         dots.innerHTML = cuts.map((_, k) => '<i class="' + (k === i ? 'on' : '') + '"></i>').join('');
         cap.style.display = !GF.state.settings.capOff && c.text ? 'block' : 'none'; cap.textContent = c.text || '';   /* 자막은 기본 켜짐(부모 메뉴에서 끄기) */ cap.textContent = c.text || '';
         GF.say(c.voice); if (c.sfx) setTimeout(() => GF.sfx(c.sfx), 350);
+        clearTimeout(tm); if (opt.auto) tm = setTimeout(() => { if (r.isConnected) next(); }, opt.auto);
       };
       const next = () => {
         GF.sfx('page');
+        if (opt.skipAll && ended) return;
         if (i < cuts.length - 1) { i++; render(); return; }
-        onEnd && onEnd();
+        finish();
       };
-      nb.onclick = (e) => { e.stopPropagation(); next(); };
-      r.addEventListener('pointerup', (e) => { if (e.target === r || e.target.closest('.bg')) next(); });
+      nb.onclick = (e) => { e.stopPropagation(); opt.skipAll ? finish() : next(); };
+      r.addEventListener('pointerup', (e) => { if (e.target === r || e.target.closest('.bg')) opt.skipAll ? finish() : next(); });
+      if (opt.skipAll) nb.style.display = 'none';
       render();
+  };
+  /* 첫 만남 인사: 첫 실행 1회, 세 가족 한 컷(①은 프롤로그 3컷)을 자동으로 넘기고 아무 데나 탭하면 바로 건너뛴다. 5앱 같은 모양(GF.story) */
+  GF.screen('greet', {
+    wide: () => true,
+    enter(r, p) { GF.story(r, p.cuts, () => { GF.state.greeted = 1; Store.save(); if (p.then) p.then(); else GF.back(); }, { auto: p.auto || 3200, skipAll: true }); },
+  });
+  const GREET = {
+    'gf:idle:ui:v1': [{ bg: 'indoor', text: '세 가족이 한 동네에 살아요. 오늘도 식탁은 따뜻해요.', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
+    'gf:merge:ui:v1': [{ bg: 'indoor2', text: '네모, 세모, 동그라미가 새집으로 이사 가요.', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
+    'gf:color:ui:v1': [{ bg: 'home', text: '막둥이랑 세모 이모랑 같이 색칠해요!', chars: [{ id: 'baby.joy', x: 90, y: 600 }, { id: 'nemo_kids.kid1', x: 190, y: 600 }, { id: 'wife.joy', x: 290, y: 600 }] }],
+    'gf:quiz:ui:v1': [{ bg: 'indoor2', text: '네모, 세모, 동그라미. 오늘 하루, 당신은 누구와 닮았나요?', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
+  };
+  GF.maybeGreet = () => {
+    const cuts = GREET[KEY]; if (!cuts || GF.state.greeted) return;
+    if (navigator.webdriver && !/[?&]greet=1/.test(location.search)) return;       // 자동 시험(smoke)은 건너뜀. 인사 확인은 ?greet=1
+    GF.go('greet', { cuts });
   };
   GF.screen('book', {
     wide: () => true,
@@ -760,7 +785,8 @@
     document.addEventListener('visibilitychange', () => GF.bgm.sync());
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') GF.back(); });
     window.addEventListener('popstate', () => GF.back());
-    if (opts.start) opts.start(); else GF.home();
+    if (opts.start) await opts.start(); else GF.home();
+    GF.maybeGreet();
     GF.ready = true;
   };
 })();

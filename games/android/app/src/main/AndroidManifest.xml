@@ -11,6 +11,7 @@
         <provider android:authorities="com.geometricfamily.block.share" />
         <provider android:authorities="com.geometricfamily.spot.share" />
         <provider android:authorities="com.geometricfamily.tile.share" />
+        <provider android:authorities="com.geometricfamily.sort.share" />
     </queries>
     <application
         android:allowBackup="false"

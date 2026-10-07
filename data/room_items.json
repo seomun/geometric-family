@@ -101,6 +101,13 @@
    "game": "tile",
    "room": "yard",
    "story": "같은 그림을 세 개씩 모을 때마다 마당이 살림으로 채워졌어요. 평상, 장독대, 빨랫줄, 텃밭까지."
+  },
+  {
+   "id": "storage",
+   "name": "수납 세트",
+   "game": "sort",
+   "room": "nemo",
+   "story": "뒤섞였던 물건이 자리를 찾았어요. 냉장고, 옷장, 신발장, 서랍장까지 한 칸씩 정리가 끝났어요."
   }
  ],
  "items": [
@@ -3026,6 +3033,366 @@
     "#FFFFFF"
    ],
    "game": "tile",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 153,
+   "id": "u_fridge",
+   "name": "냉장고",
+   "set": "storage",
+   "room": "nemo",
+   "w": 52,
+   "h": 80,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧊",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 154,
+   "id": "u_eggtray",
+   "name": "계란판",
+   "set": "storage",
+   "room": "nemo",
+   "w": 40,
+   "h": 32,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🥚",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 155,
+   "id": "u_sidedish",
+   "name": "반찬통 선반",
+   "set": "storage",
+   "room": "nemo",
+   "w": 56,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🍱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 156,
+   "id": "u_closet",
+   "name": "옷장",
+   "set": "storage",
+   "room": "nemo",
+   "w": 56,
+   "h": 88,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🚪",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 157,
+   "id": "u_shoerack",
+   "name": "신발장",
+   "set": "storage",
+   "room": "nemo",
+   "w": 56,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👟",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 158,
+   "id": "u_box",
+   "name": "수납함",
+   "set": "storage",
+   "room": "nemo",
+   "w": 48,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "📦",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 159,
+   "id": "u_shelf",
+   "name": "벽 선반",
+   "set": "storage",
+   "room": "nemo",
+   "w": 60,
+   "h": 28,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪜",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 160,
+   "id": "u_drawer",
+   "name": "서랍장",
+   "set": "storage",
+   "room": "nemo",
+   "w": 52,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🗄️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 161,
+   "id": "u_hanger",
+   "name": "옷걸이",
+   "set": "storage",
+   "room": "nemo",
+   "w": 44,
+   "h": 52,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🧥",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 162,
+   "id": "u_basket",
+   "name": "빨래 바구니",
+   "set": "storage",
+   "room": "nemo",
+   "w": 44,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 163,
+   "id": "u_crate",
+   "name": "과일 상자",
+   "set": "storage",
+   "room": "nemo",
+   "w": 48,
+   "h": 36,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍎",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 164,
+   "id": "u_label",
+   "name": "정리 라벨",
+   "set": "storage",
+   "room": "nemo",
+   "w": 36,
+   "h": 28,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🏷️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 165,
+   "id": "u_coffee",
+   "name": "믹스커피 통",
+   "set": "storage",
+   "room": "nemo",
+   "w": 36,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "☕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 166,
+   "id": "u_bagrack",
+   "name": "가방 걸이",
+   "set": "storage",
+   "room": "nemo",
+   "w": 44,
+   "h": 48,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎒",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 167,
+   "id": "u_umbrella",
+   "name": "우산꽂이",
+   "set": "storage",
+   "room": "nemo",
+   "w": 36,
+   "h": 52,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "☂️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 168,
+   "id": "u_socks",
+   "name": "양말 서랍",
+   "set": "storage",
+   "room": "nemo",
+   "w": 44,
+   "h": 36,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧦",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 169,
+   "id": "u_toybox",
+   "name": "장난감 통",
+   "set": "storage",
+   "room": "nemo",
+   "w": 52,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 170,
+   "id": "u_pill",
+   "name": "약 서랍",
+   "set": "storage",
+   "room": "nemo",
+   "w": 40,
+   "h": 36,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "💊",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 171,
+   "id": "u_cart",
+   "name": "정리 수레",
+   "set": "storage",
+   "room": "nemo",
+   "w": 52,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛒",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 172,
+   "id": "u_env",
+   "name": "봉투 보관함",
+   "set": "storage",
+   "room": "nemo",
+   "w": 40,
+   "h": 32,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "✉️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "sort",
    "season": null,
    "physical": null
   }

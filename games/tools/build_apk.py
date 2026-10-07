@@ -4,7 +4,7 @@
 release 는 서명 키가 필요: ~/.gradle/gradle.properties 의 GF_STORE_* (없으면 TESTKEY=경로 로 테스트 키). 다섯 앱은 반드시 같은 키여야 집 공유가 된다."""
 import os, pathlib, shutil, subprocess, sys, glob
 G = pathlib.Path(__file__).resolve().parents[1]; A = G / 'android'
-FL = {'toddler': ('build.py', 'index.html'), 'tables': ('build_idle.py', 'idle.html'), 'merge': ('build_merge.py', 'merge.html'), 'color': ('build_color.py', 'color.html'), 'quiz': ('build_quiz.py', 'quiz.html'), 'block': ('build_block.py', 'block.html'), 'spot': ('build_spot.py', 'spot.html'), 'tile': ('build_tile.py', 'tile.html')}
+FL = {'toddler': ('build.py', 'index.html'), 'tables': ('build_idle.py', 'idle.html'), 'merge': ('build_merge.py', 'merge.html'), 'color': ('build_color.py', 'color.html'), 'quiz': ('build_quiz.py', 'quiz.html'), 'block': ('build_block.py', 'block.html'), 'spot': ('build_spot.py', 'spot.html'), 'tile': ('build_tile.py', 'tile.html'), 'sort': ('build_sort.py', 'sort.html')}
 typ = 'debug'; sel = []
 for a in sys.argv[1:]:
     (typ := a) if a in ('debug', 'release') else sel.append(a)

@@ -8,6 +8,7 @@ const APPS = [
   ['④ 색칠북', 'color/index.html', ['.screen.on .cl-card', '.screen.on .cl-th'], () => !!document.querySelector('.screen.on .cl-art')],
   ['⑥ 다른 그림 찾기', 'spot/index.html', ['.screen.on .sp-btns .uk-btn'], () => !!document.querySelector('.screen.on .sp-area')],
   ['⑨ 짝 맞추기', 'tile/index.html', ['.screen.on .tl-btns .uk-btn'], () => !!document.querySelector('.screen.on .tl-board')],
+  ['⑧ 정리의 달인', 'sort/index.html', ['.screen.on .sr-btns .uk-btn'], () => !!document.querySelector('.screen.on .sr-area')],
   ['⑦ 도형 블록', 'block/index.html', ['.screen.on .bk-btns .uk-btn'], () => !!document.querySelector('.screen.on .bk-board')],
   ['⑤ 어느 도형', 'quiz/index.html', ['.screen.on .qz-go .uk-btn'], () => !!document.querySelector('.screen.on .qz-opt')],
 ];

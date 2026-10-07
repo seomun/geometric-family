@@ -1,0 +1,369 @@
+{
+ "version": 1,
+ "note": "아이템은 id 목록만 저장된다(개인정보 없음). physical = 실물 짝 상품 id(코드 카드), season = 열리는 달.",
+ "rooms": [
+  {
+   "id": "nemo",
+   "name": "네모네 거실",
+   "char": "nemo_kids.kid1",
+   "wall": "#FFE3C2",
+   "floor": "#E3B27F"
+  },
+  {
+   "id": "semo",
+   "name": "세모네 신혼집",
+   "char": "wife.joy",
+   "wall": "#D8F0FF",
+   "floor": "#C9D8E8"
+  },
+  {
+   "id": "dong",
+   "name": "동그라미네 서재",
+   "char": "dong_dad.good",
+   "wall": "#E2E6FA",
+   "floor": "#B9BFD8"
+  },
+  {
+   "id": "kid",
+   "name": "아이 방",
+   "char": "baby.joy",
+   "wall": "#FFF0B8",
+   "floor": "#F2C98A"
+  },
+  {
+   "id": "yard",
+   "name": "마당·골목",
+   "char": "nemo_dad.good",
+   "wall": "#CFEFFF",
+   "floor": "#9BD98A"
+  }
+ ],
+ "sets": [
+  {
+   "id": "kid",
+   "name": "아이 방 세트",
+   "game": "playground",
+   "room": "kid",
+   "story": "막둥이 방에 장난감이 가득 찼어요. 오늘은 기차를 타고 잔칫집에 가요."
+  },
+  {
+   "id": "kitchen",
+   "name": "주방·식탁 세트",
+   "game": "tables",
+   "room": "nemo",
+   "story": "큰 상에 밥솥, 믹스커피, 김치통까지. 세 식탁이 한자리에 모일 준비가 됐어요."
+  },
+  {
+   "id": "build",
+   "name": "가구·건축 세트",
+   "game": "merge",
+   "room": "nemo",
+   "story": "네모 소파, 세모 책장, 동그라미 창문. 도형들이 모여 집 한 채가 됐어요."
+  },
+  {
+   "id": "wall",
+   "name": "벽지·액자 세트",
+   "game": "coloring",
+   "room": "kid",
+   "story": "벽마다 내가 칠한 그림이 걸렸어요. 집이 갤러리가 됐어요."
+  },
+  {
+   "id": "badge",
+   "name": "문패·배지 세트",
+   "game": "quiz",
+   "room": "yard",
+   "story": "문패에 내 도형이 새겨졌어요. 이제 이 집은 우리 집이에요."
+  },
+  {
+   "id": "season",
+   "name": "시즌 세트",
+   "game": "all",
+   "room": "yard",
+   "story": "계절이 바뀌어요. 마당에 계절 장식이 걸렸어요."
+  }
+ ],
+ "items": [
+  {
+   "id": "b_sofa",
+   "name": "도형 블록 소파",
+   "set": "build",
+   "room": "nemo",
+   "w": 96,
+   "h": 56,
+   "slot": "floor",
+   "art": "sofa",
+   "colors": [
+    "#F6C28B",
+    "#8FD3F4",
+    "#FF8FA8",
+    "#6CCB8A"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": "note_sofa"
+  },
+  {
+   "id": "b_shelf",
+   "name": "세모 지붕 책장",
+   "set": "build",
+   "room": "dong",
+   "w": 60,
+   "h": 92,
+   "slot": "floor",
+   "art": "shelf",
+   "colors": [
+    "#8FD3F4",
+    "#F6C28B",
+    "#C9B6F2"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "b_window",
+   "name": "동그라미 창문",
+   "set": "build",
+   "room": "nemo",
+   "w": 56,
+   "h": 64,
+   "slot": "wall",
+   "art": "window",
+   "colors": [
+    "#BFE8FF",
+    "#FFE3C2"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "b_table",
+   "name": "네모 식탁",
+   "set": "build",
+   "room": "nemo",
+   "w": 84,
+   "h": 50,
+   "slot": "floor",
+   "art": "table",
+   "colors": [
+    "#E3B27F",
+    "#F6C28B",
+    "#FFE3C2"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "b_lamp",
+   "name": "세모 램프",
+   "set": "build",
+   "room": "semo",
+   "w": 30,
+   "h": 70,
+   "slot": "floor",
+   "art": "lamp",
+   "colors": [
+    "#FFC933",
+    "#FF8FA8",
+    "#8FD3F4"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "b_rug",
+   "name": "동그라미 러그",
+   "set": "build",
+   "room": "kid",
+   "w": 110,
+   "h": 34,
+   "slot": "floor",
+   "art": "rug",
+   "colors": [
+    "#FF8FA8",
+    "#8FD3F4",
+    "#6CCB8A",
+    "#FFC933"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "b_tv",
+   "name": "네모 TV장",
+   "set": "build",
+   "room": "semo",
+   "w": 76,
+   "h": 56,
+   "slot": "floor",
+   "art": "tv",
+   "colors": [
+    "#8A5A3B",
+    "#3B4A7A"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "b_plant",
+   "name": "세모 화분",
+   "set": "build",
+   "room": "dong",
+   "w": 36,
+   "h": 58,
+   "slot": "floor",
+   "art": "plant",
+   "colors": [
+    "#6CCB8A",
+    "#9BD98A"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "b_clock",
+   "name": "동그라미 벽시계",
+   "set": "build",
+   "room": "dong",
+   "w": 44,
+   "h": 44,
+   "slot": "wall",
+   "art": "clock",
+   "colors": [
+    "#FFFFFF",
+    "#FFE3C2",
+    "#FFC933"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "b_bed",
+   "name": "네모 침대",
+   "set": "build",
+   "room": "kid",
+   "w": 96,
+   "h": 56,
+   "slot": "floor",
+   "art": "bed",
+   "colors": [
+    "#FF8FA8",
+    "#8FD3F4",
+    "#FFC933"
+   ],
+   "game": "merge",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "k_train",
+   "name": "기차 장난감",
+   "set": "kid",
+   "room": "kid",
+   "w": 90,
+   "h": 40,
+   "slot": "floor",
+   "art": "train",
+   "colors": [
+    "#FF8FA8",
+    "#8FD3F4",
+    "#FFC933"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "k_party",
+   "name": "잔칫집 미니어처",
+   "set": "kid",
+   "room": "kid",
+   "w": 70,
+   "h": 62,
+   "slot": "floor",
+   "art": "party",
+   "colors": [
+    "#F3C58E"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "w_frame",
+   "name": "그림 액자",
+   "set": "wall",
+   "room": "kid",
+   "w": 52,
+   "h": 60,
+   "slot": "wall",
+   "art": "frame",
+   "colors": [
+    "#8A5A3B",
+    "#FFC933",
+    "#FF8FA8"
+   ],
+   "game": "coloring",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "t_bowl",
+   "name": "밥그릇",
+   "set": "kitchen",
+   "room": "nemo",
+   "w": 40,
+   "h": 26,
+   "slot": "floor",
+   "art": "bowl",
+   "colors": [
+    "#FF8FA8",
+    "#8FD3F4"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "n_plate",
+   "name": "도형 문패",
+   "set": "badge",
+   "room": "yard",
+   "w": 60,
+   "h": 30,
+   "slot": "wall",
+   "art": "nameplate",
+   "colors": [
+    "#F6C28B",
+    "#8FD3F4",
+    "#3B4A7A"
+   ],
+   "game": "quiz",
+   "season": null,
+   "physical": null
+  },
+  {
+   "id": "s_tree",
+   "name": "연말 트리",
+   "set": "season",
+   "room": "yard",
+   "w": 44,
+   "h": 70,
+   "slot": "floor",
+   "art": "tree",
+   "colors": [
+    "#6CCB8A"
+   ],
+   "game": "all",
+   "season": "12",
+   "physical": null
+  }
+ ]
+}

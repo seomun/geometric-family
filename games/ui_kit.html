@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko" data-uk="kid">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>기하학 가족 UI 키트 쇼케이스</title>
+<link rel="stylesheet" href="engine/ui-kit/ui-kit.css">
+<link rel="stylesheet" href="engine/room/room.css">
+<style>
+  html, body { margin: 0; background: #E9E2EE; font-family: var(--uk-font); }
+  .ctl { position: sticky; top: 0; z-index: 200; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 10px; background: #3A2E39; }
+  .ctl .uk-seg { background: #5B4F60; } .ctl .uk-seg button { color: #eee; } .ctl .uk-seg button.on { color: #3A2E39; }
+  .wrap { display: flex; justify-content: center; padding: 16px 0 60px; }
+  #frame { position: relative; width: 360px; background: var(--uk-cream); border-radius: 28px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.25); padding-bottom: 24px; }
+  #frame.tab { width: 760px; }
+  section { padding: 14px 14px 4px; } section > h3 { margin: 0 0 8px; font: 900 18px/1.2 "Noto Sans KR", sans-serif; color: var(--uk-ink2); letter-spacing: 1px; }
+  .sw { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; } .sw div { height: 54px; border-radius: 14px; box-shadow: var(--uk-sh); font: 700 13px/1.1 sans-serif; padding: 6px; color: #fff; display: flex; align-items: flex-end; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; } .col { display: flex; flex-direction: column; gap: 10px; }
+  .cards { display: flex; gap: 10px; } .cards .uk-card { width: 100px; height: 120px; display: flex; align-items: center; justify-content: center; } .cards img { width: 88%; height: 88%; object-fit: contain; pointer-events: none; }
+  .cards .uk-card.locked::after { content: ""; position: absolute; right: 8px; bottom: 6px; width: 30px; height: 30px; background: no-repeat center/contain; }
+  .phonebar { background: var(--uk-sky); border-radius: 0; }
+  .scale { display: grid; gap: 4px; } .scale span { display: block; }
+  .shot { position: relative; height: 230px; border-radius: 22px; overflow: hidden; background: linear-gradient(#BFE8FF, #F4FBFF 60%, #8FD67A 60%); box-shadow: var(--uk-sh); }
+  .shot .uk-caption { position: absolute; left: 10px; right: 10px; top: 62px; }
+</style>
+</head>
+<body>
+<div class="ctl">
+  <div class="uk-seg" id="seg-mode" style="min-width:230px"><button data-v="kid" class="on">유아 모드</button><button data-v="adult">성인 모드</button></div>
+  <div class="uk-seg" id="seg-dev" style="min-width:230px"><button data-v="phone" class="on">폰 360</button><button data-v="tab">태블릿 760</button></div>
+</div>
+<div class="wrap"><div id="frame" class="uk"></div></div>
+<script src="engine/ui-kit/ui-kit.js"></script>
+<script src="engine/room/room-art.js"></script>
+<script src="engine/room/room.js"></script>
+<script>
+const F = document.getElementById('frame'), $ = (s) => UK.el, A = '../assets/';
+function sec(title) { const s = UK.el('section', '', F); UK.el('h3', '', s, title); return s; }
+let ROOMDATA = null;
+const CH = { 'nemo_kids.kid1': 'nemo_kids/kid1.png', 'wife.joy': 'wife/joy.png', 'dong_dad.good': 'dong_dad/good.png', 'baby.joy': 'baby/joy.png', 'nemo_dad.good': 'nemo_dad/good.png' };
+function buildHouse(s) {
+  const adult = UK.mode() === 'adult';
+  localStorage.removeItem('gf:house:demo');
+  Room.init({ data: ROOMDATA, game: adult ? 'merge' : 'playground', mode: UK.mode(), store: { key: 'gf:house:demo', get() { return null; }, set() {} }, charSrc: (id) => A + CH[id], guard: (cb) => UK.modal({ parent: F, title: '보호자 확인', body: '3 + 4 = ?', row: true, actions: [{ text: '6', cls: 'ghost' }, { text: '7', onclick: cb }] }) });
+  Room.S.done = ['kid', 'wall', 'build'];   // 데모에서는 세트 완성 팝업을 띄우지 않는다
+  ['b_sofa', 'b_window', 'b_table', 'b_lamp', 'b_rug', 'b_tv', 'b_plant', 'k_train', 'k_party', 'w_frame', 'b_bed', 'b_clock'].forEach((id) => Room.grant(id));
+  ['b_sofa', 'b_window', 'b_lamp', 'b_rug', 'b_table'].forEach((id) => Room.place(id, 'nemo'));
+  ['k_train', 'k_party', 'b_bed', 'w_frame'].forEach((id) => Room.place(id, 'kid'));
+  ['b_tv', 'b_plant'].forEach((id) => Room.place(id, 'semo'));
+  const box = UK.el('div', '', s); Room.house(box, { room: adult ? 'nemo' : 'kid' });
+}
+function build() {
+  F.innerHTML = '';
+  const adult = UK.mode() === 'adult';
+  // 1 상단 바
+  let s = sec('상단 바 — 뒤로·홈 · 별 알약 · 소리');
+  const tb = UK.topbar({ stars: 12 }, s); tb.bar.classList.add('phonebar');
+  // 2 색 토큰
+  s = sec('색 토큰 — 세 가족 + 공통');
+  const g = UK.el('div', 'sw', s);
+  [['nemo', '네모', '--uk-nemo'], ['semo', '세모', '--uk-semo'], ['dong', '동그라미', '--uk-dong'], ['pink', '분홍', '--uk-pink'], ['gold', '금색', '--uk-gold'], ['green', '초록', '--uk-green'], ['sky', '하늘', '--uk-sky'], ['ink', '잉크', '--uk-ink']].forEach(([k, n, v]) => { const d = UK.el('div', '', g, n); d.style.background = `var(${v})`; if (k === 'gold' || k === 'sky') d.style.color = '#3A2E39'; });
+  // 3 글자
+  s = sec('글자 크기 — ' + (adult ? '성인: 모두 18px 이상' : '유아: 글자 없이, 자막 24px'));
+  const t = UK.el('div', 'scale', s); UK.el('span', 'uk-title', t, '기하학 가족'); UK.el('span', 'uk-h', t, '제목 (h)'); UK.el('span', 'uk-text', t, '본문 — 잔잔하게 읽히는 글자입니다.'); UK.el('div', 'uk-caption', t, '자막: 오늘은 막둥이의 생일!');
+  // 4 버튼
+  s = sec('버튼 — 기본·강조·가족색·비활성');
+  const r = UK.el('div', 'row', s);
+  UK.btn({ text: '시작', icon: 'play', cls: '' }, r); UK.btn({ text: '다시', icon: 'replay', cls: 'pink' }, r); UK.btn({ text: '선물', icon: 'gift', cls: 'gold' }, r); UK.btn({ text: '확인', cls: 'sky' }, r); UK.btn({ text: '돌아가기', cls: 'ghost' }, r); UK.btn({ text: '지우기', cls: 'danger' }, r);
+  const r2 = UK.el('div', 'row', s); r2.style.marginTop = '10px'; UK.btn({ text: '네모', cls: 'nemo' }, r2); UK.btn({ text: '세모', cls: 'semo' }, r2); UK.btn({ text: '동그라미', cls: 'dong' }, r2); const dis = UK.btn({ text: '잠김', icon: 'lock' }, r2); dis.disabled = true;
+  const r3 = UK.el('div', 'row', s); r3.style.marginTop = '10px'; ['home', 'back', 'sound', 'mute', 'gear', 'share', 'info', 'plus', 'brush', 'book', 'shapes', 'heart'].forEach((n) => UK.round({ icon: n }, r3));
+  const r4 = UK.el('div', 'row', s); r4.style.marginTop = '10px'; UK.round({ icon: 'play', cls: 'lg' }, r4); UK.round({ icon: 'replay', cls: 'lg pink' }, r4); UK.round({ icon: 'next', cls: 'lg gold' }, r4);
+  // 5 카드
+  s = sec('카드 — 캐릭터(항상 색·얼굴이 있는 도형)');
+  const cs = UK.el('div', 'cards', s);
+  [['nemo_kids/kid1', ''], ['wife/joy', ''], ['dong_dad/good', 'locked']].forEach(([p, c]) => { const k = UK.el('button', 'uk-card ' + c, cs, `<img src="${A}${p}.png">`); if (c) UK.el('span', 'uk-dot', k).style.cssText = 'right:8px;bottom:8px'; });
+  // 6 패널
+  s = sec('패널 — 가족별 색');
+  const pc = UK.el('div', 'col', s);
+  ['nemo', 'semo', 'dong'].forEach((k, i) => { const p = UK.el('div', 'uk-panel ' + k, pc); UK.el('h4', '', p, ['네모네 식탁', '세모네 식탁', '동그라미네 식탁'][i]).style.color = `var(--uk-${k}-ink)`; UK.el('p', '', p, ['넘치고 북적이는 7인 가족', '티격태격 달달한 두 사람', '완벽한데, 의자가 비어 있어요'][i]); });
+  // 7 진행·설정
+  s = sec('진행 막대 · 설정 위젯');
+  const pg = UK.el('div', 'uk-progress', s, '<i style="width:62%"></i>'); pg.style.marginBottom = '10px';
+  const pg2 = UK.el('div', 'uk-progress gold', s, '<i style="width:35%"></i>'); pg2.style.marginBottom = '10px';
+  UK.settings(s, { title: '설정' });
+  const sg = UK.el('div', 'uk-seg', s); sg.style.marginTop = '10px'; ['쉬움', '보통', '어려움'].forEach((x, i) => UK.el('button', i === 1 ? 'on' : '', sg, x)); sg.onclick = (e) => { if (e.target.tagName === 'BUTTON') { [...sg.children].forEach((b) => b.classList.toggle('on', b === e.target)); } };
+  // 8 팝업·결과·토스트
+  s = sec('팝업 · 결과 · 토스트 (눌러 보기)');
+  const dm = UK.el('div', 'row', s);
+  UK.btn({ text: '결과(별3)', cls: 'gold', onclick: () => UK.result(adult ? { title: '잘했어요!', stars: 3, chips: [{ icon: 'star', text: '+3' }, { icon: 'heart', text: '웃음 +40' }], onNext: () => {}, onRetry: () => {}, parent: F } : { kid: true, title: '', stars: 3, parent: F, onNext: () => {}, onRetry: () => {} }) }, dm);
+  UK.btn({ text: '팝업', cls: 'sky', onclick: () => UK.modal({ parent: F, title: '다녀오셨어요?', body: '8시간 동안 식탁이 데워졌어요.', big: '+1.2억 온기', actions: [{ text: '받았어요' }], dismiss: true }) }, dm);
+  UK.btn({ text: '확인창', cls: 'pink', onclick: () => UK.modal({ parent: F, title: '정말요?', body: '진행이 모두 지워져요.', row: true, actions: [{ text: '아니요', cls: 'ghost' }, { text: '지우기', cls: 'danger' }] }) }, dm);
+  UK.btn({ text: '토스트', cls: 'ghost', onclick: () => UK.toast('새 소품 · 믹스커피', F) }, dm);
+  // 9 집
+  s = sec('기하학 가족의 집 — 꾸미기 화면 (' + (adult ? '성인: 모든 방' : '유아: 아이 방만, 자물쇠=보호자 잠금 뒤 가족 집') + ')'); if (ROOMDATA) buildHouse(s);
+  // 10 화면 조립 예시
+  s = sec('화면 조립 예시 — 그림책 컷 (상단 바 + 자막 + 다음)');
+  const sh = UK.el('div', 'shot', s); const tb2 = UK.topbar({ stars: 0 }, sh); tb2.bar.style.position = 'absolute'; tb2.bar.style.left = tb2.bar.style.right = '0'; UK.el('div', 'uk-caption', sh, '오늘은 막둥이의 생일! 잔칫집에 가요.');
+  const im = UK.el('img', '', sh); im.src = A + 'nemo_kids/kid1.png'; im.style.cssText = 'position:absolute;left:30px;bottom:-4px;height:92px;pointer-events:none'; const im2 = UK.el('img', '', sh); im2.src = A + 'baby/joy.png'; im2.style.cssText = 'position:absolute;left:130px;bottom:-4px;height:70px;pointer-events:none';
+  UK.round({ icon: 'play', cls: 'lg' }, sh).style.cssText += ';position:absolute;right:12px;bottom:10px';
+}
+function seg(id, fn) { const e = document.getElementById(id); e.onclick = (ev) => { const b = ev.target.closest('button'); if (!b) return; [...e.children].forEach((x) => x.classList.toggle('on', x === b)); fn(b.dataset.v); }; }
+seg('seg-mode', (v) => { UK.mode(v); build(); });
+seg('seg-dev', (v) => { F.classList.toggle('tab', v === 'tab'); });
+UK.mode(new URLSearchParams(location.search).get('mode') || 'kid'); if (UK.mode() === 'adult') document.querySelector('#seg-mode').children[1].click();
+if (new URLSearchParams(location.search).get('dev') === 'tab') document.querySelector('#seg-dev').children[1].click();
+fetch('../data/room_items.json').then((r) => r.json()).then((d) => { ROOMDATA = d; build(); });
+</script>
+</body>
+</html>

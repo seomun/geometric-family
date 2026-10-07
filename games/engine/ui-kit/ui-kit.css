@@ -1,0 +1,116 @@
+/* 기하학 가족 공통 UI 키트 — 다섯 앱(놀이터·세 가족 식탁·도형 합치기·막둥이 색칠북·어느 도형?)이 같이 쓴다.
+   규칙: 색·모서리·그림자·글자 크기는 전부 토큰(--uk-*). 앱은 토큰만 바꿔 모드를 분기한다.
+   모드: <html data-uk="kid"> 유아(글자 없이 그림·소리, 자막은 24px)  /  <html data-uk="adult"> 성인(모든 글자 18px 이상, 고대비)
+   기준 화면 360×640(세로), 터치 영역 64dp(--hit), 흰 □△○ 단독 기호는 쓰지 않는다(항상 색·얼굴이 있는 도형). */
+:root {
+  /* 색 */
+  --uk-cream: #FFF6E5; --uk-card: #fff; --uk-ink: #3A2E39; --uk-ink2: #5B4F60; --uk-ink3: #8B8092;
+  --uk-pink: #FF8FA8; --uk-gold: #FFC933; --uk-green: #6CCB8A; --uk-sky: #8FD3F4; --uk-danger: #B04040; --uk-gray: #B9B2C0;
+  /* 세 가족: 강조색 / 연한 바탕 / 글자색 */
+  --uk-nemo: #E8870F; --uk-nemo-bg: #FFE3C2; --uk-nemo-ink: #B5651D;
+  --uk-semo: #2F8FD0; --uk-semo-bg: #D8F0FF; --uk-semo-ink: #1F6FA8;
+  --uk-dong: #3B4A7A; --uk-dong-bg: #E2E6FA; --uk-dong-ink: #3B4A7A;
+  /* 모양 */
+  --uk-r-s: 14px; --uk-r-m: 22px; --uk-r-l: 28px; --uk-r-pill: 999px;
+  --uk-sh: 0 4px 0 rgba(0,0,0,.14); --uk-sh-lg: 0 6px 0 rgba(0,0,0,.14); --uk-sh-press: 0 1px 0 rgba(0,0,0,.14); --uk-sh-pop: 0 8px 0 rgba(0,0,0,.22);
+  --uk-scrim: rgba(40,30,50,.62);
+  --uk-hit: 64px;
+  /* 움직임 */
+  --uk-t-fast: .12s; --uk-t: .2s; --uk-t-slow: .4s; --uk-ease: cubic-bezier(.2,.9,.3,1.2);
+  /* 글꼴·크기: 기본은 유아 */
+  --uk-font: "Jua", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --uk-fs-cap: 24px; --uk-fs-body: 22px; --uk-fs-h: 30px; --uk-fs-title: 50px; --uk-fs-num: 34px; --uk-fw: 800;
+}
+[data-uk="adult"] {
+  --uk-font: "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --uk-fs-cap: 18px; --uk-fs-body: 20px; --uk-fs-h: 24px; --uk-fs-title: 34px; --uk-fs-num: 34px; --uk-fw: 700;
+}
+.uk, .uk * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+.uk { font-family: var(--uk-font); color: var(--uk-ink); }
+
+/* ---- 버튼 ---- */
+.uk-btn { min-height: var(--uk-hit); padding: 0 22px; border: 0; border-radius: var(--uk-r-m); background: var(--uk-green); color: #fff;
+  font: 900 var(--uk-fs-body)/1.15 var(--uk-font); display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: var(--uk-sh); transition: transform var(--uk-t-fast); }
+.uk-btn:active { transform: translateY(3px); box-shadow: var(--uk-sh-press); }
+.uk-btn svg { width: 30px; height: 30px; flex: none; }
+.uk-btn.block { display: flex; width: 100%; }
+.uk-btn.pink { background: var(--uk-pink); } .uk-btn.sky { background: var(--uk-sky); color: var(--uk-ink); }
+.uk-btn.gold { background: var(--uk-gold); color: var(--uk-ink); } .uk-btn.danger { background: var(--uk-danger); }
+.uk-btn.ghost { background: #fff; color: var(--uk-pink); } .uk-btn.ghost span { color: var(--uk-ink); } .uk-btn.gray, .uk-btn[disabled] { background: var(--uk-gray); color: #fff; }
+.uk-btn.nemo { background: var(--uk-nemo); } .uk-btn.semo { background: var(--uk-semo); } .uk-btn.dong { background: var(--uk-dong); }
+.uk-btn[disabled] { box-shadow: var(--uk-sh); }
+.uk-btn small { display: block; font-size: var(--uk-fs-cap); font-weight: 700; opacity: .95; }
+/* 둥근 아이콘 버튼 (상단 바) / 큰 둥근 버튼 (유아 주 행동) */
+.uk-round { color: var(--uk-pink); position: relative; width: 52px; height: 52px; border-radius: 50%; border: 0; background: #fff; padding: 0; box-shadow: var(--uk-sh);
+  display: flex; align-items: center; justify-content: center; transition: transform var(--uk-t-fast); }
+.uk-round:active { transform: translateY(2px); box-shadow: var(--uk-sh-press); }
+.uk-round svg { width: 30px; height: 30px; }
+.uk-round::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--uk-hit)); height: max(100%, var(--uk-hit)); transform: translate(-50%, -50%); }
+.uk-round.lg { color: #fff; width: 84px; height: 84px; background: var(--uk-green); box-shadow: 0 5px 0 rgba(0,0,0,.18); } .uk-round.lg svg { width: 46px; height: 46px; }
+.uk-round.pink { background: var(--uk-pink); } .uk-round.gold { background: var(--uk-gold); } .uk-round.gray { background: var(--uk-gray); }
+
+/* ---- 상단 바·알약 ---- */
+.uk-topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 64px; padding: 6px 12px; }
+.uk-grp { display: flex; gap: 10px; align-items: center; }
+.uk-pill { height: 44px; padding: 0 14px 0 8px; border-radius: 22px; background: #fff; box-shadow: var(--uk-sh); display: inline-flex; align-items: center; gap: 4px; font: var(--uk-fw) var(--uk-fs-body)/1 var(--uk-font); }
+.uk-pill svg { width: 30px; height: 30px; }
+.uk-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 12px; background: #E5334A; color: #fff; font: 900 16px/1 var(--uk-font); }
+.uk-dot { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #E5334A; border: 2px solid #fff; }
+
+/* ---- 카드·패널 ---- */
+.uk-card { position: relative; border: 0; border-radius: var(--uk-r-l); background: var(--uk-card); box-shadow: var(--uk-sh-lg); overflow: hidden; padding: 0; }
+button.uk-card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,.14); }
+.uk-card.locked { background: #e9e2ee; } .uk-card.locked img { filter: brightness(0) opacity(.28); }
+.uk-panel { background: var(--uk-card); border-radius: var(--uk-r-m); padding: 12px 14px; box-shadow: var(--uk-sh); }
+.uk-panel h4 { margin: 0 0 6px; font: 900 var(--uk-fs-body)/1.2 var(--uk-font); }
+.uk-panel p { margin: 4px 0; font: 600 var(--uk-fs-cap)/1.35 var(--uk-font); color: var(--uk-ink2); }
+.uk-panel.nemo { background: var(--uk-nemo-bg); } .uk-panel.semo { background: var(--uk-semo-bg); } .uk-panel.dong { background: var(--uk-dong-bg); }
+.uk-title { font: 900 var(--uk-fs-title)/1.1 var(--uk-font); letter-spacing: 1px; -webkit-text-stroke: 6px #fff; paint-order: stroke fill; text-shadow: 0 4px 0 rgba(0,0,0,.12); }
+.uk-h { font: 900 var(--uk-fs-h)/1.15 var(--uk-font); }
+.uk-text { font: 600 var(--uk-fs-body)/1.4 var(--uk-font); color: var(--uk-ink2); }
+.uk-caption { background: rgba(255,255,255,.94); border-radius: 18px; padding: 12px 16px; font: 800 var(--uk-fs-cap)/1.35 var(--uk-font); color: var(--uk-ink); text-align: center; word-break: keep-all; box-shadow: 0 3px 0 rgba(0,0,0,.1); }
+
+/* ---- 팝업(모달)·결과 ---- */
+.uk-scrim { position: absolute; inset: -3000px; z-index: 90; background: var(--uk-scrim); display: flex; align-items: center; justify-content: center; animation: uk-fade var(--uk-t) ease; }
+.uk-sheet { width: min(330px, 92%); background: #fff; border-radius: var(--uk-r-l); padding: 18px 16px 16px; text-align: center; box-shadow: var(--uk-sh-pop); animation: uk-pop var(--uk-t-slow) var(--uk-ease); }
+.uk-sheet h2 { margin: 0 0 6px; font: 900 var(--uk-fs-h)/1.15 var(--uk-font); }
+.uk-sheet .body { margin: 6px 0; font: 600 var(--uk-fs-body)/1.4 var(--uk-font); color: var(--uk-ink2); }
+.uk-sheet .big { font: 900 var(--uk-fs-num)/1.1 var(--uk-font); color: var(--uk-ink); margin: 6px 0; }
+.uk-sheet .acts { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; } .uk-sheet .acts.row { flex-direction: row; } .uk-sheet .acts.row .uk-btn { flex: 1; padding: 0 8px; }
+.uk-stars { display: flex; justify-content: center; gap: 8px; margin: 6px 0 10px; }
+.uk-stars svg { width: 56px; height: 56px; filter: grayscale(1) opacity(.35); }
+.uk-stars svg.on { filter: none; animation: uk-star var(--uk-t-slow) var(--uk-ease) both; }
+.uk-stars svg.on:nth-child(2) { animation-delay: .15s; } .uk-stars svg.on:nth-child(3) { animation-delay: .3s; }
+.uk-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 8px 0; }
+.uk-chip { display: inline-flex; align-items: center; gap: 4px; background: var(--uk-cream); border-radius: var(--uk-r-pill); padding: 6px 12px; font: 800 var(--uk-fs-cap)/1 var(--uk-font); }
+.uk-chip svg { width: 24px; height: 24px; }
+
+/* ---- 토스트 ---- */
+.uk-toast { position: absolute; left: 20px; right: 20px; top: 84px; z-index: 95; background: rgba(46,36,48,.94); color: #fff; border-radius: 18px; padding: 12px 14px; text-align: center;
+  font: 800 var(--uk-fs-cap)/1.3 var(--uk-font); pointer-events: none; animation: uk-toast 2.2s ease forwards; }
+
+/* ---- 설정 위젯 ---- */
+.uk-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: var(--uk-hit); font: 800 var(--uk-fs-body)/1.2 var(--uk-font); }
+.uk-switch { position: relative; width: 72px; height: 40px; border-radius: 20px; border: 0; background: var(--uk-gray); flex: none; transition: background var(--uk-t); }
+.uk-switch::before { content: ""; position: absolute; left: 4px; top: 4px; width: 32px; height: 32px; border-radius: 50%; background: #fff; box-shadow: 0 2px 0 rgba(0,0,0,.18); transition: left var(--uk-t) var(--uk-ease); }
+.uk-switch.on { background: var(--uk-green); } .uk-switch.on::before { left: 36px; }
+.uk-switch::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--uk-hit)); height: var(--uk-hit); transform: translate(-50%, -50%); }
+.uk-slider { width: 100%; height: 44px; accent-color: var(--uk-pink); }
+.uk-seg { display: flex; background: #EFE8F3; border-radius: var(--uk-r-pill); padding: 4px; gap: 4px; }
+.uk-seg button { flex: 1; min-height: 48px; border: 0; border-radius: var(--uk-r-pill); background: transparent; font: 800 var(--uk-fs-cap)/1 var(--uk-font); color: var(--uk-ink2); }
+.uk-seg button.on { background: #fff; color: var(--uk-ink); box-shadow: 0 2px 0 rgba(0,0,0,.12); }
+.uk-progress { height: 20px; border-radius: 10px; background: rgba(0,0,0,.12); overflow: hidden; } .uk-progress i { display: block; height: 100%; border-radius: 10px; background: var(--uk-green); transition: width var(--uk-t-slow); }
+.uk-progress.gold i { background: var(--uk-gold); }
+
+/* ---- 움직임 ---- */
+@keyframes uk-fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes uk-pop { 0% { transform: scale(.7); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
+@keyframes uk-star { 0% { transform: scale(0) rotate(-40deg) } 100% { transform: scale(1) rotate(0) } }
+@keyframes uk-toast { 0% { opacity: 0; transform: translateY(-10px) } 10%, 85% { opacity: 1; transform: none } 100% { opacity: 0 } }
+@keyframes uk-slide { from { transform: translateY(24px); opacity: 0 } to { transform: none; opacity: 1 } }
+@keyframes uk-wob { 25% { transform: rotate(-12deg) } 75% { transform: rotate(12deg) } }
+@keyframes uk-float { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+.uk-in { animation: uk-slide var(--uk-t-slow) var(--uk-ease) both; } .uk-wob { animation: uk-wob .4s; } .uk-float { animation: uk-float 2.4s ease-in-out infinite; }
+.uk-confetti i { position: absolute; top: -12px; width: 10px; height: 14px; border-radius: 3px; animation: uk-fall 1.6s ease-in forwards; }
+@keyframes uk-fall { to { transform: translateY(700px) rotate(540deg); opacity: .9 } }

@@ -8,7 +8,7 @@
 | 연령 | 일반 이용(만 14세 이상 권장) — Kids 카테고리 아님 · 등급은 RATING_idle_ko.md |
 | 가격 | 수익 방식 미정(작가·퍼블리셔 결정) — 현재 빌드는 광고·결제 없음 |
 | 개인정보처리방침 URL | (허브가 github.io 에 게시) — PRIVACY_idle_ko.md |
-| 지원 이메일 | nemo.semo.domgle@gmail.com (도메인 메일로 교체 예정) |
+| 지원 이메일 | {{SUPPORT_EMAIL}} (도메인 메일로 교체 예정) |
 
 ## 긴 설명
 세 가족이 한 동네에 산다.

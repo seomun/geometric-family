@@ -5,3 +5,4 @@ demo/*.apk
 demo/*.zip
 demo/apk/
 demo/play_*.html
+store/out/

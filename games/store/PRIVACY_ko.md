@@ -25,8 +25,8 @@
 ## 6. 운영자와 문의
 - **개인정보 처리자(운영자)**: ______________ (사업자 명의·대표자 확정 후 기재)
 - **사업자등록번호**: ______________ (해당 시)
-- 문의: nemo.semo.domgle@gmail.com (사업자 도메인 메일로 교체 예정)  ·  변경 시 이 문서와 앱 업데이트 노트에 알립니다.
+- 문의: {{SUPPORT_EMAIL}} (사업자 도메인 메일로 교체 예정)  ·  변경 시 이 문서와 앱 업데이트 노트에 알립니다.
 
 ---
 ## Privacy Policy (English summary)
-This app does not collect, store, or transmit any personal information. It has no ads, no in-app purchases, no analytics, no accounts, and requests no permissions or internet access. Game progress (stars, stickers, volume) stays on the device only and is deleted by the "Clear progress" option in the parental menu or by uninstalling. Designed for children aged 3–6; no data collection means no parental consent flow is required. Operator: ______________ (to be filled once the business name is confirmed). Contact: nemo.semo.domgle@gmail.com
+This app does not collect, store, or transmit any personal information. It has no ads, no in-app purchases, no analytics, no accounts, and requests no permissions or internet access. Game progress (stars, stickers, volume) stays on the device only and is deleted by the "Clear progress" option in the parental menu or by uninstalling. Designed for children aged 3–6; no data collection means no parental consent flow is required. Operator: ______________ (to be filled once the business name is confirmed). Contact: {{SUPPORT_EMAIL}}

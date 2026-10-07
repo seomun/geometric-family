@@ -64,7 +64,7 @@ cd games\android
 | 스크린샷 | `store/shots/phone_1~6.png` (1080×1920), `tab_1~6.png` (1920×1200) — 문구는 허브 승인안 |
 | 영상 | `media/store_phone_30s.webm` ⚠ 포털이 받는 형식(MP4/유튜브 링크) 확인 후 변환, 소리는 작가 판정 후 입힘 |
 | 개인정보처리방침 URL | **`https://________` ← 허브가 github.io 에 게시한 주소** (게시 전에는 제출 불가) |
-| 지원 이메일 | nemo.semo.domgle@gmail.com → 사업자 메일로 교체 권장 |
+| 지원 이메일 | {{SUPPORT_EMAIL}} → 사업자 메일로 교체 권장 |
 | 개인정보 수집 | 아니오 (이름·사진·위치·기기ID·광고ID 없음) |
 | 광고 | 없음 · SDK 없음 |
 | 권한 | 없음 (인터넷 포함) |

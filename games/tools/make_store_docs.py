@@ -14,8 +14,8 @@ APPS = {
 ■ 120판(새집 첫날 → 식탁 차리기 → 이삿짐 정리 …) + 오늘의 한 판 + 계절 판
 ■ 판 종류 7가지: 만들기·주문·짐 치우기·좁은 집·한 가족만·이사·김장 — 장마다 새 규칙이 하나씩 나와요
 ■ 세 가족 판: 같은 판에서 네모·세모·동그라미 규칙이 서로 달라요
-■ 클리어하면 가구·소품이 「우리 집」에 놓이고, 별을 모으면 방이 채워져요
-■ 되돌리기·힌트 무제한, 시간 제한 없음, 틀려도 벌 없음
+■ 클리어한 판에서 만든 가구가 「우리 집」에 놓여요
+■ 되돌리기는 한 판에 한 번, 힌트는 언제든 · 시간 제한 없음, 틀려도 벌 없음
 ■ 광고·결제·서버·가입 없음, 개인정보 수집 없음, 오프라인 실행''',
   shots=['홈', '120판 목록', '합치는 중', '클리어', '세 가족 판', '우리 집'],
   ratingnote='판 퍼즐. 폭력·공포·선정·언어·약물·사행성 요소 없음. 확률형·랜덤 뽑기 없음(가구는 클리어 조건으로 확정 획득).',
@@ -23,10 +23,10 @@ APPS = {
  'color': dict(
   name='기하학 가족: 막둥이 색칠북', short='막둥이 색칠북', pkg='com.geometricfamily.color', grp='kid', adult=False, age='전체 이용가 · 만 3~6세 대상(가족 정책 준수)',
   cat='게임 > 어린이(Kids)  ※ 한국 스토어에서 선택 가능한지 포털 확인, 아니면 게임 > 교육/캐주얼', one='막둥이와 쓱쓱 색칠해요. 68장 도안, 완성하면 벽에 걸리는 광고 없는 안심 색칠북',
-  body='''막둥이와 함께 색칠하는 놀이책이에요. 칠하고 싶은 색을 고르고 칸을 톡 누르면 쓱쓱 채워져요. 틀린 색은 없어요.
+  body='''막둥이와 함께 색칠하는 놀이책이에요. 칠하고 싶은 색을 고르고 칸을 톡 누르면 쓱쓱 채워져요. 자유 색칠에는 틀린 색이 없어요.
 
 ■ 68장 도안: 자유 색칠, 번호 따라 색칠, 선 따라 그리기, 스티커 붙이기, 벽지 꾸미기, 이야기 색칠
-■ 글자를 읽지 못해도 괜찮아요(그림과 소리로 안내)
+■ 놀이 화면에 글자가 없어요(이야기 자막만 있어요)
 ■ 완성한 그림은 「우리 집」 벽에 액자로 걸려요
 ■ 광고·결제·서버·가입 없음, 사진·카메라·마이크 사용 없음, 앱 밖 링크 없음
 ■ 그림은 이 기기 안에만 저장돼요(사진첩 저장·공유 기능 없음)
@@ -41,8 +41,8 @@ APPS = {
 
 ■ 테스트 10종 · 60문항 · 결과 9종(네모형·세모형·동그라미형의 세부 성향)
 ■ 내 도형 카드를 이미지로 저장 — 버튼을 누르면 기기 사진첩(Pictures/기하학 가족)에 저장돼요(저장소 권한 불필요)
-■ 미니게임 5종(반응·기억·균형 등), 결과는 문패와 배지로 「우리 집」에 걸려요
-■ 정답·점수 비교·순위 없음, 결과는 이 기기에만 남음(집계·공유 서버 없음)
+■ 미니게임 5종(반응·기억·선택·그림·가족 맞히기), 결과는 문패와 배지로 「우리 집」에 걸려요
+■ 테스트에는 정답이 없고 점수 비교·순위도 없어요, 결과는 이 기기에만 남음(집계·공유 서버 없음)
 ■ 광고·결제·서버·가입 없음, 개인정보 수집 없음, 오프라인 실행''',
   shots=['홈', '테스트 목록', '문항', '결과', '우리 집(문패)', '미니게임'],
   ratingnote='성향 테스트(재미용). 의학·심리 진단 아님. 폭력·공포·선정·언어·약물·사행성 없음.',
@@ -63,7 +63,7 @@ def listing(k, a):
 | 연령 | {a['age']} — {'아동 대상(Kids/Families 정책 적용)' if not a['adult'] else '아동 대상 아님 · 「아이용·유아」 표현을 문구·아이콘에 쓰지 않음(D12), 구현은 Families 수준(데이터·SDK·외부 링크 0)'} |
 | 가격 | 무료 · 앱 내 결제 없음 · 광고 없음(수익 방식은 작가·퍼블리셔 결정, 현재 빌드는 갈고리만) |
 | 개인정보처리방침 URL | (허브가 github.io 에 게시) — `PRIVACY_{k}_ko.md` |
-| 지원 이메일 | nemo.semo.domgle@gmail.com (사업자 도메인 메일로 교체 예정) |
+| 지원 이메일 | {{{{SUPPORT_EMAIL}}}} (사업자 도메인 메일로 교체 예정) |
 | 권한 | **없음** (인터넷 포함 선언 없음) |
 | 아이콘 | `store/icon_512_{ {'merge':'merge','color':'color','quiz':'quiz'}[k] }.png` |
 | 버전 | 1.0.0 (versionCode 1) |
@@ -120,7 +120,7 @@ def privacy(k, a):
 ## 6. 운영자와 문의
 - **개인정보 처리자(운영자)**: {OP} (사업자 명의·대표자 확정 후 기재)
 - **사업자등록번호**: {OP} (해당 시)
-- 문의: nemo.semo.domgle@gmail.com (사업자 도메인 메일로 교체 예정). 변경 시 이 문서와 앱 업데이트 노트에 알립니다.
+- 문의: {{{{SUPPORT_EMAIL}}}} (사업자 도메인 메일로 교체 예정). 변경 시 이 문서와 앱 업데이트 노트에 알립니다.
 
 ---
 ## Privacy Policy (English summary)
@@ -150,4 +150,17 @@ for k, a in APPS.items():
     (OUT / f'LISTING_{k}_ko.md').write_text(listing(k, a), encoding='utf-8')
     (OUT / f'PRIVACY_{k}_ko.md').write_text(privacy(k, a), encoding='utf-8')
     (OUT / f'RATING_{k}_ko.md').write_text(rating(k, a), encoding='utf-8')
-print('store docs ok')
+
+# 자리표시({{SUPPORT_EMAIL}} 등)를 저장소 밖 ~/.gf/store.env 값으로 채워 games/store/out/ (gitignore)에 낸다 — 공개 저장소에 실제 메일을 두지 않기 위함
+env = {}
+ef = pathlib.Path.home() / '.gf' / 'store.env'
+if ef.exists():
+    for ln in ef.read_text(encoding='utf-8').splitlines():
+        if '=' in ln and not ln.startswith('#'): k_, v_ = ln.split('=', 1); env[k_.strip()] = v_.strip()
+od = OUT / 'out'; od.mkdir(exist_ok=True)
+for f in sorted(OUT.glob('*_ko.md')):
+    t = f.read_text(encoding='utf-8')
+    for k_, v_ in env.items(): t = t.replace('{{' + k_ + '}}', v_)
+    (od / f.name).write_text(t, encoding='utf-8')
+left = sorted({m for f in od.glob('*.md') for m in __import__('re').findall(r'\{\{[A-Z_]+\}\}', f.read_text(encoding='utf-8'))})
+print('store docs ok', '· 채워지지 않은 자리표시:', left or '없음')

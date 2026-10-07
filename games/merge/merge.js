@@ -100,12 +100,12 @@
   GF.screen('mtrio', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'mg'); GF.bg('indoor', r); bar();
+      r.classList.add('uk', 'mg'); GF.bg('indoor2', r); bar();
       const n = Math.max(6, Math.min(60, (SV.last || 1) + 4)), Ls = trioLevels(n);
       el('div', 'mg-ttl', r, '<div class="uk-title" style="font-size:30px">세 가족 판</div><div class="mg-sub">같은 일, 세 가지 규칙</div>').style.top = '84px';
-      const box = el('div', 'mg-trio', r), RULE = [['네모 규칙', '셋이 맞닿으면 한꺼번에 합치고 조각을 돌려받아요', 'nemo'], ['세모 규칙', '반짝 조각은 두 단계 껑충 뛰어요', 'semo'], ['동그라미 규칙', '항상 둘씩만 합쳐져요', 'dong']];
+      const box = el('div', 'mg-trio', r); box.style.top = '226px'; const RULE = [['네모 규칙', '셋이 맞닿으면 한꺼번에 합치고 조각을 돌려받아요', 'nemo'], ['세모 규칙', '반짝 조각은 두 단계 껑충 뛰어요', 'semo'], ['동그라미 규칙', '항상 둘씩만 합쳐져요', 'dong']];
       Ls.forEach((L, i) => { const st = SV.trio[n + ':' + i] || 0, b = UK.btn({ text: RULE[i][0] + (st ? '  ' + '★'.repeat(st) : ''), cls: RULE[i][2] + ' block', onclick: () => { if (L) GF.go('mplay', { level: L }); } }, box); el('small', '', b, RULE[i][1]); });
-      el('div', 'uk-caption mg-tip', r, '모든 조각이 한 가족의 규칙을 따라요. 어느 쪽이 편한가요?').style.top = '420px';
+      el('div', 'mg-line', r, '모든 조각이 한 가족의 규칙을 따라요. 어느 쪽이 편한가요?').style.top = '172px';
     },
   });
 

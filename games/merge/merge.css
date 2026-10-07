@@ -48,3 +48,4 @@
 .mg-season { position: absolute; left: 24px; right: 24px; top: 506px; } .mg-season .uk-btn { position: relative; min-height: 56px; font-size: 18px; } .mg-season .mg-badge { right: 10px; top: -8px; padding: 0 10px; width: auto; }
 .mg-foot { bottom: 18px !important; }
 .mg-goals { gap: 6px; flex-wrap: nowrap; } .mg-goal { height: 46px; padding: 0 10px 0 2px; font-size: 18px; gap: 2px; } .mg-goal .mg-pc { width: 38px; height: 38px; }
+.mg-line { position: absolute; left: 16px; right: 16px; text-align: center; font-size: 18px; font-weight: 700; color: var(--uk-sub, #7A6B73); z-index: 5; }

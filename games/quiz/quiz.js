@@ -1,4 +1,4 @@
-/* 당신은 어느 도형? — 성격 테스트 12종(시즌 2) + 미니게임 5종. 결과 = 세 가족 + 세부 타입(9), 내 도형 카드가 집의 문패·배지가 된다.
+/* 당신은 어느 도형? — 성격 테스트 17종(시즌 2·동화 5) + 미니게임 5종. 결과 = 세 가족 + 세부 타입(9), 내 도형 카드가 집의 문패·배지가 된다.
    성인 그룹(만 13세↑ 일반, 구현은 Families 수준: 서버·SDK·외부 링크 0). 결과는 기기 안에만 — 집계·공유 서버 없음, 이미지 저장만. 키트·공유 룸·엔진 상단 바·공용 소리 id 사용. */
 (function () {
   'use strict';
@@ -59,7 +59,7 @@
     enter(r) {
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r);
       const sc = el('div', 'qz-scroll', r);
-      D.tests.forEach((t) => { const res = SV.res[t.id], b = el('button', 'qz-test', sc); const th = el('div', 'th', b); t.chars.slice(0, 2).forEach((id) => th.appendChild(GF.img(id))); el('div', 'tx', b, `<b>${t.title}${t.season ? ' · 시즌' : ''}</b><span>${t.sub}</span>`); if (res) { const T = D.types[res.f]; el('em', '', b, tsub(res.f, res.s).n).style.background = T.bg; } b.onclick = () => { GF.sfx('pick'); GF.go('qplay', { id: t.id }); }; });
+      D.tests.forEach((t) => { const res = SV.res[t.id], b = el('button', 'qz-test', sc); const th = el('div', 'th', b); t.chars.slice(0, 2).forEach((id) => th.appendChild(GF.img(id))); el('div', 'tx', b, `<b>${t.title}${t.season ? ' · 시즌' : t.kind === 'tale' ? ' · 동화' : ''}</b><span>${t.sub}</span>`); if (res) { const T = D.types[res.f]; el('em', '', b, tsub(res.f, res.s).n).style.background = T.bg; } b.onclick = () => { GF.sfx('pick'); GF.go('qplay', { id: t.id }); }; });
     },
   });
 

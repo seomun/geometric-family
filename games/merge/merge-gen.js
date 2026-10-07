@@ -5,7 +5,7 @@
   'use strict';
   const M = typeof module !== 'undefined' && module.exports ? require('./merge-core.js') : root.MergeCore;
   const mulberry = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  const CHAPTERS = ['새집 첫날', '식탁 차리기', '이삿짐 정리', '화장실 하나', '냉장고 정리', '거실 꾸미기', '김장하는 날', '손님이 온다', '큰 상 차리기', '이사 가는 날', '동네 한 바퀴', '세 가족 한자리'];
+  const CHAPTERS = ['아기돼지 삼형제', '세 마리 곰', '구두장이와 요정', '콩쥐팥쥐', '흥부 박', '브레멘 음악대', '혹부리 영감', '금도끼 은도끼', '해님 달님', '개미와 베짱이', '피노키오', '잭과 콩나무'];
   const FEATURED = ['make', 'order', 'tight', 'solo', 'clear', 'move', 'kimjang', 'order', 'clear', 'move', 'solo', 'tight'];   // 장마다 새 판 종류 1개를 소개
   const TYPE_NAME = { make: '만들기', order: '주문', tight: '좁은 집', solo: '한 가족만', clear: '짐 치우기', move: '이사', kimjang: '김장' };
   const typeOf0 = (n) => { const ch = ((n - 1) / 10 | 0), pos = (n - 1) % 10 + 1; if (n <= 3 || pos === 5 || pos === 10) return 'make'; if (pos === 3 || pos === 7) return FEATURED[ch]; if (pos === 2 && ch > 0) return FEATURED[ch - 1]; if (pos === 8 && ch > 3) return FEATURED[ch - 3]; return pos === 9 && ch > 0 ? 'order' : 'make'; };

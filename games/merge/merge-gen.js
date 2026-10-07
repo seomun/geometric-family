@@ -14,7 +14,7 @@
     N = N || 120; const t = tagOf(n, N), f = Math.min(1, n / (N * 0.85)); type = type || typeOf(n);
     const T0 = n <= 3 ? 2 + (n > 1 ? 1 : 0) : n <= 30 ? 3 : n <= 108 ? 4 : 5, T = t === 'rest' ? Math.max(2, T0 - 1) : T0;
     let cg = n < 8 ? 1 : n < 100 ? 2 : 3, cols = n <= 20 ? 4 : 5, rows = n <= 20 ? 4 : n <= 50 ? 5 : 6; if (n > 90) cols = 6;
-    const p = { tutorial: 0.97, intro: 0.9, rest: 0.98, growth: 0.85 - 0.2 * f, challenge: 0.7 }[t], d = n < 60 ? 0 : { tutorial: 0, intro: 0.05, rest: 0.03, growth: 0.06 + 0.06 * f, challenge: 0.1 }[t];
+    const p = { tutorial: 0.97, intro: 0.9, rest: 0.98, growth: 0.85 - 0.2 * f, challenge: 0.78 }[t], d = n < 60 ? 0 : { tutorial: 0, intro: 0.05, rest: 0.03, growth: 0.06 + 0.06 * f, challenge: 0.1 }[t];
     let extra = { tutorial: 0.8, intro: 0.6, rest: 0.8, growth: 0.45 - 0.12 * f, challenge: 0.25 }[t], goalT = T, nGoal = 1, moveAt = 0, clear = 0, solo = false, junkT = 2;
     if (type === 'order') { cg = Math.min(3, Math.max(2, cg)); nGoal = n > 40 ? 2 : 1; }
     if (type === 'tight') { cols = Math.max(3, cols - 1); rows = Math.max(3, rows - 1); goalT = Math.max(2, T - 1); extra += 0.2; }
@@ -50,15 +50,15 @@
     L.queue = orig.concat(tail).map((q) => ({ c: q.c, t: q.t, s: q.s ? 1 : 0 })); L.solution = path; L.stars = [Math.floor(ex / 2), Math.max(1, ex)];
     return L;
   }
-  const greedyTarget = (P, n, N) => ({ tutorial: 0.95, intro: 0.85, rest: 0.92, growth: 0.74 - 0.26 * Math.min(1, n / ((N || 120) * 0.8)), challenge: 0.32 }[P.t]);
+  const greedyTarget = (P, n, N) => ({ tutorial: 0.95, intro: 0.85, rest: 0.92, growth: 0.74 - 0.26 * Math.min(1, n / ((N || 120) * 0.8)), challenge: 0.4 }[P.t]);
   /** 한 판 생성(목표 탐욕 성공률에 맞춰 여유 조각을 늘려 가며). seedBase 로 같은 입력 = 같은 판. */
   function make(n, N, seedBase, opts) {
     opts = opts || {}; const P0 = params(n, N, opts.type); let L = null;
     for (let tries = 0; tries < 14 && !L; tries++) {
       const P = Object.assign({}, P0, { T: tries > 6 ? Math.max(2, P0.T - 1) : P0.T });
-      for (let ex = P.extra; ex <= (P0.t === 'rest' ? 1.6 : 1.1); ex += 0.2) {
+      for (let ex = P.extra; ex <= (P0.t === 'rest' ? 2.6 : P0.t === 'challenge' ? 1.5 : 1.2); ex += 0.2) {
         const l = build(n, Object.assign({}, P, { extra: ex }), mulberry((seedBase || n * 7919) + tries * 101), opts); if (!l) break;
-        L = l; if (opts.noGreedy || M.greedyWinRate(l, 24, mulberry(n + 5)) >= greedyTarget(P0, n, N)) break;
+        L = l; if (opts.noGreedy || M.greedyWinRate(l, P0.t === 'rest' ? 40 : 24, mulberry(n + 5)) >= greedyTarget(P0, n, N)) break;
       }
     }
     if (!L && (opts.type || typeOf(n)) !== 'make') return make(n, N, seedBase, Object.assign({}, opts, { type: 'make' }));   // 안 만들어지면 만들기로 대체

@@ -6,6 +6,7 @@ const APPS = [
   ['② 세 가족 식탁', 'idle/index.html', ['.tcard[data-t=nemo]', '.screen.on .grow .buy'], () => !!document.querySelector('.screen.on .grow .buy')],
   ['③ 도형 합치기', 'merge/index.html', ['.screen.on .mg-btns .uk-btn'], () => !!document.querySelector('.screen.on .mg-board')],
   ['④ 색칠북', 'color/index.html', ['.screen.on .cl-card', '.screen.on .cl-th'], () => !!document.querySelector('.screen.on .cl-art')],
+  ['⑦ 도형 블록', 'block/index.html', ['.screen.on .bk-btns .uk-btn'], () => !!document.querySelector('.screen.on .bk-board')],
   ['⑤ 어느 도형', 'quiz/index.html', ['.screen.on .qz-go .uk-btn'], () => !!document.querySelector('.screen.on .qz-opt')],
 ];
 (async () => {

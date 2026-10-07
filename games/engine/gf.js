@@ -559,6 +559,7 @@
     'gf:idle:ui:v1': [{ bg: 'indoor', text: '세 가족이 한 동네에 살아요. 오늘도 식탁은 따뜻해요.', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
     'gf:merge:ui:v1': [{ bg: 'indoor2', text: '네모, 세모, 동그라미가 새집으로 이사 가요.', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
     'gf:color:ui:v1': [{ bg: 'home', text: '막둥이랑 세모 이모랑 같이 색칠해요!', chars: [{ id: 'baby.joy', x: 90, y: 600 }, { id: 'nemo_kids.kid1', x: 190, y: 600 }, { id: 'wife.joy', x: 290, y: 600 }] }],
+    'gf:block:ui:v1': [{ bg: 'indoor2', text: '네모, 세모, 동그라미가 벽돌을 쌓아 새집을 지어요.', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
     'gf:quiz:ui:v1': [{ bg: 'indoor2', text: '네모, 세모, 동그라미. 오늘 하루, 당신은 누구와 닮았나요?', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
   };
   GF.maybeGreet = () => {

@@ -168,6 +168,22 @@ Q5 = [
 ]
 
 
+# ---------------- ⑦ 도형 블록 사연(장 끝 4컷): 같은 옛이야기를 "줄을 맞춰 쌓는" 눈으로 ----------------
+TB = [
+ dict(base='pigs', title='아기돼지 삼형제', cuts=[
+  ('네모 엄마가 세 아이에게 벽돌 한 상자씩을 주었다. 「줄을 맞춰 쌓으면 튼튼한 집이 된단다.」', ['nemo_mom.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3'], None),
+  ('{kid1}와 {kid2}는 쉬운 볏짚·나무 조각으로 뚝딱뚝딱 먼저 지었다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], 'sparkle'),
+  ('바람 친구가 후— 불자 볏짚집과 나무집은 폴폴. {kid3}는 벽돌을 한 줄 한 줄 맞춰 쌓았다.', ['nemo_kids.kid3'], 'bang'),
+  ('벽돌집은 끄떡없어 모두 모였다. 줄을 맞춘 집 한 채가 마당 가득 환했다.', ['nemo_kids.kid3', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_mom.love'], 'heart')]),
+ dict(base='bremen', title='브레멘 음악대', cuts=[
+  ('늙었다고 쫓겨난 네 친구 — 당나귀(네모 아빠), 개(세모 남편), 고양이(세모 아내), 수탉(동그라미 아빠).', ['nemo_dad.good', 'husband.good', 'wife.good', 'dong_dad.good'], None),
+  ('길 끝에 불 켜진 집이 보였지만 창문이 높았다. 네 친구는 발판 삼아 차곡차곡 쌓기로 했다.', ['nemo_dad.joy', 'husband.joy', 'wife.joy', 'dong_dad.joy'], 'question'),
+  ('당나귀 위에 개, 그 위에 고양이, 그 위에 수탉. 줄 맞춘 탑이 완성되자 함께 노래했다.', ['nemo_dad.joy', 'husband.joy', 'wife.joy', 'dong_dad.joy'], 'note'),
+  ('허깨비 도둑들이 놀라 달아나고, 빈집은 네 친구의 음악당이 되었다.', ['nemo_dad.love', 'husband.love', 'wife.love', 'dong_dad.warm'], 'heart')]),
+]
+BLOCK_SEASONS = [dict(id='chuseok', title='추석 송편 빚기', months=[9, 10], n=14, seed=901, type='family'), dict(id='kimjang', title='김장 한 판', months=[11], n=16, seed=902, type='lines'), dict(id='yeonmal', title='연말 별 모으기', months=[12, 1], n=18, seed=903, type='star')]
+
+
 def tally(items):
     """가족별 역할 횟수 집계: {(fam, kind): n}"""
     c = {}
@@ -205,6 +221,8 @@ if __name__ == '__main__':
         return dict(id=kw['id'], title=t['title'], origin=t['origin'], apps=kw['apps'], audience=kw['aud'], cast=[dict(role=a, who=b, kind=c, family=d) for a, b, c, d in t['cast']], line=t['line'], kept=t['kept'], art_pending=t.get('art_pending', []), status='[제안]')
     for i, t in enumerate(T12):
         tales.append(ent(t, id=t['id'], apps={'merge': i + 1, 'color': i + 1}, aud='adult'))
+    for i, t in enumerate(TB):
+        base = next(x for x in T12 if x['id'] == t['base']); tales.append(ent(dict(base, title=base['title'] + ' (도형 블록 사연)'), id='block_' + t['base'], apps={'block': i + 1}, aud='adult'))
     for k in K:
         tales.append(ent(k, id='kid_' + k['id'], apps={'playground': k['ch'], 'mode': k['mode']}, aud='kid'))
     for q in Q5:
@@ -217,6 +235,11 @@ if __name__ == '__main__':
     p = R / 'data/merge_levels.json'; L = json.load(open(p, encoding='utf-8')); L['chapters'] = names; json.dump(L, open(p, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     p = R / 'games/merge/merge-gen.js'; s = open(p, encoding='utf-8').read()
     s = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + n + "'" for n in names) + "];", s, count=1); open(p, 'w', encoding='utf-8').write(s)
+    # ⑦ 도형 블록 사연·시즌
+    for t in TB:
+        assert len(t['cuts']) == 4
+    json.dump({'version': 1, 'note': '⑦ 도형 블록 사연(장 끝 4컷)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['o_lantern', 'o_mailbox', 'o_doghouse'], 'seasons': BLOCK_SEASONS,
+               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['base'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(TB)]}, open(R / 'data/block_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     p = R / 'data/story.json'; S = json.load(open(p, encoding='utf-8'))
     def cuts(bg, lst):
         out = []

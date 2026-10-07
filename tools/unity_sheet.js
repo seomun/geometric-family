@@ -3,7 +3,7 @@ const { chromium } = require('playwright-core');
 const path = require('path'), fs = require('fs');
 const OUT = path.resolve(__dirname, '..', 'notes', 'snapshots'); const B = 'http://localhost:8765/games/';
 const APPS = [
-  ['1', 'index.html', 'khouse'], ['2', 'idle/index.html', 'ihouse'], ['3', 'merge/index.html', 'mhouse'], ['4', 'color/index.html', 'chouse'], ['5', 'quiz/index.html', 'qhouse'],
+  ['1', 'index.html', 'khouse'], ['2', 'idle/index.html', 'ihouse'], ['3', 'merge/index.html', 'mhouse'], ['4', 'color/index.html', 'chouse'], ['5', 'quiz/index.html', 'qhouse'], ['7', 'block/index.html', 'bhouse'],
 ];
 (async () => {
   const b = await chromium.launch({ executablePath: process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe' });

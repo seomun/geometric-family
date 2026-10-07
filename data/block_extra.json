@@ -1,0 +1,133 @@
+{
+ "version": 1,
+ "note": "⑦ 도형 블록 사연(장 끝 4컷)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py",
+ "shardsPerItem": 3,
+ "dailyItems": [
+  "o_lantern",
+  "o_mailbox",
+  "o_doghouse"
+ ],
+ "seasons": [
+  {
+   "id": "chuseok",
+   "title": "추석 송편 빚기",
+   "months": [
+    9,
+    10
+   ],
+   "n": 14,
+   "seed": 901,
+   "type": "family"
+  },
+  {
+   "id": "kimjang",
+   "title": "김장 한 판",
+   "months": [
+    11
+   ],
+   "n": 16,
+   "seed": 902,
+   "type": "lines"
+  },
+  {
+   "id": "yeonmal",
+   "title": "연말 별 모으기",
+   "months": [
+    12,
+    1
+   ],
+   "n": 18,
+   "seed": 903,
+   "type": "star"
+  }
+ ],
+ "stories": [
+  {
+   "chapter": 1,
+   "title": "아기돼지 삼형제",
+   "tale": "pigs",
+   "cuts": [
+    {
+     "text": "네모 엄마가 세 아이에게 벽돌 한 상자씩을 주었다. 「줄을 맞춰 쌓으면 튼튼한 집이 된단다.」",
+     "chars": [
+      "nemo_mom.joy",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "text": "{kid1}와 {kid2}는 쉬운 볏짚·나무 조각으로 뚝딱뚝딱 먼저 지었다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "바람 친구가 후— 불자 볏짚집과 나무집은 폴폴. {kid3}는 벽돌을 한 줄 한 줄 맞춰 쌓았다.",
+     "chars": [
+      "nemo_kids.kid3"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "벽돌집은 끄떡없어 모두 모였다. 줄을 맞춘 집 한 채가 마당 가득 환했다.",
+     "chars": [
+      "nemo_kids.kid3",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 2,
+   "title": "브레멘 음악대",
+   "tale": "bremen",
+   "cuts": [
+    {
+     "text": "늙었다고 쫓겨난 네 친구 — 당나귀(네모 아빠), 개(세모 남편), 고양이(세모 아내), 수탉(동그라미 아빠).",
+     "chars": [
+      "nemo_dad.good",
+      "husband.good",
+      "wife.good",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "text": "길 끝에 불 켜진 집이 보였지만 창문이 높았다. 네 친구는 발판 삼아 차곡차곡 쌓기로 했다.",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.joy",
+      "wife.joy",
+      "dong_dad.joy"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "당나귀 위에 개, 그 위에 고양이, 그 위에 수탉. 줄 맞춘 탑이 완성되자 함께 노래했다.",
+     "chars": [
+      "nemo_dad.joy",
+      "husband.joy",
+      "wife.joy",
+      "dong_dad.joy"
+     ],
+     "bubble": "note"
+    },
+    {
+     "text": "허깨비 도둑들이 놀라 달아나고, 빈집은 네 친구의 음악당이 되었다.",
+     "chars": [
+      "nemo_dad.love",
+      "husband.love",
+      "wife.love",
+      "dong_dad.warm"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  }
+ ]
+}

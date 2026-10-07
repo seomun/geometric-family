@@ -4,8 +4,8 @@ HTML·APK·zip 은 용량 때문에 git 에 올리지 않고(games/.gitignore) �
 import os, pathlib, shutil, subprocess, sys, zipfile
 G = pathlib.Path(__file__).resolve().parents[1]; D = G / 'demo'; D.mkdir(exist_ok=True)
 APPS = [('toddler', '① 기하학 가족 놀이터', 'index.html', 'shots', '만 3~6세'), ('tables', '② 기하학 가족: 세 가족 식탁', 'idle.html', 'shots_idle', '성인'),
-        ('merge', '③ 기하학 가족: 도형 합치기', 'merge.html', 'shots_merge', '만 13세↑'), ('color', '④ 기하학 가족: 막둥이 색칠북', 'color.html', 'shots_color', '만 3~6세'), ('quiz', '⑤ 기하학 가족: 당신은 어느 도형?', 'quiz.html', 'shots_quiz', '만 13세↑')]
-BUILD = {'toddler': 'build.py', 'tables': 'build_idle.py', 'merge': 'build_merge.py', 'color': 'build_color.py', 'quiz': 'build_quiz.py'}
+        ('merge', '③ 기하학 가족: 도형 합치기', 'merge.html', 'shots_merge', '만 13세↑'), ('color', '④ 기하학 가족: 막둥이 색칠북', 'color.html', 'shots_color', '만 3~6세'), ('quiz', '⑤ 기하학 가족: 당신은 어느 도형?', 'quiz.html', 'shots_quiz', '만 13세↑'), ('block', '⑦ 기하학 가족: 도형 블록', 'block.html', 'shots_block', '만 13세↑')]
+BUILD = {'toddler': 'build.py', 'tables': 'build_idle.py', 'merge': 'build_merge.py', 'color': 'build_color.py', 'quiz': 'build_quiz.py', 'block': 'build_block.py'}
 for fl, *_ in APPS: subprocess.run([sys.executable, str(G / 'tools' / BUILD[fl])], check=True, stdout=subprocess.DEVNULL)
 for fl, nm, h, shots, age in APPS:
     shutil.copy2(G / 'app' / h, D / f'play_{fl}.html'); out = D / f'screens_{fl}'; out.mkdir(exist_ok=True)

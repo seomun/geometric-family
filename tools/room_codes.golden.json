@@ -366,5 +366,37 @@
  "k_ch15": {
   "no": 92,
   "code": "2KI7WE"
+ },
+ "o_bricks": {
+  "no": 93,
+  "code": "2LIENH"
+ },
+ "o_roof": {
+  "no": 94,
+  "code": "2MILED"
+ },
+ "o_chimney": {
+  "no": 95,
+  "code": "2NIS59"
+ },
+ "o_fence": {
+  "no": 96,
+  "code": "2OIZW5"
+ },
+ "o_gate": {
+  "no": 97,
+  "code": "2PJ6MP"
+ },
+ "o_mailbox": {
+  "no": 98,
+  "code": "2QJDDS"
+ },
+ "o_doghouse": {
+  "no": 99,
+  "code": "2RJK4O"
+ },
+ "o_lantern": {
+  "no": 100,
+  "code": "2SJRVK"
  }
 }

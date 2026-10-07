@@ -5,6 +5,8 @@ run() { echo "=== $1"; shift; "$@" 2>&1 | grep -E "^(FAIL|FAILED|ALL PASS|ASSERT
 for c in 1 2 3 4 5 6 7 8 9 10; do run "① ch$c" env ONLY=$c node games/tools/smoke.js; done
 for c in 11 12 13 14 15; do run "① 3권 ch$c" env ONLY=$c node games/tools/book3_smoke.js; done
 for r in 1-5 6-10 11-15 16-20; do run "③ merge LV=$r" env LV=$r node tools/merge_smoke.js; done
+for r in 1-10 11-20; do run "⑦ block LV=$r" env LV=$r node tools/block_smoke.js; done
+run "⑦ block_sim" node tools/block_sim.js
 run "④ color" node tools/color_smoke.js
 run "⑤ quiz" node tools/quiz_smoke.js
 run "② idle" node tools/idle_smoke.js

@@ -2,7 +2,7 @@
 // → games/store/shots_<app>/raw/phone_N_*.png → APP=<app> python games/tools/frame_shots.py 로 액자
 const { chromium } = require('playwright-core');
 const path = require('path'), fs = require('fs');
-const app = process.argv[2]; const URLS = { merge: 'merge/index.html', color: 'color/index.html', quiz: 'quiz/index.html' };
+const app = process.argv[2]; const URLS = { merge: 'merge/index.html', color: 'color/index.html', quiz: 'quiz/index.html', block: 'block/index.html' };
 const RAW = path.resolve(__dirname, '..', 'store', 'shots_' + app, 'raw'); fs.mkdirSync(RAW, { recursive: true });
 const wait = (p, ms) => p.waitForTimeout(ms);
 const SCENES = {
@@ -31,6 +31,19 @@ const SCENES = {
     const st = pages.find((q) => q.type === 'sticker'); if (st) { await p.evaluate((id) => { GF.stack = []; GF.go('chome'); GF.go('csticker', { id, skipStory: true }); }, st.id); await wait(p, 900); await p.evaluate(() => COLOR.debug.addStickers()); await wait(p, 800); }
     await shot('5_sticker');
     await p.evaluate(() => { pages_done = 1; }).catch(() => {}); await p.evaluate(() => { GF.stack = []; GF.go('chome'); GF.go('chouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
+  },
+  async block(p, shot) {
+    await p.waitForSelector('.bk-btns'); await wait(p, 900); await shot('1_home');
+    await p.evaluate(() => { GF.go('blevels'); }); await p.waitForSelector('.bk-l'); await wait(p, 600); await shot('2_levels');
+    await p.evaluate(() => { BLOCK.unlockAll = true; GF.stack = []; GF.go('bhome'); GF.go('bplay', { n: 8 }); }); await p.waitForSelector('.bk-board'); await wait(p, 600);
+    const L = await p.evaluate(() => BLOCK.debug.level()); for (const m of L.solution.slice(0, Math.max(3, (L.solution.length * 0.55) | 0))) { await p.evaluate((mm) => BLOCK.debug.place(mm[0], mm[1], mm[2]), m); await p.waitForFunction(() => !BLOCK.debug.busy(), null, { timeout: 5000 }).catch(() => {}); await wait(p, 120); }
+    await wait(p, 500); await shot('3_play');
+    await p.evaluate(() => { GF.stack = []; GF.go('bhome'); GF.go('bplay', { n: 10 }); BLOCK.fast = true; }); await p.waitForSelector('.bk-board'); await wait(p, 400);
+    const L2 = await p.evaluate(() => BLOCK.debug.level()); for (const m of L2.solution) { await p.evaluate((mm) => BLOCK.debug.place(mm[0], mm[1], mm[2]), m); await p.waitForFunction(() => !BLOCK.debug.busy() || !!document.querySelector('.screen.on .uk-sheet, .screen.on .nextbtn'), null, { timeout: 6000 }).catch(() => {}); if (await p.evaluate(() => !!document.querySelector('.screen.on .uk-sheet, .screen.on .nextbtn'))) break; }
+    await wait(p, 900); await shot('4_story');
+    for (let g = 0; g < 8; g++) { if (await p.evaluate(() => !!document.querySelector('.screen.on .uk-sheet'))) break; const nb = await p.$('.screen.on .nextbtn'); if (nb) await nb.click({ force: true }).catch(() => {}); await wait(p, 400); }
+    await wait(p, 800); await shot('5_clear');
+    await p.evaluate(() => { Object.values(BLOCK.debug.REW).slice(0, 7).forEach((id) => Room.grant(id)); GF.stack = []; GF.go('bhome'); GF.go('bhouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
   },
   async quiz(p, shot) {
     await p.waitForSelector('.qz-grid'); await wait(p, 900); await shot('1_home');

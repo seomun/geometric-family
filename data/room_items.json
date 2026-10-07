@@ -80,6 +80,13 @@
    "game": "all",
    "room": "yard",
    "story": "계절이 바뀌어요. 마당에 계절 장식이 걸렸어요."
+  },
+  {
+   "id": "outer",
+   "name": "외관·지붕·담장 세트",
+   "game": "block",
+   "room": "yard",
+   "story": "벽돌을 한 줄 한 줄 맞춰 쌓았더니 집 바깥이 완성됐어요. 지붕, 굴뚝, 담장, 대문, 우체통까지."
   }
  ],
  "items": [
@@ -1925,6 +1932,150 @@
     "#FFFFFF"
    ],
    "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 93,
+   "id": "o_bricks",
+   "name": "벽돌 더미",
+   "set": "outer",
+   "room": "yard",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 94,
+   "id": "o_roof",
+   "name": "빨간 지붕",
+   "set": "outer",
+   "room": "yard",
+   "w": 56,
+   "h": 56,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🏠",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 95,
+   "id": "o_chimney",
+   "name": "굴뚝",
+   "set": "outer",
+   "room": "yard",
+   "w": 44,
+   "h": 52,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🏭",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 96,
+   "id": "o_fence",
+   "name": "담장",
+   "set": "outer",
+   "room": "yard",
+   "w": 64,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🚧",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 97,
+   "id": "o_gate",
+   "name": "대문",
+   "set": "outer",
+   "room": "yard",
+   "w": 48,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🚪",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 98,
+   "id": "o_mailbox",
+   "name": "우체통",
+   "set": "outer",
+   "room": "yard",
+   "w": 40,
+   "h": 48,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "📮",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 99,
+   "id": "o_doghouse",
+   "name": "강아지 집",
+   "set": "outer",
+   "room": "yard",
+   "w": 48,
+   "h": 48,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 100,
+   "id": "o_lantern",
+   "name": "등불",
+   "set": "outer",
+   "room": "yard",
+   "w": 36,
+   "h": 52,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🏮",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "block",
    "season": null,
    "physical": null
   }

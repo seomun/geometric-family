@@ -15,6 +15,9 @@
   const persist = () => { if (GF.save) GF.save(); };
   function applyBig() { document.documentElement.dataset.big = S().big ? '1' : '0'; }
 
+  /* 진동: 성인 앱만(유아 앱엔 VIBRATE 권한이 없다). 소리 id 에 맞춰 아주 짧게 */
+  const HAP = { drop: 10, pick: 6, ok: 18, star: [18, 40, 22], hmm: 32, celebrate: [20, 40, 20, 40, 30] };
+  GF.haptic = function (id) { if (!X.ready || !X.cfg || X.cfg.kid || S().vib === false || !navigator.vibrate) return; const p = HAP[id]; if (p) { try { navigator.vibrate(p); } catch (e) {} } };
   /** 시트(팝업) 하나를 열고 본문 노드를 돌려 준다 */
   function sheet(title) {
     const sc = UK.modal({ title, dismiss: true, parent: document.getElementById('safe') }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet');
@@ -30,6 +33,7 @@
     row(body, '소리', UK.switch(!s.mute, (on) => { s.mute = !on; persist(); GF.refreshBar && GF.refreshBar(); GF.bgm && GF.bgm.sync && GF.bgm.sync(); }));
     const rg = el('input', 'xt-range'); rg.type = 'range'; rg.min = 0; rg.max = 1; rg.step = 0.1; rg.value = s.vol; rg.oninput = () => { s.vol = +rg.value; persist(); GF.bgm && GF.bgm.sync && GF.bgm.sync(); GF.sfx('tap'); }; row(body, '소리 크기', rg);
     row(body, '자막', UK.switch(!s.capOff, (on) => { s.capOff = !on; persist(); }));
+    if (!kid && navigator.vibrate) row(body, '진동', UK.switch(s.vib !== false, (on) => { s.vib = on; persist(); if (on) GF.haptic('ok'); }));
     if (!kid) row(body, '큰 글씨', UK.switch(!!s.big, (on) => { s.big = on ? 1 : 0; persist(); applyBig(); }));
     if (kid) {   // 쉬어요 알림: 보호자가 정하는 놀이 시간 알림(아이에게 압박 없음, 설정 안 하면 없음)
       const opts = [0, 10, 20, 30], b = tbtn(s.rest ? s.rest + '분' : '끔', () => { const i = (opts.indexOf(s.rest || 0) + 1) % opts.length; s.rest = opts[i]; b.textContent = s.rest ? s.rest + '분' : '끔'; persist(); X.restReset(); }); row(body, '쉬어요 알림', b);

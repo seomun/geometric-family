@@ -94,6 +94,7 @@
   /** GF.sfx(id, {st}) — st: 반음 단위 음높이 이동(연쇄 콤보처럼 오를수록 높아지게). 같은 id 라도 파일은 하나, 재생 속도로만 바꾼다. */
   GF.sfx = function (n, opt) {
     ensureAudio(); loadSounds(); n = (snd().alias || {})[n] || n;
+    if (GF.haptic) GF.haptic(n);   // 성인 앱만, 설정에서 끌 수 있는 짧은 진동(engine/extras.js)
     if (!ac || GF.state.settings.mute) return;
     const b = bufs[n], e = snd().sfx[n], st = opt && opt.st ? opt.st : 0, mul = Math.pow(2, st / 12);
     if (!b) { if (SFX[n]) { pitch = mul; try { SFX[n](); } finally { pitch = 1; } } return; }                 // 파일이 없거나 아직 못 읽었으면 합성음으로 대신

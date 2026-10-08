@@ -17,13 +17,18 @@ const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
     ok(await p.evaluate(() => !!(window.GF && GF.extras && GF.extras.ready)), name + ' extras 초기화');
     if (kind === 'adult') {
       ok(!!(await p.$('#b-set')), name + ' ⚙ 버튼');
-      await p.click('#b-set'); await p.waitForSelector('.xt-sheet', { timeout: 3000 }); await p.waitForTimeout(300);
+      await p.evaluate(() => document.getElementById('b-set').click()); await p.waitForSelector('.xt-sheet', { timeout: 3000 }); await p.waitForTimeout(300);
       const rows = await p.$$eval('.xt-sheet .xt-row', (r) => r.map((x) => x.textContent.trim()));
       ok(rows.some((t) => t.startsWith('소리')) && rows.some((t) => t.startsWith('큰 글씨')) && rows.some((t) => t.startsWith('통계')), name + ' 설정 줄: ' + rows.map((t) => t.slice(0, 6)).join('|'));
       await p.screenshot({ path: path.join(__dirname, '..', 'notes', 'snapshots', '2026-10-08_extras_' + name.slice(0, 1) + '_set.png') });
       // 큰 글씨
-      const sw = await p.$$('.xt-sheet .xt-row .uk-switch'); await sw[2].click().catch(() => {}); await p.waitForTimeout(150);
-      ok(await p.evaluate(() => document.documentElement.dataset.big === '1'), name + ' 큰 글씨 켜짐'); await sw[2].click().catch(() => {}); await p.waitForTimeout(150); ok(await p.evaluate(() => document.documentElement.dataset.big === '0'), name + ' 큰 글씨 꺼짐');
+      const swOf = async (label) => { const rows = await p.$$('.xt-sheet .xt-row'); for (const r of rows) { if ((await r.textContent()).trim().startsWith(label)) return r.$('.uk-switch'); } return null; };
+      const big = await swOf('큰 글씨'); await big.click(); await p.waitForTimeout(150);
+      ok(await p.evaluate(() => document.documentElement.dataset.big === '1'), name + ' 큰 글씨 켜짐'); await big.click(); await p.waitForTimeout(150); ok(await p.evaluate(() => document.documentElement.dataset.big === '0'), name + ' 큰 글씨 꺼짐');
+      // 진동(성인 앱만, 설정에서 끌 수 있음)
+      await p.evaluate(() => { window.__v = 0; navigator.vibrate = () => { window.__v++; return true; }; });
+      await p.evaluate(() => GF.sfx('drop')); const v1 = await p.evaluate(() => window.__v); const vsw = await swOf('진동');
+      if (vsw) { await vsw.click(); await p.waitForTimeout(150); await p.evaluate(() => { window.__v = 0; GF.sfx('drop'); }); const v2 = await p.evaluate(() => window.__v); ok(v1 >= 1 && v2 === 0, name + ' 진동: 켜면 울리고(' + v1 + ') 끄면 안 울림(' + v2 + ')'); await vsw.click(); await p.waitForTimeout(100); } else ok(false, name + ' 진동 토글 없음');
       // 통계
       const stBtn = (await p.$$('.xt-sheet .xt-row .xt-btn'))[0]; await stBtn.click(); await p.waitForTimeout(300);
       const stats = await p.$$eval('.xt-sheet .xt-row', (r) => r.length); ok(stats >= 2, name + ' 통계 줄 ' + stats);
@@ -45,6 +50,7 @@ const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
       ok(await p.evaluate(() => { GF.ads.config.adFree = true; let g = 0; GF.ads.reward('undo', () => { g++; }); return g === 1; }), name + ' 광고 제거 구매자는 광고 없이 바로 보상');
     } else {
       ok(!(await p.$('#b-set')), name + ' 유아 앱엔 ⚙ 없음');
+      ok(await p.evaluate(() => { window.__v = 0; navigator.vibrate = () => { window.__v++; return true; }; GF.sfx('ok'); GF.sfx('drop'); return window.__v === 0; }), name + ' 유아 앱은 진동 없음(권한 0)');
       ok(await p.evaluate(() => { GF.ads.config.enabled = true; return !GF.ads.available('rewarded') && !GF.ads.available('interstitial'); }), name + ' 유아 앱은 광고 설정과 무관하게 항상 차단');
       // 보호자 메뉴: 제목 길게(① 은 로고, 그 외 .uk-title) → 구구단 잠금
       const opened = await p.evaluate(async () => { const t = document.querySelector('.uk-title, .hometitle'); if (!t) return 'notitle'; const r = t.getBoundingClientRect(); return JSON.stringify({ x: r.left + r.width / 2, y: r.top + r.height / 2 }); });

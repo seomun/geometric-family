@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 성인 앱만: 판 손맛용 짧은 진동(설정에서 끌 수 있음). 유아 앱(play·color·day)은 이 권한이 없다(권한 0). -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+</manifest>

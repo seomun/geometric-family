@@ -26,7 +26,7 @@
     const lines = wrap(S.line, 17).map((l, i) => `<text x="160" y="${252 + i * 20}" font-size="15" font-weight="700" text-anchor="middle" fill="#3A2E39">${l}</text>`).join('');
     return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><rect width="${W}" height="${H}" rx="26" fill="${T.bg}"/><rect x="8" y="8" width="${W - 16}" height="${H - 16}" rx="20" fill="none" stroke="${T.color}" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/>`
       + `<text x="160" y="34" font-size="14" font-weight="800" text-anchor="middle" fill="${T.color}">당신은 어느 도형인가요?</text><image href="${GF.src(T.char)}" x="95" y="46" width="130" height="150" preserveAspectRatio="xMidYMid meet"/>`
-      + `<text x="160" y="226" font-size="26" font-weight="900" text-anchor="middle" fill="${T.color}">${S.n}</text>${lines}${bars}<text x="160" y="426" font-size="11" font-weight="700" text-anchor="middle" fill="#7a6f84">기하학 가족 · ${title}</text></svg>`;
+      + `<text x="160" y="226" font-size="26" font-weight="900" text-anchor="middle" fill="${T.color}">${S.n}</text>${lines}${bars}<text x="160" y="426" font-size="11" font-weight="700" text-anchor="middle" fill="#7a6f84">기하학 가족 · ${title}</text>${res.stk ? '<text x="262" y="70" font-size="44">⭐</text><text x="58" y="70" font-size="30">✨</text>' : ''}</svg>`;
   }
   async function savePNG(res, title) {   // 결과 이미지 저장: 기기 안에서 PNG 로 만들어 내려받기(서버·SNS SDK 없음)
     const svg = cardSVG(res, title), img = new Image(); img.src = uri(svg); await img.decode(); const c = document.createElement('canvas'); c.width = 640; c.height = 880; c.getContext('2d').drawImage(img, 0, 0, 640, 880);
@@ -95,6 +95,9 @@
       const acts = el('div', 'qz-acts', r);
       UK.btn({ text: '이미지 저장', icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, t.title); GF.sfx('star'); UK.toast('이미지로 저장했어요', r); } catch (e) { GF.sfx('hmm'); UK.toast('저장하지 못했어요', r); } } }, acts);
       UK.btn({ text: '집에 걸기', icon: 'home', cls: 'dong', onclick: () => GF.go('qhouse') }, acts);
+      const stk = () => GF.ads && GF.ads.run({ placement: 'cardsticker', onReward: () => { res.stk = 1; save(); im.src = uri(cardSVG(res, t.title)); GF.sfx('star'); } });
+      if (!res.stk && GF.ads && GF.ads.eligible()) { const sb = UK.btn({ text: '광고 보고 스티커', icon: 'star', cls: 'sky', onclick: () => { stk(); sb.style.display = 'none'; } }, acts); }
+      QZ.debug.adCard = stk;
     },
   });
   GF.screen('qcard', {

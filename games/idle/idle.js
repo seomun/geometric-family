@@ -171,7 +171,7 @@
   function welcomeBack(parent, w) {
     const hrs = w.ms / 3600000, cap = w.capped;
     const acts = [{ text: '받았어요', onclick: () => GF.sfx('star') }];
-    if (IDLE.hooks.adAvailable()) acts.push({ text: '광고 보고 2배 받기', cls: 'dong', keep: true, onclick: () => IDLE.hooks.rewardedAd('offline2x', (ok) => { if (ok) S.w += w.gained; }) });
+    if (IDLE.hooks.adAvailable()) acts.push({ text: '광고 보고 2배 받기', cls: 'dong', onclick: () => IDLE.hooks.rewardedAd('offline2x', (ok) => { if (ok) { S.w += w.gained; S.tot += w.gained; save(); } }) });
     UK.modal({ parent, title: '다녀오셨어요?', body: (hrs >= 1 ? Math.floor(hrs) + '시간 ' + Math.floor((hrs % 1) * 60) + '분' : Math.max(1, Math.floor(w.ms / 60000)) + '분') + ' 동안' + (cap ? ' (최대 8시간)' : '') + ' 식탁이 데워졌어요.', big: '+' + fmt(w.gained) + ' 온기', actions: acts });
     GF.sfx('celebrate');
   }
@@ -191,7 +191,7 @@
       const rows = el('div', '', list);
       // 식탁 넓히기
       const up = el('div', 'panel2', list); const upb = el('button', 'uk-btn', up); upb.style.cssText += ';position:static;width:100%;height:64px;background:' + Rbtn(t);
-      const upd = () => { const c = tlCost(t); upb.innerHTML = `식탁 넓히기 Lv${S.tl[t]} → Lv${S.tl[t] + 1} <small style="font-size:18px">(×${B.tableLevel.mult}) ${fmt(c)}</small>`; upb.disabled = S.w < c || S.tl[t] >= B.tableLevel.max; };
+      const upd = () => { const c = tlCost(t); upb.innerHTML = `식탁 넓히기 Lv${S.tl[t]} → Lv${S.tl[t] + 1} <small style="font-size:calc(18px * var(--uk-fs-k, 1))">(×${B.tableLevel.mult}) ${fmt(c)}</small>`; upb.disabled = S.w < c || S.tl[t] >= B.tableLevel.max; };
       upb.onclick = () => { const c = tlCost(t); if (S.w < c) return; S.w -= c; S.tl[t]++; GF.sfx('star'); GF.burst(sc, 180, 300, 14); renderAll(); IDLE.hooks.event('tableLevel', { t, lv: S.tl[t] }); };
       const rowEls = [];
       function renderAll() { rebuildScene(); special.innerHTML = ''; rows.innerHTML = ''; rowEls.length = 0; buildSpecial(); buildRows(); }
@@ -299,7 +299,7 @@
       sb.onclick = () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); sUp(); };
       const rb = el('button', 'uk-btn', set, '처음부터 다시'); rb.style.cssText += ';position:static;width:100%;background:#B04040'; let armed = false;
       rb.onclick = () => { if (!armed) { armed = true; rb.textContent = '정말요? 한 번 더 누르면 지워져요'; setTimeout(() => { armed = false; rb.textContent = '처음부터 다시'; }, 3000); return; } S = fresh(); save(); GF.stack = []; GF.go('itable'); };
-      el('p', '', set, '버전 0.1 (MVP 1주차) · 기기 안에만 저장돼요').style.cssText = 'font-size:18px;color:#5B4F60;margin-top:8px';
+      el('p', '', set, '버전 0.1 (MVP 1주차) · 기기 안에만 저장돼요').style.cssText = 'font-size:calc(18px * var(--uk-fs-k, 1));color:#5B4F60;margin-top:8px';
     },
   });
 
@@ -367,6 +367,8 @@
       Object.keys(S.pr || {}).forEach((id) => { if (Room.item(id)) Room.grant(id); });   // 예전 저장(S.pr)을 집으로 옮긴다
       checkProps(); UI.toastOk = true; S.last = S.last || Date.now();
       const o = offline(); if (o && o.gained > 0) UI.welcome = o;
+      IDLE.hooks.adAvailable = () => GF.ads.eligible();
+      IDLE.hooks.rewardedAd = (placement, cb) => { if (!GF.ads.run({ placement, onReward: () => cb && cb(true) })) cb && cb(false); };
       GF.extras.init({ app: 'idle', kid: false, rewardSet: 'kitchen', stats: () => [['본 사연', Object.keys(S.sd).length + ' / ' + ST.stories.length], ['식탁 단계', ['nemo', 'semo', 'dong'].map((k) => S.tl[k]).join(' · ')], ['의자', S.chairs]],
         badges: [{ id: 's1', icon: '📖', name: '첫 사연', desc: '사연 1편', ok: () => Object.keys(S.sd).length >= 1 }, { id: 's10', icon: '📚', name: '열 편', desc: '사연 10편', ok: () => Object.keys(S.sd).length >= 10 }, { id: 's30', icon: '👑', name: '서른 편', desc: '사연을 모두 봤어요', ok: () => Object.keys(S.sd).length >= ST.stories.length }, { id: 'c2', icon: '🪑', name: '의자가 늘었어요', desc: '의자 2개 이상', ok: () => S.chairs >= 2 }],
         resetTips: () => {}, reset: () => { S = fresh(); save(); } });

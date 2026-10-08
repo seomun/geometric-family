@@ -39,6 +39,7 @@
   const blank = () => ({ v: 2, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x, { v: 2 }); } catch (e) {} return blank(); })();
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(SV)); } catch (e) {} };
+  const bonusShard = () => { SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it) Room.grant(it); } save(); GF.refreshBar(); };   // 오늘의 한 판 조각 한 번 더(보상형)
   const totalStars = () => Object.values(SV.stars).reduce((a, b) => a + b, 0);
   const unlocked = (n) => n === 1 || SV.stars[n - 1] > 0 || !!MG.unlockAll;
   let D, X, roomOK = false;
@@ -115,13 +116,13 @@
     bare: false,
     enter(r, p) {
       r.classList.add('uk', 'mg'); GF.bg('indoor2', r);   // 플레이 화면은 창문 없는 배경(HUD 가독)
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:514px;left:24px;right:24px;padding:6px 12px;font-size:18px'; return t; };   // 토스트는 판 아래·조각 줄 위
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:514px;left:24px;right:24px;padding:6px 12px;font-size:calc(18px * var(--uk-fs-k, 1))'; return t; };   // 토스트는 판 아래·조각 줄 위
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hintCell = null; const gained = [];
       if (!p.level) { SV.last = LV.id; save(); }
       bar();
       const hd = el('div', 'mg-hd', r), leftChip = el('span', 'uk-chip mg-left', r), goals = el('div', 'mg-goals', r), board = el('div', 'mg-board', r), dock = el('div', 'mg-dock', r), tip = el('div', 'uk-caption mg-tip', r);
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
-      hd.innerHTML = `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type && LV.type !== 'make' ? `<em class="mg-type">${D.types[LV.type]}</em>` : '');
+      hd.innerHTML = `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type && LV.type !== 'make' ? `<em class="mg-type">${D.types[LV.type]}</em>` : '');
       const finalRows = LV.rows + (LV.moveAt ? 1 : 0), cs = Math.max(48, Math.min(76, Math.floor(Math.min(336 / LV.cols, 330 / finalRows))));
       let cells = [];
       function buildBoard() {
@@ -171,7 +172,8 @@
         });
         setTimeout(() => { busy = false; draw(); if (M.won(S)) finish(); else if (M.lost(S)) lose(); }, t + slow(520));
       }
-      function undo() { if (!hist.length || busy || undone >= 1) { if (undone >= 1) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hintCell = null; GF.sfx('tap'); buildBoard(); draw(); }
+      function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: '되돌리기 1번 더', parent: r, onReward: () => { undone = 0; undo(); } }); }
+      function undo() { if (!hist.length || busy || undone >= 1) { if (undone >= 1 && !offerUndo()) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hintCell = null; GF.sfx('tap'); buildBoard(); draw(); }
       function hint() { if (busy) return; const c = M.candidates(S, 1); if (!c.length) return; hintCell = c[0]; GF.sfx('pick'); draw(); }
       /* 끌어서 놓기: 지금 조각을 잡아 빈 칸 위에서 놓는다(탭도 그대로 동작) */
       cur.addEventListener('pointerdown', (e) => {
@@ -182,6 +184,7 @@
         window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
       });
       function result(stars) {
+        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }]; if (M.left(S) > 0) chips.push({ icon: 'gift', text: '남은 조각 ' + M.left(S) }); gained.forEach((id) => chips.push({ icon: 'home', text: NAME[id] || (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('mplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
@@ -200,7 +203,7 @@
         }, 650);
       }
       function lose() { busy = true; say('한 번 더!'); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
-      MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
+      MG.debug.adOffer = () => offerUndo(); MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
       buildBoard(); draw(); showTip();
       if (!LV.kind && LV.id <= 2 && !hist.length) setTimeout(() => { const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }, 1200);   // 처음 두 판: 첫 칸을 손가락이 알려 준다
     },

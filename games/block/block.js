@@ -24,6 +24,7 @@
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x); } catch (e) {} return blank(); })();
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(SV)); } catch (e) {} };
+  const bonusShard = () => { SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it) Room.grant(it); } save(); GF.refreshBar(); };   // 오늘의 한 판 조각 한 번 더(보상형)
   const totalStars = () => Object.values(SV.stars).reduce((a, b) => a + b, 0);
   const unlocked = (n) => n === 1 || SV.stars[n - 1] > 0 || !!BK.unlockAll;
   let D, X, roomOK = false;
@@ -102,12 +103,12 @@
     bare: false,
     enter(r, p) {
       r.classList.add('uk', 'bk'); GF.bg('indoor2', r);
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:150px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;z-index:30;pointer-events:none'; return t; };   // 안내는 판 위 목표 칩 줄에 잠깐 뜬다(판·조각을 덮지 않게)
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:150px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));z-index:30;pointer-events:none'; return t; };   // 안내는 판 위 목표 칩 줄에 잠깐 뜬다(판·조각을 덮지 않게)
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hint = null, sel = -1, streak = 0; const gained = [];
       if (!p.level) { SV.last = LV.id; save(); }
       bar();
       const title = LV.kind === 'endless' ? '끝없이' : LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
-      el('div', 'bk-hd', r, `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'lines' ? `<em class="bk-type">${D.types[LV.type]}</em>` : ''));
+      el('div', 'bk-hd', r, `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'lines' ? `<em class="bk-type">${D.types[LV.type]}</em>` : ''));
       const goals = el('div', 'bk-goals', r), board = el('div', 'bk-board', r), tray = el('div', 'bk-tray', r), tip = el('div', 'uk-caption bk-tip', r), btns = el('div', 'bk-btns2', r);
       const cs = 36, gap = 2, pitch = cs + gap; board.style.width = board.style.height = N * pitch + gap + 'px';
       const cells = []; for (let i = 0; i < 64; i++) { const c = el('button', 'bk-cell', board); c.dataset.i = i; c.style.cssText = `left:${(i % N) * pitch + gap}px;top:${((i / N) | 0) * pitch + gap}px;width:${cs}px;height:${cs}px`; c.setAttribute('aria-label', '칸 ' + (i + 1)); cells.push(c); }
@@ -160,7 +161,8 @@
         setTimeout(() => { busy = false; draw(); if (M.won(S)) finish(); else if (M.lost(S)) lose(); }, slow(ev.cleared.length ? 480 : 120));
         return true;
       }
-      function undo() { if (!hist.length || busy || undone >= 1) { if (undone >= 1) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hint = null; streak = 0; GF.sfx('tap'); draw(); }
+      function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: '되돌리기 1번 더', parent: r, onReward: () => { undone = 0; undo(); } }); }
+      function undo() { if (!hist.length || busy || undone >= 1) { if (undone >= 1 && !offerUndo()) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hint = null; streak = 0; GF.sfx('tap'); draw(); }
       function showHint() {
         if (busy) return;
         // 지금 판 상태에서 이길 수 있는 첫 수를 찾기 어렵다 → 놓을 수 있는 수 중 가장 많이 지우는 수를 보여 준다
@@ -187,6 +189,7 @@
       // 탭으로도 놓을 수 있다: 조각을 누르면 선택, 판의 칸을 누르면 그 칸이 조각의 왼쪽 위
       cells.forEach((c, i) => { c.onclick = () => { if (sel >= 0 && S.tray[sel]) doPlace(sel, (i / N) | 0, i % N); else GF.sfx('tap'); }; });
       function result(stars) {
+        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'gift', text: '조각 ' + S.used + '개' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('bplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
@@ -211,7 +214,7 @@
           setTimeout(() => { const m = UK.modal({ title: isBest ? '새 최고 기록!' : '끝!', big: String(sc), chips: [{ icon: 'star', text: '최고 ' + e.best }, { icon: 'gift', text: '조각 ' + S.used + '개' }, { icon: 'info', text: '지운 줄 ' + S.got.lines }], parent: r, actions: [{ text: '한 번 더', cls: 'green', icon: 'replay', onclick: () => GF.replace('bplay', { level: G.makeEndless(Date.now() % 100000) }) }, { text: '처음으로', cls: 'ghost', icon: 'home', onclick: () => GF.home2() }] }); UK.confetti(m); }, slow(500)); return;
         }
         busy = true; say(LV.lim != null && S.used >= LV.lim ? '조각을 다 썼어요! 한 번 더' : '놓을 자리가 없어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
-      BK.debug.cells = () => cells; BK.debug.endScore = () => endScore(S); BK.debug.place = (slot, r0, c0) => doPlace(slot, r0, c0); BK.debug.state = () => S; BK.debug.level = () => LV; BK.debug.undo = undo; BK.debug.hint = showHint; BK.debug.busy = () => busy; BK.debug.drag = dragStart;
+      BK.debug.adOffer = () => offerUndo(); BK.debug.cells = () => cells; BK.debug.endScore = () => endScore(S); BK.debug.place = (slot, r0, c0) => doPlace(slot, r0, c0); BK.debug.state = () => S; BK.debug.level = () => LV; BK.debug.undo = undo; BK.debug.hint = showHint; BK.debug.busy = () => busy; BK.debug.drag = dragStart;
       if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '조각을 끌어다 판에 놓아요' : '줄이 가득 차면 지워져요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';

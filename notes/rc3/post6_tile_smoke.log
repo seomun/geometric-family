@@ -1,0 +1,29 @@
+OK   홈 글자 크기 17px 이상 
+OK   레벨 목록 120개(처음엔 1만 열림)
+OK   레벨 1 클리어(pair, 타일 12)
+OK   레벨 2 클리어(pair, 타일 12)
+OK   레벨 3 클리어(classic, 타일 12)
+OK   레벨 4 클리어(classic, 타일 33)
+OK   레벨 5 클리어(classic, 타일 27)
+OK   레벨 6 클리어(goal, 타일 27)
+OK   레벨 7 클리어(lock, 타일 33)
+OK   레벨 8 클리어(narrow, 타일 21)
+OK   레벨 9 클리어(trio, 타일 36)
+OK   레벨 10 클리어(classic, 타일 27)
+OK   레벨 10 까지 마당 살림 소품 4개
+OK   레벨 11 클리어(classic, 타일 36)
+OK   레벨 12 클리어(goal, 타일 30)
+OK   가려진 타일은 눌러도 바구니에 안 들어감
+OK   실제 클릭으로 타일이 바구니에 들어감
+OK   되돌리기(1회)
+OK   섞기(무료 1회)
+OK   힌트: 누를 수 있는 타일이 깜빡임
+OK   바구니가 가득 차면 벌 없이 즉시 새 판(한 번 더)
+OK   판 종류 6종: pair,classic,goal,lock,narrow,trio
+OK   오늘의 한 판 클리어(classic)
+OK   세 가족 판(네모) 클리어(classic)
+OK   세 가족 판(세모) 클리어(classic)
+OK   세 가족 판(동그라미) 클리어(classic)
+OK   시즌 판 클리어(classic)
+OK   콘솔 오류 없음 
+ALL PASS

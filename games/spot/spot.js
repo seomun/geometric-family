@@ -46,6 +46,7 @@
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x); } catch (e) {} return blank(); })();
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(SV)); } catch (e) {} };
+  const bonusShard = () => { SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it) Room.grant(it); } save(); GF.refreshBar(); };   // 오늘의 한 판 조각 한 번 더(보상형)
   const totalStars = () => Object.values(SV.stars).reduce((a, b) => a + b, 0);
   const unlocked = (n) => n === 1 || SV.stars[n - 1] > 0 || !!SP.unlockAll;
   let D, X;
@@ -110,9 +111,9 @@
     enter(r, p) {
       r.classList.add('uk', 'sp'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;z-index:30;pointer-events:none'; return t; };
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));z-index:30;pointer-events:none'; return t; };
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
-      el('div', 'sp-hd', r, `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'diff' ? `<em class="sp-type">${D.types[LV.type]}</em>` : ''));
+      el('div', 'sp-hd', r, `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'diff' ? `<em class="sp-type">${D.types[LV.type]}</em>` : ''));
       const goals = el('div', 'sp-goals', r), area = el('div', 'sp-area', r), btns = el('div', 'sp-btns2', r), tip = el('div', 'sp-tip', r);
       let ri = 0, found = LV.rounds.map((R) => R.diffs.map(() => false)), wrong = 0, hints = 0, busy = false, phase = LV.type === 'memory' ? 'study' : 'find', zoomed = LV.type === 'zoom', hintIdx = -1, total = 0;
       const R0 = () => LV.rounds[ri], foundN = () => found.flat().filter(Boolean).length;
@@ -156,6 +157,8 @@
         if (busy || phase !== 'find') return; const R = R0(), i = found[ri].findIndex((f) => !f); if (i < 0) return; hints++; hintIdx = i; GF.sfx('pick'); draw(); setTimeout(() => { if (hintIdx === i) { hintIdx = -1; if (area.isConnected) draw(); } }, slow(3000));
       }
       function result(stars) {
+        if (!LV.kind && hints > 0 && stars < 3 && GF.ads) GF.ads.resultHook = { placement: 'hint2', ask: '힌트 없이 별 다시 세기', onReward: () => { const st2 = C.stars(0, wrong); if (st2 > (SV.stars[LV.id] || 0)) { SV.stars[LV.id] = st2; save(); GF.refreshBar(); } } };
+        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '힌트 ' + hints }, { icon: 'gift', text: '틀린 탭 ' + wrong }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('pplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('pplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
@@ -174,7 +177,7 @@
           else result(st);
         }, slow(650));
       }
-      SP.debug.level = () => LV; SP.debug.tap = (x, y) => { const R = R0(), fake = { clientX: 180, clientY: 300 }; tapAt(x, y, fake); }; SP.debug.round = () => ri; SP.debug.state = () => ({ ri, found, wrong, hints, phase, zoomed }); SP.debug.hint = hint; SP.debug.busy = () => busy; SP.debug.seen = () => { phase = 'find'; draw(); };
+      SP.debug.adOffer = () => { hints = Math.max(hints, 2); result(1); }; SP.debug.level = () => LV; SP.debug.tap = (x, y) => { const R = R0(), fake = { clientX: 180, clientY: 300 }; tapAt(x, y, fake); }; SP.debug.round = () => ri; SP.debug.state = () => ({ ri, found, wrong, hints, phase, zoomed }); SP.debug.hint = hint; SP.debug.busy = () => busy; SP.debug.seen = () => { phase = 'find'; draw(); };
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '위아래 그림에서 다른 곳을 눌러요' : '못 찾겠으면 힌트를 눌러요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));

@@ -35,6 +35,7 @@
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x); } catch (e) {} return blank(); })();
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(SV)); } catch (e) {} };
+  const bonusShard = () => { SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it) Room.grant(it); } save(); GF.refreshBar(); };   // 오늘의 한 판 조각 한 번 더(보상형)
   const totalStars = () => Object.values(SV.stars).reduce((a, b) => a + b, 0);
   const unlocked = (n) => n === 1 || SV.stars[n - 1] > 0 || !!TL.unlockAll;
   let D, X;
@@ -99,9 +100,9 @@
     enter(r, p) {
       r.classList.add('uk', 'tl'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:18px;white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
-      el('div', 'tl-hd', r, `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'classic' ? `<em class="tl-type">${D.types[LV.type]}</em>` : ''));
+      el('div', 'tl-hd', r, `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'classic' ? `<em class="tl-type">${D.types[LV.type]}</em>` : ''));
       TL._ch = typeof LV.chapter === 'number' ? LV.chapter : 1; let S = C.newGame(LV), hist = [], busy = false, hintI = -1, streak = 0; const gained = [], rng = G.mulberry(LV.id === 'daily' ? 5 : (typeof LV.id === 'number' ? LV.id : 9) * 13 + 7);
       const goals = el('div', 'tl-goals', r), boardW = el('div', 'tl-boardw', r), board = el('div', 'tl-board', boardW), trayW = el('div', 'tl-trayw', r), btns = el('div', 'tl-btns2', r), tip = el('div', 'tl-tip', r);
       const u = 27; board.style.width = G.GW * u + 'px'; board.style.height = G.GH * u + 'px';   // 타일 한 변 = 54(화면 폭 360 기준 15%, 실제 기기에서 56dp 안팎 이상)
@@ -134,10 +135,13 @@
         } else streak = 0;
         if (S.won) { busy = true; setTimeout(finish, slow(700)); } else if (ev.lose || C.lost(S)) { busy = true; setTimeout(lose, slow(500)); }
       }
-      function undo() { if (busy || !hist.length || S.used.undo >= 1) { if (S.used.undo >= 1) say('되돌리기는 한 판 한 번'); return; } const u0 = S.used.undo + 1, sh = S.used.shuffle, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.shuffle = sh; S.used.hint = hn; hist = []; hintI = -1; streak = 0; TL._new = false; GF.sfx('tap'); draw(); }
-      function doShuffle() { if (busy || S.won || S.used.shuffle >= 1) { if (S.used.shuffle >= 1) say('섞기는 한 판 한 번'); return; } if (C.shuffle(S, rng)) { S.used.shuffle++; hist = []; hintI = -1; GF.sfx('star'); draw(); say('다시 섞었어요'); } }
+      function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: '되돌리기 1번 더', parent: r, onReward: () => { S.used.undo = 0; say('한 번 더 되돌릴 수 있어요'); draw(); } }); }
+      function offerShuffle() { return GF.ads && GF.ads.offer({ placement: 'extra', ask: '섞기 1번 더', parent: r, onReward: () => { S.used.shuffle = 0; doShuffle(); } }); }
+      function undo() { if (busy || !hist.length || S.used.undo >= 1) { if (S.used.undo >= 1 && !offerUndo()) say('되돌리기는 한 판 한 번'); return; } const u0 = S.used.undo + 1, sh = S.used.shuffle, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.shuffle = sh; S.used.hint = hn; hist = []; hintI = -1; streak = 0; TL._new = false; GF.sfx('tap'); draw(); }
+      function doShuffle() { if (busy || S.won || S.used.shuffle >= 1) { if (S.used.shuffle >= 1 && !offerShuffle()) say('섞기는 한 판 한 번'); return; } if (C.shuffle(S, rng)) { S.used.shuffle++; hist = []; hintI = -1; GF.sfx('star'); draw(); say('다시 섞었어요'); } }
       function hint() { if (busy || S.won) return; const i = C.hintTile(S); if (i < 0) return; S.used.hint++; hintI = i; GF.sfx('pick'); draw(); setTimeout(() => { if (hintI === i) { hintI = -1; if (board.isConnected) draw(); } }, slow(2600)); }
       function result(stars) {
+        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const tools = S.used.undo + S.used.shuffle + S.used.hint, chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '도움 ' + tools + '번' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('tplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
@@ -156,7 +160,7 @@
         }, slow(650));
       }
       function lose() { busy = true; GF.extras && GF.extras.resumeClear(); say('가득 찼어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
-      TL.debug.level = () => LV; TL.debug.state = () => S; TL.debug.press = (i) => tap(i); TL.debug.undo = undo; TL.debug.shuffle = doShuffle; TL.debug.hint = hint; TL.debug.busy = () => busy; TL.debug.tiles = () => tiles;
+      TL.debug.adOffer = () => offerUndo(); TL.debug.level = () => LV; TL.debug.state = () => S; TL.debug.press = (i) => tap(i); TL.debug.undo = undo; TL.debug.shuffle = doShuffle; TL.debug.hint = hint; TL.debug.busy = () => busy; TL.debug.tiles = () => tiles;
       if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '눌러서 바구니에 모아요' : '같은 그림이 모이면 톡!'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';

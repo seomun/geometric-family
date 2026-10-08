@@ -6,6 +6,7 @@ let bad = 0;
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
   for (const [nm, url, screens] of APPS) {
     const pg = await (await b.newContext({ viewport: { width: 360, height: 700 } })).newPage(); await pg.goto('http://localhost:8765/games/' + url + '?x'); await pg.waitForTimeout(1500);
+    if (process.env.BIG) await pg.evaluate(() => { GF.state.settings.big = 1; document.documentElement.dataset.big = '1'; });   // BIG=1: 큰 글씨 켠 상태로 점검
     for (const sc of screens) {
       const [name, params] = Array.isArray(sc) ? sc : [sc]; await pg.evaluate(([n, p]) => { GF.stack = []; GF.go(n, p || {}); }, [name, params]); await pg.waitForTimeout(700);
       const r = await pg.evaluate(() => [...document.querySelectorAll('.screen.on .uk-btn')].filter((e) => e.offsetParent).map((e) => { const tw = document.createTreeWalker(e, NodeFilter.SHOW_TEXT), tops = new Set(); let right = 0, txt = ''; const small = (n) => n.parentElement && n.parentElement.closest('small, i'); while (tw.nextNode()) { const n = tw.currentNode; if (!n.textContent.trim() || small(n)) continue; txt += n.textContent.trim(); const rg = document.createRange(); rg.selectNodeContents(n); [...rg.getClientRects()].filter((q) => q.width > 2 && q.height > 4).forEach((q) => { tops.add(Math.round(q.top / 8)); right = Math.max(right, q.right); }); } const br = e.getBoundingClientRect(); return { t: txt.slice(0, 14), lines: tops.size, over: right > br.right + 1 }; }).filter((x) => x.t && (x.lines > 1 || x.over)));

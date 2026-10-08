@@ -93,12 +93,12 @@
   R.open = function (boardId, tab) {
     if (!R.ready) return; const b = R.cfg.boards[boardId]; tab = tab || 'day';
     const sc = UK.modal({ title: b.title + ' 순위표', dismiss: true, parent: document.getElementById('safe') }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet', 'rk-sheet');
-    const tabs = el('div', 'rk-tabs', sh), body = el('div', 'rk-body', sh), acts = el('div', 'acts row', sh); UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.close() }, acts);
+    const tabs = el('div', 'rk-tabs', sh), body = el('div', 'rk-body', sh), note = el('small', 'xt-note rk-note', sh), acts = el('div', 'acts row', sh); UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.close() }, acts);
     const draw = (t) => {
-      tabs.innerHTML = ''; body.innerHTML = ''; [['day', '오늘'], ['week', '이번 주'], ['mine', '내 기록']].forEach(([k, n]) => { const x = el('button', 'rk-tab' + (k === t ? ' on' : ''), tabs, n); x.onclick = () => { GF.sfx('tap'); draw(k); }; });
+      tabs.innerHTML = ''; body.innerHTML = ''; note.textContent = ''; [['day', '오늘'], ['week', '이번 주'], ['mine', '내 기록']].forEach(([k, n]) => { const x = el('button', 'rk-tab' + (k === t ? ' on' : ''), tabs, n); x.onclick = () => { GF.sfx('tap'); draw(k); }; });
       if (t === 'mine') { const top = (load().top[boardId]) || []; if (!top.length) el('p', 'xt-p', body, '아직 기록이 없어요.'); top.forEach((r, i) => { const d = el('div', 'rk-row' + (i === 0 ? ' first' : ''), body); el('b', 'rk-n', d, (i + 1) + '. ' + String(r.d).replace(/^(\d{4})(\d{2})(\d{2})$/, '$1.$2.$3')); el('span', 'rk-s', d, String(r.s)); }); return; }
       const rows = R.rows(boardId, t), line = R.beatLine(rows, t); if (line) el('div', 'rk-line', body, line);
-      rows.forEach((r) => rowEl(body, r)); el('small', 'xt-note', body, t === 'week' ? '월요일에 새로 시작해요. 한 주 동안 가장 높은 점수로 겨뤄요.' : '네모·세모·동그라미 식구들이 각자 규칙으로 낸 오늘의 점수예요.');
+      rows.forEach((r) => rowEl(body, r)); note.textContent = t === 'week' ? '월요일에 새로 시작해요. 한 주 동안 가장 높은 점수로 겨뤄요.' : '네모·세모·동그라미 식구들이 각자 규칙으로 낸 오늘의 점수예요.';
     };
     draw(tab); return sc;
   };

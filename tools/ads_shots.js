@@ -16,17 +16,14 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
   for (const [name, key, url, go] of APPS) {
-    const ctx = await b.newContext({ viewport: { width: 390, height: 780 } }), p = await ctx.newPage(), errs = [];
-    await p.addInitScript(() => { window.__noResume = true; });
-    p.on('pageerror', (e) => errs.push(e.message)); p.on('console', (m) => m.type() === 'error' && errs.push(m.text()));
-    await p.goto(B + url); await p.waitForTimeout(2000); await p.mouse.click(195, 400).catch(() => {}); await p.waitForTimeout(700);
-    // 꺼짐(기본): 자리가 보이지 않는다
-    await p.evaluate(() => { GF.ads.config.enabled = false; });
+    const errs = [], fresh = async () => { const c = await b.newContext({ viewport: { width: 390, height: 780 } }), q = await c.newPage(); await q.addInitScript(() => { window.__noResume = true; }); q.on('pageerror', (e) => errs.push(e.message)); q.on('console', (m) => m.type() === 'error' && errs.push(m.text())); await q.goto(B + url); await q.waitForTimeout(2000); await q.mouse.click(195, 400).catch(() => {}); await q.waitForTimeout(700); return [c, q]; };
+    // 꺼짐(기본): 자리가 보이지 않는다(새 페이지)
+    let [ctx0, p] = await fresh(); await p.evaluate(() => { GF.ads.config.enabled = false; });
     const kind = await go(p);
     const offBtn = await p.evaluate(() => /광고 보고/.test(document.body.innerText)); ok(!offBtn, name + ' 광고 꺼짐이면 「광고 보고」 문구 없음');
-    await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); });
-    // 켬(테스트 모드)
-    await p.evaluate(() => { GF.ads.config.enabled = true; GF.ads.config.test = true; });
+    await ctx0.close();
+    // 켬(테스트 모드): 또 새 페이지에서 처음부터(화면이 겹쳐 쌓이지 않게)
+    let ctx; [ctx, p] = await fresh(); await p.evaluate(() => { GF.ads.config.enabled = true; GF.ads.config.test = true; });
     await go(p);
     await p.waitForTimeout(500);
     let txt = await p.evaluate(() => document.body.innerText);

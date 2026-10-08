@@ -133,18 +133,19 @@
     return { win: false, moves: [], used: 0 };
   }
   /** 사람 흉내 탐욕(난이도 지표): 놓으면 가장 줄이 많이 지워지는 수, 같으면 구멍이 적은 수. eps 확률로 아무 수 */
-  function greedyRun(L, rng, eps, rule) {
-    const S = newGame(L, rule); let guard = 0;
-    while (!won(S) && !lost(S) && guard++ < 400) {
+  function botPlay(L, rng, eps, rule) {
+    const S = newGame(L, rule); let guard = 0; const cap = L.goal.t === 'endless' ? 900 : 400;
+    while (!won(S) && !lost(S) && guard++ < cap) {
       const ms = moves(S); if (!ms.length) break;
       let pick;
       if (rng() < eps) pick = ms[(rng() * ms.length) | 0];
       else { let best = -1e9; for (const m of ms) { const T = clone(S); const ev = place(T, m[0], m[1], m[2]); const sc = (ev.lines * 50 + ev.stars * 40 + (S.L.goal.t === 'family' ? ev.cleared.filter((i) => S.fam[i] === S.L.goal.f).length * 12 : 0) + (S.L.goal.t === 'junk' ? ev.cleared.filter((i) => S.fam[i] === 9).length * 30 : 0)) + progress(T) * 200 + lineFill(T) * 9 + (S.L.goal.t === 'combo' ? (ev.lines >= 2 ? 400 : 0) + nearLines(T) * 22 : 0) - holes(T) * 5 + rng() * 2; if (sc > best) { best = sc; pick = m; } } }
       place(S, pick[0], pick[1], pick[2]);
     }
-    return won(S);
+    return { won: won(S), used: S.used, lines: S.got.lines, combo: S.got.combo };
   }
+  const greedyRun = (L, rng, eps, rule) => botPlay(L, rng, eps, rule).won;
   const greedyWinRate = (L, runs, rng, eps, rule) => { let w = 0; for (let i = 0; i < runs; i++) if (greedyRun(L, rng, eps == null ? 0.12 : eps, rule)) w++; return w / runs; };
-  const api = { N, PIECES, SIZE, BY_SIZE, newGame, place, moves, anyFit, canAt, won, lost, progress, solve, greedyWinRate, clone, cellsOf, junkLeft, outOfPieces };
+  const api = { N, PIECES, SIZE, BY_SIZE, newGame, place, moves, anyFit, canAt, won, lost, progress, solve, botPlay, greedyWinRate, clone, cellsOf, junkLeft, outOfPieces };
   if (typeof module !== 'undefined') module.exports = api; else root.BlockCore = api;
 })(typeof window !== 'undefined' ? window : globalThis);

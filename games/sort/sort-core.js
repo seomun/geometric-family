@@ -72,19 +72,20 @@
     }
     return null;
   }
-  /** 사람 흉내 탐욕(난이도 지표) */
-  function greedyRun(L, rng, eps, rule) {
+  /** 사람 흉내 탐욕 플레이(난이도 지표·가족 순위표 봇): rule 을 주면 그 가족 규칙으로. 반환 {won, moves} */
+  function botPlay(L, rng, eps, rule) {
     const S = newGame(L, rule), seen = new Set(); let guard = 0;
     while (!S.won && guard++ < 300) {
-      const ms = validMoves(S).filter(([i, j]) => !(S.tubes[j].length === 0 && S.tubes[i].every((x) => x === S.tubes[i][0]))); if (!ms.length) return false;
+      const ms = validMoves(S).filter(([i, j]) => !(S.tubes[j].length === 0 && S.tubes[i].every((x) => x === S.tubes[i][0]))); if (!ms.length) return { won: false, moves: S.moves };
       let pick; if (rng() < eps) pick = ms[(rng() * ms.length) | 0]; else { let best = -1e9; ms.forEach(([i, j]) => { const T = clone(S); move(T, i, j); const k = keyOf(T); const v = sc(T) - (seen.has(k) ? 30 : 0) + rng() * 2; if (v > best) { best = v; pick = [i, j]; } }); }
       move(S, pick[0], pick[1]); seen.add(keyOf(S));
     }
-    return S.won;
+    return { won: S.won, moves: S.moves };
   }
+  const greedyRun = (L, rng, eps, rule) => botPlay(L, rng, eps, rule).won;
   const greedyWinRate = (L, runs, rng, eps, rule) => { let w = 0; for (let i = 0; i < runs; i++) if (greedyRun(L, rng, eps == null ? 0.1 : eps, rule)) w++; return w / runs; };
   /** 힌트: 풀이(빔)의 첫 수 */
   const hint = (S) => { const m = solve(S, 40, 120); return m && m.length ? m[0] : null; };
-  const api = { newGame, clone, addTube, count, canMove, move, isWon, isDone, doneCount, isLocked, mixed, validMoves, scramble, solve, hint, greedyRun, greedyWinRate, top };
+  const api = { newGame, clone, addTube, count, canMove, move, isWon, isDone, doneCount, isLocked, mixed, validMoves, scramble, solve, hint, botPlay, greedyRun, greedyWinRate, top };
   if (typeof module !== 'undefined') module.exports = api; else root.SortCore = api;
 })(typeof window !== 'undefined' ? window : globalThis);

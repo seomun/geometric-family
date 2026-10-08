@@ -88,17 +88,18 @@
     return best;
   }
   /** 사람 흉내 탐욕(난이도 지표) */
-  function greedyRun(L, rng, eps, rule) {
-    const S = newGame(L, rule); let guard = 0;
+  function botPlay(L, rng, eps, rule) {
+    const S = newGame(L, rule); let guard = 0, maxTray = 0;
     while (!S.won && guard++ < 400) {
-      const fr = freeList(S); if (!fr.length) return false; let pick;
+      const fr = freeList(S); if (!fr.length) return { won: false, maxTray, cap: S.cap }; let pick;
       if (rng() < eps) pick = fr[(rng() * fr.length) | 0];
       else { let bs = -1e9; fr.forEach((i) => { const same = trayCount(S, S.kinds[i]), opens = L.tiles.filter((t, j) => !S.gone[j] && j !== i && covers(L.tiles[i], t)).length, rest = S.kinds.filter((k, j) => !S.gone[j] && k === S.kinds[i]).length; const sc = (same >= S.need - 1 ? 100 : same * 18) + opens * 2 + (S.tray.length > S.cap - 3 && !same ? -40 : 0) + (rest >= 3 ? 1 : 0) + rng() * 2; if (sc > bs) { bs = sc; pick = i; } }); }
-      const ev = press(S, pick); if (!ev) return false; if (ev.lose || lost(S)) return false;
+      const ev = press(S, pick); if (!ev) return { won: false, maxTray, cap: S.cap }; maxTray = Math.max(maxTray, S.tray.length); if (ev.lose || lost(S)) return { won: false, maxTray, cap: S.cap };
     }
-    return S.won;
+    return { won: !!S.won, maxTray, cap: S.cap, presses: S.presses };
   }
+  const greedyRun = (L, rng, eps, rule) => botPlay(L, rng, eps, rule).won;
   const greedyWinRate = (L, runs, rng, eps, rule) => { let w = 0; for (let i = 0; i < runs; i++) if (greedyRun(L, rng, eps == null ? 0.12 : eps, rule)) w++; return w / runs; };
-  const api = { UNIT, covers, newGame, clone, isFree, freeList, press, isWon, lost, left, shuffle, hintTile, greedyRun, greedyWinRate, trayCount, removalOrder };
+  const api = { UNIT, covers, newGame, clone, isFree, freeList, press, isWon, lost, left, shuffle, hintTile, botPlay, greedyRun, greedyWinRate, trayCount, removalOrder };
   if (typeof module !== 'undefined') module.exports = api; else root.TileCore = api;
 })(typeof window !== 'undefined' ? window : globalThis);

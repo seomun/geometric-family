@@ -48,7 +48,7 @@
     const ads = GF.ads && GF.ads.config.enabled && !kid;
     el('small', 'xt-note', body, kid ? '이 앱은 이름·사진·위치·기기 정보를 수집하지 않고, 광고와 결제가 없으며, 인터넷에 연결하지 않습니다. 기록은 이 기기 안에만 저장됩니다.' : (ads ? '선택해서 보는 광고가 있어요. 보지 않아도 불이익은 없어요. 기록은 이 기기 안에만 저장돼요.' : '광고·결제·서버·가입 없이 이 기기 안에서만 돌아가요.'));
   }
-  function openStats() { const { body } = sheet('통계'); (X.cfg.stats ? X.cfg.stats() : []).forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); }
+  function openStats() { const { sc, body } = sheet('통계'); (X.cfg.stats ? X.cfg.stats() : []).forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); if (GF.rank && GF.rank.ready) GF.rank.boards().forEach((b) => row(body, b.title + ' 순위표', tbtn('보기', () => { sc.close(); GF.rank.open(b.id); }))); }
 
   /* ---------------- 업적(배지): 보상 압박 없이 모아 보기 ---------------- */
   function earned() { const s = load(); return X.cfg.badges.filter((b) => s.badges.includes(b.id)); }

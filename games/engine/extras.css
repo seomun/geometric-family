@@ -26,3 +26,10 @@ html[data-big="1"][data-uk="adult"] { --uk-fs-k: 1.15; --uk-fs-cap: 21px; --uk-f
 .uk-toast { --uk-fs-k: 1; }
 .mg-hd, .bk-hd, .tl-hd, .sr-hd, .sp-hd, .mg-tip, .bk-tip, .tl-tip, .sr-tip, .sp-tip, .sr-info, .mg-goals, .bk-goals, .tl-goals, .sr-goals, .sp-goals, .tcard { --uk-fs-k: 1; --uk-fs-cap: 18px; --uk-fs-body: 20px; --uk-fs-h: 24px; }
 html[data-big="1"][data-uk="adult"] .uk-toast, html[data-big="1"][data-uk="adult"] .bk-tip, html[data-big="1"][data-uk="adult"] .tl-tip, html[data-big="1"][data-uk="adult"] .sr-tip, html[data-big="1"][data-uk="adult"] .sp-tip, html[data-big="1"][data-uk="adult"] .mg-tip { --uk-fs-cap: 18px; --uk-fs-body: 20px; }
+/* 순위표 */
+.rk-sheet .rk-tabs { display: flex; gap: 6px; margin: 6px 0; } .rk-tab { flex: 1; min-height: 44px; border: 0; border-radius: 22px; background: #fff; box-shadow: var(--uk-sh); font: 900 var(--uk-fs-cap)/1 var(--uk-font); color: var(--uk-ink2); } .rk-tab.on { background: var(--uk-pink, #FF8FA8); color: #fff; }
+.rk-body { display: flex; flex-direction: column; gap: 6px; margin: 4px 0; max-height: 420px; overflow-y: auto; touch-action: pan-y; }
+.rk-row { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 4px 10px; border-radius: 18px; background: #fff; box-shadow: var(--uk-sh); } .rk-row.me { background: #FFF3C2; outline: 3px solid #FFC933; } .rk-row.first .rk-n { color: #C99A00; }
+.rk-a { flex: none; width: 40px; height: 40px; border-radius: 50%; background-color: #FFF6E5; background-size: 175%; background-position: 50% 8%; background-repeat: no-repeat; display: flex; align-items: center; justify-content: center; font-size: 24px; } .rk-a.me { background-image: none !important; box-shadow: 0 0 0 3px #FFC933; }
+.rk-n { flex: 1; text-align: left; font: 900 var(--uk-fs-body)/1.2 var(--uk-font); } .rk-s { font: 900 var(--uk-fs-body)/1 var(--uk-font); color: var(--uk-ink); }
+.rk-line { padding: 8px 12px; border-radius: 16px; background: #DDF6E5; font: 800 var(--uk-fs-cap)/1.3 var(--uk-font); color: #1E6B3A; text-align: center; }

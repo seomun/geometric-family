@@ -36,7 +36,8 @@
 
   /* 공통 판 4종이 만드는 판 */
   const DAILY = ['lines', 'family', 'junk', 'star', 'combo', 'limit', 'solo'];
-  function dailyLevel() { const d = +today(), type = DAILY[dayNum() % 7], L = G.make(8 + (d % 40), d, { type, tag: 'growth', noGreedy: true }); if (L) { L.id = 'daily'; L.kind = 'daily'; } return L; }
+  function dailyLevelAt(d, dn) { dn = dn == null ? dayNum() : dn; const type = DAILY[dn % 7], L = G.make(8 + (d % 40), d, { type, tag: 'growth', noGreedy: true }); if (L) { L.id = 'daily'; L.kind = 'daily'; } return L; }
+  function dailyLevel() { return dailyLevelAt(+today()); }
   const seasonNow = () => X.seasons.filter((s) => s.months.includes(now().getMonth() + 1) || BK.season === s.id);
   const seasonKey = (s) => s.id + ':' + now().getFullYear();
   function seasonLevel(s) { const L = G.make(s.n, s.seed + now().getFullYear(), { type: s.type, tag: 'growth', noGreedy: true }); if (L) { L.id = 'season:' + s.id; L.kind = 'season'; L.season = s; } return L; }
@@ -104,7 +105,7 @@
     enter(r, p) {
       r.classList.add('uk', 'bk'); GF.bg('indoor2', r);
       const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:150px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));z-index:30;pointer-events:none'; return t; };   // 안내는 판 위 목표 칩 줄에 잠깐 뜬다(판·조각을 덮지 않게)
-      const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hint = null, sel = -1, streak = 0; const gained = [];
+      const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hint = null, sel = -1, streak = 0, hintN = 0, rankRes = null; const gained = [];
       if (!p.level) { SV.last = LV.id; save(); }
       bar();
       const title = LV.kind === 'endless' ? '끝없이' : LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
@@ -167,7 +168,7 @@
         if (busy) return;
         // 지금 판 상태에서 이길 수 있는 첫 수를 찾기 어렵다 → 놓을 수 있는 수 중 가장 많이 지우는 수를 보여 준다
         let best = null, bs = -1; M.moves(S).forEach((m) => { const T = M.clone(S), ev = M.place(T, m[0], m[1], m[2]); const sc = ev.lines * 10 + ev.stars * 8 + M.progress(T) * 5; if (sc > bs) { bs = sc; best = m; } });
-        if (!best) return; const t = S.tray[best[0]]; hint = { slot: best[0], cells: M.PIECES[t.p].map(([dr, dc]) => (best[1] + dr) * N + best[2] + dc) }; sel = best[0]; GF.sfx('pick'); draw();
+        if (!best) return; hintN++; const t = S.tray[best[0]]; hint = { slot: best[0], cells: M.PIECES[t.p].map(([dr, dc]) => (best[1] + dr) * N + best[2] + dc) }; sel = best[0]; GF.sfx('pick'); draw();
       }
       /* 끌어서 놓기: 조각을 잡으면 손가락 위쪽에 떠서 따라온다. 놓을 자리가 맞으면 초록, 안 맞으면 빨강 미리 보기 */
       function preview(k, rr, cc) {
@@ -189,6 +190,7 @@
       // 탭으로도 놓을 수 있다: 조각을 누르면 선택, 판의 칸을 누르면 그 칸이 조각의 왼쪽 위
       cells.forEach((c, i) => { c.onclick = () => { if (sel >= 0 && S.tray[sel]) doPlace(sel, (i / N) | 0, i % N); else GF.sfx('tap'); }; });
       function result(stars) {
+        if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'gift', text: '조각 ' + S.used + '개' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
@@ -200,6 +202,7 @@
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
         else if (LV.kind === 'trio') { const key = LV.id.split(':').slice(1).join(':'); SV.trio[key] = Math.max(SV.trio[key] || 0, st); }
+        if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: LV.par, actions: S.used, tools: undone + hintN, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
         save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(); GF.sfx('star');
         setTimeout(() => {
           const story = !LV.kind && LV.id % 10 === 0 && X.stories.find((s) => s.chapter === LV.chapter);   // 사연 판: 장의 마지막 판 뒤에 옛이야기 4컷
@@ -208,10 +211,10 @@
         }, slow(650));
       }
       function lose() {
-        GF.extras && GF.extras.resumeClear();
+        GF.extras && GF.extras.resumeClear(); if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily');
         if (LV.kind === 'endless') {   // 끝없이: 벌 없음. 점수와 최고 기록만 남기고 한 번 더
-          busy = true; const sc = endScore(S), e = SV.endless || (SV.endless = { best: 0, plays: 0 }), isBest = sc > e.best; e.plays++; if (isBest) e.best = sc; save(); GF.extras && GF.extras.check(); GF.sfx(isBest ? 'star' : 'hmm');
-          setTimeout(() => { const m = UK.modal({ title: isBest ? '새 최고 기록!' : '끝!', big: String(sc), chips: [{ icon: 'star', text: '최고 ' + e.best }, { icon: 'gift', text: '조각 ' + S.used + '개' }, { icon: 'info', text: '지운 줄 ' + S.got.lines }], parent: r, actions: [{ text: '한 번 더', cls: 'green', icon: 'replay', onclick: () => GF.replace('bplay', { level: G.makeEndless(Date.now() % 100000) }) }, { text: '처음으로', cls: 'ghost', icon: 'home', onclick: () => GF.home2() }] }); UK.confetti(m); }, slow(500)); return;
+          busy = true; const sc = endScore(S), e = SV.endless || (SV.endless = { best: 0, plays: 0 }), isBest = sc > e.best; e.plays++; if (isBest) e.best = sc; save(); GF.extras && GF.extras.check(); const rr = GF.rank && GF.rank.ready ? GF.rank.record('endless', sc) : null; if (rr) setTimeout(() => GF.rank.announce(rr, r), slow(1500)); GF.sfx(isBest ? 'star' : 'hmm');
+          setTimeout(() => { const m = UK.modal({ title: isBest ? '새 최고 기록!' : '끝!', big: String(sc), chips: [{ icon: 'star', text: '최고 ' + e.best }, { icon: 'gift', text: '조각 ' + S.used + '개' }, { icon: 'info', text: '지운 줄 ' + S.got.lines }], parent: r, actions: [{ text: '한 번 더', cls: 'green', icon: 'replay', onclick: () => GF.replace('bplay', { level: G.makeEndless(Date.now() % 100000) }) }, { text: '순위표', cls: 'sky', icon: 'star', keep: true, onclick: () => GF.rank.open('endless') }, { text: '처음으로', cls: 'ghost', icon: 'home', onclick: () => GF.home2() }] }); UK.confetti(m); }, slow(500)); return;
         }
         busy = true; say(LV.lim != null && S.used >= LV.lim ? '조각을 다 썼어요! 한 번 더' : '놓을 자리가 없어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
       BK.debug.adOffer = () => offerUndo(); BK.debug.cells = () => cells; BK.debug.endScore = () => endScore(S); BK.debug.place = (slot, r0, c0) => doPlace(slot, r0, c0); BK.debug.state = () => S; BK.debug.level = () => LV; BK.debug.undo = undo; BK.debug.hint = showHint; BK.debug.busy = () => busy; BK.debug.drag = dragStart;
@@ -237,6 +240,10 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'block_levels', 'block_extra', 'room_items', 'art_slots'], storeKey: 'gf:block:ui:v1', async start() {
       D = GF.data.block_levels; X = GF.data.block_extra;
       Room.init({ data: GF.data.room_items, game: 'block', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      GF.rank.init({ app: 'block', boards: {
+        daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { const r = M.botPlay(L, rng, eps, rule); return { won: r.won, score: GF.rank.eff({ par: L.par, actions: r.used, tools: 0, attempts: 1 }) }; } },
+        endless: { title: '끝없이', levelAt: null, bot: (L, rule, rng, eps, date) => { const E = G.makeEndless(date % 100000); if (rule === 0) E.lim = 60 + ((rng() * 30) | 0); else if (rule === 2) E.lim = 120 + ((rng() * 40) | 0);   // 네모는 꾸준히 중간쯤에서, 동그라미는 오래, 세모는 한계 없이(들쭉날쭉)
+          const r = M.botPlay(E, rng, eps, rule); return { won: true, score: r.lines * 10 + r.combo * 10 + r.used }; } } } });
       GF.extras.init(Object.assign({ app: 'block', kid: false, rewardSet: 'outer', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, (() => { const la = GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'outer', itemTotal: 20, icon: '🧱' }); const st = la.stats; la.stats = () => st().concat([['끝없이 최고', (SV.endless || {}).best || 0]]); la.badges.push({ id: 'e100', icon: '♾️', name: '끝없이 100점', desc: '끝없이 모드에서 100점', ok: () => ((SV.endless || {}).best || 0) >= 100 }, { id: 'e300', icon: '🚀', name: '끝없이 300점', desc: '끝없이 모드에서 300점', ok: () => ((SV.endless || {}).best || 0) >= 300 }); return la; })()));
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('bhome');
       BK.debug.D = () => D; BK.debug.endless = (seed) => G.makeEndless(seed); BK.debug.SV = () => SV; BK.debug.reset = () => { SV = blank(); save(); }; BK.debug.dailyLevel = dailyLevel; BK.debug.seasonLevel = seasonLevel; BK.debug.trioLevels = trioLevels; BK.debug.X = () => X; BK.debug.REW = REW;

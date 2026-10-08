@@ -19,6 +19,7 @@
   const PAL = ['#FF6B6B', '#FFD43B', '#4DABF7', '#9775FA', '#F783AC', '#69DB7C', '#FFA94D'];
   const EXPR = { 'nemo_dad.joy': 'nemo_dad.surprise', 'nemo_dad.good': 'nemo_dad.surprise', 'nemo_mom.joy': 'nemo_mom.surprise', 'husband.joy': 'husband.surprise', 'husband.good': 'husband.surprise', 'wife.joy': 'wife.surprise', 'wife.good': 'wife.surprise', 'dong_dad.joy': 'dong_dad.surprise', 'dong_dad.good': 'dong_dad.surprise', 'baby.joy': 'baby.surprise' };
   const pick = (rng, a) => a[(rng() * a.length) | 0];
+  const shufR = (a, rng) => { for (let i = a.length - 1; i > 0; i--) { const j = (rng() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };   // 일관된 셔플(흔드는 비교 함수 정렬은 엔진 단계에 따라 달라질 수 있음)
   let uid = 0; const mk = (o) => Object.assign({ u: 'e' + (uid++), z: 1 }, o);   // u = 요소 고유 번호(id 는 그림 id 와 겹칠 수 있어 따로 둔다)
   /* 생활 소품 풀: [종류, id/그림, 가로, 세로 or 크기] — item 은 방 아이템(그림은 방 아이템 슬롯), emo 는 이모지, deco 는 코드 장식 */
   const I = (id, w, h) => ['item', id, w, h], E = (e, s) => ['emo', e, s, s], DC = (d, s) => ['deco', d, s, s];
@@ -125,7 +126,7 @@
         const t = template(chapter), base = t.els.map((e) => Object.assign({}, e, { y: e.y * 1.9 > BH - 4 ? BH - 8 : Math.round(e.y * 1.9) }));
         base.forEach((e) => { if (e.k === 'chr') e.h = Math.round(e.h * 1.4); else if (e.k === 'item') { e.w = Math.round(e.w * 1.4); e.h = Math.round(e.h * 1.4); } else e.s = Math.round(e.s * 1.4); });
         const keep = base.filter((e) => inside(C.bbox(e), BW, BH, 2)); scatter(keep, rng, Math.round(density(n) * 1.5) + 8, BW, BH, t);
-        const nT = tag === 'tutorial' ? 3 : Math.min(5, 3 + ((n / 6) | 0)), tg = TARGETS.slice().sort(() => rng() - 0.5).slice(0, nT), B1 = keep.map((e) => Object.assign({}, e)), diffs = [], names = [], icons = [];
+        const nT = tag === 'tutorial' ? 3 : Math.min(5, 3 + ((n / 6) | 0)), tg = shufR(TARGETS.slice(), rng).slice(0, nT), B1 = keep.map((e) => Object.assign({}, e)), diffs = [], names = [], icons = [];
         for (const [d, nm] of tg) { for (let tr = 0; tr < 80; tr++) { const x = 24 + rng() * (BW - 48), y = 40 + rng() * (BH - 70), s = 26, el = mk({ k: 'deco', d, x: Math.round(x), y: Math.round(y), s, c: '#C98F5A', z: 2, tgt: nm }), ar = area(el, null); if (!inside(ar, BW, BH, 4)) continue; if (keep.some((e) => { const q = C.bbox(e); return Math.hypot(q.x + q.w / 2 - x, q.y + q.h / 2 - y) < (q.w + q.h) / 4 + 10 && e.z === 2; })) continue; if (diffs.some((q) => Math.hypot(q.x + q.w / 2 - x, q.y + q.h / 2 - y) < 50)) continue; B1.push(el); diffs.push(Object.assign({ u: el.u, op: 'add', name: nm, d }, ar)); names.push(nm); icons.push(d); break; } }
         if (diffs.length < nT) continue; L.rounds.push({ w: BW, h: BH, bg: t.bg, A: keep, B: B1, diffs }); L.goalN = nT; L.targets = names; L.targetIcons = icons; L.elCount = keep.length;
       } else {

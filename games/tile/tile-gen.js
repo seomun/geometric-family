@@ -32,8 +32,8 @@
     const gone = new Set(), out = [], T = tiles; let keyDone = !tiles.some((t) => t.lock);
     while (out.length < T.length) {
       const fr = []; for (let i = 0; i < T.length; i++) { if (gone.has(i)) continue; if (T[i].lock && !keyDone) continue; let cov = false; for (let j = 0; j < T.length; j++) if (j !== i && !gone.has(j) && C.covers(T[j], T[i])) { cov = true; break; } if (!cov) fr.push(i); }
-      if (!fr.length) return null; fr.sort((a, b) => T[b].z - T[a].z + (rng() - 0.5) * 1.6);   // 위층 먼저 쪽으로 기울이되 흔든다
-      const i = fr[0]; gone.add(i); out.push(i); if (out.length >= (lockFirst || 3)) keyDone = true;
+      if (!fr.length) return null;   // 위층 먼저 쪽으로 기울이되 흔든다(일관된 키 하나로 뽑는다: 흔드는 비교 함수 정렬은 JS 엔진 단계에 따라 결과가 달라질 수 있어 순위표·오늘의 한 판의 결정성을 해친다)
+      let i = fr[0], bk = -1e9; fr.forEach((x) => { const k = T[x].z + (rng() - 0.5) * 1.1; if (k > bk) { bk = k; i = x; } }); gone.add(i); out.push(i); if (out.length >= (lockFirst || 3)) keyDone = true;
     }
     return out;
   }

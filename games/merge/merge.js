@@ -50,7 +50,10 @@
   const bar = () => GF.refreshBar && GF.refreshBar();
 
   /* 공통 판 4종이 만드는 판 */
-  function dailyLevel() { const d = +today(), types = ['make', 'order', 'tight', 'solo', 'clear', 'move', 'kimjang'], type = types[dayNum() % 7], n = 30 + (d % 60); const L = G.make(n, 120, d, { type }); if (L) { L.id = 'daily'; L.kind = 'daily'; L.tag = 'growth'; } return L; }
+  function dailyLevelAt(d, dn) { dn = dn == null ? dayNum() : dn; const types = ['make', 'order', 'tight', 'solo', 'clear', 'move', 'kimjang'], type = types[dn % 7], n = 30 + (d % 60); const L = G.make(n, 120, d, { type }); if (L) { L.id = 'daily'; L.kind = 'daily'; L.tag = 'growth'; } return L; }
+  const parMemo = {};   // 그날 판의 최소 놓은 횟수(빔 풀이), 순위표 점수의 기준
+  function parOf(d, L) { if (parMemo[d] == null) { let p = 0; try { const r = M.solve(L, 40); p = r.ok ? r.path.length : 0; } catch (e) {} parMemo[d] = p || L.queue.length; } return parMemo[d]; }
+  function dailyLevel() { return dailyLevelAt(+today()); }
   const seasonNow = () => X.seasons.filter((s) => s.months.includes(now().getMonth() + 1) || MG.season === s.id);
   const seasonKey = (s) => s.id + ':' + now().getFullYear();
   function seasonLevel(s) { const L = G.make(s.n, 120, s.seed + now().getFullYear(), { type: s.type }); if (L) { L.id = 'season:' + s.id; L.kind = 'season'; L.season = s; L.tag = 'growth'; } return L; }
@@ -117,7 +120,7 @@
     enter(r, p) {
       r.classList.add('uk', 'mg'); GF.bg('indoor2', r);   // 플레이 화면은 창문 없는 배경(HUD 가독)
       const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:514px;left:24px;right:24px;padding:6px 12px;font-size:calc(18px * var(--uk-fs-k, 1))'; return t; };   // 토스트는 판 아래·조각 줄 위
-      const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hintCell = null; const gained = [];
+      const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hintCell = null, hintN = 0, rankRes = null; const gained = [];
       if (!p.level) { SV.last = LV.id; save(); }
       bar();
       const hd = el('div', 'mg-hd', r), leftChip = el('span', 'uk-chip mg-left', r), goals = el('div', 'mg-goals', r), board = el('div', 'mg-board', r), dock = el('div', 'mg-dock', r), tip = el('div', 'uk-caption mg-tip', r);
@@ -174,7 +177,7 @@
       }
       function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: '되돌리기 1번 더', parent: r, onReward: () => { undone = 0; undo(); } }); }
       function undo() { if (!hist.length || busy || undone >= 1) { if (undone >= 1 && !offerUndo()) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hintCell = null; GF.sfx('tap'); buildBoard(); draw(); }
-      function hint() { if (busy) return; const c = M.candidates(S, 1); if (!c.length) return; hintCell = c[0]; GF.sfx('pick'); draw(); }
+      function hint() { if (busy) return; const c = M.candidates(S, 1); if (!c.length) return; hintN++; hintCell = c[0]; GF.sfx('pick'); draw(); }
       /* 끌어서 놓기: 지금 조각을 잡아 빈 칸 위에서 놓는다(탭도 그대로 동작) */
       cur.addEventListener('pointerdown', (e) => {
         if (busy || !S.q[S.qi]) return; e.preventDefault(); const q = S.q[S.qi], ghost = pieceEl(q.c, q.t, q.s), gs = cs * (r.getBoundingClientRect().width / 360);
@@ -184,6 +187,7 @@
         window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
       });
       function result(stars) {
+        if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }]; if (M.left(S) > 0) chips.push({ icon: 'gift', text: '남은 조각 ' + M.left(S) }); gained.forEach((id) => chips.push({ icon: 'home', text: NAME[id] || (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
@@ -195,6 +199,7 @@
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
         else if (LV.kind === 'trio') { const key = LV.id.split(':').slice(1).join(':'); SV.trio[key] = Math.max(SV.trio[key] || 0, st); }
+        if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: parOf(GF.rank.today(), LV), actions: S.moves, tools: undone + hintN, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
         save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone();
         setTimeout(() => {
           const story = !LV.kind && LV.id % 10 === 0 && X.stories.find((s) => s.chapter === LV.chapter);   // 사연 판: 장의 마지막 판 뒤에 사연 컷
@@ -202,7 +207,7 @@
           else result(st);
         }, 650);
       }
-      function lose() { busy = true; say('한 번 더!'); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
+      function lose() { busy = true; if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); say('한 번 더!'); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
       MG.debug.adOffer = () => offerUndo(); MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
       buildBoard(); draw(); showTip();
       if (!LV.kind && LV.id <= 2 && !hist.length) setTimeout(() => { const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }, 1200);   // 처음 두 판: 첫 칸을 손가락이 알려 준다
@@ -224,6 +229,7 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'merge_levels', 'merge_extra', 'room_items', 'art_slots'], storeKey: 'gf:merge:ui:v1', async start() {
       D = GF.data.merge_levels; X = GF.data.merge_extra; const RD = GF.data.room_items; D.roomTotal = RD.items.filter((i) => i.set === 'build').length;
       Room.init({ data: RD, game: 'merge', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      GF.rank.init({ app: 'merge', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps, d) => { const r = M.botPlay(Object.assign({}, L, { rule }), rng, eps); return { won: r.won, score: GF.rank.eff({ par: parOf(d, L), actions: r.moves, tools: 0, attempts: 1 }) }; } } } });
       GF.extras.init(Object.assign({ app: 'merge', kid: false, rewardSet: 'build', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'build', itemTotal: 16, icon: '🔷' })));
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('mhome');
       MG.debug.D = () => D; MG.debug.SV = () => SV; MG.debug.reset = () => { SV = blank(); save(); }; MG.debug.dailyLevel = dailyLevel; MG.debug.seasonLevel = seasonLevel; MG.debug.trioLevels = trioLevels; MG.debug.X = () => X;

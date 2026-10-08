@@ -63,6 +63,12 @@
     });
     sc.sort((x, y) => y.v - x.v); return sc.slice(0, k).map((x) => x.i);
   }
+  /** 사람 같은 탐욕 플레이(가족 순위표 봇): eps 확률로 덜 좋은 후보. 반환 {won, moves} */
+  function botPlay(L, rng, eps) {
+    const S = newGame(L); let g = 0;
+    while (!won(S) && !lost(S) && g++ < 400) { const c = candidates(S, 3); if (!c.length) break; place(S, c[rng() < 1 - eps ? 0 : Math.min(c.length - 1, 1 + ((rng() * 2) | 0))]); }
+    return { won: won(S), moves: S.moves };
+  }
   /** 사람 같은 탐욕 플레이로 이길 확률(난이도 지표: 0.5~0.9 가 적당) */
   function greedyWinRate(L, trials, rng) {
     let w = 0; for (let k = 0; k < trials; k++) { const S = newGame(L); while (!won(S) && !lost(S)) { const c = candidates(S, 3); place(S, c[rng() < 0.75 ? 0 : Math.min(c.length - 1, 1 + ((rng() * 2) | 0))]); } if (won(S)) w++; } return w / trials;
@@ -88,6 +94,6 @@
   function randomWinRate(L, trials, rng) {
     let w = 0; for (let k = 0; k < trials; k++) { const S = newGame(L); while (!won(S) && !lost(S)) { const e = empty(S); place(S, e[(rng() * e.length) | 0]); } if (won(S)) w++; } return w / trials;
   }
-  const api = { junkLeft, MAXT, newGame, clone, place, won, lost, left, empty, stars, progress, solve, randomWinRate, greedyWinRate, candidates, key, nb };
+  const api = { junkLeft, MAXT, newGame, clone, place, won, lost, left, empty, stars, progress, solve, botPlay, randomWinRate, greedyWinRate, candidates, key, nb };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.MergeCore = api;
 })(typeof window !== 'undefined' ? window : globalThis);

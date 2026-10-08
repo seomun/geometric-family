@@ -48,7 +48,7 @@ for grp in ('sfx', 'music'):
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
 css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'day/day.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/extras.js', 'day/day-gen.js', 'day/day.js'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/extras.js', 'day/day-gen.js', 'day/day.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'day' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 html = f'''<!DOCTYPE html>
 <html lang="ko" data-uk="kid"><head><meta charset="utf-8">

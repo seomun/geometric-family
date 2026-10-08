@@ -70,7 +70,9 @@
       if (type === 'goal') { const ks = [...new Set(tiles.map((t) => t.kind))].filter((q) => q !== 'key'); const c = [pick(rng, ks)]; const ks2 = ks.filter((q) => q !== c[0]); c.push(pick(rng, ks2)); L.goal = { t: 'goal', kinds: c }; }
       if (rule === 1) tiles.forEach((t, i) => { if (rng() < 0.12 && !t.lock) t.wild = true; });
       // 검증: 풀이 재생
-      const S = C.newGame(L, rule); let okp = true; for (const i of L.solution) { const ev = C.press(S, i); if (!ev || ev.lose) { okp = false; break; } if (S.won) break; } if (!okp || !S.won) continue;
+      const replayOk = () => { const S = C.newGame(L, rule); for (const i of L.solution) { const ev = C.press(S, i); if (!ev || ev.lose) return false; if (S.won) break; } return S.won; };
+      if (!replayOk() && rule === 1) { tiles.forEach((t) => { delete t.wild; }); }   // 반짝 타일 때문에 풀이가 깨지면 반짝 없이(세모 규칙 판이 생성에 실패해 비는 일을 막는다)
+      if (!replayOk()) continue;
       if (!opts.noGreedy) { const floor = type === 'pair' ? 0.9 : { tutorial: 0.85, rest: 0.7, intro: 0.5, growth: 0.3 }[tag] * (type === 'narrow' || type === 'lock' ? 0.7 : 1); L.greedy = +C.greedyWinRate(L, 50, mulberry(n + 29)).toFixed(2); if (L.greedy < floor && !opts.type) { if (!best || L.greedy > best.greedy) best = L; continue; } }
       return L;
     }

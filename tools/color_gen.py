@@ -1,6 +1,6 @@
 """④ 막둥이 색칠북 페이지 데이터 생성: python tools/color_gen.py → data/color_pages.json (+ 방 아이템 추가)
 페이지 = 데이터 한 줄(type + 그림 지정). 새 페이지는 이 목록(또는 JSON)에 한 줄 더하면 늘어난다."""
-import json
+import json, math
 P = []
 def add(type_, id_, **kw): P.append(dict(id=id_, type=type_, **kw))
 # 1) 자유 색칠 — 집 가구·소품·도형 얼굴(룸 아이템 그림을 그대로 선화로)
@@ -53,6 +53,31 @@ for bg in ['home','stream','night','house','seaside','hill','rails','field']: ad
 # 5) 벽지 만들기 — 도형 무늬 두 색으로 아이 방 벽지
 for i,(bg,fg,shp) in enumerate([('#FFE3C2','#FF8FA8',0),('#D8F0FF','#4DABF7',1),('#E2E6FA','#9775FA',2),('#FFF0B8','#69DB7C',0),('#FFE0E8','#FFD43B',1),('#E3F6DC','#FFA94D',2),('#FFF6E5','#F06595',0),('#E7F5FF','#339AF0',2),('#F3F0FF','#845EF4',1)]):
     add('wall','w_%d'%(i+1),pat=shp,bg=bg,fg=fg)
+# 5-2) 계절 도안 20장([제안]) — 봄·여름·가을·겨울 따라 그리기 8 + 벽지 8 + 스티커 장면 4. season 키로 썸네일에 계절 표식
+def ring(n, r, cx=150, cy=150, a0=-90): return [[cx + r * math.cos(math.radians(a0 + 360 * i / n)), cy + r * math.sin(math.radians(a0 + 360 * i / n))] for i in range(n)]
+def star(tips, ro, ri, cx=150, cy=150):
+    pts = []
+    for i in range(tips * 2):
+        r = ro if i % 2 == 0 else ri; a = math.radians(-90 + 180 * i / tips); pts.append([cx + r * math.cos(a), cy + r * math.sin(a)])
+    return pts
+SEASON_DOTS = [
+ ('tulip', 'spring', [[150,40],[205,85],[210,150],[170,205],[170,255],[130,255],[130,205],[90,150],[95,85]]),
+ ('sun', 'summer', star(8, 125, 78)),
+ ('melon', 'summer', [[40,170],[70,115],[115,90],[185,90],[230,115],[260,170],[205,230],[95,230]]),
+ ('maple', 'autumn', star(5, 125, 62) + [[150,255]]),
+ ('acorn', 'autumn', [[150,35],[205,70],[225,115],[200,150],[180,215],[150,260],[120,215],[100,150],[75,115],[95,70]]),
+ ('snowflake', 'winter', star(6, 130, 62)),
+ ('mitten', 'winter', [[95,60],[165,50],[200,100],[215,170],[195,245],[115,245],[95,175],[60,150],[50,100]]),
+ ('bell', 'winter', [[150,35],[205,85],[220,160],[250,215],[50,215],[80,160],[95,85],[150,255]]),
+]
+for k, ss, v in SEASON_DOTS:
+    sp = spread(v); md = min(((sp[i][0]-sp[j][0])**2+(sp[i][1]-sp[j][1])**2)**0.5 for i in range(len(sp)) for j in range(i+1,len(sp)))
+    add('trace', 't_' + k, dots=sp, minGap=round(md), season=ss)
+for i, (bg, fg, shp, ss) in enumerate([('#FFE0EC','#FF8FA8',0,'spring'),('#E3F6DC','#69DB7C',2,'spring'),('#D8F0FF','#4DABF7',1,'summer'),('#FFF6C9','#FFC933',0,'summer'),('#FFE9C7','#E8870F',2,'autumn'),('#FFF3C2','#F06595',1,'autumn'),('#EAF2FF','#8FB4E8',0,'winter'),('#FFE3E3','#E5334A',1,'winter')]):
+    add('wall', 'w_s%d' % (i + 1), pat=shp, bg=bg, fg=fg, season=ss)
+SEASON_STK = {'spring': ('hill', ['emo:🌸','emo:🌷','emo:🐝','emo:🦋']), 'summer': ('seaside', ['emo:🏖️','emo:🍉','emo:🐚','emo:⛱️']), 'autumn': ('field', ['emo:🍁','emo:🌰','emo:🎃','emo:🍂']), 'winter': ('night', ['emo:⛄','emo:❄️','emo:🧣','emo:🎄'])}
+for ss, (bg, emo) in SEASON_STK.items():
+    add('sticker', 's_' + ss, bg=bg, tray=['chr:baby.joy','chr:nemo_kids.kid1','chr:wife.joy','chr:nemo_mom.joy'] + emo + ['art:tree','shp:0:2','shp:1:2','shp:2:2'], deco=[dict(art=a,x=x,y=y,w=w) for a,x,y,w in DECO[bg]], season=ss)
 # 6) 옛이야기 색칠 12장(D13) — ③ 도형 합치기와 같은 12개 옛이야기의 명장면, 배역은 기하학 가족 [제안]. type 키는 호환 위해 'webtoon' 유지(화면 이름만 「옛이야기 색칠」)
 def S(*items): return [list(x) for x in items]
 SC = [

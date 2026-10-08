@@ -1105,6 +1105,626 @@
    "fg": "#845EF4"
   },
   {
+   "id": "t_tulip",
+   "type": "trace",
+   "dots": [
+    [
+     150,
+     40
+    ],
+    [
+     205,
+     85
+    ],
+    [
+     210,
+     150
+    ],
+    [
+     176,
+     203
+    ],
+    [
+     176,
+     257
+    ],
+    [
+     124,
+     256
+    ],
+    [
+     124,
+     204
+    ],
+    [
+     90,
+     150
+    ],
+    [
+     95,
+     85
+    ]
+   ],
+   "minGap": 52,
+   "season": "spring"
+  },
+  {
+   "id": "t_sun",
+   "type": "trace",
+   "dots": [
+    [
+     150,
+     28
+    ],
+    [
+     180,
+     78
+    ],
+    [
+     238,
+     62
+    ],
+    [
+     222,
+     120
+    ],
+    [
+     272,
+     150
+    ],
+    [
+     222,
+     180
+    ],
+    [
+     238,
+     238
+    ],
+    [
+     180,
+     222
+    ],
+    [
+     150,
+     272
+    ],
+    [
+     120,
+     222
+    ],
+    [
+     62,
+     238
+    ],
+    [
+     78,
+     180
+    ],
+    [
+     28,
+     150
+    ],
+    [
+     78,
+     120
+    ],
+    [
+     62,
+     62
+    ],
+    [
+     120,
+     78
+    ]
+   ],
+   "minGap": 58,
+   "season": "summer"
+  },
+  {
+   "id": "t_melon",
+   "type": "trace",
+   "dots": [
+    [
+     40,
+     170
+    ],
+    [
+     69,
+     115
+    ],
+    [
+     116,
+     90
+    ],
+    [
+     184,
+     90
+    ],
+    [
+     231,
+     115
+    ],
+    [
+     260,
+     170
+    ],
+    [
+     205,
+     230
+    ],
+    [
+     95,
+     230
+    ]
+   ],
+   "minGap": 53,
+   "season": "summer"
+  },
+  {
+   "id": "t_maple",
+   "type": "trace",
+   "dots": [
+    [
+     150,
+     28
+    ],
+    [
+     186,
+     100
+    ],
+    [
+     269,
+     111
+    ],
+    [
+     209,
+     169
+    ],
+    [
+     223,
+     251
+    ],
+    [
+     150,
+     207
+    ],
+    [
+     77,
+     251
+    ],
+    [
+     91,
+     169
+    ],
+    [
+     31,
+     111
+    ],
+    [
+     114,
+     100
+    ],
+    [
+     150,
+     260
+    ]
+   ],
+   "minGap": 53,
+   "season": "autumn"
+  },
+  {
+   "id": "t_acorn",
+   "type": "trace",
+   "dots": [
+    [
+     150,
+     35
+    ],
+    [
+     204,
+     67
+    ],
+    [
+     230,
+     113
+    ],
+    [
+     197,
+     154
+    ],
+    [
+     180,
+     215
+    ],
+    [
+     150,
+     260
+    ],
+    [
+     120,
+     215
+    ],
+    [
+     103,
+     155
+    ],
+    [
+     70,
+     113
+    ],
+    [
+     96,
+     67
+    ]
+   ],
+   "minGap": 53,
+   "season": "autumn"
+  },
+  {
+   "id": "t_snowflake",
+   "type": "trace",
+   "dots": [
+    [
+     150,
+     28
+    ],
+    [
+     181,
+     96
+    ],
+    [
+     263,
+     85
+    ],
+    [
+     212,
+     150
+    ],
+    [
+     263,
+     215
+    ],
+    [
+     181,
+     204
+    ],
+    [
+     150,
+     272
+    ],
+    [
+     119,
+     204
+    ],
+    [
+     37,
+     215
+    ],
+    [
+     88,
+     150
+    ],
+    [
+     37,
+     85
+    ],
+    [
+     119,
+     96
+    ]
+   ],
+   "minGap": 62,
+   "season": "winter"
+  },
+  {
+   "id": "t_mitten",
+   "type": "trace",
+   "dots": [
+    [
+     95,
+     60
+    ],
+    [
+     165,
+     50
+    ],
+    [
+     200,
+     100
+    ],
+    [
+     215,
+     170
+    ],
+    [
+     195,
+     245
+    ],
+    [
+     115,
+     245
+    ],
+    [
+     100,
+     178
+    ],
+    [
+     56,
+     149
+    ],
+    [
+     50,
+     97
+    ]
+   ],
+   "minGap": 52,
+   "season": "winter"
+  },
+  {
+   "id": "t_bell",
+   "type": "trace",
+   "dots": [
+    [
+     150,
+     35
+    ],
+    [
+     205,
+     85
+    ],
+    [
+     220,
+     160
+    ],
+    [
+     250,
+     215
+    ],
+    [
+     50,
+     215
+    ],
+    [
+     80,
+     160
+    ],
+    [
+     95,
+     85
+    ],
+    [
+     150,
+     255
+    ]
+   ],
+   "minGap": 63,
+   "season": "winter"
+  },
+  {
+   "id": "w_s1",
+   "type": "wall",
+   "pat": 0,
+   "bg": "#FFE0EC",
+   "fg": "#FF8FA8",
+   "season": "spring"
+  },
+  {
+   "id": "w_s2",
+   "type": "wall",
+   "pat": 2,
+   "bg": "#E3F6DC",
+   "fg": "#69DB7C",
+   "season": "spring"
+  },
+  {
+   "id": "w_s3",
+   "type": "wall",
+   "pat": 1,
+   "bg": "#D8F0FF",
+   "fg": "#4DABF7",
+   "season": "summer"
+  },
+  {
+   "id": "w_s4",
+   "type": "wall",
+   "pat": 0,
+   "bg": "#FFF6C9",
+   "fg": "#FFC933",
+   "season": "summer"
+  },
+  {
+   "id": "w_s5",
+   "type": "wall",
+   "pat": 2,
+   "bg": "#FFE9C7",
+   "fg": "#E8870F",
+   "season": "autumn"
+  },
+  {
+   "id": "w_s6",
+   "type": "wall",
+   "pat": 1,
+   "bg": "#FFF3C2",
+   "fg": "#F06595",
+   "season": "autumn"
+  },
+  {
+   "id": "w_s7",
+   "type": "wall",
+   "pat": 0,
+   "bg": "#EAF2FF",
+   "fg": "#8FB4E8",
+   "season": "winter"
+  },
+  {
+   "id": "w_s8",
+   "type": "wall",
+   "pat": 1,
+   "bg": "#FFE3E3",
+   "fg": "#E5334A",
+   "season": "winter"
+  },
+  {
+   "id": "s_spring",
+   "type": "sticker",
+   "bg": "hill",
+   "tray": [
+    "chr:baby.joy",
+    "chr:nemo_kids.kid1",
+    "chr:wife.joy",
+    "chr:nemo_mom.joy",
+    "emo:🌸",
+    "emo:🌷",
+    "emo:🐝",
+    "emo:🦋",
+    "art:tree",
+    "shp:0:2",
+    "shp:1:2",
+    "shp:2:2"
+   ],
+   "deco": [
+    {
+     "art": "tree",
+     "x": 70,
+     "y": 320,
+     "w": 100
+    },
+    {
+     "art": "tree",
+     "x": 290,
+     "y": 340,
+     "w": 110
+    },
+    {
+     "art": "sofa",
+     "x": 180,
+     "y": 470,
+     "w": 120
+    }
+   ],
+   "season": "spring"
+  },
+  {
+   "id": "s_summer",
+   "type": "sticker",
+   "bg": "seaside",
+   "tray": [
+    "chr:baby.joy",
+    "chr:nemo_kids.kid1",
+    "chr:wife.joy",
+    "chr:nemo_mom.joy",
+    "emo:🏖️",
+    "emo:🍉",
+    "emo:🐚",
+    "emo:⛱️",
+    "art:tree",
+    "shp:0:2",
+    "shp:1:2",
+    "shp:2:2"
+   ],
+   "deco": [
+    {
+     "art": "bowl",
+     "x": 90,
+     "y": 430,
+     "w": 60
+    },
+    {
+     "art": "tree",
+     "x": 300,
+     "y": 330,
+     "w": 90
+    },
+    {
+     "art": "suitcase",
+     "x": 200,
+     "y": 440,
+     "w": 60
+    }
+   ],
+   "season": "summer"
+  },
+  {
+   "id": "s_autumn",
+   "type": "sticker",
+   "bg": "field",
+   "tray": [
+    "chr:baby.joy",
+    "chr:nemo_kids.kid1",
+    "chr:wife.joy",
+    "chr:nemo_mom.joy",
+    "emo:🍁",
+    "emo:🌰",
+    "emo:🎃",
+    "emo:🍂",
+    "art:tree",
+    "shp:0:2",
+    "shp:1:2",
+    "shp:2:2"
+   ],
+   "deco": [
+    {
+     "art": "tree",
+     "x": 60,
+     "y": 330,
+     "w": 100
+    },
+    {
+     "art": "plant",
+     "x": 280,
+     "y": 380,
+     "w": 50
+    },
+    {
+     "art": "party",
+     "x": 180,
+     "y": 420,
+     "w": 90
+    }
+   ],
+   "season": "autumn"
+  },
+  {
+   "id": "s_winter",
+   "type": "sticker",
+   "bg": "night",
+   "tray": [
+    "chr:baby.joy",
+    "chr:nemo_kids.kid1",
+    "chr:wife.joy",
+    "chr:nemo_mom.joy",
+    "emo:⛄",
+    "emo:❄️",
+    "emo:🧣",
+    "emo:🎄",
+    "art:tree",
+    "shp:0:2",
+    "shp:1:2",
+    "shp:2:2"
+   ],
+   "deco": [
+    {
+     "art": "tree",
+     "x": 60,
+     "y": 360,
+     "w": 100
+    },
+    {
+     "art": "lamp",
+     "x": 290,
+     "y": 380,
+     "w": 50
+    },
+    {
+     "art": "globe",
+     "x": 180,
+     "y": 420,
+     "w": 50
+    }
+   ],
+   "season": "winter"
+  },
+  {
    "id": "x_1",
    "type": "webtoon",
    "scene": [

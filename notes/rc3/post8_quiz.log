@@ -1,0 +1,32 @@
+OK   홈 글자 18px↑ 
+FAIL 테스트 19종 × 6문항
+OK   q1 결과: nemo/1 {"nemo":2,"semo":2,"dong":2}
+OK   q2 결과: semo/1 {"nemo":2,"semo":2,"dong":2}
+OK   q3 결과: semo/2 {"nemo":2,"semo":2,"dong":2}
+OK   q4 결과: nemo/0 {"nemo":2,"semo":2,"dong":2}
+OK   q5 결과: nemo/0 {"nemo":2,"semo":2,"dong":2}
+OK   q6 결과: nemo/1 {"nemo":2,"semo":2,"dong":2}
+OK   q7 결과: semo/2 {"nemo":2,"semo":2,"dong":2}
+OK   q8 결과: semo/1 {"nemo":2,"semo":2,"dong":2}
+OK   q9 결과: dong/2 {"nemo":2,"semo":2,"dong":2}
+OK   q10 결과: nemo/2 {"nemo":2,"semo":2,"dong":2}
+OK   q11 결과: nemo/1 {"nemo":2,"semo":2,"dong":2}
+OK   q12 결과: nemo/0 {"nemo":2,"semo":2,"dong":2}
+OK   q13 결과: dong/2 {"nemo":2,"semo":2,"dong":2}
+OK   q14 결과: dong/0 {"nemo":2,"semo":2,"dong":2}
+OK   q15 결과: dong/0 {"nemo":2,"semo":2,"dong":2}
+OK   q16 결과: semo/2 {"nemo":2,"semo":2,"dong":2}
+OK   q17 결과: dong/2 {"nemo":2,"semo":2,"dong":2}
+OK   q18 결과: dong/0 {"nemo":2,"semo":2,"dong":2}
+OK   q19 결과: dong/1 {"nemo":2,"semo":2,"dong":2}
+OK   다양한 결과 8종 나옴
+OK   결과 카드 PNG 52550 bytes
+OK   문패·배지·내 도형이 집에 생김: {"n":11,"plates":3,"me":{"f":"nemo","s":0}}
+OK   미니게임 3 결과
+OK   미니게임 4 결과
+OK   미니게임 5 결과
+OK   미니게임 1(반응) 5번 → 결과
+OK   미니게임 2(기억) 결과
+OK   트로피 3개 집에 생김
+OK   콘솔 오류 없음 
+FAILED 1

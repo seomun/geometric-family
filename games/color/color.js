@@ -58,7 +58,7 @@
   }
   const svgURI = (root) => { const c = root.cloneNode(true); c.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); c.setAttribute('width', 300); c.setAttribute('height', 300); c.querySelectorAll('.num').forEach((x) => x.remove()); return uri(new XMLSerializer().serializeToString(c)); };
   function paintedURI(pg, fills) { const root = baseSVG(pg), R = regionize(root); Object.keys(fills || {}).forEach((i) => R.regions[i] && R.regions[i].setAttribute('fill', fills[i])); return svgURI(root); }
-  function stickerSrc(key) { const [k, a, b] = key.split(':'); if (k === 'chr') return GF.src(a); if (k === 'art') return uri(RoomArt.make(a, '#F6C28B', {})); return uri(shapeStr(+a, +b)); }
+  function stickerSrc(key) { const [k, a, b] = key.split(':'); if (k === 'emo') return uri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><text x="32" y="50" font-size="52" text-anchor="middle">' + a + '</text></svg>'); if (k === 'chr') return GF.src(a); if (k === 'art') return uri(RoomArt.make(a, '#F6C28B', {})); return uri(shapeStr(+a, +b)); }
   function sceneImage(pg, desc) {
     const bg = uri(GF.bgSVG(pg.bg)), deco = (pg.deco || []).map((d) => `<image href="${uri(RoomArt.make(d.art, '#F6C28B', {}))}" x="${d.x - d.w / 2}" y="${d.y - d.w / 2}" width="${d.w}" height="${d.w}" preserveAspectRatio="xMidYMid meet"/>`).join(''), st = (desc.stickers || []).map((s) => `<image href="${stickerSrc(s.k)}" x="${s.x - 36}" y="${s.y - 36}" width="72" height="72" preserveAspectRatio="xMidYMid meet"/>`).join('');
     return uri(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="30 150 300 330" width="300" height="330"><image href="${bg}" x="0" y="0" width="360" height="640"/>${deco}${st}</svg>`);
@@ -91,6 +91,7 @@
     else if (pg.type === 'wall') { const w = el('div', '', btn); w.style.cssText = 'width:100%;height:100%;border-radius:14px;' + Room.wallStyle({ pat: pg.pat, bg: pg.bg, fg: pg.fg }); }
     else if (pg.type === 'trace' && !d) { const t = trace(pg.dots); btn.innerHTML = `<svg viewBox="0 0 300 300">${pg.dots.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="12" fill="${['#FF8FA8', '#FFC933', '#8FD3F4', '#B197FC', '#6CCB8A'][i % 5]}"/>`).join('')}</svg>`; }
     else { const i = el('img', '', btn); i.src = d ? imageFor(pg.id) : paintedURI(pg, {}); }
+    if (pg.season) el('i', 'sn', btn, { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️' }[pg.season] || '');   // 계절 도안 표식(글자 없음)
     if (d) { const ck = el('div', 'ck', btn, UK.icon('check')); ck.style.cssText = 'background:#fff;border-radius:50%;box-shadow:var(--uk-sh)'; }
   }
   GF.screen('cbook', {

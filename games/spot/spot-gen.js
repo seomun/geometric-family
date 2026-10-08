@@ -7,8 +7,8 @@
   const C = typeof module !== 'undefined' ? require('./spot-core.js') : root.SpotCore;
   const mulberry = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const W = 336, H = 210, BW = 336, BH = 430;
-  const IDS = ['pigs', 'bremen', 'gyeonwoo', 'bears', 'jack', 'kongjwi', 'heungbu', 'ureng', 'axe', 'ant', 'sun', 'hare'];   // ⑦과 같은 이야기 순서
-  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이'];
+  const IDS = ['pigs', 'bremen', 'gyeonwoo', 'bears', 'jack', 'kongjwi', 'heungbu', 'ureng', 'axe', 'ant', 'sun', 'hare', 'brothers', 'snowqueen'];   // ⑦과 같은 이야기 순서(13·14장은 ⑥ 확장분)
+  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이', '의좋은 형제', '눈의 여왕'];
   const TYPE_NAME = { diff: '틀린 그림', odd: '다른 하나', hidden: '숨은 물건', three: '세 가족', memory: '기억', zoom: '확대' };
   const A = ['diff', 'diff', 'diff', 'odd', 'diff', 'hidden', 'three', 'memory', 'zoom', 'diff'], B = ['diff', 'odd', 'hidden', 'three', 'diff', 'memory', 'zoom', 'odd', 'hidden', 'diff'], Cc = ['diff', 'hidden', 'diff', 'memory', 'diff', 'zoom', 'odd', 'three', 'diff', 'diff'];
   const SEQS = [A, B, Cc];
@@ -42,6 +42,8 @@
       case 'axe': return { bg: 'forest', out: true, els: [m({ k: 'item', id: 'o_pond', x: 168, y: 190, w: 100, h: 56 }), c({ k: 'chr', id: 'nemo_dad.worry', x: 66, y: 200, h: 82 }), c({ k: 'chr', id: 'dong_dad.warm', x: 280, y: 200, h: 84 }), m({ k: 'deco', d: 'tree', x: 40, y: 110, s: 60 }), m({ k: 'deco', d: 'tree', x: 298, y: 112, s: 64 })] };
       case 'ant': return { bg: 'hill', out: true, els: [m({ k: 'item', id: 'o_hay', x: 70, y: 188, w: 46, h: 50 }), m({ k: 'item', id: 'o_jar', x: 150, y: 190, w: 50, h: 56 }), m({ k: 'item', id: 'o_jar', x: 212, y: 190, w: 44, h: 50 }), c({ k: 'chr', id: 'nemo_mom.joy', x: 96, y: 202, h: 80 }), c({ k: 'chr', id: 'husband.joy', x: 220, y: 202, h: 78 }), c({ k: 'chr', id: 'dong_dad.joy', x: 296, y: 202, h: 66 })] };
       case 'sun': return { bg: 'night', out: true, els: [m({ k: 'deco', d: 'hut', v: 'wood', x: 90, y: 124, s: 62 }), m({ k: 'deco', d: 'tree', x: 240, y: 110, s: 78 }), c({ k: 'chr', id: 'nemo_kids.kid1', x: 160, y: 198, h: 62 }), c({ k: 'chr', id: 'nemo_kids.kid2', x: 206, y: 198, h: 62 }), b({ k: 'deco', d: 'moon', x: 40, y: 34, s: 34 })] };
+      case 'brothers': return { bg: 'field', out: true, els: [m({ k: 'item', id: 'o_hay', x: 66, y: 186, w: 52, h: 56 }), m({ k: 'item', id: 'o_hay', x: 270, y: 186, w: 52, h: 56 }), c({ k: 'chr', id: 'nemo_kids.kid1', x: 128, y: 198, h: 64 }), c({ k: 'chr', id: 'baby.joy', x: 212, y: 200, h: 56 }), m({ k: 'item', id: 'o_jar', x: 168, y: 150, w: 40, h: 44 }), b({ k: 'deco', d: 'moon', x: 168, y: 34, s: 36 })] };
+      case 'snowqueen': return { bg: 'night', out: true, els: [m({ k: 'deco', d: 'tree', x: 56, y: 112, s: 70 }), m({ k: 'deco', d: 'tree', x: 288, y: 108, s: 76 }), c({ k: 'chr', id: 'nemo_kids.kid1', x: 128, y: 198, h: 64 }), c({ k: 'chr', id: 'baby.joy', x: 214, y: 200, h: 56 }), m({ k: 'emo', e: '❄️', x: 168, y: 70, s: 34 }), m({ k: 'emo', e: '❄️', x: 100, y: 52, s: 26 }), m({ k: 'emo', e: '❄️', x: 246, y: 60, s: 28 }), b({ k: 'deco', d: 'moon', x: 300, y: 30, s: 30 })] };
       default: return { bg: 'field', out: true, els: [m({ k: 'item', id: 'o_flag', x: 296, y: 186, w: 34, h: 58 }), c({ k: 'chr', id: 'nemo_dad.joy', x: 232, y: 200, h: 78 }), c({ k: 'chr', id: 'dong_dad.joy', x: 112, y: 200, h: 70 }), m({ k: 'item', id: 'o_sign', x: 170, y: 176, w: 42, h: 38 }), m({ k: 'deco', d: 'tree', x: 40, y: 120, s: 60 })] };
     }
   }

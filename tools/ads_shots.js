@@ -11,6 +11,7 @@ const APPS = [
   ['⑧ 정리', 'sort', 'sort/index.html', async (p) => { await p.evaluate(() => { SORT.unlockAll = true; GF.stack = []; GF.go('shome'); GF.go('splay', { n: 3 }); }); await p.waitForTimeout(900); await p.evaluate(() => SORT.debug.adOffer()); return 'ok'; }],
   ['⑨ 짝 맞추기', 'tile', 'tile/index.html', async (p) => { await p.evaluate(() => { TILE.unlockAll = true; GF.stack = []; GF.go('thome'); GF.go('tplay', { n: 3 }); }); await p.waitForTimeout(900); await p.evaluate(() => TILE.debug.adOffer()); return 'ok'; }],
 ];
+const inSafe = async (p) => p.evaluate(() => { const sf = document.getElementById('safe').getBoundingClientRect(); return [...document.querySelectorAll('.uk-sheet .uk-btn, .uk-sheet')].filter((e) => e.offsetParent).filter((e) => { const r = e.getBoundingClientRect(); return r.left < sf.left - 1 || r.right > sf.right + 1 || r.top < sf.top - 1 || r.bottom > sf.bottom + 1; }).length; });
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
@@ -29,17 +30,18 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     await go(p);
     await p.waitForTimeout(500);
     let txt = await p.evaluate(() => document.body.innerText);
-    if (kind === 'quizbtn') { ok(/광고 보고 스티커/.test(txt), name + ' 결과 카드 버튼 「광고 보고 스티커」'); await p.screenshot({ path: path.join(OUT, `ads_${key}_offer.png`) }); await p.evaluate(() => QUIZ.debug.adCard()); await p.waitForTimeout(500); await p.screenshot({ path: path.join(OUT, `ads_${key}_test.png`) }); await p.evaluate(() => document.querySelectorAll('.uk-sheet .acts .uk-btn')[1].click()); }
+    if (kind === 'quizbtn') { ok(/광고 보고 카드에 스티커/.test(txt), name + ' 결과 카드 버튼 「광고 보고 카드에 스티커」'); await p.screenshot({ path: path.join(OUT, `ads_${key}_offer.png`) }); await p.evaluate(() => QUIZ.debug.adCard()); await p.waitForTimeout(500); await p.screenshot({ path: path.join(OUT, `ads_${key}_test.png`) }); await p.evaluate(() => document.querySelectorAll('.uk-sheet .acts .uk-btn')[1].click()); }
     else if (kind === 'idle') { ok(/광고 보고 2배 받기/.test(txt), name + ' 다녀오셨어요 팝업의 「광고 보고 2배 받기」'); await p.screenshot({ path: path.join(OUT, `ads_${key}_offer.png`) }); await p.click('.uk-sheet .acts .uk-btn >> nth=1'); await p.waitForTimeout(500); await p.screenshot({ path: path.join(OUT, `ads_${key}_test.png`) }); }
-    else if (kind === 'result') { ok(/광고 보고 힌트 없이 별 다시 세기/.test(txt), name + ' 결과의 「광고 보고 힌트 없이 별 다시 세기」'); await p.screenshot({ path: path.join(OUT, `ads_${key}_offer.png`) }); await p.click('.uk-sheet .acts .uk-btn >> nth=0'); await p.waitForTimeout(500); await p.screenshot({ path: path.join(OUT, `ads_${key}_test.png`) }); }
+    else if (kind === 'result') { ok(/광고 보고 힌트 쓴 것 지우기/.test(txt), name + ' 결과의 「광고 보고 힌트 쓴 것 지우기」'); await p.screenshot({ path: path.join(OUT, `ads_${key}_offer.png`) }); await p.click('.uk-sheet .acts .uk-btn >> nth=0'); await p.waitForTimeout(500); await p.screenshot({ path: path.join(OUT, `ads_${key}_test.png`) }); }
     else {
       ok(/광고 보고 /.test(txt) && /안 봐도 괜찮아요/.test(txt), name + ' 「광고 보고 …」 + 「안 봐도 괜찮아요」 정직 표기');
+      ok((await inSafe(p)) === 0, name + ' 팝업이 화면 안에 있음');
       await p.screenshot({ path: path.join(OUT, `ads_${key}_offer.png`) });
       // 괜찮아요 = 아무 일 없음
       await p.click('.uk-sheet .acts .uk-btn >> nth=1'); await p.waitForTimeout(300); ok(await p.evaluate(() => !document.querySelector('.uk-sheet')), name + ' 「괜찮아요」 로 닫힘(보상·불이익 없음)');
       // 광고 보기 → 테스트 광고 → 끝까지 → 보상 팝업 닫힘
       await p.evaluate((k) => window[({ sort: 'SORT', tile: 'TILE', block: 'BLOCK', merge: 'MERGE' })[k]].debug.adOffer(), key); await p.waitForTimeout(300); await p.click('.uk-sheet .acts .uk-btn >> nth=0'); await p.waitForTimeout(500);
-      ok(await p.evaluate(() => !!document.querySelector('.uk-sheet [data-adtest], [data-adtest]')), name + ' 테스트 광고 팝업'); await p.screenshot({ path: path.join(OUT, `ads_${key}_test.png`) });
+      ok(await p.evaluate(() => !!document.querySelector('.uk-sheet [data-adtest], [data-adtest]')), name + ' 테스트 광고 팝업'); ok((await inSafe(p)) === 0, name + ' 테스트 광고 팝업이 화면 안에 있음(위로 밀리지 않음)'); await p.screenshot({ path: path.join(OUT, `ads_${key}_test.png`) });
     }
     // 광고를 못 불러오면 보상을 그냥 지급: 테스트 모드 끄고(네이티브 없음) 켜진 상태
     const free = await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.ads.config.test = false; let g = 0; GF.ads.run({ placement: 'x', onReward: () => { g++; } }); return g; }); ok(free === 1, name + ' 광고를 못 불러오면 보상을 그냥 지급');

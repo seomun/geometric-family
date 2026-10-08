@@ -515,6 +515,79 @@
      "bubble": "heart"
     }
    ]
+  },
+  {
+   "chapter": 13,
+   "title": "의좋은 형제",
+   "tale": "brothers",
+   "cuts": [
+    {
+     "text": "추수가 끝난 가을밤, 형(네모네 {kid1})과 아우(네모 {baby})는 각자 쌀가마를 곳간에 쌓아 두고 잠자리에 들었다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "형은 생각했다. 「아우는 식구가 늘었으니 더 필요하겠지.」 몰래 아우 곳간에 쌀 한 가마를 옮겨 놓았다.",
+     "chars": [
+      "nemo_kids.kid1"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "같은 시각 아우도 「형님은 살림이 크시니까…」 하며 형의 곳간에 한 가마를 옮겼다. 아침이 되니 쌀이 줄지 않아 둘 다 고개를 갸웃했다.",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid1"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "다음 밤, 둘은 가마를 지고 가다 달빛 아래서 마주쳤다. 웃음이 터졌고, 쌀가마를 나란히 내려놓고 함께 달을 올려다보았다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 14,
+   "title": "눈의 여왕",
+   "tale": "snowqueen",
+   "cuts": [
+    {
+     "text": "겨울밤, 카이(네모네 {kid1})의 마음에 차가운 눈 조각이 콕 박혀 카이는 말이 없어졌다.",
+     "chars": [
+      "nemo_kids.kid1"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "눈의 여왕(동그라미 엄마)은 카이를 하얀 성으로 데려갔다. 사납게 굴지 않고 조용히 지켜보기만 했다.",
+     "chars": [
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "친구 게르다(네모 {baby})가 눈길을 걸어 성까지 찾아왔다. 「카이야, 같이 집에 가자!」",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid1"
+     ],
+     "bubble": "heart"
+    },
+    {
+     "text": "게르다의 따뜻한 눈물에 눈 조각이 녹았다. 눈의 여왕도 고개를 끄덕여 길을 열어 주었고, 둘은 손을 잡고 돌아갔다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
   }
  ]
 }

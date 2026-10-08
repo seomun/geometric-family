@@ -26,7 +26,7 @@
       const id = ++A._id; A._cb[id] = done; const n = A.native();
       if (n) { try { n.show(kind, id, placement || ''); } catch (e) { A._event(id, 'fail'); } return; }
       // JS 테스트 광고(네이티브 없음): 흐름 시험용 팝업
-      const m = UK.modal({ title: '테스트 광고', body: '실제 광고가 나올 자리예요(개발용)', actions: [{ text: '끝까지 보기', cls: 'green', onclick: () => A._event(id, 'reward') }, { text: '닫기', cls: 'ghost', onclick: () => A._event(id, 'close') }], dismiss: false });
+      const m = UK.modal({ parent: document.getElementById('safe'), title: '테스트 광고', body: '실제 광고가 나올 자리예요(개발용)', actions: [{ text: '끝까지 보기', cls: 'green', onclick: () => A._event(id, 'reward') }, { text: '닫기', cls: 'ghost', onclick: () => A._event(id, 'close') }], dismiss: false });
       m.dataset.adtest = '1';
     },
     _event(id, ev) { const cb = A._cb[id]; if (!cb) return; delete A._cb[id]; cb(ev); },
@@ -77,7 +77,7 @@
   UK.result = function (o) {
     const sc = _result.call(UK, o), h = A.resultHook; A.resultHook = null;
     try {
-      if (h && sc && A.eligible()) { const acts = sc.querySelector('.acts'); if (acts) { const b = UK.btn({ text: '광고 보고 ' + h.ask, icon: 'gift', cls: 'gold', onclick: () => A.run({ placement: h.placement, onReward: () => { h.onReward(); b.disabled = true; b.lastChild.textContent = '받았어요'; } }) }, acts); acts.insertBefore(b, acts.firstChild); } }
+      if (h && sc && A.eligible()) { const acts = sc.querySelector('.acts'); if (acts) { const b = UK.btn({ text: '광고 보고 ' + h.ask, icon: 'gift', cls: 'gold', onclick: () => A.run({ placement: h.placement, onReward: () => { h.onReward(); b.disabled = true; b.lastChild.textContent = '받았어요'; } }) }, acts); if (h.sub) { const sm = document.createElement('small'); sm.textContent = h.sub; b.appendChild(sm); b.style.flexDirection = 'column'; b.style.gap = '2px'; } acts.insertBefore(b, acts.firstChild); } }
     } catch (e) {}
     return sc;
   };

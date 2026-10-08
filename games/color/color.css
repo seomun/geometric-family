@@ -31,3 +31,4 @@
 @keyframes clhang { 0% { transform: translateY(-260px) rotate(-14deg) scale(.6); opacity: 0 } 55% { transform: translateY(8px) rotate(3deg) scale(1.08); opacity: 1 } 100% { transform: none } }
 .cl-hang .acts { position: absolute; left: 0; right: 0; bottom: 12px; display: flex; justify-content: center; gap: 18px; }
 .cl-dr { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-height: 360px; overflow-y: auto; touch-action: pan-y; margin-bottom: 8px; } .cl-dr .cl-th { height: 92px; } .cl-dr .cl-th.off { opacity: .55; }
+.cl-th .sn { position: absolute; left: 4px; top: 2px; font-style: normal; font-size: 22px; line-height: 1; pointer-events: none; }

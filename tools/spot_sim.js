@@ -2,8 +2,8 @@
 const C = require('../games/spot/spot-core.js'), G = require('../games/spot/spot-gen.js'), D = require('../data/spot_levels.json');
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 const solveAll = (L) => { const found = L.rounds.map((R) => R.diffs.map(() => false)); for (const [ri, x, y] of C.solution(L)) { const i = C.hit(L.rounds[ri], found[ri], x, y); if (i < 0) return false; found[ri][i] = true; } return found.flat().every(Boolean); };
-ok(D.levels.length === 120 && D.levels.every((l) => C.verify(l).length === 0), '120판 검증(틀린 곳 목록 = 실제 차이, 크기·간격, 요소 전체가 화면 안)');
-ok(D.levels.every(solveAll), '정답 좌표를 모두 탭하면 판정이 모두 맞음(120/120)');
+ok(D.levels.length === 140 && D.levels.every((l) => C.verify(l).length === 0), '140판 검증(틀린 곳 목록 = 실제 차이, 크기·간격, 요소 전체가 화면 안)');
+ok(D.levels.every(solveAll), '정답 좌표를 모두 탭하면 판정이 모두 맞음(140/140)');
 ok(D.levels.every((l) => { const R = l.rounds[0], found = R.diffs.map(() => false); return C.hit(R, found, -50, -50) === -1; }), '빈 곳을 누르면 틀린 탭(-1)');
 const types = new Set(D.levels.map((l) => l.type)); ok(types.size >= 6, '판 종류 ' + types.size + '종: ' + [...types].join(','));
 let run = 1, mx = 1; for (let i = 1; i < D.levels.length; i++) { run = D.levels[i].type === D.levels[i - 1].type ? run + 1 : 1; mx = Math.max(mx, run); } ok(mx <= 3, '같은 종류 연속 최대 ' + mx + '판(≤3)');

@@ -96,7 +96,7 @@
       UK.btn({ text: '이미지 저장', icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, t.title); GF.sfx('star'); UK.toast('이미지로 저장했어요', r); } catch (e) { GF.sfx('hmm'); UK.toast('저장하지 못했어요', r); } } }, acts);
       UK.btn({ text: '집에 걸기', icon: 'home', cls: 'dong', onclick: () => GF.go('qhouse') }, acts);
       const stk = () => GF.ads && GF.ads.run({ placement: 'cardsticker', onReward: () => { res.stk = 1; save(); im.src = uri(cardSVG(res, t.title)); GF.sfx('star'); } });
-      if (!res.stk && GF.ads && GF.ads.eligible()) { const sb = UK.btn({ text: '광고 보고 스티커', icon: 'star', cls: 'sky', onclick: () => { stk(); sb.style.display = 'none'; } }, acts); }
+      if (!res.stk && GF.ads && GF.ads.eligible()) { const sb = UK.btn({ text: '광고 보고 카드에 스티커', icon: 'star', cls: 'sky ad', onclick: () => { stk(); sb.style.display = 'none'; } }, acts); }
       QZ.debug.adCard = stk;
     },
   });

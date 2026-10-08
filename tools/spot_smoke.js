@@ -23,7 +23,7 @@ const solveLevel = async (pg) => {
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent && !/^[★☆✔]+$/.test(e.textContent.trim())) { const f = parseFloat(getComputedStyle(e).fontSize); if (f < 17) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈 글자 크기 17px 이상 ' + small.slice(0, 4).join(','));
   await pg.evaluate(() => { GF.stack = []; GF.go('phome'); GF.go('plevels'); }); await pg.waitForSelector('.screen.on .sp-l'); await shot('levels');
-  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .sp-l.off').length, all: document.querySelectorAll('.screen.on .sp-l').length })); ok(lk.all === 120 && lk.off === 119, '레벨 목록 120개(처음엔 1만 열림)');
+  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .sp-l.off').length, all: document.querySelectorAll('.screen.on .sp-l').length })); const NLV = await pg.evaluate(() => SPOT.debug.D().levels.length); ok(lk.all === NLV && lk.off === NLV - 1, '레벨 목록 ' + NLV + '개(처음엔 1만 열림)');
   for (let n = A; n <= B; n++) {
     await pg.evaluate((nn) => { GF.stack = []; GF.go('phome'); GF.go('pplay', { n: nn }); SPOT.unlockAll = true; SPOT.fast = true; }, n); await pg.waitForSelector('.screen.on .sp-area');
     if (n === A || n === 4 || n === 6 || n === 9) await shot('play' + n);

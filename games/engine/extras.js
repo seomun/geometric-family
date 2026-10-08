@@ -94,6 +94,18 @@
   }
 
   X.tick = restTick; X._back = (ms) => { restStart -= ms; };   // 시험용
+
+  /* ---------------- 판 이어하기: 앱을 나갔다 와도 하던 판의 상태에서 다시 시작(되돌리기 기록만 사라짐) ---------------- */
+  const rkey = () => 'gf:' + X.cfg.app + ':resume';
+  X.resumeSave = function (S, id) { if (!X.ready) return; try { const o = {}; Object.keys(S).forEach((k) => { if (k !== 'L' && typeof S[k] !== 'function') o[k] = S[k]; }); LS(rkey(), { id, S: o }); } catch (e) {} };
+  X.resumeLoad = function (S, id) { if (!X.ready || window.__noResume) return false; const d = LS(rkey());   // window.__noResume: 자동 시험이 같은 판을 새로 시작할 때 쓰는 끔 스위치
+   if (!d || d.id !== id || !d.S) return false; Object.keys(d.S).forEach((k) => { S[k] = d.S[k]; }); return true; };
+  X.resumeClear = function () { if (X.ready) { try { localStorage.removeItem(rkey()); } catch (e) {} } };
+  /** 레벨 목록 맨 위: 별을 다 못 모은 판이 있으면 가장 앞 판으로 가는 부담 없는 버튼 */
+  X.retryBanner = function (parent, stars, go) {
+    const ids = Object.keys(stars || {}).map(Number).filter((n) => stars[n] > 0 && stars[n] < 3).sort((a, b) => a - b); if (!ids.length) return null;
+    const w = el('div', 'xt-retry', parent), b = UK.btn({ text: '별 더 모으기 · ' + ids.length + '판', icon: 'star', cls: 'gold block', onclick: () => { GF.sfx('pick'); go(ids[0]); } }, w); return b;
+  };
   X.open = openSettings; X.openStats = openStats; X.openBadges = openBadges; X.openAttend = openAttend;
   X.init = function (cfg) {
     X.cfg = cfg; X.ready = true; applyBig(); const adult = !cfg.kid;

@@ -84,7 +84,7 @@
   GF.screen('plevels', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'sp'); GF.bg('indoor', r); bar(); const sc = el('div', 'sp-scroll', r);
+      r.classList.add('uk', 'sp'); GF.bg('indoor', r); bar(); const sc = el('div', 'sp-scroll', r); GF.extras.retryBanner(sc, SV.stars, (n) => GF.go('pplay', { n }));
       D.chapters.forEach((name, ci) => {
         const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return; const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);
         el('div', 'sp-ch', sc, `<b>${ci + 1}장 · ${name}</b><span>★ ${got}/${ls.length * 3}</span>`); const g = el('div', 'sp-lv', sc);

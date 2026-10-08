@@ -69,6 +69,7 @@
       case 'junk': return junkLeft(S) === 0;
       case 'combo': return S.got.combo >= g.n;
       case 'star': return S.got.stars >= S.L.stars.length;
+      case 'endless': return false;   // 끝없이: 이기는 일은 없고 자리가 없을 때 끝난다
       default: return S.got.lines >= g.n;   // lines · limit · solo
     }
   }
@@ -80,6 +81,7 @@
       case 'junk': { const tot = (S.L.pre || []).filter((p) => p[1] === 9).length || 1; return 1 - junkLeft(S) / tot; }
       case 'combo': return Math.min(1, S.got.combo / g.n);
       case 'star': return Math.min(1, S.got.stars / Math.max(1, S.L.stars.length));
+      case 'endless': return 0;
       default: return Math.min(1, S.got.lines / g.n);
     }
   }

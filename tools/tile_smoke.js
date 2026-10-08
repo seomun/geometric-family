@@ -14,7 +14,7 @@ const solveLevel = async (pg) => {
 };
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
-  const pg = await (await b.newContext({ viewport: { width: 412, height: 915 }, hasTouch: true })).newPage(), errs = [];
+  const pg = await (await b.newContext({ viewport: { width: 412, height: 915 }, hasTouch: true })).newPage(), errs = []; await pg.addInitScript(() => { window.__noResume = true; });
   pg.on('pageerror', (e) => errs.push(e.message)); pg.on('console', (m) => m.type() === 'error' && errs.push(m.text()));
   await pg.goto(URL); await pg.waitForSelector('.tl-btns', { timeout: 10000 });
   const shot = async (n) => { await pg.waitForTimeout(500); await pg.screenshot({ path: path.join(__dirname, '..', 'notes', 'snapshots', '2026-10-08_tile_' + n + '.png') }); };

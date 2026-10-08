@@ -81,7 +81,7 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'mg'); GF.bg('indoor', r); bar();
-      const sc = el('div', 'mg-scroll', r);
+      const sc = el('div', 'mg-scroll', r); GF.extras.retryBanner(sc, SV.stars, (n) => GF.go('mplay', { n }));
       D.chapters.forEach((name, ci) => {
         const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return;
         const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);

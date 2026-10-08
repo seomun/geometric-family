@@ -54,6 +54,12 @@
     }
     return best;
   }
-  const api = { mulberry, CHAPTERS, TYPE_NAME, typeOf, tagOf, make };
+  /** 끝없이 모드: 조각이 끝없이 이어지고(처음엔 쉬운 조각, 갈수록 큰 조각) 놓을 자리가 없을 때 끝난다. 벌 없음, 최고 점수만 기록 */
+  function makeEndless(seed) {
+    const rng = mulberry((seed || 12345) * 7919 + 17), L = { id: 'endless', kind: 'endless', chapter: 0, tag: 'growth', type: 'lines', goal: { t: 'endless' }, pre: [], stars: [], queue: [], lim: null, rule: -1, par: 0, s2: 0, s3: 0, solution: [] };
+    for (let i = 0; i < 3000; i++) L.queue.push([pieceFor(rng, Math.min(0.9, i / 400), i < 9 ? 'rest' : 'growth'), (rng() * 3) | 0, 0]);
+    return L;
+  }
+  const api = { mulberry, CHAPTERS, TYPE_NAME, typeOf, tagOf, make, makeEndless };
   if (typeof module !== 'undefined') module.exports = api; else root.BlockGen = api;
 })(typeof window !== 'undefined' ? window : globalThis);

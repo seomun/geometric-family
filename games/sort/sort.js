@@ -66,7 +66,7 @@
   GF.screen('slevels', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'sr'); GF.bg('indoor', r); bar(); const sc = el('div', 'sr-scroll', r);
+      r.classList.add('uk', 'sr'); GF.bg('indoor', r); bar(); const sc = el('div', 'sr-scroll', r); GF.extras.retryBanner(sc, SV.stars, (n) => GF.go('splay', { n }));
       D.chapters.forEach((name, ci) => {
         const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return; const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);
         el('div', 'sr-ch', sc, `<b>${ci + 1}장 · ${name}</b><span>★ ${got}/${ls.length * 3}</span>`); const g = el('div', 'sr-lv', sc);
@@ -101,6 +101,7 @@
       const bdU = el('i', 'sr-bd', bu), bdX = el('i', 'sr-bd', bx);
       let tubeEls = [];
       function draw() {
+        if (!LV.kind && GF.extras && !S.won) GF.extras.resumeSave(S, LV.id);
         area.innerHTML = ''; tubeEls = []; const nt = S.tubes.length, rows = nt > 6 ? 2 : 1, per = Math.ceil(nt / rows), cmax = Math.max(...S.caps), rowH = 420 / rows, isz = Math.max(26, Math.min(44, Math.floor((rowH - 34) / cmax) - 3)), tw = Math.min(58, Math.floor(344 / per) - 6);
         for (let ro = 0; ro < rows; ro++) {
           const row = el('div', 'sr-row', area);
@@ -127,14 +128,14 @@
       function undo() { if (busy || S.won) return; if (S.used.undo >= 3) { say('되돌리기는 한 판 세 번'); return; } if (!hist.length) return; const u0 = S.used.undo + 1, ex = S.used.extra, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.extra = ex; S.used.hint = hn; sel = -1; hintP = null; streak = 0; GF.sfx('tap'); draw(); }
       function addExtra() { if (busy || S.won) return; if (S.used.extra) { say('칸 더는 한 판 한 번'); return; } C.addTube(S); S.used.extra = 1; hist = []; sel = -1; GF.sfx('star'); draw(); say('빈 칸이 하나 생겼어요'); }
       function hint() { if (busy || S.won) return; const h = C.hint(S); if (!h) { say('되돌리거나 다시 해 봐요'); return; } S.used.hint++; hintP = h; sel = -1; GF.sfx('pick'); draw(); setTimeout(() => { if (hintP === h) { hintP = null; if (area.isConnected) draw(); } }, slow(2600)); }
-      function again() { if (busy) return; GF.sfx('tap'); GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id }); }
+      function again() { if (busy) return; GF.extras && GF.extras.resumeClear(); GF.sfx('tap'); GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id }); }
       function result(stars) {
         const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '옮긴 횟수 ' + S.moves }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: '정리 끝!', stars, chips, parent: r, onNext: next ? () => GF.replace('splay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
       }
       function finish() {
-        busy = true; const st = S.moves <= LV.par + 4 ? 3 : S.moves <= LV.par + 12 ? 2 : 1;
+        busy = true; GF.extras && GF.extras.resumeClear(); const st = S.moves <= LV.par + 4 ? 3 : S.moves <= LV.par + 12 ? 2 : 1;
         if (!LV.kind) { SV.stars[LV.id] = Math.max(SV.stars[LV.id] || 0, st); if (REW[LV.id] && Room.grant(REW[LV.id])) gained.push(REW[LV.id]); }
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
@@ -147,6 +148,7 @@
         }, slow(650));
       }
       SR.debug.level = () => LV; SR.debug.state = () => S; SR.debug.tap = (i) => tap(i); SR.debug.undo = undo; SR.debug.extra = addExtra; SR.debug.hint = hint; SR.debug.busy = () => busy; SR.debug.tubes = () => tubeEls; SR.debug.sel = () => sel;
+      if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '칸을 눌러 집고, 다른 칸에 놓아요' : '같은 그림 위나 빈 칸에 놓을 수 있어요'; } else if (t0 && !SV.tips[LV.type] && LV.type !== 'sort') { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));

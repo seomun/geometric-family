@@ -15,7 +15,7 @@ const solveLevel = async (pg) => {
 };
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
-  const pg = await (await b.newContext({ viewport: { width: 412, height: 915 }, hasTouch: true })).newPage(), errs = [];
+  const pg = await (await b.newContext({ viewport: { width: 412, height: 915 }, hasTouch: true })).newPage(), errs = []; await pg.addInitScript(() => { window.__noResume = true; });
   pg.on('pageerror', (e) => errs.push(e.message)); pg.on('console', (m) => m.type() === 'error' && errs.push(m.text()));
   await pg.goto(URL); await pg.waitForSelector('.bk-btns', { timeout: 10000 });
   const shot = async (n) => { await pg.waitForTimeout(500); await pg.screenshot({ path: path.join(__dirname, '..', 'notes', 'snapshots', '2026-10-07_block_' + n + '.png') }); };
@@ -63,6 +63,13 @@ const solveLevel = async (pg) => {
     }
     await pg.evaluate(() => { GF.stack = []; GF.go('bhome'); GF.go('btrio'); }); await pg.waitForSelector('.screen.on .bk-trio'); await shot('trio');
     await pg.evaluate(() => { GF.stack = []; GF.go('bhome'); GF.go('bhouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');
+    // 끝없이 모드: 아무 데나 놓다가 자리가 없으면 벌 없이 끝, 최고 기록 저장, 한 번 더
+    await pg.evaluate(() => { BLOCK.fast = true; GF.stack = []; GF.go('bhome'); GF.go('blevels'); }); await pg.waitForSelector('.screen.on .bk-endless .uk-btn'); await pg.click('.screen.on .bk-endless .uk-btn'); await pg.waitForSelector('.screen.on .bk-board');
+    const endL = await pg.evaluate(() => BLOCK.debug.level()); ok(endL.kind === 'endless' && endL.queue.length >= 1000, '끝없이: 조각 ' + endL.queue.length + '개 준비');
+    for (let g = 0; g < 400; g++) { const mv = await pg.evaluate(() => { const S = BLOCK.debug.state(); const M = BlockCore; const m = M.moves(S); return m.length ? m[(Math.random() * m.length) | 0] : null; }); if (!mv) break; await pg.evaluate((m) => BLOCK.debug.place(m[0], m[1], m[2]), mv); await pg.waitForTimeout(8); if (await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet'))) break; }
+    await pg.waitForSelector('.screen.on .uk-sheet', { timeout: 6000 }).catch(() => {}); ok(await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet')), '끝없이: 자리가 없으면 결과 시트(벌 없음)');
+    ok(await pg.evaluate(() => (BLOCK.debug.SV().endless || {}).best > 0), '끝없이: 최고 기록 저장 ' + await pg.evaluate(() => JSON.stringify(BLOCK.debug.SV().endless)));
+    await pg.click('.screen.on .uk-sheet .acts .uk-btn >> nth=0'); await pg.waitForSelector('.screen.on .bk-board'); ok(await pg.evaluate(() => BLOCK.debug.level().kind === 'endless' && BLOCK.debug.state().used === 0), '끝없이: 한 번 더로 새 판');
   }
   ok(errs.length === 0, '콘솔 오류 없음 ' + errs.slice(0, 3).join(' | '));
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

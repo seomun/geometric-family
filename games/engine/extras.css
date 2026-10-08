@@ -20,3 +20,4 @@
 #b-set svg { width: 30px; height: 30px; }
 /* 큰 글씨: 키트 글자 토큰을 키운다(앱 안의 고정 px 글자는 그대로) */
 html[data-big="1"] { --uk-fs-cap: 22px !important; --uk-fs-body: 24px !important; --uk-fs-h: 28px !important; }
+.xt-retry { padding: 4px 4px 2px; } .xt-retry .uk-btn { min-height: 52px; }

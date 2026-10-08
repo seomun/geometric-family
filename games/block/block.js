@@ -11,6 +11,7 @@
   const TYPE_TIP = { lines: '가로나 세로 줄을 가득 채우면 지워져요', family: '목표 도형 색 칸이 든 줄을 지워요', junk: '갈색 짐이 든 줄을 지우면 짐이 사라져요', combo: '두 줄 이상을 한꺼번에 지워 보세요', star: '반짝 별이 든 줄을 지워 별을 모아요', limit: '정해진 조각 수 안에 끝내요', solo: '한 가족의 조각만 나와요' };
   const RULE_TXT = [['네모 규칙', '두 줄 이상 한꺼번에 지우면 점 조각을 돌려받아요', 'nemo'], ['세모 규칙', '반짝 조각이 든 줄을 지우면 옆 줄까지 껑충 지워져요', 'semo'], ['동그라미 규칙', '4×4 방도 가득 차면 지워져요', 'dong']];
   const slow = (ms) => (BK.fast ? 0 : ms);
+  const endScore = (S) => S.got.lines * 10 + S.got.combo * 10 + S.used;   // 끝없이 점수
   const uri = (svg) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   const MARK = [  // 가족 표시(색만으로 구분하지 않게 칸 안에 모양을 넣는다)
     '<rect x="14" y="14" width="22" height="22" rx="5" fill="#fff" opacity=".85"/>', '<path d="M25 12L39 37H11z" fill="#fff" opacity=".85"/>', '<circle cx="25" cy="25" r="12" fill="#fff" opacity=".85"/>'];
@@ -66,7 +67,8 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'bk'); GF.bg('indoor', r); bar();
-      const sc = el('div', 'bk-scroll', r);
+      const sc = el('div', 'bk-scroll', r), best = (SV.endless || {}).best || 0; GF.extras.retryBanner(sc, SV.stars, (n) => GF.go('bplay', { n }));
+      const en = UK.btn({ text: '끝없이' + (best ? ' · 최고 ' + best : ''), icon: 'play', cls: 'pink block', onclick: () => { GF.sfx('pick'); GF.go('bplay', { level: G.makeEndless(Date.now() % 100000) }); } }, el('div', 'bk-endless', sc)); en.setAttribute('aria-label', 'endless');
       D.chapters.forEach((name, ci) => {
         const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return;
         const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);
@@ -104,13 +106,13 @@
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; let S = M.newGame(LV), hist = [], undone = 0, busy = false, hint = null, sel = -1, streak = 0; const gained = [];
       if (!p.level) { SV.last = LV.id; save(); }
       bar();
-      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
+      const title = LV.kind === 'endless' ? '끝없이' : LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
       el('div', 'bk-hd', r, `<b>${title}</b><span>${LV.kind ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'lines' ? `<em class="bk-type">${D.types[LV.type]}</em>` : ''));
       const goals = el('div', 'bk-goals', r), board = el('div', 'bk-board', r), tray = el('div', 'bk-tray', r), tip = el('div', 'uk-caption bk-tip', r), btns = el('div', 'bk-btns2', r);
       const cs = 36, gap = 2, pitch = cs + gap; board.style.width = board.style.height = N * pitch + gap + 'px';
       const cells = []; for (let i = 0; i < 64; i++) { const c = el('button', 'bk-cell', board); c.dataset.i = i; c.style.cssText = `left:${(i % N) * pitch + gap}px;top:${((i / N) | 0) * pitch + gap}px;width:${cs}px;height:${cs}px`; c.setAttribute('aria-label', '칸 ' + (i + 1)); cells.push(c); }
       const bu = UK.btn({ text: '되돌리기', icon: 'replay', cls: 'ghost sm', onclick: undo }, btns); UK.btn({ text: '힌트', icon: 'info', cls: 'sky sm', onclick: showHint }, btns);
-      const lbl = { lines: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, solo: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, limit: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, combo: () => `한꺼번에 ${S.got.combo}/${LV.goal.n}`, junk: () => `짐 ${M.junkLeft(S)}`, star: () => `별 ${S.got.stars}/${LV.stars.length}`, family: () => `${Math.min(S.got.fam[LV.goal.f], LV.goal.n)}/${LV.goal.n}` };
+      const lbl = { endless: () => `점수 ${endScore(S)} · 최고 ${Math.max((SV.endless || {}).best || 0, endScore(S))}`, lines: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, solo: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, limit: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, combo: () => `한꺼번에 ${S.got.combo}/${LV.goal.n}`, junk: () => `짐 ${M.junkLeft(S)}`, star: () => `별 ${S.got.stars}/${LV.stars.length}`, family: () => `${Math.min(S.got.fam[LV.goal.f], LV.goal.n)}/${LV.goal.n}` };
       function goalChips() {
         goals.innerHTML = ''; const ch = el('div', 'bk-goal' + (M.won(S) ? ' ok' : ''), goals);
         if (LV.goal.t === 'family') { const i = el('img', 'bk-gi', ch); i.src = tile(LV.goal.f); } else if (LV.goal.t === 'junk') { const i = el('img', 'bk-gi', ch); i.src = tile(9); } else if (LV.goal.t === 'star') el('b', 'bk-gs', ch, '★');
@@ -124,6 +126,7 @@
         d.dataset.p = t.p; return d;
       }
       function draw(clearing) {
+        if (!LV.kind && GF.extras && !M.won(S)) GF.extras.resumeSave(S, LV.id);
         cells.forEach((c, i) => {
           c.className = 'bk-cell'; c.innerHTML = ''; const f = S.fam[i]; if (f >= 0) { const im = el('img', '', c); im.src = tile(f, S.shiny[i]); c.classList.add('full'); if (S.shiny[i]) c.classList.add('sh'); }
           if (S.star.indexOf(i) >= 0) { c.classList.add('st'); el('b', 'bk-star', c, '★'); }
@@ -189,7 +192,7 @@
         UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('bplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
       }
       function finish() {
-        busy = true; const st = S.used <= LV.s3 ? 3 : S.used <= LV.s2 ? 2 : 1;
+        busy = true; GF.extras && GF.extras.resumeClear(); const st = S.used <= LV.s3 ? 3 : S.used <= LV.s2 ? 2 : 1;
         if (!LV.kind) { const first = !SV.stars[LV.id]; SV.stars[LV.id] = Math.max(SV.stars[LV.id] || 0, st); if (REW[LV.id] && roomOK && Room.grant(REW[LV.id])) gained.push(REW[LV.id]); void first; }
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
@@ -201,8 +204,15 @@
           else result(st);
         }, slow(650));
       }
-      function lose() { busy = true; say(LV.lim != null && S.used >= LV.lim ? '조각을 다 썼어요! 한 번 더' : '놓을 자리가 없어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
-      BK.debug.cells = () => cells; BK.debug.place = (slot, r0, c0) => doPlace(slot, r0, c0); BK.debug.state = () => S; BK.debug.level = () => LV; BK.debug.undo = undo; BK.debug.hint = showHint; BK.debug.busy = () => busy; BK.debug.drag = dragStart;
+      function lose() {
+        GF.extras && GF.extras.resumeClear();
+        if (LV.kind === 'endless') {   // 끝없이: 벌 없음. 점수와 최고 기록만 남기고 한 번 더
+          busy = true; const sc = endScore(S), e = SV.endless || (SV.endless = { best: 0, plays: 0 }), isBest = sc > e.best; e.plays++; if (isBest) e.best = sc; save(); GF.extras && GF.extras.check(); GF.sfx(isBest ? 'star' : 'hmm');
+          setTimeout(() => { const m = UK.modal({ title: isBest ? '새 최고 기록!' : '끝!', big: String(sc), chips: [{ icon: 'star', text: '최고 ' + e.best }, { icon: 'gift', text: '조각 ' + S.used + '개' }, { icon: 'info', text: '지운 줄 ' + S.got.lines }], parent: r, actions: [{ text: '한 번 더', cls: 'green', icon: 'replay', onclick: () => GF.replace('bplay', { level: G.makeEndless(Date.now() % 100000) }) }, { text: '처음으로', cls: 'ghost', icon: 'home', onclick: () => GF.home2() }] }); UK.confetti(m); }, slow(500)); return;
+        }
+        busy = true; say(LV.lim != null && S.used >= LV.lim ? '조각을 다 썼어요! 한 번 더' : '놓을 자리가 없어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
+      BK.debug.cells = () => cells; BK.debug.endScore = () => endScore(S); BK.debug.place = (slot, r0, c0) => doPlace(slot, r0, c0); BK.debug.state = () => S; BK.debug.level = () => LV; BK.debug.undo = undo; BK.debug.hint = showHint; BK.debug.busy = () => busy; BK.debug.drag = dragStart;
+      if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '조각을 끌어다 판에 놓아요' : '줄이 가득 차면 지워져요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (LV.id <= 2 && !LV.kind) setTimeout(() => { const slot = tray.querySelector('.bk-slot[data-k]'), mv = LV.solution[0], c = mv && cells[mv[1] * N + mv[2]]; if (slot && c && c.isConnected && !hist.length) UK.finger(r, slot, { to: c, ms: 7000 }); }, 1200);   // 처음 두 판: 조각을 끌어다 놓는 시늉
@@ -224,9 +234,9 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'block_levels', 'block_extra', 'room_items', 'art_slots'], storeKey: 'gf:block:ui:v1', async start() {
       D = GF.data.block_levels; X = GF.data.block_extra;
       Room.init({ data: GF.data.room_items, game: 'block', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
-      GF.extras.init(Object.assign({ app: 'block', kid: false, rewardSet: 'outer', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'outer', itemTotal: 20, icon: '🧱' })));
+      GF.extras.init(Object.assign({ app: 'block', kid: false, rewardSet: 'outer', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, (() => { const la = GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'outer', itemTotal: 20, icon: '🧱' }); const st = la.stats; la.stats = () => st().concat([['끝없이 최고', (SV.endless || {}).best || 0]]); la.badges.push({ id: 'e100', icon: '♾️', name: '끝없이 100점', desc: '끝없이 모드에서 100점', ok: () => ((SV.endless || {}).best || 0) >= 100 }, { id: 'e300', icon: '🚀', name: '끝없이 300점', desc: '끝없이 모드에서 300점', ok: () => ((SV.endless || {}).best || 0) >= 300 }); return la; })()));
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('bhome');
-      BK.debug.D = () => D; BK.debug.SV = () => SV; BK.debug.reset = () => { SV = blank(); save(); }; BK.debug.dailyLevel = dailyLevel; BK.debug.seasonLevel = seasonLevel; BK.debug.trioLevels = trioLevels; BK.debug.X = () => X; BK.debug.REW = REW;
+      BK.debug.D = () => D; BK.debug.endless = (seed) => G.makeEndless(seed); BK.debug.SV = () => SV; BK.debug.reset = () => { SV = blank(); save(); }; BK.debug.dailyLevel = dailyLevel; BK.debug.seasonLevel = seasonLevel; BK.debug.trioLevels = trioLevels; BK.debug.X = () => X; BK.debug.REW = REW;
     } }, opts || {}));
   };
 })();

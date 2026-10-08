@@ -73,7 +73,7 @@
   GF.screen('tlevels', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'tl'); GF.bg('indoor', r); bar(); const sc = el('div', 'tl-scroll', r);
+      r.classList.add('uk', 'tl'); GF.bg('indoor', r); bar(); const sc = el('div', 'tl-scroll', r); GF.extras.retryBanner(sc, SV.stars, (n) => GF.go('tplay', { n }));
       D.chapters.forEach((name, ci) => {
         const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return; const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);
         el('div', 'tl-ch', sc, `<b>${ci + 1}장 · ${name}</b><span>★ ${got}/${ls.length * 3}</span>`); const g = el('div', 'tl-lv', sc);
@@ -120,6 +120,7 @@
         if (S.tray.length >= S.cap - 1 && !S.won) trayW.classList.add('warn'); else trayW.classList.remove('warn');
       }
       function draw() {
+        if (!LV.kind && GF.extras && !S.won) GF.extras.resumeSave(S, LV.id);
         LV.tiles.forEach((t, i) => {
           const d = tiles[i]; d.style.display = S.gone[i] ? 'none' : ''; if (S.gone[i]) return; const free = C.isFree(S, i); d.className = 'tl-t' + (free ? '' : ' cov') + (S.wildOf[i] ? ' wild' : '') + (hintI === i ? ' hint' : '') + (t.lock && !S.keyDone ? ' lock' : ''); d.innerHTML = ''; art(S.wildOf[i] ? 'wild' : S.kinds[i], d); if (S.wildOf[i]) art(S.kinds[i], d).classList.add('under'); if (t.lock && !S.keyDone) el('i', 'lk', d, '🔒');
         });
@@ -142,7 +143,7 @@
         UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('tplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
       }
       function finish() {
-        busy = true; const tools = S.used.undo + S.used.shuffle + S.used.hint, st = tools === 0 ? 3 : tools <= 2 ? 2 : 1;
+        busy = true; GF.extras && GF.extras.resumeClear(); const tools = S.used.undo + S.used.shuffle + S.used.hint, st = tools === 0 ? 3 : tools <= 2 ? 2 : 1;
         if (!LV.kind) { SV.stars[LV.id] = Math.max(SV.stars[LV.id] || 0, st); if (REW[LV.id] && Room.grant(REW[LV.id])) gained.push(REW[LV.id]); }
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
@@ -154,8 +155,9 @@
           else result(st);
         }, slow(650));
       }
-      function lose() { busy = true; say('가득 찼어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
+      function lose() { busy = true; GF.extras && GF.extras.resumeClear(); say('가득 찼어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
       TL.debug.level = () => LV; TL.debug.state = () => S; TL.debug.press = (i) => tap(i); TL.debug.undo = undo; TL.debug.shuffle = doShuffle; TL.debug.hint = hint; TL.debug.busy = () => busy; TL.debug.tiles = () => tiles;
+      if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '눌러서 바구니에 모아요' : '같은 그림이 모이면 톡!'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));

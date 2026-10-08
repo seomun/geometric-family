@@ -25,7 +25,7 @@
   R.addDays = (n, k) => { const d = toDate(n); d.setDate(d.getDate() + k); return toNum(d); };
   const weekDays = (n) => { const ws = R.weekStart(n), o = []; for (let d = ws; d <= n; d = R.addDays(d, 1)) o.push(d); return o; };
   /** 점수 공통식: 효율(par/행동 수)·도구·다시 하기. 사람과 가족 봇이 같은 식을 쓴다 */
-  R.clamp = (v) => Math.max(50, Math.min(1250, Math.round(v)));
+  R.clamp = (v) => Math.max(50, Math.min(1500, Math.round(v)));
   R.eff = (o) => R.clamp(1000 * (o.par || 1) / Math.max(1, o.actions || 1) - 60 * (o.tools || 0) - 150 * ((o.attempts || 1) - 1));
   const key = () => 'gf:' + R.cfg.app + ':rank';
   const load = () => Object.assign({ top: {}, day: {}, claimed: {}, tries: {}, cache: {} }, LS(key()) || {});
@@ -37,21 +37,47 @@
     if (p.fam === 1) return { eps: rng() < 0.5 ? 0.01 : 0.6, absent: false };            // 대박 아니면 꽝
     return { eps: 0.03, absent: rng() < 0.12 };                                          // 높고 일정, 가끔 빈자리
   }
-  /** 가족 한 명의 그날 점수(결정적). 쉬는 날이면 null */
-  R.famScore = function (boardId, date, p) {
-    const b = R.cfg.boards[boardId], ck = boardId + ':' + date + ':' + p.id, S = load(); if (S.cache[ck] !== undefined) return S.cache[ck];
-    const base = R.cfg.app + ':' + boardId + ':' + date + ':' + p.id, rng = mulberry(hash(base)), st = style(p, rng); let out = null;
-    if (!st.absent) {
-      const L = b.levelAt ? b.levelAt(date, R.dayNumOf(date)) : null; out = 50;
-      for (let att = 0; att < 3; att++) { const r = b.bot(L, p.fam, mulberry(hash(base + ':' + att)), st.eps, date); if (r && r.won) { out = Math.max(50, Math.round(r.score) - 150 * att); break; } }
-    }
-    S.cache[ck] = out; const keys = Object.keys(S.cache); if (keys.length > 400) keys.sort().slice(0, keys.length - 300).forEach((k) => delete S.cache[k]); save(S); return out;
+  /** 가족 한 명의 「원점수」(봇 플레이 결과). 쉬는 날이면 null — 동점 풀기·스포트라이트 전의 값 */
+  function rawScore(boardId, date, p, forcePresent) {
+    const b = R.cfg.boards[boardId], base = R.cfg.app + ':' + boardId + ':' + date + ':' + p.id, rng = mulberry(hash(base)), st = style(p, rng);
+    if (st.absent && !forcePresent) return null;
+    const L = b.levelAt ? b.levelAt(date, R.dayNumOf(date)) : null;
+    for (let att = 0; att < 3; att++) { const r = b.bot(L, p.fam, mulberry(hash(base + ':' + att)), st.eps, date); if (r && r.won) return Math.max(50, Math.round(r.score) - 150 * att); }
+    return 120 + Math.floor(rng() * 160);   // 끝내 못 깬 날도 같은 바닥에 몰리지 않게(120~279)
+  }
+  /** 같은 점수는 사람 해시 순으로 1점씩 벌려 봇끼리 동점이 없게 한다(결정적) */
+  R.untie = function (items, seed) {   // items: [{id, s}] (s 가 null 이면 제외). 반환 {id: 새 점수}
+    const by = {}; items.filter((x) => x.s != null).forEach((x) => { (by[x.s] = by[x.s] || []).push(x); }); const out = {};
+    Object.keys(by).forEach((k) => { const g = by[k].slice().sort((a, b) => hash(a.id + seed) - hash(b.id + seed)); g.forEach((x, i) => { out[x.id] = x.s - i; }); });
+    // 벌린 값이 다른 사람의 값과 다시 겹치면 겹치지 않을 때까지 한 번 더
+    const seen = new Set(); Object.keys(out).sort((a, b) => out[b] - out[a] || hash(a + seed) - hash(b + seed)).forEach((id) => { while (seen.has(out[id])) out[id]--; seen.add(out[id]); }); return out;
   };
+  /** 그날 가족 5명의 최종 점수 [{p, score|null}] (결정적·캐시): 봇 점수 + 주간 스포트라이트 + 흩뿌리기 + 동점 풀기
+     주간 스포트라이트: 월~일 7일 중 세모 2일·네모 1일·동그라미 1일을 시드로 골라 그날 그 가족 한 명(둘 중 시드로 번갈아)이 봇 중 1위가 되는 「대박 날」 — 어느 가족도 한 주에 한 번은 1위, 세모는 눈에 띄게 */
+  R.famDay = function (boardId, date) {
+    const S = load(), ck = 'D:' + boardId + ':' + date; if (S.cache[ck]) return S.cache[ck].map((s, i) => ({ p: PLAYERS[i], score: s }));
+    const raw = PLAYERS.map((p) => rawScore(boardId, date, p, false));
+    const ws = R.weekStart(date), dayIdx = Math.round((toDate(date) - toDate(ws)) / 86400000), wr = mulberry(hash(R.cfg.app + ':' + boardId + ':' + ws)), ord = [0, 1, 2, 3, 4, 5, 6];
+    for (let i = ord.length - 1; i > 0; i--) { const j = (wr() * (i + 1)) | 0; [ord[i], ord[j]] = [ord[j], ord[i]]; }
+    const spot = ord[0] === dayIdx || ord[1] === dayIdx ? 1 : ord[2] === dayIdx ? 0 : ord[3] === dayIdx ? 2 : -1, dr = mulberry(hash(R.cfg.app + ':' + boardId + ':' + date + ':spot'));
+    const jit = PLAYERS.map((p) => (hash(p.id + ':' + date + ':' + boardId) % 33) - 16);   // 점수를 살짝 흩뿌린다(±16)
+    let sc = raw.map((v, i) => (v == null ? null : Math.max(50, v + jit[i])));
+    if (spot >= 0) {
+      const mem = PLAYERS.map((p, i) => i).filter((i) => PLAYERS[i].fam === spot), who = mem[(dr() * mem.length) | 0];
+      if (sc[who] == null) { const v = rawScore(boardId, date, PLAYERS[who], true); sc[who] = Math.max(50, v + jit[who]); }
+      const top = Math.max.apply(null, sc.filter((v, i) => v != null && i !== who)); sc[who] = Math.max(sc[who], top + 8 + Math.floor(dr() * 46));
+    }
+    const un = R.untie(PLAYERS.map((p, i) => ({ id: p.id, s: sc[i] })), boardId + ':' + date); sc = PLAYERS.map((p) => (un[p.id] == null ? null : un[p.id]));
+    S.cache[ck] = sc; const keys = Object.keys(S.cache); if (keys.length > 300) keys.sort().slice(0, keys.length - 240).forEach((k) => delete S.cache[k]); save(S);
+    return sc.map((s, i) => ({ p: PLAYERS[i], score: s }));
+  };
+  R.famScore = (boardId, date, p) => R.famDay(boardId, date)[PLAYERS.indexOf(PLAYERS.find((x) => x.id === p.id))].score;
   R.myDay = (boardId, date) => ((load().day[boardId] || {})[date]) || null;
   R.myBest = (boardId, dates) => dates.reduce((a, d) => Math.max(a, R.myDay(boardId, d) || 0), 0) || null;
   /** 한 칸 순위표: scope 'day' | 'week'. 반환 [{p|me, score|null, rank|null}] */
   R.rows = function (boardId, scope) {
     const today = R.today(), dates = scope === 'week' ? weekDays(today) : [today], rows = PLAYERS.map((p) => { let best = null; dates.forEach((d) => { const s = R.famScore(boardId, d, p); if (s != null && (best == null || s > best)) best = s; }); return { p, name: p.name, score: best }; });
+    if (scope === 'week') { const un = R.untie(rows.map((r) => ({ id: r.p.id, s: r.score })), boardId + ':w' + R.weekStart(today)); rows.forEach((r) => { if (r.score != null) r.score = un[r.p.id]; }); }
     rows.push({ me: true, name: '나', score: R.myBest(boardId, dates) });
     const scored = rows.filter((r) => r.score != null).sort((a, b) => b.score - a.score || (a.me ? -1 : 0)); scored.forEach((r, i) => { r.rank = i + 1; });
     return scored.concat(rows.filter((r) => r.score == null));

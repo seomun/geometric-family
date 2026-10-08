@@ -14,5 +14,14 @@ let bad = 0;
       if (r.length) { bad += r.length; console.log('FAIL', nm, name, JSON.stringify(r)); }
     }
   }
+  // 순위표 시트(성인 점수형 앱): 글자·안내 줄이 잘리거나 화면 밖으로 나가면 실패(큰 글씨에서도)
+  for (const [nm, url] of [['③ merge', 'merge/index.html'], ['⑥ spot', 'spot/index.html'], ['⑦ block', 'block/index.html'], ['⑧ sort', 'sort/index.html'], ['⑨ tile', 'tile/index.html']]) {
+    const pg = await (await b.newContext({ viewport: { width: 360, height: 700 } })).newPage(); await pg.goto('http://localhost:8765/games/' + url + '?x'); await pg.waitForTimeout(1500);
+    if (process.env.BIG) await pg.evaluate(() => { GF.state.settings.big = 1; document.documentElement.dataset.big = '1'; });
+    for (const tab of ['day', 'week', 'mine']) { await pg.evaluate((t) => { document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.rank.record('daily', 700); GF.rank.open('daily', t); }, tab); await pg.waitForTimeout(400);
+      const r = await pg.evaluate(() => { const sf = document.getElementById('safe').getBoundingClientRect(), sh = document.querySelector('.rk-sheet'); if (!sh) return ['시트 없음']; const o = [], q = sh.getBoundingClientRect(); if (q.left < sf.left - 1 || q.right > sf.right + 1 || q.top < sf.top - 1 || q.bottom > sf.bottom + 1) o.push('시트 화면 밖'); [...sh.querySelectorAll('.rk-n, .rk-s, .rk-note, .rk-line, .rk-tab')].forEach((e) => { if (e.scrollWidth > e.clientWidth + 2 || e.scrollHeight > e.clientHeight + 2) o.push(e.className + ':' + e.textContent.trim().slice(0, 10)); }); const n = sh.querySelector('.rk-note'); if (n && n.getBoundingClientRect().height > parseFloat(getComputedStyle(n).lineHeight || 20) * 2.6) o.push('안내 줄 세 줄 이상'); return o; });
+      if (r.length) { bad += r.length; console.log('FAIL', nm, '순위표 ' + tab, JSON.stringify(r)); } }
+    await pg.close();
+  }
   console.log(bad ? 'FAILED ' + bad : 'ALL PASS'); await b.close(); process.exit(bad ? 1 : 0);
 })();

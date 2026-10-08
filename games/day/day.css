@@ -7,12 +7,11 @@
 .dy-card { width: 120px; height: 132px; border: 0; border-radius: 30px; box-shadow: var(--uk-sh-lg); display: flex; align-items: center; justify-content: center; } .dy-card:active { transform: translateY(3px); }
 .dy-card svg { width: 76px; height: 76px; }
 /* 하루 길: 장면 그림 5개가 구불구불 이어짐 */
-.dy-path { position: absolute; left: 0; right: 0; top: 80px; bottom: 20px; }
-.dy-scene { position: absolute; width: 132px; height: 112px; border: 0; border-radius: 40px; background: #fff; box-shadow: var(--uk-sh-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
-.dy-scene:nth-child(1) { left: 20px; top: 4px; } .dy-scene:nth-child(2) { right: 20px; top: 116px; } .dy-scene:nth-child(3) { left: 20px; top: 228px; } .dy-scene:nth-child(4) { right: 20px; top: 340px; } .dy-scene:nth-child(5) { left: 20px; top: 452px; }
+.dy-path { position: absolute; left: 0; right: 0; top: 78px; bottom: 0; overflow-y: auto; touch-action: pan-y; padding: 8px 14px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-content: start; scrollbar-width: none; } .dy-path::-webkit-scrollbar { display: none; }
+.dy-scene { position: relative; height: 104px; border: 0; border-radius: 30px; background: #fff; box-shadow: var(--uk-sh-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
 .dy-scene.cur { outline: 6px solid var(--uk-pink); animation: dybob 1.2s ease-in-out infinite alternate; } @keyframes dybob { to { transform: translateY(-6px); } }
-.dy-scene.full { background: #DDF6E5; } .dy-scene.off { background: #E7E1EC; filter: grayscale(.6); } .dy-scene .lk { position: absolute; right: 6px; bottom: 6px; font-style: normal; font-size: 30px; }
-.dy-scene .dy-em { position: static; font-size: 54px; line-height: 1; } .dy-dots { display: flex; gap: 8px; } .dy-dots i { width: 14px; height: 14px; border-radius: 50%; background: #D9CDD3; } .dy-dots i.on { background: #6CCB8A; }
+.dy-scene.full { background: #DDF6E5; } .dy-scene.off { background: #E7E1EC; filter: grayscale(.6); } .dy-scene .lk { position: absolute; right: 4px; bottom: 4px; font-style: normal; font-size: 26px; }
+.dy-scene .dy-em { position: static; line-height: 1; } .dy-dots { display: flex; gap: 8px; } .dy-dots i { width: 14px; height: 14px; border-radius: 50%; background: #D9CDD3; } .dy-dots i.on { background: #6CCB8A; }
 .dy-scene.shake { animation: dyshake .4s; } @keyframes dyshake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 /* 놀이 화면 공통 */
 .dy-stage { position: absolute; inset: 0; touch-action: none; user-select: none; -webkit-user-select: none; }

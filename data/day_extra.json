@@ -191,6 +191,261 @@
      "bubble": "sparkle"
     }
    ]
+  },
+  {
+   "chapter": 6,
+   "title": "흥부 박",
+   "tale": "heungbu",
+   "cuts": [
+    {
+     "text": "제비가 다리를 다쳐 마당에 떨어졌어요. 아빠와 엄마가 살살 안아 주었어요.",
+     "chars": [
+      "nemo_dad.love",
+      "nemo_mom.worry"
+     ]
+    },
+    {
+     "text": "다친 다리를 깨끗이 씻고 약을 발라 주었어요.",
+     "chars": [
+      "nemo_mom.good",
+      "nemo_dad.joy"
+     ]
+    },
+    {
+     "text": "봄이 되자 제비가 박씨를 물어 왔어요. 박을 타자 쌀과 보물이 와르르!",
+     "chars": [
+      "nemo_dad.surprise",
+      "nemo_mom.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "아빠는 이웃에게도 나누어 주었어요. {baby}도 손을 씻고 함께 먹어요.",
+     "chars": [
+      "baby.joy",
+      "nemo_dad.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 7,
+   "title": "콩쥐팥쥐",
+   "tale": "kongjwi",
+   "cuts": [
+    {
+     "text": "콩쥐 {sib1}는 물을 길어 독에 채우고 있었어요. 그런데 독 밑이 깨져 있었어요.",
+     "chars": [
+      "nemo_kids.kid1"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "두꺼비 동그라미 아저씨가 퐁! 깨진 구멍을 몸으로 막아 주었어요.",
+     "chars": [
+      "dong_dad.joy"
+     ]
+    },
+    {
+     "text": "독이 가득 찼어요. {sib1}는 시원한 물로 세수를 하고 방긋 웃었어요.",
+     "chars": [
+      "nemo_kids.kid1"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "고마운 두꺼비에게 {baby}도 말해요. 「고마워요!」 오늘 아침 세수도 쓱쓱.",
+     "chars": [
+      "baby.joy",
+      "dong_dad.warm"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 8,
+   "title": "견우와 직녀",
+   "tale": "gyeonwoo",
+   "cuts": [
+    {
+     "text": "하늘 위 세모 삼촌과 세모 이모는 은하수 양쪽에 살았어요.",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "일 년에 한 번 만나는 날, 까치들이 날아와 다리를 놓았어요.",
+     "chars": [
+      "husband.surprise",
+      "wife.surprise"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "까치 다리는 짝이 맞아야 이어져요. 한 쌍, 한 쌍!",
+     "chars": [
+      "husband.joy"
+     ]
+    },
+    {
+     "text": "삼촌과 이모가 손을 잡았어요. {baby}도 신발을 짝 맞춰 신어요.",
+     "chars": [
+      "baby.joy",
+      "husband.love",
+      "wife.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 9,
+   "title": "개미와 베짱이",
+   "tale": "ant",
+   "cuts": [
+    {
+     "text": "더운 여름, 엄마 개미는 열매를 부지런히 날랐어요.",
+     "chars": [
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "text": "세모 삼촌 베짱이는 그늘에서 노래만 불렀어요.",
+     "chars": [
+      "husband.joy"
+     ],
+     "bubble": "note"
+    },
+    {
+     "text": "겨울이 오자 베짱이가 똑똑 문을 두드렸어요. 엄마 개미는 간식을 나눠 주었어요.",
+     "chars": [
+      "husband.worry",
+      "nemo_mom.love"
+     ]
+    },
+    {
+     "text": "나눠 먹으니 더 맛있어요. 막내 개미 {baby}도 간식을 꼭꼭 씹어요.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 10,
+   "title": "아기돼지 삼형제",
+   "tale": "pigs",
+   "cuts": [
+    {
+     "text": "{sib1}, {kid2}, {kid3} 셋은 집을 하나씩 지었어요.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "text": "바람 친구가 후— 볏짚집도 나무집도 날려 버렸어요.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "셋은 벽돌집으로 달려가 문을 꼭 닫았어요. 바람은 휘이잉 지나갔어요.",
+     "chars": [
+      "nemo_kids.kid3",
+      "nemo_kids.kid1",
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "깨끗하고 튼튼한 집에서 모두 따뜻하게 목욕을 했어요. {baby}도 보글보글.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 11,
+   "title": "잭과 콩나무",
+   "tale": "jack",
+   "cuts": [
+    {
+     "text": "엄마가 심은 콩이 하룻밤에 쑥쑥 자라 하늘까지 닿았어요.",
+     "chars": [
+      "nemo_mom.surprise",
+      "nemo_kids.kid2"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "{kid2} 잭이 콩나무를 타고 구름 위로 올라갔어요. 쿵쿵 발소리가 났지만 거인은 졸고 있었어요.",
+     "chars": [
+      "nemo_kids.kid2"
+     ]
+    },
+    {
+     "text": "잭은 살금살금 황금알을 안고 내려왔어요.",
+     "chars": [
+      "nemo_kids.kid2",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "text": "책도 제자리, 장난감도 제자리. {baby}도 쑥쑥 자라는 중이에요.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 12,
+   "title": "눈의 여왕",
+   "tale": "snowqueen",
+   "cuts": [
+    {
+     "text": "눈이 내리는 밤, {sib1}와 {baby}는 창가에서 눈송이를 보았어요.",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "눈의 여왕 아주머니가 하얀 눈이불을 하늘 가득 펼쳐 주었어요.",
+     "chars": [
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "{sib1}와 {baby}는 서로 손을 꼭 잡았어요. 춥지 않았어요.",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "따뜻한 이불 속에서 오늘 하루를 돌아봐요. 잘 자요, {baby}.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
   }
  ]
 }

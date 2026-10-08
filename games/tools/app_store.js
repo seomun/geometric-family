@@ -70,8 +70,8 @@ const SCENES = {
     const go = async (n) => { await p.evaluate((nn) => { DAY.unlockAll = true; DAY.fast = true; GF.stack = []; GF.go('dhome'); GF.go('dplay', { n: nn }); }, n); await p.waitForSelector('.dy-stage'); await wait(p, 800); };
     await go(3); await p.evaluate(() => DAY.debug.brushTo(0)); await wait(p, 700); await shot('3_brush');
     await go(6); await wait(p, 500); await p.evaluate(() => DAY.debug.wear(0)); await wait(p, 500); await shot('4_dress');
-    await go(18); await p.evaluate(() => DAY.debug.light(0)); await wait(p, 700); await shot('5_sleep');
-    await p.evaluate(() => { Object.values(DAY.debug.REW).slice(0, 8).forEach((id) => Room.grant(id)); GF.stack = []; GF.go('dhome'); GF.go('dhouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
+    await go(22); await p.evaluate(() => DAY.debug.light(0)); await wait(p, 700); await shot('5_sleep');
+    await p.evaluate(() => { Object.values(DAY.debug.REW).slice(0, 10).forEach((id) => Room.grant(id)); GF.stack = []; GF.go('dhome'); GF.go('dhouse'); }); await p.waitForSelector('.rm-room'); await wait(p, 900); await shot('6_house');
   },
   async sort(p, shot) {
     const play = async (n, k) => { await p.evaluate((nn) => { SORT.unlockAll = true; SORT.fast = true; GF.stack = []; GF.go('shome'); GF.go('splay', { n: nn }); }, n); await p.waitForSelector('.sr-tube'); await wait(p, 700); const L = await p.evaluate(() => SORT.debug.level()); for (const [a, b] of L.solution.slice(0, k)) { await p.evaluate(([x, y]) => { SORT.debug.tap(x); SORT.debug.tap(y); }, [a, b]); await wait(p, 160); } await wait(p, 500); };

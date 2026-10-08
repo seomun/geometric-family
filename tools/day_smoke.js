@@ -1,6 +1,6 @@
 // 막둥이의 하루 smoke: node tools/day_smoke.js (URL=… 빌드본, LV=1-20). 장마다 첫 판은 실제 포인터(끌기·문지르기·탭)로, 나머지는 디버그 진행으로 끝까지.
 const { chromium } = require('playwright-core'), path = require('path');
-const URL = process.env.URL || 'http://localhost:8765/games/day/index.html', [A, B] = (process.env.LV || '1-20').split('-').map(Number);
+const URL = process.env.URL || 'http://localhost:8765/games/day/index.html', [A, B] = (process.env.LV || '1-60').split('-').map(Number);
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
@@ -15,7 +15,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent) { const f = parseFloat(getComputedStyle(e).fontSize); if (f < 24 && !/^[0-9]+$/.test(e.textContent.trim())) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈: 글자 없음/24px 이상 ' + small.slice(0, 4).join(','));
   await pg.evaluate(() => { GF.stack = []; GF.go('dhome'); GF.go('dmap'); }); await pg.waitForSelector('.screen.on .dy-scene'); await shot('map');
-  const sc = await pg.evaluate(() => ({ n: document.querySelectorAll('.screen.on .dy-scene').length, off: document.querySelectorAll('.screen.on .dy-scene.off').length })); ok(sc.n === 5 && sc.off === 4, '하루 길: 장면 5개(처음엔 1만 열림)');
+  const sc = await pg.evaluate(() => ({ n: document.querySelectorAll('.screen.on .dy-scene').length, off: document.querySelectorAll('.screen.on .dy-scene.off').length })); ok(sc.n === 12 && sc.off === 11, '하루 길: 장면 12개(처음엔 1만 열림)');
   const NL = await pg.evaluate(() => DAY.debug.D().levels.length);
   const afterFinish = async (n) => { for (let g = 0; g < 14; g++) { if (await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet'))) break; const nb = await pg.$('.screen.on .nextbtn'); if (nb) await nb.click({ force: true }).catch(() => {}); await pg.waitForTimeout(350); } await pg.waitForSelector('.screen.on .uk-sheet', { timeout: 5000 }).catch(() => {}); return pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet')); };
   for (let n = A; n <= Math.min(B, NL); n++) {
@@ -35,7 +35,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     }
     const done = await afterFinish(n); ok(done, '판 ' + n + ' 클리어(' + L.type + (real ? ', 실제 포인터' : '') + ')');
     if (n === A) await shot('result');
-    if (n === 10 || n === 20 || n === NL) { const rw = await pg.evaluate(() => Room.owned().filter((id) => id.startsWith('y_')).length); ok(rw >= 1, '판 ' + n + ' 까지 욕실·침실 소품 ' + rw + '개'); }
+    if (n === 15 || n === 30 || n === NL) { const rw = await pg.evaluate(() => Room.owned().filter((id) => id.startsWith('y_')).length); ok(rw >= 1, '판 ' + n + ' 까지 욕실·침실 소품 ' + rw + '개'); }
   }
   if (A === 1) {
     const texts = await pg.evaluate(() => { GF.stack = []; GF.go('dhome'); GF.go('dplay', { n: 1 }); return [...document.querySelectorAll('.screen.on *')].filter((e) => e.children.length === 0 && /[가-힣A-Za-z]/.test(e.textContent) && e.offsetParent).map((e) => e.textContent.trim()).slice(0, 5); });

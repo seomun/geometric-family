@@ -5,9 +5,9 @@
   const el = UK.el, G = DayGen;
   const DY = (window.DAY = { debug: {} });
   const KEY = 'gf:day:v1';
-  const REW = { 2: 'y_cup', 4: 'y_paste', 6: 'y_hanger', 8: 'y_hat', 10: 'y_bowl', 12: 'y_spoon', 14: 'y_toybox', 16: 'y_ball', 18: 'y_moon', 20: 'y_pillow' };
+  const REW = { 3: 'y_cup', 6: 'y_paste', 9: 'y_hanger', 12: 'y_hat', 15: 'y_bowl', 18: 'y_spoon', 21: 'y_toybox', 24: 'y_ball', 27: 'y_moon', 30: 'y_pillow', 33: 'y_towel', 36: 'y_soap', 39: 'y_mat', 42: 'y_duck', 45: 'y_boots', 48: 'y_book', 51: 'y_quilt', 54: 'y_clock', 57: 'y_cup2', 60: 'y_star' };
   const slow = (ms) => (DY.fast ? 0 : ms);
-  const SCENE_BG = ['indoor2', 'indoor2', 'indoor2', 'indoor2', 'indoor2'];
+  const SCENE_BG = ['indoor2'];
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 1, done: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, intro: 0, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x); } catch (e) {} return blank(); })();
@@ -21,9 +21,17 @@
   const now = () => new Date(), pad = (n) => String(n).padStart(2, '0'), today = () => { const d = now(); return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()); };
   const dayNum = () => { const d = now(); return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000); };
   function dailyLevel() { const d = +today(), n = 1 + ((dayNum() % 5) * G.PER) + (d % G.PER), L = G.make(n, d); L.id = 'daily'; L.kind = 'daily'; return L; }
+  const TOOTH = [[99, 330], [153, 330], [207, 330], [261, 330], [99, 430], [153, 430], [207, 430], [261, 430]];
+  const svgWrap = (b) => '<svg viewBox="0 0 360 640">' + b + '</svg>';
+  const THEME_SVG = {
+    teeth: svgWrap('<rect x="30" y="170" width="300" height="340" rx="96" fill="#F9D9A6" stroke="#6b5443" stroke-width="5"/><path d="M92 252q22-24 44 0M224 252q22-24 44 0" fill="none" stroke="#6b5443" stroke-width="6" stroke-linecap="round"/><circle cx="70" cy="300" r="22" fill="#FF9AA8" opacity=".8"/><circle cx="290" cy="300" r="22" fill="#FF9AA8" opacity=".8"/><ellipse cx="180" cy="380" rx="124" ry="92" fill="#8E3040" stroke="#6b5443" stroke-width="5"/><ellipse cx="180" cy="452" rx="62" ry="26" fill="#E8707E"/>' + TOOTH.map((t) => '<rect x="' + (t[0] - 25) + '" y="' + (t[1] - 25) + '" width="50" height="50" rx="14" fill="#fff" stroke="#E4DDE0" stroke-width="3"/>').join('')),
+    hands: svgWrap([[40, 6], [190, 6]].map((o) => '<rect x="' + o[0] + '" y="250" width="130" height="220" rx="46" fill="#F9D9A6" stroke="#6b5443" stroke-width="5"/>' + [0, 1, 2, 3].map((i) => '<rect x="' + (o[0] + 6 + i * 30) + '" y="190" width="24" height="86" rx="12" fill="#F9D9A6" stroke="#6b5443" stroke-width="4"/>').join('')).join('') + '<rect x="40" y="250" width="130" height="30" fill="#F9D9A6"/><rect x="190" y="250" width="130" height="30" fill="#F9D9A6"/><ellipse cx="180" cy="520" rx="150" ry="26" fill="#BFE8FF" opacity=".8"/>'),
+    face: svgWrap('<rect x="30" y="170" width="300" height="340" rx="96" fill="#F9D9A6" stroke="#6b5443" stroke-width="5"/><path d="M92 282q22-24 44 0M224 282q22-24 44 0" fill="none" stroke="#6b5443" stroke-width="6" stroke-linecap="round"/><circle cx="70" cy="340" r="20" fill="#FF9AA8" opacity=".8"/><circle cx="290" cy="340" r="20" fill="#FF9AA8" opacity=".8"/><path d="M150 380q30 24 60 0" fill="none" stroke="#6b5443" stroke-width="6" stroke-linecap="round"/>'),
+    bath: svgWrap('<rect x="70" y="190" width="220" height="270" rx="100" fill="#F9D9A6" stroke="#6b5443" stroke-width="5"/><path d="M122 250q18-20 36 0M202 250q18-20 36 0" fill="none" stroke="#6b5443" stroke-width="6" stroke-linecap="round"/><rect x="24" y="430" width="312" height="110" rx="46" fill="#8FD3F4" stroke="#6b5443" stroke-width="5" opacity=".92"/><circle cx="60" cy="410" r="16" fill="#fff" opacity=".9"/><circle cx="310" cy="400" r="12" fill="#fff" opacity=".9"/><circle cx="288" cy="428" r="9" fill="#fff" opacity=".9"/>'),
+  };
   /** 로컬 좌표(360×640): 화면 root 기준 */
   const toLocal = (r, e) => { const b = r.getBoundingClientRect(), k = b.width / 360; return { x: (e.clientX - b.left) / k, y: (e.clientY - b.top) / k }; };
-  const SLOT_OF = { '🪥': 'brush', '🧢': 'cloth:cap', '👕': 'cloth:tee', '🩴': 'cloth:sandal', '🧣': 'cloth:scarf', '🧥': 'cloth:coat', '🧦': 'cloth:socks', '☂️': 'cloth:umbrella', '🥾': 'cloth:boots', '☀️': 'weather:sun', '❄️': 'weather:cold', '🌧️': 'weather:rain', '🍚': 'food:rice', '🥕': 'food:carrot', '🍎': 'food:apple', '🥦': 'food:broccoli', '🍌': 'food:banana', '🥄': 'spoon', '🐢': 'turtle', '⚽': 'toy:ball', '🚗': 'toy:car', '🧱': 'toy:block', '🧸': 'toy:bear', '💡': 'light', '🌙': 'moon' };
+  const SLOT_OF = { '🪥': 'brush', '🧢': 'cloth:cap', '👕': 'cloth:tee', '🩴': 'cloth:sandal', '🧣': 'cloth:scarf', '🧥': 'cloth:coat', '🧦': 'cloth:socks', '☂️': 'cloth:umbrella', '🥾': 'cloth:boots', '☀️': 'weather:sun', '❄️': 'weather:cold', '🌧️': 'weather:rain', '🍚': 'food:rice', '🥕': 'food:carrot', '🍎': 'food:apple', '🥦': 'food:broccoli', '🍌': 'food:banana', '🥄': 'spoon', '🐢': 'turtle', '⚽': 'toy:ball', '🚗': 'toy:car', '🧱': 'toy:block', '🧸': 'toy:bear', '💡': 'light', '🌙': 'moon', '🧼': 'soap', '🧽': 'cloth2', '🍪': 'food:cookie', '🥛': 'food:milk', '🍉': 'food:watermelon', '🍙': 'food:riceball', '🧀': 'food:cheese', '👟': 'shoe:sneaker', '👞': 'shoe:dress', '📕': 'book:red', '📗': 'book:green', '📘': 'book:blue', '📙': 'book:orange' };
   /** 그림: 슬롯 GF.slot('day', 키)가 있으면 그 그림, 없으면 임시 이모지(ASSET_LIST day:*) */
   const em = (parent, ch, size, cls) => { const d = el('div', 'dy-em ' + (cls || ''), parent), sl = SLOT_OF[ch] && GF.slot('day', SLOT_OF[ch]); if (sl) { const i = el('img', '', d); i.src = sl; i.style.cssText = 'width:100%;height:100%;object-fit:contain;pointer-events:none'; d.style.width = d.style.height = size + 'px'; d.dataset.ch = ch; d.textContent = ''; d.appendChild(i); d.title = ''; } else d.textContent = ch; d.style.fontSize = size + 'px'; return d; };
   const at = (d, x, y) => { d.style.left = x + 'px'; d.style.top = y + 'px'; return d; };
@@ -50,13 +58,14 @@
       let target = null;
       D.chapters.forEach((c, ci) => {
         const ls = D.levels.filter((l) => l.chapter === ci + 1), full = ls.every((l) => SV.done[l.id]), open = unlocked(ls[0].id), cur = nxt.chapter === ci + 1;
-        const b = el('button', 'dy-scene' + (full ? ' full' : '') + (open ? '' : ' off') + (cur ? ' cur' : ''), path); b.style.setProperty('--i', ci); b.setAttribute('aria-label', c.type);
-        em(b, c.icon, 54); const dots = el('div', 'dy-dots', b); ls.forEach((l) => el('i', SV.done[l.id] ? 'on' : '', dots));
+        const b = el('button', 'dy-scene' + (full ? ' full' : '') + (open ? '' : ' off') + (cur ? ' cur' : ''), path); b.setAttribute('aria-label', c.type);
+        em(b, c.icon, 46); const dots = el('div', 'dy-dots', b); ls.forEach((l) => el('i', SV.done[l.id] ? 'on' : '', dots));
         if (!open) el('i', 'lk', b, '🔒');
         b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } const l = ls.find((x) => !SV.done[x.id]) || ls[0]; GF.sfx('pick'); GF.go('dplay', { n: l.id }); };
         if (cur) target = b;
       });
       if (!doneCount()) setTimeout(() => { if (target && target.isConnected) UK.finger(r, target); }, 700);
+      setTimeout(() => { if (target && target.isConnected) target.scrollIntoView({ block: 'center' }); }, 30);
     },
   });
 
@@ -64,7 +73,7 @@
   GF.screen('dplay', {
     bare: false,
     enter(r, p) {
-      r.classList.add('uk', 'dy'); const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; GF.bg(SCENE_BG[(LV.chapter - 1) % 5], r); bar(); if (!p.level) { SV.last = LV.id; save(); }
+      r.classList.add('uk', 'dy'); const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; GF.bg(SCENE_BG[0], r); bar(); if (!p.level) { SV.last = LV.id; save(); }
       const stage = el('div', 'dy-stage', r), pips = el('div', 'dy-pips', r), gained = []; let finished = false, goalN = 1, got = 0; const idle = { t: null };
       const pip = (n) => { got = n; pips.innerHTML = ''; for (let i = 0; i < goalN; i++) el('i', i < got ? 'on' : '', pips); };
       const setGoal = (n) => { goalN = n; pip(0); };
@@ -85,7 +94,7 @@
       const ACT = {};
       /* 1) 양치: 칫솔을 끌어 문질러 이의 얼룩을 지운다 */
       ACT.brush = () => {
-        const face = el('div', 'dy-face', stage); face.innerHTML = '<svg viewBox="0 0 360 640"><rect x="30" y="170" width="300" height="340" rx="96" fill="#F9D9A6" stroke="#6b5443" stroke-width="5"/><path d="M92 252q22-24 44 0M224 252q22-24 44 0" fill="none" stroke="#6b5443" stroke-width="6" stroke-linecap="round"/><circle cx="70" cy="300" r="22" fill="#FF9AA8" opacity=".8"/><circle cx="290" cy="300" r="22" fill="#FF9AA8" opacity=".8"/><ellipse cx="180" cy="380" rx="124" ry="92" fill="#8E3040" stroke="#6b5443" stroke-width="5"/><ellipse cx="180" cy="452" rx="62" ry="26" fill="#E8707E"/>' + [[99, 330], [153, 330], [207, 330], [261, 330], [99, 430], [153, 430], [207, 430], [261, 430]].map((t) => '<rect x="' + (t[0] - 25) + '" y="' + (t[1] - 25) + '" width="50" height="50" rx="14" fill="#fff" stroke="#E4DDE0" stroke-width="3"/>').join('') + '</svg>'; const brush = em(stage, '🪥', 64, 'dy-brush'); at(brush, 262, 504); const rest = { x: 262, y: 504 };
+const th = LV.theme || 'teeth', face = el('div', 'dy-face', stage); face.innerHTML = THEME_SVG[th]; const brush = em(stage, { teeth: '🪥', hands: '🧼', face: '🧽', bath: '🧽' }[th], 64, 'dy-brush'); at(brush, 262, 504); const rest = { x: 262, y: 504 };
         const spots = LV.spots.map((s) => { const d = el('div', 'dy-spot', stage); d.style.cssText = `left:${s.x - s.r}px;top:${s.y - s.r}px;width:${2 * s.r}px;height:${2 * s.r}px`; return { d, s, dist: 0, clean: false }; });
         setGoal(spots.length); let down = false, last = null;
         const clean = (o) => { o.clean = true; o.d.classList.add('gone'); GF.sfx('ok', { st: [0, 2, 4, 7, 9, 12, 14][Math.min(got, 6)] }); sparkle(o.s.x, o.s.y); pip(got + 1); if (got >= goalN) finish(); };
@@ -133,8 +142,8 @@
       };
       /* 4) 장난감 정리: 장난감을 같은 그림의 상자로 끌어 넣는다 */
       ACT.tidy = () => {
-        const K = LV.kinds, bw = 90, boxes = K.map((k, i) => { const b = el('div', 'dy-box', stage); const x = 180 - K.length * bw / 2 + i * bw + 6; b.style.cssText = `left:${x}px;top:452px;width:${bw - 12}px;height:96px`; em(b, G.TOYS[k], 40, 'dy-boxico'); b.dataset.k = k; return b; });
-        setGoal(LV.toys.length); const toys = LV.toys.map((t) => { const d = em(stage, G.TOYS[t.k], 52, 'dy-toy'); at(d, t.x - 26, t.y - 26); d._t = t; d._home = [t.x - 26, t.y - 26]; d._done = false; return d; });
+        const K = LV.kinds, bw = 90, boxes = K.map((k, i) => { const b = el('div', 'dy-box', stage); const x = 180 - K.length * bw / 2 + i * bw + 6; b.style.cssText = `left:${x}px;top:452px;width:${bw - 12}px;height:96px`; em(b, G.ITEMS[LV.theme || 'toys'][k], 40, 'dy-boxico'); b.dataset.k = k; return b; });
+        setGoal(LV.toys.length); const toys = LV.toys.map((t) => { const d = em(stage, G.ITEMS[LV.theme || 'toys'][t.k], 52, 'dy-toy'); at(d, t.x - 26, t.y - 26); d._t = t; d._home = [t.x - 26, t.y - 26]; d._done = false; return d; });
         toys.forEach((d) => { let drag = false;
           d.addEventListener('pointerdown', (e) => { if (finished || d._done) return; drag = true; d.classList.add('lift'); try { d.setPointerCapture(e.pointerId); } catch (x) {} const q = toLocal(r, e); at(d, q.x - 26, q.y - 26); e.preventDefault(); });
           d.addEventListener('pointermove', (e) => { if (!drag) return; const q = toLocal(r, e); at(d, q.x - 26, q.y - 26); });

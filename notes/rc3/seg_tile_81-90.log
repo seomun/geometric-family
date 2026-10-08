@@ -1,0 +1,22 @@
+OK   홈 글자 크기 17px 이상 
+OK   레벨 목록 120개(처음엔 1만 열림)
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.evaluate: TypeError: Cannot read properties of null (reading 'items')
+    at Object.item (http://localhost:8765/games/engine/room/room.js:44:29)
+    at art (http://localhost:8765/games/tile/tile.js:30:36)
+    at http://localhost:8765/games/tile/tile.js:124:291
+    at Array.forEach (<anonymous>)
+    at draw (http://localhost:8765/games/tile/tile.js:123:18)
+    at Object.enter (http://localhost:8765/games/tile/tile.js:159:7)
+    at show (http://localhost:8765/games/engine/gf.js:277:7)
+    at GF.go (http://localhost:8765/games/engine/gf.js:280:64)
+    at eval (eval at evaluate (:311:30), <anonymous>:1:45)
+    at UtilityScript.evaluate (<anonymous>:313:16)
+    at C:\projects\geometric-family\tools\tile_smoke.js:27:14 {
+  log: []
+}
+
+Node.js v24.12.0

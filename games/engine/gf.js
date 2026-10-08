@@ -50,6 +50,7 @@
     reset() { GF.state = fresh(); Store.save(); },
   };
   GF.Store = Store;
+  GF.save = Store.save; GF.resetState = Store.reset;
   const totalStars = () => Object.values(GF.state.stages).reduce((a, s) => a + (s.stars || 0), 0);
 
   /* ---------------- 소리 (WebAudio 합성) ---------------- */
@@ -770,6 +771,7 @@
     open() { Gate.ask(() => Gate.menu()); },
     close() { Gate.p.classList.remove('on'); },
     menu() {
+      if (GF.extras && GF.extras.ready) { Gate.close(); GF.extras.open('parent'); return; }   // 공통 보호자 메뉴(games/engine/extras.js)
       const s = GF.state.settings, pn = Gate.p.firstChild;
       pn.innerHTML = '<h3>부모 메뉴</h3>';
       const l1 = el('div', 'line', pn, '<span>소리 크기</span>'), rg = el('input', '', l1); rg.type = 'range'; rg.min = 0; rg.max = 1; rg.step = 0.1; rg.value = s.vol;
@@ -804,6 +806,7 @@
     GF.state = Store.load();
     if (window.Room && GF.data.room_items && !opts.dataNames) {   // ① 놀이터: 유아 그룹 집(아이 방만 보임, 가족 집은 보호자 잠금 뒤)
       Room.init({ data: GF.data.room_items, game: 'playground', mode: 'kid', autoPlace: true, guard: (cb) => Gate.ask(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      if (GF.extras) GF.extras.init({ app: 'play', kid: true, noHold: true, stats: () => [['별', totalStars()], ['깬 단계', Object.values(GF.state.stages).filter((x) => x.stars > 0).length], ['스티커', Object.keys(GF.state.stickers || {}).length]], reset: () => GF.resetState() });
     }
     ensureAudio(); loadSounds();
     fit(); window.addEventListener('resize', () => { fit(); const s = GF.cur; if (s && wantWide(s, s.params) !== !!GF.safeWide) show(s.name, s.params); });

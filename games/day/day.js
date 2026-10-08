@@ -182,6 +182,7 @@ const th = LV.theme || 'teeth', face = el('div', 'dy-face', stage); face.innerHT
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'day_levels', 'day_extra', 'room_items', 'art_slots'], storeKey: 'gf:day:ui:v1', async start() {
       D = GF.data.day_levels; X = GF.data.day_extra;
       Room.init({ data: GF.data.room_items, game: 'day', mode: 'kid', autoPlace: true, guard: (cb) => GF.gate(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      GF.extras.init({ app: 'day', kid: true, rewardSet: 'daybath', stats: () => [['깬 판', Object.keys(SV.done).length + ' / ' + D.levels.length], ['아이 방 소품', Room.owned().filter((id) => (Room.item(id) || {}).set === 'daybath').length + ' / 20']], resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
       document.getElementById('safe').classList.add('uk'); GF.go('dhome');
       DY.debug.D = () => D; DY.debug.SV = () => SV; DY.debug.reset = () => { SV = blank(); save(); }; DY.debug.dailyLevel = dailyLevel; DY.debug.X = () => X; DY.debug.REW = REW;
     } }, opts || {}));

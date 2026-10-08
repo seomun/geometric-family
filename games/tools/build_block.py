@@ -47,8 +47,8 @@ for grp in ('sfx', 'music'):
         elif grp == 'sfx': raw, mime = to_mp3(path), 'audio/mpeg'
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
-css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'block/block.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'block/block-core.js', 'block/block-gen.js', 'block/block.js'])
+css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'block/block.css'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/extras.js', 'block/block-core.js', 'block/block-gen.js', 'block/block.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'block' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 html = f'''<!DOCTYPE html>
 <html lang="ko" data-uk="adult"><head><meta charset="utf-8">

@@ -1,0 +1,22 @@
+/* 공통 부가 UI(설정·보호자 메뉴·통계·업적·출석·쉬어요) — 키트 토큰만 */
+.xt-sheet { max-height: 86%; overflow-y: auto; touch-action: pan-y; }
+.xt-body { display: flex; flex-direction: column; gap: 8px; margin: 8px 0 4px; }
+.xt-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 48px; font: 800 var(--uk-fs-body)/1.2 var(--uk-font); } .xt-row span { flex: 1; text-align: left; }
+.xt-row b { font-size: var(--uk-fs-body); color: var(--uk-ink); }
+.xt-btn { min-height: 44px; padding: 0 16px; border: 0; border-radius: 22px; background: #fff; box-shadow: var(--uk-sh); font: 900 var(--uk-fs-cap)/1 var(--uk-font); color: var(--uk-ink); white-space: nowrap; }
+.xt-range { width: 130px; accent-color: #FF8FA8; }
+.xt-h { margin: 10px 0 0; font: 900 var(--uk-fs-body)/1.2 var(--uk-font); text-align: left; }
+.xt-note { display: block; margin-top: 6px; font: 600 14px/1.4 var(--uk-font); color: var(--uk-ink2); text-align: left; }
+.xt-p { margin: 8px 0 2px; font: 700 var(--uk-fs-cap)/1.3 var(--uk-font); color: var(--uk-ink2); }
+.xt-badges { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.xt-bd { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 6px; border-radius: 18px; background: #EFE9F1; opacity: .75; } .xt-bd.on { background: #FFF3C2; opacity: 1; }
+.xt-bd .ic { font-size: 34px; line-height: 1.1; } .xt-bd b { font: 900 var(--uk-fs-cap)/1.2 var(--uk-font); } .xt-bd small { font: 600 14px/1.25 var(--uk-font); color: var(--uk-ink2); text-align: center; }
+.xt-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; } .xt-cal i { font-style: normal; text-align: center; padding: 6px 0; border-radius: 10px; font: 700 15px/1 var(--uk-font); color: var(--uk-ink2); }
+.xt-cal i.h { color: var(--uk-ink); font-weight: 900; } .xt-cal i.d.on { background: #FFF3C2; } .xt-cal i.today { outline: 3px solid #FF8FA8; }
+.xt-claim { min-height: 52px; border: 0; border-radius: 26px; background: #D9CDD3; color: #fff; font: 900 var(--uk-fs-body)/1 var(--uk-font); } .xt-claim.on { background: #6CCB8A; box-shadow: var(--uk-sh); }
+.xt-rest { position: absolute; inset: 0; z-index: 95; background: #1F2A52; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+.xt-rest .moon { font-size: 120px; line-height: 1; } .xt-rest .z { font-size: 64px; }
+.xt-restbtn { margin-top: 30px; width: 84px; height: 84px; border: 0; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; } .xt-restbtn svg { width: 46px; height: 46px; }
+#b-set svg { width: 30px; height: 30px; }
+/* 큰 글씨: 키트 글자 토큰을 키운다(앱 안의 고정 px 글자는 그대로) */
+html[data-big="1"] { --uk-fs-cap: 22px !important; --uk-fs-body: 24px !important; --uk-fs-h: 28px !important; }

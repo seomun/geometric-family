@@ -55,8 +55,8 @@ for grp in ('sfx', 'music'):
         elif grp == 'sfx': raw, mime = to_mp3(path), 'audio/mpeg'
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
-css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'idle/idle.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'idle/idle.js'])
+css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'idle/idle.css'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/extras.js', 'idle/idle.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'idle' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 code = (ROOT / 'src' / 'characters.js').read_text(encoding='utf-8')
 html = f'''<!DOCTYPE html>

@@ -192,7 +192,7 @@
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
         else if (LV.kind === 'trio') { const key = LV.id.split(':').slice(1).join(':'); SV.trio[key] = Math.max(SV.trio[key] || 0, st); }
-        save(); GF.refreshBar();
+        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone();
         setTimeout(() => {
           const story = !LV.kind && LV.id % 10 === 0 && X.stories.find((s) => s.chapter === LV.chapter);   // 사연 판: 장의 마지막 판 뒤에 사연 컷
           if (story) { const ov = el('div', 'abs', r); ov.style.cssText = 'inset:0;z-index:60'; GF.story(ov, story.cuts.map((c) => ({ bg: 'indoor', text: c.text, chars: c.chars.map((id, k, a) => ({ id, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 })), bubble: c.bubble ? { type: c.bubble, at: 0 } : null })), () => { ov.remove(); result(st); }); }
@@ -221,6 +221,7 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'merge_levels', 'merge_extra', 'room_items', 'art_slots'], storeKey: 'gf:merge:ui:v1', async start() {
       D = GF.data.merge_levels; X = GF.data.merge_extra; const RD = GF.data.room_items; D.roomTotal = RD.items.filter((i) => i.set === 'build').length;
       Room.init({ data: RD, game: 'merge', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      GF.extras.init(Object.assign({ app: 'merge', kid: false, rewardSet: 'build', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'build', itemTotal: 16, icon: '🔷' })));
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('mhome');
       MG.debug.D = () => D; MG.debug.SV = () => SV; MG.debug.reset = () => { SV = blank(); save(); }; MG.debug.dailyLevel = dailyLevel; MG.debug.seasonLevel = seasonLevel; MG.debug.trioLevels = trioLevels; MG.debug.X = () => X;
     } }, opts || {}));

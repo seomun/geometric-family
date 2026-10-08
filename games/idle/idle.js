@@ -367,6 +367,9 @@
       Object.keys(S.pr || {}).forEach((id) => { if (Room.item(id)) Room.grant(id); });   // 예전 저장(S.pr)을 집으로 옮긴다
       checkProps(); UI.toastOk = true; S.last = S.last || Date.now();
       const o = offline(); if (o && o.gained > 0) UI.welcome = o;
+      GF.extras.init({ app: 'idle', kid: false, rewardSet: 'kitchen', stats: () => [['본 사연', Object.keys(S.sd).length + ' / ' + ST.stories.length], ['식탁 단계', ['nemo', 'semo', 'dong'].map((k) => S.tl[k]).join(' · ')], ['의자', S.chairs]],
+        badges: [{ id: 's1', icon: '📖', name: '첫 사연', desc: '사연 1편', ok: () => Object.keys(S.sd).length >= 1 }, { id: 's10', icon: '📚', name: '열 편', desc: '사연 10편', ok: () => Object.keys(S.sd).length >= 10 }, { id: 's30', icon: '👑', name: '서른 편', desc: '사연을 모두 봤어요', ok: () => Object.keys(S.sd).length >= ST.stories.length }, { id: 'c2', icon: '🪑', name: '의자가 늘었어요', desc: '의자 2개 이상', ok: () => S.chairs >= 2 }],
+        resetTips: () => {}, reset: () => { S = fresh(); save(); } });
       if (!B || !ST) return; GF.go('itable');
       setInterval(tick, 250); document.addEventListener('visibilitychange', () => { if (document.hidden) save(); else { const o2 = offline(); if (o2 && o2.gained > 0 && GF.cur.name === 'itable') { UI.welcome = o2; const e = GF.screens.itable.el; e.innerHTML = ''; GF.screens.itable.enter(e); } else if (o2 && o2.gained > 0) UI.welcome = o2; } });
       window.addEventListener('pagehide', save);

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>기하학 가족 게임</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#fde9cf; --card:#fffaf2; --ink:#5a463a; --sub:#8a7566; --kid:#ffd6e0; --adult:#d6ebff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:'Gowun Dodum',sans-serif; }
+  main { max-width:720px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-family:'Jua',sans-serif; font-size:32px; margin:8px 0 4px; text-align:center; }
+  .lead { text-align:center; color:var(--sub); margin:0 0 20px; font-size:15px; }
+  h2 { font-family:'Jua',sans-serif; font-size:20px; margin:24px 4px 10px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
+  a.card { display:flex; flex-direction:column; align-items:center; gap:8px; padding:14px 10px; background:var(--card);
+           border-radius:20px; text-decoration:none; color:var(--ink); box-shadow:0 4px 0 rgba(107,84,67,.15); }
+  a.card:active { transform:translateY(2px); box-shadow:0 2px 0 rgba(107,84,67,.15); }
+  a.card img { width:84px; height:84px; border-radius:20px; }
+  .name { font-family:'Jua',sans-serif; font-size:17px; text-align:center; line-height:1.25; }
+  .tag { font-size:12px; color:var(--sub); text-align:center; }
+  .kid a.card { border:3px solid var(--kid); }
+  .adult a.card { border:3px solid var(--adult); }
+  .note { margin-top:28px; font-size:13px; color:var(--sub); line-height:1.6; text-align:center; }
+</style>
+</head>
+<body>
+<main>
+  <h1>기하학 가족 게임</h1>
+  <p class="lead">네모·세모·동그라미 세 가족과 함께 노는 게임 10가지<br>눌러서 바로 해 보세요</p>
+
+  <h2>아이와 함께 (만 3~7세)</h2>
+  <div class="grid kid">
+    <a class="card" href="playground.html"><img src="icon_toddler.png" alt=""><span class="name">기하학 가족 놀이터</span><span class="tag">옛이야기 놀이 15가지</span></a>
+    <a class="card" href="color.html"><img src="icon_color.png" alt=""><span class="name">막둥이 색칠북</span><span class="tag">색칠·스티커·벽지</span></a>
+    <a class="card" href="day.html"><img src="icon_day.png" alt=""><span class="name">막둥이의 하루</span><span class="tag">양치·옷 입기·잠자리</span></a>
+  </div>
+
+  <h2>어른을 위한 (만 13세 이상)</h2>
+  <div class="grid adult">
+    <a class="card" href="idle.html"><img src="icon_tables.png" alt=""><span class="name">세 가족 식탁</span><span class="tag">사연을 모으는 방치형</span></a>
+    <a class="card" href="merge.html"><img src="icon_merge.png" alt=""><span class="name">도형 합치기</span><span class="tag">합쳐서 집 채우기</span></a>
+    <a class="card" href="quiz.html"><img src="icon_quiz.png" alt=""><span class="name">당신은 어느 도형?</span><span class="tag">성격 테스트</span></a>
+    <a class="card" href="spot.html"><img src="icon_spot.png" alt=""><span class="name">다른 그림 찾기</span><span class="tag">옛이야기 속 틀린 곳</span></a>
+    <a class="card" href="block.html"><img src="icon_block.png" alt=""><span class="name">도형 블록</span><span class="tag">줄 채워 지우기</span></a>
+    <a class="card" href="sort.html"><img src="icon_sort.png" alt=""><span class="name">정리의 달인</span><span class="tag">칸마다 한 종류</span></a>
+    <a class="card" href="tile.html"><img src="icon_tile.png" alt=""><span class="name">세 가족 짝 맞추기</span><span class="tag">같은 그림 세 개</span></a>
+  </div>
+
+  <p class="note">개발 중인 시험판입니다. 그림과 소리는 바뀔 예정이에요.<br>기록은 이 기기의 브라우저에만 저장됩니다.</p>
+</main>
+</body>
+</html>

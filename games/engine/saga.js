@@ -41,8 +41,8 @@
   const TYN = { family: '세 가족 규칙', pair: '짝 규칙', trio: '셋 규칙', junk: '판 치우기', clear: '판 치우기', combo: '한꺼번에', order: '주문', kimjang: '김장', star: '반짝 칸', odd: '다른 하나', goal: '목표 모으기', locked: '잠긴 칸', lock: '자물쇠', limit: '횟수 제한', tight: '좁은 판', narrow: '작은 바구니', hidden: '숨은 것', memory: '기억', zoom: '확대', solo: '한 종류만', three: '세 곳', move: '이사' };
   /** o: { levels:[{id,chapter,type,tag,idx}], per, stars(id)→0~3, unlocked(id)→bool, onNode(l), onGate(ch,zone), onChest(ch), side:[{icon,text,fn,badge}], avatar:'nemo_dad.joy', kid, last(id), from(id|null), justOpened(ch|null), title(ch), nodeCls, hideStars } */
   S.open = function (parent, o) {
-    const D = S.data; if (!D) return null; const kid = !!o.kid, per = D.per, H = D.zoneH, TOP = 90, BOT = 96, Z = D.zones.length, total = Z * H + TOP + BOT;
-    const root = el('div', 'sg-root' + (kid ? ' kid' : ''), parent), sc = el('div', 'sg-scroll', root), world = el('div', 'sg-world', sc); world.style.height = total + 'px';
+    const D = S.data; if (!D) return null; const kid = !!o.kid, per = D.per, H = D.zoneH, TOP = 90, BOT = 150, Z = D.zones.length, total = Z * H + TOP + BOT;
+    const root = el('div', 'sg-root' + (kid ? ' kid' : ''), parent), sc = el('div', 'sg-scroll', root), world = el('div', 'sg-world', sc); if (D.tint) root.style.setProperty('--sg-tint', D.tint); world.style.height = total + 'px';
     const sky = el('div', 'sg-sky', world); sky.style.height = TOP + 'px'; slotImg('sky', 'sg-img', sky);
     const byCh = {}; o.levels.forEach((l) => { (byCh[l.chapter] = byCh[l.chapter] || []).push(l); });
     const zoneTop = (zi) => total - BOT - (zi + 1) * H, pos = {};
@@ -58,7 +58,7 @@
     function build(zi) {
       if (built[zi]) return; built[zi] = 1; const z = D.zones[zi], ls = byCh[z.ch] || [], zd = el('div', 'sg-zone', world), open = firstOpen(z), nd = ls.filter(done).length;
       zd.style.cssText = `top:${zoneTop(zi)}px;height:${H}px;--sg-a:${z.pal[0]};--sg-b:${z.pal[1]}`; zd.dataset.ch = z.ch;
-      if (!slotImg(`${S.app}:${z.ch}:bg`, 'sg-img', zd)) { const d = el('div', 'sg-hill', zd); d.innerHTML = '<i></i><i></i><i></i>' + S.sceneSVG(z.tale, H); }
+      if (!slotImg(`${S.app}:${z.ch}:bg`, 'sg-img', zd)) { zd.classList.add('tinted'); const d = el('div', 'sg-hill', zd); d.innerHTML = '<i></i><i></i><i></i>' + S.sceneSVG(z.tale, H); }
       /* 길 */
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('class', 'sg-path'); svg.setAttribute('viewBox', `0 0 100 ${H}`); svg.setAttribute('preserveAspectRatio', 'none'); zd.appendChild(svg);
       const mk = (a, b, cls) => { const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', `M${a[0]} ${a[1]}C${a[0]} ${(a[1] + b[1]) / 2} ${b[0]} ${(a[1] + b[1]) / 2} ${b[0]} ${b[1]}`); p.setAttribute('class', cls); p.setAttribute('vector-effect', 'non-scaling-stroke'); svg.appendChild(p); };
@@ -105,7 +105,7 @@
     /* 곁가지 + 이어서 */
     if (o.side && o.side.length) { root.classList.add('rail'); const sd = el('div', 'sg-side', root); o.side.forEach((x) => { const b = el('button', 'sg-rb' + (x.cls ? ' ' + x.cls : ''), sd); b.setAttribute('aria-label', x.text); const ic = el('span', 'ic', b); try { ic.innerHTML = UK.icon(x.icon); } catch (e) { ic.textContent = '•'; } if (!kid) el('small', '', b, x.text); if (x.badge) el('i', 'bd', b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
     const go = UK.btn({ text: kid ? '' : (o.goText ? o.goText(cur) : `이어서 · 레벨 ${cur.id}`), icon: 'play', cls: 'green sg-go', onclick: () => { GF.sfx('pick'); o.onNode(cur); } }, el('div', 'sg-gowrap', root)); go.setAttribute('aria-label', 'continue');
-    const focus = () => { const p = pos[cur.id]; if (p) sc.scrollTop = Math.max(0, p.y - sc.clientHeight * 0.55); };
+    const focus = () => { const p = pos[cur.id]; if (p) sc.scrollTop = Math.max(0, p.y - sc.clientHeight * 0.42); };
     focus(); setTimeout(focus, 40); S.cur = cur; S.pos = pos; S.scroll = sc; S.built = built; S.root = root;
     return root;
   };

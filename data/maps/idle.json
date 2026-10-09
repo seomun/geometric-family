@@ -7,6 +7,7 @@
  "nodeSize": 58,
  "base": null,
  "special": [],
+ "tint": "#FFE19A",
  "zones": [
   {
    "ch": 1,

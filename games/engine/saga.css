@@ -48,3 +48,7 @@
 .sg-node.thumb { width: 92px; height: 92px; border-radius: 24px; overflow: hidden; padding: 4px; background: #fff; } .sg-node.thumb img, .sg-node.thumb svg { width: 100%; height: 100%; object-fit: contain; border-radius: 18px; } .sg-node.thumb .ck { position: absolute; right: 2px; bottom: 2px; width: 28px; height: 28px; } .sg-node.thumb .sn { position: absolute; left: 4px; top: 2px; font-style: normal; font-size: 20px; } .sg-node.thumb.cur { box-shadow: 0 0 0 4px #FFC933, var(--uk-sh); }
 
 .sg-prop { position: absolute; transform: translate(-50%, -50%); width: 64px; height: 64px; line-height: 64px; text-align: center; font-size: 42px; border-radius: 18px; background: rgba(255,255,255,.55); box-shadow: 0 4px 0 rgba(120,90,60,.12); pointer-events: none; } .sg-prop .sg-img { position: static; width: 58px; height: 58px; object-fit: contain; }
+
+/* 앱별 색조(지도 하늘·바탕): data/maps/<앱>.json tint. 구역 배경 슬롯 그림이 있으면 색조를 얹지 않는다 */
+.sg-sky { background: linear-gradient(color-mix(in srgb, var(--sg-tint, #BFE3FA) 75%, #fff), color-mix(in srgb, var(--sg-tint, #D9EEFA) 40%, #fff)); }
+.sg-zone.tinted::after { content: ''; position: absolute; inset: 0; background: var(--sg-tint, transparent); opacity: .42; mix-blend-mode: multiply; pointer-events: none; z-index: 1; }

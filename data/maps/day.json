@@ -13,6 +13,7 @@
   "tidy",
   "sleep"
  ],
+ "tint": "#BFE0FF",
  "zones": [
   {
    "ch": 1,

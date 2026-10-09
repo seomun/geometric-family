@@ -14,6 +14,7 @@ PRE += [lambda i, n: 50 + 30 * math.sin(i * 0.6 + 1.0), lambda i, n: 20 + 60 * a
 APP_PATH = {'merge': (0, 1), 'spot': (3, 3), 'block': (2, 5), 'sort': (5, 7), 'tile': (7, 3), 'idle': (1, 1), 'quiz': (4, 3), 'color': (6, 5), 'day': (0, 3)}
 # 앱 주제 소품(이모지 임시, 슬롯 map.<앱>:prop1|prop2): ③ 이삿짐 ⑥ 액자 ⑦ 블록 더미 ⑧ 선반 ⑨ 타일 바구니
 PROPS = {'merge': ('🧳', '🪑'), 'spot': ('🖼️', '🪞'), 'block': ('🧱', '🏗️'), 'sort': ('🗄️', '🧺'), 'tile': ('🧺', '🀄')}
+TINT = {'merge': '#FFC9A3', 'spot': '#A9D8F5', 'block': '#C2EBA0', 'sort': '#D3C4F2', 'tile': '#A8E6D2', 'idle': '#FFE19A', 'quiz': '#FFC4D8', 'color': '#FFF09A', 'day': '#BFE0FF'}   # 앱 색조: ③ 살구 ⑥ 하늘 ⑦ 연두 ⑧ 라벤더 ⑨ 민트
 W = 296   # 지도 폭 가정(px): 레일 62 를 뺀 390 화면 안쪽 — 겹침 검사용
 def spots(nodes, H, fixed, thr=84):
     """랜드마크 2개 자리: 노드·상자·관문·띠에서 80px 이상 떨어진 곳, 서로 150px 이상 떨어진 높이"""
@@ -45,7 +46,7 @@ def emit(app, kid, per, specs, base, special, step=None):
                     dp = min([max(abs((x - pr['x']) / 100 * W), abs(yy - pr['y'])) for pr in props] + [999])
                     if dn >= 68 and dm >= 86 and dp >= 140 and len(props) < 2: props.append(dict(e=PROPS[app][len(props)], x=x, y=yy)); break
         zones.append(dict(ch=int(ch), title=title, tale=t, pal=[a, b], faces=faces, nodes=nodes, gate=gate, chest=chest, marks=marks, props=props))
-    D = dict(app=app, version=1, kid=kid, per=per, zoneH=H, nodeSize=(84 if kid else 58), base=base, special=special, zones=zones,
+    D = dict(app=app, version=1, kid=kid, per=per, zoneH=H, nodeSize=(84 if kid else 58), base=base, special=special, tint=TINT.get(app), zones=zones,
              note='[제안] 이야기 지도 데이터. tools/map_build.py 로 생성. 그림 슬롯은 art_slots.map (games/19_SAGA_MAP.md §4).')
     json.dump(D, open(f'data/maps/{app}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1); print(app, len(zones), 'zones, H', H, 'marks', [len(z['marks']) for z in zones])
 def build(app, kid):

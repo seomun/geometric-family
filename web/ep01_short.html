@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[짧은판] 기하학 가족 2화 「부고」</title>
+<meta name="description" content="연락이 없던 세 동창에게 같은 문자가 왔다. — 네모·세모·동그라미, 당신은 어느 도형인가요?">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #2b2118; --paper: #fff5df; }
+  body { margin: 0; background: #f1e6cf; color: var(--ink); font-family: 'Jua', sans-serif; }
+  .strip { max-width: 720px; margin: 0 auto; background: var(--paper); box-shadow: 0 0 40px rgba(0,0,0,.12); }
+  .cut { display: block; width: 100%; height: auto; }
+  .gap { height: 20px; } .gap.big { height: 60px; }
+  .next { max-width: 720px; margin: 0 auto; padding: 28px 24px 40px; font-size: 22px; text-align: center; }
+  .next a { color: inherit; }
+  .talk { max-width: 720px; margin: 0 auto 30px; padding: 24px; text-align: center; font-size: 20px; }
+  .talk a { display: inline-block; margin-top: 10px; padding: 14px 22px; border: 4px solid var(--ink); border-radius: 40px; background: #03c75a; color: #fff; text-decoration: none; font-size: 22px; box-shadow: 6px 7px 0 var(--ink); }
+  .foot { text-align: center; font-size: 13px; opacity: .6; padding: 20px; font-family: sans-serif; }
+</style>
+</head>
+<body>
+<div class="strip" id="strip"></div>
+<div class="talk">댓글은 네이버 블로그에서 나눠요. 당신의 이야기를 들려주세요.<br>
+  <a href="https://blog.naver.com/gihahakf">기하학 가족 블로그에서 댓글 남기기 →</a></div>
+<div class="next"><a href="ep02.html">← 1화 「단톡방」</a> &nbsp;·&nbsp; <a href="index.html">목차</a><br><span style="font-size:17px;opacity:.7">다음 화 — 3화 「상갓집」 준비 중</span></div>
+<div class="foot">© 기하학 가족 · 이야기는 모두 허구입니다. 이름·기관은 만든 것입니다. 상처가 되었다면 미안합니다 — 연락 주시면 내리거나 고치겠습니다.</div>
+
+<script src="../src/characters.js"></script>
+<script src="shorts/_shorts.js"></script>
+<script>
+// 2화 「부고」 v2 (2026-10-06) — 화풍 v2. 원고: docs/01_STORY_SOURCE.md 「에피소드 1화 — 부고」(원문 보존). 고인 = 김태섭(확정)
+document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE + SH.DEFS);
+GF.setMode('clean');
+GF.setAssets('../assets/');
+const W = 720, { C, INK2, HEAD, sticker, hl } = SH;
+const T = (x, y, t, size = 36, o = {}) => SH.T(x, y, t, size, o);
+const cuts = [];
+const cut = (h, inner, bg = C.cream) => cuts.push(`<svg class="cut" viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${h}" fill="${bg}"/>${inner}</svg>`);
+const gap = (big) => cuts.push(`<div class="gap${big ? ' big' : ''}"></div>`);
+// 해설 상자
+const say = (y, lines, size = 38, bg = '#fff') => { const lh = size * 1.32, h = lines.length * lh + 34, w = W - 80;
+  return `<rect x="40" y="${y}" width="${w}" height="${h}" rx="22" fill="${bg}" stroke="${INK2}" stroke-width="5"/>` +
+    lines.map((t, i) => T(W / 2, y + 17 + lh * (i + 0.74), t, size)).join(''); };
+// 카톡 말풍선
+const chat = (x, y, lines, mine = false, name = '', fs = 32) => { const lh = fs * 1.35;
+  const w = Math.max(...lines.map(l => l.length)) * fs * 0.92 + 40, h = lines.length * lh + 24; let g = '';
+  const bx = mine ? x - w : x;
+  if (name) g += T(mine ? x : x + 4, y - 12, name, 26, { anchor: mine ? 'end' : 'start' });
+  g += `<rect x="${bx}" y="${y}" width="${w}" height="${h}" rx="18" fill="${mine ? '#ffe066' : '#fff'}" stroke="${INK2}" stroke-width="4"/>`;
+  lines.forEach((l, i) => { g += T(bx + 20, y + 12 + lh * (i + 0.72), l, fs, { anchor: 'start' }); });
+  return g; };
+const phone = (x, y, w, h, screen = '#a9c6de') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="36" fill="#2b2b30" stroke="${INK2}" stroke-width="5"/><rect x="${x + 16}" y="${y + 34}" width="${w - 32}" height="${h - 68}" rx="18" fill="${screen}"/><circle cx="${x + w / 2}" cy="${y + 18}" r="6" fill="#666"/>`;
+// 말풍선(대사) — _shorts.js say
+const talk = (cx, cy, w, h, lines, size, tx, ty) => SH.say(cx, cy, w, h, lines, size, tx, ty);
+// 창가 — 하늘 + 창틀 + 바깥 풍경
+const windowScene = (sky, outside) => `<rect x="60" y="40" width="600" height="420" rx="10" fill="${sky}" stroke="${INK2}" stroke-width="8"/>${outside}<path d="M360,40 v420 M60,250 h600" stroke="${INK2}" stroke-width="8"/>`;
+const env = (cx, cy, w, label) => { const h = w * 0.64;
+  return `<g transform="translate(${cx},${cy})"><rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="8" fill="#fff" stroke="${INK2}" stroke-width="6"/><path d="M${-w / 2},${-h / 2} L0,${h * 0.05} L${w / 2},${-h / 2}" fill="none" stroke="${INK2}" stroke-width="5"/>${T(0, h * 0.34, label, w * 0.2, { font: HEAD })}</g>`; };
+
+// ── 타이틀 ──
+cut(1000, `
+  ${phone(110, 40, 500, 640, '#d5dade')}
+  ${T(W / 2, 120, '＜ 메시지', 30)}
+  ${chat(150, 170, ['[부고]', '김태섭 (본인상)', '상주: 김두돌, 김한돌', '장소: 구로 ○○병원', '장례식장 203호', '발인: 5월 29일'], false, '', 34)}
+  ${T(W / 2, 640, '오후 2:17', 26, { fill: '#6b6b6b' })}
+  ${say(730, ['그동안 연락이 없던 세 동창에게,', '같은 문자가 왔다.'], 42)}
+`, '#dcd8d2');
+gap();
+
+// ── 2 : 몇 달 전 카톡 ──
+cut(820, `
+  ${chat(40, 60, ['세모야, 나 위암 말기래.', '수술도 어렵고,', '많이 살면 6개월이란다.', '너도 검진 자주 받고,', '건강 챙겨라…', '다 부질없다.'], false, '태섭', 38)}
+  ${say(560, ['맞장구는 쳐 줬다.', '셋 다, 딱히 관심은 없었다.'], 40)}
+`, C.sky);
+gap(true);
+
+// ── 4~6 : 세 개의 창가 ──
+cut(720, `
+  ${windowScene('#cfe3f4', [0, 1, 2, 3, 4].map(i => `<rect x="${90 + i * 115}" y="${120 + (i % 2) * 30}" width="70" height="330" fill="#9aa8b6"/>`).join(''))}
+  ${sticker(nemoDad({ x: 230, y: 290, w: 260, h: 230, emo: 'worry', item: 'coffee' }))}
+  ${say(560, ['네모 — 아주 큰 회사 건물 창가,', '믹스커피'], 38)}
+`, C.peach);
+cut(360, `${say(40, ['사실 셋 모두 그의 결혼식엔', '가지 않았다.', '둘은 연락을 못 받았고, 하나는', '소식을 들었지만 그냥 넘겼다.'], 38)}`);
+gap(true);
+
+// ── 8 : 다음날, 검은 정장 ──
+cut(1000, `
+  <rect x="0" y="800" width="${W}" height="18" fill="#9aa3ad"/><rect x="60" y="50" width="600" height="80" rx="10" fill="#2f6f4f"/>${T(W / 2, 108, '구로디지털단지', 46, { font: HEAD, fill: '#fff' })}
+  ${sticker(nemoDad({ x: 70, y: 560, w: 210, h: 185, emo: 'relief', suit: true }))}
+  ${sticker(semoHusband({ x: 430, y: 545, size: 210, emo: 'good', suit: true }))}
+  ${talk(230, 250, 420, 140, ['어어 왔어? 우리 생각보다', '가까운 데서 근무했구나!'], 32, 170, 560)}
+  ${talk(490, 430, 420, 140, ['그러게. 이럴 줄 알았으면', '중간에 소주라도 할걸.'], 32, 540, 545)}
+  ${talk(360, 900, 560, 130, ['넌 좀 친하지 않았냐?'], 40, 520, 800)}
+`, C.peach);
+cut(900, `
+  <rect x="120" y="40" width="480" height="300" fill="#ddd3c2" stroke="${INK2}" stroke-width="6"/>
+  <rect x="300" y="180" width="120" height="160" fill="#b9ad9b" stroke="${INK2}" stroke-width="6"/>
+  ${T(W / 2, 120, '장례식장 203호', 44, { font: HEAD })}
+  ${sticker(dongDad({ cx: W / 2, cy: 520, r: 120, emo: 'good', suit: true }))}
+  ${talk(W / 2, 760, 520, 130, ['별일 없지? 들어가자.'], 44, 400, 660)}
+`, '#e4e8ee');
+cut(900, `
+  <rect x="80" y="50" width="560" height="110" rx="10" fill="#fff" stroke="${INK2}" stroke-width="6"/>${T(W / 2, 125, '부의 (賻儀)', 52, { font: HEAD })}
+  ${sticker(nemoDad({ x: 40, y: 260, w: 190, h: 168, emo: 'worry', suit: true }))}
+  ${sticker(semoHusband({ x: 260, y: 250, size: 190, emo: 'worry', suit: true }))}
+  ${sticker(dongDad({ cx: 600, cy: 360, r: 85, emo: 'good', suit: true }))}
+  ${env(135, 520, 150, '네모')}${env(355, 520, 150, '세모')}
+  ${T(600, 600, '(미리 준비해 왔다)', 30)}
+  ${say(660, ['얼마나 해야 하나. 종일 고민했다.', '서로 묻진 못했다.'], 40)}
+`);
+gap();
+
+// ── 12 : 넌 얼마나 했냐 ──
+cut(820, `
+  ${talk(260, 120, 420, 130, ['넌 얼마나 했냐?'], 48, 200, 300)}
+  ${talk(470, 640, 460, 130, ['뭐, 그런 거 알아 뭐하게.'], 40, 560, 500)}
+  ${sticker(semoHusband({ x: 80, y: 300, size: 220, emo: 'bad', suit: true }))}
+  ${sticker(dongDad({ cx: 560, cy: 400, r: 100, emo: 'good', suit: true }))}
+`);
+gap(true);
+
+// ── 13 : 착지 ──
+cut(620, `
+  ${T(W / 2, 140, '금액이 뭔 상관이냐고', 46)}
+  ${T(W / 2, 210, '묻는 듯하다.', 46)}
+  ${sticker(nemoDad({ x: 255, y: 250, w: 210, h: 185, emo: 'sad', suit: true }))}
+  ${hl(W / 2, 535, 640, 110, C.hlY, -2)}
+  ${T(W / 2, 560, '우린 상관이 좀 있단다, 친구야.', 46, { font: HEAD })}
+`, '#ece3d3');
+gap(true);
+
+// ── 끝 : 당신은 어느 도형인가요? ──
+cut(1000, `
+  ${T(W / 2, 110, '같은 부고를 받았다면', 50, { font: HEAD })}
+  ${hl(W / 2, 200, 560, 110, C.hlY, -2)}
+  ${T(W / 2, 230, '어느 도형인가요?', 64, { font: HEAD })}
+  ${sticker(nemoDad({ x: 50, y: 330, w: 180, h: 159, emo: 'worry', suit: true }))}
+  ${sticker(semoHusband({ x: 270, y: 320, size: 180, emo: 'bad', suit: true }))}
+  ${sticker(dongDad({ cx: 590, cy: 410, r: 90, emo: 'good', suit: true }))}
+  ${SH.pill(W / 2, 640, '① 네모 — 종일 고민한다', 38)}
+  ${SH.pill(W / 2, 750, '② 세모 — 대놓고 물어본다', 38)}
+  ${SH.pill(W / 2, 860, '③ 동그라미 — 미리 준비한다', 38)}
+`, C.mint);
+
+document.getElementById('strip').innerHTML = cuts.join('');
+</script>
+</body>
+</html>

@@ -268,10 +268,10 @@
 
   /* ---------------- 부팅 ---------------- */
   CL.start = async function (opts) {
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'color_pages', 'merge_extra', 'room_items', 'art_slots'], storeKey: 'gf:color:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'color_pages', 'merge_extra', 'story_color', 'room_items', 'art_slots'], storeKey: 'gf:color:ui:v1', async start() {
       D = GF.data.color_pages; X = GF.data.merge_extra;
       Room.init({ data: GF.data.room_items, game: 'coloring', mode: 'kid', autoPlace: false, guard: (cb) => GF.gate(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), imageFor });
-      GF.extras.init({ app: 'color', kid: true, stats: () => [['완성한 그림', Object.keys(SV.done).length + ' / ' + D.pages.length], ['아이 방 액자', Room.placedIn('kid').filter((x) => x.img).length]], resetTips: () => { SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
+      GF.tale.init('color', GF.data.story_color, { kid: true }); GF.extras.init({ app: 'color', kid: true, stats: () => [['완성한 그림', Object.keys(SV.done).length + ' / ' + D.pages.length], ['아이 방 액자', Room.placedIn('kid').filter((x) => x.img).length]], resetTips: () => { SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('chome');
       CL.debug.D = () => D; CL.debug.SV = () => SV; CL.debug.reset = () => { SV = blank(); save(); }; CL.debug.page = page;
     } }, opts || {}));

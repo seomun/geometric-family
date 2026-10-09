@@ -27,8 +27,8 @@ def webp(path, max_h=420):
     buf = io.BytesIO(); im.save(buf, 'WEBP', quality=84, alpha_quality=95, method=6); return buf.getvalue()
 rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8'))
 bal, sto, chars, anchors, sounds, props = rd('idle_balance'), rd('idle_stories'), rd('chars'), rd('anchors'), rd('sounds'), rd('room_items')
-used = set(re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(bal) + json.dumps(sto)))
-data = {'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'room_items': props, 'names': rd('names'), 'base': ''}
+used = set(re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(bal) + json.dumps(sto) + json.dumps(rd('story_idle'))))
+data = {'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'story_idle': rd('story_idle'), 'room_items': props, 'names': rd('names'), 'base': ''}
 data['art_slots'] = inline_slots(ROOT)
 img = 0
 for k in sorted(used):
@@ -56,7 +56,7 @@ for grp in ('sfx', 'music'):
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
 css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'idle/idle.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/extras.js', 'idle/idle.js'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/extras.js', 'idle/idle.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'idle' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 code = (ROOT / 'src' / 'characters.js').read_text(encoding='utf-8')
 html = f'''<!DOCTYPE html>

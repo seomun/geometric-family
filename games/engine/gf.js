@@ -570,7 +570,7 @@
   /* 첫 만남 인사: 첫 실행 1회, 세 가족 한 컷(①은 프롤로그 3컷)을 자동으로 넘기고 아무 데나 탭하면 바로 건너뛴다. 5앱 같은 모양(GF.story) */
   GF.screen('greet', {
     wide: () => true,
-    enter(r, p) { GF.story(r, p.cuts, () => { GF.state.greeted = 1; Store.save(); if (p.then) p.then(); else GF.back(); }, { auto: p.auto || 3200, skipAll: true }); },
+    enter(r, p) { GF.story(r, p.cuts, () => { GF.state.greeted = 1; Store.save(); if (p.then) p.then(); else GF.back(); GF.proTale(); }, { auto: p.auto || 3200, skipAll: true }); },
   });
   const GREET = {
     'gf:idle:ui:v1': [{ bg: 'indoor', text: '세 가족이 한 동네에 살아요. 오늘도 식탁은 따뜻해요.', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
@@ -583,12 +583,13 @@
     'gf:day:ui:v1': [{ bg: 'home', text: '막둥이와 하루를 지내 봐요. 이도 닦고, 옷도 입고, 밥도 먹어요.', chars: [{ id: 'nemo_kids.kid1', x: 80, y: 600 }, { id: 'baby.joy', x: 190, y: 600 }, { id: 'wife.joy', x: 300, y: 600 }] }],
     'gf:quiz:ui:v1': [{ bg: 'indoor2', text: '네모, 세모, 동그라미. 오늘 하루, 당신은 누구와 닮았나요?', chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
   };
+  GF.proTale = () => { if (GF.tale && GF.tale.ready) setTimeout(() => GF.tale.prologue(document.getElementById('safe')), 300); };   // 이야기 프롤로그(첫 인사 다음, 한 번)
   GF.maybeGreet = () => {
-    const cuts = GREET[KEY]; if (!cuts) return;
+    const cuts = GREET[KEY]; if (!cuts) { GF.proTale(); return; }
     const ids = cuts.flatMap((c) => c.chars.map((q) => q.id)); try { if (GF.data.idle_balance) ids.push(...(JSON.stringify(GF.data.idle_balance).match(/"[a-z_]+\.[a-z0-9]+"/g) || []).map((x) => x.slice(1, -1)).filter((x) => !/^art\./.test(x))); } catch (e) { /* 미리 읽기 실패는 무시 */ }
     GF.predecode(ids);                                                         // 인사가 떠 있는 동안(없어도 홈 직후) 다음 화면 그림을 디코딩
-    if (GF.state.greeted) return;
-    if (navigator.webdriver && !/[?&]greet=1/.test(location.search)) return;       // 자동 시험(smoke)은 건너뜀. 인사 확인은 ?greet=1
+    if (GF.state.greeted) { GF.proTale(); return; }
+    if (navigator.webdriver && !/[?&]greet=1/.test(location.search)) { GF.proTale(); return; }       // 자동 시험(smoke)은 건너뜀. 인사 확인은 ?greet=1
     GF.go('greet', { cuts });
   };
   GF.screen('book', {

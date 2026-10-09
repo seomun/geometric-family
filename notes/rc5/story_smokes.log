@@ -1,0 +1,33 @@
+## block
+    '       - waiting 500ms'
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.12.0
+## sort
+FAIL 실제 클릭으로 칸을 집음
+FAIL 실제 클릭으로 물건이 옮겨짐
+FAIL 되돌리기
+FAILED 3
+## tile
+FAIL 실제 클릭으로 타일이 바구니에 들어감
+FAIL 되돌리기(1회)
+FAILED 2
+## day
+ALL PASS
+## idle
+ALL PASS
+## color
+ALL PASS
+## quiz
+ALL PASS
+## resume
+ALL PASS
+## rank
+     ⑥ 다른 그림 [daily] 평균(네모·세모·동그라미)=685/681/906 표준편차=149/265/114 쉬는 날=2
+     ⑦ 블록 [daily] 평균(네모·세모·동그라미)=584/431/561 표준편차=276/317/314 쉬는 날=1
+     ⑦ 블록 [endless] 평균(네모·세모·동그라미)=291/272/480 표준편차=170/213/226 쉬는 날=2
+     ⑧ 정리 [daily] 평균(네모·세모·동그라미)=698/738/953 표준편차=164/223/113 쉬는 날=1
+     ⑨ 짝 맞추기 [daily] 평균(네모·세모·동그라미)=890/694/746 표준편차=247/339/201 쉬는 날=1
+ALL PASS

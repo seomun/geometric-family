@@ -359,7 +359,7 @@
     } catch (e) { console.error('code chars', e); }
   }
   IDLE.start = async function (opts) {
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'idle_balance', 'idle_stories', 'room_items', 'art_slots'], storeKey: 'gf:idle:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'idle_balance', 'idle_stories', 'story_idle', 'room_items', 'art_slots'], storeKey: 'gf:idle:ui:v1', async start() {
       await loadCodeChars();
       B = GF.data.idle_balance; ST = GF.data.idle_stories; S = load();
       Room.init({ data: GF.data.room_items, game: 'tables', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), onGrant: (it) => { if (UI.toastOk) { toast('새 소품 · ' + it.name); GF.sfx('star'); } } });
@@ -369,7 +369,7 @@
       const o = offline(); if (o && o.gained > 0) UI.welcome = o;
       IDLE.hooks.adAvailable = () => GF.ads.eligible();
       IDLE.hooks.rewardedAd = (placement, cb) => { if (!GF.ads.run({ placement, onReward: () => cb && cb(true) })) cb && cb(false); };
-      GF.extras.init({ app: 'idle', kid: false, rewardSet: 'kitchen', stats: () => [['본 사연', Object.keys(S.sd).length + ' / ' + ST.stories.length], ['식탁 단계', ['nemo', 'semo', 'dong'].map((k) => S.tl[k]).join(' · ')], ['의자', S.chairs]],
+      GF.tale.init('idle', GF.data.story_idle, { kid: false }); GF.extras.init({ app: 'idle', kid: false, rewardSet: 'kitchen', stats: () => [['본 사연', Object.keys(S.sd).length + ' / ' + ST.stories.length], ['식탁 단계', ['nemo', 'semo', 'dong'].map((k) => S.tl[k]).join(' · ')], ['의자', S.chairs]],
         badges: [{ id: 's1', icon: '📖', name: '첫 사연', desc: '사연 1편', ok: () => Object.keys(S.sd).length >= 1 }, { id: 's10', icon: '📚', name: '열 편', desc: '사연 10편', ok: () => Object.keys(S.sd).length >= 10 }, { id: 's30', icon: '👑', name: '서른 편', desc: '사연을 모두 봤어요', ok: () => Object.keys(S.sd).length >= ST.stories.length }, { id: 'c2', icon: '🪑', name: '의자가 늘었어요', desc: '의자 2개 이상', ok: () => S.chairs >= 2 }],
         resetTips: () => {}, reset: () => { S = fresh(); save(); } });
       if (!B || !ST) return; GF.go('itable');

@@ -1,0 +1,31 @@
+{
+ "app": "color",
+ "version": 1,
+ "note": "[제안] 이야기 진행 층(간이). tools/story_build.py 로 생성.",
+ "per": 0,
+ "last": 0,
+ "prologue": [
+  {
+   "text": "막둥이가 크레파스를 꺼냈다. 「오늘은 뭘 칠할까?」",
+   "chars": [
+    "baby.joy"
+   ]
+  },
+  {
+   "text": "세모 이모가 방긋 웃었다. 「마음대로 칠해도 돼!」",
+   "chars": [
+    "wife.joy"
+   ]
+  },
+  {
+   "text": "완성한 그림은 우리 집 벽에 걸어 줄게.",
+   "chars": [
+    "nemo_mom.joy"
+   ]
+  }
+ ],
+ "chapters": {},
+ "rules": {},
+ "ending": [],
+ "finalLine": "네모는 평범하게, 세모는 행복하게, 동그라미는 완벽하게. 오늘의 나는 어느 쪽에 가까웠나요? 댓글로 알려 주세요."
+}

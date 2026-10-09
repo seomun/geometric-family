@@ -166,9 +166,9 @@
   /* ---------------- 부팅 ---------------- */
   QZ.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'quiz_tests', 'room_items', 'art_slots'], storeKey: 'gf:quiz:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'quiz_tests', 'story_quiz', 'room_items', 'art_slots'], storeKey: 'gf:quiz:ui:v1', async start() {
       D = GF.data.quiz_tests; Room.init({ data: GF.data.room_items, game: 'quiz', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
-      GF.extras.init({ app: 'quiz', kid: false, rewardSet: 'badge', stats: () => [['끝낸 테스트', Object.keys(SV.res).length + ' / ' + D.tests.length], ['한 미니게임', Object.keys(SV.game || {}).length + ' / 5'], ['집 배지', Room.owned().filter((id) => (Room.item(id) || {}).set === 'badge').length + ' / 18']],
+      GF.tale.init('quiz', GF.data.story_quiz, { kid: false }); GF.extras.init({ app: 'quiz', kid: false, rewardSet: 'badge', stats: () => [['끝낸 테스트', Object.keys(SV.res).length + ' / ' + D.tests.length], ['한 미니게임', Object.keys(SV.game || {}).length + ' / 5'], ['집 배지', Room.owned().filter((id) => (Room.item(id) || {}).set === 'badge').length + ' / 18']],
         badges: [{ id: 't1', icon: '🔮', name: '첫 테스트', desc: '테스트 1개를 끝냈어요', ok: () => Object.keys(SV.res).length >= 1 }, { id: 't5', icon: '🎴', name: '다섯 장', desc: '테스트 5개', ok: () => Object.keys(SV.res).length >= 5 }, { id: 't10', icon: '🃏', name: '열 장', desc: '테스트 10개', ok: () => Object.keys(SV.res).length >= 10 }, { id: 'tall', icon: '👑', name: '전부 해 봤어요', desc: '테스트를 모두 끝냈어요', ok: () => Object.keys(SV.res).length >= D.tests.length }, { id: 'g1', icon: '🎮', name: '미니게임', desc: '미니게임을 해 봤어요', ok: () => Object.keys(SV.game || {}).length >= 1 }, { id: 'g5', icon: '🏆', name: '미니게임 다섯', desc: '미니게임 5종을 모두 했어요', ok: () => Object.keys(SV.game || {}).length >= 5 }],
         resetTips: () => { SV.last = null; save(); }, reset: () => { SV = blank(); save(); } });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('qhome');

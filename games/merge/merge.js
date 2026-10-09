@@ -90,6 +90,7 @@
         const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return;
         const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);
         el('div', 'mg-ch', sc, `<b>${ci + 1}장 · ${name}</b><span>★ ${got}/${ls.length * 3}</span>`);
+        GF.tale.strip(sc, ci + 1, ls.filter((l) => SV.stars[l.id]).length, ls.length, !unlocked(ls[0].id));
         const g = el('div', 'mg-lv', sc);
         ls.forEach((l) => {
           const open = unlocked(l.id), st = SV.stars[l.id] || 0, b = el('button', 'mg-l' + (open ? '' : ' off') + (l.tag === 'rest' ? ' rest' : '') + (l.type !== 'make' ? ' sp' : ''), g, `<span>${l.id}</span><i>${'★'.repeat(st)}${'☆'.repeat(3 - st)}</i>`);
@@ -202,14 +203,12 @@
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: parOf(GF.rank.today(), LV), actions: S.moves, tools: undone + hintN, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
         save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone();
         setTimeout(() => {
-          const story = !LV.kind && LV.id % 10 === 0 && X.stories.find((s) => s.chapter === LV.chapter);   // 사연 판: 장의 마지막 판 뒤에 사연 컷
-          if (story) { const ov = el('div', 'abs', r); ov.style.cssText = 'inset:0;z-index:60'; GF.story(ov, story.cuts.map((c) => ({ bg: 'indoor', text: c.text, chars: c.chars.map((id, k, a) => ({ id, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 })), bubble: c.bubble ? { type: c.bubble, at: 0 } : null })), () => { ov.remove(); result(st); }); }
-          else result(st);
+          GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, 650);
       }
       function lose() { busy = true; if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); say('한 번 더!'); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
       MG.debug.adOffer = () => offerUndo(); MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
-      buildBoard(); draw(); showTip();
+      buildBoard(); draw(); showTip(); GF.tale.level(r, LV);
       if (!LV.kind && LV.id <= 2 && !hist.length) setTimeout(() => { const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }, 1200);   // 처음 두 판: 첫 칸을 손가락이 알려 준다
     },
   });
@@ -226,8 +225,8 @@
   /* ---------------- 부팅 ---------------- */
   MG.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'merge_levels', 'merge_extra', 'room_items', 'art_slots'], storeKey: 'gf:merge:ui:v1', async start() {
-      D = GF.data.merge_levels; X = GF.data.merge_extra; const RD = GF.data.room_items; D.roomTotal = RD.items.filter((i) => i.set === 'build').length;
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'merge_levels', 'merge_extra', 'story_merge', 'maps/merge', 'room_items', 'art_slots'], storeKey: 'gf:merge:ui:v1', async start() {
+      D = GF.data.merge_levels; X = GF.data.merge_extra; GF.saga.init('merge', GF.data['maps/merge']); GF.tale.init('merge', GF.data.story_merge, { kid: false }); const RD = GF.data.room_items; D.roomTotal = RD.items.filter((i) => i.set === 'build').length;
       Room.init({ data: RD, game: 'merge', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'merge', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps, d) => { const r = M.botPlay(Object.assign({}, L, { rule }), rng, eps); return { won: r.won, score: GF.rank.eff({ par: parOf(d, L), actions: r.moves, tools: 0, attempts: 1 }) }; } } } });
       GF.extras.init(Object.assign({ app: 'merge', kid: false, rewardSet: 'build', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'build', itemTotal: 16, icon: '🔷' })));

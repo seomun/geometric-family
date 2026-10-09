@@ -69,20 +69,11 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'bk'); GF.bg('indoor', r); bar();
-      const sc = el('div', 'bk-scroll', r), best = (SV.endless || {}).best || 0; GF.extras.retryBanner(sc, SV.stars, (n) => GF.go('bplay', { n }));
-      const en = UK.btn({ text: '끝없이' + (best ? ' · 최고 ' + best : ''), icon: 'play', cls: 'pink block', onclick: () => { GF.sfx('pick'); GF.go('bplay', { level: G.makeEndless(Date.now() % 100000) }); } }, el('div', 'bk-endless', sc)); en.setAttribute('aria-label', 'endless');
-      D.chapters.forEach((name, ci) => {
-        const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return;
-        const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);
-        el('div', 'bk-ch', sc, `<b>${ci + 1}장 · ${name}</b><span>★ ${got}/${ls.length * 3}</span>`);
-        const g = el('div', 'bk-lv', sc);
-        ls.forEach((l) => {
-          const open = unlocked(l.id), st = SV.stars[l.id] || 0, b = el('button', 'bk-l' + (open ? '' : ' off') + (l.tag === 'rest' ? ' rest' : '') + (l.type !== 'lines' ? ' sp' : ''), g, `<span>${l.id}</span><i>${'★'.repeat(st)}${'☆'.repeat(3 - st)}</i>`);
-          if (l.type !== 'lines') b.title = D.types[l.type];
-          b.onclick = () => { if (!open) { GF.sfx('hmm'); UK.toast('앞 레벨을 먼저 깨 보세요', r); return; } GF.sfx('pick'); GF.go('bplay', { n: l.id }); };
-        });
-      });
-      setTimeout(() => { const last = [...sc.querySelectorAll('.bk-l')].filter((x) => !x.classList.contains('off')).pop(); last && last.scrollIntoView({ block: 'center' }); }, 30);
+      const best = (SV.endless || {}).best || 0; GF.extras.retryBanner(el('div', 'sg-banner', r), SV.stars, (n) => GF.go('bplay', { n }));
+      const rows = D.levels.map((l) => l);
+      GF.saga.open(r, { levels: rows, kid: false, stars: (id) => SV.stars[id] || 0, unlocked, title: (c) => D.chapters[c - 1],
+        onNode: (l) => GF.go('bplay', { n: l.id }), onGate: (c) => GF.tale.replay(c, r), onChest: () => GF.go('bhouse'),
+        side: [{ icon: 'play', text: '끝없이', fn: () => { GF.sfx('pick'); GF.go('bplay', { level: G.makeEndless(Date.now() % 100000) }); }, badge: best ? String(best) : '' }, { icon: 'home', text: '우리 집', fn: () => GF.go('bhouse') }] });
     },
   });
 
@@ -205,9 +196,7 @@
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: LV.par, actions: S.used, tools: undone + hintN, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
         save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(); GF.sfx('star');
         setTimeout(() => {
-          const story = !LV.kind && LV.id % 10 === 0 && X.stories.find((s) => s.chapter === LV.chapter);   // 사연 판: 장의 마지막 판 뒤에 옛이야기 4컷
-          if (story) { const ov = el('div', 'abs', r); ov.style.cssText = 'inset:0;z-index:60'; GF.story(ov, story.cuts.map((c) => ({ bg: 'indoor', text: c.text, chars: c.chars.map((id, k, a) => ({ id, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 })), bubble: c.bubble ? { type: c.bubble, at: 0 } : null })), () => { ov.remove(); result(st); }); }
-          else result(st);
+          GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
       }
       function lose() {
@@ -221,6 +210,7 @@
       if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '조각을 끌어다 판에 놓아요' : '줄이 가득 차면 지워져요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
+      GF.tale.level(r, LV);
       if (LV.id <= 2 && !LV.kind) setTimeout(() => { const slot = tray.querySelector('.bk-slot[data-k]'), mv = LV.solution[0], c = mv && cells[mv[1] * N + mv[2]]; if (slot && c && c.isConnected && !hist.length) UK.finger(r, slot, { to: c, ms: 7000 }); }, 1200);   // 처음 두 판: 조각을 끌어다 놓는 시늉
     },
   });
@@ -237,8 +227,8 @@
   /* ---------------- 부팅 ---------------- */
   BK.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'block_levels', 'block_extra', 'room_items', 'art_slots'], storeKey: 'gf:block:ui:v1', async start() {
-      D = GF.data.block_levels; X = GF.data.block_extra;
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'block_levels', 'block_extra', 'story_block', 'maps/block', 'room_items', 'art_slots'], storeKey: 'gf:block:ui:v1', async start() {
+      D = GF.data.block_levels; X = GF.data.block_extra; GF.saga.init('block', GF.data['maps/block']); GF.tale.init('block', GF.data.story_block, { kid: false });
       Room.init({ data: GF.data.room_items, game: 'block', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'block', boards: {
         daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { const r = M.botPlay(L, rng, eps, rule); return { won: r.won, score: GF.rank.eff({ par: L.par, actions: r.used, tools: 0, attempts: 1 }) }; } },

@@ -1,0 +1,16 @@
+## sort
+ALL PASS
+## tile
+    at C:\projects\geometric-family\tools\tile_smoke.js:19:32 {
+  log: [ "  - waiting for locator('.tl-btns') to be visible" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.12.0
+## block
+    at C:\projects\geometric-family\tools\block_smoke.js:20:32 {
+  log: [ "  - waiting for locator('.bk-btns') to be visible" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.12.0

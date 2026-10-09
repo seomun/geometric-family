@@ -85,10 +85,10 @@
         if (LV.kind === 'daily' && (SV.daily.date !== today() || !SV.daily.done)) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } }
         save(); GF.refreshBar();
         setTimeout(() => {
-          const story = !LV.kind && LV.last && X.stories.find((s) => s.chapter === LV.chapter);
+          const story = false;
           const result = () => { const nx = !LV.kind && D.levels.find((l) => l.id === LV.id + 1), it = gained[0] && Room.item(gained[0]);
             UK.result({ kid: true, title: '', stars: 3, parent: r, onNext: nx ? () => GF.replace('dplay', { n: nx.id }) : () => GF.home2(), onRetry: () => GF.replace('dplay', LV.kind ? { level: LV } : { n: LV.id }) }); if (it && it.emoji) { const sh = r.querySelector('.uk-sheet'); if (sh) { const b = el('div', 'uk-big', null, it.emoji); sh.insertBefore(b, sh.children[1] || null); } } };
-          if (story) { const ov = el('div', 'abs', r); ov.style.cssText = 'inset:0;z-index:60'; GF.story(ov, story.cuts.map((c) => ({ bg: 'indoor', text: c.text, chars: c.chars.map((id, k, a) => ({ id, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 })), bubble: c.bubble ? { type: c.bubble, at: 0 } : null })), () => { ov.remove(); result(); }); } else result();
+          GF.tale.done(r, LV, result);   // 말풍선 · 승전결 컷(장 끝) · 마지막 장이면 엔딩
         }, slow(900));
       }
       const ACT = {};
@@ -171,7 +171,7 @@ const th = LV.theme || 'teeth', face = el('div', 'dy-face', stage); face.innerHT
         setTimeout(() => { if (!finished && !SV.tips.sleep && stage.isConnected) { UK.finger(r, lights[0], { tap: true, ms: 6000 }); SV.tips.sleep = 1; save(); } else kick(hintSleep, 5000); }, slow(900));
       };
       DY.debug.level = () => LV; DY.debug.finished = () => finished; DY.debug.got = () => [got, goalN]; DY.debug.stage = stage;
-      ACT[LV.type]();
+      ACT[LV.type](); GF.tale.level(r, LV);
     },
   });
   GF.screen('dhouse', {
@@ -179,8 +179,8 @@ const th = LV.theme || 'teeth', face = el('div', 'dy-face', stage); face.innerHT
     enter(r) { r.classList.add('uk', 'dy'); GF.bg('home', r); bar(); const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house(sc, { room: 'kid' }); },
   });
   DY.start = async function (opts) {
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'day_levels', 'day_extra', 'room_items', 'art_slots'], storeKey: 'gf:day:ui:v1', async start() {
-      D = GF.data.day_levels; X = GF.data.day_extra;
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'day_levels', 'day_extra', 'story_day', 'maps/day', 'room_items', 'art_slots'], storeKey: 'gf:day:ui:v1', async start() {
+      D = GF.data.day_levels; X = GF.data.day_extra; GF.saga.init('day', GF.data['maps/day']); GF.tale.init('day', GF.data.story_day, { kid: true });
       Room.init({ data: GF.data.room_items, game: 'day', mode: 'kid', autoPlace: true, guard: (cb) => GF.gate(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.extras.init({ app: 'day', kid: true, rewardSet: 'daybath', stats: () => [['깬 판', Object.keys(SV.done).length + ' / ' + D.levels.length], ['아이 방 소품', Room.owned().filter((id) => (Room.item(id) || {}).set === 'daybath').length + ' / 20']], resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
       document.getElementById('safe').classList.add('uk'); GF.go('dhome');

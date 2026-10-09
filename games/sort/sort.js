@@ -71,7 +71,7 @@
       r.classList.add('uk', 'sr'); GF.bg('indoor', r); bar(); const sc = el('div', 'sr-scroll', r); GF.extras.retryBanner(sc, SV.stars, (n) => GF.go('splay', { n }));
       D.chapters.forEach((name, ci) => {
         const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return; const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);
-        el('div', 'sr-ch', sc, `<b>${ci + 1}장 · ${name}</b><span>★ ${got}/${ls.length * 3}</span>`); const g = el('div', 'sr-lv', sc);
+        el('div', 'sr-ch', sc, `<b>${ci + 1}장 · ${name}</b><span>★ ${got}/${ls.length * 3}</span>`); GF.tale.strip(sc, ci + 1, ls.filter((l) => (SV.stars[l.id] || 0) > 0).length, ls.length, !unlocked(ls[0].id)); const g = el('div', 'sr-lv', sc);
         ls.forEach((l) => { const open = unlocked(l.id), st = SV.stars[l.id] || 0, b = el('button', 'sr-l' + (open ? '' : ' off') + (l.tag === 'rest' ? ' rest' : '') + (l.type !== 'sort' ? ' sp2' : ''), g, `<span>${l.id}</span><i>${'★'.repeat(st)}${'☆'.repeat(3 - st)}</i>`); if (l.type !== 'sort') b.title = D.types[l.type]; b.onclick = () => { if (!open) { GF.sfx('hmm'); UK.toast('앞 레벨을 먼저 깨 보세요', r); return; } GF.sfx('pick'); GF.go('splay', { n: l.id }); }; });
       });
       setTimeout(() => { const last = [...sc.querySelectorAll('.sr-l')].filter((x) => !x.classList.contains('off')).pop(); last && last.scrollIntoView({ block: 'center' }); }, 30);
@@ -148,9 +148,7 @@
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: LV.par, actions: S.moves, tools: S.used.undo + S.used.extra + S.used.hint, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
         save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(); GF.sfx('star');
         setTimeout(() => {
-          const story = !LV.kind && LV.id % 10 === 0 && X.stories.find((s) => s.chapter === LV.chapter);   // 사연 판: 장의 마지막 판 뒤에 옛이야기 4컷
-          if (story) { const ov = el('div', 'abs', r); ov.style.cssText = 'inset:0;z-index:60'; GF.story(ov, story.cuts.map((c) => ({ bg: 'indoor', text: c.text, chars: c.chars.map((id, k, a) => ({ id, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 })), bubble: c.bubble ? { type: c.bubble, at: 0 } : null })), () => { ov.remove(); result(st); }); }
-          else result(st);
+          GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
       }
       SR.debug.adOffer = () => offerUndo(); SR.debug.level = () => LV; SR.debug.state = () => S; SR.debug.tap = (i) => tap(i); SR.debug.undo = undo; SR.debug.extra = addExtra; SR.debug.hint = hint; SR.debug.busy = () => busy; SR.debug.tubes = () => tubeEls; SR.debug.sel = () => sel;
@@ -158,6 +156,7 @@
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '칸을 눌러 집고, 다른 칸에 놓아요' : '같은 그림 위나 빈 칸에 놓을 수 있어요'; } else if (t0 && !SV.tips[LV.type] && LV.type !== 'sort') { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));
+      GF.tale.level(r, LV);
       if (LV.id <= 2 && !LV.kind) setTimeout(() => { const d = tubeEls[LV.solution[0][0]]; if (d && d.isConnected && !hist.length && sel < 0) UK.finger(r, d, { tap: true, ms: 6000 }); }, slow(1300));   // 처음 두 판: 집을 칸을 손가락이 알려 준다
     },
   });
@@ -167,8 +166,8 @@
   });
   SR.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'sort_levels', 'sort_extra', 'room_items', 'art_slots'], storeKey: 'gf:sort:ui:v1', async start() {
-      D = GF.data.sort_levels; X = GF.data.sort_extra;
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'sort_levels', 'sort_extra', 'story_sort', 'maps/sort', 'room_items', 'art_slots'], storeKey: 'gf:sort:ui:v1', async start() {
+      D = GF.data.sort_levels; X = GF.data.sort_extra; GF.saga.init('sort', GF.data['maps/sort']); GF.tale.init('sort', GF.data.story_sort, { kid: false });
       Room.init({ data: GF.data.room_items, game: 'sort', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'sort', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { const r = C.botPlay(L, rng, eps, rule); return { won: r.won, score: GF.rank.eff({ par: L.par, actions: r.moves, tools: 0, attempts: 1 }) }; } } } });
       GF.extras.init(Object.assign({ app: 'sort', kid: false, rewardSet: 'storage', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'storage', itemTotal: 20, icon: '🧹' })));

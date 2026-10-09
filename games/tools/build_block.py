@@ -22,9 +22,11 @@ def webp(path, max_h=420):
     buf = io.BytesIO(); im.save(buf, 'WEBP', quality=84, alpha_quality=95, method=6); return buf.getvalue()
 rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8'))
 chars, anchors, sounds, levels, room, extra = rd('chars'), rd('anchors'), rd('sounds'), rd('block_levels'), rd('room_items'), rd('block_extra')
+story = rd('story_block')
+smap = rd('maps/block')
 import re as _re
-USED = sorted(set(['nemo_dad.joy', 'wife.joy', 'dong_dad.joy', 'nemo_kids.kid1', 'baby.joy'] + _re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(extra))))
-data = {'chars': {}, 'anchors': {}, 'block_levels': levels, 'block_extra': extra, 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
+USED = sorted(set(['nemo_dad.joy', 'wife.joy', 'dong_dad.joy', 'nemo_kids.kid1', 'baby.joy'] + _re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(extra) + json.dumps(story))))
+data = {'chars': {}, 'anchors': {}, 'block_levels': levels, 'block_extra': extra, 'story_block': story, 'maps/block': smap, 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
 img = 0
 for k in USED:
     v = dict(chars[k]); raw = webp(ROOT / v['src']); img += len(raw); v['src'] = b64(raw, 'image/webp'); data['chars'][k] = v
@@ -47,8 +49,8 @@ for grp in ('sfx', 'music'):
         elif grp == 'sfx': raw, mime = to_mp3(path), 'audio/mpeg'
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
-css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'block/block.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/extras.js', 'block/block-core.js', 'block/block-gen.js', 'block/block.js'])
+css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'engine/saga.css', 'block/block.css'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/saga.js', 'engine/extras.js', 'block/block-core.js', 'block/block-gen.js', 'block/block.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'block' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 html = f'''<!DOCTYPE html>
 <html lang="ko" data-uk="adult"><head><meta charset="utf-8">

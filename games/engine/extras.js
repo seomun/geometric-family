@@ -43,6 +43,7 @@
       if (c.badges && c.badges.length) row(body, '업적', tbtn(badgeCount() + '/' + c.badges.length, () => { sc.close(); openBadges(); }));
       if (c.rewardItems && c.rewardItems.length) row(body, '출석 도장', tbtn('보기', () => { sc.close(); openAttend(); }));
     }
+    if (!kid && GF.tale && GF.tale.ready) { if (GF.tale.d.rules) row(body, '도움말', tbtn('판 종류 설명', () => { sc.close(); GF.tale.help(); })); row(body, '이야기 다시 보기', tbtn('다시 보기', () => { GF.tale.reset(); UK.toast('프롤로그와 장 이야기가 다시 나와요', document.getElementById('safe')); })); }
     if (c.resetTips) row(body, '도움말 다시 보기', tbtn('다시 보기', () => { c.resetTips(); GF.toast ? GF.toast('다음 판에서 도움말이 다시 나와요') : UK.toast('다음 판에서 도움말이 다시 나와요', document.getElementById('safe')); }));
     if (c.reset) { let armed = false; const b = tbtn('지우기', () => { if (!armed) { armed = true; b.textContent = '한 번 더'; return; } c.reset(); try { localStorage.removeItem(key()); } catch (e) {} location.reload(); }); row(body, '이 앱 기록 지우기(집은 그대로)', b); }
     const ads = GF.ads && GF.ads.config.enabled && !kid;

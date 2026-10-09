@@ -34,7 +34,7 @@ const solveLevel = async (pg) => {
   }
   if (A === 1) {
     // 실제 포인터로 한 곳 누르기 + 틀린 탭 + 힌트
-    await pg.evaluate(() => { GF.stack = []; GF.go('phome'); GF.go('pplay', { n: 1 }); }); await pg.waitForSelector('.screen.on .sp-pic'); await pg.waitForTimeout(500);
+    await pg.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.stack = []; GF.go('phome'); GF.go('pplay', { n: 1 }); }); await pg.waitForSelector('.screen.on .sp-pic'); await pg.evaluate(() => document.querySelectorAll('.uk-scrim').forEach((e) => e.remove())); await pg.waitForTimeout(500);
     const d0 = await pg.evaluate(() => SPOT.debug.level().rounds[0].diffs[0]);
     const pos = await pg.evaluate((d) => { const w = document.querySelectorAll('.screen.on .sp-pic')[1].getBoundingClientRect(); const L = SPOT.debug.level().rounds[0]; let bx = 168, by = 105, best = -1; for (let yy = 30; yy < 190; yy += 10) for (let xx = 30; xx < 310; xx += 10) { const m = Math.min(...L.diffs.map((q) => Math.hypot(xx - (q.x + q.w / 2), yy - (q.y + q.h / 2)))); if (m > best) { best = m; bx = xx; by = yy; } } return { x: w.x + (d.x + d.w / 2) / 336 * w.width, y: w.y + (d.y + d.h / 2) / 210 * w.height, wx: w.x + bx / 336 * w.width, wy: w.y + by / 210 * w.height }; }, d0);
     await pg.mouse.click(pos.wx, pos.wy); await pg.waitForTimeout(300); ok(await pg.evaluate(() => SPOT.debug.state().wrong === 1), '틀린 곳을 누르면 틀린 탭 1회(판은 계속)');

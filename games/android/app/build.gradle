@@ -50,9 +50,30 @@ android {
             if (gfStore) signingConfig signingConfigs.release
         }
     }
+    buildFeatures { buildConfig true }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
     // 코드는 Java(네이티브 라이브러리 없음) → 64비트 요구도 자동 충족
+}
+
+// ---- 광고(D19, games/16_ADS_RND.md §D19): AdMob. 실제 ID 는 ~/.gradle/gradle.properties 에서 flavor 별로 주입(없으면 구글 공식 테스트 ID).
+//   GF_ADMOB_APP_<FLAVOR>=ca-app-pub-…~…   GF_ADMOB_BANNER_<FLAVOR>=ca-app-pub-…/…   GF_ADMOB_INTERSTITIAL_<FLAVOR>=…   GF_ADMOB_REWARDED_<FLAVOR>=…
+//   <FLAVOR> = TODDLER COLOR TABLES MERGE QUIZ BLOCK SPOT TILE SORT DAY.  유아(Families) flavor: toddler·color·day — 배너만, 아동 대상 처리, AD_ID 권한 제거.
+def GF_KIDS = ['toddler', 'color', 'day']
+def GF_TEST = [app: 'ca-app-pub-3940256099942544~3347511713', banner: 'ca-app-pub-3940256099942544/9214589741', interstitial: 'ca-app-pub-3940256099942544/1033173712', rewarded: 'ca-app-pub-3940256099942544/5224354917']
+android.productFlavors.configureEach { f ->
+    def u = f.name.toUpperCase()
+    def idOf = { String k -> (project.findProperty("GF_ADMOB_${k.toUpperCase()}_${u}") ?: GF_TEST[k]) as String }
+    f.manifestPlaceholders = [admobAppId: idOf('app')]
+    f.buildConfigField 'boolean', 'GF_KID', GF_KIDS.contains(f.name) ? 'true' : 'false'
+    f.buildConfigField 'String', 'GF_AD_BANNER', "\"${idOf('banner')}\""
+    f.buildConfigField 'String', 'GF_AD_INTERSTITIAL', "\"${idOf('interstitial')}\""
+    f.buildConfigField 'String', 'GF_AD_REWARDED', "\"${idOf('rewarded')}\""
+    f.buildConfigField 'boolean', 'GF_AD_TEST', (project.findProperty("GF_ADMOB_APP_${u}") ? 'false' : 'true')
+}
+dependencies {
+    implementation 'com.google.android.gms:play-services-ads:24.4.0'
+    implementation 'com.google.android.ump:user-messaging-platform:3.2.0'
 }

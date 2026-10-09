@@ -277,6 +277,7 @@
     $('b-home').style.visibility = 'visible'; if ($('b-back')) $('b-back').style.visibility = GF.stack.length > 1 ? 'visible' : 'hidden';
     refreshBar();
     s.enter(s.el, s.params);
+    if (GF.onScreen) GF.onScreen(name);                     // 광고 배너: 홈·지도에서만 켠다(ads.js)
     GF.bgm.play(name === 'round' ? ((run && run.ch === 'ch4') ? 'night' : 'theme_kids') : name === 'book' ? (s.params.ch === 'ch4' ? 'night' : 'theme_kids') : 'theme_main');
   }
   GF.go = (name, params) => { GF.stack.push({ name, params }); show(name, params); };
@@ -345,7 +346,7 @@
   GF.mode = (name, def) => { GF.modes[name] = def; };
   // 안드로이드 껍데기가 호출: 앱이 백그라운드로 가면 소리를 멈추고, 돌아오면 이어 간다 / 노치 인셋이 바뀌면 다시 맞춘다
   GF.setHidden = (h) => { GF.appHidden = !!h; if (GF.bgm) GF.bgm.sync(); if (!h && window.Room && Room.refresh) { try { Room.refresh(); } catch (e) { /* 형제 앱 집 불러오기 실패는 무시 */ } } };
-  GF.refit = () => fit();
+  GF.refit = () => { try { fit(); } catch (e) {} };   // 부팅 전(DOM 없음)에 네이티브가 불러도 오류 없이 넘어간다
   const GAME_ICON = { shadow: 'gshadow', faces: 'gfaces', puzzle: 'gpuzzle', paint: 'gpaint', shapes: 'gshapes' };
   const GAME_HERO = { shadow: 'dong_dad.good', faces: 'wife.joy', puzzle: 'nemo_mom.good', paint: 'baby.joy', shapes: 'nemo_dad.good' };
   const GAME_ORDER = ['shadow', 'faces', 'puzzle', 'paint', 'shapes'];

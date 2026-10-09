@@ -1,1 +1,9 @@
 ## tile
+ALL PASS
+## block
+    "  - waiting for locator('.screen.on .bk-endless .uk-btn') to be visible"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.12.0

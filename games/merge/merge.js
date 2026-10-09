@@ -201,7 +201,7 @@
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
         else if (LV.kind === 'trio') { const key = LV.id.split(':').slice(1).join(':'); SV.trio[key] = Math.max(SV.trio[key] || 0, st); }
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: parOf(GF.rank.today(), LV), actions: S.moves, tools: undone + hintN, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
-        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone();
+        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(LV);
         setTimeout(() => {
           GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, 650);
@@ -209,7 +209,7 @@
       function lose() { busy = true; if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); say('한 번 더!'); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
       MG.debug.adOffer = () => offerUndo(); MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
       buildBoard(); draw(); showTip(); GF.tale.level(r, LV);
-      if (!LV.kind && LV.id <= 2 && !hist.length) setTimeout(() => { const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }, 1200);   // 처음 두 판: 첫 칸을 손가락이 알려 준다
+      if (!LV.kind && LV.id <= 2 && !hist.length) { r.__demo = () => { if (GF.tale.cardOpen) return; const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }; setTimeout(r.__demo, 1200); }   // 처음 두 판: 첫 칸을 손가락이 알려 준다
     },
   });
 

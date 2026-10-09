@@ -19,8 +19,8 @@ def build(app, kid):
         t = c['tale']; a, b = PAL.get(t, ('#FFE9B8', '#C7E6A0')); m = MARKS.get(t, ('🌟', '🌿'))
         n0, n1 = nodes[0], nodes[-1]
         zones.append(dict(ch=int(ch), title=c['title'], tale=t, pal=[a, b], faces=c['faces'], nodes=nodes,
-            gate=[round(100 - n0[0] if abs(n0[0] - 50) < 20 else (12 if n0[0] > 50 else 88), 1), H - 40], chest=[round(max(14, min(86, 100 - n1[0])), 1), 112],
-            marks=[dict(e=m[0], x=round(8 if n1[0] > 50 else 90, 1), y=int(H * 0.45)), dict(e=m[1], x=round(90 if n1[0] > 50 else 8, 1), y=int(H * 0.72))]))
+            gate=[14 if n0[0] > 40 else 86, H - 70], chest=[round(max(20, min(80, n1[0] + (-30 if n1[0] > 50 else 30))), 1), 124],
+            marks=[dict(e=m[0], x=(18 if n1[0] > 50 else 82), y=int(H * 0.45)), dict(e=m[1], x=(82 if n1[0] > 50 else 18), y=int(H * 0.72))]))
     D = dict(app=app, version=1, kid=kid, per=per, zoneH=H, nodeSize=(84 if kid else 58), base=None, special=[], zones=zones,
              note='[제안] 이야기 지도 데이터. tools/map_build.py 로 생성. 그림 슬롯은 art_slots.map (games/19_SAGA_MAP.md §4).')
     json.dump(D, open(f'data/maps/{app}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1); print(app, len(zones), 'zones, H', H)

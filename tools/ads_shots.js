@@ -41,7 +41,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
       ok(await p.evaluate(() => !!document.querySelector('.uk-sheet [data-adtest], [data-adtest]')), name + ' 테스트 광고 팝업'); ok((await inSafe(p)) === 0, name + ' 테스트 광고 팝업이 화면 안에 있음(위로 밀리지 않음)'); await p.screenshot({ path: path.join(OUT, `ads_${key}_test.png`) });
     }
     // 광고를 못 불러오면 보상을 그냥 지급: 테스트 모드 끄고(네이티브 없음) 켜진 상태
-    const free = await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.ads.config.test = false; let g = 0; GF.ads.run({ placement: 'x', onReward: () => { g++; } }); return g; }); ok(free === 1, name + ' 광고를 못 불러오면 보상을 그냥 지급');
+    const free = await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.ads.config.test = false; window.GFAds = { isReady: () => false, show() {} }; let g = 0; GF.ads.run({ placement: 'x', onReward: () => { g++; } }); return g; }); ok(free === 1, name + ' 광고를 못 불러오면 보상을 그냥 지급');
     // 한도 5회
     const cap = await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.ads.config.test = true; localStorage.setItem('gf:ads:daily', JSON.stringify({ d: (() => { const d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); })(), r: 5, i: 0 })); return [GF.ads.eligible(), GF.ads.offer({ ask: 'x' })]; }); ok(cap[0] === false && cap[1] === false, name + ' 하루 5회를 넘으면 자리가 사라짐');
     ok(errs.length === 0, name + ' 콘솔 오류 없음 ' + errs.slice(0, 2).join('|'));

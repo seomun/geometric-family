@@ -146,7 +146,7 @@
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
         else if (LV.kind === 'trio') { const key = LV.id.split(':').slice(1).join(':'); SV.trio[key] = Math.max(SV.trio[key] || 0, st); }
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: LV.par, actions: S.moves, tools: S.used.undo + S.used.extra + S.used.hint, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
-        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(); GF.sfx('star');
+        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(LV); GF.sfx('star');
         setTimeout(() => {
           GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
@@ -157,7 +157,7 @@
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '칸을 눌러 집고, 다른 칸에 놓아요' : '같은 그림 위나 빈 칸에 놓을 수 있어요'; } else if (t0 && !SV.tips[LV.type] && LV.type !== 'sort') { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));
       GF.tale.level(r, LV);
-      if (LV.id <= 2 && !LV.kind) setTimeout(() => { const d = tubeEls[LV.solution[0][0]]; if (d && d.isConnected && !hist.length && sel < 0) UK.finger(r, d, { tap: true, ms: 6000 }); }, slow(1300));   // 처음 두 판: 집을 칸을 손가락이 알려 준다
+      if (LV.id <= 2 && !LV.kind) { r.__demo = () => { if (GF.tale.cardOpen) return; const d = tubeEls[LV.solution[0][0]]; if (d && d.isConnected && !hist.length && sel < 0) UK.finger(r, d, { tap: true, ms: 6000 }); }; setTimeout(r.__demo, slow(1300)); }   // 처음 두 판: 집을 칸을 손가락이 알려 준다
     },
   });
   GF.screen('shouse', {

@@ -15,12 +15,16 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.window.OnBackInvokedCallback;
 import android.window.OnBackInvokedDispatcher;
 
-/** 단일 HTML(assets/index.html)을 오프라인으로 띄우는 껍데기. 외부 이동·권한·네트워크 없음. */
+/** 단일 HTML(assets/index.html)을 띄우는 껍데기. 앱 밖으로 가는 이동은 막는다. 광고 SDK 만 네트워크를 쓴다(AdsBridge). */
 public class MainActivity extends Activity {
     private WebView web;
+    private AdsBridge ads;
+    private int navBottomPx = 0;
 
     @Override
     protected void onCreate(Bundle b) {
@@ -62,7 +66,16 @@ public class MainActivity extends Activity {
                 pushInsets(v.getRootWindowInsets());
             }
         });
-        setContentView(web);
+        LinearLayout root = new LinearLayout(this);                          // WebView 위, 배너 자리 아래(배너가 보이면 WebView 가 그만큼 줄어든다)
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setBackgroundColor(0xFFFFF6E5);
+        root.addView(web, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f));
+        FrameLayout adHolder = new FrameLayout(this);
+        adHolder.setBackgroundColor(0xFFFFF6E5);
+        root.addView(adHolder, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        setContentView(root);
+        ads = new AdsBridge(this, web, adHolder, () -> pushInsets(web.getRootWindowInsets()));
+        web.addJavascriptInterface(ads, "GFAds");                                    // 광고(D19): 아래 AdsBridge 가 유아·성인 규칙을 나눈다
         web.setOnApplyWindowInsetsListener((v, insets) -> {
             pushInsets(insets);
             return insets;
@@ -99,6 +112,9 @@ public class MainActivity extends Activity {
             if (c != null) top = c.getSafeInsetTop();
         }
         int bottom = Build.VERSION.SDK_INT >= 30 ? in.getInsets(WindowInsets.Type.navigationBars()).bottom : in.getSystemWindowInsetBottom();
+        navBottomPx = bottom;
+        if (ads != null) ads.setBottomInset(bottom);
+        if (ads != null && ads.bannerVisible()) bottom = 0;      // 배너가 내비 바 여백을 맡는다
         float d = getResources().getDisplayMetrics().density;
         web.evaluateJavascript("document.documentElement.style.setProperty('--sat','" + (top / d)
                 + "px');document.documentElement.style.setProperty('--sab','" + (bottom / d)
@@ -122,6 +138,7 @@ public class MainActivity extends Activity {
         web.evaluateJavascript("window.GF&&GF.setHidden&&GF.setHidden(true)", null);   // BGM 정지
         web.onPause();
         web.pauseTimers();
+        if (ads != null) ads.pause();
     }
 
     @Override
@@ -129,12 +146,14 @@ public class MainActivity extends Activity {
         super.onResume();
         web.resumeTimers();
         web.onResume();
+        if (ads != null) ads.resume();
         web.evaluateJavascript("window.GF&&GF.setHidden&&GF.setHidden(false)", null);
         hideBars();
     }
 
     @Override
     protected void onDestroy() {
+        if (ads != null) ads.destroy();
         if (web != null) {
             web.destroy();
             web = null;

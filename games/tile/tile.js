@@ -155,7 +155,7 @@
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
         else if (LV.kind === 'trio') { const key = LV.id.split(':').slice(1).join(':'); SV.trio[key] = Math.max(SV.trio[key] || 0, st); }
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.clamp(600 + 110 * (S.cap - maxTray) - 60 * (S.used.undo + S.used.shuffle + S.used.hint) - 150 * (GF.rank.attempts('daily') - 1))); GF.rank.clearTries('daily'); }
-        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(); GF.sfx('star');
+        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(LV); GF.sfx('star');
         setTimeout(() => {
           GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
@@ -167,7 +167,7 @@
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '눌러서 바구니에 모아요' : '같은 그림이 모이면 톡!'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));
       GF.tale.level(r, LV);
-      if (LV.id <= 2 && !LV.kind) setTimeout(() => { const i = LV.solution[0], d = tiles[i]; if (d && d.isConnected && !hist.length) UK.finger(r, d, { tap: true, ms: 6000 }); }, slow(1300));   // 처음 두 판: 눌러도 되는 타일 하나를 손가락이 알려 준다
+      if (LV.id <= 2 && !LV.kind) { r.__demo = () => { if (GF.tale.cardOpen) return; const i = LV.solution[0], d = tiles[i]; if (d && d.isConnected && !hist.length) UK.finger(r, d, { tap: true, ms: 6000 }); }; setTimeout(r.__demo, slow(1300)); }   // 처음 두 판: 눌러도 되는 타일 하나를 손가락이 알려 준다
     },
   });
   GF.screen('thouse', {

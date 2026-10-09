@@ -42,7 +42,7 @@ const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
       await p.click('.xt-sheet .acts .uk-btn');
       // 광고 브리지
       const a = await p.evaluate(() => { const A = GF.ads; const r = { off: A.available('rewarded') }; A.config.enabled = true; A.config.test = true; r.on = A.available('rewarded'); r.inter = A.available('interstitial'); return r; });
-      ok(a.off === false && a.on === true && a.inter === false, name + ' 광고: 기본 꺼짐·켜면 보상형만·전면 기본 꺼짐');
+      ok(a.off === false && a.on === true && a.inter === true, name + ' 광고(D19): 네이티브·?ads 없으면 꺼짐 · 테스트 모드에서 보상형·전면 가능');
       let got = 0; await p.evaluate(() => { window.__r = 0; GF.ads.rewarded({ placement: 'undo', onReward: () => { window.__r++; }, onClose: (ok) => { window.__c = ok; } }); }); await p.waitForSelector('.uk-sheet'); await p.click('.uk-sheet .acts .uk-btn >> nth=1'); await p.waitForTimeout(200);
       ok(await p.evaluate(() => window.__r === 0 && window.__c === false), name + ' 광고 닫기 = 보상 없음·불이익 없음');
       await p.evaluate(() => { GF.ads.rewarded({ placement: 'undo', onReward: () => { window.__r++; }, onClose: (ok) => { window.__c = ok; } }); }); await p.waitForSelector('.uk-sheet'); await p.click('.uk-sheet .acts .uk-btn >> nth=0'); await p.waitForTimeout(200);

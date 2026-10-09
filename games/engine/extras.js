@@ -46,8 +46,8 @@
     if (!kid && GF.tale && GF.tale.ready) { if (GF.tale.d.rules) row(body, '도움말', tbtn('판 종류 설명', () => { sc.close(); GF.tale.help(); })); row(body, '이야기 다시 보기', tbtn('다시 보기', () => { GF.tale.reset(); UK.toast('프롤로그와 장 이야기가 다시 나와요', document.getElementById('safe')); })); }
     if (c.resetTips) row(body, '도움말 다시 보기', tbtn('다시 보기', () => { c.resetTips(); GF.toast ? GF.toast('다음 판에서 도움말이 다시 나와요') : UK.toast('다음 판에서 도움말이 다시 나와요', document.getElementById('safe')); }));
     if (c.reset) { let armed = false; const b = tbtn('지우기', () => { if (!armed) { armed = true; b.textContent = '한 번 더'; return; } c.reset(); try { localStorage.removeItem(key()); } catch (e) {} location.reload(); }); row(body, '이 앱 기록 지우기(집은 그대로)', b); }
-    const ads = GF.ads && GF.ads.config.enabled && !kid;
-    el('small', 'xt-note', body, kid ? '이 앱은 이름·사진·위치·기기 정보를 수집하지 않고, 광고와 결제가 없으며, 인터넷에 연결하지 않습니다. 기록은 이 기기 안에만 저장됩니다.' : (ads ? '선택해서 보는 광고가 있어요. 보지 않아도 불이익은 없어요. 기록은 이 기기 안에만 저장돼요.' : '광고·결제·서버·가입 없이 이 기기 안에서만 돌아가요.'));
+    const ads = GF.ads && GF.ads.live && GF.ads.live() && !kid;
+    el('small', 'xt-note', body, kid ? '이 앱은 이름·사진·위치를 수집하지 않아요. 홈·지도 화면 아래에 아이에게 맞춘(비개인화) 배너 광고가 있어요. 놀이 중과 이 메뉴에는 광고가 없어요. 기록은 이 기기 안에만 저장돼요.' : (ads ? '배너·전면 광고와 선택해서 보는 광고가 있어요. 광고를 보지 않아도 불이익은 없어요. 기록은 이 기기 안에만 저장돼요.' : '가입·서버 없이 기록은 이 기기 안에만 저장돼요.'));
   }
   function openStats() { const { sc, body } = sheet('통계'); (X.cfg.stats ? X.cfg.stats() : []).forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); if (GF.rank && GF.rank.ready) GF.rank.boards().forEach((b) => row(body, b.title + ' 순위표', tbtn('보기', () => { sc.close(); GF.rank.open(b.id); }))); }
 

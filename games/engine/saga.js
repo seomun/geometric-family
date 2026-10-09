@@ -41,7 +41,7 @@
       /* 랜드마크 */
       (z.marks || []).forEach((m, k) => { const d = el('div', 'sg-mark', zd); d.style.cssText = `left:${m.x}%;top:${m.y}px`; if (!slotImg(`${S.app}:${z.ch}:mark${k + 1}`, 'sg-img', d)) d.textContent = m.e; });
       /* 관문(이야기 책) */
-      const gt = el('button', 'sg-gate', zd); gt.style.cssText = `left:${z.gate[0]}%;top:${z.gate[1]}px`; gt.setAttribute('aria-label', 'story'); if (!slotImg(`${S.app}:${z.ch}:gate`, 'sg-img', gt)) gt.textContent = '📖';
+      const gt = el('button', 'sg-gate', zd); gt.style.cssText = `left:${z.gate[0]}%;top:${z.gate[1]}px`; gt.setAttribute('aria-label', 'story'); if (!slotImg(`${S.app}:${z.ch}:gate`, 'sg-img', gt)) gt.textContent = '📖'; if (!kid) el('small', '', gt, '이야기');
       gt.onclick = () => { if (!open) { GF.sfx('hmm'); return; } GF.sfx('page'); o.onGate && o.onGate(z.ch, z); };
       /* 노드 */
       ls.forEach((l, k) => {
@@ -55,7 +55,7 @@
       });
       /* 보상 상자: 구역의 판을 모두 깼을 때 열림 */
       const all = ls.length && nd >= ls.length, ch = el('button', 'sg-chest' + (all ? ' open' : (open && nd ? ' near' : '')), zd); ch.style.cssText = `left:${z.chest[0]}%;top:${z.chest[1]}px`; ch.setAttribute('aria-label', 'chest');
-      if (!slotImg(all ? 'chest_open' : 'chest', 'sg-img', ch)) ch.textContent = all ? '🎁' : '📦';
+      if (!slotImg(all ? 'chest_open' : 'chest', 'sg-img', ch)) ch.textContent = all ? '🎁' : '📦'; if (!kid) el('small', '', ch, all ? '열기' : '상자');
       ch.onclick = () => { if (all) { GF.sfx('star'); o.onChest && o.onChest(z.ch); } else { GF.sfx('hmm'); if (!kid) UK.toast(`${ls.length - nd}판을 더 깨면 열려요`, parent); } };
       /* 구름(잠긴 구역) */
       if (!open) { const f = el('div', 'sg-fog' + (o.justOpened === z.ch ? ' lift' : ''), zd); f.innerHTML = '<span>☁️</span><span>☁️</span><span>☁️</span>'; if (o.justOpened === z.ch) { f.style.opacity = '0.6'; setTimeout(() => f.classList.add('go'), 500); } }
@@ -70,7 +70,7 @@
     const place = (p) => { me.style.left = p.x + '%'; me.style.top = (p.y - 6) + 'px'; };
     const from = o.from && pos[o.from] ? pos[o.from] : null; if (from && pos[cur.id] && from !== pos[cur.id]) { me.style.transition = 'none'; place(from); void me.offsetWidth; setTimeout(() => { me.style.transition = ''; place(pos[cur.id]); }, 600); } else if (pos[cur.id]) place(pos[cur.id]);
     /* 곁가지 + 이어서 */
-    if (o.side && o.side.length) { const sd = el('div', 'sg-side', root); o.side.forEach((s) => { const b = UK.btn({ text: kid ? '' : s.text, icon: s.icon, cls: 'sg-sb' + (s.cls ? ' ' + s.cls : ''), onclick: s.fn }, sd); b.setAttribute('aria-label', s.text); if (s.badge) el('i', 'bd', b, s.badge); }); }
+    if (o.side && o.side.length) { root.classList.add('rail'); const sd = el('div', 'sg-side', root); o.side.forEach((x) => { const b = el('button', 'sg-rb' + (x.cls ? ' ' + x.cls : ''), sd); b.setAttribute('aria-label', x.text); const ic = el('span', 'ic', b); try { ic.innerHTML = UK.icon(x.icon); } catch (e) { ic.textContent = '•'; } if (!kid) el('small', '', b, x.text); if (x.badge) el('i', 'bd', b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
     const go = UK.btn({ text: kid ? '' : `이어서 · 레벨 ${cur.id}`, icon: 'play', cls: 'green sg-go', onclick: () => { GF.sfx('pick'); o.onNode(cur); } }, el('div', 'sg-gowrap', root)); go.setAttribute('aria-label', 'continue');
     const focus = () => { const p = pos[cur.id]; if (p) sc.scrollTop = Math.max(0, p.y - sc.clientHeight * 0.62); };
     focus(); setTimeout(focus, 40); S.cur = cur; S.pos = pos; S.scroll = sc; S.built = built; S.root = root;

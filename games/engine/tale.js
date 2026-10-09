@@ -20,7 +20,8 @@
   T.cuts = (raw, bg) => raw.map((c) => ({ bg: c.bg || bg || 'indoor2', text: c.text, voice: c.voice, chars: (c.chars || []).map((q, k, a) => (typeof q === 'string' ? { id: q, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 } : q)), bubble: c.bubble ? { type: c.bubble, at: 0 } : null }));
   /** 컷 묶음을 화면 위에 띄운다. 끝나거나 건너뛰면 cb(). parent 는 화면 루트 */
   T.play = function (raw, parent, cb, o) {
-    o = o || {}; parent = parent || safe(); const ov = el('div', 'abs tale-ov', parent); ov.style.cssText = 'inset:0;z-index:70;background:#FFF1D6'; let done = false;
+    o = o || {}; try { GF.ads && GF.ads.noteStory && GF.ads.noteStory(); } catch (e) {}   // 컷 직후에는 전면 광고 금지
+    parent = parent || safe(); const ov = el('div', 'abs tale-ov', parent); ov.style.cssText = 'inset:0;z-index:70;background:#FFF1D6'; let done = false;
     const end = () => { if (done) return; done = true; try { ov.remove(); } catch (e) {} cb && cb(); };
     const inner = el('div', 'abs', ov); inner.style.cssText = 'inset:0'; GF.story(inner, T.cuts(raw, o.bg), end);
     const sk = el('button', 'tale-skip', ov, T.kid ? UK.icon('next') : '건너뛰기'); sk.setAttribute('aria-label', 'skip'); sk.onclick = (e) => { e.stopPropagation(); GF.sfx('tap'); end(); };
@@ -73,7 +74,18 @@
   /** 판 화면이 열릴 때: 장 첫 판이면 기 컷 → 처음 나오는 판 종류 설명 → 시작 한마디 */
   T.level = function (parent, LV) {
     if (!T.ready || LV.kind) return; const per = T.d.per, i = idxOf(LV, per);
-    T.before(LV.chapter, i, parent, () => T.explain(LV.type, parent, () => T.say(parent, LV.chapter, 'start', LV.id)));
+    T.before(LV.chapter, i, parent, () => {
+      /* 첫 판 안내 순서: 설명 카드 → 손가락 시연 → (첫 조각을 놓은 뒤) 말풍선. 카드가 있는 판에서는 안내 토스트를 생략한다 */
+      let sync = true;
+      const shown = T.explain(LV.type, parent, () => {
+        if (sync) return; T.cardOpen = false;
+        setTimeout(() => { try { parent.__demo && parent.__demo(); } catch (e) {} }, 350);            // 손가락 시연은 카드가 닫힌 뒤
+        const arm = () => { parent.removeEventListener('pointerup', arm, true); setTimeout(() => T.say(parent, LV.chapter, 'start', LV.id), 900); };
+        parent.addEventListener('pointerup', arm, true);                                              // 말풍선은 첫 조각을 놓은 뒤
+      });
+      sync = false;
+      if (shown) { T.cardOpen = true; parent.querySelectorAll('.uk-toast').forEach((x) => x.remove()); } else T.say(parent, LV.chapter, 'start', LV.id);
+    });
   };
   /** 판을 깬 직후(결과 화면 앞): 클리어 한마디 + 승·전·결 컷. 끝나면 cb() */
   T.done = function (parent, LV, cb) {

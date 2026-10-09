@@ -20,7 +20,20 @@
 .sg-me { position: absolute; width: 64px; height: 72px; transform: translate(-50%, -100%); z-index: 4; pointer-events: none; transition: left .8s ease-in-out, top .8s ease-in-out; } .sg-me img { width: 100%; height: 100%; object-fit: contain; animation: sgbob 1.8s ease-in-out infinite; } .sg-me .sh { position: absolute; left: 50%; bottom: -3px; width: 36px; height: 8px; margin-left: -18px; border-radius: 50%; background: rgba(0,0,0,.18); z-index: -1; }
 .sg-root.kid .sg-me { width: 84px; height: 94px; }
 .sg-fog { position: absolute; inset: 0; background: rgba(255,255,255,.55); z-index: 5; pointer-events: none; transition: opacity 1.2s; display: flex; flex-direction: column; justify-content: space-around; font-size: 80px; } .sg-fog span:nth-child(2n) { align-self: flex-end; } .sg-fog.go { opacity: 0 !important; }
-/*SIDE*/.sg-side { position: absolute; left: 8px; right: 8px; top: 6px; display: flex; flex-direction: row; justify-content: center; gap: 8px; z-index: 8; pointer-events: none; } .sg-side > * { pointer-events: auto; } .sg-side .uk-btn { min-height: 46px; padding: 0 12px; font-size: var(--uk-fs-cap); position: relative; } .sg-side .bd { position: absolute; right: -4px; top: -6px; font-style: normal; font-size: 12px; background: #FF6B6B; color: #fff; border-radius: 10px; min-width: 20px; height: 20px; line-height: 20px; text-align: center; }
+ 
 .sg-gowrap { position: absolute; left: 12px; bottom: 14px; z-index: 6; } .sg-go { box-shadow: var(--uk-sh-lg); } .sg-root.kid .sg-go { min-width: 96px; min-height: 76px; }
 @keyframes sgbob { 50% { transform: translateY(-5px); } } @keyframes sgchest { 50% { transform: translate(-50%, -50%) scale(1.1); } } @keyframes sgpulse { 50% { transform: translate(-50%, -50%) scale(1.1); } }
 .sg-banner { position: absolute; left: 8px; right: 8px; top: 70px; z-index: 7; }
+
+/* 곁가지 버튼 = 지도 오른쪽 세로 레일(길을 가리지 않는다) */
+.sg-root.rail .sg-scroll { right: 62px; }
+.sg-side { position: absolute; right: 0; top: 0; bottom: 0; width: 62px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 14px; background: linear-gradient(90deg, rgba(255,246,229,.85), #FFF1D6); box-shadow: -3px 0 8px rgba(120,90,60,.12); z-index: 8; }
+.sg-rb { width: 52px; border: 0; border-radius: 16px; background: #fff; box-shadow: var(--uk-sh); padding: 6px 0 4px; display: flex; flex-direction: column; align-items: center; gap: 1px; position: relative; color: var(--uk-ink); font: 800 11px/1.1 var(--uk-font); } .sg-rb .ic { width: 30px; height: 30px; display: block; } .sg-rb .ic svg { width: 100%; height: 100%; } .sg-rb small { font-size: 11px; font-weight: 800; white-space: nowrap; }
+.sg-rb .bd { position: absolute; right: -2px; top: -6px; font-style: normal; font-size: 11px; background: #FF6B6B; color: #fff; border-radius: 10px; min-width: 18px; height: 18px; line-height: 18px; text-align: center; padding: 0 3px; }
+/* 구역을 눈에 띄게: 큰 랜드마크 · 큰 관문 책 · 큰 상자 · 진한 언덕 */
+.sg-hill i { background: rgba(255,255,255,.5); box-shadow: 0 -6px 0 rgba(255,255,255,.25); } .sg-zone::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 18px; background: radial-gradient(circle at 12px 0, rgba(255,255,255,.7) 11px, transparent 12px) 0 0 / 24px 18px repeat-x; z-index: 4; pointer-events: none; }
+.sg-mark { font-size: 84px; width: 110px; height: 110px; line-height: 110px; text-align: center; border-radius: 50%; background: rgba(255,255,255,.45); opacity: 1; box-shadow: 0 6px 0 rgba(120,90,60,.12); } .sg-mark .sg-img { width: 100px; height: 100px; }
+.sg-gate, .sg-chest { width: 74px; height: 74px; line-height: 56px; font-size: 38px; border-radius: 22px; border: 3px solid #fff; box-shadow: 0 5px 0 rgba(120,90,60,.22), var(--uk-sh); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; gap: 2px; } .sg-gate small, .sg-chest small { font: 900 12px/1 var(--uk-font); color: var(--uk-ink); }
+.sg-gate { background: #FFF3C4; } .sg-chest { background: #fff; } .sg-chest.open { background: #FFE27A; }
+.sg-root.kid .sg-gate, .sg-root.kid .sg-chest { width: 96px; height: 96px; font-size: 52px; line-height: 1; }
+.sg-hd b { font-size: calc(18px * var(--uk-fs-k, 1)); background: rgba(255,255,255,.95); box-shadow: var(--uk-sh); }

@@ -194,7 +194,7 @@
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
         else if (LV.kind === 'trio') { const key = LV.id.split(':').slice(1).join(':'); SV.trio[key] = Math.max(SV.trio[key] || 0, st); }
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: LV.par, actions: S.used, tools: undone + hintN, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
-        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(); GF.sfx('star');
+        save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(LV); GF.sfx('star');
         setTimeout(() => {
           GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
@@ -211,7 +211,7 @@
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '조각을 끌어다 판에 놓아요' : '줄이 가득 차면 지워져요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       GF.tale.level(r, LV);
-      if (LV.id <= 2 && !LV.kind) setTimeout(() => { const slot = tray.querySelector('.bk-slot[data-k]'), mv = LV.solution[0], c = mv && cells[mv[1] * N + mv[2]]; if (slot && c && c.isConnected && !hist.length) UK.finger(r, slot, { to: c, ms: 7000 }); }, 1200);   // 처음 두 판: 조각을 끌어다 놓는 시늉
+      if (LV.id <= 2 && !LV.kind) { r.__demo = () => { if (GF.tale.cardOpen) return; const slot = tray.querySelector('.bk-slot[data-k]'), mv = LV.solution[0], c = mv && cells[mv[1] * N + mv[2]]; if (slot && c && c.isConnected && !hist.length) UK.finger(r, slot, { to: c, ms: 7000 }); }; setTimeout(r.__demo, 1200); }   // 처음 두 판: 조각을 끌어다 놓는 시늉
     },
   });
 

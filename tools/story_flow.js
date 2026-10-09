@@ -15,7 +15,9 @@ const want = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(
     const modal = await p.evaluate(() => !!document.querySelector('.uk-scrim'));
     ok(modal, a + ' 처음 나오는 판 종류 설명 모달'); await p.screenshot({ path: `notes/snapshots/story_${a}_rule.png` });
     if (modal) { await p.click('.uk-scrim .acts .uk-btn'); await p.waitForTimeout(500); }
-    ok(await p.evaluate(() => !!document.querySelector('.tale-say')), a + ' 시작 말풍선'); await p.screenshot({ path: `notes/snapshots/story_${a}_say.png` });
+    ok(await p.evaluate(() => !document.querySelector('.tale-say') && !document.querySelector('.uk-toast.on, .uk-toast')), a + ' 설명 카드 직후엔 말풍선·안내 토스트 없음(카드 → 손가락 → 말풍선 순서)');
+    await p.mouse.click(195, 450); await p.waitForTimeout(1300);
+    ok(await p.evaluate(() => !!document.querySelector('.tale-say')), a + ' 첫 조작 뒤에 시작 말풍선'); await p.screenshot({ path: `notes/snapshots/story_${a}_say.png` });
     ok(errs.length === 0, a + ' 오류 없음 ' + errs[0]); await ctx.close();
   }
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

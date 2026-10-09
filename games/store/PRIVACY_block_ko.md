@@ -3,22 +3,23 @@
 시행일: 2026-__-__ (게시일로 채움) · 게시는 허브가 github.io 에 올린다 (스토어 등록 시 URL 필요)
 
 ## 한 줄 요약
-**이 앱은 어떤 개인정보도 수집·저장·전송하지 않습니다.** 계정이 없고, 인터넷에 연결하지 않으며, 짧은 진동(VIBRATE, 설정에서 끌 수 있음) 권한 하나만 요청합니다.
+**이 앱은 이름·연락처·사진·위치를 수집하지 않고 계정이 없습니다. 진행 기록은 기기 안에만 저장됩니다.** 광고를 보여 주기 위해 Google 광고 SDK(AdMob)가 인터넷에 연결하며, 그 과정에서 광고 SDK 가 처리하는 정보는 아래 §3 에 적었습니다.
 
 ## 1. 수집하는 정보
-없습니다. 이름·연락처·사진·음성·위치·기기 식별자·광고 ID·사용 기록 분석 정보를 수집하지 않습니다.
+이 앱 자체는 이름·연락처·사진·음성·위치·사용 기록 분석 정보를 수집하지 않습니다. 광고 SDK 가 처리하는 정보는 §3 을 보세요.
 
 ## 2. 기기 안에만 저장되는 정보
 게임 기록: 클리어한 판·별·모은 집 바깥 소품, 모은 가구·소품과 놓은 위치, 설정이 이 **기기 안**에만 저장되며 외부로 전송되지 않습니다. 앱 삭제로 지워집니다.
 같은 회사의 형제 앱(「세 가족 식탁」·「도형 합치기」·「도형 블록」·「다른 그림 찾기」·「세 가족 짝 맞추기」·「당신은 어느 도형?」)이 같은 기기에 설치돼 있으면 「우리 집」(얻은 아이템 번호 목록과 놓은 위치)을 서로 읽어 와 함께 보여 줍니다. 이 공유는 **같은 서명의 앱 사이, 같은 기기 안**에서만 이뤄지고(성인 그룹끼리만), 서버·계정·권한이 없으며 다른 앱이나 제3자는 읽을 수 없습니다.
 
 ## 3. 제3자 제공·광고·결제
-- 제3자에게 제공하거나 공유하는 정보가 없습니다.
-- 현재 버전에는 광고 SDK·분석 SDK·결제 기능이 없습니다. (추가되면 먼저 이 방침을 고쳐 게시합니다.)
-- 앱 밖(웹사이트·다른 앱)으로 이동하는 링크가 없습니다.
+- 앱 개발자는 이용자의 정보를 제3자에게 제공하지 않습니다. 분석 SDK·결제 기능은 없습니다.
+- **광고(Google AdMob)**: 광고 요청·표시·부정 클릭 방지를 위해 Google 이 IP 주소, 기기 정보(모델·OS), 광고 식별자(성인 앱의 경우 이용자가 허용했을 때), 광고 상호작용 정보를 처리할 수 있습니다. 처리 방식은 Google 의 개인정보처리방침(policies.google.com/privacy)을 따릅니다.
+- 성인 앱은 처음 실행할 때 필요한 지역에서 **동의 안내(UMP)** 를 띄우고, 이용자가 선택한 범위에서만 맞춤 광고를 씁니다(최대 등급 PG). 광고는 홈·지도 배너, 판 결과 뒤 전면, 이용자가 눌러 보는 보상형으로 나옵니다.
+- 광고를 누르면 SDK 가 앱 밖(브라우저·스토어)을 엽니다. 앱 자체에는 앱 밖으로 가는 링크가 없습니다.
 
 ## 4. 앱 권한
-요청하는 권한은 **진동(VIBRATE) 하나**입니다(판을 놓을 때의 짧은 손맛용, 설정에서 끌 수 있음). 인터넷·저장소·카메라·마이크·위치·알림은 사용하지 않습니다.
+진동(VIBRATE, 판을 놓을 때의 짧은 손맛, 설정에서 끌 수 있음), 인터넷·네트워크 상태(광고 SDK), 광고 ID(AD_ID, 광고 SDK 용)를 사용합니다. 저장소·카메라·마이크·위치·알림은 사용하지 않습니다.
 
 ## 5. 이용 연령
 만 13세 이상 일반 이용을 전제로 한 앱입니다. 수집하는 정보가 없으므로 연령 확인 절차도 없습니다.
@@ -30,4 +31,4 @@
 
 ---
 ## Privacy Policy (English summary)
-This app does not collect, store, or transmit any personal information. No accounts, no network access, no permissions, no ads, no analytics, no in-app purchases in this version. Progress is stored only on the device and is erased by uninstalling the app. Sibling apps from the same publisher on the same device may share the in-game "house" (item ids and positions) through an on-device store restricted to apps signed with the same key; nothing leaves the device.
+This app itself does not collect names, contacts, photos or location, and has no accounts, analytics or in-app purchases. It shows ads through Google AdMob (which processes IP address, device info and, where allowed, advertising identifiers). Kids apps use child-directed treatment, max content rating G and non-personalized ads with the AD_ID permission removed; adult apps show a consent form where required. Progress is stored only on the device and is erased by uninstalling the app. Sibling apps from the same publisher on the same device may share the in-game "house" (item ids and positions) through an on-device store restricted to apps signed with the same key; nothing leaves the device.

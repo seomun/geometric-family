@@ -9,6 +9,11 @@ PAL = {'pigs': ('#FFE9B8', '#C7E6A0'), 'bears': ('#FFE0C2', '#B8DDB0'), 'shoes':
 MARKS = {'pigs': ('🧱', '🌾'), 'bears': ('🍲', '🛏️'), 'shoes': ('👞', '🌙'), 'kongjwi': ('🏺', '👡'), 'heungbu': ('🏠', '🎃'), 'bremen': ('🎺', '🌲'), 'hok': ('🍄', '🔦'), 'axe': ('🪓', '🌊'), 'sun': ('🌙', '☀️'), 'ant': ('🐜', '🎻'),
          'pino': ('🪵', '🧸'), 'jack': ('🌱', '☁️'), 'gyeonwoo': ('⭐', '🐮'), 'ureng': ('🐚', '🌾'), 'hare': ('🐇', '🐢'), 'brothers': ('🌾', '🌕'), 'snowqueen': ('❄️', '🪞')}
 PRE = [lambda i, n: 50 + 26 * math.sin(i * 0.95), lambda i, n: 50 + 28 * math.sin(i * 0.8 + 2.4), lambda i, n: 24 + 52 * (i % 2) + (6 if i % 4 > 1 else -6) * 0.5, lambda i, n: 50 + 30 * math.cos(i * 0.7)]
+# 길 모양 8종 — 앱마다 시작과 걸음이 달라 같은 장 순서여도 지도가 다르게 보인다
+PRE += [lambda i, n: 50 + 30 * math.sin(i * 0.6 + 1.0), lambda i, n: 20 + 60 * abs(((i / max(1, n - 1)) * 2) % 2 - 1), lambda i, n: 50 + 28 * math.sin(i * 1.3) * (1 - 0.3 * i / n), lambda i, n: 30 + 40 * ((i // 2) % 2) + (4 if i % 2 else -4)]
+APP_PATH = {'merge': (0, 1), 'spot': (3, 3), 'block': (2, 5), 'sort': (5, 7), 'tile': (7, 3), 'idle': (1, 1), 'quiz': (4, 3), 'color': (6, 5), 'day': (0, 3)}
+# 앱 주제 소품(이모지 임시, 슬롯 map.<앱>:prop1|prop2): ③ 이삿짐 ⑥ 액자 ⑦ 블록 더미 ⑧ 선반 ⑨ 타일 바구니
+PROPS = {'merge': ('🧳', '🪑'), 'spot': ('🖼️', '🪞'), 'block': ('🧱', '🏗️'), 'sort': ('🗄️', '🧺'), 'tile': ('🧺', '🀄')}
 W = 296   # 지도 폭 가정(px): 레일 62 를 뺀 390 화면 안쪽 — 겹침 검사용
 def spots(nodes, H, fixed, thr=84):
     """랜드마크 2개 자리: 노드·상자·관문·띠에서 80px 이상 떨어진 곳, 서로 150px 이상 떨어진 높이"""
@@ -23,14 +28,23 @@ def spots(nodes, H, fixed, thr=84):
 def emit(app, kid, per, specs, base, special, step=None):
     step = step or (100 if kid else 72); H = per * step + (300 if kid else 250); base0 = 155 if kid else 115; zones = []
     for zi, (ch, title, t, faces) in enumerate(specs):
-        f = PRE[zi % 4]; nodes = []
+        off, stp = APP_PATH.get(app, (0, 1)); f = PRE[(off + zi * stp) % 8]; nodes = []
         for i in range(per):
             x = max(18, min(82, f(i, per))); nodes.append([round(x, 1), H - base0 - i * step])
         a, b = PAL.get(t, ('#FFE9B8', '#C7E6A0')); m = MARKS.get(t, ('🌟', '🌿'))
         n1 = nodes[-1]; gate = [16 if kid else 14, H - 44]; chest = [round(max(22, min(78, n1[0] + (-32 if n1[0] > 50 else 32))), 1), 120]
         sp = spots(nodes, H, [gate, chest, [60, H - 40]], 100 if kid else 84)
         marks = [dict(e=m[k], x=sp[k][0], y=sp[k][1]) for k in range(len(sp))]
-        zones.append(dict(ch=int(ch), title=title, tale=t, pal=[a, b], faces=faces, nodes=nodes, gate=gate, chest=chest, marks=marks))
+        props = []
+        if app in PROPS and not kid:
+            fixed = nodes + [gate, chest, [60, H - 40]]
+            for yy in range(220, H - 200, 30):
+                for x in (14, 20, 32, 68, 80, 86):
+                    dn = min(max(abs((x - q[0]) / 100 * W), abs(yy - q[1])) for q in fixed)
+                    dm = min([max(abs((x - mk['x']) / 100 * W), abs(yy - mk['y'])) for mk in marks] + [999])
+                    dp = min([max(abs((x - pr['x']) / 100 * W), abs(yy - pr['y'])) for pr in props] + [999])
+                    if dn >= 68 and dm >= 86 and dp >= 140 and len(props) < 2: props.append(dict(e=PROPS[app][len(props)], x=x, y=yy)); break
+        zones.append(dict(ch=int(ch), title=title, tale=t, pal=[a, b], faces=faces, nodes=nodes, gate=gate, chest=chest, marks=marks, props=props))
     D = dict(app=app, version=1, kid=kid, per=per, zoneH=H, nodeSize=(84 if kid else 58), base=base, special=special, zones=zones,
              note='[제안] 이야기 지도 데이터. tools/map_build.py 로 생성. 그림 슬롯은 art_slots.map (games/19_SAGA_MAP.md §4).')
     json.dump(D, open(f'data/maps/{app}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1); print(app, len(zones), 'zones, H', H, 'marks', [len(z['marks']) for z in zones])

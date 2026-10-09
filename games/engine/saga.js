@@ -69,6 +69,7 @@
       else { el('b', '', hd, `${z.ch}장 · ${o.title ? o.title(z.ch) : z.title}`); el('span', '', hd, `★ ${ls.reduce((a, l) => a + (o.stars(l.id) || 0), 0)}/${ls.length * 3}`); if (GF.tale && GF.tale.ready) GF.tale.strip(hd, z.ch, nd, ls.length, !open); }
       /* 랜드마크 */
       (z.marks || []).forEach((m, k) => { const d = el('div', 'sg-mark', zd); d.style.cssText = `left:${m.x}%;top:${m.y}px`; if (!slotImg(`${S.app}:${z.ch}:mark${k + 1}`, 'sg-img', d)) d.textContent = m.e; });
+      (z.props || []).forEach((m, k) => { const d = el('div', 'sg-prop', zd); d.style.cssText = `left:${m.x}%;top:${m.y}px`; if (!slotImg(`${S.app}:prop${k + 1}`, 'sg-img', d)) d.textContent = m.e; });   // 앱 주제 소품
       /* 관문(이야기 책) */
       const gt = el('button', 'sg-gate', zd);  gt.style.cssText = `left:${z.gate[0]}%;top:${z.gate[1]}px`; gt.setAttribute('aria-label', 'story'); if (!slotImg(`${S.app}:${z.ch}:gate`, 'sg-img', gt)) gt.textContent = '📖'; if (!kid) el('small', '', gt, '이야기');
       if (!kid) { const bd = el('div', 'sg-band', zd); bd.style.cssText = `top:${z.gate[1]}px`; bd.innerHTML = `<b>${z.ch}장</b> ${o.title ? o.title(z.ch) : z.title}`; }

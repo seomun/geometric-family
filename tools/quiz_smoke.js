@@ -13,7 +13,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   ok(small.length === 0, '홈 글자 18px↑ ' + small.join(','));
   const tests = await pg.evaluate(() => QUIZ.debug.D().tests.map((t) => ({ id: t.id, n: t.qs.length })));
   ok(tests.length === 19 && tests.every((t) => t.n === 6), '테스트 ' + tests.length + '종 × ' + tests[0].n + '문항');
-  await pg.evaluate(() => GF.go('qtests')); await pg.waitForSelector('.qz-test'); await shot('tests');
+  await pg.evaluate(() => GF.go('qtests')); await pg.waitForSelector('.sg-node'); await shot('tests');
   const got = {};
   for (let k = 0; k < tests.length; k++) {
     await pg.evaluate((id) => { GF.stack = []; GF.go('qhome'); GF.go('qplay', { id }); }, tests[k].id); await pg.waitForSelector('.qz-opt');

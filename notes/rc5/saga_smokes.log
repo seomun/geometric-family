@@ -1,0 +1,21 @@
+## merge
+ALL PASS
+## spot
+ALL PASS
+## sort
+ALL PASS
+## tile
+ALL PASS
+## day
+    at C:\projects\geometric-family\tools\day_smoke.js:17:88 {
+  log: [ "  - waiting for locator('.screen.on .dy-scene') to be visible" ],
+  name: 'TimeoutError'
+}
+
+Node.js v24.12.0
+## idle
+ALL PASS
+## color
+ALL PASS
+## quiz
+ALL PASS

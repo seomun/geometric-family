@@ -58,8 +58,9 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r);
-      const sc = el('div', 'qz-scroll', r);
-      D.tests.forEach((t) => { const res = SV.res[t.id], b = el('button', 'qz-test', sc); const th = el('div', 'th', b); t.chars.slice(0, 2).forEach((id) => th.appendChild(GF.img(id))); el('div', 'tx', b, `<b>${t.title}${t.season ? ' · 시즌' : t.kind === 'tale' ? ' · 동화' : ''}</b><span>${t.sub}</span>`); if (res) { const T = D.types[res.f]; el('em', '', b, tsub(res.f, res.s).n).style.background = T.bg; } b.onclick = () => { GF.sfx('pick'); GF.go('qplay', { id: t.id }); }; });
+      const lv = D.tests.map((t, k) => ({ id: k + 1, chapter: Math.floor(k / 10) + 1, type: 'test', label: t.title + (t.season ? ' · 시즌' : t.kind === 'tale' ? ' · 동화' : '') }));
+      GF.saga.open(r, { levels: lv, kid: false, noGate: true, hideStars: true, goText: (l) => '이어서 · 테스트 ' + l.id, stars: (id) => (SV.res[D.tests[id - 1].id] ? 3 : 0), unlocked: () => true, title: (c) => ['도형 테스트', '도형 테스트 · 동화·시즌'][c - 1] || '',
+        onNode: (l) => GF.go('qplay', { id: D.tests[l.id - 1].id }), onChest: () => GF.go('qhouse'), side: [{ icon: 'home', text: '우리 집', fn: () => GF.go('qhouse') }] });
     },
   });
 
@@ -166,9 +167,9 @@
   /* ---------------- 부팅 ---------------- */
   QZ.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'quiz_tests', 'story_quiz', 'room_items', 'art_slots'], storeKey: 'gf:quiz:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'quiz_tests', 'story_quiz', 'maps/quiz', 'room_items', 'art_slots'], storeKey: 'gf:quiz:ui:v1', async start() {
       D = GF.data.quiz_tests; Room.init({ data: GF.data.room_items, game: 'quiz', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
-      GF.tale.init('quiz', GF.data.story_quiz, { kid: false }); GF.extras.init({ app: 'quiz', kid: false, rewardSet: 'badge', stats: () => [['끝낸 테스트', Object.keys(SV.res).length + ' / ' + D.tests.length], ['한 미니게임', Object.keys(SV.game || {}).length + ' / 5'], ['집 배지', Room.owned().filter((id) => (Room.item(id) || {}).set === 'badge').length + ' / 18']],
+      GF.saga.init('quiz', GF.data['maps/quiz']); GF.tale.init('quiz', GF.data.story_quiz, { kid: false }); GF.extras.init({ app: 'quiz', kid: false, rewardSet: 'badge', stats: () => [['끝낸 테스트', Object.keys(SV.res).length + ' / ' + D.tests.length], ['한 미니게임', Object.keys(SV.game || {}).length + ' / 5'], ['집 배지', Room.owned().filter((id) => (Room.item(id) || {}).set === 'badge').length + ' / 18']],
         badges: [{ id: 't1', icon: '🔮', name: '첫 테스트', desc: '테스트 1개를 끝냈어요', ok: () => Object.keys(SV.res).length >= 1 }, { id: 't5', icon: '🎴', name: '다섯 장', desc: '테스트 5개', ok: () => Object.keys(SV.res).length >= 5 }, { id: 't10', icon: '🃏', name: '열 장', desc: '테스트 10개', ok: () => Object.keys(SV.res).length >= 10 }, { id: 'tall', icon: '👑', name: '전부 해 봤어요', desc: '테스트를 모두 끝냈어요', ok: () => Object.keys(SV.res).length >= D.tests.length }, { id: 'g1', icon: '🎮', name: '미니게임', desc: '미니게임을 해 봤어요', ok: () => Object.keys(SV.game || {}).length >= 1 }, { id: 'g5', icon: '🏆', name: '미니게임 다섯', desc: '미니게임 5종을 모두 했어요', ok: () => Object.keys(SV.game || {}).length >= 5 }],
         resetTips: () => { SV.last = null; save(); }, reset: () => { SV = blank(); save(); } });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('qhome');

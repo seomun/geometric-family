@@ -98,13 +98,11 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'cl'); GF.bg('home', r);
-      const tabs = el('div', 'cl-tabs', r), grid = el('div', 'cl-grid', r);
-      const draw = () => {
-        tabs.innerHTML = ''; TYPES.forEach((t) => { const b = el('button', 'cl-tab' + (SV.tab === t ? ' on' : ''), tabs, TICON[t]()); b.setAttribute('aria-label', D.types[t]); b.onclick = () => { SV.tab = t; save(); GF.sfx('pick'); draw(); }; });
-        grid.innerHTML = ''; D.pages.filter((p) => p.type === SV.tab).forEach((pg) => { const b = el('button', 'cl-th', grid); thumb(pg, b); b.onclick = () => { GF.sfx('pick'); GF.go(pg.type === 'trace' && !SV.done[pg.id] ? 'ctrace' : pg.type === 'sticker' ? 'csticker' : pg.type === 'wall' ? 'cwall' : 'cpaint', { id: pg.id }); }; });
-      };
-      draw();
-      if (!Object.keys(SV.done).length) setTimeout(() => { const t0 = grid.querySelector('.cl-th'); if (t0 && t0.isConnected) UK.finger(r, t0); }, 700);
+      const order = []; TYPES.forEach((t) => D.pages.filter((p) => p.type === t).forEach((p) => order.push(p)));
+      const lv = order.map((pg, k) => ({ id: k + 1, chapter: Math.floor(k / 10) + 1, type: pg.type, pg }));
+      GF.saga.open(r, { levels: lv, kid: true, nodeCls: 'thumb', stars: (id) => (SV.done[lv[id - 1].pg.id] ? 3 : 0), unlocked: () => true, noGate: true,
+        render: (l, b) => thumb(l.pg, b), onNode: (l) => { const pg = l.pg; GF.go(pg.type === 'trace' && !SV.done[pg.id] ? 'ctrace' : pg.type === 'sticker' ? 'csticker' : pg.type === 'wall' ? 'cwall' : 'cpaint', { id: pg.id }); },
+        onChest: () => GF.go('chouse'), side: [{ icon: 'home', text: 'house', fn: () => GF.go('chouse') }] });
     },
   });
 
@@ -268,10 +266,10 @@
 
   /* ---------------- 부팅 ---------------- */
   CL.start = async function (opts) {
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'color_pages', 'merge_extra', 'story_color', 'room_items', 'art_slots'], storeKey: 'gf:color:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'color_pages', 'merge_extra', 'story_color', 'maps/color', 'room_items', 'art_slots'], storeKey: 'gf:color:ui:v1', async start() {
       D = GF.data.color_pages; X = GF.data.merge_extra;
       Room.init({ data: GF.data.room_items, game: 'coloring', mode: 'kid', autoPlace: false, guard: (cb) => GF.gate(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), imageFor });
-      GF.tale.init('color', GF.data.story_color, { kid: true }); GF.extras.init({ app: 'color', kid: true, stats: () => [['완성한 그림', Object.keys(SV.done).length + ' / ' + D.pages.length], ['아이 방 액자', Room.placedIn('kid').filter((x) => x.img).length]], resetTips: () => { SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
+      GF.saga.init('color', GF.data['maps/color']); GF.tale.init('color', GF.data.story_color, { kid: true }); GF.extras.init({ app: 'color', kid: true, stats: () => [['완성한 그림', Object.keys(SV.done).length + ' / ' + D.pages.length], ['아이 방 액자', Room.placedIn('kid').filter((x) => x.img).length]], resetTips: () => { SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('chome');
       CL.debug.D = () => D; CL.debug.SV = () => SV; CL.debug.reset = () => { SV = blank(); save(); }; CL.debug.page = page;
     } }, opts || {}));

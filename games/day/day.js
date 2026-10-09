@@ -54,18 +54,9 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'dy'); GF.bg('home', r); bar();
-      const path = el('div', 'dy-path', r); const nxt = D.levels.find((l) => !SV.done[l.id]) || D.levels[D.levels.length - 1];
-      let target = null;
-      D.chapters.forEach((c, ci) => {
-        const ls = D.levels.filter((l) => l.chapter === ci + 1), full = ls.every((l) => SV.done[l.id]), open = unlocked(ls[0].id), cur = nxt.chapter === ci + 1;
-        const b = el('button', 'dy-scene' + (full ? ' full' : '') + (open ? '' : ' off') + (cur ? ' cur' : ''), path); b.setAttribute('aria-label', c.type);
-        em(b, c.icon, 46); const dots = el('div', 'dy-dots', b); ls.forEach((l) => el('i', SV.done[l.id] ? 'on' : '', dots));
-        if (!open) el('i', 'lk', b, '🔒');
-        b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } const l = ls.find((x) => !SV.done[x.id]) || ls[0]; GF.sfx('pick'); GF.go('dplay', { n: l.id }); };
-        if (cur) target = b;
-      });
-      if (!doneCount()) setTimeout(() => { if (target && target.isConnected) UK.finger(r, target); }, 700);
-      setTimeout(() => { if (target && target.isConnected) target.scrollIntoView({ block: 'center' }); }, 30);
+      GF.saga.open(r, { levels: D.levels, kid: true, stars: (id) => (SV.done[id] ? 3 : 0), unlocked,
+        onNode: (l) => GF.go('dplay', { n: l.id }), onGate: (c) => GF.tale.replay(c, r), onChest: () => GF.go('dhouse'),
+        side: [{ icon: 'home', text: 'house', fn: () => GF.go('dhouse') }] });
     },
   });
 

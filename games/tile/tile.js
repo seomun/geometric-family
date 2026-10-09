@@ -75,13 +75,10 @@
   GF.screen('tlevels', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'tl'); GF.bg('indoor', r); bar(); const sc = el('div', 'tl-scroll', r); GF.extras.retryBanner(sc, SV.stars, (n) => GF.go('tplay', { n }));
-      D.chapters.forEach((name, ci) => {
-        const ls = D.levels.filter((l) => l.chapter === ci + 1); if (!ls.length) return; const got = ls.reduce((a, l) => a + (SV.stars[l.id] || 0), 0);
-        el('div', 'tl-ch', sc, `<b>${ci + 1}장 · ${name}</b><span>★ ${got}/${ls.length * 3}</span>`); GF.tale.strip(sc, ci + 1, ls.filter((l) => (SV.stars[l.id] || 0) > 0).length, ls.length, !unlocked(ls[0].id)); const g = el('div', 'tl-lv', sc);
-        ls.forEach((l) => { const open = unlocked(l.id), st = SV.stars[l.id] || 0, b = el('button', 'tl-l' + (open ? '' : ' off') + (l.tag === 'rest' ? ' rest' : '') + (l.type !== 'classic' ? ' sp2' : ''), g, `<span>${l.id}</span><i>${'★'.repeat(st)}${'☆'.repeat(3 - st)}</i>`); if (l.type !== 'classic') b.title = D.types[l.type]; b.onclick = () => { if (!open) { GF.sfx('hmm'); UK.toast('앞 레벨을 먼저 깨 보세요', r); return; } GF.sfx('pick'); GF.go('tplay', { n: l.id }); }; });
-      });
-      setTimeout(() => { const last = [...sc.querySelectorAll('.tl-l')].filter((x) => !x.classList.contains('off')).pop(); last && last.scrollIntoView({ block: 'center' }); }, 30);
+      r.classList.add('uk', 'tl'); GF.bg('indoor', r); bar(); GF.extras.retryBanner(el('div', 'sg-banner', r), SV.stars, (n) => GF.go('tplay', { n }));
+      GF.saga.open(r, { levels: D.levels, kid: false, stars: (id) => SV.stars[id] || 0, unlocked, title: (c) => D.chapters[c - 1],
+        onNode: (l) => GF.go('tplay', { n: l.id }), onGate: (c) => GF.tale.replay(c, r), onChest: () => GF.go('thouse'),
+        side: [{ icon: 'heart', text: '세 가족', fn: () => GF.go('ttrio') }, { icon: 'home', text: '우리 집', fn: () => GF.go('thouse') }] });
     },
   });
   GF.screen('ttrio', {

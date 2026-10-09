@@ -73,7 +73,7 @@
       const rows = D.levels.map((l) => l);
       GF.saga.open(r, { levels: rows, kid: false, stars: (id) => SV.stars[id] || 0, unlocked, title: (c) => D.chapters[c - 1],
         onNode: (l) => GF.go('bplay', { n: l.id }), onGate: (c) => GF.tale.replay(c, r), onChest: () => GF.go('bhouse'),
-        side: [{ icon: 'play', text: '끝없이', fn: () => { GF.sfx('pick'); GF.go('bplay', { level: G.makeEndless(Date.now() % 100000) }); }, badge: best ? String(best) : '' }, { icon: 'home', text: '우리 집', fn: () => GF.go('bhouse') }] });
+        side: [{ icon: 'play', text: '끝없이', fn: () => { GF.sfx('pick'); GF.go('bplay', { level: G.makeEndless(Date.now() % 100000) }); }, badge: best ? String(best) : '' }, { icon: 'heart', text: '세 가족', fn: () => GF.go('btrio') }, { icon: 'home', text: '우리 집', fn: () => GF.go('bhouse') }] });
     },
   });
 

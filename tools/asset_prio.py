@@ -3,7 +3,7 @@
 import csv, io, sys
 P = 'assets/_generated/ASSET_LIST.csv'
 rows = list(csv.DictReader(open(P, encoding='utf-8-sig'))); keys = [k for k in rows[0].keys() if k != '우선순위']; K = keys[1]
-P1 = {'배경', '표지', '앱 아이콘', '집 방', '타이틀 대표 그림', '장면 배경 슬롯', '캐릭터 시트', '옛이야기 가족 밖 배역', '이야기 컷 배경'}
+P1 = {'지도 구역 배경', '지도 관문·랜드마크', '배경', '표지', '앱 아이콘', '집 방', '타이틀 대표 그림', '장면 배경 슬롯', '캐릭터 시트', '옛이야기 가족 밖 배역', '이야기 컷 배경'}
 P3 = {'집 아이템', '집 가구'}
 TALES = [('pigs', '아기돼지 삼형제', 'a straw house, a wooden house and a brick house on a green hill with a soft wind'), ('bears', '세 마리 곰', 'a cozy cottage kitchen with three bowls of soup on a table'),
          ('shoes', '구두장이와 요정', 'a small shoemaker workshop at night with tiny shoes on a bench'), ('kongjwi', '콩쥐팥쥐', 'a village yard with a big earthen jar and a mountain behind'),
@@ -19,6 +19,17 @@ for t, ko, desc in TALES:
     if i not in have:
         rows.append({keys[0]: i, keys[1]: '이야기 컷 배경', keys[2]: f'10앱 이야기 컷(GF.tale) 배경 — {ko}', keys[3]: '1080x1920 세로', keys[4]: 'merge/spot/block/sort/tile/day',
                      keys[5]: '글로 만든 배경(임시: 공용 배경 재사용)', keys[6]: f'{desc}, portrait background, keep lower-middle area empty for characters; flat pastel vector illustration, uniform warm-brown #6b5443 outline, no gradients, no text, no characters, rounded kid-friendly shapes'})
+for t, ko, desc in TALES:
+    i = 'map-zone:' + t
+    if i not in have:
+        rows.append({keys[0]: i, keys[1]: '지도 구역 배경', keys[2]: f'이야기 지도(GF.saga) 구역 배경 — {ko}. 같은 이야기는 앱이 달라도 같은 그림(슬롯 map.<앱>:<장>:bg 에 같은 파일 등록)', keys[3]: '360x970 세로 타일(이웃 구역과 위·아래 이음)', keys[4]: 'merge/spot/block/sort/tile/day',
+                     keys[5]: '코드 SVG 실루엣(임시)', keys[6]: f'{desc}, vertical scrolling game map zone, path area kept empty in the middle, flat pastel vector illustration, uniform warm-brown #6b5443 outline, no text, no characters'})
+        rows.append({keys[0]: 'map-mark:' + t, keys[1]: '지도 관문·랜드마크', keys[2]: f'이야기 지도 랜드마크 2개 + 관문 책 — {ko}', keys[3]: '220x220 투명 ×3', keys[4]: 'merge/spot/block/sort/tile/day', keys[5]: '이모지(임시)',
+                     keys[6]: f'two small landmark props and a story-book icon for {ko}, transparent background, flat pastel vector illustration, uniform warm-brown #6b5443 outline, no text'})
+for k, (ko, d) in {'sky': ('지도 하늘 띠', 'soft sky strip 360x90'), 'node': ('판 노드', 'round level button, plain'), 'node_lock': ('잠긴 판 노드', 'round level button, grey, locked'), 'chest': ('구역 상자(닫힘)', 'small treasure chest closed'), 'chest_open': ('구역 상자(열림)', 'small treasure chest open with sparkles')}.items():
+    i = 'map-ui:' + k
+    if i not in have:
+        rows.append({keys[0]: i, keys[1]: '지도 UI', keys[2]: f'이야기 지도 {ko} (슬롯 map.{k})', keys[3]: '160x160' if k != 'sky' else '360x90', keys[4]: 'all', keys[5]: '코드(임시)', keys[6]: f'{d}, flat pastel vector illustration, uniform warm-brown #6b5443 outline, no text'})
 def pr(r): return 1 if r[K] in P1 else 3 if r[K] in P3 else 2
 order = {k: i for i, k in enumerate(['이야기 컷 배경', '타이틀 대표 그림', '배경', '장면 배경 슬롯', '표지', '집 방', '캐릭터 시트', '옛이야기 가족 밖 배역', '앱 아이콘'])}
 rows = [dict(r, **{'우선순위': pr(r)}) for r in rows]

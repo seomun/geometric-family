@@ -11,7 +11,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await shot('home');
   const pages = await pg.evaluate(() => COLOR.debug.D().pages.map((p) => ({ id: p.id, type: p.type })));
   ok(pages.length >= 60, '페이지 ' + pages.length + '개(60+): ' + JSON.stringify(pages.reduce((o, p) => (o[p.type] = (o[p.type] || 0) + 1, o), {})));
-  await pg.evaluate(() => GF.go('cbook')); await pg.waitForSelector('.cl-th'); await shot('book');
+  await pg.evaluate(() => GF.go('cbook')); await pg.waitForSelector('.sg-node'); await shot('book');
   const seen = {};
   for (const p of pages) {
     const route = { trace: 'ctrace', sticker: 'csticker', wall: 'cwall' }[p.type] || 'cpaint';

@@ -7,7 +7,7 @@
 .sg-path { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; } .sg-seg { fill: none; stroke: rgba(255,255,255,.85); stroke-width: 8; stroke-dasharray: 2 12; stroke-linecap: round; } .sg-seg.on { stroke: #FFC933; stroke-dasharray: none; stroke-width: 9; }
 .sg-hd { position: absolute; left: 10px; right: 10px; top: 8px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 8px; z-index: 3; } .sg-hd b { font: 900 var(--uk-fs-body)/1.2 var(--uk-font); background: rgba(255,255,255,.85); padding: 3px 10px; border-radius: 14px; } .sg-hd > span { font: 800 var(--uk-fs-cap)/1 var(--uk-font); background: rgba(255,255,255,.85); padding: 3px 8px; border-radius: 12px; } .sg-hd .tale-strip { flex: 1 1 100%; margin: 2px 0 0; }
 .sg-root.kid .sg-hd { justify-content: center; align-items: center; gap: 8px; } .sg-hd .f { width: 52px; height: 52px; border-radius: 50%; background: #FFF6E5 center 0 / 150% no-repeat; box-shadow: 0 0 0 3px #fff; } .sg-hd .dots { display: flex; gap: 6px; } .sg-hd .dots b { width: 16px; height: 16px; padding: 0; border-radius: 50%; background: rgba(255,255,255,.7); } .sg-hd .dots b.on { background: #FFC933; }
-.sg-mark { position: absolute; transform: translate(-50%, 0); font-size: 54px; opacity: .9; pointer-events: none; filter: drop-shadow(0 3px 0 rgba(0,0,0,.08)); } .sg-mark .sg-img { position: static; width: 88px; height: 88px; object-fit: contain; }
+.sg-mark { position: absolute; transform: translate(-50%, -50%); font-size: 54px; opacity: .9; pointer-events: none; filter: drop-shadow(0 3px 0 rgba(0,0,0,.08)); } .sg-mark .sg-img { position: static; width: 88px; height: 88px; object-fit: contain; }
 .sg-gate, .sg-chest { position: absolute; transform: translate(-50%, -50%); width: 56px; height: 56px; border: 0; padding: 0; border-radius: 18px; background: rgba(255,255,255,.9); box-shadow: var(--uk-sh); font-size: 30px; line-height: 56px; z-index: 2; } .sg-gate .sg-img, .sg-chest .sg-img { position: static; width: 100%; height: 100%; object-fit: contain; }
 .sg-chest.open { background: #FFE27A; animation: sgchest 1.6s ease-in-out infinite; } .sg-chest:not(.open):not(.near) { filter: grayscale(.7); opacity: .85; }
 .sg-root.kid .sg-gate, .sg-root.kid .sg-chest { width: 76px; height: 76px; line-height: 76px; font-size: 42px; }
@@ -37,3 +37,12 @@
 .sg-gate { background: #FFF3C4; } .sg-chest { background: #fff; } .sg-chest.open { background: #FFE27A; }
 .sg-root.kid .sg-gate, .sg-root.kid .sg-chest { width: 96px; height: 96px; font-size: 52px; line-height: 1; }
 .sg-hd b { font-size: calc(18px * var(--uk-fs-k, 1)); background: rgba(255,255,255,.95); box-shadow: var(--uk-sh); }
+
+.sg-scene { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.sg-band { position: absolute; left: 28%; right: 4%; transform: translateY(-50%); height: 34px; padding: 0 12px; display: flex; align-items: center; gap: 6px; border-radius: 17px; background: #fff; box-shadow: var(--uk-sh); font: 800 calc(14px * var(--uk-fs-k, 1))/1.1 var(--uk-font); color: var(--uk-ink); z-index: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .sg-band b { color: #C57A00; }
+.sg-mark { width: 92px; height: 92px; line-height: 92px; font-size: 64px; } .sg-mark .sg-img { width: 86px; height: 86px; }
+.sg-node .ty svg { width: 16px; height: 16px; display: block; margin: 4px; }
+
+.sg-node .sg-lb { position: absolute; top: 62px; left: 50%; transform: translateX(-50%); width: 112px; text-align: center; font: 800 calc(12px * var(--uk-fs-k, 1))/1.15 var(--uk-font); background: rgba(255,255,255,.88); border-radius: 8px; padding: 2px 4px; color: var(--uk-ink); pointer-events: none; z-index: 1; } .sg-node.off .sg-lb { color: #8B8092; } .sg-node .sg-lb ~ .sg-st { bottom: -34px; }
+
+.sg-node.thumb { width: 92px; height: 92px; border-radius: 24px; overflow: hidden; padding: 4px; background: #fff; } .sg-node.thumb img, .sg-node.thumb svg { width: 100%; height: 100%; object-fit: contain; border-radius: 18px; } .sg-node.thumb .ck { position: absolute; right: 2px; bottom: 2px; width: 28px; height: 28px; } .sg-node.thumb .sn { position: absolute; left: 4px; top: 2px; font-style: normal; font-size: 20px; } .sg-node.thumb.cur { box-shadow: 0 0 0 4px #FFC933, var(--uk-sh); }

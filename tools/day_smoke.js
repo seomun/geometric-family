@@ -14,8 +14,8 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await shot('home');
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent) { const f = parseFloat(getComputedStyle(e).fontSize); if (f < 24 && !/^[0-9]+$/.test(e.textContent.trim())) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈: 글자 없음/24px 이상 ' + small.slice(0, 4).join(','));
-  await pg.evaluate(() => { GF.stack = []; GF.go('dhome'); GF.go('dmap'); }); await pg.waitForSelector('.screen.on .dy-scene'); await shot('map');
-  const sc = await pg.evaluate(() => ({ n: document.querySelectorAll('.screen.on .dy-scene').length, off: document.querySelectorAll('.screen.on .dy-scene.off').length })); ok(sc.n === 12 && sc.off === 11, '하루 길: 장면 12개(처음엔 1만 열림)');
+  await pg.evaluate(() => { GF.stack = []; GF.go('dhome'); GF.go('dmap'); }); await pg.waitForSelector('.screen.on .sg-node'); await shot('map');
+  const sc = await pg.evaluate(() => ({ n: document.querySelectorAll('.screen.on .sg-node').length, off: document.querySelectorAll('.screen.on .sg-node.off').length })); ok(sc.n >= 10 && sc.off === sc.n - 1, '하루 길: 지도 노드(보이는 구역 안에서 처음엔 1만 열림)');
   const NL = await pg.evaluate(() => DAY.debug.D().levels.length);
   const afterFinish = async (n) => { for (let g = 0; g < 14; g++) { if (await pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet'))) break; const nb = await pg.$('.screen.on .nextbtn'); if (nb) await nb.click({ force: true }).catch(() => {}); await pg.waitForTimeout(350); } await pg.waitForSelector('.screen.on .uk-sheet', { timeout: 5000 }).catch(() => {}); return pg.evaluate(() => !!document.querySelector('.screen.on .uk-sheet')); };
   for (let n = A; n <= Math.min(B, NL); n++) {

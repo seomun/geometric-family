@@ -18,8 +18,8 @@ const solveLevel = async (pg) => {
   await shot('home');
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent && !/^[★☆✔]+$/.test(e.textContent.trim())) { const f = parseFloat(getComputedStyle(e).fontSize); if (f < 17) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈 글자 크기 17px 이상 ' + small.slice(0, 4).join(','));
-  await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('shome'); GF.go('slevels'); }); await pg.waitForSelector('.screen.on .sr-l'); await shot('levels');
-  const lk = await pg.evaluate(() => ({ off: document.querySelectorAll('.screen.on .sr-l.off').length, all: document.querySelectorAll('.screen.on .sr-l').length })); const NL = await pg.evaluate(() => SORT.debug.D().levels.length); ok(lk.all === NL && lk.off === NL - 1, '레벨 목록 ' + NL + '개(처음엔 1만 열림)');
+  await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('shome'); GF.go('slevels'); }); await pg.waitForSelector('.screen.on .sg-node'); await shot('levels');
+  const lk = await pg.evaluate(async () => { const sc = GF.saga.scroll; for (let y = sc.scrollHeight; y >= 0; y -= 500) { sc.scrollTop = y; await new Promise((r) => setTimeout(r, 60)); } return { off: document.querySelectorAll('.screen.on .sg-node.off').length, all: document.querySelectorAll('.screen.on .sg-node').length }; }); const NL = await pg.evaluate(() => SORT.debug.D().levels.length); ok(lk.all === NL && lk.off === NL - 1, '레벨 목록 ' + NL + '개(처음엔 1만 열림)');
   for (let n = A; n <= Math.min(B, NL); n++) {
     await pg.evaluate((nn) => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('shome'); GF.go('splay', { n: nn }); SORT.unlockAll = true; SORT.fast = true; }, n); await pg.waitForSelector('.screen.on .sr-tube');
     if (n === A || [4, 9, 12, 14].includes(n)) await shot('play' + n);

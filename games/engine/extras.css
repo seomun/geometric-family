@@ -84,3 +84,5 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 /* 카드 줄: 제목은 한 줄 전체, 「어느 앱에서 얻나」 힌트는 그 아래 작은 줄 (ops-card hint) */
 .ops-card { flex-wrap: wrap; } .ops-card b { flex: 1 1 0; white-space: normal; overflow: visible; text-overflow: clip; } .ops-card small { flex: 1 1 100%; max-width: 100%; text-align: left; padding-left: 34px; margin-top: -2px; }
 .ops-card { flex: none; }
+/* 앨범 카드 줄: 이모지 아이콘이 잘리지 않게 줄 높이·여백 확보 */
+.ops-card .ic { line-height: 1.3; min-width: 28px; text-align: center; flex: none; } .ops-cards { padding: 3px 2px; }

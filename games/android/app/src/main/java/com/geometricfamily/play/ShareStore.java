@@ -22,7 +22,7 @@ public class ShareStore extends ContentProvider {
     static final String[] ADULT = {"com.geometricfamily.tables", "com.geometricfamily.merge", "com.geometricfamily.quiz", "com.geometricfamily.block", "com.geometricfamily.spot", "com.geometricfamily.tile", "com.geometricfamily.sort"};
     static final String PREFS = "gfshare";
 
-    static boolean okKey(String k) { return k != null && (k.equals("gf:house:kid:v1") || k.equals("gf:house:adult:v1")); }
+    static boolean okKey(String k) { return k != null && (k.equals("gf:house:kid:v1") || k.equals("gf:house:adult:v1") || k.equals("gf:ip:kid:v1") || k.equals("gf:ip:adult:v1")); }
     static String[] group(String k) { return k.contains(":kid:") ? KID : ADULT; }
     static boolean in(String[] g, String pkg) { for (String x : g) if (x.equals(pkg)) return true; return false; }
 

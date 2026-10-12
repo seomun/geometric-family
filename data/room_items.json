@@ -115,6 +115,20 @@
    "game": "day",
    "room": "kid",
    "story": "막둥이가 이도 닦고 옷도 입고 밥도 꼭꼭 먹었어요. 하루가 끝나면 방에 소품이 하나씩 놓여요."
+  },
+  {
+   "id": "story_a",
+   "name": "이야기 완성 세트(성인)",
+   "game": "tables",
+   "room": "nemo",
+   "story": "같은 이야기를 네 장의 카드로 모아 한 편을 완성하면, 그 이야기를 닮은 작은 소품이 집에 놓여요."
+  },
+  {
+   "id": "story_k",
+   "name": "이야기 완성 세트(유아)",
+   "game": "playground",
+   "room": "kid",
+   "story": "이야기 카드를 모아 한 편을 완성하면 방에 작은 소품이 놓여요."
   }
  ],
  "items": [
@@ -3760,6 +3774,546 @@
     "#FFFFFF"
    ],
    "game": "day",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 193,
+   "id": "t_pigs_a",
+   "name": "벽돌집 미니어처",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 194,
+   "id": "t_pigs_k",
+   "name": "벽돌집 미니어처",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 195,
+   "id": "t_bears_a",
+   "name": "곰 세 식구 의자",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪑",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 196,
+   "id": "t_bears_k",
+   "name": "곰 세 식구 의자",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪑",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 197,
+   "id": "t_shoes_a",
+   "name": "요정의 작은 구두",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👞",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 198,
+   "id": "t_kongjwi_a",
+   "name": "꽃신 한 켤레",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 199,
+   "id": "t_kongjwi_k",
+   "name": "꽃신 한 켤레",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 200,
+   "id": "t_heungbu_a",
+   "name": "박 항아리",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎃",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 201,
+   "id": "t_heungbu_k",
+   "name": "박 항아리",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎃",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 202,
+   "id": "t_bremen_a",
+   "name": "음악대 나팔",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 203,
+   "id": "t_hok_a",
+   "name": "도깨비 방망이",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🔨",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 204,
+   "id": "t_axe_a",
+   "name": "금도끼 장식",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪓",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 205,
+   "id": "t_axe_k",
+   "name": "금도끼 장식",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪓",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 206,
+   "id": "t_sun_a",
+   "name": "해님 달님 모빌",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌙",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 207,
+   "id": "t_sun_k",
+   "name": "해님 달님 모빌",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌙",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 208,
+   "id": "t_ant_a",
+   "name": "개미 열매 광주리",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 209,
+   "id": "t_ant_k",
+   "name": "개미 열매 광주리",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 210,
+   "id": "t_pino_a",
+   "name": "피노키오 인형",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪆",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 211,
+   "id": "t_jack_a",
+   "name": "콩나무 화분",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 212,
+   "id": "t_jack_k",
+   "name": "콩나무 화분",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 213,
+   "id": "t_gyeonwoo_a",
+   "name": "오작교 별등",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "⭐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 214,
+   "id": "t_gyeonwoo_k",
+   "name": "오작교 별등",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "⭐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 215,
+   "id": "t_ureng_a",
+   "name": "우렁각시 소라집",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐚",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 216,
+   "id": "t_ureng_k",
+   "name": "우렁각시 소라집",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐚",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 217,
+   "id": "t_hare_a",
+   "name": "결승선 깃발",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🏁",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 218,
+   "id": "t_hare_k",
+   "name": "결승선 깃발",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🏁",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 219,
+   "id": "t_brothers_a",
+   "name": "볏단 두 단",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌾",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 220,
+   "id": "t_brothers_k",
+   "name": "볏단 두 단",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌾",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 221,
+   "id": "t_snowqueen_a",
+   "name": "눈 결정 장식",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "❄️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 222,
+   "id": "t_snowqueen_k",
+   "name": "눈 결정 장식",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "❄️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
    "season": null,
    "physical": null
   }

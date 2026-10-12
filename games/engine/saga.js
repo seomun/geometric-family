@@ -103,6 +103,8 @@
     const place = (p) => { me.style.left = p.x + '%'; me.style.top = (p.y - 6) + 'px'; };
     const from = o.from && pos[o.from] ? pos[o.from] : null; if (from && pos[cur.id] && from !== pos[cur.id]) { me.style.transition = 'none'; place(from); void me.offsetWidth; setTimeout(() => { me.style.transition = ''; place(pos[cur.id]); }, 600); } else if (pos[cur.id]) place(pos[cur.id]);
     /* 곁가지 + 이어서 */
+    if (!kid && GF.ops && GF.ops.webtoonUrl && GF.ops.webtoonUrl()) { o.side = (o.side || []).concat([{ icon: 'book', text: GF.t('ops.settings.webtoon'), fn: () => GF.ops.openWebtoon() }]); }   // 웹툰 보기(성인)
+    if (kid && GF.ip && GF.ip.ready && GF.ops && GF.ops.openPassport) { o.side = (o.side || []).concat([{ icon: 'star', text: 'stamp', fn: () => GF.ops.openPassport() }]); }   // 유아 도장판(글자 없음)
     if (o.side && o.side.length) { root.classList.add('rail'); const sd = el('div', 'sg-side', root); o.side.forEach((x) => { const b = el('button', 'sg-rb' + (x.cls ? ' ' + x.cls : ''), sd); b.setAttribute('aria-label', x.text); const ic = el('span', 'ic', b); try { ic.innerHTML = UK.icon(x.icon); } catch (e) { ic.textContent = '•'; } if (!kid) el('small', '', b, x.text); if (x.badge) el('i', 'bd', b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
     const go = UK.btn({ text: kid ? '' : (o.goText ? o.goText(cur) : `이어서 · 레벨 ${cur.id}`), icon: 'play', cls: 'green sg-go', onclick: () => { GF.sfx('pick'); o.onNode(cur); } }, el('div', 'sg-gowrap', root)); go.setAttribute('aria-label', 'continue');
     const focus = () => { const p = pos[cur.id]; if (p) sc.scrollTop = Math.max(0, p.y - sc.clientHeight * 0.42); };

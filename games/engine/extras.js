@@ -58,6 +58,7 @@
   const safe = (fn) => { try { return !!fn(); } catch (e) { return false; } };
   /** 새로 달성한 업적이 있으면 알려 준다(결과 화면 뒤 등에서 앱이 부름). 돌려주는 값: 새 업적 배열 */
   X.check = function (quiet) {
+    if (GF.ip && GF.ip.ready) GF.ip.syncStamps();   // 진행이 늘었으면 도장
     if (!X.ready || !X.cfg.badges) return []; const s = load(), fresh = X.cfg.badges.filter((b) => !s.badges.includes(b.id) && safe(b.ok));
     if (fresh.length) { fresh.forEach((b) => s.badges.push(b.id)); save(s); if (!quiet) fresh.slice(0, 2).forEach((b, i) => setTimeout(() => { try { UK.toast(b.icon + ' 업적: ' + b.name, document.getElementById('safe')); GF.sfx('star'); } catch (e) {} }, 400 + i * 1300)); }
     return fresh;
@@ -121,6 +122,7 @@
       if (bar && snd && !document.getElementById('b-set')) { const b = el('button', 'round-btn'); b.id = 'b-set'; b.setAttribute('aria-label', 'settings'); b.innerHTML = UK.icon('gear'); b.onclick = () => { GF.sfx('tap'); openSettings(); }; bar.insertBefore(b, snd); const g = snd.previousElementSibling; }
       X.attend(); setTimeout(() => X.check(true), 600);
     } else { if (!cfg.noHold) kidHold(); X.restReset(); restT = restT || setInterval(restTick, 20000); }
+    if (GF.ip) GF.ip.init(cfg);   // IP 장부(카드·도장·카메오)
     if (GF.polish) GF.polish.init(cfg);   // 완성도 층(손상 복구·첫 실행 안내)
     if (GF.ops) GF.ops.init(cfg);   // 운영 공통 층(새 소식·복귀/금요일 선물·움직임 줄이기·문의)
   };
@@ -129,6 +131,7 @@
     const SV = o.SV, stars = () => Object.entries(SV().stars || {}), done = () => stars().filter((e) => e[1] > 0).length, sum = () => stars().reduce((a, e) => a + e[1], 0), full = () => stars().filter((e) => e[1] >= 3).length;
     const items = () => (window.Room ? Room.owned().filter((id) => (Room.item(id) || {}).set === o.roomSet).length : 0);
     return {
+      progress: done,
       stats: () => [['깬 판', done() + ' / ' + o.total], ['별', sum() + ' / ' + o.total * 3], ['별 3개 판', full()], ['집 소품', items() + ' / ' + o.itemTotal], ['오늘의 한 판 도장', (SV().shards || 0)], ['세 가족 판', Object.keys(SV().trio || {}).length + ' / 3']],
       badges: [
         { id: 'p1', icon: o.icon || '🌟', name: '첫 걸음', desc: '첫 판을 깼어요', ok: () => done() >= 1 },

@@ -117,6 +117,43 @@
     el('p', 'xt-p', body, GF.t('ops.mis.note'));
   };
 
+
+  /* ---------------- IP 층 UI: 이야기 카드 · 도장책 · 가족 코드 · 유아 도장판 ---------------- */
+  const GP = () => (GF.ip && GF.ip.ready ? GF.ip : null), ipD = () => (GF.data && GF.data.ops) || {};
+  const appLabel = (a) => (ipD().appNames || {})[a] || a;
+  /** 카드 퍼즐 목록: kid=true 면 글자 없이 이모지·점만 */
+  function I_cards(body, sec, kid) {
+    const I = GP(); if (!I) return; const g = I.kid ? 'kid' : 'adult', map = (ipD().cardMap || {})[g] || {}, tales = Object.keys(map), T = ipD().tales || {}; if (!tales.length) return;
+    const done = tales.filter((t) => I.complete(t)).length; if (!kid) sec(GF.t('ops.album.cards') + ' ' + done + '/' + tales.length);
+    const wrap = el('div', 'ops-cards', body);
+    tales.forEach((t) => {
+      const r = el('div', 'ops-card' + (I.complete(t) ? ' ok' : ''), wrap); el('span', 'ic', r, (T[t] || {}).icon || '📖'); if (!kid) el('b', '', r, (T[t] || {}).title || t);
+      const dots = el('span', 'dots', r); for (let i = 0; i < 4; i++) el('i', I.hasCard(t, i) ? 'on' : '', dots);
+      if (!kid) { const miss = [0, 1, 2, 3].filter((i) => !I.hasCard(t, i)).map((i) => I.cardApp(t, i)).filter((x, i, ar) => x && ar.indexOf(x) === i && x !== (O.app)); if (I.complete(t)) el('small', '', r, '✔'); else if (miss.length) el('small', '', r, miss.map(appLabel).join(' · ')); }
+    });
+    if (!kid) el('p', 'xt-p', body, GF.t('ops.album.cardnote'));
+  }
+  O.openCards = function () { const { body } = sheet(GF.t('ops.album.cards')); I_cards(body, () => {}, O.kid); };
+  O.openPassport = function () {
+    const I = GP(); if (!I) return; const { body } = sheet(GF.t('ops.pass.title')), g = I.kid ? 'kid' : 'adult', apps = (ipD().apps || {})[g] || [];
+    const row = (a) => { const r = el('div', 'ops-pass' + (a === O.app ? ' me' : ''), body); el('b', '', r, I.kid ? '' : appLabel(a)); const ds = el('span', 'dots', r); const have = I.stamps(a); ['first', 'a', 'b', 'end', 'story'].forEach((id) => el('i', have.includes(id) ? 'on' : '', ds)); return r; };
+    apps.forEach((a) => { const r = row(a); if (I.kid) { const ic = el('span', 'ic', r, a === 'play' ? '🧸' : a === 'color' ? '🎨' : '🌞'); r.insertBefore(ic, r.firstChild); } });
+    const pl = el('div', 'ops-plates', body); [['ribbon', '🎀'], ['sparkle', '✨'], ['crown', '👑']].forEach(([id, e]) => { const has = I.plates().includes(id); const c = el('span', has ? 'on' : '', pl, has ? e : '🔒'); if (!I.kid) el('small', '', c, GF.t('ops.ip.plate.' + id) + (has ? '' : ' · ' + I.plateNeed(id))); });
+    if (!I.kid) {
+      el('h4', 'xt-h', body, GF.t('ops.pass.more')); const n = O.native();
+      apps.filter((a) => a !== O.app).forEach((a) => { const pkg = 'com.geometricfamily.' + (a === 'idle' ? 'tables' : a), r = el('div', 'ops-more', body); el('b', '', r, appLabel(a)); const inst = !!(n && n.hasApp && n.hasApp(pkg));
+        if (n && n.openStore) { const b2 = el('button', 'xt-btn', r, inst ? GF.t('ops.pass.open') : GF.t('ops.pass.store')); b2.onclick = () => { try { inst ? n.launch(pkg) : n.openStore(pkg); } catch (e) {} }; } });
+      el('p', 'xt-p', body, GF.t('ops.pass.note'));
+    }
+  };
+  O.openFamilyCode = function () {
+    const I = GP(); if (!I) return; const { body } = sheet(GF.t('ops.fam.title')); el('p', 'xt-p', body, GF.t('ops.fam.note'));
+    const out = el('textarea', 'ops-code', body); out.readOnly = true; out.rows = 3; out.style.display = 'none';
+    UK.btn({ text: GF.t('ops.fam.make'), cls: 'sky block', onclick: () => { out.value = I.makeFamilyCode(); out.style.display = 'block'; out.select(); } }, body);
+    el('h4', 'xt-h', body, GF.t('ops.fam.paste')); const inp = el('textarea', 'ops-code', body); inp.rows = 3; const msg = el('p', 'xt-p', body, '');
+    UK.btn({ text: GF.t('ops.fam.apply'), cls: 'ghost block', onclick: () => { const r = I.applyFamilyCode(inp.value); msg.textContent = r.ok ? GF.t('ops.fam.ok') : GF.t('ops.fam.bad'); } }, body);
+  };
+
   /* ---------------- 앨범: 집 소품 · 이야기 카드 · 계절. 확정 지급(뽑기·중복 없음), 이야기 카드 3장마다 소품 1개 ---------------- */
   function cardsDone() {
     const T = GF.tale, out = []; if (!T || !T.ready || !T.d.chapters) return out;
@@ -127,12 +164,7 @@
     const { sc, body } = sheet(GF.t('ops.album.title')), c = O.cfg || {}, s = st();
     const sec = (t) => el('h4', 'xt-h', body, t);
     if (window.Room && Room.data && c.rewardSet) { const its = Room.data.items.filter((i) => i.set === c.rewardSet), own = its.filter((i) => Room.has(i.id)).length; sec(GF.t('ops.album.items') + ' ' + own + '/' + its.length); const g = el('div', 'ops-chips', body); its.forEach((i) => el('span', Room.has(i.id) ? 'on' : '', g, Room.has(i.id) ? i.name : '🔒')); }
-    const cards = cardsDone();
-    if (cards.length) {
-      const got = cards.filter((x) => x.got).length, earned = Math.floor(got / 3), claimed = s.albumClaimed || 0; sec(GF.t('ops.album.cards') + ' ' + got + '/' + cards.length); const g = el('div', 'ops-chips', body); cards.forEach((x) => el('span', x.got ? 'on' : '', g, x.got ? x.title : '🔒'));
-      if (earned > claimed) UK.btn({ text: GF.t('ops.album.claim'), cls: 'gold block', onclick: () => { const s2 = st(), it = nextGift(); s2.albumClaimed = (s2.albumClaimed || 0) + 1; put(s2); let ok = null; if (it && Room.grant(it.id)) ok = it; sc.close(); UK.toast(ok ? GF.t('ops.mis.got', { name: ok.name }) : GF.t('ops.mis.none'), safe()); GF.sfx('celebrate'); } }, body);
-      else el('p', 'xt-p', body, GF.t('ops.album.next', { n: 3 - (got % 3) }));
-    }
+    I_cards(body, sec, false);
     const ev = (c.calendar && c.calendar()) || []; if (ev.length) sec(GF.t('ops.album.season') + ' ' + ev.filter((e) => e.done).length + '/' + ev.length);
   };
 
@@ -189,6 +221,10 @@
   };
   window.GF_notifEvent = (ev) => { if (ev === 'denied') { S().notif = 0; if (GF.save) GF.save(); UK.toast(GF.t('ops.notif.denied'), safe()); } else if (ev === 'granted') UK.toast(GF.t('ops.notif.on'), safe()); };
 
+  /* ---------------- 웹툰 보기(성인 전용): 블로그 주소(data/ops.json webtoonUrl, 비면 숨김). 유아 앱에는 없다 ---------------- */
+  O.webtoonUrl = () => (!O.kid && O.d && O.d.webtoonUrl) || '';
+  O.openWebtoon = function (path) { const u = O.webtoonUrl() + (path || ''); if (!O.webtoonUrl()) return; const n = O.native(); if (n && n.openUrl) { try { n.openUrl(u); } catch (e) {} } else { try { window.open(u, '_blank', 'noopener'); } catch (e) {} } };
+
   /* ---------------- 설정 줄(extras 가 부른다) ---------------- */
   O.rows = function (body, sc, kid) {
     const row = (label, node) => { const r = el('div', 'xt-row', body); el('span', '', r, label); if (node) r.appendChild(node); return r; };
@@ -199,13 +235,17 @@
       row(GF.t('ops.settings.mis'), tb(GF.t('common.view'), () => { sc.close(); O.openMissions(); }));
       if (O.cfg && O.cfg.calendar) row(GF.t('ops.settings.cal'), tb(GF.t('common.view'), () => { sc.close(); O.openCalendar(); }));
       row(GF.t('ops.settings.album'), tb(GF.t('common.view'), () => { sc.close(); O.openAlbum(); }));
+      row(GF.t('ops.settings.passport'), tb(GF.t('common.view'), () => { sc.close(); O.openPassport(); }));
     }
+    if (kid && GP()) { row(GF.t('ops.settings.kidbook'), tb(GF.t('common.view'), () => { sc.close(); O.openPassport(); })); row(GF.t('ops.settings.cards'), tb(GF.t('common.view'), () => { sc.close(); O.openCards(); })); }
+    if (GP()) row(GF.t('ops.settings.family'), tb(GF.t('common.view'), () => { sc.close(); O.openFamilyCode(); }));
     if (!kid && O.notif.native()) row(GF.t('ops.settings.notif'), UK.switch(O.notif.on(), (on) => { O.notif.set(on); }));
     if (!kid && (O.iap.configured('adfree') || O.iap.configured('pack'))) {
       if (O.iap.configured('adfree')) row(GF.t('ops.iap.adfree'), O.iap.owned('adfree') ? el('b', '', null, GF.t('ops.iap.owned')) : tb(O.iap.price('adfree') || GF.t('ops.iap.buy'), () => { sc.close(); O.iap.buy('adfree'); }));
       if (O.iap.configured('pack')) row(GF.t('ops.iap.pack'), O.iap.owned('pack') ? el('b', '', null, GF.t('ops.iap.owned')) : tb(O.iap.price('pack') || GF.t('ops.iap.buy'), () => { sc.close(); O.iap.buy('pack'); }));
       row(GF.t('ops.iap.restore'), tb(GF.t('common.view'), () => { O.iap.restore(); UK.toast(GF.t('ops.iap.restoring'), safe()); }));
     }
+    if (!kid && O.webtoonUrl()) row(GF.t('ops.settings.webtoon'), tb(GF.t('common.view'), () => { sc.close(); O.openWebtoon(); }));
     row(GF.t('ops.settings.backup'), tb(GF.t('common.view'), () => { sc.close(); O.openBackup(); }));
     row(GF.t('ops.settings.help'), tb(GF.t('common.view'), () => { sc.close(); O.openHelp(); }));
     if (GF.polish && GF.polish.ready) GF.polish.rows(body, sc);   // 앱 정보

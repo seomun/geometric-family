@@ -27,7 +27,12 @@
     const sk = el('button', 'tale-skip', ov, T.kid ? UK.icon('next') : GF.t('ui.tale.skip')); sk.setAttribute('aria-label', 'skip'); sk.onclick = (e) => { e.stopPropagation(); GF.sfx('tap'); end(); };
     return ov;
   };
-  const go = (raw, parent, cb, o, k) => { if (!raw || !raw.length || (k && T.seen(k)) || auto()) { if (k && !T.seen(k)) T.mark(k); cb && cb(); return false; } if (k) T.mark(k); T.play(raw, parent, cb, o); return true; };
+  /** 장 n 의 기(s)·승/전(m)·결(e) 컷을 끝까지 보면 그 이야기 카드를 얻는다(GF.ip). 이미 본 컷도 한 번 더 확인해 예전 진행도 카드가 된다 */
+  const afterBeat = (k) => { try { if (!GF.ip || !GF.ip.ready || auto() || !T.d) return; const m = /^([sme])(\d+)(?::(\d+))?$/.exec(k); if (!m) return; const c = ch(+m[2]); if (!c) return; let beat = m[1] === 's' ? 0 : m[1] === 'e' ? 3 : (c.mid || []).findIndex((x) => x.after === +m[3]) + 1; if (beat < 0 || beat > 3) return; GF.ip.beat(T.app, c.tale, beat); } catch (e) {} };
+  const go = (raw, parent, cb, o, k) => {
+    if (!raw || !raw.length || (k && T.seen(k)) || auto()) { if (k && !T.seen(k)) T.mark(k); else if (k && T.seen(k)) afterBeat(k); cb && cb(); return false; }
+    if (k) T.mark(k); T.play(raw, parent, () => { if (k) afterBeat(k); cb && cb(); }, o); return true;
+  };
   const ch = (n) => (T.d && T.d.chapters && T.d.chapters[n]) || null;
   /** 앱을 처음 쓸 때(첫 인사 다음) 이 게임의 이야기를 2~4컷으로 소개 */
   T.prologue = (parent, cb) => (T.ready ? go(T.d.prologue, parent, cb, { bg: 'indoor' }, 'prologue') : (cb && cb(), false));

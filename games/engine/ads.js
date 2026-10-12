@@ -104,6 +104,7 @@
       if (!A.live()) return f.apply(me, ar); A.interstitial({ placement: 'result', onClose: () => f.apply(me, ar) }); }; });   // 결과를 닫은 직후에만
     if (o && !A.isKid() && GF.ops && GF.ops.noteResult) GF.ops.noteResult(o.stars);   // 오늘의 작은 일(미션) 집계
     const sc = _result.call(UK, o), h = A.resultHook; A.resultHook = null;
+    if (GF.share && o && !A.isKid()) GF.share.attach(sc, o);   // 공유 카드 저장(성인)
     try { const nt = GF.polish && GF.polish.takeNext && GF.polish.takeNext(); if (nt && sc && !A.isKid()) { const body = sc.querySelector('.body') || sc.querySelector('.uk-sheet'), anchor = sc.querySelector('.acts'); const p2 = document.createElement('p'); p2.className = 'pol-next'; p2.textContent = nt; (anchor && anchor.parentNode ? anchor.parentNode : body).insertBefore(p2, anchor || null); } } catch (e) {}   // 결과 「다음 목표」 한 줄
     try {
       if (h && sc && A.eligible()) { const acts = sc.querySelector('.acts'); if (acts) { const b = UK.btn({ text: GF.t('ui.ads.prefix') + h.ask, icon: 'gift', cls: 'gold', onclick: () => A.run({ placement: h.placement, onReward: () => { h.onReward(); b.disabled = true; b.lastChild.textContent = GF.t('ui.ads.got'); } }) }, acts); if (h.sub) { const sm = document.createElement('small'); sm.textContent = h.sub; b.appendChild(sm); b.style.flexDirection = 'column'; b.style.gap = '2px'; } acts.insertBefore(b, acts.firstChild); } }

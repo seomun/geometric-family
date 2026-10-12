@@ -76,7 +76,7 @@
     /** 내 도형 문패(⑤ 결과): 성인 앱 홈에 작게 보여 준다. 결과가 없으면 null */
     mePlate(parent) {
       const m = Room.me(), T = m && Room.data.meTypes && Room.data.meTypes[m.f]; if (!T) return null;
-      const d = el('div', 'rm-plate', parent, `<img src="${Room.cfg.charSrc ? Room.cfg.charSrc(T.char) : ''}" alt=""><span><small>내 도형</small><b>${T.sub[m.s]}</b></span>`); d.style.background = T.bg; d.style.borderColor = T.color; return d;
+      const d = el('div', 'rm-plate', parent, `<img src="${Room.cfg.charSrc ? Room.cfg.charSrc(T.char) : ''}" alt=""><span><small>내 도형</small><b>${T.sub[m.s]}</b></span>`); d.style.background = T.bg; d.style.borderColor = T.color; try { const pl = (window.GF && GF.ip && GF.ip.ready) ? GF.ip.plates() : []; if (pl.length) el('i', 'rm-deco', d, pl.map((x) => ({ ribbon: '🎀', sparkle: '✨', crown: '👑' }[x] || '')).join('')); } catch (e) {} return d;
     },
     setWall(room, d) { Room.S.wall = Room.S.wall || {}; Room.S.wall[room] = d; Room.save(); },
     placedIn: (r) => (Room.S.placed[r] = Room.S.placed[r] || []),

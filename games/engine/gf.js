@@ -349,7 +349,7 @@
   /* ---------------- 모드 등록 ---------------- */
   GF.mode = (name, def) => { GF.modes[name] = def; };
   // 안드로이드 껍데기가 호출: 앱이 백그라운드로 가면 소리를 멈추고, 돌아오면 이어 간다 / 노치 인셋이 바뀌면 다시 맞춘다
-  GF.setHidden = (h) => { GF.appHidden = !!h; if (GF.bgm) GF.bgm.sync(); if (!h && window.Room && Room.refresh) { try { Room.refresh(); } catch (e) { /* 형제 앱 집 불러오기 실패는 무시 */ } } };
+  GF.setHidden = (h) => { GF.appHidden = !!h; if (!h && GF.ip && GF.ip.refresh) { try { GF.ip.refresh(); } catch (e) {} } if (GF.bgm) GF.bgm.sync(); if (!h && window.Room && Room.refresh) { try { Room.refresh(); } catch (e) { /* 형제 앱 집 불러오기 실패는 무시 */ } } };
   GF.refit = () => { try { fit(); } catch (e) {} };   // 부팅 전(DOM 없음)에 네이티브가 불러도 오류 없이 넘어간다
   const GAME_ICON = { shadow: 'gshadow', faces: 'gfaces', puzzle: 'gpuzzle', paint: 'gpaint', shapes: 'gshapes' };
   const GAME_HERO = { shadow: 'dong_dad.good', faces: 'wife.joy', puzzle: 'nemo_mom.good', paint: 'baby.joy', shapes: 'nemo_dad.good' };
@@ -602,6 +602,7 @@
     enter(r, p) {
       const cuts = GF.data.story[p.ch][p.part];
       GF.story(r, cuts, () => {
+        if (GF.ip && GF.ip.ready) GF.ip.playBeat(p.ch, p.part === 'pro' ? 0 : 3);   // 이야기 카드(GF.ip)
         if (p.part === 'pro') { GF.state.seen[p.ch] = 1; Store.save(); if (p.replay) GF.back(); else GF.replace('stages', { ch: p.ch }); }
         else { Reward.sticker(p.ch + '_book'); GF.popTo('map'); }
       });
@@ -722,6 +723,7 @@
     // 스테이지 완료
     const avg = Math.max(1, Math.floor(run.res.reduce((a, b) => a + b, 0) / run.res.length));   // 평균 내림: 한 라운드라도 틀리면 ★3 이 안 된다
     const rec = GF.state.stages[run.id] || {}; rec.done = true; rec.stars = Math.max(rec.stars || 0, avg); GF.state.stages[run.id] = rec; Store.save(); refreshBar();
+    if (GF.ip && GF.ip.ready && run.kind === 'story' && run.k < 2) GF.ip.playBeat(run.ch, run.k + 1);   // 단계 A·B 깸 = 이야기 카드 1·2
     const gain = Reward.sticker(run.ch + '_' + 'ABC'[run.k], avg === 3);
     const n = run.ch.slice(2);
     if (run.k === 2 && window.Room && Room.data) { const gi = { ch1: 'k_party', ch2: 'k_train' }[run.ch] || 'k_' + run.ch; if (Room.grant(gi)) { GF.sfx('star'); const it = Room.item(gi), gf = el('div', 'kgift', r); const im = el('img', '', gf); im.src = Room.src(it, it.colors[0]); setTimeout(() => gf.remove(), 2600); } }   // 장을 끝내면 아이 방에 장난감 하나
@@ -813,7 +815,7 @@
     GF.state = Store.load();
     if (window.Room && GF.data.room_items && !opts.dataNames) {   // ① 놀이터: 유아 그룹 집(아이 방만 보임, 가족 집은 보호자 잠금 뒤)
       Room.init({ data: GF.data.room_items, game: 'playground', mode: 'kid', autoPlace: true, guard: (cb) => Gate.ask(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
-      if (GF.extras) GF.extras.init({ app: 'play', kid: true, noHold: true, stats: () => [['별', totalStars()], ['깬 단계', Object.values(GF.state.stages).filter((x) => x.stars > 0).length], ['스티커', Object.keys(GF.state.stickers || {}).length]], reset: () => GF.resetState() });
+      if (GF.extras) GF.extras.init({ app: 'play', kid: true, noHold: true, progress: () => Object.values(GF.state.stages || {}).filter((x) => x.stars > 0).length, stats: () => [['별', totalStars()], ['깬 단계', Object.values(GF.state.stages).filter((x) => x.stars > 0).length], ['스티커', Object.keys(GF.state.stickers || {}).length]], reset: () => GF.resetState() });
     }
     ensureAudio(); loadSounds();
     fit(); window.addEventListener('resize', () => { fit(); const s = GF.cur; if (s && wantWide(s, s.params) !== !!GF.safeWide) show(s.name, s.params); });

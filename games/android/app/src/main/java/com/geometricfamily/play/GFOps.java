@@ -2,6 +2,7 @@ package com.geometricfamily.play;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.webkit.JavascriptInterface;
 
@@ -36,6 +37,35 @@ public class GFOps {
             } catch (Exception ignored) {
             }
         });
+    }
+
+    /** 웹툰(블로그) 등 https 주소를 시스템 브라우저로 연다 — 성인 앱 전용(유아 flavor 는 무시), https 만 허용 */
+    @JavascriptInterface
+    public void openUrl(final String url) {
+        if (BuildConfig.GF_KID || url == null || !url.startsWith("https://")) return;
+        act.runOnUiThread(() -> { try { act.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url))); } catch (Exception ignored) { } });
+    }
+
+    /** 형제 앱 모음: 스토어 열기(성인 전용) */
+    @JavascriptInterface
+    public void openStore(final String pkg) {
+        if (BuildConfig.GF_KID || pkg == null || !pkg.startsWith("com.geometricfamily.")) return;
+        act.runOnUiThread(() -> {
+            try { act.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pkg))); }
+            catch (Exception e) { try { act.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + pkg))); } catch (Exception ignored) { } }
+        });
+    }
+
+    @JavascriptInterface
+    public boolean hasApp(String pkg) {
+        if (BuildConfig.GF_KID || pkg == null || !pkg.startsWith("com.geometricfamily.")) return false;
+        try { act.getPackageManager().getPackageInfo(pkg, 0); return true; } catch (PackageManager.NameNotFoundException e) { return false; }
+    }
+
+    @JavascriptInterface
+    public void launch(final String pkg) {
+        if (BuildConfig.GF_KID || pkg == null || !pkg.startsWith("com.geometricfamily.")) return;
+        act.runOnUiThread(() -> { try { Intent i = act.getPackageManager().getLaunchIntentForPackage(pkg); if (i != null) act.startActivity(i); } catch (Exception ignored) { } });
     }
 
     @JavascriptInterface

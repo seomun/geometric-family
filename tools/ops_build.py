@@ -89,7 +89,46 @@ FAQ = [
     dict(q='이야기를 다시 보고 싶어요.', a='설정의 「이야기 다시 보기」로 처음부터 다시 볼 수 있어요. 지도의 책 모양을 눌러도 그 장을 볼 수 있어요.'),
     dict(q='진행을 처음부터 다시 하고 싶어요.', a='설정 맨 아래 「이 앱 기록 지우기」를 두 번 누르면 지워져요. 집은 그대로 남아요.'),
 ]
-D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', webtoonUrl='https://blog.naver.com/gihahakf', privacyUrl='', credits=CREDITS, strings=STR, news=NEWS, faq=FAQ)
+
+# ---- IP 층(games/22_IP_SYNERGY.md): 이야기 카드 배분표 · 도장 규칙 · 앱 목록 ----
+TALES = {'pigs': ('아기돼지 삼형제', '🐷'), 'bears': ('세 마리 곰', '🐻'), 'shoes': ('구두장이와 요정', '👞'), 'kongjwi': ('콩쥐팥쥐', '👡'), 'heungbu': ('흥부와 놀부', '🎃'), 'bremen': ('브레멘 음악대', '🎺'),
+         'hok': ('혹부리 영감', '🍄'), 'axe': ('금도끼 은도끼', '🪓'), 'sun': ('해님 달님', '🌙'), 'ant': ('개미와 베짱이', '🐜'), 'pino': ('피노키오', '🪆'), 'jack': ('잭과 콩나무', '🌱'), 'gyeonwoo': ('견우와 직녀', '⭐'),
+         'ureng': ('우렁 각시', '🐚'), 'hare': ('토끼와 거북이', '🐇'), 'brothers': ('의좋은 형제', '🌾'), 'snowqueen': ('눈의 여왕', '❄️')}
+APPS_G = {'adult': ['idle', 'merge', 'quiz', 'spot', 'block', 'sort', 'tile'], 'kid': ['play', 'color', 'day']}
+APP_NAMES = {'play': '막둥이 놀이터', 'color': '색칠북', 'day': '막둥이의 하루', 'idle': '세 가족 식탁', 'merge': '도형 합치기', 'quiz': '당신은 어느 도형?', 'spot': '다른 그림 찾기', 'block': '도형 블록', 'sort': '정리의 달인', 'tile': '짝 맞추기'}
+PLAY_TALE = {11: 'brothers', 12: 'ant', 13: 'axe', 14: 'snowqueen', 15: 'kongjwi'}   # ① 놀이터 3권 11~15장
+def tales_of(app):
+    if app == 'play': return list(PLAY_TALE.values())
+    try: d = json.load(open(R / 'data' / f'story_{app}.json', encoding='utf-8'))
+    except Exception: return []
+    return [c['tale'] for c in d['chapters'].values()]
+def card_map():
+    out = {}
+    for g, apps in (('adult', ['merge', 'spot', 'block', 'sort', 'tile']), ('kid', ['play', 'day'])):
+        have = {a: set(tales_of(a)) for a in apps}; out[g] = {}
+        for k, t in enumerate(TALES):
+            prov = [a for a in apps if t in have[a]]
+            if not prov: continue
+            prov = prov[k % len(prov):] + prov[:k % len(prov)]           # 이야기마다 시작 앱을 돌려 한 앱에 몰리지 않게
+            out[g][t] = [prov[i % len(prov)] for i in range(4)]
+        for t, cards in out[g].items():                                  # 단언: 각 그룹 안의 앱만으로 네 장이 모두 얻어진다(S3)
+            assert len(cards) == 4 and all(c in apps and t in have[c] for c in cards), (g, t, cards)
+    return out
+def stamp_rules():
+    lv = {'merge': 120, 'spot': 140, 'block': 120, 'sort': 120, 'tile': 120}
+    r = {a: [dict(id='first', at=1), dict(id='a', at=30), dict(id='b', at=60), dict(id='end', at=n), dict(id='story', at=None)] for a, n in lv.items()}
+    r['idle'] = [dict(id='first', at=1), dict(id='a', at=10), dict(id='b', at=20), dict(id='end', at=30), dict(id='story', at=None)]
+    r['quiz'] = [dict(id='first', at=1), dict(id='a', at=5), dict(id='b', at=10), dict(id='end', at=19), dict(id='story', at=None)]
+    r['color'] = [dict(id='first', at=1), dict(id='a', at=10), dict(id='b', at=50), dict(id='end', at=100), dict(id='story', at=None)]
+    r['day'] = [dict(id='first', at=1), dict(id='a', at=15), dict(id='b', at=30), dict(id='end', at=60), dict(id='story', at=None)]
+    r['play'] = [dict(id='first', at=1), dict(id='a', at=15), dict(id='b', at=30), dict(id='end', at=45), dict(id='story', at=None)]
+    return r
+STR.update({'ops.pass.title': '기하학 가족 도장책', 'ops.pass.more': '다른 기하학 가족 게임', 'ops.pass.open': '열기', 'ops.pass.store': '스토어에서 보기', 'ops.pass.note': '같은 기기에 함께 있으면 집과 이야기 카드가 이어져요. 하지 않아도 괜찮아요.',
+            'ops.settings.passport': '도장책', 'ops.settings.kidbook': '도장판', 'ops.settings.cards': '이야기 카드', 'ops.settings.family': '가족 코드', 'ops.album.cardnote': '카드는 여러 앱에서 한 장씩 모여요. 네 장이 모이면 집에 작은 소품이 놓여요.',
+            'ops.fam.title': '가족 코드', 'ops.fam.note': '아이 앱과 어른 앱은 따로 모아요. 코드를 넣으면 이야기 카드·도장·카메오가 서로 합쳐져요. 꼭 하지 않아도 돼요.', 'ops.fam.make': '코드 만들기', 'ops.fam.paste': '코드 붙여넣기', 'ops.fam.apply': '합치기', 'ops.fam.ok': '합쳤어요!', 'ops.fam.bad': '코드가 올바르지 않아요.',
+            'ops.ip.share': '공유 카드 저장', 'ops.ip.shared': '사진첩에 저장했어요.', 'ops.ip.sharefail': '저장하지 못했어요.', 'ops.settings.webtoon': '웹툰 보기', 'ops.ip.card': '「{title}」 카드를 얻었어요 ({n}/4)', 'ops.ip.stamp': '도장: {name}', 'ops.ip.stamp.first': '첫 걸음', 'ops.ip.stamp.a': '쑥쑥 자라요', 'ops.ip.stamp.b': '반 넘었어요', 'ops.ip.stamp.end': '끝까지', 'ops.ip.stamp.story': '이야기 한 편',
+            'ops.ip.plate': '문패 장식 「{name}」을 얻었어요', 'ops.ip.plate.ribbon': '리본', 'ops.ip.plate.sparkle': '반짝이', 'ops.ip.plate.crown': '왕관', 'ops.ip.story': '이야기를 완성했어요! 「{name}」을 집에 놓아 두었어요.'})
+D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', webtoonUrl='https://blog.naver.com/gihahakf', privacyUrl='', credits=CREDITS, strings=STR, news=NEWS, faq=FAQ, tales={k: dict(title=v[0], icon=v[1]) for k, v in TALES.items()}, apps=APPS_G, appNames=APP_NAMES, cardMap=card_map(), stamps=stamp_rules(), playTale={str(k): v for k, v in PLAY_TALE.items()})
 if __name__ == '__main__':
     p = R / 'data' / 'ops.json'; old = json.load(open(p, encoding='utf-8')) if p.exists() else {}
     for k in ('events', 'missions', 'album'):

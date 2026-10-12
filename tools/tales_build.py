@@ -1,5 +1,5 @@
 """
-[주의 2026-10-12] 이 스크립트는 data/spot_extra.json·story_spot.json 을 3권 원천으로 다시 쓰므로, RC4 에서 따로 추가한 ⑥ 13~14장(의좋은 형제·눈의 여왕)이 지워진다. 호칭만 고칠 때는 돌린 뒤 git checkout data/spot_extra.json data/story_spot.json 으로 되돌리고 python tools/story_build.py 를 다시 돌릴 것.
+[2026-10-12 수정] 앱별 *_extra.json 은 emit_extra 로 생성하는 장(1..N)만 갱신하고 나머지 장·키는 보존한다(RC4 에서 더한 ⑥ 13~14장 등이 지워지던 문제의 근본 수정).
 D13 옛이야기 데이터 생성: python tools/tales_build.py
 단일 원천(이 파일) → data/tales.json(배역표) · merge_extra.json stories(③·④ 12장, 장당 4컷 기승전결) · merge_levels.json chapters · merge-gen.js CHAPTERS
 · story.json ch11~15(① 3권) · games/10_TALES_CAST.md(배역표 + 가족별 역할 집계).  모두 [제안] — 허브 QA 대기.
@@ -27,6 +27,16 @@ KIND = {'lead': '주인공', 'helper': '조력', 'funny': '웃긴 실패역', 'v
 FAM = {'nemo': '네모네', 'semo': '세모네', 'dong': '동그라미네', 'outside': '가족 밖'}
 
 # ---------------- ③·④ 성인 12장: "만들고 짓는" 옛이야기 (장당 4컷: 기·승·전·결) ----------------
+def emit_extra(new, path):
+    """앱별 *_extra.json 에는 이 스크립트가 만드는 장(1..N)만 갱신한다. 다른 스크립트·손으로 더한 장(N+1~)·시즌·상품 같은 나머지 키는 그대로 둔다(덮어쓰기 방지, 2026-10-12)."""
+    old = json.load(open(path, encoding='utf-8')) if path.exists() else {}
+    out = dict(old)
+    for k, v in new.items():
+        if k == 'stories': continue
+        out.setdefault(k, v)
+    gen = new.get('stories', []); out['stories'] = gen + [s for s in old.get('stories', []) if s.get('chapter', 0) > len(gen)]
+    json.dump(out, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+
 T12 = [
  dict(id='pigs', title='아기돼지 삼형제', origin='영국 민담(공유 저작물)',
   cast=[('첫째 돼지(볏짚집)', '네모네 {kid1}', 'lead', 'nemo'), ('둘째 돼지(나무집)', '네모네 {kid2}', 'lead', 'nemo'), ('셋째 돼지(벽돌집)', '네모네 {kid3}', 'lead', 'nemo'), ('엄마 돼지', '네모 엄마', 'helper', 'nemo'), ('늑대 → 바람 친구', '바람 친구(가족 밖, 소리·바람)', 'villain', 'outside')],
@@ -86,12 +96,12 @@ T12 = [
         ('쇠도끼가 나오자 「그건 제 것입니다.」 정직한 나무꾼은 금도끼와 은도끼까지 받았다.', ['nemo_dad.love', 'dong_dad.joy'], 'sparkle'),
         ('소문을 들은 이웃 네모 엄마가 거짓말하려다 웃음이 터져 쇠도끼만 받고 함께 웃었다.', ['nemo_mom.wink', 'dong_dad.joy', 'nemo_dad.joy'], 'heart')]),
  dict(id='sun', title='해님 달님', origin='한국 전래동화(공유 저작물)',
-  cast=[('오빠(달님)', '네모네 {kid1}', 'lead', 'nemo'), ('동생(해님)', '네모네 {kid2}', 'lead', 'nemo'), ('떡 팔러 간 엄마', '네모 엄마', 'helper', 'nemo'), ('호랑이 → 바람 호랑이', '바람 호랑이(가족 밖, 소리·그림자)', 'villain', 'outside')],
+  cast=[('누나(해님)', '네모네 {kid1}', 'lead', 'nemo'), ('동생(해님)', '네모네 {kid3}', 'lead', 'nemo'), ('떡 팔러 간 엄마', '네모 엄마', 'helper', 'nemo'), ('호랑이 → 바람 호랑이', '바람 호랑이(가족 밖, 소리·그림자)', 'villain', 'outside')],
   line='호랑이는 가족 밖 바람 호랑이, 엉덩방아만 찧고 웃는다 — 동아줄은 그대로', kept=['엄마 흉내를 내는 호랑이', '나무 위로 피함', '하늘에서 튼튼한 동아줄', '해님과 달님이 됨'],
-  cuts=[('떡 팔러 간 엄마를 기다리던 오누이({kid1}·{kid2})는 문을 꼭 닫고 있었다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], None),
-        ('바람 호랑이가 엄마 목소리를 흉내 내며 찾아왔다. 「문 열어라.」 문틈의 손이 이상했다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], 'question'),
-        ('오누이는 뒷문으로 나가 나무 위로 올라갔다. 하늘에서 튼튼한 동아줄이 내려왔다.', ['nemo_kids.kid1', 'nemo_kids.kid2'], 'sparkle'),
-        ('오누이는 동아줄을 타고 올라가 해님과 달님이 되었다. 바람 호랑이는 엉덩방아를 찧고 허허 웃었다.', ['nemo_kids.kid2', 'nemo_kids.kid1', 'nemo_mom.joy'], 'heart')]),
+  cuts=[('떡 팔러 간 엄마를 기다리던 남매({kid1}·{kid3})는 문을 꼭 닫고 있었다.', ['nemo_kids.kid1', 'nemo_kids.kid3'], None),
+        ('바람 호랑이가 엄마 목소리를 흉내 내며 찾아왔다. 「문 열어라.」 문틈의 손이 이상했다.', ['nemo_kids.kid1', 'nemo_kids.kid3'], 'question'),
+        ('남매는 뒷문으로 나가 나무 위로 올라갔다. 하늘에서 튼튼한 동아줄이 내려왔다.', ['nemo_kids.kid1', 'nemo_kids.kid3'], 'sparkle'),
+        ('남매는 동아줄을 타고 올라가 해님과 달님이 되었다. 바람 호랑이는 엉덩방아를 찧고 허허 웃었다.', ['nemo_kids.kid3', 'nemo_kids.kid1', 'nemo_mom.joy'], 'heart')]),
  dict(id='ant', title='개미와 베짱이', origin='이솝(공유 저작물)',
   cast=[('개미', '네모 엄마', 'lead', 'nemo'), ('베짱이', '세모 남편', 'funny', 'semo'), ('지켜보는 이웃', '동그라미 아빠', 'helper', 'dong')],
   line='여름엔 노래, 겨울엔 빈 곳간 — 개미는 곡식 한 줌과 「내년엔 같이」를 건넨다', kept=['여름에 일하는 개미 / 노는 베짱이', '겨울에 베짱이가 문을 두드림'],
@@ -275,21 +285,21 @@ if __name__ == '__main__':
     names = [t['title'] for t in T12]
     p = R / 'data/merge_levels.json'; L = json.load(open(p, encoding='utf-8')); L['chapters'] = names; json.dump(L, open(p, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     p = R / 'games/merge/merge-gen.js'; s = open(p, encoding='utf-8').read()
-    s = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + n + "'" for n in names) + "];", s, count=1); open(p, 'w', encoding='utf-8').write(s)
+    s = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + n + "'" for n in names) + "];", s, count=1); open(p, 'w', encoding='utf-8', newline='').write(s)
     # ⑦ 도형 블록 사연·시즌
     for t in TB:
         assert len(t['cuts']) == 4
-    json.dump({'version': 1, 'note': '⑦ 도형 블록 사연(장 끝 4컷)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['o_lantern', 'o_mailbox', 'o_doghouse'], 'seasons': BLOCK_SEASONS,
-               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['base'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(TB)]}, open(R / 'data/block_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    emit_extra({'version': 1, 'note': '⑦ 도형 블록 사연(장 끝 4컷)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['o_lantern', 'o_mailbox', 'o_doghouse'], 'seasons': BLOCK_SEASONS,
+               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['base'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(TB)]}, R / 'data/block_extra.json')
     SPOT_ORDER = ['pigs', 'bremen', 'gyeonwoo', 'bears', 'jack', 'kongjwi', 'heungbu', 'ureng', 'axe', 'ant', 'sun', 'hare']
     SPOT_STORIES = [next((x for x in T12 if x['id'] == tid), None) or next(dict(id=tid, title=y['title'], cuts=y['cuts']) for y in TB if y['base'] == tid) for tid in SPOT_ORDER]
-    json.dump({'version': 1, 'note': '⑥ 다른 그림 찾기 사연(장 끝 4컷, ③과 같은 옛이야기 배역)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['a_polaroid', 'a_film', 'a_camera'], 'seasons': SPOT_SEASONS,
-               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(SPOT_STORIES)]}, open(R / 'data/spot_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    emit_extra({'version': 1, 'note': '⑥ 다른 그림 찾기 사연(장 끝 4컷, ③과 같은 옛이야기 배역)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['a_polaroid', 'a_film', 'a_camera'], 'seasons': SPOT_SEASONS,
+               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(SPOT_STORIES)]}, R / 'data/spot_extra.json')
     TILE_SEASONS = [dict(id='chuseok', title='추석 송편 한 판', months=[9, 10], n=12, seed=821, type='classic'), dict(id='kimjang', title='김장 목표 모으기', months=[11], n=14, seed=822, type='goal'), dict(id='yeonmal', title='연말 잠금 풀기', months=[12, 1], n=16, seed=823, type='lock')]
-    json.dump({'version': 1, 'note': '⑨ 세 가족 짝 맞추기 사연(장 끝 4컷, ③과 같은 옛이야기 배역)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['m_cat', 'm_rooster', 'm_duck'], 'seasons': TILE_SEASONS,
-               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(SPOT_STORIES)]}, open(R / 'data/tile_extra.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    p = R / 'games/block/block-gen.js'; g = open(p, encoding='utf-8').read()
-    g = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + t['title'] + "'" for t in TB) + "];", g, count=1); open(p, 'w', encoding='utf-8').write(g)
+    emit_extra({'version': 1, 'note': '⑨ 세 가족 짝 맞추기 사연(장 끝 4컷, ③과 같은 옛이야기 배역)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['m_cat', 'm_rooster', 'm_duck'], 'seasons': TILE_SEASONS,
+               'stories': [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(SPOT_STORIES)]}, R / 'data/tile_extra.json')
+    p = R / 'games/block/block-gen.js'; g = open(p, encoding='utf-8', newline='').read()
+    g = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + t['title'] + "'" for t in TB) + "];", g, count=1); open(p, 'w', encoding='utf-8', newline='').write(g)
     p = R / 'data/story.json'; S = json.load(open(p, encoding='utf-8'))
     def cuts(bg, lst):
         out = []
@@ -303,7 +313,7 @@ if __name__ == '__main__':
         S['ch%d' % k['ch']] = dict(pro=cuts(k['bg'], k['pro']), epi=cuts(k['bg'], k['epi']), tale=k['id'])
     json.dump(S, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     # ① 11장 영웅(지도 원) — 의좋은 형제
-    p = R / 'data/stages.json'; ST = json.load(open(p, encoding='utf-8')); ST['ch11']['heroes'] = ['nemo_kids.kid1', 'baby.joy']; json.dump(ST, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    p = R / 'data/stages.json'; ST = json.load(open(p, encoding='utf-8')); ST['ch11']['heroes'] = ['nemo_kids.kid3', 'baby.joy']; json.dump(ST, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     md = ['# 10. 옛이야기 배역표 (D13) — 모든 항목 [제안]', '', '허브 QA 대기. 생성: `python tools/tales_build.py` (원천은 이 스크립트, 가족 악역 0 · 세모 웃긴 실패역 ≤3 단언 포함). 원칙은 docs/20: 구조·모티브·상징물은 원작 그대로, 바꾸는 것은 배역과 무서운 수위뿐, **진짜 악역은 가족 밖 캐릭터**. 그림은 임시.', '', '**아이 호칭 변수**: 글 속 변수 sib1(형/누나/언니/오빠)·kid1~kid3·baby 는 중괄호로 감싸 쓰며(예: 중괄호 안에 sib1) `data/names.json` 값으로 화면에 풀린다(은/는·이/가·을/를·과/와 자동). 작가 결정이 나오면 그 파일만 고치고 이 스크립트를 다시 돌린다. 지금 값: sib1=' + NAMES['sib1'] + ', kid1/2/3=' + '/'.join(NAMES[k] for k in ('kid1', 'kid2', 'kid3')) + ', baby=' + NAMES['baby'] + '.', '']
     md += table(tally(T12), '③④ 12장 가족별 역할 횟수') + ['', '(세모의 웃긴 실패역·악역: %d회 / 가족 악역: 0)' % semo_funny, ''] + table(tally(K), '① 3권 11~15장 가족별 역할 횟수') + ['', '## ③ 도형 합치기 12장 · ④ 옛이야기 색칠 12장 (같은 이야기, 장당 4컷 기승전결)', '']
     for i, t in enumerate(T12):

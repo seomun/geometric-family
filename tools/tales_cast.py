@@ -19,7 +19,7 @@ CAST = {
     'bremen': [('당나귀', 'nemo_dad', 'lead'), ('개', 'semo_h', 'lead'), ('고양이', 'semo_w', 'lead'), ('수탉', 'dong_dad', 'lead'), ('도둑들', O('허깨비 도둑(가족 밖, 소리·그림자)'), 'villain')],
     'hok': [('혹부리 영감', 'nemo_dad', 'lead'), ('도깨비', O('도깨비(art.dokkaebi, 순한 판)'), 'villain'), ('따라 하는 욕심쟁이 영감', 'dong_dad', 'funny')],
     'axe': [('나무꾼', 'nemo_dad', 'lead'), ('산신령', 'dong_dad', 'helper'), ('욕심쟁이 이웃', 'nemo_mom', 'funny')],
-    'sun': [('오빠(달님)', 'kid1', 'lead'), ('동생(해님)', 'kid2', 'lead'), ('떡 팔러 간 엄마', 'nemo_mom', 'helper'), ('호랑이 → 바람 호랑이', O('바람 호랑이(가족 밖, 소리·그림자)'), 'villain')],
+    'sun': [('누나(해님)', 'kid1', 'lead'), ('동생(달님)', 'kid3', 'lead'), ('떡 팔러 간 엄마', 'nemo_mom', 'helper'), ('호랑이 → 바람 호랑이', O('바람 호랑이(가족 밖, 소리·그림자)'), 'villain')],
     'ant': [('개미', 'nemo_mom', 'lead'), ('베짱이', 'semo_h', 'funny'), ('지켜보는 이웃', 'dong_dad', 'helper'), ('열매를 함께 모으는 막내 개미(유아 앱)', 'baby', 'helper', 'kid')],
     'pino': [('제페토(목수)', 'nemo_dad', 'lead'), ('피노키오(나무 인형)', 'baby', 'funny'), ('파란 요정', O('요정(art.fairy)'), 'helper')],
     'jack': [('잭', 'kid2', 'lead'), ('잭의 엄마', 'nemo_mom', 'helper'), ('구름 위 거인', O('구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)'), 'villain'), ('잔치 손님', 'semo_h', 'helper')],
@@ -42,6 +42,19 @@ def cast_for(tale, aud):
             a, k, fam = ACTORS[key]; out.append((role, a if aud == 'adult' else k, kind, fam))
     return out
 
+# 성별 일치(허브 2026-10-12): kid1·kid2(하나·두리, 딸)는 형/오빠/아우/남동생/아들 역 금지, kid3·baby(세찌·막둥이, 아들)는 누나/언니/누이/여동생/딸 역 금지
+FEMALE_KIDS, MALE_KIDS = ('kid1', 'kid2'), ('kid3', 'baby')
+MALE_WORDS, FEMALE_WORDS = ('형', '오빠', '아우', '남동생', '아들'), ('누나', '언니', '누이', '여동생', '딸')
+def GENDER_OK():
+    bad = []
+    for tale, rows in CAST.items():
+        for row in rows:
+            role, key = row[0], row[1]
+            if key in FEMALE_KIDS and any(w in role for w in MALE_WORDS): bad.append('%s: %s 역을 %s(딸)이 맡음' % (tale, role, key))
+            if key in MALE_KIDS and any(w in role for w in FEMALE_WORDS): bad.append('%s: %s 역을 %s(아들)이 맡음' % (tale, role, key))
+    assert not bad, '배역 성별 불일치: ' + ' / '.join(bad)
+    return True
+
 
 def audit():
     """전체 이야기 기준 단언: 가족 악역 0 · 세모의 웃긴 실패역/악역 ≤3 · 세모네 아이 없음"""
@@ -54,4 +67,5 @@ def audit():
             if fam == 'semo' and kind in ('funny', 'villain'): semo += 1
             assert not (fam == 'semo' and key in ('kid1', 'kid2', 'kid3', 'baby')), '세모네에는 아이가 없다'
     assert semo <= 3, '세모의 웃긴 실패역/악역 전체 %d회(>3)' % semo
+    GENDER_OK()
     return semo

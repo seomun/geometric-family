@@ -162,17 +162,17 @@
      ]
     },
     {
-     "text": "{sib_kid1}과 {kid2}는 이불 속에서 엄마를 기다렸어요.",
+     "text": "{sib_kid1}과 {kid3}는 이불 속에서 엄마를 기다렸어요.",
      "chars": [
       "nemo_kids.kid1",
-      "nemo_kids.kid2"
+      "nemo_kids.kid3"
      ]
     },
     {
      "text": "바람 호랑이가 문을 똑똑. 「엄마 목소리가 아니네!」 문은 열지 않고 이불 속에서 꼭 안고 있었어요.",
      "chars": [
       "nemo_kids.kid1",
-      "nemo_kids.kid2"
+      "nemo_kids.kid3"
      ],
      "bubble": "question"
     },

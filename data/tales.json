@@ -283,7 +283,7 @@
   ],
   "sun": [
    {
-    "role": "오빠(달님)",
+    "role": "누나(해님)",
     "adult": "네모네 하나",
     "kid": "하나 누나",
     "kind": "lead",
@@ -291,9 +291,9 @@
     "only": null
    },
    {
-    "role": "동생(해님)",
-    "adult": "네모네 두리",
-    "kid": "두리 누나",
+    "role": "동생(달님)",
+    "adult": "네모네 세찌",
+    "kid": "세찌 형",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -909,14 +909,14 @@
    "audience": "adult",
    "cast": [
     {
-     "role": "오빠(달님)",
+     "role": "누나(해님)",
      "who": "네모네 하나",
      "kind": "lead",
      "family": "nemo"
     },
     {
-     "role": "동생(해님)",
-     "who": "네모네 두리",
+     "role": "동생(달님)",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },
@@ -1508,14 +1508,14 @@
    "audience": "adult",
    "cast": [
     {
-     "role": "오빠(달님)",
+     "role": "누나(해님)",
      "who": "네모네 하나",
      "kind": "lead",
      "family": "nemo"
     },
     {
-     "role": "동생(해님)",
-     "who": "네모네 두리",
+     "role": "동생(달님)",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },
@@ -2024,14 +2024,14 @@
    "audience": "adult",
    "cast": [
     {
-     "role": "오빠(달님)",
+     "role": "누나(해님)",
      "who": "네모네 하나",
      "kind": "lead",
      "family": "nemo"
     },
     {
-     "role": "동생(해님)",
-     "who": "네모네 두리",
+     "role": "동생(달님)",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },
@@ -2540,14 +2540,14 @@
    "audience": "adult",
    "cast": [
     {
-     "role": "오빠(달님)",
+     "role": "누나(해님)",
      "who": "네모네 하나",
      "kind": "lead",
      "family": "nemo"
     },
     {
-     "role": "동생(해님)",
-     "who": "네모네 두리",
+     "role": "동생(달님)",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },

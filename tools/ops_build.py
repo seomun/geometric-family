@@ -19,6 +19,17 @@ STR = {
     'ops.settings.notif': '오늘의 한 판 알림', 'ops.notif.denied': '알림 권한이 꺼져 있어요. 휴대폰 설정에서 켤 수 있어요.', 'ops.notif.on': '하루 한 번, 저녁에 알려 드릴게요.',
     'ops.iap.adfree': '광고 제거', 'ops.iap.pack': '소품 팩', 'ops.iap.owned': '구매했어요', 'ops.iap.buy': '구매', 'ops.iap.restore': '구매 복원', 'ops.iap.restoring': '구매 내역을 확인하고 있어요.',
     'ops.iap.thanks': '고마워요! 광고가 사라졌어요. 선택해서 보는 광고의 보상은 바로 받아요.', 'ops.iap.packgot': '집 소품 {n}개를 놓아 두었어요.', 'ops.iap.pending': '결제가 확인되면 적용돼요.', 'ops.iap.fail': '구매하지 못했어요. 나중에 다시 해 주세요.',
+    'polish.exit': '한 번 더 누르면 나가요', 'polish.cancel': '취소', 'polish.broken': '저장을 읽지 못해 새로 시작해요. 이전 기록은 백업 코드로 되살릴 수 있어요.',
+    'polish.settings.about': '앱 정보', 'polish.about.title': '앱 정보', 'polish.about.version': '버전', 'polish.about.credits': '만든 사람들·출처', 'polish.about.privacy': '개인정보',
+    'polish.privacy.adult': '이 앱은 이름·이메일·위치를 수집하지 않아요. 진행 기록은 이 기기 안에만 저장돼요. 광고(Google AdMob)와 선택 구매(Google Play 결제)는 각 서비스가 정해진 정보를 처리해요. 자세한 내용은 스토어의 개인정보처리방침에서 볼 수 있어요.',
+    'polish.privacy.kid': '이 앱은 이름·사진·위치를 수집하지 않아요. 홈·지도 화면 아래에 아이에게 맞춘 배너 광고가 있고, 놀이 중에는 광고가 없어요. 기록은 이 기기 안에만 저장돼요.',
+    'polish.wipe.title': '정말 지울까요?', 'polish.wipe.body': '이 앱의 기록이 지워져요. 집은 그대로 남아요.', 'polish.wipe.do': '지우기',
+    'polish.fs.title': '글자 크기', 'polish.fs.body': '편하게 보이는 쪽을 골라 주세요. 나중에 설정에서 바꿀 수 있어요.', 'polish.fs.normal': '보통', 'polish.fs.big': '크게',
+    'polish.autosave': '진행은 자동으로 저장돼요.', 'polish.offline': '인터넷 없이도 놀 수 있어요. 광고만 인터넷을 써요.',
+    'polish.pause.title': '잠깐 쉬어요', 'polish.pause.resume': '계속', 'polish.pause.again': '다시', 'polish.pause.map': '지도로',
+    'polish.goal.merge': '★★★ · 조각 {n}개 남기기', 'polish.goal.spot': '★★★ · 힌트 없이, 틀린 곳 3번 이하', 'polish.goal.block': '★★★ · 조각 {n}개 이하', 'polish.goal.sort': '★★★ · {n}번 이하로 옮기기', 'polish.goal.tile': '★★★ · 되돌리기·섞기·힌트 없이',
+    'polish.next': '다음 · {c}장 {title}', 'polish.next.type': ' · 새 판 종류: {type}', 'polish.next.story': '다음은 이야기가 이어져요',
+    'polish.settings.assist': '쉬운 모드', 'polish.assist.note': '되돌리기·섞기를 마음껏 쓰고 별 기준이 한 칸 쉬워져요. 오늘의 한 판 같은 경쟁 판에는 적용되지 않아요.', 'polish.assist.chip': ' · 쉬운 모드',
     'ops.back.title': '오랜만이에요!', 'ops.back.got': '다시 와 줘서 반가워요. 집에 「{name}」을 놓아 두었어요.', 'ops.back.none': '다시 와 줘서 반가워요. 천천히 놀아요.',
 }
 STR.update({
@@ -66,6 +77,7 @@ STR.update({
  "ui.saga.open": "열기",
  "ui.saga.locked": "앞 레벨을 먼저 깨 보세요"
 })   # H7: 엔진 층 고정 문구(tools/_i18n_move.py 가 옮김)
+CREDITS = ['소리: Kenney.nl — Interface Sounds · Impact Sounds · RPG Audio · Casino Audio (CC0 1.0, 상업 이용·재배포 가능)', '바람·기적 소리: 자체 제작', '그림·이야기·캐릭터: 기하학 가족 제작진(세 도형 가족)', '광고: Google AdMob · 선택 구매: Google Play 결제(성인 앱)', '글꼴: 기기 기본 글꼴 사용']
 NEWS = dict(version='1.0.0-rc7', items=[dict(ver='1.0.0-rc7', title='이야기와 지도', lines=[
     '판 사이에 이야기가 이어져요. 처음 나오는 판 종류는 짧게 알려 드려요.', '이야기 지도에서 내가 어디까지 왔는지 한눈에 볼 수 있어요.',
     '설정에 「움직임 줄이기」·「문의·FAQ」·「백업 코드」·「올해의 달력」·「오늘의 작은 일」·「앨범」이 생겼어요.', '오랜만에 오시면 작은 선물을 놓아 둘게요.', '설정에서 하루 한 번 「오늘의 한 판」 알림을 켤 수 있어요(기본은 꺼짐).'])])
@@ -77,7 +89,7 @@ FAQ = [
     dict(q='이야기를 다시 보고 싶어요.', a='설정의 「이야기 다시 보기」로 처음부터 다시 볼 수 있어요. 지도의 책 모양을 눌러도 그 장을 볼 수 있어요.'),
     dict(q='진행을 처음부터 다시 하고 싶어요.', a='설정 맨 아래 「이 앱 기록 지우기」를 두 번 누르면 지워져요. 집은 그대로 남아요.'),
 ]
-D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', strings=STR, news=NEWS, faq=FAQ)
+D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', webtoonUrl='https://blog.naver.com/gihahakf', privacyUrl='', credits=CREDITS, strings=STR, news=NEWS, faq=FAQ)
 if __name__ == '__main__':
     p = R / 'data' / 'ops.json'; old = json.load(open(p, encoding='utf-8')) if p.exists() else {}
     for k in ('events', 'missions', 'album'):

@@ -46,7 +46,7 @@
     if (!kid && GF.tale && GF.tale.ready) { if (GF.tale.d.rules) row(body, GF.t('ui.set.help'), tbtn(GF.t('ui.set.rules'), () => { sc.close(); GF.tale.help(); })); row(body, GF.t('ui.set.replay'), tbtn(GF.t('ui.set.again'), () => { GF.tale.reset(); UK.toast(GF.t('ui.set.replay.toast'), document.getElementById('safe')); })); }
     if (GF.ops && GF.ops.ready) GF.ops.rows(body, sc, kid);   // 움직임 줄이기·새 소식·문의·FAQ(D21)
     if (c.resetTips) row(body, GF.t('ui.set.tips'), tbtn(GF.t('ui.set.again'), () => { c.resetTips(); GF.toast ? GF.toast(GF.t('ui.set.tips.toast')) : UK.toast(GF.t('ui.set.tips.toast'), document.getElementById('safe')); }));
-    if (c.reset) { let armed = false; const b = tbtn(GF.t('ui.set.wipe'), () => { if (!armed) { armed = true; b.textContent = GF.t('ui.set.once'); return; } c.reset(); try { localStorage.removeItem(key()); } catch (e) {} location.reload(); }); row(body, GF.t('ui.set.wipe.row'), b); }
+    if (c.reset) { const b = tbtn(GF.t('ui.set.wipe'), () => { const run = () => { c.reset(); try { localStorage.removeItem(key()); } catch (e) {} location.reload(); }; if (GF.polish) GF.polish.confirmWipe(run); else run(); }); row(body, GF.t('ui.set.wipe.row'), b); }
     const ads = GF.ads && GF.ads.live && GF.ads.live() && !kid;
     el('small', 'xt-note', body, kid ? GF.t('ui.set.note.kid') : (ads ? GF.t('ui.set.note.ads') : GF.t('ui.set.note.plain')));
   }
@@ -112,7 +112,7 @@
     const ids = Object.keys(stars || {}).map(Number).filter((n) => stars[n] > 0 && stars[n] < 3).sort((a, b) => a - b); if (!ids.length) return null;
     const w = el('div', 'xt-retry', parent), b = UK.btn({ text: '별 더 모으기 · ' + ids.length + '판', icon: 'star', cls: 'gold block', onclick: () => { GF.sfx('pick'); go(ids[0]); } }, w); return b;
   };
-  X.open = openSettings; X.openStats = openStats; X.openBadges = openBadges; X.openAttend = openAttend;
+  X.applyBig = applyBig; X.open = openSettings; X.openStats = openStats; X.openBadges = openBadges; X.openAttend = openAttend;
   X.init = function (cfg) {
     X.cfg = cfg; X.ready = true; applyBig(); const adult = !cfg.kid;
     if (cfg.rewardSet && !cfg.rewardItems && window.Room && Room.data && Room.data.items) cfg.rewardItems = Room.data.items.filter((i) => i.set === cfg.rewardSet).map((i) => i.id);
@@ -121,6 +121,7 @@
       if (bar && snd && !document.getElementById('b-set')) { const b = el('button', 'round-btn'); b.id = 'b-set'; b.setAttribute('aria-label', 'settings'); b.innerHTML = UK.icon('gear'); b.onclick = () => { GF.sfx('tap'); openSettings(); }; bar.insertBefore(b, snd); const g = snd.previousElementSibling; }
       X.attend(); setTimeout(() => X.check(true), 600);
     } else { if (!cfg.noHold) kidHold(); X.restReset(); restT = restT || setInterval(restTick, 20000); }
+    if (GF.polish) GF.polish.init(cfg);   // 완성도 층(손상 복구·첫 실행 안내)
     if (GF.ops) GF.ops.init(cfg);   // 운영 공통 층(새 소식·복귀/금요일 선물·움직임 줄이기·문의)
   };
   /** 별 지도(stars) 앱 공통 통계·업적 묶음 만들기(③⑥⑦⑧⑨) */

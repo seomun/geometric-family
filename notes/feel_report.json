@@ -1,0 +1,50 @@
+{
+ "merge": {
+  "loadMs": 533,
+  "touchMedianMs": 5.5,
+  "touchMaxMs": 262.7,
+  "samples": 3,
+  "longTasks": 1,
+  "hasButtons": true
+ },
+ "spot": {
+  "loadMs": 419,
+  "touchMedianMs": 0.9,
+  "touchMaxMs": 16.1,
+  "samples": 5,
+  "longTasks": 1,
+  "hasButtons": true
+ },
+ "block": {
+  "loadMs": 333,
+  "touchMedianMs": 0.8,
+  "touchMaxMs": 24.3,
+  "samples": 3,
+  "longTasks": 1,
+  "hasButtons": true
+ },
+ "sort": {
+  "loadMs": 270,
+  "touchMedianMs": 1.6,
+  "touchMaxMs": 2.9,
+  "samples": 5,
+  "longTasks": 1,
+  "hasButtons": true
+ },
+ "tile": {
+  "loadMs": 278,
+  "touchMedianMs": 0.7,
+  "touchMaxMs": 2.4,
+  "samples": 5,
+  "longTasks": 1,
+  "hasButtons": true
+ },
+ "day": {
+  "loadMs": 294,
+  "touchMedianMs": 0.8,
+  "touchMaxMs": 1.3,
+  "samples": 5,
+  "longTasks": 1,
+  "hasButtons": false
+ }
+}

@@ -81,7 +81,7 @@
           const story = false;
           const result = () => { const nx = !LV.kind && D.levels.find((l) => l.id === LV.id + 1), it = gained[0] && Room.item(gained[0]);
             UK.result({ kid: true, title: '', stars: 3, parent: r, onNext: nx ? () => GF.replace('dplay', { n: nx.id }) : () => GF.home2(), onRetry: () => GF.replace('dplay', LV.kind ? { level: LV } : { n: LV.id }) }); if (it && it.emoji) { const sh = r.querySelector('.uk-sheet'); if (sh) { const b = el('div', 'uk-big', null, it.emoji); sh.insertBefore(b, sh.children[1] || null); } } };
-          GF.tale.done(r, LV, result);   // 말풍선 · 승전결 컷(장 끝) · 마지막 장이면 엔딩
+          GF.polish.finished(); GF.tale.done(r, LV, result);   // 말풍선 · 승전결 컷(장 끝) · 마지막 장이면 엔딩
         }, slow(900));
       }
       const ACT = {};
@@ -164,7 +164,7 @@ const th = LV.theme || 'teeth', face = el('div', 'dy-face', stage); face.innerHT
         setTimeout(() => { if (!finished && !SV.tips.sleep && stage.isConnected) { UK.finger(r, lights[0], { tap: true, ms: 6000 }); SV.tips.sleep = 1; save(); } else kick(hintSleep, 5000); }, slow(900));
       };
       DY.debug.level = () => LV; DY.debug.finished = () => finished; DY.debug.got = () => [got, goalN]; DY.debug.stage = stage;
-      ACT[LV.type](); GF.tale.level(r, LV);
+      ACT[LV.type](); GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('dplay', LV.kind ? { level: LV } : { n: LV.id }));
     },
   });
   GF.screen('dhouse', {

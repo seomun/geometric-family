@@ -125,7 +125,7 @@
         if (S.won) { busy = true; setTimeout(finish, slow(700)); } else if (!C.validMoves(S).length) { say('막혔어요. 되돌리거나 다시 해 봐요'); GF.sfx('hmm'); }
       }
       function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo3', ask: '되돌리기 3번 더', parent: r, onReward: () => { S.used.undo = Math.max(0, S.used.undo - 3); draw(); say('되돌리기를 3번 더 쓸 수 있어요'); } }); }
-      function undo() { if (busy || S.won) return; if (S.used.undo >= 3) { if (!offerUndo()) say('되돌리기는 한 판 세 번'); return; } if (!hist.length) return; const u0 = S.used.undo + 1, ex = S.used.extra, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.extra = ex; S.used.hint = hn; sel = -1; hintP = null; streak = 0; GF.sfx('tap'); draw(); }
+      function undo() { if (busy || S.won) return; if (S.used.undo >= GF.polish.cap(3, LV)) { if (!offerUndo()) say('되돌리기는 한 판 세 번'); return; } if (!hist.length) return; const u0 = S.used.undo + 1, ex = S.used.extra, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.extra = ex; S.used.hint = hn; sel = -1; hintP = null; streak = 0; GF.sfx('tap'); draw(); }
       function addExtra() { if (busy || S.won) return; if (S.used.extra) { say('칸 더는 한 판 한 번'); return; } C.addTube(S); S.used.extra = 1; hist = []; sel = -1; GF.sfx('star'); draw(); say('빈 칸이 하나 생겼어요'); }
       function hint() { if (busy || S.won) return; const h = C.hint(S); if (!h) { say('되돌리거나 다시 해 봐요'); return; } S.used.hint++; hintP = h; sel = -1; GF.sfx('pick'); draw(); setTimeout(() => { if (hintP === h) { hintP = null; if (area.isConnected) draw(); } }, slow(2600)); }
       function again() { if (busy) return; GF.extras && GF.extras.resumeClear(); if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); GF.sfx('tap'); GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id }); }
@@ -137,7 +137,7 @@
         UK.result({ title: '정리 끝!', stars, chips, parent: r, onNext: next ? () => GF.replace('splay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
       }
       function finish() {
-        busy = true; GF.extras && GF.extras.resumeClear(); const st = S.moves <= LV.par + 4 ? 3 : S.moves <= LV.par + 12 ? 2 : 1;
+        busy = true; GF.extras && GF.extras.resumeClear(); const st = GF.polish.easy(S.moves <= LV.par + 4 ? 3 : S.moves <= LV.par + 12 ? 2 : 1, LV);
         if (!LV.kind) { SV.stars[LV.id] = Math.max(SV.stars[LV.id] || 0, st); if (REW[LV.id] && Room.grant(REW[LV.id])) gained.push(REW[LV.id]); }
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
@@ -145,7 +145,7 @@
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: LV.par, actions: S.moves, tools: S.used.undo + S.used.extra + S.used.hint, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
         save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(LV); GF.sfx('star');
         setTimeout(() => {
-          GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
+          GF.polish.finished(); GF.polish.setNext(GF.polish.nextText(LV, D)); GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
       }
       SR.debug.adOffer = () => offerUndo(); SR.debug.level = () => LV; SR.debug.state = () => S; SR.debug.tap = (i) => tap(i); SR.debug.undo = undo; SR.debug.extra = addExtra; SR.debug.hint = hint; SR.debug.busy = () => busy; SR.debug.tubes = () => tubeEls; SR.debug.sel = () => sel;
@@ -153,7 +153,7 @@
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '칸을 눌러 집고, 다른 칸에 놓아요' : '같은 그림 위나 빈 칸에 놓을 수 있어요'; } else if (t0 && !SV.tips[LV.type] && LV.type !== 'sort') { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));
-      GF.tale.level(r, LV);
+      GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id })); GF.polish.goal(r, GF.t('polish.goal.sort', { n: (LV.par || 0) + 4 }));
       if (LV.id <= 2 && !LV.kind) { r.__demo = () => { if (GF.tale.cardOpen) return; const d = tubeEls[LV.solution[0][0]]; if (d && d.isConnected && !hist.length && sel < 0) UK.finger(r, d, { tap: true, ms: 6000 }); }; setTimeout(r.__demo, slow(1300)); }   // 처음 두 판: 집을 칸을 손가락이 알려 준다
     },
   });

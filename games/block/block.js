@@ -154,7 +154,7 @@
         return true;
       }
       function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: '되돌리기 1번 더', parent: r, onReward: () => { undone = 0; undo(); } }); }
-      function undo() { if (!hist.length || busy || undone >= 1) { if (undone >= 1 && !offerUndo()) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hint = null; streak = 0; GF.sfx('tap'); draw(); }
+      function undo() { if (!hist.length || busy || undone >= GF.polish.cap(1, LV)) { if (undone >= GF.polish.cap(1, LV) && !offerUndo()) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hint = null; streak = 0; GF.sfx('tap'); draw(); }
       function showHint() {
         if (busy) return;
         // 지금 판 상태에서 이길 수 있는 첫 수를 찾기 어렵다 → 놓을 수 있는 수 중 가장 많이 지우는 수를 보여 준다
@@ -188,7 +188,7 @@
         UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('bplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
       }
       function finish() {
-        busy = true; GF.extras && GF.extras.resumeClear(); const st = S.used <= LV.s3 ? 3 : S.used <= LV.s2 ? 2 : 1;
+        busy = true; GF.extras && GF.extras.resumeClear(); const st = GF.polish.easy(S.used <= LV.s3 ? 3 : S.used <= LV.s2 ? 2 : 1, LV);
         if (!LV.kind) { const first = !SV.stars[LV.id]; SV.stars[LV.id] = Math.max(SV.stars[LV.id] || 0, st); if (REW[LV.id] && roomOK && Room.grant(REW[LV.id])) gained.push(REW[LV.id]); void first; }
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
         else if (LV.kind === 'season') { if (!SV.seasonDone[seasonKey(LV.season)]) { SV.seasonDone[seasonKey(LV.season)] = 1; if (LV.season.reward && Room.grant(LV.season.reward)) gained.push(LV.season.reward); } }
@@ -196,7 +196,7 @@
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) { rankRes = GF.rank.record('daily', GF.rank.eff({ par: LV.par, actions: S.used, tools: undone + hintN, attempts: GF.rank.attempts('daily') })); GF.rank.clearTries('daily'); }
         save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(LV); GF.sfx('star');
         setTimeout(() => {
-          GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
+          GF.polish.finished(); GF.polish.setNext(GF.polish.nextText(LV, D)); GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
       }
       function lose() {
@@ -210,7 +210,7 @@
       if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '조각을 끌어다 판에 놓아요' : '줄이 가득 차면 지워져요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
-      GF.tale.level(r, LV);
+      GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id })); GF.polish.goal(r, GF.t('polish.goal.block', { n: LV.s3 }));
       if (LV.id <= 2 && !LV.kind) { r.__demo = () => { if (GF.tale.cardOpen) return; const slot = tray.querySelector('.bk-slot[data-k]'), mv = LV.solution[0], c = mv && cells[mv[1] * N + mv[2]]; if (slot && c && c.isConnected && !hist.length) UK.finger(r, slot, { to: c, ms: 7000 }); }; setTimeout(r.__demo, 1200); }   // 처음 두 판: 조각을 끌어다 놓는 시늉
     },
   });

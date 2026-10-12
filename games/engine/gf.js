@@ -269,6 +269,7 @@
   const wantWide = (s, params) => { const v = { landscape: window.innerWidth > window.innerHeight }; return !!(v.landscape && s.wide && s.wide(params || {})); };
   GF.screen = function (name, def) { def.el = el('div', 'screen', $('safe')); def.name = name; GF.screens[name] = def; return def; };
   function show(name, params) {
+    GF.backHook = null;   // 화면이 바뀌면 뒤로가기 가로채기 해제(판 화면이 다시 등록)
     Object.values(GF.screens).forEach((s) => { s.el.classList.remove('on'); s.leave && s.leave(); });
     const s = GF.screens[name];
     s.el.innerHTML = ''; s.el.classList.add('on'); GF.cur = s; s.params = params || {};
@@ -284,7 +285,10 @@
   GF.replace = (name, params) => { GF.stack.pop(); GF.go(name, params); };
   GF.back = function () {
     if (GF.overlayOpen && GF.overlayOpen()) return true;
-    if (GF.stack.length <= 1) return false;
+    if (GF.backHook && GF.backHook()) return true;   // 판 중 일시정지 메뉴(polish.js)
+    if (GF.stack.length <= 1) {   // 홈에서 뒤로: 2초 안에 한 번 더 누르면 종료(실수로 나가는 것 방지)
+      const now = Date.now(); if (GF._exitAt && now - GF._exitAt < 2000) return false; GF._exitAt = now; try { GF.toast(GF.t ? GF.t('polish.exit') : '한 번 더 누르면 나가요'); } catch (e) {} return true;
+    }
     GF.stack.pop(); const t = GF.stack[GF.stack.length - 1]; show(t.name, t.params); return true;
   };
   GF.popTo = function (name, params) {

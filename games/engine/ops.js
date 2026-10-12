@@ -208,6 +208,7 @@
     }
     row(GF.t('ops.settings.backup'), tb(GF.t('common.view'), () => { sc.close(); O.openBackup(); }));
     row(GF.t('ops.settings.help'), tb(GF.t('common.view'), () => { sc.close(); O.openHelp(); }));
+    if (GF.polish && GF.polish.ready) GF.polish.rows(body, sc);   // 앱 정보
   };
 
   O.init = function (cfg) {

@@ -164,7 +164,7 @@
       }
       const gained = []; let rankRes = null;
       function finish() {
-        busy = true; const st = C.stars(hints, wrong);
+        busy = true; const st = GF.polish.easy(C.stars(hints, wrong), LV);
         if (LV.kind === 'daily' && GF.rank && GF.rank.ready) rankRes = GF.rank.record('daily', GF.rank.eff({ par: LV.goalN, actions: LV.goalN + wrong, tools: hints, attempts: 1 }));
         if (!LV.kind) { SV.stars[LV.id] = Math.max(SV.stars[LV.id] || 0, st); if (REW[LV.id] && Room.grant(REW[LV.id])) gained.push(REW[LV.id]); }
         else if (LV.kind === 'daily') { if (SV.daily.date !== today() || !SV.daily.done) { SV.daily = { date: today(), done: 1 }; SV.shards++; if (SV.shards % X.shardsPerItem === 0) { const it = X.dailyItems.find((id) => !Room.has(id)); if (it && Room.grant(it)) gained.push(it); } } }
@@ -172,14 +172,14 @@
         else if (LV.kind === 'trio') { const key = LV.id.split(':').slice(1).join(':'); SV.trio[key] = Math.max(SV.trio[key] || 0, st); }
         save(); GF.refreshBar(); GF.extras && GF.extras.check(); GF.ads && GF.ads.noteLevelDone(LV); GF.sfx('star');
         setTimeout(() => {
-          GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
+          GF.polish.finished(); GF.polish.setNext(GF.polish.nextText(LV, D)); GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
       }
       SP.debug.adOffer = () => { hints = Math.max(hints, 2); result(1); }; SP.debug.level = () => LV; SP.debug.tap = (x, y) => { const R = R0(), fake = { clientX: 180, clientY: 300 }; tapAt(x, y, fake); }; SP.debug.round = () => ri; SP.debug.state = () => ({ ri, found, wrong, hints, phase, zoomed }); SP.debug.hint = hint; SP.debug.busy = () => busy; SP.debug.seen = () => { phase = 'find'; draw(); };
       draw();
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '위아래 그림에서 다른 곳을 눌러요' : '못 찾겠으면 힌트를 눌러요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));
-      GF.tale.level(r, LV);
+      GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('pplay', LV.kind ? { level: LV } : { n: LV.id })); GF.polish.goal(r, GF.t('polish.goal.spot', {}));
       if (LV.id <= 2 && !LV.kind) { r.__demo = () => { if (GF.tale.cardOpen) return; const pics = area.querySelectorAll('.sp-pic'), d = R0().diffs[0], w = pics[pics.length - 1]; if (w && w.isConnected && !foundN()) { const fake = el('i', 'sp-anchor', w); fake.style.cssText = `position:absolute;left:${(d.x + d.w / 2) / R0().w * 100}%;top:${(d.y + d.h / 2) / R0().h * 100}%;width:2px;height:2px`; UK.finger(r, fake, { tap: true, ms: 6000 }); setTimeout(() => fake.remove(), 6200); } }; setTimeout(r.__demo, slow(1400)); }   // 처음 두 판: 틀린 곳 하나를 손가락이 알려 준다
     },
   });

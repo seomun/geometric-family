@@ -396,7 +396,7 @@
      "after": 2,
      "cuts": [
       {
-       "text": "{sib1}과 {kid2}는 이불 속에서 엄마를 기다렸어요.",
+       "text": "{sib_kid1}과 {kid2}는 이불 속에서 엄마를 기다렸어요.",
        "chars": [
         "nemo_kids.kid1",
         "nemo_kids.kid2"
@@ -564,7 +564,7 @@
    "midAt2": 4,
    "start": [
     {
-     "text": "콩쥐 {sib1}는 물을 길어 독에 채우고 있었어요. 그런데 독 밑이 깨져 있었어요.",
+     "text": "콩쥐 {sib_kid1}는 물을 길어 독에 채우고 있었어요. 그런데 독 밑이 깨져 있었어요.",
      "chars": [
       "nemo_kids.kid1"
      ],
@@ -587,7 +587,7 @@
      "after": 4,
      "cuts": [
       {
-       "text": "독이 가득 찼어요. {sib1}는 시원한 물로 세수를 하고 방긋 웃었어요.",
+       "text": "독이 가득 찼어요. {sib_kid1}는 시원한 물로 세수를 하고 방긋 웃었어요.",
        "chars": [
         "nemo_kids.kid1"
        ],
@@ -821,7 +821,7 @@
    "midAt2": 4,
    "start": [
     {
-     "text": "{sib1}, {kid2}, {kid3} 셋은 집을 하나씩 지었어요.",
+     "text": "{sib_kid1}, {kid2}, {kid3} 셋은 집을 하나씩 지었어요.",
      "chars": [
       "nemo_kids.kid1",
       "nemo_kids.kid2",
@@ -996,7 +996,7 @@
    "midAt2": 4,
    "start": [
     {
-     "text": "눈이 내리는 밤, {sib1}와 {baby}는 창가에서 눈송이를 보았어요.",
+     "text": "눈이 내리는 밤, {sib_kid1}와 {baby}는 창가에서 눈송이를 보았어요.",
      "chars": [
       "nemo_kids.kid1",
       "baby.joy"
@@ -1020,7 +1020,7 @@
      "after": 4,
      "cuts": [
       {
-       "text": "{sib1}와 {baby}는 서로 손을 꼭 잡았어요. 춥지 않았어요.",
+       "text": "{sib_kid1}와 {baby}는 서로 손을 꼭 잡았어요. 춥지 않았어요.",
        "chars": [
         "nemo_kids.kid1",
         "baby.joy"

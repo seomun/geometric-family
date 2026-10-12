@@ -5,7 +5,7 @@
    {
     "role": "첫째 돼지(볏짚집)",
     "adult": "네모네 하나",
-    "kid": "형",
+    "kid": "하나 누나",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -13,7 +13,7 @@
    {
     "role": "둘째 돼지(나무집)",
     "adult": "네모네 두리",
-    "kid": "두리",
+    "kid": "두리 누나",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -21,7 +21,7 @@
    {
     "role": "셋째 돼지(벽돌집)",
     "adult": "네모네 세찌",
-    "kid": "세찌",
+    "kid": "세찌 형",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -107,7 +107,7 @@
    {
     "role": "콩쥐",
     "adult": "네모네 하나",
-    "kid": "형",
+    "kid": "하나 누나",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -115,7 +115,7 @@
    {
     "role": "팥쥐",
     "adult": "네모네 두리",
-    "kid": "두리",
+    "kid": "두리 누나",
     "kind": "funny",
     "family": "nemo",
     "only": null
@@ -285,7 +285,7 @@
    {
     "role": "오빠(달님)",
     "adult": "네모네 하나",
-    "kid": "형",
+    "kid": "하나 누나",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -293,7 +293,7 @@
    {
     "role": "동생(해님)",
     "adult": "네모네 두리",
-    "kid": "두리",
+    "kid": "두리 누나",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -379,7 +379,7 @@
    {
     "role": "잭",
     "adult": "네모네 두리",
-    "kid": "두리",
+    "kid": "두리 누나",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -498,8 +498,8 @@
   "brothers": [
    {
     "role": "형",
-    "adult": "네모네 하나",
-    "kid": "형",
+    "adult": "네모네 세찌",
+    "kid": "세찌 형",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -517,7 +517,7 @@
    {
     "role": "카이",
     "adult": "네모네 하나",
-    "kid": "형",
+    "kid": "하나 누나",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -2623,7 +2623,7 @@
    "cast": [
     {
      "role": "형",
-     "who": "형",
+     "who": "세찌 형",
      "kind": "lead",
      "family": "nemo"
     },
@@ -2737,7 +2737,7 @@
    "cast": [
     {
      "role": "카이",
-     "who": "형",
+     "who": "하나 누나",
      "kind": "lead",
      "family": "nemo"
     },
@@ -2777,13 +2777,13 @@
    "cast": [
     {
      "role": "콩쥐",
-     "who": "형",
+     "who": "하나 누나",
      "kind": "lead",
      "family": "nemo"
     },
     {
      "role": "팥쥐",
-     "who": "두리",
+     "who": "두리 누나",
      "kind": "funny",
      "family": "nemo"
     },
@@ -2835,7 +2835,7 @@
     "박씨",
     "박 타기",
     "쌀이 쏟아짐",
-    "형이 찾아옴",
+    "놀부(세모 삼촌)가 찾아옴",
     "잔치 뒤 밤"
    ],
    "line": "장면마다 세 가지 반응(예: 박을 탈 때 하나씩 천천히 / 한 번에 다 / 순서대로 정확히) 중 내 쪽을 고른다",

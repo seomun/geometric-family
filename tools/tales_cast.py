@@ -5,7 +5,7 @@ tools/tales_build.py 가 이 표를 읽어 data/tales.json 을 만들고, ③④
 # 배우 키 → (성인 앱 표기, 유아 앱 표기(막둥이 시점), 가족)
 ACTORS = {
     'nemo_dad': ('네모 아빠', '아빠', 'nemo'), 'nemo_mom': ('네모 엄마', '엄마', 'nemo'), 'nemo_gma': ('네모 할머니', '할머니', 'nemo'),
-    'kid1': ('네모네 {kid1}', '{sib1}', 'nemo'), 'kid2': ('네모네 {kid2}', '{kid2}', 'nemo'), 'kid3': ('네모네 {kid3}', '{kid3}', 'nemo'), 'baby': ('네모 {baby}', '{baby}', 'nemo'),
+    'kid1': ('네모네 {kid1}', '{kid1} {sib_kid1}', 'nemo'), 'kid2': ('네모네 {kid2}', '{kid2} {sib_kid2}', 'nemo'), 'kid3': ('네모네 {kid3}', '{kid3} {sib_kid3}', 'nemo'), 'baby': ('네모 {baby}', '{baby}', 'nemo'),
     'semo_h': ('세모 남편', '세모 삼촌', 'semo'), 'semo_w': ('세모 아내', '세모 이모', 'semo'),
     'dong_dad': ('동그라미 아빠', '동그라미 아저씨', 'dong'), 'dong_mom': ('동그라미 엄마', '동그라미 아주머니', 'dong'), 'dong_son': ('동그라미 아들', '동그라미 아들', 'dong'),
 }
@@ -26,7 +26,7 @@ CAST = {
     'gyeonwoo': [('견우', 'semo_h', 'lead'), ('직녀', 'semo_w', 'lead'), ('오작교를 놓는 까치와 까마귀', O('까치 떼(가족 밖)'), 'helper'), ('둘을 갈라놓는 하늘 어른', O('하늘 어른(가족 밖, 목소리·순한 판)'), 'villain')],
     'ureng': [('혼자 농사짓는 총각', 'nemo_dad', 'lead'), ('우렁 각시', 'semo_w', 'helper'), ('각시를 탐내는 원님', O('욕심쟁이 원님(가족 밖, 목소리·순한 판)'), 'villain')],
     'hare': [('거북이', 'nemo_dad', 'lead'), ('토끼', 'dong_dad', 'funny'), ('심판', 'semo_h', 'helper')],
-    'brothers': [('형', 'kid1', 'lead'), ('아우', 'baby', 'lead')],
+    'brothers': [('형', 'kid3', 'lead'), ('아우', 'baby', 'lead')],
     'snowqueen': [('카이', 'kid1', 'lead'), ('게르다', 'baby', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper')],
 }
 

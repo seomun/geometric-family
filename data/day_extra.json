@@ -384,20 +384,20 @@
      "text": "엄마가 심은 콩이 하룻밤에 쑥쑥 자라 하늘까지 닿았어요.",
      "chars": [
       "nemo_mom.surprise",
-      "nemo_kids.kid2"
+      "nemo_kids.kid3"
      ],
      "bubble": "sparkle"
     },
     {
-     "text": "{kid2} 잭이 콩나무를 타고 구름 위로 올라갔어요. 쿵쿵 발소리가 났지만 거인은 졸고 있었어요.",
+     "text": "{kid3} 잭이 콩나무를 타고 구름 위로 올라갔어요. 쿵쿵 발소리가 났지만 거인은 졸고 있었어요.",
      "chars": [
-      "nemo_kids.kid2"
+      "nemo_kids.kid3"
      ]
     },
     {
      "text": "잭은 살금살금 황금알을 안고 내려왔어요.",
      "chars": [
-      "nemo_kids.kid2",
+      "nemo_kids.kid3",
       "nemo_mom.joy"
      ]
     },
@@ -417,21 +417,20 @@
    "tale": "snowqueen",
    "cuts": [
     {
-     "text": "눈이 내리는 밤, {sib_kid1}와 {baby}는 창가에서 눈송이를 보았어요.",
+     "text": "눈이 내리는 밤, 눈송이 하나가 {baby} 눈에 쏙 들어갔어요. {baby}는 눈을 비비며 졸려 했어요.",
      "chars": [
-      "nemo_kids.kid1",
-      "baby.joy"
+      "baby.tired"
      ]
     },
     {
-     "text": "눈의 여왕 아주머니가 하얀 눈이불을 하늘 가득 펼쳐 주었어요.",
+     "text": "눈의 여왕 아주머니가 하얀 눈이불을 하늘 가득 펼쳐 포근히 덮어 주었어요.",
      "chars": [
       "baby.joy"
      ],
      "bubble": "sparkle"
     },
     {
-     "text": "{sib_kid1}와 {baby}는 서로 손을 꼭 잡았어요. 춥지 않았어요.",
+     "text": "{sib_kid1}가 {baby}의 손을 꼭 잡았어요. 춥지 않았어요.",
      "chars": [
       "nemo_kids.kid1",
       "baby.joy"

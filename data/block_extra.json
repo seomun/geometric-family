@@ -208,9 +208,9 @@
    "tale": "jack",
    "cuts": [
     {
-     "text": "소를 팔러 간 잭({kid2})이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.",
+     "text": "소를 팔러 간 잭({kid3})이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.",
      "chars": [
-      "nemo_kids.kid2",
+      "nemo_kids.kid3",
       "nemo_mom.worry"
      ],
      "bubble": "question"
@@ -218,21 +218,21 @@
     {
      "text": "밤새 콩나무가 한 칸 한 칸 쌓이듯 하늘까지 자랐다. 잭이 올라가 보니 구름 위에 거인의 큰 성이 있었다.",
      "chars": [
-      "nemo_kids.kid2"
+      "nemo_kids.kid3"
      ],
      "bubble": "bang"
     },
     {
      "text": "황금알을 낳는 거위를 안고 달아나는 잭. 구름 거인이 쿵쿵쿵 쫓아왔다.",
      "chars": [
-      "nemo_kids.kid2"
+      "nemo_kids.kid3"
      ],
      "bubble": "sparkle"
     },
     {
      "text": "내려온 잭이 콩나무를 베자 거인은 구름 위에서 손을 흔들었다. 세 가족이 큰 상에 모여 황금알 오믈렛을 먹었다.",
      "chars": [
-      "nemo_kids.kid2",
+      "nemo_kids.kid3",
       "nemo_mom.joy",
       "husband.joy",
       "dong_dad.joy"

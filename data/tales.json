@@ -378,8 +378,8 @@
   "jack": [
    {
     "role": "잭",
-    "adult": "네모네 두리",
-    "kid": "두리 누나",
+    "adult": "네모네 세찌",
+    "kid": "세찌 형",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -516,16 +516,16 @@
   "snowqueen": [
    {
     "role": "카이",
-    "adult": "네모네 하나",
-    "kid": "하나 누나",
+    "adult": "네모 막둥이",
+    "kid": "막둥이",
     "kind": "lead",
     "family": "nemo",
     "only": null
    },
    {
     "role": "게르다",
-    "adult": "네모 막둥이",
-    "kid": "막둥이",
+    "adult": "네모네 하나",
+    "kid": "하나 누나",
     "kind": "lead",
     "family": "nemo",
     "only": null
@@ -1030,7 +1030,7 @@
    "cast": [
     {
      "role": "잭",
-     "who": "네모네 두리",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },
@@ -1261,7 +1261,7 @@
    "cast": [
     {
      "role": "잭",
-     "who": "네모네 두리",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },
@@ -1777,7 +1777,7 @@
    "cast": [
     {
      "role": "잭",
-     "who": "네모네 두리",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },
@@ -2293,7 +2293,7 @@
    "cast": [
     {
      "role": "잭",
-     "who": "네모네 두리",
+     "who": "네모네 세찌",
      "kind": "lead",
      "family": "nemo"
     },
@@ -2737,13 +2737,13 @@
    "cast": [
     {
      "role": "카이",
-     "who": "하나 누나",
+     "who": "막둥이",
      "kind": "lead",
      "family": "nemo"
     },
     {
      "role": "게르다",
-     "who": "막둥이",
+     "who": "하나 누나",
      "kind": "lead",
      "family": "nemo"
     },
@@ -2754,7 +2754,7 @@
      "family": "dong"
     }
    ],
-   "line": "얼음 궁전은 포근한 눈 궁전, 막둥이의 따뜻한 눈물에 눈송이가 녹아요.",
+   "line": "얼음 궁전은 포근한 눈 궁전, 누나의 따뜻한 눈물에 눈송이가 녹아요(소녀가 소년을 구하는 원작 그대로).",
    "kept": [
     "눈송이(거울 조각)가 눈에 들어감",
     "눈의 여왕이 카이를 데려감",

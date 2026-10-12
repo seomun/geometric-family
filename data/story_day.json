@@ -903,7 +903,7 @@
    "tale": "jack",
    "faces": [
     "nemo_mom.surprise",
-    "nemo_kids.kid2",
+    "nemo_kids.kid3",
     "nemo_mom.joy"
    ],
    "midAt1": 2,
@@ -913,7 +913,7 @@
      "text": "엄마가 심은 콩이 하룻밤에 쑥쑥 자라 하늘까지 닿았어요.",
      "chars": [
       "nemo_mom.surprise",
-      "nemo_kids.kid2"
+      "nemo_kids.kid3"
      ],
      "bubble": "sparkle"
     }
@@ -923,9 +923,9 @@
      "after": 2,
      "cuts": [
       {
-       "text": "{kid2} 잭이 콩나무를 타고 구름 위로 올라갔어요. 쿵쿵 발소리가 났지만 거인은 졸고 있었어요.",
+       "text": "{kid3} 잭이 콩나무를 타고 구름 위로 올라갔어요. 쿵쿵 발소리가 났지만 거인은 졸고 있었어요.",
        "chars": [
-        "nemo_kids.kid2"
+        "nemo_kids.kid3"
        ]
       }
      ]
@@ -936,7 +936,7 @@
       {
        "text": "잭은 살금살금 황금알을 안고 내려왔어요.",
        "chars": [
-        "nemo_kids.kid2",
+        "nemo_kids.kid3",
         "nemo_mom.joy"
        ]
       }
@@ -960,7 +960,7 @@
       "text": "오늘도 해 볼까?"
      },
      {
-      "who": "nemo_kids.kid2",
+      "who": "nemo_kids.kid3",
       "text": "같이 하자!"
      },
      {
@@ -974,7 +974,7 @@
       "text": "잘했어!"
      },
      {
-      "who": "nemo_kids.kid2",
+      "who": "nemo_kids.kid3",
       "text": "또 하나 끝났네."
      },
      {
@@ -988,18 +988,17 @@
    "title": "눈의 여왕",
    "tale": "snowqueen",
    "faces": [
-    "nemo_kids.kid1",
+    "baby.tired",
     "baby.joy",
-    "nemo_mom.love"
+    "nemo_kids.kid1"
    ],
    "midAt1": 2,
    "midAt2": 4,
    "start": [
     {
-     "text": "눈이 내리는 밤, {sib_kid1}와 {baby}는 창가에서 눈송이를 보았어요.",
+     "text": "눈이 내리는 밤, 눈송이 하나가 {baby} 눈에 쏙 들어갔어요. {baby}는 눈을 비비며 졸려 했어요.",
      "chars": [
-      "nemo_kids.kid1",
-      "baby.joy"
+      "baby.tired"
      ]
     }
    ],
@@ -1008,7 +1007,7 @@
      "after": 2,
      "cuts": [
       {
-       "text": "눈의 여왕 아주머니가 하얀 눈이불을 하늘 가득 펼쳐 주었어요.",
+       "text": "눈의 여왕 아주머니가 하얀 눈이불을 하늘 가득 펼쳐 포근히 덮어 주었어요.",
        "chars": [
         "baby.joy"
        ],
@@ -1020,7 +1019,7 @@
      "after": 4,
      "cuts": [
       {
-       "text": "{sib_kid1}와 {baby}는 서로 손을 꼭 잡았어요. 춥지 않았어요.",
+       "text": "{sib_kid1}가 {baby}의 손을 꼭 잡았어요. 춥지 않았어요.",
        "chars": [
         "nemo_kids.kid1",
         "baby.joy"
@@ -1042,7 +1041,7 @@
    "say": {
     "start": [
      {
-      "who": "nemo_kids.kid1",
+      "who": "baby.tired",
       "text": "오늘도 해 볼까?"
      },
      {
@@ -1050,13 +1049,13 @@
       "text": "같이 하자!"
      },
      {
-      "who": "nemo_mom.love",
+      "who": "nemo_kids.kid1",
       "text": "천천히 해도 돼."
      }
     ],
     "clear": [
      {
-      "who": "nemo_kids.kid1",
+      "who": "baby.tired",
       "text": "잘했어!"
      },
      {
@@ -1064,7 +1063,7 @@
       "text": "또 하나 끝났네."
      },
      {
-      "who": "nemo_mom.love",
+      "who": "nemo_kids.kid1",
       "text": "멋져!"
      }
     ]

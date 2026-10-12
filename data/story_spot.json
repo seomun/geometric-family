@@ -397,7 +397,7 @@
    "title": "잭과 콩나무",
    "tale": "jack",
    "faces": [
-    "nemo_kids.kid2",
+    "nemo_kids.kid3",
     "nemo_mom.worry",
     "nemo_mom.joy"
    ],
@@ -405,9 +405,9 @@
    "midAt2": 7,
    "start": [
     {
-     "text": "소를 팔러 간 잭({kid2})이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.",
+     "text": "소를 팔러 간 잭({kid3})이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.",
      "chars": [
-      "nemo_kids.kid2",
+      "nemo_kids.kid3",
       "nemo_mom.worry"
      ],
      "bubble": "question"
@@ -420,7 +420,7 @@
       {
        "text": "하룻밤 사이 콩나무가 하늘까지! 잭이 올라가 보니 구름 위에 거인의 큰 성이 있었다.",
        "chars": [
-        "nemo_kids.kid2"
+        "nemo_kids.kid3"
        ],
        "bubble": "bang"
       }
@@ -432,7 +432,7 @@
       {
        "text": "황금알을 낳는 거위를 안고 달아나는 잭. 구름 거인이 쿵쿵쿵 쫓아왔다.",
        "chars": [
-        "nemo_kids.kid2"
+        "nemo_kids.kid3"
        ],
        "bubble": "sparkle"
       }
@@ -443,7 +443,7 @@
     {
      "text": "내려온 잭이 콩나무를 베자 거인은 구름 위에서 손을 흔들었다. 세 가족이 큰 상에 모여 황금알 오믈렛을 먹었다.",
      "chars": [
-      "nemo_kids.kid2",
+      "nemo_kids.kid3",
       "nemo_mom.joy",
       "husband.joy",
       "dong_dad.joy"
@@ -454,7 +454,7 @@
    "say": {
     "start": [
      {
-      "who": "nemo_kids.kid2",
+      "who": "nemo_kids.kid3",
       "text": "어디가 달라졌을까요?"
      },
      {
@@ -468,7 +468,7 @@
     ],
     "clear": [
      {
-      "who": "nemo_kids.kid2",
+      "who": "nemo_kids.kid3",
       "text": "찾았어요!"
      },
      {
@@ -1195,16 +1195,17 @@
    "title": "눈의 여왕",
    "tale": "snowqueen",
    "faces": [
-    "nemo_kids.kid1",
-    "baby.joy"
+    "baby.surprise",
+    "baby.joy",
+    "nemo_kids.kid1"
    ],
    "midAt1": 4,
    "midAt2": 7,
    "start": [
     {
-     "text": "겨울밤, 카이(네모네 {kid1})의 마음에 차가운 눈 조각이 콕 박혀 카이는 말이 없어졌다.",
+     "text": "겨울밤, 눈송이(거울 조각) 하나가 카이(네모 {baby})의 눈에 콕 들어가 카이는 말이 없어졌다.",
      "chars": [
-      "nemo_kids.kid1"
+      "baby.surprise"
      ],
      "bubble": "question"
     }
@@ -1214,9 +1215,9 @@
      "after": 4,
      "cuts": [
       {
-       "text": "눈의 여왕(동그라미 엄마)은 카이를 하얀 성으로 데려갔다. 사납게 굴지 않고 조용히 지켜보기만 했다.",
+       "text": "눈의 여왕(동그라미 엄마)은 카이를 포근한 하얀 성으로 데려갔다. 사납게 굴지 않고 다정하게 지켜보았다.",
        "chars": [
-        "nemo_kids.kid1"
+        "baby.joy"
        ]
       }
      ]
@@ -1225,10 +1226,10 @@
      "after": 7,
      "cuts": [
       {
-       "text": "친구 게르다(네모 {baby})가 눈길을 걸어 성까지 찾아왔다. 「카이야, 같이 집에 가자!」",
+       "text": "친구 게르다(네모네 {kid1})가 눈길을 걸어 성까지 찾아왔다. 「카이야, 같이 집에 가자!」",
        "chars": [
-        "baby.joy",
-        "nemo_kids.kid1"
+        "nemo_kids.kid1",
+        "baby.joy"
        ],
        "bubble": "heart"
       }
@@ -1248,7 +1249,7 @@
    "say": {
     "start": [
      {
-      "who": "nemo_kids.kid1",
+      "who": "baby.surprise",
       "text": "어디가 달라졌을까요?"
      },
      {
@@ -1262,7 +1263,7 @@
     ],
     "clear": [
      {
-      "who": "nemo_kids.kid1",
+      "who": "baby.surprise",
       "text": "찾았어요!"
      },
      {

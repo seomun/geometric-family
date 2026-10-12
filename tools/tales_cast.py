@@ -22,12 +22,12 @@ CAST = {
     'sun': [('누나(해님)', 'kid1', 'lead'), ('동생(달님)', 'kid3', 'lead'), ('떡 팔러 간 엄마', 'nemo_mom', 'helper'), ('호랑이 → 바람 호랑이', O('바람 호랑이(가족 밖, 소리·그림자)'), 'villain')],
     'ant': [('개미', 'nemo_mom', 'lead'), ('베짱이', 'semo_h', 'funny'), ('지켜보는 이웃', 'dong_dad', 'helper'), ('열매를 함께 모으는 막내 개미(유아 앱)', 'baby', 'helper', 'kid')],
     'pino': [('제페토(목수)', 'nemo_dad', 'lead'), ('피노키오(나무 인형)', 'baby', 'funny'), ('파란 요정', O('요정(art.fairy)'), 'helper')],
-    'jack': [('잭', 'kid2', 'lead'), ('잭의 엄마', 'nemo_mom', 'helper'), ('구름 위 거인', O('구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)'), 'villain'), ('잔치 손님', 'semo_h', 'helper')],
+    'jack': [('잭', 'kid3', 'lead'), ('잭의 엄마', 'nemo_mom', 'helper'), ('구름 위 거인', O('구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)'), 'villain'), ('잔치 손님', 'semo_h', 'helper')],
     'gyeonwoo': [('견우', 'semo_h', 'lead'), ('직녀', 'semo_w', 'lead'), ('오작교를 놓는 까치와 까마귀', O('까치 떼(가족 밖)'), 'helper'), ('둘을 갈라놓는 하늘 어른', O('하늘 어른(가족 밖, 목소리·순한 판)'), 'villain')],
     'ureng': [('혼자 농사짓는 총각', 'nemo_dad', 'lead'), ('우렁 각시', 'semo_w', 'helper'), ('각시를 탐내는 원님', O('욕심쟁이 원님(가족 밖, 목소리·순한 판)'), 'villain')],
     'hare': [('거북이', 'nemo_dad', 'lead'), ('토끼', 'dong_dad', 'funny'), ('심판', 'semo_h', 'helper')],
     'brothers': [('형', 'kid3', 'lead'), ('아우', 'baby', 'lead')],
-    'snowqueen': [('카이', 'kid1', 'lead'), ('게르다', 'baby', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper')],
+    'snowqueen': [('카이', 'baby', 'lead'), ('게르다', 'kid1', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper')],
 }
 
 
@@ -45,13 +45,14 @@ def cast_for(tale, aud):
 # 성별 일치(허브 2026-10-12): kid1·kid2(하나·두리, 딸)는 형/오빠/아우/남동생/아들 역 금지, kid3·baby(세찌·막둥이, 아들)는 누나/언니/누이/여동생/딸 역 금지
 FEMALE_KIDS, MALE_KIDS = ('kid1', 'kid2'), ('kid3', 'baby')
 MALE_WORDS, FEMALE_WORDS = ('형', '오빠', '아우', '남동생', '아들'), ('누나', '언니', '누이', '여동생', '딸')
+MALE_NAMES, FEMALE_NAMES = ('잭', '카이', '피노키오', '흥부', '놀부', '왕자', '도령'), ('게르다', '콩쥐', '팥쥐', '공주', '신데렐라', '누이')   # 원작 이름 역의 성별(2026-10-12)
 def GENDER_OK():
     bad = []
     for tale, rows in CAST.items():
         for row in rows:
             role, key = row[0], row[1]
-            if key in FEMALE_KIDS and any(w in role for w in MALE_WORDS): bad.append('%s: %s 역을 %s(딸)이 맡음' % (tale, role, key))
-            if key in MALE_KIDS and any(w in role for w in FEMALE_WORDS): bad.append('%s: %s 역을 %s(아들)이 맡음' % (tale, role, key))
+            if key in FEMALE_KIDS and any(w in role for w in MALE_WORDS + MALE_NAMES): bad.append('%s: %s 역을 %s(딸)이 맡음' % (tale, role, key))
+            if key in MALE_KIDS and any(w in role for w in FEMALE_WORDS + FEMALE_NAMES): bad.append('%s: %s 역을 %s(아들)이 맡음' % (tale, role, key))
     assert not bad, '배역 성별 불일치: ' + ' / '.join(bad)
     return True
 

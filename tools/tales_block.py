@@ -24,10 +24,10 @@ TB = [
   ('큰 것은 너무 크고 중간 것은 헐렁하고 — 작은 침대에서 손님이 쿨쿨 잠이 들었다.', ['wife.tired'], None),
   ('돌아온 곰들이 깜짝! 아기 곰이 웃으며 말했다. 「같이 먹어요!」 모두 한 상에 앉았다.', ['dong_dad.warm', 'wife.joy'], 'heart')]),
  dict(base='jack', title='잭과 콩나무', cast=None, cuts=[
-  ('소를 팔러 간 잭({kid2})이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.', ['nemo_kids.kid2', 'nemo_mom.worry'], 'question'),
-  ('밤새 콩나무가 한 칸 한 칸 쌓이듯 하늘까지 자랐다. 잭이 올라가 보니 구름 위에 거인의 큰 성이 있었다.', ['nemo_kids.kid2'], 'bang'),
-  ('황금알을 낳는 거위를 안고 달아나는 잭. 구름 거인이 쿵쿵쿵 쫓아왔다.', ['nemo_kids.kid2'], 'sparkle'),
-  ('내려온 잭이 콩나무를 베자 거인은 구름 위에서 손을 흔들었다. 세 가족이 큰 상에 모여 황금알 오믈렛을 먹었다.', ['nemo_kids.kid2', 'nemo_mom.joy', 'husband.joy', 'dong_dad.joy'], 'heart')]),
+  ('소를 팔러 간 잭({kid3})이 마법의 콩 한 줌과 바꿔 왔다. 엄마는 한숨, 콩은 창밖으로 휙.', ['nemo_kids.kid3', 'nemo_mom.worry'], 'question'),
+  ('밤새 콩나무가 한 칸 한 칸 쌓이듯 하늘까지 자랐다. 잭이 올라가 보니 구름 위에 거인의 큰 성이 있었다.', ['nemo_kids.kid3'], 'bang'),
+  ('황금알을 낳는 거위를 안고 달아나는 잭. 구름 거인이 쿵쿵쿵 쫓아왔다.', ['nemo_kids.kid3'], 'sparkle'),
+  ('내려온 잭이 콩나무를 베자 거인은 구름 위에서 손을 흔들었다. 세 가족이 큰 상에 모여 황금알 오믈렛을 먹었다.', ['nemo_kids.kid3', 'nemo_mom.joy', 'husband.joy', 'dong_dad.joy'], 'heart')]),
  dict(base='kongjwi', title='콩쥐팥쥐', cast=None, cuts=[
   ('깐깐한 아주머니가 콩쥐({kid1})에게 밑 빠진 독에 물을 가득 채우라고 했다.', ['nemo_kids.kid1'], 'question'),
   ('빈칸이 구멍 난 독처럼 자꾸 새었다. 두꺼비(동그라미 아빠)가 엉금엉금 나와 구멍을 막아 주었다.', ['nemo_kids.kid1', 'dong_dad.calm'], 'sparkle'),

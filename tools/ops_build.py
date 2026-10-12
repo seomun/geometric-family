@@ -125,26 +125,27 @@ def stamp_rules():
     return r
 
 # ---- 카메오(5): 다른 앱 배역이 판 사이(장 끝 컷 직후)에 잠깐 등장. 문구는 짧고 따뜻하게·세 가족 말투(네모 평이/세모 들뜸/동그라미 차분), 광고성 말 금지. [제안] ----
-GUEST = {  # 어느 앱에서 온 손님인가: (캐릭터, 소품, 문구 2종)
-    'merge': ('husband.joy', '🧳', ['이삿짐이 한가득이에요!', '상자를 하나 더 옮겼어요!']),
-    'spot': ('dong_dad.calm', '🖼️', ['액자가 곧은지 살피는 중이에요.', '그림 속 다른 곳을 하나 찾았어요.']),
-    'block': ('nemo_dad.good', '🧱', ['벽돌을 딱 맞게 쌓는 중이야.', '한 줄이 깔끔하게 맞았어.']),
-    'sort': ('nemo_mom.good', '🗄️', ['선반을 정리하는 중이에요.', '같은 것끼리 모았어요.']),
-    'tile': ('wife.wink', '🧺', ['바구니에 하나 더 담았어요!', '짝이 딱 맞았어요!']),
-    'idle': ('nemo_mom.joy', '🍲', ['따뜻한 국이 끓고 있어요.', '식탁에 한 자리 더 놓았어요.']),
-    'quiz': ('wife.smug', '🔮', ['너는 어느 도형일까?', '오늘의 나를 알아봤어요.']),
-    'play': ('baby.joy', '🧸', ['', '']), 'color': ('wife.joy', '🖍️', ['', '']),
+GUEST = {  # 손님 = 그 손님이 「일하는」 앱 · docs/24_CAMEO_LINES_v2.md(허브 v2). 대사 30개 모두 다름(단언: tools/ip_smoke.js), 광고성 말 없음
+    'merge': ('husband.joy', '🧳', ['이삿짐이 한가득! …근데 반은 아내 캐리어야.', '이사는 한 방에 끝낸다. 허리는 내일 생각하고.', '상자에 「깨짐 주의」라고 썼어. 내 마음 말고 접시.', '짐 줄이자더니, 또 여행 가방이 늘었네.', '다 옮겼다! 이제 짜장면 시킬 시간.']),
+    'spot': ('dong_dad.calm', '🖼️', ['액자가 1도 기울었어요. 바로잡는 중입니다.', '다른 곳을 찾았어요. 일곱 개 중 하나.', '사진 속 의자 하나가 비어 있네요. …괜찮습니다.', '틀린 그림은 금방 찾는데, 다른 건 잘 안 보이더군요.', '정답 일곱 개. 오늘도 정확합니다.']),
+    'block': ('nemo_dad.good', '🧱', ['한 줄 맞췄다! 학원비도 이렇게 딱 맞으면 좋겠네.', '벽돌 한 장에 한숨 한 번. 그래도 집은 올라간다.', '줄은 지워지는데 할 일은 안 지워지네.', '튼튼하게 쌓는 중. 일곱 식구가 들어가야 하거든.', '두 줄 한꺼번에! 오늘은 운이 좋다.']),
+    'sort': ('nemo_mom.good', '🗄️', ['선반 정리 끝! 내일이면 또 섞이겠지만요.', '양말 짝 찾는 데 삼십 분. 그래도 다 찾았어요.', '같은 것끼리 모아요. 아이들은 따로따로.', '냉장고 반찬통, 뚜껑까지 다 맞췄어요!', '「제자리에 놓으면 끝」… 오늘만 일곱 번 말했어요.']),
+    'tile': ('nemo_kids.kid1', '🧺', ['세 개 모으기는 자신 있어요. 동생이 셋이거든요.', '바구니 칸이 모자라요. 우리 집 식탁처럼.', '짝을 맞췄어요! 엄마한테 자랑해야지.', '같은 그림 세 개! 막둥이도 같이 할래?', '마지막 한 칸에서 딱! 숨 참았어요.']),
+    'idle': ('nemo_grandma.good', '🍲', ['국 끓여 놨다. 다 같이 먹어야 맛있지.', '밥은 먹고 다니냐. 한 숟갈만 더 떠라.', '반찬은 많을수록 좋아. 남으면 내일 먹고.', '식구가 많으니 솥도 커야지.', '오늘은 세 집이 다 모인다더라. 밥 넉넉히 해야지.']),
+    'quiz': ('wife.smug', '🔮', ['오늘 결과는 세모래요. 역시 나다워!', '테스트 열 번 했는데 다 다르게 나와요. 그게 나예요.', '남편은 네모 나왔대요. 절대 아닌데…', '어느 도형이냐고요? 기분 따라 달라져요!', '다음엔 동그라미 나오게 해 볼래요. 우아하게.']),
 }
+KID_GUEST = [('dong_dad.joy', '🚂', 'play'), ('nemo_kids.kid2', '🖍️', 'color'), ('wife.joy', '🎈', 'play')]   # 유아 ⑩ 손님: 동그라미 아저씨·두리 누나·세모 이모(막둥이는 자기 앱에 손님으로 나오지 않는다)
 def cameos():
-    out = []
-    adult_h = ['merge', 'spot', 'block', 'sort', 'tile']; others = {'merge': ['spot', 'block', 'sort', 'tile', 'idle', 'quiz'], 'spot': ['merge', 'block', 'sort', 'tile', 'idle', 'quiz'], 'block': ['merge', 'spot', 'sort', 'tile', 'idle', 'quiz'], 'sort': ['merge', 'spot', 'block', 'tile', 'idle', 'quiz'], 'tile': ['merge', 'spot', 'block', 'sort', 'idle', 'quiz']}
-    for h in adult_h:
+    out = []; ORDER = ['merge', 'spot', 'block', 'sort', 'tile']; GORD = ['merge', 'spot', 'block', 'sort', 'tile', 'idle', 'quiz']
+    for hi, h in enumerate(ORDER):
+        guests = [g for g in GORD if g != h]; guests = guests[hi % len(guests):] + guests[:hi % len(guests)]            # 호스트마다 시작 손님을 돌려 순서가 다르게
         for j, n in enumerate([2, 4, 6, 8, 10, 12]):
-            f = others[h][j % 6]; ch, prop, lines = GUEST[f]
-            out.append(dict(id=f'{h}:e{n}', host=h, after=f'e{n}', who=ch, prop=prop, frm=f, line=lines[j % 2], kid=False))
+            f = guests[j]; ch, prop, lines = GUEST[f]
+            hosts_of_f = [x for x in ORDER if x != f]                                                                    # 그 손님이 나오는 앱 순서(자기 앱 제외)
+            k = hosts_of_f.index(h)                                                                                       # 그 순서에서 내 앱이 몇 번째인가 → 그 번호의 대사
+            out.append(dict(id=f'{h}:e{n}', host=h, after=f'e{n}', who=ch, prop=prop, frm=f, line=lines[k], kid=False))
     for j, n in enumerate([2, 4, 6, 8, 10, 12]):
-        f = ['play', 'color'][j % 2]; ch, prop, lines = GUEST[f]
-        out.append(dict(id=f'day:e{n}', host='day', after=f'e{n}', who=ch, prop=prop, frm=f, line='', kid=True))
+        ch, prop, frm = KID_GUEST[j % 3]; out.append(dict(id=f'day:e{n}', host='day', after=f'e{n}', who=ch, prop=prop, frm=frm, line='', kid=True))
     return out
 # ---- 주간 주제(4): 모든 앱이 같은 주에 같은 주제(웹툰 연결 자리 webtoon). 번들 기본표 — 나중에 원격 설정(T1)이 덮어씀 ----
 def week_themes():

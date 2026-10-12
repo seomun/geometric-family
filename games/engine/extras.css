@@ -80,3 +80,7 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .xt-sheet .acts { position: sticky; bottom: -1px; background: linear-gradient(rgba(255,255,255,0), #fff 30%); padding-top: 8px; z-index: 2; }   /* 설정 줄이 많아져도 닫기는 늘 보이게 */
 
 .ops-card b { white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; } .ops-card small { max-width: 36%; font-size: calc(10px * var(--uk-fs-k, 1)); line-height: 1.15; }
+
+/* 카드 줄: 제목은 한 줄 전체, 「어느 앱에서 얻나」 힌트는 그 아래 작은 줄 (ops-card hint) */
+.ops-card { flex-wrap: wrap; } .ops-card b { flex: 1 1 0; white-space: normal; overflow: visible; text-overflow: clip; } .ops-card small { flex: 1 1 100%; max-width: 100%; text-align: left; padding-left: 34px; margin-top: -2px; }
+.ops-card { flex: none; }

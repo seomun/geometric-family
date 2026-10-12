@@ -44,7 +44,9 @@
   I.beat = function (app, tale, beat) { if (!I.ready || !tale) return false; const who = I.cardApp(tale, beat); if (who && who !== app) return false; const r = I.addCard(tale, beat); if (r) I.toast(tale, beat); return r; };
   /** ① 놀이터: 책 장(ch11~15)의 프롤로그=카드0, 단계 A 깸=카드1, B 깸=카드2, 에필로그=카드3 */
   I.playBeat = function (chId, beat) { const n = +String(chId).replace(/\D/g, ''), tale = ((GF.data.ops || {}).playTale || {})[n]; return tale ? I.beat('play', tale, beat) : false; };
-  I.toast = (tale, beat) => { try { const T = (GF.data.ops.tales || {})[tale] || {}; UK.toast(GF.t('ops.ip.card', { title: T.title || tale, n: I.cardCount(tale) }), document.getElementById('safe')); GF.sfx('star'); } catch (e) {} };
+  I.toast = (tale, beat, tries) => { try { if (tries === undefined) { setTimeout(() => I.toast(tale, beat, 0), 1500); return; }   // 컷 직후 바로 띄우지 않는다(설명 카드가 먼저)
+      if ((document.querySelector('.uk-scrim') || document.querySelector('.tale-ov')) && tries < 6) { setTimeout(() => I.toast(tale, beat, (tries || 0) + 1), 1600); return; }   // 설명 카드·컷이 떠 있는 동안은 기다렸다가 알림(안내가 겹치지 않게)
+ const T = (GF.data.ops.tales || {})[tale] || {}; UK.toast(GF.t('ops.ip.card', { title: T.title || tale, n: I.cardCount(tale) }), document.getElementById('safe')); GF.sfx('star'); } catch (e) {} };
 
   /* ---------------- 도장: 앱별 규칙(ops.json stamps[앱]=[{id,at}]) — 앱 진행 수(progress)가 기준을 넘으면 확정 ---------------- */
   I.stamps = (app) => (I.get().stamps[app || I.app] || []).slice();

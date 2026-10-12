@@ -13,7 +13,7 @@ const B = 'http://localhost:8765/games/';
   await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.ops.openHelp(); }); await p.waitForTimeout(200);
   ok(await p.evaluate(() => document.querySelectorAll('.ops-faq').length >= 5 && /곧 안내/.test(document.querySelector('.ops-mail').textContent)), 'FAQ 6개 + 이메일이 비면 「곧 안내」(메일 버튼 숨김)');
   await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.ops.openNews(); }); await p.waitForTimeout(200);
-  ok(await p.evaluate(() => /rc7/.test(document.body.innerText) && JSON.parse(localStorage.getItem('gf:merge:ops')).newsSeen === GF.data.ops.news.version), '새 소식 시트 + 본 버전 기록');
+  ok(await p.evaluate(() => /rc8/.test(document.body.innerText) && JSON.parse(localStorage.getItem('gf:merge:ops')).newsSeen === GF.data.ops.news.version), '새 소식 시트 + 본 버전 기록');
   /* 움직임 줄이기 */
   await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.state.settings.rm = 1; GF.ops.applyMotion(); });
   ok(await p.evaluate(() => document.documentElement.dataset.rm === '1' && getComputedStyle(document.querySelector('.uk-btn') || document.body).transitionDuration.startsWith('1e-') || document.documentElement.dataset.rm === '1'), '움직임 줄이기: html[data-rm=1]');
@@ -30,13 +30,13 @@ const B = 'http://localhost:8765/games/';
   ok(errs.length === 0, '성인 앱 오류 없음 ' + errs[0]); await c.close();
   /* 복귀 선물(성인): 7일↑ 쉬었다 오면 소품 1개, 첫 실행·매일 오는 사람에겐 없음 */
   const week = Date.now() - 9 * 86400000;
-  [c, p, errs] = await open('merge/index.html?ops=1', () => { try { if (!localStorage.getItem('gf:merge:ops')) localStorage.setItem('gf:merge:ops', JSON.stringify({ lastOpen: Date.now() - 9 * 86400000, newsSeen: '1.0.0-rc7' })); } catch (e) {} });
+  [c, p, errs] = await open('merge/index.html?ops=1', () => { try { if (!localStorage.getItem('gf:merge:ops')) localStorage.setItem('gf:merge:ops', JSON.stringify({ lastOpen: Date.now() - 9 * 86400000, newsSeen: '1.0.0-rc8' })); } catch (e) {} });
   await p.waitForTimeout(3200);
   const bk = await p.evaluate(() => ({ modal: /오랜만이에요/.test(document.body.innerText), owned: Room.owned().length }));
   ok(bk.modal, '복귀 선물: 9일 만에 열면 「오랜만이에요」 + 선물');
   ok(bk.owned >= 1, '복귀 선물: 집 소품 1개 확정 지급(뽑기 아님)');
   await c.close();
-  [c, p, errs] = await open('merge/index.html?ops=1', () => { try { if (!localStorage.getItem('gf:merge:ops')) localStorage.setItem('gf:merge:ops', JSON.stringify({ lastOpen: Date.now() - 86400000, newsSeen: '1.0.0-rc7' })); } catch (e) {} });
+  [c, p, errs] = await open('merge/index.html?ops=1', () => { try { if (!localStorage.getItem('gf:merge:ops')) localStorage.setItem('gf:merge:ops', JSON.stringify({ lastOpen: Date.now() - 86400000, newsSeen: '1.0.0-rc8' })); } catch (e) {} });
   await p.waitForTimeout(3200); ok(await p.evaluate(() => !/오랜만이에요/.test(document.body.innerText)), '복귀 선물: 어제 왔으면 없음(압박·끊김 표시 없음)'); await c.close();
   /* 새 소식 자동: 버전이 바뀐 뒤 첫 실행에만 */
   [c, p, errs] = await open('merge/index.html?ops=1', () => { try { if (!localStorage.getItem('gf:merge:ops')) localStorage.setItem('gf:merge:ops', JSON.stringify({ lastOpen: Date.now(), newsSeen: '0.9.0' })); } catch (e) {} });

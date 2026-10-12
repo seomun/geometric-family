@@ -195,7 +195,7 @@
       GF.rank.init({ app: 'spot', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, fam, rng, eps) => {   // 틀린 그림은 칸 상태가 없는 퍼즐이라 가족 맛으로 만든 모델(틀린 탭·힌트 수)
           let wrong, hints; if (fam === 0) { wrong = 1 + ((rng() * 4) | 0); hints = rng() < 0.4 ? 1 : 0; } else if (fam === 1) { if (eps < 0.2) { wrong = (rng() * 2) | 0; hints = 0; } else { wrong = 5 + ((rng() * 6) | 0); hints = 1 + ((rng() * 3) | 0); } } else { wrong = (rng() * 3) | 0; hints = 0; }
           return { won: true, score: GF.rank.eff({ par: L.goalN, actions: L.goalN + wrong, tools: hints, attempts: 1 }) }; } } } });
-      GF.extras.init(Object.assign({ app: 'spot', kid: false, rewardSet: 'photo', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 140, roomSet: 'photo', itemTotal: 20, icon: '🔍' })));
+      GF.extras.init(Object.assign({ app: 'spot', kid: false, calendar: () => X.seasons.map((s) => ({ id: s.id, title: s.title, months: s.months, icon: '📅', done: !!SV.seasonDone[seasonKey(s)], play: () => { const L = seasonLevel(s); if (L) GF.go('pplay', { level: L }); } })), rewardSet: 'photo', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 140, roomSet: 'photo', itemTotal: 20, icon: '🔍' })));
       document.getElementById('safe').classList.add('uk'); GF.go('phome');
       SP.debug.D = () => D; SP.debug.SV = () => SV; SP.debug.reset = () => { SV = blank(); save(); }; SP.debug.dailyLevel = dailyLevel; SP.debug.seasonLevel = seasonLevel; SP.debug.trioLevels = trioLevels; SP.debug.X = () => X; SP.debug.REW = REW;
     } }, opts || {}));

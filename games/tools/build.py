@@ -37,6 +37,7 @@ def webp(path, max_h=560):
     return buf.getvalue()
 
 data = {n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8')) for n in ['chars', 'stages', 'story', 'stickers', 'anchors', 'room_items', 'names', 'ops']}
+if __import__('os').environ.get('GF_SUPPORT_EMAIL'): data['ops']['supportEmail'] = __import__('os').environ['GF_SUPPORT_EMAIL']   # APK 빌드 때만 주입(저장소·웹판에는 비움)
 img_bytes = 0
 for k, v in data['chars'].items():
     raw = webp(ROOT / v['src'])

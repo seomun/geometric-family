@@ -21,7 +21,7 @@
   /** 시트(팝업) 하나를 열고 본문 노드를 돌려 준다 */
   function sheet(title) {
     const sc = UK.modal({ title, dismiss: true, parent: document.getElementById('safe') }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet');
-    const body = el('div', 'xt-body', sh); const close = el('div', 'acts row', sh); UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.close() }, close);
+    const body = el('div', 'xt-body', sh); const close = el('div', 'acts row', sh); UK.btn({ text: GF.t('common.close'), cls: 'ghost', onclick: () => sc.close() }, close);
     return { sc, sh, body };
   }
   const row = (parent, label, node) => { const r = el('div', 'xt-row', parent); el('span', '', r, label); if (node) r.appendChild(node); return r; };
@@ -29,28 +29,28 @@
 
   /** 설정(성인) / 보호자 메뉴(유아) */
   function openSettings(kind) {
-    const c = X.cfg, kid = !!c.kid, { sc, body } = sheet(kid ? '보호자 메뉴' : '설정'), s = S();
-    row(body, '소리', UK.switch(!s.mute, (on) => { s.mute = !on; persist(); GF.refreshBar && GF.refreshBar(); GF.bgm && GF.bgm.sync && GF.bgm.sync(); }));
-    const rg = el('input', 'xt-range'); rg.type = 'range'; rg.min = 0; rg.max = 1; rg.step = 0.1; rg.value = s.vol; rg.oninput = () => { s.vol = +rg.value; persist(); GF.bgm && GF.bgm.sync && GF.bgm.sync(); GF.sfx('tap'); }; row(body, '소리 크기', rg);
-    row(body, '자막', UK.switch(!s.capOff, (on) => { s.capOff = !on; persist(); }));
-    if (!kid && navigator.vibrate) row(body, '진동', UK.switch(s.vib !== false, (on) => { s.vib = on; persist(); if (on) GF.haptic('ok'); }));
-    if (!kid) row(body, '큰 글씨', UK.switch(!!s.big, (on) => { s.big = on ? 1 : 0; persist(); applyBig(); }));
+    const c = X.cfg, kid = !!c.kid, { sc, body } = sheet(kid ? GF.t('ui.set.parent') : GF.t('ui.set.title')), s = S();
+    row(body, GF.t('ui.set.sound'), UK.switch(!s.mute, (on) => { s.mute = !on; persist(); GF.refreshBar && GF.refreshBar(); GF.bgm && GF.bgm.sync && GF.bgm.sync(); }));
+    const rg = el('input', 'xt-range'); rg.type = 'range'; rg.min = 0; rg.max = 1; rg.step = 0.1; rg.value = s.vol; rg.oninput = () => { s.vol = +rg.value; persist(); GF.bgm && GF.bgm.sync && GF.bgm.sync(); GF.sfx('tap'); }; row(body, GF.t('ui.set.volume'), rg);
+    row(body, GF.t('ui.set.caption'), UK.switch(!s.capOff, (on) => { s.capOff = !on; persist(); }));
+    if (!kid && navigator.vibrate) row(body, GF.t('ui.set.vibrate'), UK.switch(s.vib !== false, (on) => { s.vib = on; persist(); if (on) GF.haptic('ok'); }));
+    if (!kid) row(body, GF.t('ui.set.big'), UK.switch(!!s.big, (on) => { s.big = on ? 1 : 0; persist(); applyBig(); }));
     if (kid) {   // 쉬어요 알림: 보호자가 정하는 놀이 시간 알림(아이에게 압박 없음, 설정 안 하면 없음)
-      const opts = [0, 10, 20, 30], b = tbtn(s.rest ? s.rest + '분' : '끔', () => { const i = (opts.indexOf(s.rest || 0) + 1) % opts.length; s.rest = opts[i]; b.textContent = s.rest ? s.rest + '분' : '끔'; persist(); X.restReset(); }); row(body, '쉬어요 알림', b);
-      if (c.stats) { el('h4', 'xt-h', body, '오늘까지 놀이 요약'); c.stats().forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); }
+      const opts = [0, 10, 20, 30], b = tbtn(s.rest ? s.rest + '분' : GF.t('ui.set.off'), () => { const i = (opts.indexOf(s.rest || 0) + 1) % opts.length; s.rest = opts[i]; b.textContent = s.rest ? s.rest + '분' : GF.t('ui.set.off'); persist(); X.restReset(); }); row(body, GF.t('ui.set.rest'), b);
+      if (c.stats) { el('h4', 'xt-h', body, GF.t('ui.set.summary')); c.stats().forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); }
     } else {
-      row(body, '통계', tbtn('보기', () => { sc.close(); openStats(); }));
-      if (c.badges && c.badges.length) row(body, '업적', tbtn(badgeCount() + '/' + c.badges.length, () => { sc.close(); openBadges(); }));
-      if (c.rewardItems && c.rewardItems.length) row(body, '출석 도장', tbtn('보기', () => { sc.close(); openAttend(); }));
+      row(body, GF.t('ui.set.stats'), tbtn(GF.t('common.view'), () => { sc.close(); openStats(); }));
+      if (c.badges && c.badges.length) row(body, GF.t('ui.set.badges'), tbtn(badgeCount() + '/' + c.badges.length, () => { sc.close(); openBadges(); }));
+      if (c.rewardItems && c.rewardItems.length) row(body, GF.t('ui.set.attend'), tbtn(GF.t('common.view'), () => { sc.close(); openAttend(); }));
     }
-    if (!kid && GF.tale && GF.tale.ready) { if (GF.tale.d.rules) row(body, '도움말', tbtn('판 종류 설명', () => { sc.close(); GF.tale.help(); })); row(body, '이야기 다시 보기', tbtn('다시 보기', () => { GF.tale.reset(); UK.toast('프롤로그와 장 이야기가 다시 나와요', document.getElementById('safe')); })); }
+    if (!kid && GF.tale && GF.tale.ready) { if (GF.tale.d.rules) row(body, GF.t('ui.set.help'), tbtn(GF.t('ui.set.rules'), () => { sc.close(); GF.tale.help(); })); row(body, GF.t('ui.set.replay'), tbtn(GF.t('ui.set.again'), () => { GF.tale.reset(); UK.toast(GF.t('ui.set.replay.toast'), document.getElementById('safe')); })); }
     if (GF.ops && GF.ops.ready) GF.ops.rows(body, sc, kid);   // 움직임 줄이기·새 소식·문의·FAQ(D21)
-    if (c.resetTips) row(body, '도움말 다시 보기', tbtn('다시 보기', () => { c.resetTips(); GF.toast ? GF.toast('다음 판에서 도움말이 다시 나와요') : UK.toast('다음 판에서 도움말이 다시 나와요', document.getElementById('safe')); }));
-    if (c.reset) { let armed = false; const b = tbtn('지우기', () => { if (!armed) { armed = true; b.textContent = '한 번 더'; return; } c.reset(); try { localStorage.removeItem(key()); } catch (e) {} location.reload(); }); row(body, '이 앱 기록 지우기(집은 그대로)', b); }
+    if (c.resetTips) row(body, GF.t('ui.set.tips'), tbtn(GF.t('ui.set.again'), () => { c.resetTips(); GF.toast ? GF.toast(GF.t('ui.set.tips.toast')) : UK.toast(GF.t('ui.set.tips.toast'), document.getElementById('safe')); }));
+    if (c.reset) { let armed = false; const b = tbtn(GF.t('ui.set.wipe'), () => { if (!armed) { armed = true; b.textContent = GF.t('ui.set.once'); return; } c.reset(); try { localStorage.removeItem(key()); } catch (e) {} location.reload(); }); row(body, GF.t('ui.set.wipe.row'), b); }
     const ads = GF.ads && GF.ads.live && GF.ads.live() && !kid;
-    el('small', 'xt-note', body, kid ? '이 앱은 이름·사진·위치를 수집하지 않아요. 홈·지도 화면 아래에 아이에게 맞춘(비개인화) 배너 광고가 있어요. 놀이 중과 이 메뉴에는 광고가 없어요. 기록은 이 기기 안에만 저장돼요.' : (ads ? '배너·전면 광고와 선택해서 보는 광고가 있어요. 광고를 보지 않아도 불이익은 없어요. 기록은 이 기기 안에만 저장돼요.' : '가입·서버 없이 기록은 이 기기 안에만 저장돼요.'));
+    el('small', 'xt-note', body, kid ? GF.t('ui.set.note.kid') : (ads ? GF.t('ui.set.note.ads') : GF.t('ui.set.note.plain')));
   }
-  function openStats() { const { sc, body } = sheet('통계'); (X.cfg.stats ? X.cfg.stats() : []).forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); if (GF.rank && GF.rank.ready) GF.rank.boards().forEach((b) => row(body, b.title + ' 순위표', tbtn('보기', () => { sc.close(); GF.rank.open(b.id); }))); }
+  function openStats() { const { sc, body } = sheet(GF.t('ui.set.stats')); (X.cfg.stats ? X.cfg.stats() : []).forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); if (GF.rank && GF.rank.ready) GF.rank.boards().forEach((b) => row(body, b.title + ' 순위표', tbtn(GF.t('common.view'), () => { sc.close(); GF.rank.open(b.id); }))); }
 
   /* ---------------- 업적(배지): 보상 압박 없이 모아 보기 ---------------- */
   function earned() { const s = load(); return X.cfg.badges.filter((b) => s.badges.includes(b.id)); }

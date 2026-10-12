@@ -28,7 +28,7 @@ def webp(path, max_h=420):
 rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8'))
 bal, sto, chars, anchors, sounds, props = rd('idle_balance'), rd('idle_stories'), rd('chars'), rd('anchors'), rd('sounds'), rd('room_items')
 used = set(re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(bal) + json.dumps(sto) + json.dumps(rd('story_idle')) + json.dumps(rd('maps/idle'))))
-data = {'ops': rd('ops'), 'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'story_idle': rd('story_idle'), 'maps/idle': rd('maps/idle'), 'room_items': props, 'names': rd('names'), 'base': ''}
+data = {'ops': dict(rd('ops'), **({'supportEmail': __import__('os').environ['GF_SUPPORT_EMAIL']} if __import__('os').environ.get('GF_SUPPORT_EMAIL') else {})), 'chars': {}, 'anchors': {}, 'idle_balance': bal, 'idle_stories': sto, 'story_idle': rd('story_idle'), 'maps/idle': rd('maps/idle'), 'room_items': props, 'names': rd('names'), 'base': ''}
 data['art_slots'] = inline_slots(ROOT)
 img = 0
 for k in sorted(used):

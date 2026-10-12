@@ -26,7 +26,7 @@ story = rd('story_merge')
 smap = rd('maps/merge')
 import re as _re
 USED = sorted(set(['nemo_dad.joy', 'wife.joy', 'dong_dad.joy', 'nemo_kids.kid1', 'baby.joy'] + _re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(extra) + json.dumps(story))))
-data = {'ops': rd('ops'), 'chars': {}, 'anchors': {}, 'merge_levels': levels, 'merge_extra': extra, 'story_merge': story, 'maps/merge': smap, 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
+data = {'ops': dict(rd('ops'), **({'supportEmail': __import__('os').environ['GF_SUPPORT_EMAIL']} if __import__('os').environ.get('GF_SUPPORT_EMAIL') else {})), 'chars': {}, 'anchors': {}, 'merge_levels': levels, 'merge_extra': extra, 'story_merge': story, 'maps/merge': smap, 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
 img = 0
 for k in USED:
     v = dict(chars[k]); raw = webp(ROOT / v['src']); img += len(raw); v['src'] = b64(raw, 'image/webp'); data['chars'][k] = v

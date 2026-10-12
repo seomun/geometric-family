@@ -382,7 +382,7 @@
       const o = offline(); if (o && o.gained > 0) UI.welcome = o;
       IDLE.hooks.adAvailable = () => GF.ads.eligible();
       IDLE.hooks.rewardedAd = (placement, cb) => { if (!GF.ads.run({ placement, onReward: () => cb && cb(true) })) cb && cb(false); };
-      GF.saga.init('idle', GF.data['maps/idle']); GF.tale.init('idle', GF.data.story_idle, { kid: false }); GF.extras.init({ app: 'idle', kid: false, rewardSet: 'kitchen', stats: () => [['본 사연', Object.keys(S.sd).length + ' / ' + ST.stories.length], ['식탁 단계', ['nemo', 'semo', 'dong'].map((k) => S.tl[k]).join(' · ')], ['의자', S.chairs]],
+      GF.saga.init('idle', GF.data['maps/idle']); GF.tale.init('idle', GF.data.story_idle, { kid: false }); GF.extras.init({ app: 'idle', kid: false, calendar: () => (ST.seasons || []).map((x) => ({ id: x.id, title: x.title, months: x.months, icon: '🍂', done: !!S.ss[seasonKey(x.id)], play: () => GF.go('istory', { id: x.id, season: 1 }) })), rewardSet: 'kitchen', stats: () => [['본 사연', Object.keys(S.sd).length + ' / ' + ST.stories.length], ['식탁 단계', ['nemo', 'semo', 'dong'].map((k) => S.tl[k]).join(' · ')], ['의자', S.chairs]],
         badges: [{ id: 's1', icon: '📖', name: '첫 사연', desc: '사연 1편', ok: () => Object.keys(S.sd).length >= 1 }, { id: 's10', icon: '📚', name: '열 편', desc: '사연 10편', ok: () => Object.keys(S.sd).length >= 10 }, { id: 's30', icon: '👑', name: '서른 편', desc: '사연을 모두 봤어요', ok: () => Object.keys(S.sd).length >= ST.stories.length }, { id: 'c2', icon: '🪑', name: '의자가 늘었어요', desc: '의자 2개 이상', ok: () => S.chairs >= 2 }],
         resetTips: () => {}, reset: () => { S = fresh(); save(); } });
       if (!B || !ST) return; GF.go('itable');

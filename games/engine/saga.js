@@ -71,7 +71,7 @@
       (z.marks || []).forEach((m, k) => { const d = el('div', 'sg-mark', zd); d.style.cssText = `left:${m.x}%;top:${m.y}px`; if (!slotImg(`${S.app}:${z.ch}:mark${k + 1}`, 'sg-img', d)) d.textContent = m.e; });
       (z.props || []).forEach((m, k) => { const d = el('div', 'sg-prop', zd); d.style.cssText = `left:${m.x}%;top:${m.y}px`; if (!slotImg(`${S.app}:prop${k + 1}`, 'sg-img', d)) d.textContent = m.e; });   // 앱 주제 소품
       /* 관문(이야기 책) */
-      const gt = el('button', 'sg-gate', zd);  gt.style.cssText = `left:${z.gate[0]}%;top:${z.gate[1]}px`; gt.setAttribute('aria-label', 'story'); if (!slotImg(`${S.app}:${z.ch}:gate`, 'sg-img', gt)) gt.textContent = '📖'; if (!kid) el('small', '', gt, '이야기');
+      const gt = el('button', 'sg-gate', zd);  gt.style.cssText = `left:${z.gate[0]}%;top:${z.gate[1]}px`; gt.setAttribute('aria-label', 'story'); if (!slotImg(`${S.app}:${z.ch}:gate`, 'sg-img', gt)) gt.textContent = '📖'; if (!kid) el('small', '', gt, GF.t('ui.saga.story'));
       if (!kid) { const bd = el('div', 'sg-band', zd); bd.style.cssText = `top:${z.gate[1]}px`; bd.innerHTML = `<b>${z.ch}장</b> ${o.title ? o.title(z.ch) : z.title}`; }
       if (o.noGate) gt.style.visibility = 'hidden';
       gt.onclick = () => { if (!open) { GF.sfx('hmm'); return; } GF.sfx('page'); o.onGate && o.onGate(z.ch, z); };
@@ -84,11 +84,11 @@
         if (o.render) { o.render(l, b); } else if (kid) { const t = el('em', 'ty', b); if (!slotImg('type:' + l.type, 'sg-ti', t)) t.textContent = TY[l.type] || '●'; el('i', 'sg-st', b, '★'.repeat(st) + '☆'.repeat(3 - st)); }
         else { el('span', 'n', b, String(l.id)); if (l.label) el('small', 'sg-lb', b, l.label); if (!o.hideStars) el('i', 'sg-st', b, '★'.repeat(st) + '☆'.repeat(3 - st)); if (special) { const t = el('em', 'ty', b); if (!slotImg('type:' + l.type, 'sg-ti', t)) t.innerHTML = UK.icon(TYI[l.type] || 'shapes'); } }
         if (special) { const nm = (o.typeName && o.typeName(l.type)) || TYN[l.type] || l.type; b.title = nm; let lp = 0; b.addEventListener('pointerdown', () => { lp = setTimeout(() => { lp = -1; UK.toast(nm, parent); }, 450); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => { if (lp > 0) clearTimeout(lp); })); b.addEventListener('click', (e) => { if (lp === -1) { lp = 0; e.stopImmediatePropagation(); } }, true); }
-        b.onclick = () => { if (!isOpen) { GF.sfx('hmm'); if (!kid) UK.toast((o.lockedMsg && o.lockedMsg(l)) || '앞 레벨을 먼저 깨 보세요', parent); else { b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); } return; } GF.sfx('pick'); o.onNode(l); };
+        b.onclick = () => { if (!isOpen) { GF.sfx('hmm'); if (!kid) UK.toast((o.lockedMsg && o.lockedMsg(l)) || GF.t('ui.saga.locked'), parent); else { b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); } return; } GF.sfx('pick'); o.onNode(l); };
       });
       /* 보상 상자: 구역의 판을 모두 깼을 때 열림 */
       const all = ls.length && nd >= ls.length, ch = el('button', 'sg-chest' + (all ? ' open' : (open && nd ? ' near' : '')), zd); ch.style.cssText = `left:${z.chest[0]}%;top:${z.chest[1]}px`; ch.setAttribute('aria-label', 'chest');
-      if (!slotImg(all ? 'chest_open' : 'chest', 'sg-img', ch)) ch.textContent = all ? '🎁' : '📦'; if (!kid) el('small', '', ch, all ? '열기' : '상자');
+      if (!slotImg(all ? 'chest_open' : 'chest', 'sg-img', ch)) ch.textContent = all ? '🎁' : '📦'; if (!kid) el('small', '', ch, all ? GF.t('ui.saga.open') : GF.t('ui.saga.chest'));
       ch.onclick = () => { if (all) { GF.sfx('star'); o.onChest && o.onChest(z.ch); } else { GF.sfx('hmm'); if (!kid) UK.toast(`${ls.length - nd}판을 더 깨면 열려요`, parent); } };
       /* 구름(잠긴 구역) */
       if (!open) { const f = el('div', 'sg-fog' + (o.justOpened === z.ch ? ' lift' : ''), zd); f.innerHTML = '<span>☁️</span><span>☁️</span><span>☁️</span>'; if (o.justOpened === z.ch) { f.style.opacity = '0.6'; setTimeout(() => f.classList.add('go'), 500); } }

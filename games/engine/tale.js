@@ -20,11 +20,11 @@
   T.cuts = (raw, bg) => raw.map((c) => ({ bg: c.bg || bg || 'indoor2', text: c.text, voice: c.voice, chars: (c.chars || []).map((q, k, a) => (typeof q === 'string' ? { id: q, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 } : q)), bubble: c.bubble ? { type: c.bubble, at: 0 } : null }));
   /** 컷 묶음을 화면 위에 띄운다. 끝나거나 건너뛰면 cb(). parent 는 화면 루트 */
   T.play = function (raw, parent, cb, o) {
-    o = o || {}; try { GF.ads && GF.ads.noteStory && GF.ads.noteStory(); } catch (e) {}   // 컷 직후에는 전면 광고 금지
+    o = o || {}; try { GF.ads && GF.ads.noteStory && GF.ads.noteStory(); GF.ops && GF.ops.note && GF.ops.note('story'); } catch (e) {}   // 컷 직후에는 전면 광고 금지
     parent = parent || safe(); const ov = el('div', 'abs tale-ov', parent); ov.style.cssText = 'inset:0;z-index:70;background:#FFF1D6'; let done = false;
     const end = () => { if (done) return; done = true; try { ov.remove(); } catch (e) {} cb && cb(); };
     const inner = el('div', 'abs', ov); inner.style.cssText = 'inset:0'; GF.story(inner, T.cuts(raw, o.bg), end);
-    const sk = el('button', 'tale-skip', ov, T.kid ? UK.icon('next') : '건너뛰기'); sk.setAttribute('aria-label', 'skip'); sk.onclick = (e) => { e.stopPropagation(); GF.sfx('tap'); end(); };
+    const sk = el('button', 'tale-skip', ov, T.kid ? UK.icon('next') : GF.t('ui.tale.skip')); sk.setAttribute('aria-label', 'skip'); sk.onclick = (e) => { e.stopPropagation(); GF.sfx('tap'); end(); };
     return ov;
   };
   const go = (raw, parent, cb, o, k) => { if (!raw || !raw.length || (k && T.seen(k)) || auto()) { if (k && !T.seen(k)) T.mark(k); cb && cb(); return false; } if (k) T.mark(k); T.play(raw, parent, cb, o); return true; };
@@ -43,8 +43,8 @@
   };
   /** 엔딩 뒤 마지막 한 줄 카드 */
   T.finalCard = function (parent, cb) {
-    parent = parent || safe(); const sc = el('div', 'uk-scrim tale-final', parent), sh = el('div', 'uk-sheet', sc); el('h2', '', sh, '당신은 어느 도형인가요?'); el('div', 'body', sh, T.d.finalLine || '네모, 세모, 동그라미. 어느 쪽에 가까운지 오늘 알려 주세요.');
-    const a = el('div', 'acts', sh); UK.btn({ text: '계속하기', cls: 'green', icon: 'next', onclick: () => { sc.remove(); cb && cb(); } }, a); GF.sfx('celebrate'); try { UK.confetti(sc); } catch (e) {}
+    parent = parent || safe(); const sc = el('div', 'uk-scrim tale-final', parent), sh = el('div', 'uk-sheet', sc); el('h2', '', sh, GF.t('ui.tale.final.title')); el('div', 'body', sh, T.d.finalLine || '네모, 세모, 동그라미. 어느 쪽에 가까운지 오늘 알려 주세요.');
+    const a = el('div', 'acts', sh); UK.btn({ text: GF.t('ui.tale.next'), cls: 'green', icon: 'next', onclick: () => { sc.remove(); cb && cb(); } }, a); GF.sfx('celebrate'); try { UK.confetti(sc); } catch (e) {}
   };
   /** 지도의 이야기 책: 그 장 컷 전부(기·승·전·결) 다시 보기 */
   T.replay = function (n, parent, cb) { const c = ch(n); if (!T.ready || !c) return (cb && cb(), false); const all = (c.start || []).concat(...(c.mid || []).map((m) => m.cuts), c.end || []); T.play(all, parent || safe(), cb, { bg: BG[c.tale] }); return true; };
@@ -60,12 +60,12 @@
   /** 처음 나오는 판 종류: 글 한 줄 + (유아는 그림) → 닫으면 cb(손가락 시연은 앱이 이어서) */
   T.explain = function (type, parent, cb) {
     const r = T.ready && T.d.rules && T.d.rules[type]; if (!r || T.seen('r:' + type) || auto()) { if (r && !T.seen('r:' + type)) T.mark('r:' + type); cb && cb(); return false; }
-    T.mark('r:' + type); parent = parent || safe(); const sc = UK.modal({ parent, title: T.kid ? '' : r.title, big: r.icon || '', body: T.kid ? '' : r.text, actions: [{ text: T.kid ? '' : '알겠어요', icon: T.kid ? 'play' : undefined, cls: 'green', onclick: () => { cb && cb(); } }] });
+    T.mark('r:' + type); parent = parent || safe(); const sc = UK.modal({ parent, title: T.kid ? '' : r.title, big: r.icon || '', body: T.kid ? '' : r.text, actions: [{ text: T.kid ? '' : GF.t('ui.tale.ok'), icon: T.kid ? 'play' : undefined, cls: 'green', onclick: () => { cb && cb(); } }] });
     if (T.kid) { const a = sc.querySelector('.acts .uk-btn'); if (a) a.setAttribute('aria-label', 'ok'); } return true;
   };
   /** 설정 「도움말」: 판 종류별 설명을 다시 보기 */
   T.help = function () {
-    if (!T.ready || !T.d.rules) return; const sc = UK.modal({ parent: safe(), title: '판 종류 설명', dismiss: true }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet'); const body = el('div', 'tale-help', sh);
+    if (!T.ready || !T.d.rules) return; const sc = UK.modal({ parent: safe(), title: GF.t('ui.set.rules'), dismiss: true }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet'); const body = el('div', 'tale-help', sh);
     Object.keys(T.d.rules).forEach((k) => { const r = T.d.rules[k], d = el('div', 'tale-hr', body); el('span', 'ic', d, r.icon || '•'); const t = el('div', 'tx', d); el('b', '', t, r.title); el('small', '', t, r.text); });
     const a = el('div', 'acts row', sh); UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.close() }, a);
   };

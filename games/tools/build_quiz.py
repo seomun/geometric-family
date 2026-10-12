@@ -24,7 +24,7 @@ rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-
 chars, anchors, sounds, quiz, room = rd('chars'), rd('anchors'), rd('sounds'), rd('quiz_tests'), rd('room_items')
 import re as _re
 USED = sorted(set(['nemo_dad.joy', 'wife.joy', 'dong_dad.joy', 'baby.joy'] + _re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(quiz) + json.dumps(rd('story_quiz')) + json.dumps(rd('maps/quiz')))))
-data = {'ops': rd('ops'), 'chars': {}, 'anchors': {}, 'quiz_tests': quiz, 'story_quiz': rd('story_quiz'), 'maps/quiz': rd('maps/quiz'), 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
+data = {'ops': dict(rd('ops'), **({'supportEmail': __import__('os').environ['GF_SUPPORT_EMAIL']} if __import__('os').environ.get('GF_SUPPORT_EMAIL') else {})), 'chars': {}, 'anchors': {}, 'quiz_tests': quiz, 'story_quiz': rd('story_quiz'), 'maps/quiz': rd('maps/quiz'), 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
 img = 0
 for k in USED:
     v = dict(chars[k]); raw = webp(ROOT / v['src']); img += len(raw); v['src'] = b64(raw, 'image/webp'); data['chars'][k] = v

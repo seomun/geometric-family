@@ -16,6 +16,9 @@ STR = {
     'ops.album.title': '앨범', 'ops.album.items': '집 소품', 'ops.album.cards': '이야기 카드', 'ops.album.season': '계절 이벤트', 'ops.album.claim': '🎁 카드 3장 선물 받기', 'ops.album.next': '다음 선물까지 이야기 카드 {n}장',
     'ops.backup.title': '백업 코드', 'ops.backup.note': '코드를 적어 두면 기기를 바꿔도 이어서 할 수 있어요. 코드는 이 기기 안에서만 만들어져요.', 'ops.backup.make': '코드 만들기', 'ops.backup.copy': '복사', 'ops.backup.copied': '복사했어요',
     'ops.backup.paste': '코드 붙여넣기', 'ops.backup.load': '불러오기', 'ops.backup.confirm': '지금 기록이 바뀌어요. 한 번 더 누르면 불러와요.', 'ops.backup.bad': '코드가 올바르지 않아요.', 'ops.backup.other': '다른 앱의 코드예요.', 'ops.backup.ok': '불러왔어요. 곧 다시 시작해요.',
+    'ops.settings.notif': '오늘의 한 판 알림', 'ops.notif.denied': '알림 권한이 꺼져 있어요. 휴대폰 설정에서 켤 수 있어요.', 'ops.notif.on': '하루 한 번, 저녁에 알려 드릴게요.',
+    'ops.iap.adfree': '광고 제거', 'ops.iap.pack': '소품 팩', 'ops.iap.owned': '구매했어요', 'ops.iap.buy': '구매', 'ops.iap.restore': '구매 복원', 'ops.iap.restoring': '구매 내역을 확인하고 있어요.',
+    'ops.iap.thanks': '고마워요! 광고가 사라졌어요. 선택해서 보는 광고의 보상은 바로 받아요.', 'ops.iap.packgot': '집 소품 {n}개를 놓아 두었어요.', 'ops.iap.pending': '결제가 확인되면 적용돼요.', 'ops.iap.fail': '구매하지 못했어요. 나중에 다시 해 주세요.',
     'ops.back.title': '오랜만이에요!', 'ops.back.got': '다시 와 줘서 반가워요. 집에 「{name}」을 놓아 두었어요.', 'ops.back.none': '다시 와 줘서 반가워요. 천천히 놀아요.',
 }
 STR.update({
@@ -65,7 +68,7 @@ STR.update({
 })   # H7: 엔진 층 고정 문구(tools/_i18n_move.py 가 옮김)
 NEWS = dict(version='1.0.0-rc7', items=[dict(ver='1.0.0-rc7', title='이야기와 지도', lines=[
     '판 사이에 이야기가 이어져요. 처음 나오는 판 종류는 짧게 알려 드려요.', '이야기 지도에서 내가 어디까지 왔는지 한눈에 볼 수 있어요.',
-    '설정에 「움직임 줄이기」·「문의·FAQ」·「백업 코드」·「올해의 달력」·「오늘의 작은 일」·「앨범」이 생겼어요.', '오랜만에 오시면 작은 선물을 놓아 둘게요.'])])
+    '설정에 「움직임 줄이기」·「문의·FAQ」·「백업 코드」·「올해의 달력」·「오늘의 작은 일」·「앨범」이 생겼어요.', '오랜만에 오시면 작은 선물을 놓아 둘게요.', '설정에서 하루 한 번 「오늘의 한 판」 알림을 켤 수 있어요(기본은 꺼짐).'])])
 FAQ = [
     dict(q='진행 기록은 어디에 저장되나요?', a='이 기기 안에만 저장돼요. 앱을 지우면 기록도 지워지니, 바꾸기 전에는 설정의 백업 기능을 써 주세요.'),
     dict(q='집은 다른 앱과 이어지나요?', a='같은 회사의 형제 앱이 같은 기기에 있으면 같은 집을 함께 꾸며요. 아이 앱끼리, 어른 앱끼리만 이어져요.'),

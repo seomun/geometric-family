@@ -71,10 +71,15 @@ android.productFlavors.configureEach { f ->
     f.buildConfigField 'String', 'GF_AD_BANNER', "\"${idOf('banner')}\""
     f.buildConfigField 'String', 'GF_AD_INTERSTITIAL', "\"${idOf('interstitial')}\""
     f.buildConfigField 'String', 'GF_AD_REWARDED', "\"${idOf('rewarded')}\""
+    f.buildConfigField 'String', 'GF_IAP_ADFREE', "\"${(project.findProperty("GF_IAP_ADFREE_${u}") ?: '')}\""      // 광고 제거 상품 ID(없으면 구매 UI 숨김, 유아 flavor 는 무시)
+    f.buildConfigField 'String', 'GF_IAP_PACK', "\"${(project.findProperty("GF_IAP_PACK_${u}") ?: '')}\""          // 소품 팩 상품 ID
     f.buildConfigField 'boolean', 'GF_AD_TEST', (project.findProperty("GF_ADMOB_APP_${u}") ? 'false' : 'true')
 }
 dependencies {
     implementation 'com.google.android.gms:play-services-ads:24.4.0'
     implementation 'com.google.android.ump:user-messaging-platform:3.2.0'
-    implementation 'com.google.android.play:review:2.0.2'     // 인앱 리뷰(성인 앱만 JS 가 부름)
+    implementation 'com.google.android.play:review:2.0.2'
+    implementation 'com.android.billingclient:billing:7.1.1'          // 구매(성인 앱 광고 제거·소품 팩, 상품 ID 가 있을 때만 동작)
+    implementation 'androidx.work:work-runtime:2.9.1'                  // 로컬 알림(성인 앱, 기본 꺼짐)
+    implementation 'androidx.core:core:1.13.1'     // 인앱 리뷰(성인 앱만 JS 가 부름)
 }

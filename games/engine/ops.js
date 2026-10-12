@@ -157,6 +157,38 @@
     UK.btn({ text: GF.t('ops.backup.load'), cls: 'ghost block', onclick: () => { const r = O.readCode(inp.value); if (!r.ok) { msg.textContent = GF.t('ops.backup.' + r.err); armed = false; return; } if (!armed) { armed = true; msg.textContent = GF.t('ops.backup.confirm'); return; } O.applyCode(inp.value); msg.textContent = GF.t('ops.backup.ok'); setTimeout(() => location.reload(), 700); } }, body);
   };
 
+
+  /* ---------------- 구매(H1): 성인 앱 「광고 제거」·「소품 팩」(확정 지급). 상품 ID 가 없으면 숨김, 유아 앱은 없음 ---------------- */
+  const iapKey = () => 'gf:' + O.app + ':iap';
+  O.iap = {
+    native: () => (window.GFBilling && typeof window.GFBilling.info === 'function' ? window.GFBilling : null),
+    info() { try { return JSON.parse(O.iap.native().info()) || {}; } catch (e) { return {}; } },
+    configured(kind) { return !O.kid && !!O.iap.native() && !!(O.iap.info()[kind] || {}).configured; },
+    price(kind) { return (O.iap.info()[kind] || {}).price || ''; },
+    owned(kind) { return !!(LS(iapKey()) || {})[kind]; },
+    buy(kind) { const n = O.iap.native(); if (n) { try { n.buy(kind); } catch (e) {} } },
+    restore() { const n = O.iap.native(); if (n) { try { n.restore(); } catch (e) {} } },
+  };
+  const PACK_N = 5;
+  function applyIap(kind, fresh) {
+    const k = iapKey(), v = LS(k) || {}, had = !!v[kind]; v[kind] = 1; LS(k, v);
+    if (kind === 'adfree') { if (GF.ads) { GF.ads.config.adFree = true; GF.ads.banner && GF.ads.banner(false); } if (fresh && !had) UK.toast(GF.t('ops.iap.thanks'), safe()); }
+    if (kind === 'pack' && !had) { let n = 0; for (let i = 0; i < PACK_N; i++) { const it = nextGift(); if (it && Room.grant(it.id)) n++; } UK.toast(GF.t('ops.iap.packgot', { n }), safe()); }
+  }
+  window.GF_billEvent = (kind, ev) => {
+    if (ev === 'owned' || ev === 'restored') applyIap(kind, ev === 'owned');
+    else if (ev === 'pending') UK.toast(GF.t('ops.iap.pending'), safe());
+    else if (ev === 'fail') UK.toast(GF.t('ops.iap.fail'), safe());
+  };
+
+  /* ---------------- 로컬 알림(H3): 성인 앱만·기본 꺼짐·하루 1회 이하·설정에서 켤 때만 권한 요청 ---------------- */
+  O.notif = {
+    native: () => (!O.kid && window.GFNotify && typeof window.GFNotify.available === 'function' && window.GFNotify.available() ? window.GFNotify : null),
+    on: () => !!S().notif,
+    set(on) { const n = O.notif.native(); if (!n) return; S().notif = on ? 1 : 0; if (GF.save) GF.save(); try { on ? n.enable() : n.disable(); } catch (e) {} },
+  };
+  window.GF_notifEvent = (ev) => { if (ev === 'denied') { S().notif = 0; if (GF.save) GF.save(); UK.toast(GF.t('ops.notif.denied'), safe()); } else if (ev === 'granted') UK.toast(GF.t('ops.notif.on'), safe()); };
+
   /* ---------------- 설정 줄(extras 가 부른다) ---------------- */
   O.rows = function (body, sc, kid) {
     const row = (label, node) => { const r = el('div', 'xt-row', body); el('span', '', r, label); if (node) r.appendChild(node); return r; };
@@ -168,6 +200,12 @@
       if (O.cfg && O.cfg.calendar) row(GF.t('ops.settings.cal'), tb(GF.t('common.view'), () => { sc.close(); O.openCalendar(); }));
       row(GF.t('ops.settings.album'), tb(GF.t('common.view'), () => { sc.close(); O.openAlbum(); }));
     }
+    if (!kid && O.notif.native()) row(GF.t('ops.settings.notif'), UK.switch(O.notif.on(), (on) => { O.notif.set(on); }));
+    if (!kid && (O.iap.configured('adfree') || O.iap.configured('pack'))) {
+      if (O.iap.configured('adfree')) row(GF.t('ops.iap.adfree'), O.iap.owned('adfree') ? el('b', '', null, GF.t('ops.iap.owned')) : tb(O.iap.price('adfree') || GF.t('ops.iap.buy'), () => { sc.close(); O.iap.buy('adfree'); }));
+      if (O.iap.configured('pack')) row(GF.t('ops.iap.pack'), O.iap.owned('pack') ? el('b', '', null, GF.t('ops.iap.owned')) : tb(O.iap.price('pack') || GF.t('ops.iap.buy'), () => { sc.close(); O.iap.buy('pack'); }));
+      row(GF.t('ops.iap.restore'), tb(GF.t('common.view'), () => { O.iap.restore(); UK.toast(GF.t('ops.iap.restoring'), safe()); }));
+    }
     row(GF.t('ops.settings.backup'), tb(GF.t('common.view'), () => { sc.close(); O.openBackup(); }));
     row(GF.t('ops.settings.help'), tb(GF.t('common.view'), () => { sc.close(); O.openHelp(); }));
   };
@@ -176,6 +214,8 @@
     if (window.Room && Room.place && !Room._opsW) { const pl = Room.place; Room.place = function () { O.note('house'); return pl.apply(Room, arguments); }; Room._opsW = 1; }   // 집 소품 놓기 → 미션
     O.cfg = cfg; O.app = cfg.app; O.kid = !!cfg.kid; O.d = (GF.data && GF.data.ops) || null; O.ready = !!O.d; O.applyMotion();
     if (!O.ready) return;
+    if (!O.kid && O.iap.owned('adfree') && GF.ads) GF.ads.config.adFree = true;   // 이미 산 「광고 제거」
+    if (!O.kid) setTimeout(() => { try { if (O.iap.native()) O.iap.restore(); } catch (e) {} }, 2500);   // 재설치·기기 변경 복원(기기 안 조회)
     if (/[?&]ops=0/.test(location.search) || (navigator.webdriver && !/[?&]ops=1/.test(location.search))) { const s = st(); s.lastOpen = O._now(); put(s); return; }   // 자동 시험은 팝업을 띄우지 않는다(?ops=1 로 확인)
     if (O.kid) setTimeout(O.fridayGift, 3200); else { comeback(); newsAuto(); }
   };

@@ -85,3 +85,9 @@
 - 허용: 홈·지도 화면 하단 배너(비개인화, 등급 G, 아동 대상 처리). 금지: 전면·보상형·놀이 화면·그림책·보호자 메뉴·집 화면.
 - 배너가 켜지는 화면은 `GF.ads.BANNER_SCREENS` 한 곳. 판이 시작되면 `GF.onScreen` 이 배너를 끈다.
 - AD_ID 제거는 flavor 매니페스트. 광고 클릭의 앱 밖 이동은 SDK 동작이므로 방침·스토어 설명에 적었다.
+
+## 10. D21 운영·구매·알림 추가분 (2026-10-12) — 유아 ①④⑩ 영향
+- **구매·알림 없음**: 유아 flavor 매니페스트에서 `com.android.vending.BILLING`·`POST_NOTIFICATIONS` 를 `tools:node="remove"` 로 제거, `GFBilling`·`GFNotify` 는 `BuildConfig.GF_KID` 면 모든 호출을 무시(Java), JS(`GF.ops.iap/notif`)도 유아 앱에선 `configured`/`native` 가 항상 false(smoke 가 스텁을 심어도 줄이 없음을 단언).
+- **인앱 리뷰 없음**: `GFOps.review()` 가 유아 flavor 에서 즉시 반환, JS `reviewDue()` 도 유아면 false.
+- **보호자 메뉴(구구단 뒤)에 추가된 것**: 「움직임 줄이기」·「문의·FAQ」·「백업 코드」(기기 안 문자열, 서버 없음). 문의 메일은 `GFOps.mail` 이 시스템 메일 앱을 연다(앱 밖 이동이므로 **보호자 잠금 뒤 화면에서만**, 주소는 빌드 때 `~/.gf/store.env` 에서 주입 — 비어 있으면 버튼 숨김). 미션·달력·앨범은 성인 전용.
+- **금요일 선물·오늘의 하루**: 기기 날짜 기준, 글자 없는 연출, 서버·권한 없음, 집 소품 확정 지급(뽑기 아님), 카운트다운·압박 없음.

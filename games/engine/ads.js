@@ -68,7 +68,7 @@
     noteStory() { if (A._ctx) A._ctx.story = true; },
     _interOk() {
       const c = A.config, now = Date.now(), st = LS('gf:ads:state') || {}, ctx = A._ctx || {}, u = A._used();
-      if (!A.available('interstitial')) return false;
+      if (c.adFree || !A.available('interstitial')) return false;
       if (ctx.kind || ctx.story) return false;                                  // 오늘의 한 판·시즌·끝없이·사연 컷 직후
       if ((st.plays || 0) <= c.interstitialFirst) return false;                 // 처음 5판
       if (now - A._t0 < c.interstitialWarmMs) return false;                     // 앱을 연 뒤 3분
@@ -87,7 +87,7 @@
     BANNER_SCREENS: /^(home|map|shelf|itable|chome|cbook|qhome|qtests|mhome|mlevels|phome|plevels|bhome|blevels|shome|slevels|thome|tlevels|dhome|dmap)$/,
     _banner: false,
     banner(on) {
-      on = !!on && A.config.banner && A.live(); if (on === A._banner) return; A._banner = on;
+      on = !!on && A.config.banner && A.live() && !A.config.adFree; if (on === A._banner) return; A._banner = on;   // 광고 제거 구매자는 배너 없음
       const n = A.native(); if (n && typeof n.banner === 'function') { try { n.banner(on); } catch (e) {} return; }
       let d = document.getElementById('gf-adbanner');   // JS 시험 배너(?ads=1)
       if (on && !d) { d = document.createElement('div'); d.id = 'gf-adbanner'; d.textContent = '배너 광고 자리(테스트)'; d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;height:50px;background:#ddd;color:#555;font:12px sans-serif;text-align:center;line-height:50px;z-index:5;pointer-events:none'; document.body.appendChild(d); }

@@ -24,6 +24,8 @@ import android.window.OnBackInvokedDispatcher;
 public class MainActivity extends Activity {
     private WebView web;
     private AdsBridge ads;
+    private GFNotify notify;
+    private GFBilling billing;
     private int navBottomPx = 0;
 
     @Override
@@ -76,6 +78,10 @@ public class MainActivity extends Activity {
         setContentView(root);
         ads = new AdsBridge(this, web, adHolder, () -> pushInsets(web.getRootWindowInsets()));
         web.addJavascriptInterface(new GFOps(this), "GFOps");                        // 운영(D21): 문의 메일·인앱 리뷰·버전
+        notify = new GFNotify(this, web);
+        billing = new GFBilling(this, web);
+        web.addJavascriptInterface(notify, "GFNotify");                              // 로컬 알림(D21 H3): 성인 앱만
+        web.addJavascriptInterface(billing, "GFBilling");                            // 구매(D21 H1): 성인 앱만, 상품 ID 없으면 숨김
         web.addJavascriptInterface(ads, "GFAds");                                    // 광고(D19): 아래 AdsBridge 가 유아·성인 규칙을 나눈다
         web.setOnApplyWindowInsetsListener((v, insets) -> {
             pushInsets(insets);
@@ -88,6 +94,12 @@ public class MainActivity extends Activity {
             getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
                     OnBackInvokedDispatcher.PRIORITY_OVERLAY, (OnBackInvokedCallback) this::handleBack);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int code, String[] perms, int[] res) {
+        super.onRequestPermissionsResult(code, perms, res);
+        if (notify != null) notify.onPermission(code, res);
     }
 
     private void hideBars() {
@@ -155,6 +167,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         if (ads != null) ads.destroy();
+        if (billing != null) billing.destroy();
         if (web != null) {
             web.destroy();
             web = null;

@@ -4316,6 +4316,78 @@
    "game": "playground",
    "season": null,
    "physical": null
+  },
+  {
+   "no": 223,
+   "id": "t_shoes_k",
+   "name": "요정의 작은 구두",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👞",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 224,
+   "id": "t_bremen_k",
+   "name": "음악대 나팔",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 225,
+   "id": "t_hok_k",
+   "name": "도깨비 방망이",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🔨",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 226,
+   "id": "t_pino_k",
+   "name": "피노키오 인형",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪆",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
   }
  ],
  "meTypes": {

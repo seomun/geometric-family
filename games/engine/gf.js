@@ -39,7 +39,7 @@
   };
   GF.IC = IC;
   const starsHTML = (n, cls) => '<div class="stars3 ' + (cls || '') + '">' + [1, 2, 3].map((i) => '<svg viewBox="0 0 32 32" class="' + (i > n ? 'off' : '') + '">' + STAR + '</svg>').join('') + '</div>';
-  const dotsHTML = (n) => '<svg viewBox="0 0 56 56" width="56" height="56">' + ({ 1: [[28, 28]], 2: [[17, 28], [39, 28]], 3: [[28, 17], [16, 38], [40, 38]] }[n]).map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="8" fill="#fff"/>').join('') + '</svg>';
+  const dotsHTML = (n) => '<svg viewBox="0 0 56 56" width="56" height="56">' + ({ 1: [[28, 28]], 2: [[17, 28], [39, 28]], 3: [[28, 17], [16, 38], [40, 38]], 4: [[17, 17], [39, 17], [17, 39], [39, 39]] }[n]).map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="8" fill="#fff"/>').join('') + '</svg>';
 
   /* ---------------- 저장 (localStorage 한 키) ---------------- */
   let KEY = 'gf:v1';                                          // 앱마다 다른 저장 키(방치형은 gf:idle:v1)
@@ -615,7 +615,7 @@
   GF.quickStage = () => {
     for (let n = 1; n <= 40; n++) {
       const ch = 'ch' + n, def = GF.data.stages[ch]; if (!def) continue; if (!(n === 1 || n === 6 || n === 11 || stageDone('c' + (n - 1) + 'C'))) continue;
-      for (let k = 0; k < def.stages.length; k++) { const id = 'c' + n + 'ABC'[k]; if (!stageDone(id)) return { ch, k, id }; }
+      for (let k = 0; k < Math.min(3, def.stages.length); k++) { const id = 'c' + n + 'ABCD'[k]; if (!stageDone(id)) return { ch, k, id }; }
     }
     return null;
   };
@@ -625,8 +625,8 @@
       const ch = p.ch, def = GF.data.stages[ch], n = ch.slice(2);
       GF.bg(def.bg, r);
       def.stages.forEach((s, k) => {
-        const id = 'c' + n + 'ABC'[k], open = k === 0 || stageDone('c' + n + 'ABC'[k - 1]), rec = GF.state.stages[id];
-        const b = el('button', 'card stagebtn' + (open ? '' : ' locked'), r); if (GF.safeWide) { b.style.top = '130px'; b.style.left = 'calc(50% + ' + ((k - 1) * 215) + 'px)'; } else b.style.top = (130 + k * 140) + 'px';
+        const id = 'c' + n + 'ABCD'[k], open = k === 0 || stageDone('c' + n + 'ABCD'[k - 1]), rec = GF.state.stages[id];
+        const b = el('button', 'card stagebtn' + (open ? '' : ' locked'), r); if (GF.safeWide) { b.style.top = '130px'; b.style.left = 'calc(50% + ' + ((k - (def.stages.length - 1) / 2) * 215) + 'px)'; } else b.style.top = (130 + k * (def.stages.length > 3 ? 112 : 140)) + 'px';
         el('div', 'badge', b, dotsHTML(k + 1));
         el('div', '', b, open ? starsHTML(rec ? rec.stars : 0) : IC.lock);
         b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } GF.sfx('pick'); Stage.start({ kind: 'story', ch, k, id }); };
@@ -724,14 +724,14 @@
     const avg = Math.max(1, Math.floor(run.res.reduce((a, b) => a + b, 0) / run.res.length));   // 평균 내림: 한 라운드라도 틀리면 ★3 이 안 된다
     const rec = GF.state.stages[run.id] || {}; rec.done = true; rec.stars = Math.max(rec.stars || 0, avg); GF.state.stages[run.id] = rec; Store.save(); refreshBar();
     if (GF.ip && GF.ip.ready && run.kind === 'story' && run.k < 2) GF.ip.playBeat(run.ch, run.k + 1);   // 단계 A·B 깸 = 이야기 카드 1·2
-    const gain = Reward.sticker(run.ch + '_' + 'ABC'[run.k], avg === 3);
+    const gain = run.k < 3 ? Reward.sticker(run.ch + '_' + 'ABCD'[run.k], avg === 3) : false;   // 보너스 단계 D 는 스티커 없이 별만
     const n = run.ch.slice(2);
     if (run.k === 2 && window.Room && Room.data) { const gi = { ch1: 'k_party', ch2: 'k_train' }[run.ch] || 'k_' + run.ch; if (Room.grant(gi)) { GF.sfx('star'); const it = Room.item(gi), gf = el('div', 'kgift', r); const im = el('img', '', gf); im.src = Room.src(it, it.colors[0]); setTimeout(() => gf.remove(), 2600); } }   // 장을 끝내면 아이 방에 장난감 하나
     if (run.k === 2 && ['A', 'B', 'C'].every((l) => (GF.state.stages['c' + n + l] || {}).stars === 3)) Reward.sticker(run.ch + '_star');
-    if (gain) { const s = Reward.stickerEl(run.ch + '_' + 'ABC'[run.k]); pn.insertBefore(s, row); setTimeout(() => GF.sfx('star'), 500); }
+    if (gain) { const s = Reward.stickerEl(run.ch + '_' + 'ABCD'[run.k]); pn.insertBefore(s, row); setTimeout(() => GF.sfx('star'), 500); }
     const again = el('button', 'uk-round lg gold', row, IC.again); again.onclick = () => { GF.sfx('pick'); const o = run; GF.stack.pop(); Stage.start({ kind: 'story', ch: o.ch, k: o.k, id: o.id }); };
     const nxt = el('button', 'uk-round lg', row, IC.play);
-    nxt.onclick = () => { GF.sfx('pick'); if (run.k < 2) GF.popTo('stages', { ch: run.ch }); else GF.replace('book', { ch: run.ch, part: 'epi' }); };
+    nxt.onclick = () => { GF.sfx('pick'); if (run.k < 2 || run.k === 3) GF.popTo('stages', { ch: run.ch }); else GF.replace('book', { ch: run.ch, part: 'epi' }); };
   }
   // 놀이방(자유) 모드에서는 라운드가 끝없이 이어진다 (finish 의 total = Infinity)
 

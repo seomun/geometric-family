@@ -31,7 +31,7 @@
   const afterBeat = (k) => { try { if (!GF.ip || !GF.ip.ready || auto() || !T.d) return; const m = /^([sme])(\d+)(?::(\d+))?$/.exec(k); if (!m) return; const c = ch(+m[2]); if (!c) return; let beat = m[1] === 's' ? 0 : m[1] === 'e' ? 3 : (c.mid || []).findIndex((x) => x.after === +m[3]) + 1; if (beat < 0 || beat > 3) return; GF.ip.beat(T.app, c.tale, beat); } catch (e) {} };
   const go = (raw, parent, cb, o, k) => {
     if (!raw || !raw.length || (k && T.seen(k)) || auto()) { if (k && !T.seen(k)) T.mark(k); else if (k && T.seen(k)) afterBeat(k); cb && cb(); return false; }
-    if (k) T.mark(k); T.play(raw, parent, () => { if (k) afterBeat(k); cb && cb(); }, o); return true;
+    if (k) T.mark(k); T.play(raw, parent, () => { if (k) afterBeat(k); cb && cb(); if (k) setTimeout(() => { try { GF.ip && GF.ip.cameo && GF.ip.cameo(T.app, k); } catch (e) {} }, 700); }, o); return true;
   };
   const ch = (n) => (T.d && T.d.chapters && T.d.chapters[n]) || null;
   /** 앱을 처음 쓸 때(첫 인사 다음) 이 게임의 이야기를 2~4컷으로 소개 */
@@ -58,7 +58,7 @@
   T.say = function (parent, n, kind, k) {
     if (!T.ready || auto()) return null; const c = ch(n); if (!c || !c.say || !c.say[kind] || !c.say[kind].length) return null; const L = c.say[kind][((k || 0) % c.say[kind].length + c.say[kind].length) % c.say[kind].length];
     const old = parent.querySelector('.tale-say'); if (old) old.remove();
-    const b = el('div', 'tale-say' + (T.kid ? ' kid' : ''), parent), a = el('div', 'a', b); a.style.backgroundImage = 'url("' + GF.src(L.who) + '")'; if (T.kid) el('i', '', b, '💬'); else el('span', '', b, GF.name(L.text));
+    const b = el('div', 'tale-say' + (T.kid ? ' kid' : ''), parent), a = el('div', 'a', b); a.style.backgroundImage = 'url("' + GF.src(L.who) + '")'; if (T.kid) el('i', '', b, '💬'); else el('span', '', b, GF.ops && GF.ops.tone ? GF.ops.tone(GF.name(L.text)) : GF.name(L.text));
     GF.say && L.voice && GF.say(L.voice); setTimeout(() => { b.classList.add('off'); setTimeout(() => b.remove(), 400); }, T.kid ? 2200 : 2800); return b;
   };
   /* ---------------- 설명(규칙 안내) ---------------- */

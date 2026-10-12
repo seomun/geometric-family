@@ -8,7 +8,7 @@ const goal = (l) => (l.spots || l.toys || l.lights || l.slots || []).length || l
 for (let c = 1; c <= 12; c++) { const ls = D.levels.filter((l) => l.chapter === c); for (let i = 1; i < ls.length; i++) ok(goal(ls[i]) >= goal(ls[i - 1]), c + '장 곡선 단조 ' + i); ok(ls.length === G.PER && ls.filter((l) => l.last).length === 1, c + '장 판 수·마지막 판'); }
 // 사연: 장마다 4컷, 쓰는 캐릭터가 모두 존재
 for (const s of X.stories) { ok(s.cuts.length >= 4 && s.cuts.length <= 5, s.chapter + '장 사연 4~5컷'); s.cuts.forEach((c) => c.chars.forEach((id) => ok(!!C[id], s.chapter + '장 캐릭터 ' + id))); }
-ok(X.stories.length === 12 && D.chapters.length === 12 && D.levels.length === 60, '사연 12편·12장·60판');
+ok(X.stories.length === 20 && D.chapters.length === 20 && D.levels.length === 100, '사연 20편·20장·100판');
 // 소품: 보상 id 가 모두 집 데이터에 있고 아이 방
 const items = Object.fromEntries(R.items.map((i) => [i.id, i])); const src = fs.readFileSync(path.join(__dirname, '..', 'games', 'day', 'day.js'), 'utf8'); const rew = [...src.matchAll(/(\d+): '(y_[a-z0-9]+)'/g)].map((m) => m[2]);
 rew.forEach((id) => ok(items[id] && items[id].room === 'kid' && items[id].game === 'day', '보상 소품 ' + id)); X.dailyItems.forEach((id) => ok(!!items[id], '오늘의 하루 보상 ' + id));

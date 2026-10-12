@@ -148,6 +148,100 @@
       ]
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "tokens": [
+       {
+        "id": "nemo_dad.good"
+       },
+       {
+        "id": "nemo_mom.good"
+       },
+       {
+        "id": "nemo_kids.kid1"
+       },
+       {
+        "id": "nemo_kids.kid2"
+       }
+      ]
+     },
+     {
+      "tokens": [
+       {
+        "id": "nemo_kids.kid1"
+       },
+       {
+        "id": "nemo_kids.kid2"
+       },
+       {
+        "id": "nemo_kids.kid3"
+       },
+       {
+        "id": "nemo_kids.baby"
+       }
+      ]
+     },
+     {
+      "tokens": [
+       {
+        "id": "nemo_dad.good"
+       },
+       {
+        "id": "nemo_mom.good"
+       },
+       {
+        "id": "nemo_kids.kid1"
+       },
+       {
+        "id": "nemo_kids.kid2"
+       },
+       {
+        "id": "nemo_kids.kid3"
+       }
+      ]
+     },
+     {
+      "tokens": [
+       {
+        "id": "nemo_dad.good"
+       },
+       {
+        "id": "nemo_mom.good"
+       },
+       {
+        "id": "nemo_kids.kid1"
+       },
+       {
+        "id": "nemo_kids.kid2"
+       },
+       {
+        "id": "nemo_kids.kid3"
+       }
+      ]
+     },
+     {
+      "tokens": [
+       {
+        "id": "nemo_dad.good"
+       },
+       {
+        "id": "nemo_mom.good"
+       },
+       {
+        "id": "nemo_kids.kid1"
+       },
+       {
+        "id": "nemo_kids.kid2"
+       },
+       {
+        "id": "nemo_kids.kid3"
+       }
+      ]
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -222,6 +316,31 @@
       "from": "wife"
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "pairs": 4,
+      "from": "wife"
+     },
+     {
+      "pairs": 4,
+      "from": "wife"
+     },
+     {
+      "pairs": 4,
+      "from": "wife"
+     },
+     {
+      "pairs": 4,
+      "from": "wife"
+     },
+     {
+      "pairs": 4,
+      "from": "wife"
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -281,6 +400,31 @@
       "pieces": 6
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "id": "baby.joy",
+      "pieces": 6
+     },
+     {
+      "id": "nemo_mom.good",
+      "pieces": 6
+     },
+     {
+      "id": "art.radish",
+      "pieces": 6
+     },
+     {
+      "id": "art.radish",
+      "pieces": 6
+     },
+     {
+      "id": "art.radish",
+      "pieces": 6
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -349,6 +493,36 @@
       "fills": 6
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "id": "nemo_dad.good",
+      "colors": 8,
+      "fills": 6
+     },
+     {
+      "id": "nemo_mom.good",
+      "colors": 8,
+      "fills": 6
+     },
+     {
+      "id": "wife.joy",
+      "colors": 8,
+      "fills": 6
+     },
+     {
+      "id": "wife.joy",
+      "colors": 8,
+      "fills": 6
+     },
+     {
+      "id": "wife.joy",
+      "colors": 8,
+      "fills": 6
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -409,6 +583,34 @@
       "wind": true
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "house": "nemo",
+      "n": 7
+     },
+     {
+      "house": "semo",
+      "n": 7
+     },
+     {
+      "house": "dong",
+      "n": 7,
+      "wind": true
+     },
+     {
+      "house": "dong",
+      "n": 7,
+      "wind": true
+     },
+     {
+      "house": "dong",
+      "n": 7,
+      "wind": true
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -513,6 +715,61 @@
       "len": 4
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "pads": [
+       "wife.joy",
+       "husband.good",
+       "dong_dad.good",
+       "nemo_dad.good",
+       "baby.joy"
+      ],
+      "len": 4
+     },
+     {
+      "pads": [
+       "nemo_mom.good",
+       "husband.wink",
+       "wife.good",
+       "dong_dad.joy",
+       "nemo_kids.kid1"
+      ],
+      "len": 4
+     },
+     {
+      "pads": [
+       "baby.joy",
+       "dong_dad.good",
+       "husband.joy",
+       "nemo_dad.joy",
+       "wife.wink"
+      ],
+      "len": 4
+     },
+     {
+      "pads": [
+       "baby.joy",
+       "dong_dad.good",
+       "husband.joy",
+       "nemo_dad.joy",
+       "wife.wink"
+      ],
+      "len": 4
+     },
+     {
+      "pads": [
+       "baby.joy",
+       "dong_dad.good",
+       "husband.joy",
+       "nemo_dad.joy",
+       "wife.wink"
+      ],
+      "len": 4
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -602,6 +859,51 @@
       ]
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "cards": [
+       "bell",
+       "drop",
+       "swallow",
+       "clap"
+      ]
+     },
+     {
+      "cards": [
+       "drum",
+       "gourd",
+       "clap",
+       "train"
+      ]
+     },
+     {
+      "cards": [
+       "wind",
+       "train",
+       "swallow",
+       "drop"
+      ]
+     },
+     {
+      "cards": [
+       "wind",
+       "train",
+       "swallow",
+       "drop"
+      ]
+     },
+     {
+      "cards": [
+       "wind",
+       "train",
+       "swallow",
+       "drop"
+      ]
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -697,6 +999,61 @@
       ]
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "who": "nemo_dad.joy",
+      "slots": [
+       "hat",
+       "face",
+       "neck",
+       "hand",
+       "bg"
+      ]
+     },
+     {
+      "who": "nemo_kids.kid3",
+      "slots": [
+       "hat",
+       "face",
+       "neck",
+       "hand",
+       "bg"
+      ]
+     },
+     {
+      "who": "baby.joy",
+      "slots": [
+       "hat",
+       "face",
+       "neck",
+       "hand",
+       "bg"
+      ]
+     },
+     {
+      "who": "baby.joy",
+      "slots": [
+       "hat",
+       "face",
+       "neck",
+       "hand",
+       "bg"
+      ]
+     },
+     {
+      "who": "baby.joy",
+      "slots": [
+       "hat",
+       "face",
+       "neck",
+       "hand",
+       "bg"
+      ]
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -884,6 +1241,115 @@
       ]
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "pattern": [
+       "a",
+       "b",
+       "c",
+       "a",
+       "b",
+       "c"
+      ],
+      "gaps": [
+       1,
+       4
+      ],
+      "tray": [
+       "a",
+       "b",
+       "c",
+       "x"
+      ]
+     },
+     {
+      "pattern": [
+       "c",
+       "a",
+       "b",
+       "c",
+       "a",
+       "b"
+      ],
+      "gaps": [
+       0,
+       3,
+       5
+      ],
+      "tray": [
+       "a",
+       "b",
+       "c",
+       "x"
+      ]
+     },
+     {
+      "pattern": [
+       "b",
+       "c",
+       "a",
+       "b",
+       "c",
+       "a"
+      ],
+      "gaps": [
+       1,
+       2,
+       5
+      ],
+      "tray": [
+       "a",
+       "b",
+       "c",
+       "x"
+      ]
+     },
+     {
+      "pattern": [
+       "b",
+       "c",
+       "a",
+       "b",
+       "c",
+       "a"
+      ],
+      "gaps": [
+       1,
+       2,
+       5
+      ],
+      "tray": [
+       "a",
+       "b",
+       "c",
+       "x"
+      ]
+     },
+     {
+      "pattern": [
+       "b",
+       "c",
+       "a",
+       "b",
+       "c",
+       "a"
+      ],
+      "gaps": [
+       1,
+       2,
+       5
+      ],
+      "tray": [
+       "a",
+       "b",
+       "c",
+       "x"
+      ]
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -952,6 +1418,36 @@
       "candles": 3
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "layers": 4,
+      "deco": 3,
+      "candles": 1
+     },
+     {
+      "layers": 4,
+      "deco": 4,
+      "candles": 2
+     },
+     {
+      "layers": 4,
+      "deco": 4,
+      "candles": 3
+     },
+     {
+      "layers": 4,
+      "deco": 4,
+      "candles": 3
+     },
+     {
+      "layers": 4,
+      "deco": 4,
+      "candles": 3
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -1001,6 +1497,26 @@
       "n": 6
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "n": 4
+     },
+     {
+      "n": 5
+     },
+     {
+      "n": 6
+     },
+     {
+      "n": 6
+     },
+     {
+      "n": 6
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -1101,6 +1617,58 @@
       ]
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "pieces": 8,
+      "plates": 2,
+      "heroes": [
+       "wife.joy",
+       "dong_dad.joy"
+      ]
+     },
+     {
+      "pieces": 9,
+      "plates": 3,
+      "heroes": [
+       "baby.joy",
+       "nemo_kids.kid1",
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "pieces": 8,
+      "plates": 4,
+      "heroes": [
+       "baby.joy",
+       "nemo_kids.kid1",
+       "wife.joy",
+       "husband.joy"
+      ]
+     },
+     {
+      "pieces": 8,
+      "plates": 4,
+      "heroes": [
+       "baby.joy",
+       "nemo_kids.kid1",
+       "wife.joy",
+       "husband.joy"
+      ]
+     },
+     {
+      "pieces": 8,
+      "plates": 4,
+      "heroes": [
+       "baby.joy",
+       "nemo_kids.kid1",
+       "wife.joy",
+       "husband.joy"
+      ]
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -1235,6 +1803,95 @@
       "seed": 11
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "find": [
+       {
+        "c": 0
+       },
+       {
+        "c": 1
+       },
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 20,
+      "seed": 9
+     },
+     {
+      "find": [
+       {
+        "c": 2
+       },
+       {
+        "c": 1
+       },
+       {
+        "c": 0
+       }
+      ],
+      "leaves": 22,
+      "seed": 10
+     },
+     {
+      "find": [
+       {
+        "c": 0
+       },
+       {
+        "c": 0
+       },
+       {
+        "c": 1
+       },
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 24,
+      "seed": 11
+     },
+     {
+      "find": [
+       {
+        "c": 0
+       },
+       {
+        "c": 0
+       },
+       {
+        "c": 1
+       },
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 24,
+      "seed": 11
+     },
+     {
+      "find": [
+       {
+        "c": 0
+       },
+       {
+        "c": 0
+       },
+       {
+        "c": 1
+       },
+       {
+        "c": 2
+       }
+      ],
+      "leaves": 24,
+      "seed": 11
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -1303,6 +1960,36 @@
       "speed": 4200
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "target": 1,
+      "need": 5,
+      "speed": 4600
+     },
+     {
+      "target": 0,
+      "need": 6,
+      "speed": 4400
+     },
+     {
+      "target": 2,
+      "need": 6,
+      "speed": 4200
+     },
+     {
+      "target": 2,
+      "need": 6,
+      "speed": 4200
+     },
+     {
+      "target": 2,
+      "need": 6,
+      "speed": 4200
+     }
+    ],
+    "bonus": true
    }
   ]
  },
@@ -1362,6 +2049,31 @@
       "period": 800
      }
     ]
+   },
+   {
+    "rounds": [
+     {
+      "beats": 6,
+      "period": 850
+     },
+     {
+      "beats": 7,
+      "period": 800
+     },
+     {
+      "beats": 8,
+      "period": 800
+     },
+     {
+      "beats": 8,
+      "period": 800
+     },
+     {
+      "beats": 8,
+      "period": 800
+     }
+    ],
+    "bonus": true
    }
   ]
  }

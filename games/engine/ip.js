@@ -64,6 +64,19 @@
   I.hasCameo = (id) => I.get().cameos.includes(id);
   I.addCameo = function (id) { if (!I.ready || I.hasCameo(id)) return false; I.L.cameos.push(id); changed('cameo', { id }); return true; };
 
+  /** 장 끝 컷 직후 호출: 이 앱의 이 컷(after=키)에 등장하는 카메오가 있고 처음이면 잠깐 보여 주고 도감에 기록(한 번만, 강요 없음) */
+  I.cameo = function (host, key) {
+    if (!I.ready) return false; const list = ((GF.data.ops || {}).cameos || []).filter((c) => c.host === host && c.after === key && c.kid === I.kid); if (!list.length) return false; const c = list[0]; if (I.hasCameo(c.id)) return false;
+    I.addCameo(c.id); const safe = document.getElementById('safe'); if (!safe) return true;
+    const d = document.createElement('div'); d.className = 'ip-cameo' + (I.kid ? ' kid' : ''); const av = document.createElement('div'); av.className = 'av'; try { av.style.backgroundImage = 'url("' + GF.src(c.who) + '")'; } catch (e) {} d.appendChild(av);
+    const pr = document.createElement('span'); pr.className = 'pr'; pr.textContent = c.prop; d.appendChild(pr); if (!I.kid) { const tx = document.createElement('span'); tx.className = 'tx'; tx.textContent = c.line; d.appendChild(tx); }
+    safe.appendChild(d); try { GF.sfx(I.kid ? 'ok' : 'pick'); } catch (e) {} setTimeout(() => { d.classList.add('off'); setTimeout(() => d.remove(), 500); }, I.kid ? 2600 : 3400); return true;
+  };
+  I.cameoCount = () => { const L = ((GF.data.ops || {}).cameos || []).filter((c) => c.kid === I.kid); return { got: L.filter((c) => I.hasCameo(c.id)).length, total: L.length }; };
+  /** 도감 선물: 25·50·100% 마다 집 소품 1개(확정) */
+  I.cameoGifts = function () { const n = I.cameoCount(), pct = n.total ? n.got / n.total : 0; const due = [['cam25', 0.25], ['cam50', 0.5], ['cam100', 1]].filter(([id, r]) => pct >= r && !I.L.taken.includes(id)); return due.map((d) => d[0]); };
+  I.claimCameoGift = function (id) { if (!window.Room || I.L.taken.includes(id)) return null; I.L.taken.push(id); write(); const sets = [(I.cfg && I.cfg.rewardSet), 'kid'].filter(Boolean); let it = null; for (const st of sets) { it = Room.data.items.find((x) => x.set === st && !Room.has(x.id)); if (it) break; } if (it) Room.grant(it.id); return it; };
+
   /* ---------------- 가족 코드(유아↔성인): 카드·도장·카메오만. 보호자 잠금 뒤에서만 부른다 ---------------- */
   const crc32 = (str) => { let c, crc = 0xFFFFFFFF; for (let i = 0; i < str.length; i++) { c = (crc ^ str.charCodeAt(i)) & 0xFF; for (let k = 0; k < 8; k++) c = c & 1 ? (c >>> 1) ^ 0xEDB88320 : c >>> 1; crc = (crc >>> 8) ^ c; } return ((crc ^ 0xFFFFFFFF) >>> 0).toString(16).padStart(8, '0'); };
   const b64e = (x) => btoa(unescape(encodeURIComponent(x))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''), b64d = (x) => decodeURIComponent(escape(atob(x.replace(/-/g, '+').replace(/_/g, '/'))));

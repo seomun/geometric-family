@@ -445,6 +445,290 @@
      "bubble": "heart"
     }
    ]
+  },
+  {
+   "chapter": 13,
+   "title": "저녁 양치",
+   "tale": "bremen",
+   "cuts": [
+    {
+     "text": "밤이 되었어요. 막둥이는 세모 이모와 나란히 서서 칫솔을 들었어요.",
+     "chars": [
+      "baby.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "「브레멘 음악대처럼 노래하며 닦아 볼까?」 쓱싹쓱싹 쓱싹쓱싹.",
+     "chars": [
+      "wife.wink",
+      "baby.joy"
+     ],
+     "bubble": "note"
+    },
+    {
+     "text": "당나귀 소리도, 멍멍 소리도, 야옹 소리도 따라 하며 이가 반짝반짝!",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "입을 헹구고 활짝 웃어요. 이제 달콤한 꿈 속으로.",
+     "chars": [
+      "baby.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 14,
+   "title": "목욕 시간",
+   "tale": "hok",
+   "cuts": [
+    {
+     "text": "목욕 시간! 동그라미 아저씨가 거품을 한가득 만들어 주었어요.",
+     "chars": [
+      "dong_dad.warm",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "막둥이 머리에 거품 모자가 봉긋! 「혹부리 영감님 같네!」",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "거품이 퐁퐁 터질 때마다 웃음도 퐁퐁.",
+     "chars": [
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "뽀송뽀송 닦고 나니 몸이 가벼워요.",
+     "chars": [
+      "baby.love",
+      "dong_dad.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 15,
+   "title": "외출 옷 입기",
+   "tale": "shoes",
+   "cuts": [
+    {
+     "text": "밖에 나갈 시간이에요. 막둥이가 옷장 앞에서 두리번.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "「구두장이 요정이 몰래 옷을 챙겨 놓았나 봐!」 모자도 겉옷도 양말도 딱.",
+     "chars": [
+      "nemo_mom.wink",
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "요정은 어디에도 없었지만 따뜻한 마음은 가득.",
+     "chars": [
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "준비 끝! 엄마 손을 잡고 출발해요.",
+     "chars": [
+      "nemo_mom.love",
+      "baby.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 16,
+   "title": "점심밥",
+   "tale": "brothers",
+   "cuts": [
+    {
+     "text": "점심시간. {sib_kid3}과 {baby}는 밥을 똑같이 나눠 담았어요.",
+     "chars": [
+      "nemo_kids.kid3",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "{sib_kid3}이 막둥이 접시에 반찬을 더. 막둥이도 {sib_kid3} 접시에 반찬을 더!",
+     "chars": [
+      "nemo_kids.kid3",
+      "baby.joy"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "반찬이 줄지 않아 서로 갸웃, 그러다 깔깔!",
+     "chars": [
+      "baby.surprise",
+      "nemo_kids.kid3"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "함께 먹으니 더 맛있어요. 의좋은 형제의 점심.",
+     "chars": [
+      "baby.love",
+      "nemo_kids.kid3"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 17,
+   "title": "책 정리",
+   "tale": "pino",
+   "cuts": [
+    {
+     "text": "책 정리 시간이에요. 피노키오 인형이 책장 위에서 지켜봐요.",
+     "chars": [
+      "baby.joy"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "빨간 책, 초록 책, 파란 책, 노란 책. 색깔끼리 줄을 맞춰요.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.good"
+     ]
+    },
+    {
+     "text": "코가 길어질 만큼 신나서 막둥이는 힘껏 책을 꽂았어요.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "책장이 알록달록해졌어요. 피노키오도 박수!",
+     "chars": [
+      "baby.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 18,
+   "title": "신발 가지런히",
+   "tale": "kongjwi",
+   "cuts": [
+    {
+     "text": "현관에 신발이 어질러져 있어요.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "꽃신 한 짝을 찾던 콩쥐처럼, 짝을 찾아 가지런히 놓아요. {sib_kid1}도 같이 찾아 줘요.",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "한 켤레, 두 켤레, 세 켤레! 신발이 나란히.",
+     "chars": [
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "현관이 반짝반짝. 내일도 씩씩하게 나가요.",
+     "chars": [
+      "baby.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 19,
+   "title": "오후 간식",
+   "tale": "ant",
+   "cuts": [
+    {
+     "text": "간식 시간! 엄마가 개미처럼 작은 접시에 열매를 모았어요.",
+     "chars": [
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "text": "막둥이는 한 입 먹고, 한 입은 곰 인형에게.",
+     "chars": [
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "개미와 베짱이처럼 나눠 먹으면 더 달콤해요.",
+     "chars": [
+      "baby.love",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    },
+    {
+     "text": "접시가 깨끗하게 비었어요. 잘 먹었습니다!",
+     "chars": [
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  },
+  {
+   "chapter": 20,
+   "title": "느릿느릿 잘 준비",
+   "tale": "hare",
+   "cuts": [
+    {
+     "text": "잘 준비를 해요. 토끼처럼 쏜살같이? 아니, 거북이처럼 느릿느릿.",
+     "chars": [
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "느릿느릿 이불을 펴고, 느릿느릿 인형을 눕히고.",
+     "chars": [
+      "baby.tired",
+      "nemo_mom.love"
+     ]
+    },
+    {
+     "text": "천천히 가도 괜찮아요. 오늘 하루도 잘 해냈어요.",
+     "chars": [
+      "baby.love"
+     ],
+     "bubble": "heart"
+    },
+    {
+     "text": "「잘 자.」 불을 끄면 달님이 창문으로 웃어요.",
+     "chars": [
+      "nemo_mom.love",
+      "baby.tired"
+     ],
+     "bubble": "zzz"
+    }
+   ]
   }
  ]
 }

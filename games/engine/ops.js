@@ -118,6 +118,14 @@
   };
 
 
+  /* ---------------- 내 도형 개인화(3): 칭호·말투. ⑤ 결과(Room.me)가 성인 앱 전체에 반영된다 ---------------- */
+  O.me = () => { try { if (O.kid) return null; const m = window.Room && Room.me && Room.me(), T = m && Room.data.meTypes && Room.data.meTypes[m.f]; return T ? { f: m.f, name: T.sub[m.s] || T.name, color: T.color } : null; } catch (e) { return null; } };
+  /** 말풍선 말투 필터: 네모 그대로 / 세모 들뜸(마침표→느낌표) / 동그라미 차분(느낌표→마침표) */
+  O.tone = function (text) { const m = O.me(); if (!m || !text) return text; if (m.f === 'semo') return text.replace(/([가-힣a-zA-Z])\.(\s|$)/g, '$1!$2'); if (m.f === 'dong') return text.replace(/!/g, '.').replace(/~/g, ''); return text; };
+  /** 이번 주 주제(ISO 주): ops.json weekThemes. 원격 설정이 덮을 수 있는 구조 */
+  O.week = function () { const d = nowD(), t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())), dn = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - dn); const y0 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1)), w = Math.ceil(((t - y0) / DAY + 1) / 7); return ((O.d && O.d.weekThemes) || []).find((x) => x.w === w) || null; };
+  O.weekRec = function () { const ev = (O.cfg && O.cfg.calendar && O.cfg.calendar()) || [], m0 = nowD().getMonth() + 1; return ev.find((e) => !e.done && e.months.includes(m0)) || null; };
+
   /* ---------------- IP 층 UI: 이야기 카드 · 도장책 · 가족 코드 · 유아 도장판 ---------------- */
   const GP = () => (GF.ip && GF.ip.ready ? GF.ip : null), ipD = () => (GF.data && GF.data.ops) || {};
   const appLabel = (a) => (ipD().appNames || {})[a] || a;
@@ -133,6 +141,11 @@
     });
     if (!kid) el('p', 'xt-p', body, GF.t('ops.album.cardnote'));
   }
+  O.openCameos = function () {
+    const I = GP(); if (!I) return; const { sc, body } = sheet(GF.t('ops.cam.title')), n = I.cameoCount(); el('p', 'xt-p', body, GF.t('ops.cam.seen', { n: n.got, total: n.total }));
+    const g = el('div', 'ops-cams', body); ((ipD().cameos || []).filter((c) => c.kid === I.kid)).forEach((c) => { const has = I.hasCameo(c.id), d = el('div', 'ops-cam' + (has ? ' on' : ''), g); if (has) { const a = el('i', 'av', d); a.style.backgroundImage = 'url("' + GF.src(c.who) + '")'; el('span', 'pr', d, c.prop); if (!I.kid) el('small', '', d, GF.t('ops.cam.from', { app: appLabel(c.frm) })); } else el('span', 'pr', d, '🔒'); });
+    const due = I.cameoGifts(); if (due.length) UK.btn({ text: GF.t('ops.cam.gift'), cls: 'gold block', onclick: () => { let it = null; due.forEach((id) => { it = I.claimCameoGift(id) || it; }); sc.close(); UK.toast(it ? GF.t('ops.mis.got', { name: it.name }) : GF.t('ops.mis.none'), safe()); GF.sfx('celebrate'); } }, body);
+  };
   O.openCards = function () { const { body } = sheet(GF.t('ops.album.cards')); I_cards(body, () => {}, O.kid); };
   O.openPassport = function () {
     const I = GP(); if (!I) return; const { body } = sheet(GF.t('ops.pass.title')), g = I.kid ? 'kid' : 'adult', apps = (ipD().apps || {})[g] || [];
@@ -235,9 +248,10 @@
       row(GF.t('ops.settings.mis'), tb(GF.t('common.view'), () => { sc.close(); O.openMissions(); }));
       if (O.cfg && O.cfg.calendar) row(GF.t('ops.settings.cal'), tb(GF.t('common.view'), () => { sc.close(); O.openCalendar(); }));
       row(GF.t('ops.settings.album'), tb(GF.t('common.view'), () => { sc.close(); O.openAlbum(); }));
+      row(GF.t('ops.settings.cameo'), tb(GF.t('common.view'), () => { sc.close(); O.openCameos(); }));
       row(GF.t('ops.settings.passport'), tb(GF.t('common.view'), () => { sc.close(); O.openPassport(); }));
     }
-    if (kid && GP()) { row(GF.t('ops.settings.kidbook'), tb(GF.t('common.view'), () => { sc.close(); O.openPassport(); })); row(GF.t('ops.settings.cards'), tb(GF.t('common.view'), () => { sc.close(); O.openCards(); })); }
+    if (kid && GP()) { row(GF.t('ops.settings.cameo'), tb(GF.t('common.view'), () => { sc.close(); O.openCameos(); })); row(GF.t('ops.settings.kidbook'), tb(GF.t('common.view'), () => { sc.close(); O.openPassport(); })); row(GF.t('ops.settings.cards'), tb(GF.t('common.view'), () => { sc.close(); O.openCards(); })); }
     if (GP()) row(GF.t('ops.settings.family'), tb(GF.t('common.view'), () => { sc.close(); O.openFamilyCode(); }));
     if (!kid && O.notif.native()) row(GF.t('ops.settings.notif'), UK.switch(O.notif.on(), (on) => { O.notif.set(on); }));
     if (!kid && (O.iap.configured('adfree') || O.iap.configured('pack'))) {

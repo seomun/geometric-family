@@ -730,7 +730,7 @@
    ],
    "faces": [
     "nemo_kids.kid1",
-    "nemo_kids.kid2",
+    "nemo_kids.kid3",
     "nemo_mom.joy"
    ],
    "nodes": [
@@ -993,7 +993,7 @@
     "#C5E8B0"
    ],
    "faces": [
-    "nemo_kids.kid2",
+    "nemo_kids.kid3",
     "nemo_mom.worry",
     "nemo_mom.joy"
    ],

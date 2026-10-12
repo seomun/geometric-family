@@ -1,6 +1,6 @@
 // 이야기 지도(GF.saga) 점검: node tools/saga_smoke.js [앱…] — 노드 수 = 판 수 · 잠김(처음엔 1만 열림) · 별 표시 · 상자·아바타 위치 · 겹침 0 · 스크롤 성능 · 큰 글씨
 const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
-const APPS = { block: ['bhome', 'blevels', 120, 'BLOCK'], merge: ['mhome', 'mlevels', 120, 'MG'], spot: ['phome', 'plevels', 140, 'SP'], sort: ['shome', 'slevels', 120, 'SR'], tile: ['thome', 'tlevels', 120, 'TL'], day: ['dhome', 'dmap', 60, 'DY'] };
+const APPS = { block: ['bhome', 'blevels', 120, 'BLOCK'], merge: ['mhome', 'mlevels', 120, 'MG'], spot: ['phome', 'plevels', 140, 'SP'], sort: ['shome', 'slevels', 120, 'SR'], tile: ['thome', 'tlevels', 120, 'TL'], day: ['dhome', 'dmap', 100, 'DY'] };
 const want = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(APPS);
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });

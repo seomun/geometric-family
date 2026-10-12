@@ -102,6 +102,8 @@
     const me = el('div', 'sg-me', world), av = GF.img(o.avatar || S.avatar(kid)); me.appendChild(av); el('i', 'sh', me);
     const place = (p) => { me.style.left = p.x + '%'; me.style.top = (p.y - 6) + 'px'; };
     const from = o.from && pos[o.from] ? pos[o.from] : null; if (from && pos[cur.id] && from !== pos[cur.id]) { me.style.transition = 'none'; place(from); void me.offsetWidth; setTimeout(() => { me.style.transition = ''; place(pos[cur.id]); }, 600); } else if (pos[cur.id]) place(pos[cur.id]);
+    /* 이번 주 주제(10앱 같은 주 같은 시즌) + 내 도형 칭호(성인) */
+    if (!kid && GF.ops && GF.ops.week) { const wk = GF.ops.week(), me = GF.ops.me && GF.ops.me(), rec = GF.ops.weekRec && GF.ops.weekRec(); if (wk || me) { const bar = el('div', 'sg-week', root); if (wk) { el('b', '', bar, (wk.icon || '') + ' ' + GF.t('ops.week.now', { title: wk.title })); if (rec) { const r = el('button', 'rec', bar, GF.t('ops.week.rec', { name: rec.title })); r.onclick = () => { GF.sfx('pick'); rec.play && rec.play(); }; } if (wk.webtoon && GF.ops.webtoonUrl()) { const wb = el('button', 'rec', bar, GF.t('ops.settings.webtoon')); wb.onclick = () => GF.ops.openWebtoon(wk.webtoon); } } if (me) el('small', '', bar, GF.t('ops.me.title', { name: me.name })); } }
     /* 곁가지 + 이어서 */
     if (!kid && GF.ops && GF.ops.webtoonUrl && GF.ops.webtoonUrl()) { o.side = (o.side || []).concat([{ icon: 'book', text: GF.t('ops.settings.webtoon'), fn: () => GF.ops.openWebtoon() }]); }   // 웹툰 보기(성인)
     if (kid && GF.ip && GF.ip.ready && GF.ops && GF.ops.openPassport) { o.side = (o.side || []).concat([{ icon: 'star', text: 'stamp', fn: () => GF.ops.openPassport() }]); }   // 유아 도장판(글자 없음)

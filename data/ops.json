@@ -154,6 +154,15 @@
   "ui.saga.chest": "상자",
   "ui.saga.open": "열기",
   "ui.saga.locked": "앞 레벨을 먼저 깨 보세요",
+  "ops.cam.title": "카메오 도감",
+  "ops.cam.card": "지나가던 가족",
+  "ops.cam.seen": "{n}/{total}명을 만났어요",
+  "ops.cam.gift": "🎁 카메오 선물 받기",
+  "ops.cam.from": "{app}에서 왔어요",
+  "ops.week.now": "이번 주: {title}",
+  "ops.week.rec": " · 지금 해 볼 것: {name}",
+  "ops.me.title": "내 도형 · {name}",
+  "ops.settings.cameo": "카메오 도감",
   "ops.pass.title": "기하학 가족 도장책",
   "ops.pass.more": "다른 기하학 가족 게임",
   "ops.pass.open": "열기",
@@ -446,6 +455,12 @@
     "day",
     "day"
    ],
+   "shoes": [
+    "day",
+    "day",
+    "day",
+    "day"
+   ],
    "kongjwi": [
     "day",
     "play",
@@ -453,6 +468,18 @@
     "play"
    ],
    "heungbu": [
+    "day",
+    "day",
+    "day",
+    "day"
+   ],
+   "bremen": [
+    "day",
+    "day",
+    "day",
+    "day"
+   ],
+   "hok": [
     "day",
     "day",
     "day",
@@ -475,6 +502,12 @@
     "play",
     "day",
     "play"
+   ],
+   "pino": [
+    "day",
+    "day",
+    "day",
+    "day"
    ],
    "jack": [
     "day",
@@ -501,9 +534,9 @@
     "day"
    ],
    "brothers": [
+    "day",
     "play",
-    "play",
-    "play",
+    "day",
     "play"
    ],
    "snowqueen": [
@@ -720,15 +753,15 @@
    },
    {
     "id": "a",
-    "at": 15
+    "at": 20
    },
    {
     "id": "b",
-    "at": 30
+    "at": 40
    },
    {
     "id": "end",
-    "at": 45
+    "at": 60
    },
    {
     "id": "story",
@@ -742,5 +775,740 @@
   "13": "axe",
   "14": "snowqueen",
   "15": "kongjwi"
- }
+ },
+ "cameos": [
+  {
+   "id": "merge:e2",
+   "host": "merge",
+   "after": "e2",
+   "who": "dong_dad.calm",
+   "prop": "🖼️",
+   "frm": "spot",
+   "line": "액자가 곧은지 살피는 중이에요.",
+   "kid": false
+  },
+  {
+   "id": "merge:e4",
+   "host": "merge",
+   "after": "e4",
+   "who": "nemo_dad.good",
+   "prop": "🧱",
+   "frm": "block",
+   "line": "한 줄이 깔끔하게 맞았어.",
+   "kid": false
+  },
+  {
+   "id": "merge:e6",
+   "host": "merge",
+   "after": "e6",
+   "who": "nemo_mom.good",
+   "prop": "🗄️",
+   "frm": "sort",
+   "line": "선반을 정리하는 중이에요.",
+   "kid": false
+  },
+  {
+   "id": "merge:e8",
+   "host": "merge",
+   "after": "e8",
+   "who": "wife.wink",
+   "prop": "🧺",
+   "frm": "tile",
+   "line": "짝이 딱 맞았어요!",
+   "kid": false
+  },
+  {
+   "id": "merge:e10",
+   "host": "merge",
+   "after": "e10",
+   "who": "nemo_mom.joy",
+   "prop": "🍲",
+   "frm": "idle",
+   "line": "따뜻한 국이 끓고 있어요.",
+   "kid": false
+  },
+  {
+   "id": "merge:e12",
+   "host": "merge",
+   "after": "e12",
+   "who": "wife.smug",
+   "prop": "🔮",
+   "frm": "quiz",
+   "line": "오늘의 나를 알아봤어요.",
+   "kid": false
+  },
+  {
+   "id": "spot:e2",
+   "host": "spot",
+   "after": "e2",
+   "who": "husband.joy",
+   "prop": "🧳",
+   "frm": "merge",
+   "line": "이삿짐이 한가득이에요!",
+   "kid": false
+  },
+  {
+   "id": "spot:e4",
+   "host": "spot",
+   "after": "e4",
+   "who": "nemo_dad.good",
+   "prop": "🧱",
+   "frm": "block",
+   "line": "한 줄이 깔끔하게 맞았어.",
+   "kid": false
+  },
+  {
+   "id": "spot:e6",
+   "host": "spot",
+   "after": "e6",
+   "who": "nemo_mom.good",
+   "prop": "🗄️",
+   "frm": "sort",
+   "line": "선반을 정리하는 중이에요.",
+   "kid": false
+  },
+  {
+   "id": "spot:e8",
+   "host": "spot",
+   "after": "e8",
+   "who": "wife.wink",
+   "prop": "🧺",
+   "frm": "tile",
+   "line": "짝이 딱 맞았어요!",
+   "kid": false
+  },
+  {
+   "id": "spot:e10",
+   "host": "spot",
+   "after": "e10",
+   "who": "nemo_mom.joy",
+   "prop": "🍲",
+   "frm": "idle",
+   "line": "따뜻한 국이 끓고 있어요.",
+   "kid": false
+  },
+  {
+   "id": "spot:e12",
+   "host": "spot",
+   "after": "e12",
+   "who": "wife.smug",
+   "prop": "🔮",
+   "frm": "quiz",
+   "line": "오늘의 나를 알아봤어요.",
+   "kid": false
+  },
+  {
+   "id": "block:e2",
+   "host": "block",
+   "after": "e2",
+   "who": "husband.joy",
+   "prop": "🧳",
+   "frm": "merge",
+   "line": "이삿짐이 한가득이에요!",
+   "kid": false
+  },
+  {
+   "id": "block:e4",
+   "host": "block",
+   "after": "e4",
+   "who": "dong_dad.calm",
+   "prop": "🖼️",
+   "frm": "spot",
+   "line": "그림 속 다른 곳을 하나 찾았어요.",
+   "kid": false
+  },
+  {
+   "id": "block:e6",
+   "host": "block",
+   "after": "e6",
+   "who": "nemo_mom.good",
+   "prop": "🗄️",
+   "frm": "sort",
+   "line": "선반을 정리하는 중이에요.",
+   "kid": false
+  },
+  {
+   "id": "block:e8",
+   "host": "block",
+   "after": "e8",
+   "who": "wife.wink",
+   "prop": "🧺",
+   "frm": "tile",
+   "line": "짝이 딱 맞았어요!",
+   "kid": false
+  },
+  {
+   "id": "block:e10",
+   "host": "block",
+   "after": "e10",
+   "who": "nemo_mom.joy",
+   "prop": "🍲",
+   "frm": "idle",
+   "line": "따뜻한 국이 끓고 있어요.",
+   "kid": false
+  },
+  {
+   "id": "block:e12",
+   "host": "block",
+   "after": "e12",
+   "who": "wife.smug",
+   "prop": "🔮",
+   "frm": "quiz",
+   "line": "오늘의 나를 알아봤어요.",
+   "kid": false
+  },
+  {
+   "id": "sort:e2",
+   "host": "sort",
+   "after": "e2",
+   "who": "husband.joy",
+   "prop": "🧳",
+   "frm": "merge",
+   "line": "이삿짐이 한가득이에요!",
+   "kid": false
+  },
+  {
+   "id": "sort:e4",
+   "host": "sort",
+   "after": "e4",
+   "who": "dong_dad.calm",
+   "prop": "🖼️",
+   "frm": "spot",
+   "line": "그림 속 다른 곳을 하나 찾았어요.",
+   "kid": false
+  },
+  {
+   "id": "sort:e6",
+   "host": "sort",
+   "after": "e6",
+   "who": "nemo_dad.good",
+   "prop": "🧱",
+   "frm": "block",
+   "line": "벽돌을 딱 맞게 쌓는 중이야.",
+   "kid": false
+  },
+  {
+   "id": "sort:e8",
+   "host": "sort",
+   "after": "e8",
+   "who": "wife.wink",
+   "prop": "🧺",
+   "frm": "tile",
+   "line": "짝이 딱 맞았어요!",
+   "kid": false
+  },
+  {
+   "id": "sort:e10",
+   "host": "sort",
+   "after": "e10",
+   "who": "nemo_mom.joy",
+   "prop": "🍲",
+   "frm": "idle",
+   "line": "따뜻한 국이 끓고 있어요.",
+   "kid": false
+  },
+  {
+   "id": "sort:e12",
+   "host": "sort",
+   "after": "e12",
+   "who": "wife.smug",
+   "prop": "🔮",
+   "frm": "quiz",
+   "line": "오늘의 나를 알아봤어요.",
+   "kid": false
+  },
+  {
+   "id": "tile:e2",
+   "host": "tile",
+   "after": "e2",
+   "who": "husband.joy",
+   "prop": "🧳",
+   "frm": "merge",
+   "line": "이삿짐이 한가득이에요!",
+   "kid": false
+  },
+  {
+   "id": "tile:e4",
+   "host": "tile",
+   "after": "e4",
+   "who": "dong_dad.calm",
+   "prop": "🖼️",
+   "frm": "spot",
+   "line": "그림 속 다른 곳을 하나 찾았어요.",
+   "kid": false
+  },
+  {
+   "id": "tile:e6",
+   "host": "tile",
+   "after": "e6",
+   "who": "nemo_dad.good",
+   "prop": "🧱",
+   "frm": "block",
+   "line": "벽돌을 딱 맞게 쌓는 중이야.",
+   "kid": false
+  },
+  {
+   "id": "tile:e8",
+   "host": "tile",
+   "after": "e8",
+   "who": "nemo_mom.good",
+   "prop": "🗄️",
+   "frm": "sort",
+   "line": "같은 것끼리 모았어요.",
+   "kid": false
+  },
+  {
+   "id": "tile:e10",
+   "host": "tile",
+   "after": "e10",
+   "who": "nemo_mom.joy",
+   "prop": "🍲",
+   "frm": "idle",
+   "line": "따뜻한 국이 끓고 있어요.",
+   "kid": false
+  },
+  {
+   "id": "tile:e12",
+   "host": "tile",
+   "after": "e12",
+   "who": "wife.smug",
+   "prop": "🔮",
+   "frm": "quiz",
+   "line": "오늘의 나를 알아봤어요.",
+   "kid": false
+  },
+  {
+   "id": "day:e2",
+   "host": "day",
+   "after": "e2",
+   "who": "baby.joy",
+   "prop": "🧸",
+   "frm": "play",
+   "line": "",
+   "kid": true
+  },
+  {
+   "id": "day:e4",
+   "host": "day",
+   "after": "e4",
+   "who": "wife.joy",
+   "prop": "🖍️",
+   "frm": "color",
+   "line": "",
+   "kid": true
+  },
+  {
+   "id": "day:e6",
+   "host": "day",
+   "after": "e6",
+   "who": "baby.joy",
+   "prop": "🧸",
+   "frm": "play",
+   "line": "",
+   "kid": true
+  },
+  {
+   "id": "day:e8",
+   "host": "day",
+   "after": "e8",
+   "who": "wife.joy",
+   "prop": "🖍️",
+   "frm": "color",
+   "line": "",
+   "kid": true
+  },
+  {
+   "id": "day:e10",
+   "host": "day",
+   "after": "e10",
+   "who": "baby.joy",
+   "prop": "🧸",
+   "frm": "play",
+   "line": "",
+   "kid": true
+  },
+  {
+   "id": "day:e12",
+   "host": "day",
+   "after": "e12",
+   "who": "wife.joy",
+   "prop": "🖍️",
+   "frm": "color",
+   "line": "",
+   "kid": true
+  }
+ ],
+ "weekThemes": [
+  {
+   "w": 1,
+   "id": "seol",
+   "title": "설날 한 주",
+   "icon": "🎍",
+   "webtoon": ""
+  },
+  {
+   "w": 2,
+   "id": "seol",
+   "title": "설날 한 주",
+   "icon": "🎍",
+   "webtoon": ""
+  },
+  {
+   "w": 3,
+   "id": "spring",
+   "title": "봄맞이 한 주",
+   "icon": "🌸",
+   "webtoon": ""
+  },
+  {
+   "w": 4,
+   "id": "spring",
+   "title": "봄맞이 한 주",
+   "icon": "🌸",
+   "webtoon": ""
+  },
+  {
+   "w": 5,
+   "id": "spring",
+   "title": "봄맞이 한 주",
+   "icon": "🌸",
+   "webtoon": ""
+  },
+  {
+   "w": 6,
+   "id": "spring2",
+   "title": "새 학기 한 주",
+   "icon": "🎒",
+   "webtoon": ""
+  },
+  {
+   "w": 7,
+   "id": "spring2",
+   "title": "새 학기 한 주",
+   "icon": "🎒",
+   "webtoon": ""
+  },
+  {
+   "w": 8,
+   "id": "spring2",
+   "title": "새 학기 한 주",
+   "icon": "🎒",
+   "webtoon": ""
+  },
+  {
+   "w": 9,
+   "id": "spring2",
+   "title": "새 학기 한 주",
+   "icon": "🎒",
+   "webtoon": ""
+  },
+  {
+   "w": 10,
+   "id": "flower",
+   "title": "꽃구경 한 주",
+   "icon": "🌷",
+   "webtoon": ""
+  },
+  {
+   "w": 11,
+   "id": "flower",
+   "title": "꽃구경 한 주",
+   "icon": "🌷",
+   "webtoon": ""
+  },
+  {
+   "w": 12,
+   "id": "flower",
+   "title": "꽃구경 한 주",
+   "icon": "🌷",
+   "webtoon": ""
+  },
+  {
+   "w": 13,
+   "id": "flower",
+   "title": "꽃구경 한 주",
+   "icon": "🌷",
+   "webtoon": ""
+  },
+  {
+   "w": 14,
+   "id": "family",
+   "title": "가족 나들이 한 주",
+   "icon": "🧺",
+   "webtoon": ""
+  },
+  {
+   "w": 15,
+   "id": "family",
+   "title": "가족 나들이 한 주",
+   "icon": "🧺",
+   "webtoon": ""
+  },
+  {
+   "w": 16,
+   "id": "family",
+   "title": "가족 나들이 한 주",
+   "icon": "🧺",
+   "webtoon": ""
+  },
+  {
+   "w": 17,
+   "id": "family",
+   "title": "가족 나들이 한 주",
+   "icon": "🧺",
+   "webtoon": ""
+  },
+  {
+   "w": 18,
+   "id": "child",
+   "title": "어린이날 한 주",
+   "icon": "🎈",
+   "webtoon": ""
+  },
+  {
+   "w": 19,
+   "id": "child",
+   "title": "어린이날 한 주",
+   "icon": "🎈",
+   "webtoon": ""
+  },
+  {
+   "w": 20,
+   "id": "rain",
+   "title": "비 오는 날 한 주",
+   "icon": "☔",
+   "webtoon": ""
+  },
+  {
+   "w": 21,
+   "id": "rain",
+   "title": "비 오는 날 한 주",
+   "icon": "☔",
+   "webtoon": ""
+  },
+  {
+   "w": 22,
+   "id": "rain",
+   "title": "비 오는 날 한 주",
+   "icon": "☔",
+   "webtoon": ""
+  },
+  {
+   "w": 23,
+   "id": "rain",
+   "title": "비 오는 날 한 주",
+   "icon": "☔",
+   "webtoon": ""
+  },
+  {
+   "w": 24,
+   "id": "rain",
+   "title": "비 오는 날 한 주",
+   "icon": "☔",
+   "webtoon": ""
+  },
+  {
+   "w": 25,
+   "id": "rain",
+   "title": "비 오는 날 한 주",
+   "icon": "☔",
+   "webtoon": ""
+  },
+  {
+   "w": 26,
+   "id": "summer",
+   "title": "여름 물놀이 한 주",
+   "icon": "🏖️",
+   "webtoon": ""
+  },
+  {
+   "w": 27,
+   "id": "summer",
+   "title": "여름 물놀이 한 주",
+   "icon": "🏖️",
+   "webtoon": ""
+  },
+  {
+   "w": 28,
+   "id": "summer",
+   "title": "여름 물놀이 한 주",
+   "icon": "🏖️",
+   "webtoon": ""
+  },
+  {
+   "w": 29,
+   "id": "summer",
+   "title": "여름 물놀이 한 주",
+   "icon": "🏖️",
+   "webtoon": ""
+  },
+  {
+   "w": 30,
+   "id": "summer",
+   "title": "여름 물놀이 한 주",
+   "icon": "🏖️",
+   "webtoon": ""
+  },
+  {
+   "w": 31,
+   "id": "summer",
+   "title": "여름 물놀이 한 주",
+   "icon": "🏖️",
+   "webtoon": ""
+  },
+  {
+   "w": 32,
+   "id": "summer",
+   "title": "여름 물놀이 한 주",
+   "icon": "🏖️",
+   "webtoon": ""
+  },
+  {
+   "w": 33,
+   "id": "summer",
+   "title": "여름 물놀이 한 주",
+   "icon": "🏖️",
+   "webtoon": ""
+  },
+  {
+   "w": 34,
+   "id": "vacation",
+   "title": "방학 끝 한 주",
+   "icon": "📚",
+   "webtoon": ""
+  },
+  {
+   "w": 35,
+   "id": "vacation",
+   "title": "방학 끝 한 주",
+   "icon": "📚",
+   "webtoon": ""
+  },
+  {
+   "w": 36,
+   "id": "chuseok",
+   "title": "송편 한 주",
+   "icon": "🥮",
+   "webtoon": ""
+  },
+  {
+   "w": 37,
+   "id": "chuseok",
+   "title": "송편 한 주",
+   "icon": "🥮",
+   "webtoon": ""
+  },
+  {
+   "w": 38,
+   "id": "chuseok",
+   "title": "송편 한 주",
+   "icon": "🥮",
+   "webtoon": ""
+  },
+  {
+   "w": 39,
+   "id": "chuseok",
+   "title": "송편 한 주",
+   "icon": "🥮",
+   "webtoon": ""
+  },
+  {
+   "w": 40,
+   "id": "autumn",
+   "title": "단풍 한 주",
+   "icon": "🍁",
+   "webtoon": ""
+  },
+  {
+   "w": 41,
+   "id": "autumn",
+   "title": "단풍 한 주",
+   "icon": "🍁",
+   "webtoon": ""
+  },
+  {
+   "w": 42,
+   "id": "autumn",
+   "title": "단풍 한 주",
+   "icon": "🍁",
+   "webtoon": ""
+  },
+  {
+   "w": 43,
+   "id": "autumn",
+   "title": "단풍 한 주",
+   "icon": "🍁",
+   "webtoon": ""
+  },
+  {
+   "w": 44,
+   "id": "harvest",
+   "title": "곡식 거두는 한 주",
+   "icon": "🌾",
+   "webtoon": ""
+  },
+  {
+   "w": 45,
+   "id": "harvest",
+   "title": "곡식 거두는 한 주",
+   "icon": "🌾",
+   "webtoon": ""
+  },
+  {
+   "w": 46,
+   "id": "harvest",
+   "title": "곡식 거두는 한 주",
+   "icon": "🌾",
+   "webtoon": ""
+  },
+  {
+   "w": 47,
+   "id": "kimjang",
+   "title": "김장 한 주",
+   "icon": "🥬",
+   "webtoon": ""
+  },
+  {
+   "w": 48,
+   "id": "kimjang",
+   "title": "김장 한 주",
+   "icon": "🥬",
+   "webtoon": ""
+  },
+  {
+   "w": 49,
+   "id": "winter",
+   "title": "눈 오는 한 주",
+   "icon": "⛄",
+   "webtoon": ""
+  },
+  {
+   "w": 50,
+   "id": "winter",
+   "title": "눈 오는 한 주",
+   "icon": "⛄",
+   "webtoon": ""
+  },
+  {
+   "w": 51,
+   "id": "winter",
+   "title": "눈 오는 한 주",
+   "icon": "⛄",
+   "webtoon": ""
+  },
+  {
+   "w": 52,
+   "id": "year",
+   "title": "한 해 마무리 한 주",
+   "icon": "🎄",
+   "webtoon": ""
+  },
+  {
+   "w": 53,
+   "id": "year",
+   "title": "한 해 마무리 한 주",
+   "icon": "🎄",
+   "webtoon": ""
+  }
+ ]
 }

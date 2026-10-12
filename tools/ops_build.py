@@ -121,14 +121,47 @@ def stamp_rules():
     r['quiz'] = [dict(id='first', at=1), dict(id='a', at=5), dict(id='b', at=10), dict(id='end', at=19), dict(id='story', at=None)]
     r['color'] = [dict(id='first', at=1), dict(id='a', at=10), dict(id='b', at=50), dict(id='end', at=100), dict(id='story', at=None)]
     r['day'] = [dict(id='first', at=1), dict(id='a', at=15), dict(id='b', at=30), dict(id='end', at=60), dict(id='story', at=None)]
-    r['play'] = [dict(id='first', at=1), dict(id='a', at=15), dict(id='b', at=30), dict(id='end', at=45), dict(id='story', at=None)]
+    r['play'] = [dict(id='first', at=1), dict(id='a', at=20), dict(id='b', at=40), dict(id='end', at=60), dict(id='story', at=None)]
     return r
-STR.update({'ops.pass.title': '기하학 가족 도장책', 'ops.pass.more': '다른 기하학 가족 게임', 'ops.pass.open': '열기', 'ops.pass.store': '스토어에서 보기', 'ops.pass.note': '같은 기기에 함께 있으면 집과 이야기 카드가 이어져요. 하지 않아도 괜찮아요.',
+
+# ---- 카메오(5): 다른 앱 배역이 판 사이(장 끝 컷 직후)에 잠깐 등장. 문구는 짧고 따뜻하게·세 가족 말투(네모 평이/세모 들뜸/동그라미 차분), 광고성 말 금지. [제안] ----
+GUEST = {  # 어느 앱에서 온 손님인가: (캐릭터, 소품, 문구 2종)
+    'merge': ('husband.joy', '🧳', ['이삿짐이 한가득이에요!', '상자를 하나 더 옮겼어요!']),
+    'spot': ('dong_dad.calm', '🖼️', ['액자가 곧은지 살피는 중이에요.', '그림 속 다른 곳을 하나 찾았어요.']),
+    'block': ('nemo_dad.good', '🧱', ['벽돌을 딱 맞게 쌓는 중이야.', '한 줄이 깔끔하게 맞았어.']),
+    'sort': ('nemo_mom.good', '🗄️', ['선반을 정리하는 중이에요.', '같은 것끼리 모았어요.']),
+    'tile': ('wife.wink', '🧺', ['바구니에 하나 더 담았어요!', '짝이 딱 맞았어요!']),
+    'idle': ('nemo_mom.joy', '🍲', ['따뜻한 국이 끓고 있어요.', '식탁에 한 자리 더 놓았어요.']),
+    'quiz': ('wife.smug', '🔮', ['너는 어느 도형일까?', '오늘의 나를 알아봤어요.']),
+    'play': ('baby.joy', '🧸', ['', '']), 'color': ('wife.joy', '🖍️', ['', '']),
+}
+def cameos():
+    out = []
+    adult_h = ['merge', 'spot', 'block', 'sort', 'tile']; others = {'merge': ['spot', 'block', 'sort', 'tile', 'idle', 'quiz'], 'spot': ['merge', 'block', 'sort', 'tile', 'idle', 'quiz'], 'block': ['merge', 'spot', 'sort', 'tile', 'idle', 'quiz'], 'sort': ['merge', 'spot', 'block', 'tile', 'idle', 'quiz'], 'tile': ['merge', 'spot', 'block', 'sort', 'idle', 'quiz']}
+    for h in adult_h:
+        for j, n in enumerate([2, 4, 6, 8, 10, 12]):
+            f = others[h][j % 6]; ch, prop, lines = GUEST[f]
+            out.append(dict(id=f'{h}:e{n}', host=h, after=f'e{n}', who=ch, prop=prop, frm=f, line=lines[j % 2], kid=False))
+    for j, n in enumerate([2, 4, 6, 8, 10, 12]):
+        f = ['play', 'color'][j % 2]; ch, prop, lines = GUEST[f]
+        out.append(dict(id=f'day:e{n}', host='day', after=f'e{n}', who=ch, prop=prop, frm=f, line='', kid=True))
+    return out
+# ---- 주간 주제(4): 모든 앱이 같은 주에 같은 주제(웹툰 연결 자리 webtoon). 번들 기본표 — 나중에 원격 설정(T1)이 덮어씀 ----
+def week_themes():
+    W = []
+    base = [(1, 2, 'seol', '설날 한 주', '🎍'), (3, 5, 'spring', '봄맞이 한 주', '🌸'), (6, 9, 'spring2', '새 학기 한 주', '🎒'), (10, 13, 'flower', '꽃구경 한 주', '🌷'), (14, 17, 'family', '가족 나들이 한 주', '🧺'), (18, 19, 'child', '어린이날 한 주', '🎈'),
+            (20, 25, 'rain', '비 오는 날 한 주', '☔'), (26, 33, 'summer', '여름 물놀이 한 주', '🏖️'), (34, 35, 'vacation', '방학 끝 한 주', '📚'), (36, 39, 'chuseok', '송편 한 주', '🥮'), (40, 43, 'autumn', '단풍 한 주', '🍁'),
+            (44, 46, 'harvest', '곡식 거두는 한 주', '🌾'), (47, 48, 'kimjang', '김장 한 주', '🥬'), (49, 51, 'winter', '눈 오는 한 주', '⛄'), (52, 53, 'year', '한 해 마무리 한 주', '🎄')]
+    for a, z, i, t, e in base:
+        for w in range(a, z + 1): W.append(dict(w=w, id=i, title=t, icon=e, webtoon=''))
+    return W
+STR.update({'ops.cam.title': '카메오 도감', 'ops.cam.card': '지나가던 가족', 'ops.cam.seen': '{n}/{total}명을 만났어요', 'ops.cam.gift': '🎁 카메오 선물 받기', 'ops.cam.from': '{app}에서 왔어요', 'ops.week.now': '이번 주: {title}', 'ops.week.rec': ' · 지금 해 볼 것: {name}', 'ops.me.title': '내 도형 · {name}', 'ops.settings.cameo': '카메오 도감',
+            'ops.pass.title': '기하학 가족 도장책', 'ops.pass.more': '다른 기하학 가족 게임', 'ops.pass.open': '열기', 'ops.pass.store': '스토어에서 보기', 'ops.pass.note': '같은 기기에 함께 있으면 집과 이야기 카드가 이어져요. 하지 않아도 괜찮아요.',
             'ops.settings.passport': '도장책', 'ops.settings.kidbook': '도장판', 'ops.settings.cards': '이야기 카드', 'ops.settings.family': '가족 코드', 'ops.album.cardnote': '카드는 여러 앱에서 한 장씩 모여요. 네 장이 모이면 집에 작은 소품이 놓여요.',
             'ops.fam.title': '가족 코드', 'ops.fam.note': '아이 앱과 어른 앱은 따로 모아요. 코드를 넣으면 이야기 카드·도장·카메오가 서로 합쳐져요. 꼭 하지 않아도 돼요.', 'ops.fam.make': '코드 만들기', 'ops.fam.paste': '코드 붙여넣기', 'ops.fam.apply': '합치기', 'ops.fam.ok': '합쳤어요!', 'ops.fam.bad': '코드가 올바르지 않아요.',
             'ops.ip.share': '공유 카드 저장', 'ops.ip.shared': '사진첩에 저장했어요.', 'ops.ip.sharefail': '저장하지 못했어요.', 'ops.settings.webtoon': '웹툰 보기', 'ops.ip.card': '「{title}」 카드를 얻었어요 ({n}/4)', 'ops.ip.stamp': '도장: {name}', 'ops.ip.stamp.first': '첫 걸음', 'ops.ip.stamp.a': '쑥쑥 자라요', 'ops.ip.stamp.b': '반 넘었어요', 'ops.ip.stamp.end': '끝까지', 'ops.ip.stamp.story': '이야기 한 편',
             'ops.ip.plate': '문패 장식 「{name}」을 얻었어요', 'ops.ip.plate.ribbon': '리본', 'ops.ip.plate.sparkle': '반짝이', 'ops.ip.plate.crown': '왕관', 'ops.ip.story': '이야기를 완성했어요! 「{name}」을 집에 놓아 두었어요.'})
-D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', webtoonUrl='https://blog.naver.com/gihahakf', privacyUrl='', credits=CREDITS, strings=STR, news=NEWS, faq=FAQ, tales={k: dict(title=v[0], icon=v[1]) for k, v in TALES.items()}, apps=APPS_G, appNames=APP_NAMES, cardMap=card_map(), stamps=stamp_rules(), playTale={str(k): v for k, v in PLAY_TALE.items()})
+D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', webtoonUrl='https://blog.naver.com/gihahakf', privacyUrl='', credits=CREDITS, strings=STR, news=NEWS, faq=FAQ, tales={k: dict(title=v[0], icon=v[1]) for k, v in TALES.items()}, apps=APPS_G, appNames=APP_NAMES, cardMap=card_map(), stamps=stamp_rules(), playTale={str(k): v for k, v in PLAY_TALE.items()}, cameos=cameos(), weekThemes=week_themes())
 if __name__ == '__main__':
     p = R / 'data' / 'ops.json'; old = json.load(open(p, encoding='utf-8')) if p.exists() else {}
     for k in ('events', 'missions', 'album'):

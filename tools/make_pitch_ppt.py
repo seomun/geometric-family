@@ -7,7 +7,7 @@ from PIL import Image
 import os
 
 R = r'C:/projects/geometric-family/'
-OUT = r'C:/Users/gurud/Downloads/기하학가족_안양_입주신청_발표.pptx'
+OUT = r'C:/Users/gurud/Downloads/기하학가족_사업소개_발표.pptx'
 W, H = 12192000, 6858000
 IN = 914400
 CREAM = RGBColor(0xFF, 0xF6, 0xEA); INK = RGBColor(0x4A, 0x3A, 0x30); SUB = RGBColor(0x8A, 0x75, 0x66)
@@ -59,7 +59,7 @@ def title(s, n, t, sub=None):
     ln = s.shapes.add_connector(1, int(0.6*IN), int(1.78*IN), int(12.73*IN), int(1.78*IN)); ln.line.color.rgb = LINE; ln.line.width = Pt(1.5)
 
 def foot(s):
-    text(s, 0.6, 7.05, 8, 0.3, '기하학 가족 · 안양 1인 창조기업 지원센터 입주 신청', 10, SUB)
+    text(s, 0.6, 7.05, 8, 0.3, '기하학 가족', 10, SUB)
 
 FAM = [('assets/nemo_dad/good.png', NEMO, '네모', '많고 벅차지만 북적이는 행복'),
        ('assets/wife/good.png', SEMO, '세모', '극단 — 티격태격과 달달함'),
@@ -73,7 +73,7 @@ text(s, 0.8, 1.6, 6.2, 1.0, '기하학 가족', 54, INK, True)
 text(s, 0.8, 2.75, 6.2, 1.2, ['네모·세모·동그라미 세 도형 가족이', '같은 일을 각자 다르게 겪는 이야기 IP'], 20, SUB)
 box(s, 0.8, 4.35, 5.6, 0.62, YEL, None)
 text(s, 0.8, 4.35, 5.6, 0.62, '웹툰 · 쇼츠로 알리고, 게임 · 굿즈로 법니다', 18, INK, True, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE)
-text(s, 0.8, 5.7, 8, 0.9, ['안양 1인 창조기업 지원센터 입주 신청', '대표 네모 (1인 창작자 · 예비 재창업자)'], 15, SUB)
+text(s, 0.8, 5.7, 8, 0.9, ['대표 네모 (1인 창작자 · 예비 재창업자)'], 15, SUB)
 
 # 2 대표·창업 동기
 s = p.slides.add_slide(BL); bg(s); title(s, 2, '왜 시작했나', '게임사를 접고, 캐릭터와 이야기로 다시 시작합니다'); foot(s)
@@ -194,13 +194,13 @@ for i, (a, b) in enumerate(use):
     box(s, x, y, 5.95, 1.9)
     text(s, x+0.3, y+0.25, 5.4, 0.5, a, 20, [NEMO, SEMO, DONG, NEMO][i], True)
     text(s, x+0.3, y+0.85, 5.4, 0.9, b, 15, INK)
-text(s, 0.6, 6.45, 12, 0.4, '목표: 입주 1년 안에 게임 출시 · 첫 매출 · 상표 등록 → 연장 심사에서 성과로 보여 드리겠습니다', 14, INK, True)
+text(s, 0.6, 6.45, 12, 0.4, '목표: 1년 안에 게임 출시 · 첫 매출 · 상표 등록', 14, INK, True)
 
 # 11 마무리
 s = p.slides.add_slide(BL); bg(s)
 for i, (pth, c, nm, _) in enumerate(FAM):
     img(s, pth, 3.4 + i*2.3, 1.2, h=2.5)
 text(s, 0.6, 4.1, 12.1, 0.9, '당신은 어느 도형인가요?', 40, INK, True, PP_ALIGN.CENTER)
-text(s, 0.6, 5.1, 12.1, 0.9, ['콘텐츠는 소비되지만, 경험은 쌓입니다.', '기하학 가족이 안양에서 회사가 되겠습니다. 감사합니다.'], 17, SUB, align=PP_ALIGN.CENTER)
+text(s, 0.6, 5.1, 12.1, 0.9, ['콘텐츠는 소비되지만, 경험은 쌓입니다.', '기하학 가족이 회사가 되겠습니다. 감사합니다.'], 17, SUB, align=PP_ALIGN.CENTER)
 
 p.save(OUT); print(OUT)

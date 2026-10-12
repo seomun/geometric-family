@@ -60,7 +60,7 @@ public class GFBilling implements PurchasesUpdatedListener {
         List<QueryProductDetailsParams.Product> ps = new ArrayList<>();
         for (String id : ids.values()) ps.add(QueryProductDetailsParams.Product.newBuilder().setProductId(id).setProductType(BillingClient.ProductType.INAPP).build());
         client.queryProductDetailsAsync(QueryProductDetailsParams.newBuilder().setProductList(ps).build(), (r, list) -> {
-            for (ProductDetails d : list.getProductDetailsList()) details.put(d.getProductId(), d);
+            for (ProductDetails d : list) details.put(d.getProductId(), d);
             js("window.GF_billEvent&&GF_billEvent('*','info')");
         });
     }

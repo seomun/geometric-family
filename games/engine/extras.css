@@ -45,3 +45,10 @@ html[data-big="1"][data-uk="adult"] .uk-toast, html[data-big="1"][data-uk="adult
 .tale-strip { display: flex; align-items: center; gap: 8px; margin: 0 4px 6px; padding: 4px 8px; border-radius: 16px; background: rgba(255,255,255,.7); } .tale-strip .fc { display: flex; } .tale-strip .fc i { width: 30px; height: 30px; margin-left: -8px; border-radius: 50%; background-color: #FFF6E5; background-size: 175%; background-position: 50% 8%; background-repeat: no-repeat; box-shadow: 0 0 0 2px #fff; } .tale-strip .fc i:first-child { margin-left: 0; }
 .tale-strip .bt { display: flex; gap: 4px; } .tale-strip .bt span { width: 26px; height: 26px; border-radius: 50%; background: #E2D8DE; color: #fff; font: 900 14px/26px var(--uk-font); text-align: center; } .tale-strip .bt span.on { background: #6CCB8A; } .tale-strip em { margin-left: auto; font-style: normal; font: 700 14px/1 var(--uk-font); color: var(--uk-ink2); }
 .tale-strip.lock .fc i { filter: grayscale(1) brightness(.35); } .tale-strip.lock { opacity: .75; }
+
+/* 운영 층(GF.ops) */
+.ops-news { text-align: left; margin: 4px 0 10px; } .ops-news b { display: block; font: 900 var(--uk-fs-body)/1.3 var(--uk-font); } .ops-news p { margin: 3px 0; font: 600 var(--uk-fs-cap)/1.4 var(--uk-font); }
+.ops-faq { text-align: left; background: #fff; border-radius: 14px; box-shadow: var(--uk-sh); margin: 6px 0; padding: 8px 12px; } .ops-faq summary { font: 800 var(--uk-fs-cap)/1.3 var(--uk-font); cursor: pointer; } .ops-faq p { margin: 6px 0 2px; font: 600 var(--uk-fs-cap)/1.4 var(--uk-font); color: var(--uk-ink2); }
+.ops-mail { margin-top: 8px; }
+/* 움직임 줄이기: OS 설정 또는 앱 설정 */
+html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: .001s !important; scroll-behavior: auto !important; }

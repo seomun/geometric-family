@@ -793,8 +793,8 @@
   /* ---------------- 부팅 ---------------- */
   async function loadData(namesOpt) {
     if (window.GF_DATA) return window.GF_DATA;
-    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items']).concat(['names']), out = {};
-    await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else if (n === 'room_items') out[n] = null; else throw e; } }));
+    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items']).concat(['names', 'ops']), out = {};
+    await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else if (n === 'ops') out[n] = null; else if (n === 'room_items') out[n] = null; else throw e; } }));
     return out;
   }
   // opts: {base:데이터 경로, audioBase:소리 경로, dataNames:[…], storeKey, start:()=>첫 화면}  — 방치형 등 다른 앱이 같은 엔진을 쓴다

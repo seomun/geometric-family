@@ -63,7 +63,7 @@
       return A.rewarded({ placement, onReward: grant });
     },
     /** 판 하나를 깼음을 알림(전면 노출 판단용). LV 는 그 판(kind 가 있으면 오늘의 한 판·시즌·끝없이·세 가족 판 — 그 직후엔 전면 금지) */
-    noteLevelDone(LV) { const st = LS('gf:ads:state') || {}; st.plays = (st.plays || 0) + 1; LS('gf:ads:state', st); A._ctx = { kind: LV && LV.kind ? LV.kind : null, story: false }; },
+    noteLevelDone(LV) { if (GF.ops && GF.ops.noteClear && !(LV && LV.kind)) GF.ops.noteClear(); const st = LS('gf:ads:state') || {}; st.plays = (st.plays || 0) + 1; LS('gf:ads:state', st); A._ctx = { kind: LV && LV.kind ? LV.kind : null, story: false }; },
     /** 사연·승전결 컷이 방금 나갔음(그 직후 결과 화면 닫기에는 전면 금지) */
     noteStory() { if (A._ctx) A._ctx.story = true; },
     _interOk() {
@@ -100,7 +100,8 @@
   A.resultHook = null;
   const _result = UK.result;
   UK.result = function (o) {
-    if (o && !A.isKid() && A.live()) ['onNext', 'onHome', 'onRetry'].forEach((k) => { const f = o[k]; if (typeof f === 'function') o[k] = function () { A.interstitial({ placement: 'result', onClose: () => f.apply(this, arguments) }); }; });   // 결과를 닫은 직후에만
+    if (o && !A.isKid()) ['onNext', 'onHome', 'onRetry'].forEach((k) => { const f = o[k]; if (typeof f === 'function') o[k] = function () { const me = this, ar = arguments; if (GF.ops && GF.ops.maybeReview && GF.ops.maybeReview(o.stars)) return f.apply(me, ar);   // 기쁜 순간(별 3개)에 인앱 리뷰를 띄웠으면 이번엔 전면 광고를 건너뛴다
+      if (!A.live()) return f.apply(me, ar); A.interstitial({ placement: 'result', onClose: () => f.apply(me, ar) }); }; });   // 결과를 닫은 직후에만
     const sc = _result.call(UK, o), h = A.resultHook; A.resultHook = null;
     try {
       if (h && sc && A.eligible()) { const acts = sc.querySelector('.acts'); if (acts) { const b = UK.btn({ text: '광고 보고 ' + h.ask, icon: 'gift', cls: 'gold', onclick: () => A.run({ placement: h.placement, onReward: () => { h.onReward(); b.disabled = true; b.lastChild.textContent = '받았어요'; } }) }, acts); if (h.sub) { const sm = document.createElement('small'); sm.textContent = h.sub; b.appendChild(sm); b.style.flexDirection = 'column'; b.style.gap = '2px'; } acts.insertBefore(b, acts.firstChild); } }

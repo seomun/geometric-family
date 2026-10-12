@@ -76,4 +76,5 @@ android.productFlavors.configureEach { f ->
 dependencies {
     implementation 'com.google.android.gms:play-services-ads:24.4.0'
     implementation 'com.google.android.ump:user-messaging-platform:3.2.0'
+    implementation 'com.google.android.play:review:2.0.2'     // 인앱 리뷰(성인 앱만 JS 가 부름)
 }

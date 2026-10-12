@@ -44,6 +44,7 @@
       if (c.rewardItems && c.rewardItems.length) row(body, '출석 도장', tbtn('보기', () => { sc.close(); openAttend(); }));
     }
     if (!kid && GF.tale && GF.tale.ready) { if (GF.tale.d.rules) row(body, '도움말', tbtn('판 종류 설명', () => { sc.close(); GF.tale.help(); })); row(body, '이야기 다시 보기', tbtn('다시 보기', () => { GF.tale.reset(); UK.toast('프롤로그와 장 이야기가 다시 나와요', document.getElementById('safe')); })); }
+    if (GF.ops && GF.ops.ready) GF.ops.rows(body, sc, kid);   // 움직임 줄이기·새 소식·문의·FAQ(D21)
     if (c.resetTips) row(body, '도움말 다시 보기', tbtn('다시 보기', () => { c.resetTips(); GF.toast ? GF.toast('다음 판에서 도움말이 다시 나와요') : UK.toast('다음 판에서 도움말이 다시 나와요', document.getElementById('safe')); }));
     if (c.reset) { let armed = false; const b = tbtn('지우기', () => { if (!armed) { armed = true; b.textContent = '한 번 더'; return; } c.reset(); try { localStorage.removeItem(key()); } catch (e) {} location.reload(); }); row(body, '이 앱 기록 지우기(집은 그대로)', b); }
     const ads = GF.ads && GF.ads.live && GF.ads.live() && !kid;
@@ -120,6 +121,7 @@
       if (bar && snd && !document.getElementById('b-set')) { const b = el('button', 'round-btn'); b.id = 'b-set'; b.setAttribute('aria-label', 'settings'); b.innerHTML = UK.icon('gear'); b.onclick = () => { GF.sfx('tap'); openSettings(); }; bar.insertBefore(b, snd); const g = snd.previousElementSibling; }
       X.attend(); setTimeout(() => X.check(true), 600);
     } else { if (!cfg.noHold) kidHold(); X.restReset(); restT = restT || setInterval(restTick, 20000); }
+    if (GF.ops) GF.ops.init(cfg);   // 운영 공통 층(새 소식·복귀/금요일 선물·움직임 줄이기·문의)
   };
   /** 별 지도(stars) 앱 공통 통계·업적 묶음 만들기(③⑥⑦⑧⑨) */
   X.levelApp = function (o) {

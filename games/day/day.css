@@ -42,3 +42,5 @@
 .dy-quilt { display: none; }
 .dy-kid.bed, .dy-blanket, .dy-pull { z-index: 3; } .dy-kid.bed img { filter: none; }
 .dy-spot { box-shadow: 0 0 0 2px rgba(60,35,20,.35); }
+
+.dy-cards { gap: 12px; } .dy-card { width: 104px; height: 124px; } .dy-card svg { width: 68px; height: 68px; } .dy-today { position: relative; } .dy-ck { position: absolute; right: 8px; bottom: 8px; width: 34px; height: 34px; border-radius: 50%; background: #fff; box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; font-style: normal; } .dy-ck svg { width: 22px; height: 22px; }

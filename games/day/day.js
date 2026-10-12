@@ -46,6 +46,8 @@
       const row = el('div', 'dy-cards', r);
       const c1 = el('button', 'dy-card', row, UK.icon('play')); c1.style.background = '#FFE0E8'; c1.setAttribute('aria-label', 'day'); c1.onclick = () => { GF.sfx('pick'); GF.go('dmap'); };
       const c2 = el('button', 'dy-card', row, UK.icon('home')); c2.style.background = '#FFE3C2'; c2.setAttribute('aria-label', 'house'); c2.onclick = () => { GF.sfx('pick'); GF.go('dhouse'); };
+      const c3 = el('button', 'dy-card dy-today', row, UK.icon('star')); c3.style.background = '#FFF3B8'; c3.setAttribute('aria-label', 'today');   // 오늘의 하루(글자 없음): 오늘의 일 1개, 해냈으면 별 표시만(보상 없이 칭찬 연출)
+      if (SV.daily && SV.daily.date === today() && SV.daily.done) el('i', 'dy-ck', c3, UK.icon('check')); c3.onclick = () => { GF.sfx('pick'); GF.go('dplay', { level: dailyLevel() }); };
       if (!SV.intro) { SV.intro = 1; save(); setTimeout(() => { if (c1.isConnected) UK.finger(r, c1); }, 900); }
     },
   });

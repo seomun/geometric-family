@@ -24,7 +24,7 @@ rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-
 chars, anchors, sounds, pages, room, extra = rd('chars'), rd('anchors'), rd('sounds'), rd('color_pages'), rd('room_items'), rd('merge_extra')
 import re as _re
 USED = sorted(set(['nemo_kids.kid1', 'baby.joy', 'wife.joy', 'dong_dad.good', 'nemo_dad.joy', 'nemo_mom.joy'] + _re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(extra) + json.dumps(rd('story_color')) + json.dumps(rd('maps/color')))))
-data = {'chars': {}, 'anchors': {}, 'color_pages': pages, 'merge_extra': extra, 'story_color': rd('story_color'), 'maps/color': rd('maps/color'), 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
+data = {'ops': rd('ops'), 'chars': {}, 'anchors': {}, 'color_pages': pages, 'merge_extra': extra, 'story_color': rd('story_color'), 'maps/color': rd('maps/color'), 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
 img = 0
 for k in USED:
     v = dict(chars[k]); raw = webp(ROOT / v['src']); img += len(raw); v['src'] = b64(raw, 'image/webp'); data['chars'][k] = v
@@ -48,7 +48,7 @@ for grp in ('sfx', 'music'):
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
 css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'engine/saga.css', 'color/color.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/saga.js', 'engine/extras.js', 'color/color.js'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/ops.js', 'engine/saga.js', 'engine/extras.js', 'color/color.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'color' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 html = f'''<!DOCTYPE html>
 <html lang="ko" data-uk="kid"><head><meta charset="utf-8">

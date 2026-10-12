@@ -26,7 +26,7 @@ story = rd('story_spot')
 smap = rd('maps/spot')
 import re as _re
 USED = sorted(set(['nemo_dad.joy', 'wife.joy', 'dong_dad.joy', 'nemo_kids.kid1', 'baby.joy'] + _re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(extra) + json.dumps(story))))
-data = {'chars': {}, 'anchors': {}, 'spot_levels': levels, 'spot_extra': extra, 'story_spot': story, 'maps/spot': smap, 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
+data = {'ops': rd('ops'), 'chars': {}, 'anchors': {}, 'spot_levels': levels, 'spot_extra': extra, 'story_spot': story, 'maps/spot': smap, 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
 img = 0
 for k in USED:
     v = dict(chars[k]); raw = webp(ROOT / v['src']); img += len(raw); v['src'] = b64(raw, 'image/webp'); data['chars'][k] = v
@@ -50,7 +50,7 @@ for grp in ('sfx', 'music'):
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
 css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'engine/saga.css', 'spot/spot.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/saga.js', 'engine/extras.js', 'spot/spot-core.js', 'spot/spot-gen.js', 'spot/spot.js'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/ops.js', 'engine/saga.js', 'engine/extras.js', 'spot/spot-core.js', 'spot/spot-gen.js', 'spot/spot.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'spot' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 html = f'''<!DOCTYPE html>
 <html lang="ko" data-uk="adult"><head><meta charset="utf-8">

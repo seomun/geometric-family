@@ -75,6 +75,7 @@ public class MainActivity extends Activity {
         root.addView(adHolder, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         setContentView(root);
         ads = new AdsBridge(this, web, adHolder, () -> pushInsets(web.getRootWindowInsets()));
+        web.addJavascriptInterface(new GFOps(this), "GFOps");                        // 운영(D21): 문의 메일·인앱 리뷰·버전
         web.addJavascriptInterface(ads, "GFAds");                                    // 광고(D19): 아래 AdsBridge 가 유아·성인 규칙을 나눈다
         web.setOnApplyWindowInsetsListener((v, insets) -> {
             pushInsets(insets);

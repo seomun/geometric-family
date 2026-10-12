@@ -36,7 +36,7 @@ def webp(path, max_h=560):
     buf = io.BytesIO(); im.save(buf, 'WEBP', quality=86, alpha_quality=95, method=6)
     return buf.getvalue()
 
-data = {n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8')) for n in ['chars', 'stages', 'story', 'stickers', 'anchors', 'room_items', 'names']}
+data = {n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8')) for n in ['chars', 'stages', 'story', 'stickers', 'anchors', 'room_items', 'names', 'ops']}
 img_bytes = 0
 for k, v in data['chars'].items():
     raw = webp(ROOT / v['src'])
@@ -69,7 +69,7 @@ for f in sorted(files):                      # 슬롯이 가리키는 파일만 
 data['audio'] = audio
 
 css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css'])
-js_files = ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/extras.js', 'engine/icons.js', 'engine/props.js'] + [f'engine/modes/{n}.js' for n in ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence', 'soundfind', 'dress', 'train', 'cake', 'plant', 'share', 'hidden', 'catch', 'rhythm']]
+js_files = ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/ops.js', 'engine/extras.js', 'engine/icons.js', 'engine/props.js'] + [f'engine/modes/{n}.js' for n in ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'sequence', 'soundfind', 'dress', 'train', 'cake', 'plant', 'share', 'hidden', 'catch', 'rhythm']]
 js = '\n'.join((G / f).read_text(encoding='utf-8') for f in js_files)
 
 src = (G / 'index.html').read_text(encoding='utf-8')

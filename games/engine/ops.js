@@ -136,7 +136,7 @@
     const wrap = el('div', 'ops-cards', body);
     tales.forEach((t) => {
       const r = el('div', 'ops-card' + (I.complete(t) ? ' ok' : ''), wrap); el('span', 'ic', r, (T[t] || {}).icon || '📖'); if (!kid) el('b', '', r, (T[t] || {}).title || t);
-      const dots = el('span', 'dots', r); for (let i = 0; i < 4; i++) el('i', I.hasCard(t, i) ? 'on' : '', dots);
+      const dots = el('span', 'ops-dots', r); for (let i = 0; i < 4; i++) el('i', I.hasCard(t, i) ? 'on' : '', dots);
       if (!kid) { const miss = [0, 1, 2, 3].filter((i) => !I.hasCard(t, i)).map((i) => I.cardApp(t, i)).filter((x, i, ar) => x && ar.indexOf(x) === i && x !== (O.app)); if (I.complete(t)) el('small', '', r, '✔'); else if (miss.length) el('small', '', r, miss.map(appLabel).join(' · ')); }
     });
     if (!kid) el('p', 'xt-p', body, GF.t('ops.album.cardnote'));
@@ -149,7 +149,7 @@
   O.openCards = function () { const { body } = sheet(GF.t('ops.album.cards')); I_cards(body, () => {}, O.kid); };
   O.openPassport = function () {
     const I = GP(); if (!I) return; const { body } = sheet(GF.t('ops.pass.title')), g = I.kid ? 'kid' : 'adult', apps = (ipD().apps || {})[g] || [];
-    const row = (a) => { const r = el('div', 'ops-pass' + (a === O.app ? ' me' : ''), body); el('b', '', r, I.kid ? '' : appLabel(a)); const ds = el('span', 'dots', r); const have = I.stamps(a); ['first', 'a', 'b', 'end', 'story'].forEach((id) => el('i', have.includes(id) ? 'on' : '', ds)); return r; };
+    const row = (a) => { const r = el('div', 'ops-pass' + (a === O.app ? ' me' : ''), body); el('b', '', r, I.kid ? '' : appLabel(a)); const ds = el('span', 'ops-dots', r); const have = I.stamps(a); ['first', 'a', 'b', 'end', 'story'].forEach((id) => el('i', have.includes(id) ? 'on' : '', ds)); return r; };
     apps.forEach((a) => { const r = row(a); if (I.kid) { const ic = el('span', 'ic', r, a === 'play' ? '🧸' : a === 'color' ? '🎨' : '🌞'); r.insertBefore(ic, r.firstChild); } });
     const pl = el('div', 'ops-plates', body); [['ribbon', '🎀'], ['sparkle', '✨'], ['crown', '👑']].forEach(([id, e]) => { const has = I.plates().includes(id); const c = el('span', has ? 'on' : '', pl, has ? e : '🔒'); if (!I.kid) el('small', '', c, GF.t('ops.ip.plate.' + id) + (has ? '' : ' · ' + I.plateNeed(id))); });
     if (!I.kid) {

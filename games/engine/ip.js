@@ -38,7 +38,13 @@
   /** 이야기 한 편을 완성하면 「우리 집」 특별 소품 1개를 확정 지급(한 편당 한 번) */
   I.claimStory = function (tale) {
     const id = 't_' + tale + (I.kid ? '_k' : '_a'); if (I.L.taken.includes(id) || !window.Room || !Room.data) return false;
-    I.L.taken.push(id); const it = Room.item(id); let got = false; if (it) got = Room.grant(id); write(); I.addStamp(I.app, 'story'); I._on.forEach((f) => { try { f('story', { tale, got, name: it && it.name }); } catch (e) {} }); return got;
+    I.L.taken.push(id); const it = Room.item(id); let got = false; if (it) got = Room.grant(id); write(); I.addStamp(I.app, 'story'); if (got) I.celebrate(tale, it); I._on.forEach((f) => { try { f('story', { tale, got, name: it && it.name }); } catch (e) {} }); return got;
+  };
+  /** 한 편을 완성한 순간: 특별 소품 팝업(성인 글 / 유아 큰 그림만) */
+  I.celebrate = function (tale, it) {
+    if (I._quiet) return; try { const T = ((GF.data.ops || {}).tales || {})[tale] || {}, em = (it && it.emoji) || T.icon || '🎁';
+      const sc = UK.modal({ parent: document.getElementById('safe'), title: I.kid ? '' : (T.title || ''), big: em, body: I.kid ? '' : GF.t('ops.ip.story', { name: (it && it.name) || '' }), actions: [{ text: I.kid ? '' : GF.t('ops.thanks'), icon: I.kid ? 'play' : undefined, cls: 'green', onclick: () => {} }] });
+      if (I.kid) { const b = sc.querySelector('.acts .uk-btn'); if (b) b.setAttribute('aria-label', 'ok'); } GF.sfx('celebrate'); try { UK.confetti(sc); } catch (e) {} } catch (e) {}
   };
   /** 이야기 컷(장 n 의 기승전결) 을 끝까지 봤을 때 tale.js 가 부른다 */
   I.beat = function (app, tale, beat) { if (!I.ready || !tale) return false; const who = I.cardApp(tale, beat); if (who && who !== app) return false; const r = I.addCard(tale, beat); if (r) I.toast(tale, beat); return r; };
@@ -87,7 +93,7 @@
   /** 코드를 합친다. 카드로 한 편이 완성되면 이 그룹의 특별 소품도 지급(가족 코드는 보너스) */
   I.applyFamilyCode = function (code) {
     const r = I.readFamilyCode(code); if (!r.ok) return r; const d = r.data; const inc = blank(); inc.cards = d.c || {}; inc.stamps = d.s || {}; inc.cameos = d.m || [];
-    const before = JSON.stringify(I.L); I.L = I.merge(I.L, inc); I.L.plate = I.L.plate; write(); Object.keys(I.L.cards).forEach((t) => { if (I.complete(t)) I.claimStory(t); }); I.checkPlate(); I._on.forEach((f) => { try { f('code', {}); } catch (e) {} }); return { ok: true, changed: before !== JSON.stringify(I.L) };
+    const before = JSON.stringify(I.L); I._quiet = true; I.L = I.merge(I.L, inc); I.L.plate = I.L.plate; write(); Object.keys(I.L.cards).forEach((t) => { if (I.complete(t)) I.claimStory(t); }); I._quiet = false; I.checkPlate(); I._on.forEach((f) => { try { f('code', {}); } catch (e) {} }); return { ok: true, changed: before !== JSON.stringify(I.L) };
   };
 
   I.init = function (cfg) { I.app = cfg.app; I.kid = !!cfg.kid; I.cfg = cfg; I.L = read(); I.ready = !!(GF.data && GF.data.ops); if (!I.ready) return; write(); setTimeout(() => I.syncStamps(), 800); };

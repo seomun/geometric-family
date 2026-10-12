@@ -16,8 +16,11 @@
       + (o.line ? `<text x="180" y="358" font-size="13" font-weight="700" text-anchor="middle" fill="#7a6f84">${esc(o.line)}</text>` : '') + logo
       + `<text x="180" y="425" font-size="13" font-weight="800" text-anchor="middle" fill="#7a6f84">기하학 가족${appName ? ' · ' + esc(appName) : ''}</text></svg>`;
   };
+  /** 캐릭터 그림을 data URI 로(SVG 를 이미지로 그릴 때 바깥 파일은 못 불러온다 — APK 빌드는 이미 data URI) */
+  S.inline = async function (src) { if (!src || /^data:/.test(src)) return src; try { const b = await (await fetch(src)).blob(); return await new Promise((r) => { const f = new FileReader(); f.onload = () => r(f.result); f.readAsDataURL(b); }); } catch (e) { return src; } };
+  S.svgAsync = async function (o) { const M = me(); const s0 = S.svg(o), u = GF.src(M.char), d = await S.inline(u); return u && d !== u ? s0.split(u).join(d) : s0; };
   S.save = async function (o) {
-    const svg = S.svg(o), img = new Image(); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); await img.decode();
+    const svg = await S.svgAsync(o), img = new Image(); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); await img.decode();
     const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; c.getContext('2d').drawImage(img, 0, 0, 1080, 1350);
     const nm = 'gihaha-family-' + ((GF.ops && GF.ops.app) || 'app') + '.png';
     if (window.GFSave && GFSave.image) { if (!GFSave.image(c.toDataURL('image/png'), nm)) throw new Error('save'); return 1; }

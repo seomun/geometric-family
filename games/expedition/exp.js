@@ -127,7 +127,8 @@
       const row2 = el('div', 'ex-row', btns); UK.btn({ text: '요일 던전', icon: 'gift', cls: 'sky', onclick: () => GF.go('xdun') }, row2);
       const scout = UK.btn({ text: '정찰 보상', icon: 'star', cls: 'gold', onclick: async () => { try { const g = await idleClaim(); UK.toast(g ? '🪙 +' + g + ' (정찰 보상)' : (REMOTE || S.idleTs ? '아직 모이는 중이에요 (10분 뒤부터)' : '정찰을 시작했어요. 나중에 받으러 와요'), r); scout.querySelector('span') && void 0; GF.replace('xhome'); } catch (e) { UK.toast('받지 못했어요', r); } } }, row2);
       if (!REMOTE) { const g0 = idleNow(); if (g0 > 0) scout.insertAdjacentHTML('beforeend', ' <em class="adv">' + g0 + '</em>'); }
-      if (REMOTE) UK.btn({ text: '상점·설정', icon: 'star', cls: 'ghost block', onclick: () => GF.go('xshop') }, btns);
+      const row3 = el('div', 'ex-row', btns); UK.btn({ text: '동료 도감', icon: 'heart', cls: 'pink', onclick: () => GF.go('xdex') }, row3);
+      if (REMOTE) UK.btn({ text: '상점·설정', icon: 'star', cls: 'ghost', onclick: () => GF.go('xshop') }, row3);
       el('div', 'ex-foot', r, '전투력 ' + power(S.party) + ' · 동료 ' + Object.keys(S.units).length + '/' + D.units.length + ' · 랜덤 아이템 포함(동료 모집)');
       if (!S.flags.prologue && !(navigator.webdriver && !/[?&]story=1/.test(location.search))) { S.flags.prologue = 1; save(); setTimeout(() => GF.tale.play(D.story.prologue, r, () => {}, { bg: 'field' }), 400); }
     },
@@ -196,7 +197,7 @@
       el('p', 'ex-sub', box, info.kind === 'gold' ? '오늘은 금화가 많이 나와요.' : info.kind === 'both' ? '오늘은 금화와 조각이 같이 나와요(아무 친구).' : info.el === 'any' ? '오늘은 아무 친구의 조각이 1.5배!' : '오늘은 ' + D.el[info.el].name + '(' + D.el[info.el].icon + ') 친구의 조각이 나와요.');
       const pickTarget = (el0, cb) => {
         const owned = Object.keys(S.units).filter((id) => !el0 || el0 === 'any' || $(id).el === el0); if (!owned.length) { UK.toast('오늘 조각을 받을 친구가 없어요', r); return; }
-        const sc = UK.modal({ parent: r, title: '조각을 받을 친구', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'), g = el('div', 'ex-roster', sh); owned.forEach((id) => { const u = $(id), c = el('button', 'ex-card', g); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, u.name.replace(/\(.*\)/, '')); el('small', '', c, '조각 ' + (S.dups[id] || 0)); c.onclick = () => { sc.remove(); cb(id); }; });
+        const sc = UK.modal({ parent: r, title: '조각을 받을 친구', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'), g = el('div', 'ex-dexgrid', sh); owned.forEach((id) => { const u = $(id), c = el('button', 'ex-card', g); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, u.name.replace(/\(.*\)/, '')); el('small', '', c, '조각 ' + (S.dups[id] || 0)); c.onclick = () => { sc.remove(); cb(id); }; });
         UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
       };
       info.tiers.forEach((t) => {
@@ -206,6 +207,36 @@
       el('p', 'ex-sub', box, '조각은 각성·승급에 써요. 같은 속성 친구만 받을 수 있어요.');
     },
   });
+  /* ---------------- 동료 도감 + 수집 보상 (B5) ---------------- */
+  const ROUTE = { start: '처음부터 함께해요', story: '이야기를 따라가면 합류해요', recruit: '보스에게 말을 걸어 포섭해요', gacha: '동료 모집(뽑기)에서 만나요' };
+  async function dexClaim(n) {
+    const m = (D.bal.dex || []).find((x) => x.n === n); if (!m) return false; const got = (S.flags.dex = S.flags.dex || []);
+    if (!REMOTE) { if (got.includes(n) || Object.keys(S.units).length < n) return false; got.push(n); S.gems += m.gems; save(); bar(); return m.gems; }
+    try { const r = await http('POST', '/dex/claim', { n }); applyProfile(r.profile); bar(); return m.gems; } catch (e) { UK.toast(e.code === 'not_yet' ? '동료를 더 모아요' : '받지 못했어요', document.getElementById('safe')); return false; }
+  }
+  GF.screen('xdex', {
+    bare: false,
+    enter(r) {
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); const cnt = Object.keys(S.units).length; head(r, '동료 도감', `모은 친구 ${cnt}/${D.units.length}`); back(r, 'xhome');
+      const box = el('div', 'ex-shop', r), draw = () => {
+        box.innerHTML = ''; const have = Object.keys(S.units).length, got = S.flags.dex || [], ms = el('div', 'ex-dexms', box);
+        (D.bal.dex || []).forEach((m) => { const done = got.includes(m.n), can = !done && have >= m.n, c = el('div', 'ex-dm' + (done ? ' done' : can ? ' can' : ''), ms); c.innerHTML = `<b>${m.n}명</b><small>💎 ${m.gems}</small>`; if (can) UK.btn({ text: '받기', cls: 'gold sm', onclick: async () => { const g = await dexClaim(m.n); if (g) { GF.sfx('star'); UK.toast('💎 +' + g, r); draw(); } } }, c); else el('em', '', c, done ? '✔ 받음' : have + '/' + m.n); });
+        [['start', '우리 가족'], ['story', '이야기 합류'], ['recruit', '포섭한 친구'], ['gacha', '모집 친구']].forEach(([route, title]) => {
+          const list = D.units.filter((u) => u.route === route); if (!list.length) return; const n = list.filter((u) => S.units[u.id]).length; el('div', 'ex-nation', box, `<b>${title}</b><small>${n}/${list.length}</small>`); const g = el('div', 'ex-dexgrid', box);
+          list.forEach((u) => { const own = !!S.units[u.id], c = el('button', 'ex-card' + (own ? '' : ' dim'), g); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, own ? u.name.replace(/\(.*\)/, '') : '???'); el('small', '', c, '★'.repeat(own ? SC.gradeOf(D, u.id, S.units[u.id]) : u.grade)); c.onclick = () => dexInfo(r, u); });
+        });
+      };
+      draw();
+    },
+  });
+  function dexInfo(r, u) {
+    const own = !!S.units[u.id], sc = UK.modal({ parent: r, title: own ? u.name : '??? (' + ROUTE[u.route].replace(/해요$/, '') + ')', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'), top = el('div', 'ex-dexhd', sh); top.appendChild(art(u, 'xl')); const tx = el('div', '', top);
+    const st = own ? SC.stOf(S.units[u.id]) : null; el('b', '', tx, `${'★'.repeat(own ? SC.gradeOf(D, u.id, st) : u.grade)} ${D.el[u.el].icon} ${D.el[u.el].family} ${D.el[u.el].name}`); el('small', '', tx, `${D.role[u.role].icon} ${D.role[u.role].name} · ${D.role[u.role].skill}`);
+    if (own) el('small', '', tx, `Lv ${st.lv} · 스킬 ${st.skl} · 각성 ${st.awk} · 조각 ${S.dups[u.id] || 0} · 전투력 ${Math.round(kOf(u.id) * 100)}`);
+    el('p', 'ex-tale', sh, own ? u.tale : '아직 만나지 못했어요. ' + (ROUTE[u.route] || '') + (u.route === 'story' || u.route === 'recruit' ? ' (' + (u.note || '').replace(/^[^·]*· /, '') + ')' : '') + (u.costume ? '' : ''));
+    if (own && u.costume) el('small', 'ex-sub', sh, '의상: ' + u.costume + ' 이야기');
+    UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
+  }
   /* ---------------- 원정 길 ---------------- */
   GF.screen('xmap', {
     bare: false,

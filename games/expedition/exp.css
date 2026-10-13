@@ -66,3 +66,7 @@
 @keyframes ex-pop { 0% { opacity: 0; transform: translate(-50%, 8px) scale(.7); } 15% { opacity: 1; transform: translate(-50%, 0) scale(1.1); } to { transform: translate(-50%, -26px); opacity: 0; } }
 .ex-bc small { white-space: normal !important; font-size: 10px !important; line-height: 1.08 !important; word-break: keep-all; max-height: 2.3em; overflow: hidden; display: block; text-align: center; }
 .ex-pop { top: -40px !important; text-align: center; line-height: 1.05 !important; } .ex-pop small { display: block; font-size: 11px; letter-spacing: 0; -webkit-text-stroke: 3px #3a1f0f; }
+
+.ex-dexms { display: flex; gap: 6px; margin: 8px 0; } .ex-dm { flex: 1; background: #fff8e6; border: 2px solid #ecd9a8; border-radius: 12px; padding: 5px 4px; text-align: center; font: 800 12px/1.3 var(--uk-font); display: flex; flex-direction: column; gap: 2px; align-items: center; } .ex-dm b { font-size: 13px; } .ex-dm small, .ex-dm em { font-style: normal; opacity: .8; font-size: 11px; } .ex-dm.can { border-color: #FFC933; background: #fff0b8; } .ex-dm.done { opacity: .6; } .ex-dm .uk-btn { min-height: 28px; font-size: 12px; padding: 2px 8px; }
+.ex-dexhd { display: flex; gap: 10px; align-items: center; } .ex-dexhd b { display: block; font-size: 15px; } .ex-dexhd small { display: block; opacity: .8; font-weight: 700; margin-top: 2px; } .ex-tale { font: 700 14px/1.5 var(--uk-font); margin: 10px 2px; text-align: left; }
+.ex-dexgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 6px 0 10px; } .ex-dexgrid .ex-card { position: relative; }

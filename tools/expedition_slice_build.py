@@ -50,8 +50,9 @@ exec(open('tools/expedition_nations3.py', encoding='utf-8').read())   # 7~9나�
 exec(open('tools/expedition_begin.py', encoding='utf-8').read())   # 초보자 미션 30·출석 7일(B11)
 exec(open('tools/expedition_events.py', encoding='utf-8').read())   # 계절 이벤트 스테이지 틀(B9)
 exec(open('tools/expedition_ach.py', encoding='utf-8').read())   # 업적·칭호(B10)
+exec(open('tools/expedition_reserve.py', encoding='utf-8').read())   # 새 옛이야기 코스튬 동료 6종 — 풀 밖 보관(B17)
 import os
 if os.path.exists('data/expedition_odds.json'): GACHA['effective'] = json.load(open('data/expedition_odds.json', encoding='utf-8'))['effective']   # tools/odds_effective.js 산출(실효 확률)
-D = dict(version=1, note='[제안] ⑪ 슬라이스 데이터. tools/expedition_slice_build.py 로 생성', el=EL, role=ROLE, units=UNITS, stages=STAGES, nations=NATIONS, dungeon=DUNGEON, loot=LOOT_CODES, story=STORY, gacha=GACHA, bal=BAL)
+D = dict(version=1, note='[제안] ⑪ 슬라이스 데이터. tools/expedition_slice_build.py 로 생성', el=EL, role=ROLE, units=UNITS, stages=STAGES, nations=NATIONS, dungeon=DUNGEON, loot=LOOT_CODES, story=STORY, gacha=GACHA, bal=BAL, reserve=RESERVE)
 json.dump(D, open('data/expedition_slice.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('units', len(UNITS), 'stages', len(STAGES), 'chars used', sorted({u['art'] for u in UNITS if u['art']}))

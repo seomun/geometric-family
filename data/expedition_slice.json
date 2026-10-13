@@ -6755,5 +6755,79 @@
     "title": "꾸준한 친구"
    }
   ]
- }
+ },
+ "reserve": [
+  {
+   "id": "r_redhood_hana",
+   "name": "빨간 모자 하나",
+   "art": "nemo_kids.kid1",
+   "role": "healer",
+   "el": "care",
+   "grade": 5,
+   "route": "reserve",
+   "costume": "빨간 모자(순한 판)",
+   "tale": "tale:redhood",
+   "note": "엄마 심부름 바구니를 든 하나. 큰 길로만 다니는 똑똑한 아이예요."
+  },
+  {
+   "id": "r_hansel_sejji",
+   "name": "헨젤 세찌",
+   "art": "nemo_kids.kid3",
+   "role": "tank",
+   "el": "support",
+   "grade": 5,
+   "route": "reserve",
+   "costume": "헨젤과 그레텔(순한 판)",
+   "tale": "tale:hansel",
+   "note": "빵 부스러기로 길을 표시하는 세찌. 동생들이 따라올 길을 잊지 않아요."
+  },
+  {
+   "id": "r_rabbit_duri",
+   "name": "토끼 두리",
+   "art": "nemo_kids.kid2",
+   "role": "attacker",
+   "el": "flash",
+   "grade": 5,
+   "route": "reserve",
+   "costume": "토끼전",
+   "tale": "tale:rabbitliver",
+   "note": "꾀 많은 토끼 두리. 위기에는 웃음으로 넘겨요."
+  },
+  {
+   "id": "r_persimmon_mom",
+   "name": "곶감 네모 엄마",
+   "art": "nemo_mom.joy",
+   "role": "support",
+   "el": "care",
+   "grade": 5,
+   "route": "reserve",
+   "costume": "호랑이와 곶감",
+   "tale": "tale:tigerpersimmon",
+   "note": "아기를 달래는 곶감 한 접시. 달콤하게 모두를 진정시켜요."
+  },
+  {
+   "id": "r_fairy_wife",
+   "name": "선녀 세모 아내",
+   "art": "wife.joy",
+   "role": "mage",
+   "el": "flash",
+   "grade": 5,
+   "route": "reserve",
+   "costume": "선녀와 나무꾼",
+   "tale": "tale:fairywood",
+   "note": "하늘하늘 날개옷의 세모 아내. 한 번 웃으면 연못이 반짝여요."
+  },
+  {
+   "id": "r_dragonking_dong",
+   "name": "용왕 동그라미 아빠",
+   "art": "dong_dad.warm",
+   "role": "healer",
+   "el": "support",
+   "grade": 5,
+   "route": "reserve",
+   "costume": "토끼전",
+   "tale": "tale:rabbitliver",
+   "note": "외로워서 아팠던 용왕님. 한 상에 모이면 기운이 나요."
+  }
+ ]
 }

@@ -70,7 +70,7 @@ html = f'''<!DOCTYPE html>
 </body></html>'''
 if APP:
     api = _api()
-    html = html.replace('<script>window.GF_DATA =', '<script>window.GF_API = ' + json.dumps(api) + ';</script>\n<script>window.GF_DATA =', 1).replace('기하학 원정대 (슬라이스)', '기하학 원정대 (베타)')
+    html = html.replace('<script>window.GF_DATA =', '<script>window.GF_API = ' + json.dumps(api) + '; window.GF_RELEASE = true;</script>\n<script>window.GF_DATA =', 1).replace('기하학 원정대 (슬라이스)', '기하학 원정대 (베타)')
     (G / 'app').mkdir(exist_ok=True); (G / 'app' / 'expedition.html').write_text(html, encoding='utf-8')
     print(f'app/expedition.html {len(html.encode())/1e6:.2f} MB · 서버 {api or "(미설정: GF_API 또는 ~/.gf/store.env EXPEDITION_API)"}')
 else:

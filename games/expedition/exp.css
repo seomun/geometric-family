@@ -76,3 +76,5 @@
 @keyframes ex-pop { 0% { opacity: 0; transform: translate(-50%, 6px) scale(.7); } 15% { opacity: 1; transform: translate(-50%, 0) scale(1.1); } to { transform: translate(-50%, -6px); opacity: 0; } }
 .ex-dexhd { flex-direction: column !important; text-align: center; gap: 6px !important; } .ex-dexhd .ex-art { width: 132px !important; height: 132px !important; margin: 0 auto; } .ex-dexhd .ex-art img { width: 100%; height: 100%; object-fit: contain; } .ex-dexhd > div { width: 100%; }
 .ex-gain { position: absolute; left: 50%; top: -4px; transform: translateX(-50%); font: 900 13px/1 var(--uk-font); color: #8A5A00; background: #FFF0B8; border-radius: 10px; padding: 3px 8px; animation: exgain 1.2s ease-out forwards; pointer-events: none; z-index: 5; } @keyframes exgain { to { transform: translate(-50%, -22px); opacity: 0; } } .ex-dm { position: relative; }
+
+.ex .bg .fly { display: none; }   /* 배경 나비는 UI 위를 지나가므로 ⑪ 에서는 빼고 하늘·언덕만 둔다 */

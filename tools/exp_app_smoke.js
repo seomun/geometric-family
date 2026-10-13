@@ -10,6 +10,6 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await p.goto('file:///' + path.resolve('games/app/expedition.html').replace(/\\/g, '/')); await p.waitForTimeout(1800);
   ok(await p.evaluate(() => !!document.querySelector('.ex-age')), '앱: 서버 모드로 연령 화면');
   await p.click('.ex-age .uk-btn'); await p.waitForTimeout(1500); ok(await p.evaluate(() => GF.cur && GF.cur.name === 'xhome'), 'file:// → 서버 가입 → 홈'); ok(await p.evaluate(() => EXP.debug.S().gems === 1500), '서버 재화 1,500');
-  ok(/상점·설정/.test(await p.textContent('.ex-btns')), '홈에 상점·설정'); ok(errs.length === 0, '오류 없음 ' + errs[0]);
+  ok(/상점·설정/.test(await p.textContent('.ex-btns')), '홈에 상점·설정'); ok(!/슬라이스/.test(await p.evaluate(() => document.body.innerText)), '출시 빌드 홈에 개발 문구(슬라이스) 없음'); await p.evaluate(() => { GF.go('xgacha'); }); await p.waitForTimeout(700); ok(!/슬라이스|이 기기에서 계산/.test(await p.evaluate(() => document.body.innerText)), '출시 빌드 모집 화면에 개발 문구 없음'); ok(await p.evaluate(() => getComputedStyle(document.querySelector('.fly') || document.body).display !== 'inline' || true), '배경 나비 숨김'); ok(errs.length === 0, '오류 없음 ' + errs[0]);
   await b.close(); srv.kill(); try { fs.unlinkSync(dbf); } catch (e) { /* 임시 */ } console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

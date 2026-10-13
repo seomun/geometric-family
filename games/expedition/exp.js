@@ -2,7 +2,7 @@
    서버 없음·결제 없음(무상 반짝석만). 저장 gfx:slice:v1 (다른 앱과 키를 섞지 않는다). 12+ 앱: 글자 있음. 모든 글 [제안]. 설계: games/25_EXPEDITION_GDD1.md · games/27_EXPEDITION_SERVER.md */
 (function () {
   'use strict';
-  const el = UK.el, B = ExpBattle, SC = ExpStage;
+  const el = UK.el, B = ExpBattle, SC = ExpStage, REL = !!window.GF_RELEASE;      // REL: 출시 빌드(앱) — 개발·슬라이스 안내 문구를 숨긴다
   const EXP = (window.EXP = { debug: {} });
   const KEY = 'gfx:slice:v1';
   let D, S, UD = {};
@@ -126,7 +126,7 @@
   GF.screen('xhome', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '기하학 원정대', '세 가족 도형 영웅과 옛이야기 나라를 걷는 RPG · 슬라이스');
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '기하학 원정대', '세 가족 도형 영웅과 옛이야기 나라를 걷는 RPG' + (REL ? '' : ' · 슬라이스'));
       const fam = el('div', 'ex-fam', r); S.party.slice(0, 3).forEach((id) => fam.appendChild(art($(id), 'xl')));
       const next = Math.min(S.cleared + 1, D.stages.length), st = D.stages[next - 1], done = S.cleared >= D.stages.length;
       const btns = el('div', 'ex-btns', r);
@@ -393,11 +393,11 @@
   GF.screen('xgacha', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, G().banner, '랜덤 아이템 포함 · ' + G().note); setTimeout(() => { if (r.isConnected) tipOnce('gacha', r); }, 350);
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, G().banner, '랜덤 아이템 포함' + (REL ? '' : ' · ' + G().note)); setTimeout(() => { if (r.isConnected) tipOnce('gacha', r); }, 350);
       const pk = D.units.find((u) => u.pickup), box = el('div', 'ex-banner', r); box.appendChild(art(pk, 'xl')); const tx = el('div', 'ex-btx', box); el('b', '', tx, '픽업 ★5 ' + pk.name); el('small', '', tx, `${D.el[pk.el].family} ${D.el[pk.el].name} · ${D.role[pk.role].skill}`); el('small', '', tx, '★5 확률 2.5% 중 절반이 픽업 · 천장 ' + S.pity.since5 + '/' + G().hard);
       const bar2 = el('div', 'uk-progress gold ex-pity', r); bar2.innerHTML = `<i style="width:${Math.round(S.pity.since5 / G().hard * 100)}%"></i>`;
       const row = el('div', 'ex-prow', r); const b1 = UK.btn({ text: '1회 💎' + G().cost, cls: 'gold', onclick: () => run(1) }, row), b10 = UK.btn({ text: '10회 💎' + G().ten, cls: 'green', onclick: () => run(10) }, row); void b1; void b10;
-      UK.btn({ text: '확률 공개', cls: 'sky sm ex-odds', onclick: () => odds(r) }, r); el('div', 'ex-gnote', r, '무상 반짝석으로만 모집해요(슬라이스). 모집 결과는 이 기기에서 계산되고, 정식 서비스에서는 서버가 판정하고 기록해요.');
+      UK.btn({ text: '확률 공개', cls: 'sky sm ex-odds', onclick: () => odds(r) }, r); if (!REL) el('div', 'ex-gnote', r, '무상 반짝석으로만 모집해요(슬라이스). 모집 결과는 이 기기에서 계산되고, 정식 서비스에서는 서버가 판정하고 기록해요.');
       const run = async (n) => { let res; try { res = REMOTE ? await pullRemote(n) : pull(n, rng); } catch (e) { UK.toast(e.code === 'insufficient_gems' ? '반짝석이 모자라요. 전투를 깨면 받아요' : '서버에 연결하지 못했어요', r); return; } if (!res) { UK.toast('반짝석이 모자라요. 전투를 깨면 받아요', r); return; } showPull(r, res); };
       back(r, 'xhome');
     },
@@ -415,7 +415,7 @@
     row('★5', pct(g.rates.five) + '<br>→ ' + ef(5), pool(5).map((u) => u.name + ' ' + pct(g.rates.five * (u.pickup ? g.pickup.share : (1 - g.pickup.share) / (pool(5).length - 1 || 1))) + ' → ' + eu(u)).join('<br>'));
     row('★4', pct(g.rates.four) + '<br>→ ' + ef(4), pool(4).map((u) => u.name + ' ' + pct(g.rates.four / pool(4).length) + ' → ' + eu(u)).join('<br>'));
     row('★3', pct(g.rates.three) + '<br>→ ' + ef(3), pool(3).map((u) => u.name + ' ' + pct(g.rates.three / pool(3).length) + ' → ' + eu(u)).join('<br>'));
-    el('p', 'ex-onote', sh, `· <b>기본</b>=한 회 기본 확률, <b>실효</b>=천장·10회 보장을 모두 넣고 길게 모았을 때의 평균${E ? '(★5 평균 약 ' + E.expected5 + '회)' : ''}<br>· 소프트 천장: ${g.soft + 1}회째부터 ★5 확률이 매 회 +${pct(g.softUp)}<br>· 하드 천장: ${g.hard}회째 ★5 확정(이후 0으로)<br>· 픽업 보장: ★5가 픽업이 아니면 다음 ★5는 픽업 확정<br>· 10회 모집은 ★4 이상 1명 보장 · 중복은 각성 조각으로 바뀜<br>· 지금 ★5까지 ${S.pity.since5}회 · 보장 ${S.pity.guard ? '있음' : '없음'}<br>· <b>랜덤 아이템 포함</b> · 슬라이스는 무상 반짝석만 쓰고 결제가 없어요`);
+    el('p', 'ex-onote', sh, `· <b>기본</b>=한 회 기본 확률, <b>실효</b>=천장·10회 보장을 모두 넣고 길게 모았을 때의 평균${E ? '(★5 평균 약 ' + E.expected5 + '회)' : ''}<br>· 소프트 천장: ${g.soft + 1}회째부터 ★5 확률이 매 회 +${pct(g.softUp)}<br>· 하드 천장: ${g.hard}회째 ★5 확정(이후 0으로)<br>· 픽업 보장: ★5가 픽업이 아니면 다음 ★5는 픽업 확정<br>· 10회 모집은 ★4 이상 1명 보장 · 중복은 각성 조각으로 바뀜<br>· 지금 ★5까지 ${S.pity.since5}회 · 보장 ${S.pity.guard ? '있음' : '없음'}<br>· <b>랜덤 아이템 포함</b>${REL ? '' : ' · 슬라이스는 무상 반짝석만 쓰고 결제가 없어요'}`);
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
   }
   /* ---------------- 시작 ---------------- */

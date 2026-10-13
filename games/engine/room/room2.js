@@ -440,6 +440,11 @@
     const guestChip = el('button', 'h2-dreamchip h2-guestchip', view, kid() ? '👋' : '👋 손님'); guestChip.onclick = () => Room.guestBook(parent);
     const albChip = el('button', 'h2-dreamchip h2-albchip', view, kid() ? '📒' : '📒 앨범'); albChip.onclick = () => Room.albumSheet(parent);
     const sceneChip = el('button', 'h2-dreamchip h2-scenechip', view, ''); sceneChip.style.display = 'none';
+    if (!kid()) {      // 오늘의 집 한 장면(A14): 안 본 날은 점이 붙고, 누르면 그 방으로 가서 보여 준다
+      const dayChip = el('button', 'h2-dreamchip h2-daychip', view, '📅 오늘의 장면'); const mark = () => { dayChip.classList.toggle('new', !Room.dailyToday().seen); };
+      dayChip.onclick = () => { const T = Room.dailyToday(); if (cur !== T.ev.room) { cur = T.ev.room; sel = null; drawAll(); } setTimeout(() => { const rm = stage.querySelector('.h2-room'); if (!rm) return; dayChip.style.visibility = 'hidden'; const first = !T.seen; if (!Room.playDaily(rm, T, () => { dayChip.style.visibility = ''; if (first) { Room.albumAdd(T.key, 'day', T.ev.title, T.ev.beats[2][1], T.ev.room); } mark(); })) dayChip.style.visibility = ''; }, cur === T.ev.room ? 60 : 700); };
+      setTimeout(mark, 0);
+    }
     if (kid()) { const tidyChip = el('button', 'h2-dreamchip h2-tidychip', view, '🧺'); tidyChip.onclick = () => Room.tidyGame(parent, (first) => { if (first) { try { UK.toast('⭐', parent); } catch (e) { /* 토스트 */ } } }); }
     function sceneCheck(auto) {      // 완성한 세트가 이 방의 것이면 칩을 보이고, 처음 열 땐 한 번 자동으로 보여 준다
       const c = Room.sceneFor(cur); if (!c) { sceneChip.style.display = 'none'; return; } sceneChip.style.display = ''; sceneChip.textContent = kid() ? c.icon : c.icon + ' 가족 모임'; const playIt = () => { const rm = stage.querySelector('.h2-room'); sceneChip.style.visibility = 'hidden'; if (!Room.playScene(rm, c, () => { sceneChip.style.visibility = ''; })) sceneChip.style.visibility = ''; }; sceneChip.onclick = playIt;
@@ -635,10 +640,33 @@
     });
     UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
+  /* ---------------- 오늘의 집 한 장면(A14, 성인): 하루에 하나, 가족의 작은 생활 사건. 눌러서 보고, 놓친 날은 그냥 지나간다(벌·연속 없음). 새 문장은 모두 [제안] ---------------- */
+  const D_EV = [
+    { id: 'ramen', room: 'kitchen', title: '라면 끓이기', chars: ['nemo_dad.joy', 'nemo_kids.kid1'], beats: [['🫕', '냄비에 물을 올렸어요.'], ['🌶️', '스프를 넣고 후후 저어요.'], ['🍜', '후루룩! 역시 밤 라면이 제일이야.']] },
+    { id: 'nap', room: 'nemo', title: '낮잠', chars: ['nemo_dad.joy', 'nemo_mom.joy'], beats: [['😴', '소파에 앉자마자 눈이 감겼어요.'], ['💤', '쿨쿨… 오늘은 조용한 일요일 같아요.'], ['🧸', '엄마가 살며시 담요를 덮어 줘요.']] },
+    { id: 'parcel', room: 'entrance', title: '택배 도착', chars: ['nemo_mom.joy', 'baby.joy'], beats: [['📦', '딩동! 택배가 왔어요.'], ['✂️', '막둥이가 먼저 뜯어 보겠대요.'], ['🎁', '앗, 외할머니가 보낸 선물이다!']] },
+    { id: 'laundry', room: 'yard', title: '빨래 널기', chars: ['nemo_mom.joy', 'nemo_kids.kid2'], beats: [['🧺', '빨래 바구니를 들고 마당으로 나가요.'], ['☀️', '햇볕이 쨍! 널기 딱 좋은 날.'], ['👕', '뽀송뽀송 마르면 같이 걷어요.']] },
+    { id: 'study', room: 'dong', title: '숙제 시간', chars: ['dong_dad.warm', 'nemo_kids.kid3'], beats: [['📚', '책상에 나란히 앉았어요.'], ['✏️', '모르는 건 아빠한테 물어봐요.'], ['⭐', '다 했다! 오늘도 잘했어요.']] },
+    { id: 'photo', room: 'semo', title: '여행 사진 보기', chars: ['wife.joy', 'nemo_dad.joy'], beats: [['📷', '서랍에서 옛날 사진을 꺼냈어요.'], ['🗺️', '여기가 어디였더라? 하고 웃어요.'], ['💛', '다음엔 같이 또 가요.']] },
+    { id: 'rain', room: 'nemo', title: '비 오는 날', chars: ['nemo_kids.kid1', 'baby.joy', 'nemo_grandma.good'], beats: [['☔', '창밖에 비가 주룩주룩 와요.'], ['🍵', '할머니가 따뜻한 차를 내려 줘요.'], ['🌈', '비가 그치니 무지개가 떴어요.']] },
+  ];
+  Room.dailyToday = function () {
+    const d = now0(), k = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(), open = new Set(Room.unlockedRooms().map((r) => r.id)), list = D_EV.filter((e) => open.has(e.room)), ev = (list.length ? list : D_EV.filter((e) => e.room === 'nemo'))[k % (list.length || 1)] || D_EV[1];
+    return { ev, key: 'day:' + k, seen: !!(ensure().album || []).some((a) => a.k === 'day:' + k) };
+  };
+  Room.playDaily = function (room, T, onEnd) {
+    if (!Room.cfg.charSrc || !room || room.querySelector('.h2-fam')) return null; const ev = T.ev, n = ev.chars.length, out = []; room.classList.add('scene');
+    const stg = el('div', 'h2-stage-bg', room), bn = el('div', 'h2-scenebn', room, '📅 ' + ev.title), cap = el('i', 'h2-daycap', room, ''); cap.style.opacity = 0;
+    ev.chars.forEach((id, i) => { const im = el('img', 'h2-char h2-fam', room); im.src = Room.cfg.charSrc(id); im.alt = ''; const gap = 96, x0 = 170 - ((n - 1) * gap) / 2 - 40; im.style.cssText = `left:${x0 + i * gap}px;top:250px;width:80px;height:80px;opacity:0;transition:opacity .45s ${i * 150}ms`; setTimeout(() => { im.style.opacity = 1; }, 60); out.push(im); });
+    ev.beats.forEach((bt, i) => setTimeout(() => { if (!room.isConnected) return; cap.textContent = bt[1]; cap.style.opacity = 1; const e = el('i', 'h2-emote', room, bt[0]); e.style.cssText = `left:${150 + (i % 2) * 40}px;top:206px;font-size:40px`; setTimeout(() => e.remove(), 1500); try { GF.sfx && GF.sfx(i === ev.beats.length - 1 ? 'celebrate' : 'tap'); } catch (x) { /* 소리 */ } }, 700 + i * 2100));
+    const total = 700 + ev.beats.length * 2100 + 600; setTimeout(() => { out.forEach((im) => { im.style.opacity = 0; }); bn.style.opacity = 0; stg.style.opacity = 0; cap.remove(); setTimeout(() => { out.forEach((im) => im.remove()); bn.remove(); stg.remove(); room.classList.remove('scene'); onEnd && onEnd(); }, 520); }, total); return out;
+  };
   /* ---------------- 유아 집 「오늘의 정리 놀이」(A12): 글자 없이, 흩어진 장난감을 같은 모양 그림자 자리에 끌어다 놓는다 ---------------- */
   const TIDY = ['🧸', '🚂', '⚽', '🥁', '🎨', '🪁', '🚗', '🦆'];
   Room.tidyToday = () => { const d = now0(), k = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); return { key: 'tidy:' + k, seed: k }; };
+  if (!UK._tidyGuard) { UK._tidyGuard = 1; const t0 = UK.toast; UK.toast = function () { return document.querySelector('.h2-tidy') ? null : t0.apply(this, arguments); }; }      // 유아 정리 놀이 중엔 토스트 금지(그림자 자리를 가린다)
   Room.tidyGame = function (parent, onEnd) {
+    document.querySelectorAll('.uk-toast').forEach((e) => e.remove());
     const S = ensure(), T = Room.tidyToday(), sc = el('div', 'uk-scrim h2-tidy', ovRoot(parent)), box = el('div', 'h2-tidybox', sc), shelf = el('div', 'h2-tidyshelf', box), floor = el('div', 'h2-tidyfloor', box);
     let r = T.seed % 2147483647; const rnd = () => (r = (r * 48271) % 2147483647) / 2147483647;
     const pool = TIDY.slice(); const picks = []; while (picks.length < 5) picks.push(pool.splice(Math.floor(rnd() * pool.length), 1)[0]);
@@ -662,7 +690,7 @@
     UK.btn({ icon: 'close', cls: 'ghost', onclick: () => { sc.remove(); onEnd && onEnd(false); } }, el('div', 'h2-tidyx', box)); return sc;
   };
   /* ---------------- 우리 집 앨범(A10): 장 완료·집 레벨·새 방·첫 손님·사진 저장의 순간이 날짜 도장과 함께 자동으로 쌓인다 ---------------- */
-  const AL_ICON = { tidy: '🧺', set: '🎬', chapter: '📖', level: '⭐', room: '🚪', guest: '👋', photo: '📷', loot: '🎁' };
+  const AL_ICON = { day: '📅', tidy: '🧺', set: '🎬', chapter: '📖', level: '⭐', room: '🚪', guest: '👋', photo: '📷', loot: '🎁' };
   Room.albumAdd = function (key, kind, title, sub, rid) {
     const S = ensure(); if (!S) return false; S.album = S.album || []; if (S.album.some((x) => x.k === key)) return false;
     const d = now0(), e = { k: key, kind, title, sub: sub || '', d: d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate(), t: d.getTime(), room: rid || null }; S.album.push(e); Room.save();

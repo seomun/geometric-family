@@ -7,6 +7,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await p.evaluate(() => { GF.stack = []; GF.go('khouse'); }); await p.waitForTimeout(1300); await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.h2-reveal').forEach((e) => e.remove()));
   ok(await p.evaluate(() => !!document.querySelector('.h2-tidychip')), '유아 집에 정리 놀이 칩(🧺)');
   await p.evaluate(() => { Room.S.album = []; Room.S.tidyN = 0; }); await p.click('.h2-tidychip'); await p.waitForTimeout(500);
+  ok(await p.evaluate(() => { UK.toast('x', document.body); return !document.querySelector('.uk-toast'); }), '정리 놀이 중엔 토스트가 안 뜸(자리 줄을 안 가림)');
   const o = await p.evaluate(() => ({ slots: document.querySelectorAll('.h2-tidyslot').length, toys: document.querySelectorAll('.h2-tidytoy').length, same: [...document.querySelectorAll('.h2-tidytoy')].map((t) => t.dataset.e).sort().join() === [...document.querySelectorAll('.h2-tidyslot')].map((t) => t.dataset.e).sort().join(), txt: document.querySelector('.h2-tidybox').innerText.replace(/\s/g, '') }));
   ok(o.slots === 5 && o.toys === 5 && o.same, '장난감 5개 · 같은 모양 자리 5개'); ok(!/[가-힣A-Za-z]/.test(o.txt), '글자 없음 · [' + o.txt + ']'); await p.screenshot({ path: 'notes/snapshots/a12_tidy_start.png' });
   const box = async (sel, i) => (await p.locator(sel).nth(i).boundingBox());

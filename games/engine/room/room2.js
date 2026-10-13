@@ -716,29 +716,36 @@
     ev.beats.forEach((bt, i) => setTimeout(() => { if (!room.isConnected) return; cap.textContent = bt[1]; cap.style.opacity = 1; const e = el('i', 'h2-emote', room, bt[0]); e.style.cssText = `left:${150 + (i % 2) * 40}px;top:206px;font-size:40px`; setTimeout(() => e.remove(), 1500); try { GF.sfx && GF.sfx(i === ev.beats.length - 1 ? 'celebrate' : 'tap'); } catch (x) { /* 소리 */ } }, 700 + i * 2100));
     const total = 700 + ev.beats.length * 2100 + 600; setTimeout(() => { out.forEach((im) => { im.style.opacity = 0; }); bn.style.opacity = 0; stg.style.opacity = 0; cap.remove(); setTimeout(() => { out.forEach((im) => im.remove()); sp.forEach((e) => e.remove()); unhide(); bn.remove(); stg.remove(); room.classList.remove('scene'); playing(room, false); onEnd && onEnd(); }, 520); sp.forEach((e) => { e.style.opacity = 0; }); }, total); unhide = hideUnder(room, out); return out;
   };
-  /* ---------------- 유아 집 「오늘의 정리 놀이」(A12): 글자 없이, 흩어진 장난감을 같은 모양 그림자 자리에 끌어다 놓는다 ---------------- */
+  /* ---------------- 유아 집 「오늘의 정리 놀이」(A12·A21): 글자 없이 끌어다 놓기. 날짜마다 3가지가 돈다 — ① 같은 모양 그림자 자리 ② 같은 색 바구니 ③ 작은 것부터 큰 것 순서 ---------------- */
   const TIDY = ['🧸', '🚂', '⚽', '🥁', '🎨', '🪁', '🚗', '🦆'];
-  Room.tidyToday = () => { const d = now0(), k = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); return { key: 'tidy:' + k, seed: k }; };
-  if (!UK._tidyGuard) { UK._tidyGuard = 1; const t0 = UK.toast; UK.toast = function () { return document.querySelector('.h2-tidy') ? null : t0.apply(this, arguments); }; }      // 유아 정리 놀이 중엔 토스트 금지(그림자 자리를 가린다)
-  Room.tidyGame = function (parent, onEnd) {
+  const TIDY_COLORS = [{ k: 'red', bg: '#FFD9D9', bd: '#E5484D', toys: ['🍎', '🚗', '🍓'] }, { k: 'blue', bg: '#D6E8FF', bd: '#2F8FD0', toys: ['🐳', '🫐', '🧢'] }, { k: 'yellow', bg: '#FFF3B8', bd: '#F2B100', toys: ['🐥', '🍋', '🍌'] }];
+  Room.tidyModes = ['shadow', 'color', 'size'];
+  Room.tidyToday = () => { const d = now0(), k = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); return { key: 'tidy:' + k, seed: k, mode: Room.tidyModes[k % 3] }; };
+  if (!UK._tidyGuard) { UK._tidyGuard = 1; const t0 = UK.toast; UK.toast = function () { return document.querySelector('.h2-tidy') ? null : t0.apply(this, arguments); }; }      // 유아 정리 놀이 중엔 토스트 금지(자리 줄을 가린다)
+  Room.tidyGame = function (parent, onEnd, forceMode) {
     document.querySelectorAll('.uk-toast').forEach((e) => e.remove());
-    const S = ensure(), T = Room.tidyToday(), sc = el('div', 'uk-scrim h2-tidy', ovRoot(parent)), box = el('div', 'h2-tidybox', sc), shelf = el('div', 'h2-tidyshelf', box), floor = el('div', 'h2-tidyfloor', box);
-    let r = T.seed % 2147483647; const rnd = () => (r = (r * 48271) % 2147483647) / 2147483647;
-    const pool = TIDY.slice(); const picks = []; while (picks.length < 5) picks.push(pool.splice(Math.floor(rnd() * pool.length), 1)[0]);
-    const slots = picks.map((e) => { const s2 = el('div', 'h2-tidyslot', shelf); el('span', '', s2, e); s2.dataset.e = e; return s2; });
-    let left = picks.length; const done = () => {
+    const S = ensure(), T = Room.tidyToday(), mode = forceMode || T.mode, sc = el('div', 'uk-scrim h2-tidy', ovRoot(parent)), box = el('div', 'h2-tidybox ' + mode, sc), shelf = el('div', 'h2-tidyshelf', box), floor = el('div', 'h2-tidyfloor', box); sc.dataset.mode = mode;
+    let r = T.seed % 2147483647; const rnd = () => (r = (r * 48271) % 2147483647) / 2147483647, pick1 = (list) => list[Math.floor(rnd() * list.length)];
+    const slotsDef = [], toysDef = [];      // slot: {key, html, cap, w, h, cls, bg, bd} · toy: {key, html, size}
+    if (mode === 'color') { TIDY_COLORS.forEach((c) => { slotsDef.push({ key: c.k, cap: 2, cls: 'basket', bg: c.bg, bd: c.bd, html: '🧺' }); const e = c.toys.slice(); for (let n = 0; n < 2; n++) toysDef.push({ key: c.k, html: e.splice(Math.floor(rnd() * e.length), 1)[0], size: 46 }); }); }
+    else if (mode === 'size') { const em = pick1(TIDY), sizes = [30, 42, 56, 74]; sizes.forEach((z, i) => { slotsDef.push({ key: 's' + i, cap: 1, cls: 'sz', html: em, fs: z }); toysDef.push({ key: 's' + i, html: em, size: z }); }); }
+    else { const pool = TIDY.slice(), picks = []; while (picks.length < 5) picks.push(pool.splice(Math.floor(rnd() * pool.length), 1)[0]); picks.forEach((e) => { slotsDef.push({ key: e, cap: 1, html: e }); toysDef.push({ key: e, html: e, size: 52 }); }); }
+    const slots = slotsDef.map((d) => { const s2 = el('div', 'h2-tidyslot ' + (d.cls || ''), shelf); const sp = el('span', '', s2, d.html); if (d.fs) { sp.style.fontSize = d.fs + 'px'; s2.style.width = Math.round(d.fs * 1.25 + 14) + 'px'; s2.style.height = Math.round(d.fs * 1.25 + 14) + 'px'; } if (d.bg) { s2.style.background = d.bg; s2.style.borderColor = d.bd; } s2.dataset.e = d.key; s2.dataset.key = d.key; s2.dataset.cap = d.cap; s2.dataset.n = 0; return s2; });
+    let left = toysDef.length; const done = () => {
       try { GF.sfx && GF.sfx('celebrate'); } catch (e) { /* 소리 */ } el('div', 'h2-tidystar', box, '⭐'); const first = Room.albumAdd(T.key, 'tidy', '오늘의 정리 놀이', '장난감을 모두 제자리에', null); if (first) { S.tidyN = (S.tidyN || 0) + 1; Room.save(); }
       setTimeout(() => { sc.remove(); onEnd && onEnd(first); }, 1900);
     };
-    picks.slice().sort(() => rnd() - 0.5).forEach((e, i) => {
-      const t = el('div', 'h2-tidytoy', floor, e), W = 340, x = 24 + ((i * 61 + Math.floor(rnd() * 30)) % (W - 100)), y = 14 + ((i * 47 + Math.floor(rnd() * 20)) % 120); t.style.cssText += `;left:${x}px;top:${y}px`; t.dataset.e = e; t.dataset.hx = x; t.dataset.hy = y;
+    toysDef.slice().sort(() => rnd() - 0.5).forEach((d, i) => {
+      const t = el('div', 'h2-tidytoy', floor, d.html), W = 340, x = 24 + ((i * 61 + Math.floor(rnd() * 30)) % (W - 100)), y = 14 + ((i * 47 + Math.floor(rnd() * 20)) % 110); t.style.cssText += `;left:${x}px;top:${y}px;font-size:${d.size}px;width:${Math.round(d.size * 1.4)}px;height:${Math.round(d.size * 1.4)}px`; t.dataset.e = d.key; t.dataset.key = d.key; t.dataset.hx = x; t.dataset.hy = y;
       let ox = 0, oy = 0, drag = false;
       t.addEventListener('pointerdown', (ev) => { if (t.classList.contains('ok')) return; drag = true; t.setPointerCapture(ev.pointerId); const b = t.getBoundingClientRect(); ox = ev.clientX - b.left; oy = ev.clientY - b.top; t.classList.add('drag'); try { GF.sfx && GF.sfx('tap'); } catch (x2) { /* 소리 */ } });
       t.addEventListener('pointermove', (ev) => { if (!drag) return; const fb = floor.getBoundingClientRect(), k = fb.width / floor.offsetWidth || 1; t.style.left = (ev.clientX - ox - fb.left) / k + 'px'; t.style.top = (ev.clientY - oy - fb.top) / k + 'px'; });
-      const end = (ev) => {
-        if (!drag) return; drag = false; t.classList.remove('drag'); const tb = t.getBoundingClientRect(), cx = tb.left + tb.width / 2, cy = tb.top + tb.height / 2, s2 = slots.find((q) => q.dataset.e === e), sb = s2.getBoundingClientRect();
-        if (Math.hypot(cx - (sb.left + sb.width / 2), cy - (sb.top + sb.height / 2)) <= Math.max(sb.width, 72) * 0.8) { t.classList.add('ok'); s2.classList.add('filled'); const fb = shelf.getBoundingClientRect(); t.style.transition = 'left .2s, top .2s'; const k = floor.getBoundingClientRect().width / floor.offsetWidth || 1, fl = floor.getBoundingClientRect(); t.style.left = (sb.left + sb.width / 2 - tb.width / 2 - fl.left) / k + 'px'; t.style.top = (sb.top + sb.height / 2 - tb.height / 2 - fl.top) / k + 'px'; try { GF.sfx && GF.sfx('star'); } catch (x2) { /* 소리 */ } if (--left === 0) done(); }
-        else { t.style.transition = 'left .25s, top .25s'; t.style.left = t.dataset.hx + 'px'; t.style.top = t.dataset.hy + 'px'; setTimeout(() => { t.style.transition = ''; }, 300); try { GF.sfx && GF.sfx('hmm'); } catch (x2) { /* 소리 */ } }
+      const end = () => {
+        if (!drag) return; drag = false; t.classList.remove('drag'); const tb = t.getBoundingClientRect(), cx = tb.left + tb.width / 2, cy = tb.top + tb.height / 2, s2 = slots.find((q) => q.dataset.key === d.key && +q.dataset.n < +q.dataset.cap), sb = s2 && s2.getBoundingClientRect();
+        if (s2 && Math.hypot(cx - (sb.left + sb.width / 2), cy - (sb.top + sb.height / 2)) <= Math.max(sb.width, 72) * 0.8) {
+          const idx = +s2.dataset.n; s2.dataset.n = idx + 1; t.classList.add('ok'); if (+s2.dataset.n >= +s2.dataset.cap) s2.classList.add('filled'); t.style.transition = 'left .2s, top .2s'; const fl = floor.getBoundingClientRect(), k = fl.width / floor.offsetWidth || 1, off = +s2.dataset.cap > 1 ? (idx ? 20 : -20) : 0;
+          t.style.left = (sb.left + sb.width / 2 - tb.width / 2 - fl.left + off) / k + 'px'; t.style.top = (sb.top + sb.height / 2 - tb.height / 2 - fl.top) / k + 'px'; try { GF.sfx && GF.sfx('star'); } catch (x2) { /* 소리 */ } if (--left === 0) done();
+        } else { t.style.transition = 'left .25s, top .25s'; t.style.left = t.dataset.hx + 'px'; t.style.top = t.dataset.hy + 'px'; setTimeout(() => { t.style.transition = ''; }, 300); try { GF.sfx && GF.sfx('hmm'); } catch (x2) { /* 소리 */ } }
       };
       t.addEventListener('pointerup', end); t.addEventListener('pointercancel', end);
     });

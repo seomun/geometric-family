@@ -249,9 +249,17 @@ PRESETS = [
     PS('p_travel', '여행 기념 벽', '🧳', 'semo', '엽서·지도·즉석 사진을 벽에 가득.', [('F1', 'b_semo_home'), ('F3', 'b_suitcase'), ('F6', 'a_album'), ('F8', 'a_camera')], [('W1', 'a_map'), ('W2', 'a_postcard'), ('W3', 'a_polaroid')], [(None, 'p_world'), (None, 'p_pass'), (None, 'p_bagt'), (None, 'p_globe'), (None, 'g_compass')]),
     PS('p_study', '조용한 서재', '📚', 'dong', '책장, 지구본, 체스판.', [('F1', 'b_shelf'), ('F2', 'b_dong_study'), ('F3', 'b_globe'), ('F5', 'g_stool'), ('F7', 'a_magnifier')], [('W1', 'b_clock'), ('W2', 'a_medal'), ('W3', 'a_ribbon')], [(None, 'p_book'), (None, 'p_vio'), (None, 'g_chess'), (None, 'g_pen')]),
     PS('p_sleep', '포근한 잠자리', '🌙', 'upstairs', '침대와 러그, 벽엔 필름 줄.', [('F1', 'b_bed'), ('F2', 'b_rug'), ('F3', 'u_box')], [('W1', 'a_garland'), ('W2', 'a_cork'), ('W3', 'a_film')], [(None, 'p_phone'), (None, 'p_clock')]),
+    PS('p_garden_farm', '뒷마당 닭장 살림', '🐔', 'garden', '우물과 닭장, 감나무 아래 물통.', [('F1', 'o_well'), ('F2', 'm_persimmon'), ('F3', 'm_coop'), ('F5', 'o_swing'), ('F7', 'm_bike')], [('W1', 'm_chime'), ('W2', 'm_butterfly'), ('W3', 'o_window')], [(None, 'm_pepper'), (None, 'm_bucket'), (None, 'm_rooster')]),
+    PS('p_garden_harvest', '뒷마당 수확철', '🎃', 'garden', '호박·무·연못과 오리, 대문 앞 가을.', [('F1', 'o_pond'), ('F2', 'o_gate'), ('F3', 'm_pumpkin'), ('F5', 'm_radish'), ('F7', 'm_duck')], [('W1', 'm_chime'), ('W2', 'm_butterfly')], [(None, 'm_pepper'), (None, 'm_bucket')]),
+    PS('p_attic_tales', '옛이야기 다락방', '📖', 'attic', '인형 선반과 거울, 엽서.', [('F1', 't_bears_a'), ('F2', 't_hok_a'), ('F3', 't_axe_a'), ('F4', 't_gyeonwoo_a'), ('F5', 't_ureng_a'), ('F7', 'g_flowerpot')], [('W1', 'g_mirror'), ('W2', 'g_apron'), ('W3', 'g_postcard')], [(None, 'g_pen'), (None, 'g_chess'), (None, 'g_compass')]),
+    PS('p_yard_rest', '마당 평상 쉼터', '🌻', 'yard', '평상과 화단, 우체통, 담장 위 고양이.', [('F1', 'o_fence'), ('F2', 'm_garden'), ('F3', 'm_bench'), ('F5', 'o_mailbox'), ('F6', 'm_cat'), ('F8', 'm_flowerrow')], [('W1', 'o_sign'), ('W2', 'o_lantern'), ('W3', 'm_laundry')], [(None, 'm_jar'), (None, 'u_eggtray'), (None, 'p_tea')]),
+    PS('p_entry_hello', '반가운 현관', '🚪', 'entrance', '신발장과 우산, 강아지 집, 문패.', [('F1', 'u_shoerack'), ('F2', 'u_closet'), ('F3', 'o_doghouse'), ('F5', 'o_flowerpot'), ('F7', 'u_umbrella')], [('W1', 'n_plate'), ('W2', 'q_plate_nemo'), ('W3', 'u_bagrack')], [(None, 'u_env'), (None, 'u_socks')]),
+    PS('p_roof_night', '옥상 별밤', '🌌', 'roof', '나무와 벤치, 등불 아래 간식.', [('F1', 's_tree'), ('F2', 'o_bench'), ('F3', 't_pigs_a'), ('F5', 't_shoes_a')], [('W1', 'q_type_nemo0'), ('W2', 'q_type_semo0'), ('W3', 'q_type_dong0')], [(None, 'p_ra'), (None, 'g_lantern2'), (None, 'e_candy'), (None, 's2_acorn')]),
 ]
+OLD_PRESETS = {'p_hansik', 'p_tea', 'p_movie', 'p_travel', 'p_study', 'p_sleep'}
 byid_all = {i['id'] for i in items}
 for pr in PRESETS:
+    _rt = ROOM_THEMES[pr['room']]; _bad = [q['id'] for q in pr['parts'] if byid[q['id']]['theme'] not in _rt]; assert not _bad or pr['id'] in OLD_PRESETS, ('프리셋 가구가 방 주제 밖', pr['id'], _bad)      # 기존 6개는 예전 규칙 그대로(새 6개부터 방 주제 단언)
     assert pr['room'] in {r['id'] for r in mkrooms('adult')}, pr['room']
     for q in pr['parts']: assert q['id'] in byid_all, ('프리셋 가구 없음', pr['id'], q['id'])
 D = dict(version=2, note='[제안] 우리 집 2.0 데이터. tools/housing_build.py 로 생성.', levels=levels, levelsKid=levelsKid, formula=dict(set=[[3, 0.10], [5, 0.25], ['all', 0.60]], harmony=30, style=30, fill=40, life=20), sizeF=SIZE_F, geom=dict(RW=340, RH=440, WALLH=150),

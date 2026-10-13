@@ -3557,6 +3557,374 @@
      "on": null
     }
    ]
+  },
+  {
+   "id": "p_garden_farm",
+   "name": "뒷마당 닭장 살림",
+   "icon": "🐔",
+   "room": "garden",
+   "group": "adult",
+   "note": "우물과 닭장, 감나무 아래 물통.",
+   "parts": [
+    {
+     "id": "o_well",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "m_persimmon",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "m_coop",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "o_swing",
+     "x": 282,
+     "y": 368
+    },
+    {
+     "id": "m_bike",
+     "x": 170,
+     "y": 428
+    },
+    {
+     "id": "m_chime",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "m_butterfly",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "o_window",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "m_pepper",
+     "on": null
+    },
+    {
+     "id": "m_bucket",
+     "on": null
+    },
+    {
+     "id": "m_rooster",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_garden_harvest",
+   "name": "뒷마당 수확철",
+   "icon": "🎃",
+   "room": "garden",
+   "group": "adult",
+   "note": "호박·무·연못과 오리, 대문 앞 가을.",
+   "parts": [
+    {
+     "id": "o_pond",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "o_gate",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "m_pumpkin",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "m_radish",
+     "x": 282,
+     "y": 368
+    },
+    {
+     "id": "m_duck",
+     "x": 170,
+     "y": 428
+    },
+    {
+     "id": "m_chime",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "m_butterfly",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "m_pepper",
+     "on": null
+    },
+    {
+     "id": "m_bucket",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_attic_tales",
+   "name": "옛이야기 다락방",
+   "icon": "📖",
+   "room": "attic",
+   "group": "adult",
+   "note": "인형 선반과 거울, 엽서.",
+   "parts": [
+    {
+     "id": "t_bears_a",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "t_hok_a",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "t_axe_a",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "t_gyeonwoo_a",
+     "x": 170,
+     "y": 368
+    },
+    {
+     "id": "t_ureng_a",
+     "x": 282,
+     "y": 368
+    },
+    {
+     "id": "g_flowerpot",
+     "x": 170,
+     "y": 428
+    },
+    {
+     "id": "g_mirror",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "g_apron",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "g_postcard",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "g_pen",
+     "on": null
+    },
+    {
+     "id": "g_chess",
+     "on": null
+    },
+    {
+     "id": "g_compass",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_yard_rest",
+   "name": "마당 평상 쉼터",
+   "icon": "🌻",
+   "room": "yard",
+   "group": "adult",
+   "note": "평상과 화단, 우체통, 담장 위 고양이.",
+   "parts": [
+    {
+     "id": "o_fence",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "m_garden",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "m_bench",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "o_mailbox",
+     "x": 282,
+     "y": 368
+    },
+    {
+     "id": "m_cat",
+     "x": 58,
+     "y": 428
+    },
+    {
+     "id": "m_flowerrow",
+     "x": 282,
+     "y": 428
+    },
+    {
+     "id": "o_sign",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "o_lantern",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "m_laundry",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "m_jar",
+     "on": null
+    },
+    {
+     "id": "u_eggtray",
+     "on": null
+    },
+    {
+     "id": "p_tea",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_entry_hello",
+   "name": "반가운 현관",
+   "icon": "🚪",
+   "room": "entrance",
+   "group": "adult",
+   "note": "신발장과 우산, 강아지 집, 문패.",
+   "parts": [
+    {
+     "id": "u_shoerack",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "u_closet",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "o_doghouse",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "o_flowerpot",
+     "x": 282,
+     "y": 368
+    },
+    {
+     "id": "u_umbrella",
+     "x": 170,
+     "y": 428
+    },
+    {
+     "id": "n_plate",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "q_plate_nemo",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "u_bagrack",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "u_env",
+     "on": null
+    },
+    {
+     "id": "u_socks",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_roof_night",
+   "name": "옥상 별밤",
+   "icon": "🌌",
+   "room": "roof",
+   "group": "adult",
+   "note": "나무와 벤치, 등불 아래 간식.",
+   "parts": [
+    {
+     "id": "s_tree",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "o_bench",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "t_pigs_a",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "t_shoes_a",
+     "x": 282,
+     "y": 368
+    },
+    {
+     "id": "q_type_nemo0",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "q_type_semo0",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "q_type_dong0",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "p_ra",
+     "on": null
+    },
+    {
+     "id": "g_lantern2",
+     "on": null
+    },
+    {
+     "id": "e_candy",
+     "on": null
+    },
+    {
+     "id": "s2_acorn",
+     "on": null
+    }
+   ]
   }
  ],
  "unlockLv": {

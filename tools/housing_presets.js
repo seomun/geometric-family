@@ -4,6 +4,9 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), ctx = await b.newContext({ viewport: { width: 390, height: 780 } }), p = await ctx.newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
   await p.addInitScript(() => { window.__noResume = true; }); await p.goto('http://localhost:8765/games/merge/index.html'); await p.waitForTimeout(1600);
+  ok(await p.evaluate(() => Room.H.presets.filter((q) => q.group === 'adult').length === 12), '테마 프리셋 12종(새 방 뒷마당·다락방·마당·현관·옥상 포함)');
+  ok(await p.evaluate(() => { const OLD = ['p_hansik', 'p_tea', 'p_movie', 'p_travel', 'p_study', 'p_sleep']; return Room.H.presets.filter((q) => !OLD.includes(q.id)).every((q) => { const R = Room.H.rooms.find((r) => r.id === q.room); return q.parts.every((x) => R.themes.includes(Room.item(x.id).theme)); }); }), '새 프리셋 가구는 모두 그 방의 허용 주제 안');
+  ok(await p.evaluate(() => ['garden', 'attic', 'yard', 'entrance', 'roof'].every((rid) => Room.H.presets.some((q) => q.room === rid))), '새 방마다 프리셋이 있음');
   const dm = ['u_fridge', 'u_cart', 'b_table', 't_bowl', 'u_crate', 'u_sidedish', 'u_shelf', 'u_label', 'p_pack1', 'p_rice', 'p_kimchi', 'p_label', 'y_bowl', 'y_spoon', 'g_lunch', 'g_teaset', 'b_sofa', 'b_drawer', 'b_rug', 'a_frame'];
   await p.evaluate((ids) => { Room.cfg.mode = 'adult'; ids.forEach((id) => Room.grant(id)); }, dm);
   const lv = await p.evaluate(() => { Room.S.lv = 30; return { lv: Room.level(), open: Room.unlockedRooms().map((r) => r.id) }; }); ok(lv.open.includes('kitchen'), '주방이 열려 있음 ' + JSON.stringify(lv));

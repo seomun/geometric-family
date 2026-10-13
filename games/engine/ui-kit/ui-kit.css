@@ -29,16 +29,16 @@
 .uk { font-family: var(--uk-font); color: var(--uk-ink); }
 
 /* ---- 버튼 ---- */
-.uk-btn { min-height: var(--uk-hit); padding: 0 22px; border: 0; border-radius: var(--uk-r-m); background: var(--uk-green); color: #fff;
+.uk-btn { min-height: var(--uk-hit); padding: 0 22px; border: 0; border-radius: var(--uk-r-m); background: var(--uk-green); color: var(--uk-ink);
   font: 900 var(--uk-fs-body)/1.15 var(--uk-font); display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   box-shadow: var(--uk-sh); transition: transform var(--uk-t-fast); }
 .uk-btn:active { transform: translateY(3px); box-shadow: var(--uk-sh-press); }
 .uk-btn svg { width: 30px; height: 30px; flex: none; }
 .uk-btn.block { display: flex; width: 100%; }
-.uk-btn.pink { background: var(--uk-pink); } .uk-btn.sky { background: var(--uk-sky); color: var(--uk-ink); }
+.uk-btn.pink { background: var(--uk-pink); color: var(--uk-ink); } .uk-btn.sky { background: var(--uk-sky); color: var(--uk-ink); }
 .uk-btn.gold { background: var(--uk-gold); color: var(--uk-ink); } .uk-btn.danger { background: var(--uk-danger); }
-.uk-btn.ghost { background: #fff; color: var(--uk-pink); } .uk-btn.ghost span { color: var(--uk-ink); } .uk-btn.gray, .uk-btn[disabled] { background: var(--uk-gray); color: #fff; }
-.uk-btn.nemo { background: var(--uk-nemo); } .uk-btn.semo { background: var(--uk-semo); } .uk-btn.dong { background: var(--uk-dong); }
+.uk-btn.ghost { background: #fff; color: var(--uk-ink2); } .uk-btn.ghost span { color: var(--uk-ink); } .uk-btn.gray, .uk-btn[disabled] { background: var(--uk-gray); color: var(--uk-ink); }
+.uk-btn.nemo { background: var(--uk-nemo); color: var(--uk-ink); } .uk-btn.semo { background: var(--uk-semo-ink); } .uk-btn.dong { background: var(--uk-dong); }
 .uk-btn[disabled] { box-shadow: var(--uk-sh); }
 .uk-btn small { display: block; font-size: var(--uk-fs-cap); font-weight: 700; opacity: .95; }
 /* 둥근 아이콘 버튼 (상단 바) / 큰 둥근 버튼 (유아 주 행동) */

@@ -263,7 +263,7 @@
     safeEl.style.width = SW + 'px'; safeEl.style.height = SH + 'px';
     safeEl.style.left = (vw / scale - SW) / 2 + 'px'; safeEl.style.top = (top + (availH - SH * scale) / 2) / scale + 'px';
     GF.safe = { w: SW, h: SH };
-    safeEl.style.setProperty('--hit', 64 / scale + 'px');
+    safeEl.style.setProperty('--hit', 64 / scale + 'px'); safeEl.style.setProperty('--hit-kid', 72 / scale + 'px');      // 유아 앱은 72dp
     GF.view = { vw, vh, lw: vw / scale, lh: vh / scale, landscape: vw > vh };
   }
   // 화면이 가로 구도를 지원하면(screen.wide) 가로 화면에서 720×440 안전 영역을 쓴다. 지원 안 하는 화면은 세로 컬럼 그대로.

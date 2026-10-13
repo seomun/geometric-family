@@ -313,3 +313,15 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-room.scene .h2-say { z-index: 49 !important; opacity: 1; }
 .h2-view.h2-playing .h2-dreamchip { visibility: hidden !important; }
 .h2-room.scene .h2-under { opacity: 0 !important; transition: opacity .3s; }
+/* 접근성(C10): 누를 것 최소 크기 — 성인 44px · 유아 72px */
+.h2-dreamchip { min-height: 44px; padding: 10px 14px; display: inline-flex; align-items: center; } .h2-daychip, .h2-scenechip { bottom: 62px !important; } .h2-tidychip { bottom: 66px !important; }
+
+.h2-fb { min-height: 44px; } 
+.uk-btn.dong, .uk-btn.semo, .uk-btn.danger { color: #fff; } .h2-go { min-height: 56px; }
+[data-uk="kid"] .tok::before, [data-uk="kid"] .round-btn::before, [data-uk="kid"] .fcard::before, [data-uk="kid"] .card::before, [data-uk="kid"] .pad::before, [data-uk="kid"] .sfcard::before, [data-uk="kid"] .dpitem::before, [data-uk="kid"] .trtray::before { width: max(100%, var(--hit-kid, 72px)); height: max(100%, var(--hit-kid, 72px)); }
+
+.h2-line .h2-go, .h2-task .h2-go, .h2-go { min-height: 56px; } 
+/* 유아 앱 터치 판정 72dp: 보이는 크기는 그대로 두고 ::before 로 판정만 넓힌다(프로젝트 터치 판정 방식, gf.css) */
+[data-uk="kid"] .h2-fb, [data-uk="kid"] .h2-go, [data-uk="kid"] .uk-round, [data-uk="kid"] .h2-dreamchip { position: relative; } [data-uk="kid"] .h2-dreamchip { position: absolute; }
+[data-uk="kid"] .h2-fb::before, [data-uk="kid"] .h2-go::before, [data-uk="kid"] .uk-round::before, [data-uk="kid"] .h2-dreamchip::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--hit-kid, 72px)); height: max(100%, var(--hit-kid, 72px)); transform: translate(-50%, -50%); }
+[data-uk="kid"] .h2-fb::before, [data-uk="kid"] .h2-dreamchip::before, [data-uk="kid"] .h2-go::before, [data-uk="kid"] .uk-round::before { width: max(100%, calc(var(--hit-kid, 72px) * 1.16)); height: max(100%, calc(var(--hit-kid, 72px) * 1.16)); } [data-uk="kid"] .h2-band, [data-uk="kid"] .h2-band.kid { min-height: 76px; }

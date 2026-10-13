@@ -12,13 +12,13 @@ const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m
   // 화면: 겨울 밤, 램프가 있는 방
   await p.evaluate(() => { Room.S.lv = 30; Room.S.light = 'auto'; Room.grant('b_lamp'); Room.grant('b_sofa'); Room._date = new Date(2026, 11, 25, 22, 0); GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(1200); await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast').forEach((e) => e.remove()));
   const v = await p.evaluate(() => { const r = document.querySelector('.h2-room'); return { night: r.classList.contains('night'), wx: r.dataset.wx, light: r.dataset.light, decor: document.querySelectorAll('.h2-sdecor i').length, wxp: document.querySelectorAll('.h2-wx .h2-wxp').length }; });
-  ok(v.night && v.light === 'night', '밤: 방이 어두워짐'); ok(v.decor === 4, '겨울 장식 4개 ' + v.decor); ok(['snow', 'clear', 'cloud'].includes(v.wx) && v.wxp > 0, '창밖 날씨 ' + v.wx);
+  ok(v.night && v.light === 'night', '밤: 방이 어두워짐'); ok(v.decor === 7, '겨울 가랜드 7개 ' + v.decor); ok(await p.evaluate(() => { const set = ['❄️', '🎄', '⛄']; return [...document.querySelectorAll('.h2-sdecor i')].every((i) => set.includes(i.textContent)) && document.querySelector('.h2-sdecor').dataset.season === 'winter'; }), '장식은 모두 같은 계절(겨울)'); ok(['snow', 'clear', 'cloud'].includes(v.wx) && v.wxp > 0, '창밖 날씨 ' + v.wx);
   const glow = await p.evaluate(() => { const rid = Room.placedIn ? null : null; return document.querySelectorAll('.h2-glow').length; }); await p.screenshot({ path: 'notes/snapshots/housing_night.png' });
   // 램프가 놓인 방에서 빛
   const hasLamp = await p.evaluate(() => Object.values(Room.S.placed).some((L) => L.some((q) => q.id === 'b_lamp'))); ok(!hasLamp || glow >= 0, '램프 배치 확인');
   // 버튼 순환: 자동 → 낮 → 저녁 → 밤 → 자동
   const labels = []; for (let i = 0; i < 4; i++) { labels.push(await p.evaluate(() => document.querySelector('.h2-fb span').textContent)); await p.evaluate(() => document.querySelector('.h2-fb').click()); await p.waitForTimeout(300); } ok(labels.join(',') === '자동,낮,저녁,밤', '빛 버튼 순환: ' + labels);
   await p.evaluate(() => { Room.S.light = 'day'; Room._date = new Date(2026, 3, 12, 12); GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(1000); await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast').forEach((e) => e.remove())); await p.screenshot({ path: 'notes/snapshots/housing_spring_day.png' });
-  ok(await p.evaluate(() => !document.querySelector('.h2-room').classList.contains('night') && document.querySelectorAll('.h2-sdecor i').length === 4), '낮·봄: 어둡지 않고 봄 장식');
+  ok(await p.evaluate(() => !document.querySelector('.h2-room').classList.contains('night') && document.querySelectorAll('.h2-sdecor i').length === 7 && [...document.querySelectorAll('.h2-sdecor i')].every((i) => ['🌸', '🌷', '🦋'].includes(i.textContent))), '낮·봄: 어둡지 않고 봄 장식만');
   ok(errs.length === 0, '오류 없음 ' + errs[0]); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

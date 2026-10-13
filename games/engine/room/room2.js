@@ -225,14 +225,14 @@
     const pool = { spring: ['clear', 'clear', 'blossom', 'cloud', 'rain'], summer: ['clear', 'clear', 'cloud', 'rain', 'rain'], autumn: ['clear', 'leaves', 'leaves', 'cloud', 'rain'], winter: ['clear', 'snow', 'snow', 'cloud', 'clear'] }[se];
     return pool[Math.floor(r / 20)];
   };
-  const SEASON_DECOR = { spring: ['🌸', '🌷', '🌸', '🦋'], summer: ['🎐', '🌻', '🍉', '🎐'], autumn: ['🍁', '🍂', '🎃', '🍁'], winter: ['❄️', '🎄', '⛄', '❄️'] };
+  const SEASON_DECOR = { spring: ['🌸', '🌷', '🦋'], summer: ['🎐', '🌻', '🍉'], autumn: ['🍁', '🍂', '🎃'], winter: ['❄️', '🎄', '⛄'] };   // 한 계절의 셋을 가랜드 한 줄로
   const LIGHT_IDS = ['b_lamp', 'g_lantern2'];
   const wxFx = (room, kind) => {
     const box = el('div', 'h2-wx ' + kind, room), n = { rain: 14, snow: 12, blossom: 9, leaves: 8, cloud: 3, clear: 1 }[kind] || 0, ch = { rain: '│', snow: '•', blossom: '🌸', leaves: '🍂', cloud: '☁️', clear: '☀️' }[kind];
     for (let i = 0; i < n; i++) { const f = el('i', 'h2-wxp', box, ch); f.style.cssText = `left:${(i * 83 + 11) % 100}%;animation-delay:${-((i * 37) % 30) / 10}s;animation-duration:${kind === 'rain' ? 0.7 + (i % 3) * 0.15 : kind === 'cloud' ? 14 + i * 5 : 3 + (i % 4) * 0.8}s;${kind === 'cloud' ? 'top:' + (6 + i * 18) + '%;' : ''}`; }
     return box;
   };
-  const seasonDecor = (room, se) => { const box = el('div', 'h2-sdecor', room); (SEASON_DECOR[se] || []).forEach((e, i) => { const f = el('i', '', box, e); f.style.cssText = `left:${14 + i * 62}px;top:${i % 2 ? 6 : 12}px`; }); return box; };
+  const seasonDecor = (room, se) => { const box = el('div', 'h2-sdecor', room), set = SEASON_DECOR[se] || [], n = 7, gap = 40, x0 = (RW - gap * (n - 1)) / 2; box.dataset.season = se; box.innerHTML = `<svg viewBox="0 0 ${RW} 30" width="${RW}" height="30"><path d="M10 4 Q${RW / 2} 20 ${RW - 10} 4" fill="none" stroke="rgba(120,90,50,.45)" stroke-width="2"/></svg>`; for (let i = 0; i < n; i++) { const f = el('i', '', box, set[i % set.length]), t = (i / (n - 1)) * 2 - 1, y = 6 + 14 * (1 - t * t); f.style.cssText = `left:${x0 + i * gap - 10}px;top:${y}px`; } return box; };
   const bgSVG = (R, light) => {
     const wall = R.wall, eve = light === 'eve', night = light === 'night', sky = night ? '#1B2A5C' : eve ? '#F7B27A' : '#BFE6FF', W = WINDOW; const out = [];
     out.push(`<defs>${pattern(R.pattern, wall)}</defs><rect width="${RW}" height="${WALLH}" fill="${wall}"/>`); if (R.pattern && R.pattern !== 'none') out.push(`<rect width="${RW}" height="${WALLH}" fill="url(#wp)"/>`);
@@ -467,7 +467,7 @@
   };
   /** 계절·이벤트 선물: 그 달에 집에 오면 하루에 하나씩(확정, 놓친 철은 다음 해에 다시) */
   Room.seasonCheck = function () {
-    const S = ensure(), d = new Date(), key = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(), m = d.getMonth() + 1; if (!S || S.seasonDay === key) return null;
+    const S = ensure(), d = now0(), key = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(), m = d.getMonth() + 1; if (!S || S.seasonDay === key) return null;
     const it = Room.data.items.find((i) => inGroup(i) && i.src && (i.src.kind === 'season' || i.src.kind === 'event') && (i.src.months || []).includes(m) && !Room.has(i.id) && (i.id.startsWith('s2_') || i.id.startsWith('e_') || i.id.startsWith('kc_')));
     if (!it) return null; S.seasonDay = key; Room.save(); return Room.grant(it.id) ? it : null;
   };

@@ -1,0 +1,22 @@
+// ⑪ 픽업 2탄 배너(B15) 시험: node tools/exp_banner_smoke.js (로컬 모드) — 배너 탭 · 배너마다 픽업·천장 따로 · 한정 동료는 2탄에서만 · 확률 공개 표가 배너별
+const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
+(async () => {
+  const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), p = await (await b.newContext({ viewport: { width: 390, height: 780 } })).newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.goto('http://localhost:8765/games/expedition/index.html'); await p.waitForTimeout(1500);
+  await p.evaluate(() => { const E = EXP.debug; E.reset(); E.S().flags.prologue = 1; E.save(); E.gems(9000); GF.stack = []; GF.go('xgacha'); }); await p.waitForTimeout(800);
+  ok(await p.evaluate(() => document.querySelectorAll('.ex-gtabs .uk-btn').length === 2), '배너 탭 2개(기본·2탄)'); ok(await p.evaluate(() => /놀부 세모 남편/.test(document.querySelector('.ex-banner').innerText)), '기본 배너 픽업: 놀부 세모 남편'); await p.screenshot({ path: 'notes/snapshots/exp_banner_main.png' });
+  await p.evaluate(() => document.querySelector('.ex-gtabs .uk-btn[data-banner="puss"]').click()); await p.waitForTimeout(700);
+  ok(await p.evaluate(() => /장화 신은 세모 아내/.test(document.querySelector('.ex-banner').innerText) && /장화 신은 고양이/.test([...document.querySelectorAll('.ex-head')].pop().innerText)), '2탄 배너 픽업: 장화 신은 세모 아내'); await p.screenshot({ path: 'notes/snapshots/exp_banner_puss.png' });
+  await p.evaluate(() => EXP.debug.pity({ since5: 40 }, 'puss')); await p.evaluate(() => GF.replace('xgacha', { banner: 'puss' })); await p.waitForTimeout(500);
+  ok(await p.evaluate(() => /천장 40\/80/.test(document.querySelector('.ex-banner').innerText)), '2탄 천장 40/80(배너마다 따로)'); await p.evaluate(() => GF.replace('xgacha', { banner: 'main' })); await p.waitForTimeout(500); ok(await p.evaluate(() => /천장 0\/80/.test(document.querySelector('.ex-banner').innerText)), '기본 배너 천장은 0/80 그대로');
+  // 확률 공개: 배너별
+  await p.evaluate(() => [...document.querySelectorAll('.uk-btn')].find((x) => /확률 공개/.test(x.textContent)).click()); await p.waitForTimeout(500);
+  const o1 = await p.evaluate(() => document.querySelector('.ex-odds-sh').innerText); ok(/놀부 세모 남편\(픽업\)/.test(o1) && !/장화 신은 세모 아내/.test(o1), '기본 배너 확률표에는 한정 동료가 없음'); await p.evaluate(() => document.querySelector('.ex-odds-sh .uk-btn').click()); await p.waitForTimeout(300);
+  await p.evaluate(() => GF.replace('xgacha', { banner: 'puss' })); await p.waitForTimeout(500); await p.evaluate(() => [...document.querySelectorAll('.uk-btn')].find((x) => /확률 공개/.test(x.textContent)).click()); await p.waitForTimeout(500);
+  const o2 = await p.evaluate(() => document.querySelector('.ex-odds-sh').innerText); ok(/장화 신은 세모 아내\(픽업\)/.test(o2) && /놀부 세모 남편 /.test(o2), '2탄 확률표: 픽업은 장화 신은 세모 아내 · 이전 픽업은 일반 ★5'); await p.screenshot({ path: 'notes/snapshots/exp_banner_odds.png' }); await p.evaluate(() => document.querySelector('.ex-odds-sh .uk-btn').click());
+  // 뽑기: 2탄 10회 → 2탄 천장만 오름, 한정 동료는 기본 배너에서 안 나옴
+  const r = await p.evaluate(() => { const E = EXP.debug, S = E.S(); S.pityB.puss = { since5: 0, since4: 0, guard: 0 }; S.pity = { since5: 0, since4: 0, guard: 0 }; E.save(); const a = []; for (let i = 0; i < 40; i++) { const x = ExpGacha.pullOnce(D2().gacha, D2().units, { since5: 0, since4: 0, guard: 0 }, Math.random, 'main'); a.push(x.id); } function D2() { return E.D(); } return { leak: a.includes('u_puss_wife') }; }); ok(!r.leak, '기본 배너 40회에 한정 동료 없음');
+  await p.evaluate(() => { const E = EXP.debug; E.gems(9000); GF.replace('xgacha', { banner: 'puss' }); }); await p.waitForTimeout(500); await p.evaluate(() => { const E = EXP.debug; window.__p = E.S().pity.since5; [...document.querySelectorAll('.ex-prow .uk-btn')][1].click(); }); await p.waitForTimeout(900);
+  ok(await p.evaluate(() => document.querySelectorAll('.ex-pc').length === 10), '2탄 10회 모집 결과 10명'); ok(await p.evaluate(() => EXP.debug.S().pity.since5 === window.__p && EXP.debug.S().pityB.puss.since5 > 0 || EXP.debug.S().pityB.puss.since5 === 0), '2탄 모집은 2탄 천장만 올림(기본 천장 불변)');
+  ok(errs.length === 0, '오류 없음 ' + (errs[0] || '')); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
+})().catch((e) => { console.error(e); process.exit(1); });

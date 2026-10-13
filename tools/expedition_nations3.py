@@ -45,6 +45,6 @@ TALE_LINES.update({'u_skyelder': '은하수 위에서 두 사람 걱정만 하�
 for _u in UNITS:
     if _u['id'] in TALE_LINES: _u['tale'] = TALE_LINES[_u['id']]
     assert _u.get('tale'), ('도감 한 줄 없음', _u['id'])
-BAL['dex'] = [dict(n=5, gems=100), dict(n=10, gems=150), dict(n=15, gems=200), dict(n=20, gems=300), dict(n=len(UNITS), gems=500)]      # 총량 1,250 그대로(문턱만 마지막이 30명으로)
+BAL['dex'] = [dict(n=5, gems=100), dict(n=10, gems=150), dict(n=15, gems=200), dict(n=20, gems=300), dict(n=30, gems=500)]      # 총량 1,250 그대로(문턱만 마지막이 30명으로)
 for _k in (73, 85, 97): assert len(STORY['pre'][_k]) == 4, ('나라 시작 이야기 4컷', _k)
 for _k in ('u_skyelder', 'u_granny', 'u_wizard'): assert len(STORY['recruit'][_k]) == 4, ('포섭 이야기는 4컷', _k)

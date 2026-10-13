@@ -24,7 +24,7 @@
     if (!r.ok) { const e = new Error(j.error || 'http_' + r.status); e.status = r.status; e.code = j.error; e.msg = j.msg; throw e; } return j;
   }
   function applyProfile(p) {
-    S.gems = p.wallet.free_gems + p.wallet.paid_gems; S.gold = p.wallet.gold; S.units = {}; Object.keys(p.units).forEach((id) => { S.units[id] = { lv: p.units[id].lv, skl: p.units[id].skl, awk: p.units[id].awk, promo: p.units[id].promo, gear: p.units[id].gear }; S.dups[id] = p.units[id].dups; }); S.party = p.progress.party; S.pity = { since5: p.pity.since5, since4: p.pity.since4, guard: p.pity.guard ? 1 : 0 }; S.pulls = p.pity.pulls; S.cap = p.cap_krw; S.band = p.age_band; S.guardian = p.guardian_notice;
+    S.gems = p.wallet.free_gems + p.wallet.paid_gems; S.gold = p.wallet.gold; S.units = {}; Object.keys(p.units).forEach((id) => { S.units[id] = { lv: p.units[id].lv, skl: p.units[id].skl, awk: p.units[id].awk, promo: p.units[id].promo, gear: p.units[id].gear }; S.dups[id] = p.units[id].dups; }); S.party = p.progress.party; S.pity = { since5: p.pity.since5, since4: p.pity.since4, guard: p.pity.guard ? 1 : 0 }; S.pityB = {}; Object.keys(p.pities || {}).forEach((k) => { if (k !== 'main') S.pityB[k] = { since5: p.pities[k].since5, since4: p.pities[k].since4, guard: p.pities[k].guard ? 1 : 0 }; }); S.pulls = p.pity.pulls + Object.keys(S.pityB).reduce((a, k) => a + ((p.pities[k] || {}).pulls || 0), 0); S.cap = p.cap_krw; S.band = p.age_band; S.guardian = p.guardian_notice;
     S.cleared = p.progress.cleared; S.stars = p.progress.stars; S.flags = p.progress.flags;   // 진행도의 진실은 서버(WP4)
   }
   async function remoteBoot() {
@@ -56,7 +56,7 @@
   const stageStartRemote = (stage) => http('POST', '/stage/start', { stage });
   const stageClearRemote = (srv, inputs, auto) => http('POST', '/stage/clear', { token: srv.token, inputs, auto, request_id: uid() });
   const GC_FRAG = (g) => (g === 5 ? 20 : g === 4 ? 5 : 1);
-  async function pullRemote(n) { const r = await http('POST', '/gacha/pull', { n, request_id: uid() }); S.gems = r.wallet.free_gems + r.wallet.paid_gems; S.pity = { since5: r.pity.since5, since4: r.pity.since4, guard: r.pity.guard ? 1 : 0 }; S.pulls = r.pity.pulls; const res = r.results.map((x) => ({ id: x.unit, grade: x.grade, isNew: x.isNew })); res.forEach((x) => { if (x.isNew) S.units[x.id] = { lv: 1 }; else S.dups[x.id] = (S.dups[x.id] || 0) + GC_FRAG(x.grade); }); bar(); return res; }
+  async function pullRemote(n, bid) { bid = bid || 'main'; const r = await http('POST', '/gacha/pull', { n, banner: bid, request_id: uid() }); S.gems = r.wallet.free_gems + r.wallet.paid_gems; const np = { since5: r.pity.since5, since4: r.pity.since4, guard: r.pity.guard ? 1 : 0 }; if (bid === 'main') S.pity = np; else { S.pityB = S.pityB || {}; S.pityB[bid] = np; } S.pulls = (S.pulls || 0) + n; const res = r.results.map((x) => ({ id: x.unit, grade: x.grade, isNew: x.isNew })); res.forEach((x) => { if (x.isNew) S.units[x.id] = { lv: 1 }; else S.dups[x.id] = (S.dups[x.id] || 0) + GC_FRAG(x.grade); }); bar(); return res; }
   /* ---------------- 육성 깊이(B2): 스킬 레벨 · 각성 · 등급 승급 · 장비 4칸 ---------------- */
   const stOf = (id) => SC.stOf(S.units[id] || { lv: 1 });
   async function growUp(id, kind, slot) {
@@ -95,10 +95,11 @@
   const beats = (a, b) => B.BEATS[a] === b;
   /* ---------------- 뽑기 ---------------- */
   const G = () => D.gacha;
-  const pullOnce = (rng) => ExpGacha.pullOnce(G(), D.units, S.pity, rng);   // 서버와 같은 코어(gacha-core.js)
-  function pull(n, rng) {
+  const pityOf = (bid) => (!bid || bid === 'main' ? S.pity : ((S.pityB = S.pityB || {})[bid] = S.pityB[bid] || { since5: 0, since4: 0, guard: 0 }));
+  const pullOnce = (rng, bid) => ExpGacha.pullOnce(G(), D.units, pityOf(bid), rng, bid || 'main');   // 서버와 같은 코어(gacha-core.js)
+  function pull(n, rng, bid) {
     const price = n === 10 ? G().ten : G().cost * n; if (S.gems < price) return null; S.gems -= price; const res = [];
-    for (let i = 0; i < n; i++) { const r = pullOnce(rng); S.pulls++; r.isNew = !S.units[r.id]; if (r.isNew) S.units[r.id] = { lv: 1 }; else S.dups[r.id] = (S.dups[r.id] || 0) + (r.grade === 5 ? 20 : r.grade === 4 ? 5 : 1); res.push(r); }
+    for (let i = 0; i < n; i++) { const r = pullOnce(rng, bid); S.pulls++; r.isNew = !S.units[r.id]; if (r.isNew) S.units[r.id] = { lv: 1 }; else S.dups[r.id] = (S.dups[r.id] || 0) + (r.grade === 5 ? 20 : r.grade === 4 ? 5 : 1); res.push(r); }
     save(); bar(); return res;
   }
   let _rng = null; const rng = () => (_rng || (_rng = B.mulberry((S.seed || (Date.now() & 0xffffff)) + S.pulls * 7919)))();
@@ -473,30 +474,30 @@
   /* ---------------- 동료 모집(뽑기) · 확률 공개 ---------------- */
   GF.screen('xgacha', {
     bare: false,
-    enter(r) {
-      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, G().banner, '랜덤 아이템 포함' + (REL ? '' : ' · ' + G().note)); setTimeout(() => { if (r.isConnected) tipOnce('gacha', r); }, 350);
-      const pk = D.units.find((u) => u.pickup), box = el('div', 'ex-banner', r); box.appendChild(art(pk, 'xl')); const tx = el('div', 'ex-btx', box); el('b', '', tx, '픽업 ★5 ' + pk.name); el('small', '', tx, `${D.el[pk.el].family} ${D.el[pk.el].name} · ${D.role[pk.role].skill}`); el('small', '', tx, '★5 확률 2.5% 중 절반이 픽업 · 천장 ' + S.pity.since5 + '/' + G().hard);
-      const bar2 = el('div', 'uk-progress gold ex-pity', r); bar2.innerHTML = `<i style="width:${Math.round(S.pity.since5 / G().hard * 100)}%"></i>`;
+    enter(r, p) {
+      const bid = (p && p.banner) || 'main', B0 = ExpGacha.bannerOf(G(), bid) || ExpGacha.bannerOf(G(), 'main'), P0 = pityOf(B0.id);
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, B0.name || G().banner); r.classList.add('ex-gacha'); setTimeout(() => { if (r.isConnected) tipOnce('gacha', r); }, 350);
+      const tabs = el('div', 'ex-gtabs', r); (G().banners || []).forEach((bn) => { const t = UK.btn({ text: bn.id === 'main' ? '기본' : '2탄', cls: (bn.id === B0.id ? 'gold' : 'ghost') + ' sm', onclick: () => { if (bn.id !== B0.id) GF.replace('xgacha', { banner: bn.id }); } }, tabs); t.dataset.banner = bn.id; });
+      const pk = ExpGacha.pickupOf(G(), D.units, B0.id), box = el('div', 'ex-banner', r); box.appendChild(art(pk, 'xl')); const tx = el('div', 'ex-btx', box); el('b', '', tx, '픽업 ★5 ' + pk.name); el('small', '', tx, `${D.el[pk.el].family} ${D.el[pk.el].name} · ${D.role[pk.role].skill}`); el('small', '', tx, '★5 확률 2.5% 중 절반이 픽업 · 천장 ' + P0.since5 + '/' + G().hard);
+      const bar2 = el('div', 'uk-progress gold ex-pity', r); bar2.innerHTML = `<i style="width:${Math.round(P0.since5 / G().hard * 100)}%"></i>`;
       const row = el('div', 'ex-prow', r); const b1 = UK.btn({ text: '1회 💎' + G().cost, cls: 'gold', onclick: () => run(1) }, row), b10 = UK.btn({ text: '10회 💎' + G().ten, cls: 'green', onclick: () => run(10) }, row); void b1; void b10;
-      UK.btn({ text: '확률 공개', cls: 'sky sm ex-odds', onclick: () => odds(r) }, r); if (!REL) el('div', 'ex-gnote', r, '무상 반짝석으로만 모집해요(슬라이스). 모집 결과는 이 기기에서 계산되고, 정식 서비스에서는 서버가 판정하고 기록해요.');
-      const run = async (n) => { let res; try { res = REMOTE ? await pullRemote(n) : pull(n, rng); } catch (e) { UK.toast(e.code === 'insufficient_gems' ? '반짝석이 모자라요. 전투를 깨면 받아요' : '서버에 연결하지 못했어요', r); return; } if (!res) { UK.toast('반짝석이 모자라요. 전투를 깨면 받아요', r); return; } showPull(r, res); };
+      UK.btn({ text: '확률 공개', cls: 'sky sm ex-odds', onclick: () => odds(r, B0.id) }, r); el('div', 'ex-gnote', r, '랜덤 아이템 포함' + (REL ? '' : ' · 무상 반짝석으로만 모집해요(슬라이스). 모집 결과는 이 기기에서 계산되고, 정식 서비스에서는 서버가 판정하고 기록해요.'));
+      const run = async (n) => { let res; try { res = REMOTE ? await pullRemote(n, B0.id) : pull(n, rng, B0.id); } catch (e) { UK.toast(e.code === 'insufficient_gems' ? '반짝석이 모자라요. 전투를 깨면 받아요' : '서버에 연결하지 못했어요', r); return; } if (!res) { UK.toast('반짝석이 모자라요. 전투를 깨면 받아요', r); return; } showPull(r, res, B0.id); };
       back(r, 'xhome');
     },
   });
-  function showPull(r, res) {
+  function showPull(r, res, bid) {
     const sc = UK.modal({ parent: r, title: '모집 결과', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('ex-pull'); const g = el('div', 'ex-pgrid', sh);
     res.forEach((x, i) => { const u = $(x.id), c = el('div', 'ex-pc g' + x.grade, g); c.style.animationDelay = i * 0.08 + 's'; c.appendChild(art(u, 'xs')); el('b', '', c, u.name.replace(/\(.*\)/, '')); el('small', '', c, '★'.repeat(x.grade) + (x.isNew ? ' NEW' : ' 조각+' + (x.grade === 5 ? 20 : x.grade === 4 ? 5 : 1))); });
-    const a = el('div', 'acts', sh); UK.btn({ text: '확인', cls: 'green', onclick: () => { sc.remove(); GF.replace('xgacha'); } }, a); GF.sfx(res.some((x) => x.grade === 5) ? 'celebrate' : 'star'); if (res.some((x) => x.grade === 5)) try { UK.confetti(sc); } catch (e) { /* 연출 */ }
+    const a = el('div', 'acts', sh); UK.btn({ text: '확인', cls: 'green', onclick: () => { sc.remove(); GF.replace('xgacha', { banner: bid || 'main' }); } }, a); GF.sfx(res.some((x) => x.grade === 5) ? 'celebrate' : 'star'); if (res.some((x) => x.grade === 5)) try { UK.confetti(sc); } catch (e) { /* 연출 */ }
   }
-  function odds(r) {
-    const g = G(), sc = UK.modal({ parent: r, title: '확률 공개', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('ex-odds-sh'); const pool = (gr) => D.units.filter((u) => u.route === 'gacha' && u.grade === gr), pct = (x) => (x * 100).toFixed(2).replace(/\.?0+$/, '') + '%';
-    const t = el('div', 'ex-otable', sh); const row = (a, b, c) => el('div', 'ex-orow', t, `<span>${a}</span><span>${b}</span><span>${c}</span>`);
-    const E = g.effective, ef = (gr) => (E ? pct(E.grade[gr]) : '-'), eu = (u) => (E ? pct(E.unit[u.id] / 100) : '-');
+  function odds(r, bid) {
+    const g = G(), O = ExpGacha.odds(g, D.units, bid || 'main'), P0 = pityOf(O.banner), sc = UK.modal({ parent: r, title: '확률 공개 · ' + ((ExpGacha.bannerOf(g, O.banner) || {}).name || ''), body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('ex-odds-sh'); const pct = (x) => (x * 100).toFixed(2).replace(/\.?0+$/, '') + '%';
+    const t = el('div', 'ex-otable', sh); const row = (a, b2, c) => el('div', 'ex-orow', t, `<span>${a}</span><span>${b2}</span><span>${c}</span>`);
+    const E = O.effective, ef = (gr) => (E ? pct(E.grade[gr]) : '-'), list = (gr) => O.rows.filter((x) => x.grade === gr), line = (x) => x.name + (x.pickup ? '(픽업)' : '') + ' ' + pct(x.rate) + ' → ' + (x.eff == null ? '-' : pct(x.eff));
     row('<b>등급</b>', '<b>기본·실효</b>', '<b>개별(기본 → 실효)</b>');
-    row('★5', pct(g.rates.five) + '<br>→ ' + ef(5), pool(5).map((u) => u.name + ' ' + pct(g.rates.five * (u.pickup ? g.pickup.share : (1 - g.pickup.share) / (pool(5).length - 1 || 1))) + ' → ' + eu(u)).join('<br>'));
-    row('★4', pct(g.rates.four) + '<br>→ ' + ef(4), pool(4).map((u) => u.name + ' ' + pct(g.rates.four / pool(4).length) + ' → ' + eu(u)).join('<br>'));
-    row('★3', pct(g.rates.three) + '<br>→ ' + ef(3), pool(3).map((u) => u.name + ' ' + pct(g.rates.three / pool(3).length) + ' → ' + eu(u)).join('<br>'));
-    el('p', 'ex-onote', sh, `· <b>기본</b>=한 회 기본 확률, <b>실효</b>=천장·10회 보장을 모두 넣고 길게 모았을 때의 평균${E ? '(★5 평균 약 ' + E.expected5 + '회)' : ''}<br>· 소프트 천장: ${g.soft + 1}회째부터 ★5 확률이 매 회 +${pct(g.softUp)}<br>· 하드 천장: ${g.hard}회째 ★5 확정(이후 0으로)<br>· 픽업 보장: ★5가 픽업이 아니면 다음 ★5는 픽업 확정<br>· 10회 모집은 ★4 이상 1명 보장 · 중복은 각성 조각으로 바뀜<br>· 지금 ★5까지 ${S.pity.since5}회 · 보장 ${S.pity.guard ? '있음' : '없음'}<br>· <b>랜덤 아이템 포함</b>${REL ? '' : ' · 슬라이스는 무상 반짝석만 쓰고 결제가 없어요'}`);
+    row('★5', pct(g.rates.five) + '<br>→ ' + ef(5), list(5).map(line).join('<br>')); row('★4', pct(g.rates.four) + '<br>→ ' + ef(4), list(4).map(line).join('<br>')); row('★3', pct(g.rates.three) + '<br>→ ' + ef(3), list(3).map(line).join('<br>'));
+    el('p', 'ex-onote', sh, `· <b>기본</b>=한 회 기본 확률, <b>실효</b>=천장·10회 보장을 모두 넣고 길게 모았을 때의 평균${E ? '(★5 평균 약 ' + E.expected5 + '회)' : ''}<br>· 소프트 천장: ${g.soft + 1}회째부터 ★5 확률이 매 회 +${pct(g.softUp)}<br>· 하드 천장: ${g.hard}회째 ★5 확정(이후 0으로)<br>· 픽업 보장: ★5가 픽업이 아니면 다음 ★5는 픽업 확정<br>· 천장 횟수는 배너마다 따로 세요 · 한정 동료는 그 배너에서만 나와요<br>· 10회 모집은 ★4 이상 1명 보장 · 중복은 각성 조각으로 바뀜<br>· 지금 이 배너에서 ★5까지 ${P0.since5}회 · 보장 ${P0.guard ? '있음' : '없음'}<br>· <b>랜덤 아이템 포함</b>${REL ? '' : ' · 슬라이스는 무상 반짝석만 쓰고 결제가 없어요'}`);
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
   }
   /* ---------------- 시작 ---------------- */
@@ -505,7 +506,7 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'expedition_slice', 'art_slots'], storeKey: 'gfx:slice:ui:v1', async start() {
       D = GF.data.expedition_slice; D.units.forEach((u) => { UD[u.id] = u; }); S = REMOTE ? fresh() : load(); if (/[?&]seed=(\d+)/.test(location.search)) S.seed = +RegExp.$1; if (REMOTE) await remoteBoot(); GF.tale.init('expedition', null, { kid: false });
       document.getElementById('safe').classList.add('uk'); GF.go('xhome');
-      Object.assign(EXP.debug, { S: () => S, D: () => D, reset: () => { S = fresh(); save(); GF.go('xhome'); }, save, pull: (n) => pull(n, rng), remote: () => REMOTE, refresh: async () => { applyProfile(await http('GET', '/profile')); bar(); }, auth: () => AUTH, http: (m, pa, b) => http(m, pa, b), pity: (v) => { Object.assign(S.pity, v); save(); }, gems: (n) => { S.gems = n; save(); bar(); }, gold: (n) => { S.gold = n; save(); bar(); }, kOf, power, fastBattle: (stage, party, seed) => { const st = D.stages.find((x) => x.id === stage); const core = B.create((party || S.party).map((id, i) => defOf(id, i)), st.enemies.map(enemyDef), { seed: seed == null ? stage * 1009 + 3 : seed }); const out = core.run(); return { win: out.win, turns: out.turns, hash: core.hash(out.log), downs: core.A.filter((u) => u.hp <= 0).length }; } });
+      Object.assign(EXP.debug, { S: () => S, D: () => D, reset: () => { S = fresh(); save(); GF.go('xhome'); }, save, pull: (n) => pull(n, rng), remote: () => REMOTE, refresh: async () => { applyProfile(await http('GET', '/profile')); bar(); }, auth: () => AUTH, http: (m, pa, b) => http(m, pa, b), pity: (v, bid) => { Object.assign(pityOf(bid), v); save(); }, gems: (n) => { S.gems = n; save(); bar(); }, gold: (n) => { S.gold = n; save(); bar(); }, kOf, power, fastBattle: (stage, party, seed) => { const st = D.stages.find((x) => x.id === stage); const core = B.create((party || S.party).map((id, i) => defOf(id, i)), st.enemies.map(enemyDef), { seed: seed == null ? stage * 1009 + 3 : seed }); const out = core.run(); return { win: out.win, turns: out.turns, hash: core.hash(out.log), downs: core.A.filter((u) => u.hp <= 0).length }; } });
     } }, opts || {}));
   };
 })();

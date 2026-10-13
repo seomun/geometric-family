@@ -43,3 +43,15 @@ test('출석 7일: 하루 한 번(KST) · 끊겨도 이어서 n번째 · 7일 �
   const over = await at(NOW + 20 * DAY); assert.equal(over.body.done, true); const gems = (await env.DB.prepare("SELECT SUM(d_free) AS s FROM ledger WHERE account=? AND kind='attend'").bind(a.account).first()).s; assert.equal(gems, 100, '출석 반짝석 총 100');
   const v = (await call(env, 'GET', '/beginner', { token: a.access })).body; assert.equal(v.att.n, 7);
 });
+
+test('픽업 2탄(B15): 배너마다 천장 따로 · 한정 동료는 그 배너에만 · 확률표도 배너별', async () => {
+  const env = mkenv(), a = await signup(env);
+  const main = (await call(env, 'GET', '/gacha/odds')).body, puss = (await call(env, 'GET', '/gacha/odds?banner=puss')).body;
+  assert.equal(main.banner, 'main'); assert.equal(puss.banner, 'puss'); assert.ok(!main.rows.some((r) => r.id === 'u_puss_wife'), '한정 동료는 기본 배너 확률표에 없다'); assert.ok(puss.rows.some((r) => r.id === 'u_puss_wife' && r.pickup), '2탄 배너 픽업은 장화 신은 세모 아내');
+  for (const o of [main, puss]) { const five = o.rows.filter((r) => r.grade === 5).reduce((x, r) => x + r.rate, 0); assert.ok(Math.abs(five - 0.025) < 1e-9, '★5 개별 합 = 2.5%'); assert.ok(Math.abs(o.rows.reduce((x, r) => x + r.rate, 0) - 1) < 1e-9, '개별 확률 합 100%'); assert.ok(o.effective && o.effective.grade[5] > 0.03); }
+  assert.equal((await call(env, 'GET', '/gacha/odds?banner=nope')).body.error, 'bad_banner'); assert.equal((await call(env, 'POST', '/gacha/pull', { token: a.access, body: { n: 1, banner: 'nope', request_id: R() } })).body.error, 'bad_banner');
+  const p1 = await call(env, 'POST', '/gacha/pull', { token: a.access, body: { n: 10, banner: 'puss', request_id: R() } }); assert.equal(p1.status, 200, JSON.stringify(p1.body)); assert.equal(p1.body.banner, 'puss'); assert.equal(p1.body.pity.pulls, 10);
+  const prof = (await call(env, 'GET', '/profile', { token: a.access })).body; assert.equal(prof.pity.pulls, 0, '기본 배너 천장은 그대로'); assert.equal(prof.pities.puss.pulls, 10, '2탄 배너 천장은 따로'); assert.equal(prof.pities.main.pulls, 0);
+  const G = (await import('../src/game.js')); let x = 12345; const rnd = () => { x = (x * 1103515245 + 12345) % 2147483648; return x / 2147483648; }, P = { since5: 0, since4: 0, guard: 0 }; let leak = 0, pk = 0; for (let i = 0; i < 20000; i++) { const r = G.GC.pullOnce(G.D.gacha, G.D.units, P, rnd, 'main'); if (r.id === 'u_puss_wife') leak++; } const Q = { since5: 0, since4: 0, guard: 0 }; for (let i = 0; i < 20000; i++) { const r = G.GC.pullOnce(G.D.gacha, G.D.units, Q, rnd, 'puss'); if (r.id === 'u_puss_wife') pk++; }
+  assert.equal(leak, 0, '한정 동료는 기본 배너에서 절대 안 나온다'); assert.ok(pk > 20000 * 0.015, '2탄 배너에서는 픽업이 나온다 · ' + pk);
+});

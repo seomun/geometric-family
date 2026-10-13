@@ -35,9 +35,9 @@ export async function createAccount(env, { id, deviceHash, birthYm, now = Date.n
 }
 
 export async function profile(env, account, now = Date.now()) {
-  const db = env.DB, [acc, w, units, pr, py] = await Promise.all([first(db, 'SELECT age_band,cap_krw,guardian_notice_at,has_paid,no_inter,created_at FROM accounts WHERE id=?', account), first(db, 'SELECT free_gems,paid_gems,gold,tickets,ver FROM wallet WHERE account=?', account), all(db, 'SELECT unit_id,lv,dups,skl,awk,promo,gear FROM units WHERE account=?', account), first(db, 'SELECT cleared,stars,party,flags FROM progress WHERE account=?', account), first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, BANNER)]);
+  const db = env.DB, [acc, w, units, pr, py] = await Promise.all([first(db, 'SELECT age_band,cap_krw,guardian_notice_at,has_paid,no_inter,created_at FROM accounts WHERE id=?', account), first(db, 'SELECT free_gems,paid_gems,gold,tickets,ver FROM wallet WHERE account=?', account), all(db, 'SELECT unit_id,lv,dups,skl,awk,promo,gear FROM units WHERE account=?', account), first(db, 'SELECT cleared,stars,party,flags FROM progress WHERE account=?', account), first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, BANNER)]), pRows = await all(db, 'SELECT banner,since5,since4,guard,pulls FROM pity WHERE account=?', account);
   if (!acc) throw new HttpError(404, 'no_account');
-  return { account, age_band: acc.age_band, cap_krw: acc.cap_krw, guardian_notice: !!acc.guardian_notice_at, wallet: { free_gems: w.free_gems, paid_gems: w.paid_gems, gold: w.gold, tickets: w.tickets }, has_paid: !!acc.has_paid, no_inter: !!acc.no_inter, ads: interstitialRule(acc, now), units: Object.fromEntries(units.map((u) => [u.unit_id, { lv: u.lv, dups: u.dups, skl: u.skl, awk: u.awk, promo: u.promo, gear: JSON.parse(u.gear) }])), progress: { cleared: pr.cleared, stars: JSON.parse(pr.stars), party: JSON.parse(pr.party), flags: JSON.parse(pr.flags) }, pity: { since5: py.since5, since4: py.since4, guard: !!py.guard, pulls: py.pulls }, odds_ver: ODDS_VER };
+  return { account, age_band: acc.age_band, cap_krw: acc.cap_krw, guardian_notice: !!acc.guardian_notice_at, wallet: { free_gems: w.free_gems, paid_gems: w.paid_gems, gold: w.gold, tickets: w.tickets }, has_paid: !!acc.has_paid, no_inter: !!acc.no_inter, ads: interstitialRule(acc, now), units: Object.fromEntries(units.map((u) => [u.unit_id, { lv: u.lv, dups: u.dups, skl: u.skl, awk: u.awk, promo: u.promo, gear: JSON.parse(u.gear) }])), progress: { cleared: pr.cleared, stars: JSON.parse(pr.stars), party: JSON.parse(pr.party), flags: JSON.parse(pr.flags) }, pity: { since5: py.since5, since4: py.since4, guard: !!py.guard, pulls: py.pulls }, pities: Object.fromEntries(D.gacha.banners.map((b) => { const r = pRows.find((x) => x.banner === b.id) || { since5: 0, since4: 0, guard: 0, pulls: 0 }; return [b.id, { since5: r.since5, since4: r.since4, guard: !!r.guard, pulls: r.pulls }]; })), odds_ver: ODDS_VER };
 }
 
 export async function setParty(env, account, party) {
@@ -63,12 +63,13 @@ async function walletUnit(db, account, unitId) { const w = await first(db, 'SELE
 
 /** 서버 뽑기: 재화 확인(무상 먼저) → 천장 읽기 → CSPRNG 판정 → 한 트랜잭션(낙관적 잠금)으로 반영 + 로그. 같은 request_id 는 같은 응답. */
 export async function gachaPull(env, account, { banner = BANNER, n, requestId }, now = Date.now(), rand = csprng) {
-  const db = env.DB; if (n !== 1 && n !== 10) throw new HttpError(400, 'bad_n', 'n 은 1 또는 10'); if (banner !== BANNER) throw new HttpError(400, 'bad_banner'); if (!requestId) throw new HttpError(400, 'no_request_id');
+  const db = env.DB; if (n !== 1 && n !== 10) throw new HttpError(400, 'bad_n', 'n 은 1 또는 10'); if (!GC.bannerOf(D.gacha, banner)) throw new HttpError(400, 'bad_banner'); if (!requestId) throw new HttpError(400, 'no_request_id');
   const prev = await first(db, 'SELECT response FROM gacha_log WHERE request_id=?', requestId); if (prev) return { ...JSON.parse(prev.response), replay: true };
   const G = D.gacha, price = GC.price(G, n), w = await first(db, 'SELECT free_gems,paid_gems,gold,ver FROM wallet WHERE account=?', account); if (w.paid_gems < 0) throw new HttpError(402, 'negative_balance', '환불로 모자란 유료 반짝석을 다음 결제로 채울 때까지 쓸 수 없어요'); if (w.free_gems + w.paid_gems < price) throw new HttpError(402, 'insufficient_gems', '반짝석이 모자라요');
-  const py = await first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, banner), P = { since5: py.since5, since4: py.since4, guard: py.guard };
+  let py = await first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, banner); if (!py) { await run(db, 'INSERT OR IGNORE INTO pity(account,banner,since5,since4,guard,pulls) VALUES(?,?,0,0,0,0)', account, banner).run(); py = { since5: 0, since4: 0, guard: 0, pulls: 0 }; }      // 새 배너는 처음 뽑을 때 천장 카운터를 만든다(배너마다 따로)
+  const P = { since5: py.since5, since4: py.since4, guard: py.guard };
   const owned = new Set((await all(db, 'SELECT unit_id FROM units WHERE account=?', account)).map((r) => r.unit_id)), results = [], fragAdd = {}, newUnits = [];
-  for (let i = 0; i < n; i++) { const r = GC.pullOnce(G, D.units, P, rand), isNew = !owned.has(r.id); if (isNew) { owned.add(r.id); newUnits.push(r.id); } const frag = isNew ? 0 : GC.dupFrag(r.grade); if (frag) fragAdd[r.id] = (fragAdd[r.id] || 0) + frag; results.push({ unit: r.id, grade: r.grade, isNew, dupFrag: frag }); }
+  for (let i = 0; i < n; i++) { const r = GC.pullOnce(G, D.units, P, rand, banner), isNew = !owned.has(r.id); if (isNew) { owned.add(r.id); newUnits.push(r.id); } const frag = isNew ? 0 : GC.dupFrag(r.grade); if (frag) fragAdd[r.id] = (fragAdd[r.id] || 0) + frag; results.push({ unit: r.id, grade: r.grade, isNew, dupFrag: frag }); }
   const useFree = Math.min(w.free_gems, price), usePaid = price - useFree, nf = w.free_gems - useFree, np = w.paid_gems - usePaid;
   const response = { results, wallet: { free_gems: nf, paid_gems: np, gold: w.gold }, pity: { since5: P.since5, since4: P.since4, guard: !!P.guard, pulls: py.pulls + n }, odds_ver: ODDS_VER, banner, n };
   const guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, requestId];
@@ -85,7 +86,7 @@ export async function gachaPull(env, account, { banner = BANNER, n, requestId },
   if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요'); return response;
 }
 
-export const oddsTable = () => ({ ...GC.odds(D.gacha, D.units), odds_ver: ODDS_VER, banner: D.gacha.banner, cost: D.gacha.cost, ten: D.gacha.ten });
+export const oddsTable = (banner) => { const b = GC.bannerOf(D.gacha, banner || BANNER); if (!b) throw new HttpError(400, 'bad_banner'); return { ...GC.odds(D.gacha, D.units, b.id), odds_ver: ODDS_VER, banner: b.id, banner_name: b.name, cost: D.gacha.cost, ten: D.gacha.ten }; };
 
 export async function deleteAccount(env, account) {
   const db = env.DB; await db.batch(['units', 'progress', 'pity', 'wallet', 'ledger', 'gacha_log', 'tokens', 'requests', 'spend_month', 'ad_claims', 'flags'].map((t) => run(db, `DELETE FROM ${t} WHERE account=?`, account)).concat([run(db, "UPDATE accounts SET status='deleted', birth_ym=NULL WHERE id=?", account)])); return { ok: true, note: '결제 기록은 법정 보존 기간 동안 남아요' };

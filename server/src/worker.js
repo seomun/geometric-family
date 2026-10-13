@@ -33,7 +33,7 @@ export async function handle(req, env, now = Date.now()) {
     case 'GET /webhook/ads': return json(await Shop.adWebhook(env, Object.fromEntries(url.searchParams), now));
     case 'POST /webhook/play': {   // 스토어 환불 통지(RTDN). 로컬은 공유 비밀 헤더 — 실제 Pub/Sub 푸시는 서명(JWT) 검증으로 교체(계정 뒤)
       if (!env.WEBHOOK_SECRET || !safeEq(req.headers.get('x-webhook-secret') || '', env.WEBHOOK_SECRET)) throw new HttpError(403, 'bad_secret'); const b = await readJson(req); if (b.type !== 'refund') return json({ ok: true, ignored: true }); return json(await retry(() => Shop.refundOrder(env, b.order_id, now))); }
-    case 'GET /gacha/odds': return json(G.oddsTable());
+    case 'GET /gacha/odds': return json(G.oddsTable(new URL(req.url).searchParams.get('banner')));
     case 'POST /auth/anon': {
       const b = await readJson(req), id = uuid(), a = await G.createAccount(env, { id, deviceHash: b.device_hash, birthYm: b.birth_ym, now }), t = await issue(env, id, b.device_hash, a.band, now);
       return json({ account: id, ...t, age_band: a.band, cap_krw: a.cap, guardian_notice: a.notice, payments_blocked: a.cap === 0 }, 201);

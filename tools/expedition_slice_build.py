@@ -17,6 +17,7 @@ UNITS = [  # 호칭은 단일 배역표(tools/tales_cast.py ACTORS)의 성인 �
     U('u_wind', '바람 친구', None, 'attacker', 'flash', 4, 'recruit', emoji='🌬️', note='포섭 · 바람 친구(가족 밖, 장난을 그만두고 친구가 됨)'),
     # 모집(뽑기): 옛이야기 의상 버전과 옛이야기 캐릭터 — 가족 본인은 뽑기에 없다
     U('u_nolbu_husband', '놀부 세모 남편', 'husband.wink', 'attacker', 'flash', 5, 'gacha', pickup=True, costume='흥부와 놀부'), U('u_heungbu_dad', '흥부 네모 아빠', 'nemo_dad.love', 'healer', 'support', 5, 'gacha', costume='흥부와 놀부'), U('u_sun_hana', '해님 하나', 'nemo_kids.kid1', 'mage', 'support', 5, 'gacha', costume='해님 달님'),
+    U('u_puss_wife', '장화 신은 세모 아내', 'wife.joy', 'attacker', 'support', 5, 'gacha', costume='장화 신은 고양이', banner='puss'),
     U('u_woodcutter_dad', '나무꾼 네모 아빠', 'nemo_dad.joy', 'tank', 'support', 4, 'gacha', costume='금도끼 은도끼'), U('u_bear_dong', '큰 곰 동그라미 아빠', 'dong_dad.warm', 'tank', 'care', 4, 'gacha', costume='세 마리 곰'), U('u_ant_mom', '개미 네모 엄마', 'nemo_mom.joy', 'healer', 'support', 4, 'gacha', costume='개미와 베짱이'), U('u_dokkaebi', '도깨비', None, 'attacker', 'flash', 4, 'gacha', emoji='👹', costume='혹부리 영감'),
     U('u_swallow', '제비', None, 'healer', 'care', 3, 'gacha', emoji='🐦', costume='흥부와 놀부'), U('u_toad', '두꺼비', None, 'tank', 'care', 3, 'gacha', emoji='🐸', costume='콩쥐팥쥐'), U('u_magpie', '까치', None, 'support', 'flash', 3, 'gacha', emoji='🐦‍⬛', costume='견우와 직녀'), U('u_fairy', '요정', None, 'mage', 'care', 3, 'gacha', emoji='🧚', costume='구두장이와 요정'),
 ]
@@ -39,7 +40,7 @@ STORY = dict(
     join=dict(u_kid3=[cut('벽돌집 공사장에서 셋째 돼지 세찌가 손을 흔들었다.', 'nemo_kids.kid3', bg='hill'), cut('「바람이 불어도 안 무너지게 튼튼히 지었어. 같이 가도 될까?」', 'nemo_kids.kid3', 'baby.joy', bg='hill'), cut('세찌가 원정대에 합류했다!', 'nemo_kids.kid3', 'nemo_dad.good', 'wife.joy', bg='hill')]),
     recruit=dict(u_wind=[cut('바람 친구가 멈칫했다. 「나는 그냥… 같이 놀고 싶었어. 날려 보내면 쳐다봐 줄 줄 알았거든.」', 'dong_dad.warm', bg='hill'), cut('동그라미 아빠가 조용히 말했다. 「그럼 같이 가요. 지붕은 이제 우리가 같이 고쳐요.」', 'dong_dad.calm', 'baby.joy', bg='hill'), cut('바람 친구가 원정대의 친구가 되었다!', 'baby.joy', 'wife.joy', 'dong_dad.calm', bg='hill')]),
     stage6_pre=[cut('바람 친구는 사나운 것이 아니었다. 힘이 약해지면 마음을 열지도 몰라. 상성이 맞는 친구가 말을 걸어 보자.', 'baby.surprise', 'dong_dad.calm', bg='hill')])
-GACHA = dict(cost=150, ten=1425, rates=dict(five=0.025, four=0.135, three=0.84), soft=60, softUp=0.06, hard=80, pickup=dict(id='u_husband', share=0.5), startGems=1500, clearGems=150, banner='아기돼지 마을 모집', note='슬라이스: 무상 반짝석만 · 결제 없음 · 판정은 이 기기에서(정식은 서버)')
+GACHA = dict(cost=150, ten=1425, rates=dict(five=0.025, four=0.135, three=0.84), soft=60, softUp=0.06, hard=80, pickup=dict(id='u_husband', share=0.5), banners=[dict(id='main', name='아기돼지 마을 모집', pickup='u_nolbu_husband'), dict(id='puss', name='장화 신은 고양이', pickup='u_puss_wife')], startGems=1500, clearGems=150, banner='아기돼지 마을 모집', note='슬라이스: 무상 반짝석만 · 결제 없음 · 판정은 이 기기에서(정식은 서버)')
 for _st in STAGES:
     for _e in _st['enemies']: _e['k'] = round(_e['k'] * _st['scale'], 3)
 BAL = dict(lvMul=0.065, gradeMul={'3': 1.0, '4': 1.2, '5': 1.45}, costBase=25, costGrow=1.15, lvCap=10, stages=len(STAGES), startGold=0, persuadeAt=0.3)

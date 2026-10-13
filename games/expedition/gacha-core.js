@@ -17,13 +17,15 @@
     if (P.since4 >= 10 || x < p5 + G.rates.four) { P.since4 = 0; return { id: pick(pool(units, 4, bid)).id, grade: 4 }; }
     return { id: pick(pool(units, 3, bid)).id, grade: 3 };
   }
+  /** 규칙으로 계산한 ★5 최대 횟수: 소프트 천장 이후 매 회 +softUp 로 확률이 100% 가 되는 첫 회(하드 천장 값은 안전망일 뿐). 화면·서버·스토어 문서가 모두 이 값을 쓴다 */
+  const ceiling = (G) => { for (let k = 1; k <= G.hard; k++) { if (G.rates.five + (k > G.soft ? (k - G.soft) * G.softUp : 0) >= 1 - 1e-9) return k; } return G.hard; };
   const price = (G, n) => (n === 10 ? G.ten : G.cost * n);
   const dupFrag = (grade) => (grade === 5 ? 20 : grade === 4 ? 5 : 1);
   /** 확률 공개용 표(화면·서버 /gacha/odds 가 같은 값을 쓴다) */
   function odds(G, units, bid) {
     bid = bid || 'main'; const rows = [], pk = pickupOf(G, units, bid), E = G.effective ? ((G.effective.banners || {})[bid] || (bid === 'main' ? G.effective : null)) : null;
     [5, 4, 3].forEach((gr) => { const list = pool(units, gr, bid), tot = gr === 5 ? G.rates.five : gr === 4 ? G.rates.four : G.rates.three; list.forEach((u) => { const isPk = !!pk && u.id === pk.id, p = gr === 5 ? tot * (isPk ? G.pickup.share : (1 - G.pickup.share) / (list.length - 1 || 1)) : tot / list.length; rows.push({ id: u.id, name: u.name, grade: gr, pickup: isPk, rate: p, eff: E && E.unit ? E.unit[u.id] / 100 : null }); }); });
-    return { banner: bid, banners: (G.banners || []).map((x) => ({ id: x.id, name: x.name, pickup: x.pickup })), rates: G.rates, soft: G.soft + 1, softUp: G.softUp, hard: G.hard, pickup: G.pickup, tenGuarantee: '★4 이상 1명', effective: E ? { ver: E.ver || G.effective.ver, grade: { 5: E.grade[5] / 100, 4: E.grade[4] / 100, 3: E.grade[3] / 100 }, expected5: E.expected5 } : null, rows };
+    return { banner: bid, banners: (G.banners || []).map((x) => ({ id: x.id, name: x.name, pickup: x.pickup })), rates: G.rates, soft: G.soft + 1, softUp: G.softUp, hard: ceiling(G), pickupMax: ceiling(G) * 2, pickup: G.pickup, tenGuarantee: '★4 이상 1명', effective: E ? { ver: E.ver || G.effective.ver, grade: { 5: E.grade[5] / 100, 4: E.grade[4] / 100, 3: E.grade[3] / 100 }, expected5: E.expected5 } : null, rows };
   }
-  return { pool, bannerOf, pickupOf, pullOnce, price, dupFrag, odds };
+  return { ceiling, pool, bannerOf, pickupOf, pullOnce, price, dupFrag, odds };
 });

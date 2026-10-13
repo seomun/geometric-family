@@ -15,7 +15,7 @@ let rid = 0; const R = () => 'req-' + (++rid);
 test('healthz · config · odds', async () => {
   const env = mkenv(); assert.equal((await call(env, 'GET', '/healthz')).body.ok, true);
   const c = (await call(env, 'GET', '/config')).body; assert.equal(c.caps['19p'], 200000); assert.equal(c.caps['14_18'], 70000); assert.equal(c.ads.personalized, false);
-  const o = (await call(env, 'GET', '/gacha/odds')).body; const sum = o.rows.reduce((s, r) => s + r.rate, 0); assert.ok(Math.abs(sum - 1) < 1e-9, '개별 확률 합 100%'); assert.equal(o.hard, 80);
+  const o = (await call(env, 'GET', '/gacha/odds')).body; const sum = o.rows.reduce((s, r) => s + r.rate, 0); assert.ok(Math.abs(sum - 1) < 1e-9, '개별 확률 합 100%'); assert.equal(o.hard, 77, '★5 최대 횟수는 규칙으로 계산한 77(61회부터 매 회 +6%)'); assert.equal(o.pickupMax, 154);
   assert.equal(o.effective.ver, 'eff-2'); assert.ok(o.effective.grade[5] > 0.025 && o.effective.grade[4] > 0.135, '실효 확률이 기본보다 높다(천장·10회 보장)'); assert.ok(o.rows.every((r) => r.eff > 0), '모든 동료에 실효 확률'); const es = o.rows.reduce((t, r) => t + r.eff, 0); assert.ok(Math.abs(es - 1) < 0.001, '실효 합 100%');
 });
 

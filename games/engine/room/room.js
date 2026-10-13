@@ -32,11 +32,27 @@
     },
     /** 공유 저장소 어댑터: localStorage + (APK 에서만) 네이티브 다리 GFShare. 웹·단독 실행에서는 그냥 localStorage. */
     sharedStore(key) {
-      const ls = () => { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } };
+      /* 저장 손상 복구(C12): 가구를 잃지 않게 ① 이전 값(:bak) ② 가장 많이 모았던 값(:best)을 따로 둔다.
+         읽을 때 본 저장이 깨졌거나(JSON 오류·모양 이상) 가구가 :best 보다 눈에 띄게 줄었으면(가구는 줄지 않는 값) 백업과 합쳐 되살린다. */
+      const parse = (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+      const valid = (v) => !!v && typeof v === 'object' && v.v === 1 && Array.isArray(v.items) && v.placed && typeof v.placed === 'object' && !Array.isArray(v.placed);
+      const ls = () => {
+        let v = parse(key); const bak = parse(key + ':bak'), best = parse(key + ':best'); let recovered = null;
+        if (!valid(v)) { v = valid(bak) ? bak : valid(best) ? best : null; recovered = v ? (v === bak ? 'bak' : 'best') : null; if (v && valid(best) && best.items.length > v.items.length) { v = Room.merge(v, best); recovered = 'best'; } }
+        else if (valid(best) && v.items.length < best.items.length) { v = Room.merge(v, best); recovered = 'best'; }      // 가구가 줄어든 저장 = 손상: 가장 많이 모았던 것과 합집합
+        if (recovered) { Room._recovered = recovered; try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) { /* 용량 */ } }
+        return v;
+      };
       return {
         key,
         get() { let v = ls(); try { if (window.GFShare) JSON.parse(GFShare.peers(key) || '[]').forEach((t) => { try { v = Room.merge(v, JSON.parse(t)); } catch (e) {} }); } catch (e) {} return v; },
-        set(v) { const t = JSON.stringify(v); try { localStorage.setItem(key, t); } catch (e) {} try { window.GFShare && GFShare.put(key, t); } catch (e) {} },
+        set(v) {
+          const t = JSON.stringify(v);
+          try { const cur = parse(key); if (valid(cur) && localStorage.getItem(key) !== t) localStorage.setItem(key + ':bak', JSON.stringify(cur)); } catch (e) { /* 용량 */ }
+          try { localStorage.setItem(key, t); } catch (e) { /* 용량 */ }
+          try { if (valid(v)) { const best = parse(key + ':best'); if (!valid(best) || v.items.length >= best.items.length) localStorage.setItem(key + ':best', t); } } catch (e) { /* 용량 */ }
+          try { window.GFShare && GFShare.put(key, t); } catch (e) {}
+        },
       };
     },
     /** 앱이 다시 앞으로 올 때: 다른 앱에서 바뀐 집을 불러온다. */

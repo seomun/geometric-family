@@ -332,19 +332,25 @@
     const a = el('div', 'acts', sh); UK.btn({ text: '전투 시작', icon: 'play', cls: 'green', onclick: () => { sc.remove(); GF.go('xbattle', { stage: st.id }); } }, a); UK.btn({ text: '편성하기', cls: 'sky sm', onclick: () => { sc.remove(); GF.go('xparty', { from: 'xmap' }); } }, a); UK.btn({ text: '닫기', cls: 'ghost sm', onclick: () => sc.remove() }, a);
   }
   /* ---------------- 편성·육성 ---------------- */
+  const PKEY = 'gfx:presets:v1', presetsGet = () => { try { const x = JSON.parse(localStorage.getItem(PKEY)); if (Array.isArray(x) && x.length === 3) return x; } catch (e) { /* 저장 없음 */ } return [null, null, null]; }, presetsSet = (x) => { try { localStorage.setItem(PKEY, JSON.stringify(x)); } catch (e) { /* 용량 */ } };
   GF.screen('xparty', {
     bare: false,
     enter(r, p) {
-      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '편성·육성', '카드를 누르고 자리를 눌러 바꿔요');
-      let sel = null; const slots = el('div', 'ex-slots', r), info = el('div', 'ex-info', r), grid = el('div', 'ex-roster', r);
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '편성·육성'); r.classList.add('ex-party');
+      let sel = null; const prev = el('div', 'ex-prev', r), tools = el('div', 'ex-ptools', r), slots = el('div', 'ex-slots', r), info = el('div', 'ex-info', r), grid = el('div', 'ex-roster', r);
+      const nextSt = () => D.stages[Math.min(S.cleared + 1, D.stages.length) - 1];
+      const drawPrev = () => { prev.innerHTML = ''; const st = nextSt(), pv = SC.enemyPreview(D, st), pw = power(S.party), rec = pv.map((x) => x.beatenBy).filter(Boolean); const have = S.party.filter((id) => rec.includes(D.units.find((u) => u.id === id).el)).length; el('b', '', prev, '다음 원정 ' + st.id + '. ' + st.name + ' · 유리한 친구 ' + have + '/5'); const row = el('div', 'ex-pvrow', prev); pv.forEach((x) => { const c = el('span', 'ex-pv', row); c.innerHTML = `${elIcon(x.el)}<em>×${x.n}</em>` + (x.beatenBy ? `<small>→ ${D.el[x.beatenBy].icon}</small>` : ''); c.title = D.el[x.el].name + ' 적 ' + x.n + '명 · ' + (x.beatenBy ? D.el[x.beatenBy].name + ' 친구가 유리' : ''); }); };
+      const doPreset = (i) => { const P = presetsGet(), cur = presetsGet()[i]; if (!cur) { P[i] = S.party.slice(); presetsSet(P); UK.toast('편성 ' + (i + 1) + '번에 저장했어요', r); drawTools(); return; } if (cur.every((id) => S.units[id])) { S.party = cur.slice(); save(); partySync(); sel = null; GF.sfx('drop'); draw(); drawGrid(); drawPrev(); } else UK.toast('없어진 친구가 있어요. 다시 저장해 주세요', r); };
+      const drawTools = () => { tools.innerHTML = ''; const P = presetsGet(); P.forEach((x, i) => { const b = UK.btn({ text: x ? '편성 ' + (i + 1) : '＋ 편성 ' + (i + 1), cls: (x ? 'sky' : 'ghost') + ' sm', onclick: () => doPreset(i) }, tools); b.dataset.preset = i; if (x) { const sv = el('i', 'ex-psv', b, '↻'); sv.title = '지금 편성으로 덮어쓰기'; sv.onclick = (e) => { e.stopPropagation(); const Q = presetsGet(); Q[i] = S.party.slice(); presetsSet(Q); UK.toast('편성 ' + (i + 1) + '번을 지금 편성으로 바꿨어요', r); }; } }); UK.btn({ text: '자동 편성', icon: 'star', cls: 'gold sm', onclick: () => { const top = SC.autoParty(D, nextSt(), S.units); if (top.length === 5) { S.party = top; save(); partySync(); sel = null; GF.sfx('star'); draw(); drawGrid(); drawPrev(); UK.toast('다음 원정에 맞춰 편성했어요', r); } else UK.toast('친구가 5명 필요해요', r); } }, tools).dataset.auto = 1; };
+
       const draw = () => {
         slots.innerHTML = ''; S.party.forEach((id, i) => { const u = $(id), c = el('button', 'ex-slot' + (sel && sel === id ? ' sel' : ''), slots); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el) + '<em>' + ROLEICON(u.role) + '</em>'); c.onclick = () => { if (sel && sel !== id) { const j = S.party.indexOf(sel); if (j >= 0) { S.party[j] = id; } S.party[i] = sel; save(); partySync(); sel = null; GF.sfx('drop'); draw(); } else { sel = id; draw(); } }; });
         info.innerHTML = ''; const u = sel && $(sel);
         if (u) { const lv = S.units[sel].lv, c = cost(lv), can = S.gold >= c && lv < SC.lvCap(D, S.cleared); el('b', '', info, `${u.name} ${'★'.repeat(SC.gradeOf(D, sel, S.units[sel]))} Lv ${lv} · ${D.role[u.role].skill} ${stOf(sel).skl}`); el('small', '', info, `${D.el[u.el].family} ${D.el[u.el].name} · 전투력 ${Math.round(kOf(sel) * 100)}`); UK.btn({ text: '키우기', cls: 'sky sm', onclick: () => growSheet(r, sel, () => { draw(); drawGrid(); }) }, info); UK.btn({ text: lv >= SC.lvCap(D, S.cleared) ? '레벨 상한 ' + lv : '레벨업 🪙' + c, cls: (can ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (!can) { UK.toast(lv >= SC.lvCap(D, S.cleared) ? '지금은 여기까지예요. 다음 단계를 깨면 상한이 올라요' : '금화가 모자라요. 전투로 모아요', r); return; } if (await levelUp(sel, c)) { GF.sfx('star'); draw(); drawGrid(); } } }, info); } else el('small', '', info, '카드를 눌러 보세요');
-        el('div', 'ex-pw', info, '원정대 전투력 ' + power(S.party));
+        el('div', 'ex-pw', info, '원정대 전투력 ' + power(S.party)); if (typeof drawPrev === 'function' && prev.isConnected) drawPrev();
       };
       const drawGrid = () => { grid.innerHTML = ''; D.units.forEach((u) => { const own = !!S.units[u.id], c = el('button', 'ex-card' + (own ? '' : ' dim') + (sel === u.id ? ' sel' : '') + (S.party.includes(u.id) ? ' inparty' : ''), grid); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, u.name.replace(/\(.*\)/, '')); el('small', '', c, own ? '★'.repeat(u.grade) + ' Lv' + S.units[u.id].lv : (u.route === 'gacha' ? '모집' : u.route === 'story' ? '이야기' : '포섭')); c.onclick = () => { if (!own) { UK.toast('아직 만나지 못한 친구예요 · ' + ({ gacha: '동료 모집에서', story: '이야기를 따라가면', recruit: '마음을 열어 주면' })[u.route], r); return; } sel = u.id; draw(); drawGrid(); }; }); };
-      draw(); drawGrid(); back(r, p && p.from || 'xhome');
+      draw(); drawGrid(); drawPrev(); drawTools(); back(r, p && p.from || 'xhome');
     },
   });
   const ROLEICON = (role) => D.role[role].icon;

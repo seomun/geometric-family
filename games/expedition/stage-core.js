@@ -72,5 +72,15 @@
     case 'gear': return Math.max(0, ...vals((x) => (x.gear || []).reduce((a, b) => a + b, 0))); case 'pull': return s.pulls || 0; case 'dun': return s.dun || 0; case 'idle': return s.idle || 0; case 'dex': return s.dex || 0; default: return 0; } };
   const beginner = (D, s) => (D.bal.beginner || []).map((m) => { const v = begMetric(D, s, m.k); return { id: m.id, t: m.t, need: m.n, got: Math.min(m.n, v), done: v >= m.n, gems: m.gems, gold: m.gold }; });
   const attendDay = (D, n) => (D.bal.attend || [])[Math.min(n, (D.bal.attend || []).length) - 1] || null;
-  return { beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
+  /** 자동 편성(B12): 가진 동료 중 그 단계에 가장 세게 싸울 5명. 전투력(kOf) × 상성(적 속성을 이기는 속성 가산). 포섭 보스면 말을 걸 수 있는 속성 한 명을 꼭 넣는다. 클라이언트 추천용(서버는 편성만 검증). */
+  const enemyEls = (st) => st.enemies.map((e) => e.el);
+  const autoParty = (D, st, units) => {
+    const ids = Object.keys(units || {}), en = enemyEls(st), score = (id) => kOf(D, id, units[id]) * (1 + 0.12 * en.filter((e) => B.BEATS[unitOf(D, id).el] === e).length / Math.max(1, en.length));
+    const top = ids.sort((a, b) => score(b) - score(a)).slice(0, 5), bossEl = (st.enemies.find((e) => e.lock) || {}).el;
+    if (st.recruit && bossEl && !top.some((id) => B.BEATS[unitOf(D, id).el] === bossEl)) { const c = ids.filter((id) => B.BEATS[unitOf(D, id).el] === bossEl && !top.includes(id)).sort((a, b) => score(b) - score(a))[0]; if (c) top[Math.min(4, top.length - 1)] = c; }
+    return top;
+  };
+  /** 적 속성 미리보기: 속성별 적 수와, 그 적을 이기는 속성(추천) */
+  const enemyPreview = (D, st) => { const cnt = {}; enemyEls(st).forEach((e) => { cnt[e] = (cnt[e] || 0) + 1; }); return Object.keys(cnt).map((e) => ({ el: e, n: cnt[e], beatenBy: Object.keys(D.el).find((x) => B.BEATS[x] === e) })); };
+  return { autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
 });

@@ -15,7 +15,7 @@ const pickParty = (st) => {      // 최고 5명: 등급 가중 배율 + 상성 �
 };
 const fight = (st, party) => {
   seed++; const p = party.map((id) => ({ id, lv: lv[id] })), base = { stage: st.id, seed, party: p, auto: true, inputs: [] }; let r = SC.replay(DD, base);
-  if (st.recruit) { for (let k = 0; k < 600; k++) { const t = SC.replay(DD, Object.assign({}, base, { inputs: [[k, 'p']] })); if (!t.error) return Object.assign(t, { recruited: true }); } }
+  if (st.recruit) { for (let k = 0; k < 600; k++) { const t = SC.replay(DD, Object.assign({}, base, { inputs: [[k, 'p']] })); if (!t.error && t.recruited) return t; } }
   return r;
 };
 const spend = (party) => { for (;;) { const id = party.slice().sort((a, b) => lv[a] - lv[b])[0]; if (lv[id] >= capOf(cleared) || gold < cost(lv[id])) break; gold -= cost(lv[id]); lv[id]++; } };

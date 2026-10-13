@@ -9686,6 +9686,1029 @@
      ]
     }
    ]
+  },
+  "book": {
+   "1": {
+    "title": "아기돼지 삼형제",
+    "emoji": "🐷",
+    "cuts": [
+     {
+      "bg": "field",
+      "text": "세 마리 아기 돼지가 엄마(네모 엄마)에게 인사하고 각자 집을 지으러 떠났다.",
+      "chars": [
+       "nemo_mom.good",
+       "nemo_kids.kid1",
+       "nemo_kids.kid2",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "field",
+      "text": "첫째(하나)는 볏짚으로 쓱쓱, 서둘러 볏짚집을 지었다.",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "field",
+      "text": "둘째(두리)는 나뭇가지로 톡톡, 나무집을 지었다.",
+      "chars": [
+       "nemo_kids.kid2"
+      ]
+     },
+     {
+      "bg": "field",
+      "text": "셋째(세찌)는 벽돌을 하나씩 차곡차곡 쌓았다. 해가 저물도록 열심이었다.",
+      "chars": [
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "field",
+      "text": "바람 친구가 찾아와 후우—! 볏짚집이 휘리릭 날아갔다. 하나는 얼른 둘째네 집으로 달렸다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid2"
+      ]
+     },
+     {
+      "bg": "field",
+      "text": "후우—! 나무집도 흔들흔들. 둘은 숨을 헉헉 쉬며 셋째네 벽돌집으로 달려갔다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid2",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "field",
+      "text": "바람 친구가 아무리 불어도 벽돌집은 끄떡없었다. 바람은 지쳐 굴뚝 옆에 털썩 앉았다.",
+      "chars": [
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "field",
+      "text": "세찌가 문을 열고 말했다. 「같이 놀고 싶었구나. 들어와서 따뜻한 차 마셔.」 바람 친구가 처음으로 웃었다.",
+      "chars": [
+       "nemo_kids.kid3",
+       "baby.joy"
+      ]
+     }
+    ]
+   },
+   "2": {
+    "title": "해님 달님",
+    "emoji": "🌞",
+    "cuts": [
+     {
+      "bg": "night",
+      "text": "엄마(네모 엄마)가 떡을 팔러 고개를 넘어갔다. 누나(하나)와 동생(세찌)은 집을 지켰다.",
+      "chars": [
+       "nemo_mom.good",
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "고갯길에서 바람 호랑이가 으르렁— 「떡 하나만 주면 길을 비켜 줄게!」 엄마는 떡을 한 개씩 나눠 주었다.",
+      "chars": [
+       "nemo_mom.worry"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "떡이 다 떨어지자 바람 호랑이는 엄마 소리를 흉내 내며 집 앞까지 왔다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "문틈으로 보니 손이 거칠었다. 하나가 속삭였다. 「우리 엄마가 아니야. 뒷문으로 나가자!」",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "둘은 뒷마당 큰 나무 위로 올라갔다. 호랑이가 올려다보며 물었다. 「어떻게 올라갔니?」",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "하나가 하늘에 외쳤다. 「하느님, 튼튼한 동아줄을 내려 주세요!」 반짝이는 동아줄이 스르륵 내려왔다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "둘은 줄을 타고 올라가 누나는 해님, 동생은 달님이 되었다. 호랑이는 배가 고팠을 뿐이라 풀밭에서 멍하니 올려다보았다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "밤이 되자 엄마가 달빛 아래 도착했다. 해님과 달님이 내려와 안겼고, 호랑이에게도 남은 떡을 나눠 주었다.",
+      "chars": [
+       "nemo_mom.joy",
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     }
+    ]
+   },
+   "3": {
+    "title": "콩쥐팥쥐",
+    "emoji": "👡",
+    "cuts": [
+     {
+      "bg": "village",
+      "text": "콩쥐(하나)는 새엄마 집에서 집안일을 도맡았다. 팥쥐(두리)는 옆에서 휘파람을 불었다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid2"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "새엄마(깐깐한 아주머니)가 말했다. 「깨진 독에 물을 가득 채워 놓으렴.」 콩쥐는 한숨을 쉬었다.",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "그때 두꺼비(동그라미 아빠)가 폴짝 나타나 깨진 구멍을 엉덩이로 막아 주었다. 「걱정 말아요.」",
+      "chars": [
+       "dong_dad.warm",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "독은 철철 넘치게 찼다. 콩쥐가 고맙다고 두꺼비에게 몇 번이고 절했다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "dong_dad.warm"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "마을에 큰 잔치가 열리는 날, 새엄마는 일을 시키고 나갔다. 콩쥐는 창밖만 바라보았다.",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "하늘에서 선녀 손길 같은 바람이 불어 예쁜 꽃신과 새 옷이 내려왔다. 콩쥐는 잔치에 갈 수 있었다.",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "서두르다 냇가에서 꽃신 한 짝이 벗겨졌다. 원님(세모 남편)이 신을 주워 들었다. 「주인을 찾아야겠군!」",
+      "chars": [
+       "husband.joy",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "원님이 마을을 돌아 콩쥐의 발에 꽃신을 맞춰 주었다. 새엄마도 팥쥐도 박수를 치며 잔치는 모두의 잔치가 되었다.",
+      "chars": [
+       "husband.joy",
+       "nemo_kids.kid1",
+       "nemo_kids.kid2"
+      ]
+     }
+    ]
+   },
+   "4": {
+    "title": "브레멘 음악대",
+    "emoji": "🎺",
+    "cuts": [
+     {
+      "bg": "night",
+      "text": "늙은 당나귀(네모 아빠)는 일이 힘들어 브레멘으로 가 음악대가 되기로 했다.",
+      "chars": [
+       "nemo_dad.good"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "길에서 개(세모 남편)를 만났다. 「나도 늙어서 쫓겨났어. 같이 가자!」",
+      "chars": [
+       "nemo_dad.joy",
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "고양이(세모 아내)도 합류했다. 「노래는 잘 못해도 야옹 한 마디는 자신 있지!」",
+      "chars": [
+       "wife.joy",
+       "husband.joy",
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "수탉(동그라미 아빠)이 마지막으로 합류했다. 「새벽 노래는 제가 책임질게요.」",
+      "chars": [
+       "dong_dad.good",
+       "wife.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "밤이 깊어 숲속 외딴집 불빛이 보였다. 허깨비 도둑이 식탁에 모여 앉아 있었다.",
+      "chars": [
+       "nemo_dad.surprise"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "네 친구가 차례로 올라서서 한꺼번에 소리쳤다. 「히힝! 멍멍! 야옹! 꼬끼오!」",
+      "chars": [
+       "nemo_dad.joy",
+       "husband.joy",
+       "wife.joy",
+       "dong_dad.good"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "허깨비 도둑들은 놀라 허둥지둥 달아났다. 빈집에 들어가 보니 따뜻한 수프가 남아 있었다.",
+      "chars": [
+       "wife.joy",
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "도둑들도 나중에 돌아와 같이 앉아 수프를 먹었다. 브레멘은 못 갔지만 숲속 음악회가 열렸다.",
+      "chars": [
+       "nemo_dad.joy",
+       "wife.joy",
+       "husband.joy",
+       "dong_dad.good"
+      ]
+     }
+    ]
+   },
+   "5": {
+    "title": "잭과 콩나무",
+    "emoji": "🌱",
+    "cuts": [
+     {
+      "bg": "hill",
+      "text": "가난한 집 소 한 마리를 팔러 간 잭(세찌)은 신기한 콩 몇 알과 소를 바꿔 왔다.",
+      "chars": [
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "엄마(네모 엄마)는 처음엔 한숨을 쉬었지만, 콩을 마당에 던지며 말했다. 「그래도 심어 보자.」",
+      "chars": [
+       "nemo_mom.worry",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "아침에 보니 콩나무가 구름 위까지 쑥쑥 자라 있었다. 잭의 눈이 반짝였다.",
+      "chars": [
+       "nemo_kids.kid3",
+       "baby.surprise"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "잭은 줄기를 타고 구름 나라까지 올라갔다. 커다란 집 한 채가 서 있었다.",
+      "chars": [
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "구름 거인이 쿵쿵 걸어 나왔다. 사실은 혼자 심심해서 소리만 컸던 거인이었다.",
+      "chars": [
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "잭이 말했다. 「큰 소리 안 내도 친구가 될 수 있어요.」 거인은 얼굴이 빨개졌다.",
+      "chars": [
+       "nemo_kids.kid3",
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "거인은 황금알 한 개를 선물로 주었다. 잭은 필요한 만큼만 받고 고맙다고 인사했다.",
+      "chars": [
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "잭이 돌아와 엄마에게 황금알을 보여 드렸다. 가족은 함께 잔치를 열고 거인에게도 음식을 나눠 보냈다.",
+      "chars": [
+       "nemo_mom.joy",
+       "nemo_kids.kid3",
+       "baby.joy"
+      ]
+     }
+    ]
+   },
+   "6": {
+    "title": "우렁 각시",
+    "emoji": "🐌",
+    "cuts": [
+     {
+      "bg": "stream",
+      "text": "혼자 농사짓는 총각(세모 남편)은 매일 논에서 하루를 보냈다.",
+      "chars": [
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "어느 날 「이 농사 지어 누구랑 먹나?」 하고 중얼거리자 논 속에서 대답이 들렸다. 「나랑 먹지!」",
+      "chars": [
+       "husband.surprise"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "논에서 건져 올린 우렁이를 항아리에 넣어 두었다. 다음 날 집에 오니 밥상이 차려져 있었다.",
+      "chars": [
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "몰래 숨어 지켜보니 우렁이 속에서 우렁 각시(세모 아내)가 나와 밥을 짓고 있었다.",
+      "chars": [
+       "husband.surprise",
+       "wife.joy"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "총각이 용기를 내어 말을 걸었다. 「고마워요. 같이 먹읍시다.」 둘은 부부가 되었다.",
+      "chars": [
+       "husband.love",
+       "wife.love"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "욕심쟁이 원님은 각시가 탐나 내기를 걸어 왔다. 말이 크고 목소리도 컸지만 어딘가 외로워 보였다.",
+      "chars": [
+       "husband.worry",
+       "wife.good"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "각시는 지혜로운 내기를 냈다. 원님은 번번이 지다 보니 웃음이 터졌다. 「하하, 졌소!」",
+      "chars": [
+       "wife.smug",
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "원님은 욕심을 접고 잔치 음식을 나눠 주었다. 논에는 새로 노랗게 벼가 익어 갔다.",
+      "chars": [
+       "husband.joy",
+       "wife.joy"
+      ]
+     }
+    ]
+   },
+   "7": {
+    "title": "견우와 직녀",
+    "emoji": "🌌",
+    "cuts": [
+     {
+      "bg": "bridge",
+      "text": "하늘 나라에서 견우(세모 남편)는 소를 돌보고, 직녀(세모 아내)는 베를 짰다.",
+      "chars": [
+       "husband.joy",
+       "wife.joy"
+      ]
+     },
+     {
+      "bg": "bridge",
+      "text": "둘은 서로 알게 되어 하루 종일 함께하느라 일을 미뤘다. 하늘 어른은 걱정이 되었다.",
+      "chars": [
+       "husband.love",
+       "wife.love"
+      ]
+     },
+     {
+      "bg": "bridge",
+      "text": "하늘 어른은 은하수를 사이에 두고 둘을 떨어뜨려 놓았다. 목소리만 큰 어른이라 말은 거칠었다.",
+      "chars": [
+       "husband.worry",
+       "wife.worry"
+      ]
+     },
+     {
+      "bg": "bridge",
+      "text": "칠석이 되면 하루 만나게 해 주겠다는 약속이 있었다. 둘은 하루를 기다렸다.",
+      "chars": [
+       "husband.worry",
+       "wife.worry"
+      ]
+     },
+     {
+      "bg": "bridge",
+      "text": "칠석날 은하수에는 건널 다리가 없었다. 견우와 직녀는 눈물을 글썽였다.",
+      "chars": [
+       "husband.worry",
+       "wife.cry"
+      ]
+     },
+     {
+      "bg": "bridge",
+      "text": "그때 까치와 까마귀 떼가 날개를 펼쳐 오작교를 놓았다. 「이쪽으로 건너와요!」",
+      "chars": [
+       "husband.surprise",
+       "wife.surprise"
+      ]
+     },
+     {
+      "bg": "bridge",
+      "text": "둘은 다리 한가운데서 만나 손을 꼭 잡았다. 하늘 어른도 멀리서 눈물을 닦았다.",
+      "chars": [
+       "husband.love",
+       "wife.love"
+      ]
+     },
+     {
+      "bg": "bridge",
+      "text": "하늘 어른은 해마다 칠석이면 다리가 놓이도록 허락했다. 두 사람은 별처럼 오래 웃었다.",
+      "chars": [
+       "husband.joy",
+       "wife.joy"
+      ]
+     }
+    ]
+   },
+   "8": {
+    "title": "헨젤과 그레텔",
+    "emoji": "🍬",
+    "cuts": [
+     {
+      "bg": "hill",
+      "text": "아버지(네모 아빠)는 먹을 것이 부족해 걱정이 많았다. 헨젤(세찌)과 그레텔(하나)은 손을 꼭 잡았다.",
+      "chars": [
+       "nemo_dad.worry",
+       "nemo_kids.kid3",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "헨젤은 길에 하얀 빵 부스러기를 뿌려 돌아오는 길을 표시했다. 그런데 새들이 부스러기를 먹어 버렸다.",
+      "chars": [
+       "nemo_kids.kid3",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "깊은 숲에서 길을 잃은 남매 앞에 과자 집이 나타났다. 지붕은 초콜릿, 창문은 사탕이었다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "과자집 할머니가 문을 열었다. 사탕을 너무 좋아해서 아이들이 먹을까 봐 걱정했을 뿐이었다.",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "할머니는 남매를 집 안으로 들였다. 처음엔 문을 잠갔지만 아이들이 울자 마음이 흔들렸다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "그레텔이 용기를 내어 말했다. 「저희가 설거지를 도울게요. 대신 길을 알려 주세요.」",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "할머니는 웃으며 지름길을 알려 주고 과자 바구니까지 챙겨 주었다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "남매는 무사히 집으로 돌아왔다. 아버지는 두 팔을 활짝 벌려 안아 주었다. 이제 부족해도 같이 나누기로 했다.",
+      "chars": [
+       "nemo_dad.love",
+       "nemo_kids.kid3",
+       "nemo_kids.kid1"
+      ]
+     }
+    ]
+   },
+   "9": {
+    "title": "장화 신은 고양이",
+    "emoji": "👢",
+    "cuts": [
+     {
+      "bg": "village",
+      "text": "막내 아들(세찌)이 물려받은 것은 고양이(세모 아내) 한 마리뿐이었다. 막내는 한숨을 쉬었다.",
+      "chars": [
+       "nemo_kids.kid3",
+       "wife.joy"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "고양이가 장화와 모자를 청했다. 「제게 맡기세요, 주인님. 윙크 한 번이면 다 풀려요!」",
+      "chars": [
+       "wife.wink",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "고양이는 토끼를 잡아 임금님(동그라미 아빠)께 바쳤다. 「이건 후작님의 선물입니다.」",
+      "chars": [
+       "wife.joy",
+       "dong_dad.good"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "임금님은 후작님을 궁금해했다. 고양이는 강가에서 막내를 씻겨 두고 소리쳤다. 「후작님이 빠졌어요!」",
+      "chars": [
+       "wife.joy",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "임금님은 멋진 옷을 내어 주었다. 막내는 어색했지만 고마운 마음에 허리를 굽혔다.",
+      "chars": [
+       "dong_dad.good",
+       "nemo_kids.kid3"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "성으로 가는 길목에는 변신 마법사가 있었다. 뭐든 변신하는 게 자랑이었다.",
+      "chars": [
+       "wife.smug"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "고양이가 말했다. 「큰 코끼리는 못 되지?」 마법사가 변신했다가 생쥐가 되어 부끄러워 얼굴을 가렸다.",
+      "chars": [
+       "wife.joy"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "마법사는 으스대지 않기로 했다. 막내는 임금님과 성에서 잔치를 열었고, 고양이는 장화를 신은 채 춤을 췄다.",
+      "chars": [
+       "wife.joy",
+       "nemo_kids.kid3",
+       "dong_dad.good"
+      ]
+     }
+    ]
+   },
+   "10": {
+    "title": "선녀와 나무꾼",
+    "emoji": "🪽",
+    "cuts": [
+     {
+      "bg": "hill",
+      "text": "나무꾼(세모 남편)이 장작을 지고 산길을 걷는데 사슴이 숲속에서 튀어나왔다. 사냥꾼에게 쫓기고 있었다.",
+      "chars": [
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "나무꾼은 사슴을 장작 더미 뒤에 숨겨 주었다. 사슴은 고맙다며 연못 이야기를 해 주었다.",
+      "chars": [
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "보름달이 뜨는 밤, 연못에 선녀(세모 아내)들이 내려와 목욕을 한다고 했다. 날개옷은 바위 위에 있었다.",
+      "chars": [
+       "wife.joy",
+       "husband.surprise"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "나무꾼은 날개옷 한 벌을 가만히 챙겼다. 날개옷이 없는 선녀는 하늘로 돌아갈 수 없었다.",
+      "chars": [
+       "husband.worry",
+       "wife.worry"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "나무꾼은 곧 마음이 불편해졌다. 선녀 앞에 날개옷을 내밀며 사과했다. 「미안해요. 돌려드릴게요.」",
+      "chars": [
+       "husband.worry",
+       "wife.surprise"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "선녀는 날개옷을 받아 들고 잠시 하늘을 올려다보았다. 아래에는 아기 사슴들이 폴짝폴짝 뛰어다녔다.",
+      "chars": [
+       "wife.good"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "선녀는 웃으며 말했다. 「하늘은 달마다 갈 수 있어요. 오늘은 땅에서 같이 차 마셔요.」",
+      "chars": [
+       "wife.joy",
+       "husband.joy"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "나무꾼과 선녀는 오두막에서 장작불을 피우며 도란도란 이야기했다. 보름달은 연못에 둥글게 떴다.",
+      "chars": [
+       "husband.love",
+       "wife.love"
+      ]
+     }
+    ]
+   },
+   "11": {
+    "title": "토끼전",
+    "emoji": "🐇",
+    "cuts": [
+     {
+      "bg": "sea",
+      "text": "용왕님(동그라미 아빠)이 몸져누웠다. 신하들은 토끼의 간이 약이라고 소곤거렸다.",
+      "chars": [
+       "dong_dad.trouble"
+      ]
+     },
+     {
+      "bg": "sea",
+      "text": "심부름꾼 거북(네모 아빠)이 뭍으로 올라가 토끼(하나)를 찾았다. 「용궁 구경하러 가지 않을래요?」",
+      "chars": [
+       "nemo_dad.good",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "sea",
+      "text": "토끼는 거북 등을 타고 바닷속으로 내려갔다. 산호와 물고기가 반짝반짝 반겼다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "sea",
+      "text": "용궁 문지기가 문 앞에서 소리쳤다. 「용왕님은 쉬셔야 한다!」 하지만 속으론 용왕님이 걱정이었다.",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "sea",
+      "text": "토끼는 눈을 동그랗게 떴다. 간 이야기를 듣고 깜짝 놀랐지만 침착하게 말했다. 「아이고, 간은 뭍에 두고 왔어요!」",
+      "chars": [
+       "nemo_kids.kid1",
+       "dong_dad.trouble"
+      ]
+     },
+     {
+      "bg": "sea",
+      "text": "용왕님은 속상해했다. 토끼는 약 대신 따뜻한 죽 한 그릇을 권했다. 「아플 땐 먹는 게 최고예요.」",
+      "chars": [
+       "nemo_kids.kid1",
+       "dong_dad.trouble"
+      ]
+     },
+     {
+      "bg": "sea",
+      "text": "용궁 문지기도 한 상 둘러앉았다. 해초 전과 조개국이 가득했다. 용왕님이 한 숟갈씩 먹으며 웃었다.",
+      "chars": [
+       "dong_dad.warm",
+       "nemo_kids.kid1",
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "sea",
+      "text": "토끼는 거북 등을 타고 뭍으로 돌아왔다. 용왕님이 선물한 진주를 손에 꼭 쥐고서.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_dad.joy"
+      ]
+     }
+    ]
+   },
+   "12": {
+    "title": "은혜 갚은 까치",
+    "emoji": "🐦",
+    "cuts": [
+     {
+      "bg": "night",
+      "text": "선비(네모 아빠)가 산길을 가는데 나무 위에서 까치 소리가 다급했다.",
+      "chars": [
+       "nemo_dad.good"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "올려다보니 구렁이가 까치 둥지를 올려다보고 있었다. 새끼 까치들이 파르르 떨었다.",
+      "chars": [
+       "nemo_dad.surprise"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "선비는 활 대신 담요를 흔들며 구렁이를 달랬다. 「추워서 그러니? 이리 와서 따뜻하게 있어.」",
+      "chars": [
+       "nemo_dad.good"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "구렁이는 멈칫하다가 담요 속으로 쏙 들어갔다. 사실은 따뜻한 곳이 그리웠을 뿐이었다.",
+      "chars": [
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "날이 저물어 선비는 빈집에서 하룻밤을 묵게 되었다. 밤새 구렁이가 문 앞에서 서성였다.",
+      "chars": [
+       "nemo_dad.worry"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "새벽에 종소리가 울렸다. 까치들이 둥지에서 종을 치며 선비를 깨웠다. 「일어나세요!」",
+      "chars": [
+       "nemo_dad.surprise"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "선비가 급히 일어나 나가 보니 마을에 안개가 가득한 길을 까치들이 안내해 주었다.",
+      "chars": [
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "은혜를 갚은 까치들과 구렁이, 선비는 한자리에 앉아 감을 나눠 먹으며 아침을 맞았다.",
+      "chars": [
+       "nemo_dad.love"
+      ]
+     }
+    ]
+   },
+   "13": {
+    "title": "호랑이와 곶감",
+    "emoji": "🍡",
+    "cuts": [
+     {
+      "bg": "night",
+      "text": "산골 마을 밤, 우는 아기(막둥이)가 좀처럼 울음을 그치지 않았다.",
+      "chars": [
+       "baby.cry",
+       "nemo_mom.worry"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "엄마(네모 엄마)가 달래 보았지만 소용없었다. 「호랑이가 온단다!」 해도 아기는 계속 울었다.",
+      "chars": [
+       "nemo_mom.worry",
+       "baby.cry"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "창밖에서 호랑이가 귀를 쫑긋했다. 「나를 보고도 울음을 그치지 않다니, 대단한 아기네.」 호랑이는 궁금해졌다.",
+      "chars": [
+       "nemo_mom.surprise"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "그때 곶감 아저씨(동그라미 아빠)가 말했다. 「아가야, 곶감이다!」 그러자 아기가 뚝 그쳤다.",
+      "chars": [
+       "dong_dad.warm",
+       "baby.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "호랑이는 깜짝 놀랐다. 「곶감? 나보다 센 것이 있다고?」 그만 겁이 나서 뒷걸음쳤다.",
+      "chars": [
+       "baby.surprise"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "호랑이는 곶감의 정체를 확인하려고 몰래 뒷문으로 다가왔다. 곶감 아저씨는 곶감 한 조각을 내밀었다.",
+      "chars": [
+       "dong_dad.calm"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "호랑이는 곶감을 한 입 먹고 눈을 동그랗게 떴다. 「달콤하잖아!」 배고팠던 마음도 사르르 풀렸다.",
+      "chars": [
+       "dong_dad.warm",
+       "baby.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "아기도 곶감을 쏙, 호랑이도 곶감을 쏙. 마당에서 함께 둘러앉은 산골 마을의 밤은 달콤하게 깊어 갔다.",
+      "chars": [
+       "baby.joy",
+       "nemo_mom.joy",
+       "dong_dad.warm"
+      ]
+     }
+    ]
+   },
+   "14": {
+    "title": "빨간 모자",
+    "emoji": "🧣",
+    "cuts": [
+     {
+      "bg": "hill",
+      "text": "엄마(네모 엄마)가 빨간 모자를 쓴 하나에게 바구니를 건넸다. 「할머니께 갖다 드리렴.」",
+      "chars": [
+       "nemo_mom.good",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "「큰길로만 가야 한다.」 엄마의 당부를 하나는 큰 소리로 따라 했다. 「네! 큰길로만!」",
+      "chars": [
+       "nemo_mom.good",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "숲길 앞에서 늑대가 쭈뼛쭈뼛 나타났다. 「어디 가니? 나도 같이 가도 될까?」",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "하나는 조금 놀랐지만 침착하게 말했다. 「큰길로 같이 가요. 샛길은 길을 잃기 쉬워요.」",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "늑대는 귀를 쫑긋하다 고개를 끄덕였다. 둘은 나란히 큰길을 걸으며 솔방울을 주웠다.",
+      "chars": [
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "오두막에서 할머니(네모 할머니)가 문을 열었다. 늑대를 보고 놀랐지만 따뜻한 수프를 내왔다.",
+      "chars": [
+       "nemo_grandma.good",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "늑대는 쑥스럽게 말했다. 「같이 놀고 싶어서 말을 걸었을 뿐이에요.」 할머니가 웃으며 고개를 끄덕였다.",
+      "chars": [
+       "nemo_grandma.good",
+       "nemo_kids.kid1"
+      ]
+     },
+     {
+      "bg": "hill",
+      "text": "하나와 늑대와 할머니는 수프를 나눠 먹었다. 돌아가는 길은 셋이 함께 큰길로 걸었다.",
+      "chars": [
+       "nemo_kids.kid1",
+       "nemo_grandma.good"
+      ]
+     }
+    ]
+   },
+   "15": {
+    "title": "피노키오",
+    "emoji": "🪆",
+    "cuts": [
+     {
+      "bg": "village",
+      "text": "목수 제페토(네모 아빠)는 외로워서 나무를 깎아 인형을 만들었다. 이름은 피노키오.",
+      "chars": [
+       "nemo_dad.good"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "파란 머리 요정이 나타나 인형에게 숨을 불어넣었다. 피노키오(막둥이)가 눈을 떴다.",
+      "chars": [
+       "baby.surprise",
+       "nemo_dad.surprise"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "피노키오는 학교 가는 길에 구경거리가 많아 이리저리 돌아다녔다. 인형극장 앞에서는 발길이 멈췄다.",
+      "chars": [
+       "baby.joy"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "여우가 모자를 벗고 다가왔다. 「재미난 곳이 있는데 따라와 볼래?」 피노키오는 고개를 갸웃했다.",
+      "chars": [
+       "baby.surprise"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "거짓말로 둘러대려 하자 피노키오의 코가 쑥 길어졌다. 피노키오는 코를 잡고 깜짝 놀랐다.",
+      "chars": [
+       "baby.surprise"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "파란 머리 요정이 살며시 말했다. 「솔직하게 말하면 코는 다시 돌아와요.」 피노키오는 꾹 고개를 끄덕였다.",
+      "chars": [
+       "baby.joy"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "피노키오는 용기를 내어 사실대로 말했다. 코는 쏙 줄어들었고 여우는 어색하게 모자를 만지작거렸다.",
+      "chars": [
+       "baby.joy"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "제페토가 달려와 피노키오를 꼭 안았다. 여우도 함께 둘러앉아 따뜻한 수프를 나눠 먹었다.",
+      "chars": [
+       "nemo_dad.love",
+       "baby.joy"
+      ]
+     }
+    ]
+   }
   }
  },
  "gacha": {

@@ -141,6 +141,7 @@
       const evB = evOpen(); if (evB) { const eb = UK.btn({ text: evB.icon + ' ' + evB.name, cls: 'gold sm', onclick: () => GF.go('xevent') }, r); eb.style.cssText += ';position:absolute;left:50%;top:206px;min-height:40px;height:40px;padding:0 16px;font-size:16px;transform:translateX(-50%);z-index:6;width:auto;white-space:nowrap'; if (evTodo()) el('i', 'ex-bdg', eb, '!'); }
       const row3 = el('div', 'ex-row', btns); UK.btn({ text: GF.t('c16.exp.009'), icon: 'heart', cls: 'pink', onclick: () => GF.go('xdex') }, row3);
       const pb = UK.btn({ icon: 'star', cls: 'ghost', onclick: () => GF.go('xprofile') }, r); pb.setAttribute('aria-label', 'profile'); pb.style.cssText += ';position:absolute;left:10px;top:10px;z-index:6;width:60px;height:60px;min-width:60px;padding:0;border-radius:50%'; pb.insertAdjacentHTML('beforeend', '<span style="font-size:26px">🏅</span>');
+      const bkb = UK.btn({ icon: 'heart', cls: 'ghost', onclick: () => GF.go('xbook') }, r); bkb.setAttribute('aria-label', 'storybook'); bkb.style.cssText += ';position:absolute;left:76px;top:10px;z-index:6;width:60px;height:60px;min-width:60px;padding:0;border-radius:50%'; bkb.insertAdjacentHTML('beforeend', '<span style="font-size:26px">📖</span>'); if (D.story.book && Object.keys(D.story.book).some((n) => bookOpen(+n) && !bookSeen()[n])) el('i', 'ex-bdg', bkb, '!');
       const bg = UK.btn({ text: GF.t('c16.exp.010'), icon: 'star', cls: 'green', onclick: () => GF.go('xbegin') }, row3); bg.style.position = 'relative'; Promise.all([begLoad(), dqLoad()]).then(([b, q]) => { const n = begBadge(b) + dqBadge(q); if (n && bg.isConnected) el('i', 'ex-bdg', bg, n); });
       if (REMOTE) UK.btn({ text: GF.t('c16.exp.011'), icon: 'star', cls: 'ghost', onclick: () => GF.go('xshop') }, row3);
       el('div', 'ex-foot', r, '전투력 ' + power(S.party) + ' · 동료 ' + Object.keys(S.units).length + '/' + D.units.length + ' · 랜덤 아이템 포함(동료 모집)');
@@ -236,6 +237,26 @@
   /* ---------------- 업적·칭호·프로필 카드 (B10): 보상 없는 자랑. 칭호는 기기에만 저장 ---------------- */
   const PFKEY = 'gfx:profile:v1', pfGet = () => { try { return JSON.parse(localStorage.getItem(PFKEY)) || {}; } catch (e) { return {}; } }, pfSet = (x) => { try { localStorage.setItem(PFKEY, JSON.stringify(x)); } catch (e) { /* 용량 */ } };
   const achState = () => ({ cleared: S.cleared, units: S.units, pulls: S.pulls || 0, dun: S.flags.dunN || 0, idle: S.flags.idleN || 0, dex: (S.flags.dex || []).length, stars: Object.values(S.stars || {}).reduce((a, b) => a + (+b || 0), 0), event: Object.values(S.flags.ev || {}).reduce((a, l) => a + l.length, 0), att: ((S.flags.att || {}).n) || 0 });
+  /* ---------------- 나라별 그림책 8컷 (D10): 나라를 끝내면(마지막 단계 클리어) 그 옛이야기를 우리 배역판으로 볼 수 있다. 압박 없음 — 못 열어도 잃는 것 없음 ---------------- */
+  const bookSeen = () => (S.flags.books = S.flags.books || {});
+  const bookOpen = (n) => S.cleared >= n * 12;
+  GF.screen('xbook', {
+    bare: false,
+    enter(r, p) {
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '옛이야기 그림책', '나라를 끝까지 걸으면 그 이야기가 열려요'); back(r, 'xhome');
+      const box = el('div', 'ex-shop ex-books', r), B = (D.story && D.story.book) || {}, nations = D.nations || [];
+      const draw = () => {
+        box.innerHTML = ''; const seen = bookSeen(); const open = Object.keys(B).filter((n) => bookOpen(+n)).length; el('div', 'ex-nation', box, `<b>그림책</b><small>${open}/${Object.keys(B).length}권</small>`);
+        const g = el('div', 'ex-bookgrid', box);
+        Object.keys(B).map(Number).sort((a, b) => a - b).forEach((n) => {
+          const bk = B[n], on = bookOpen(n), c = el('button', 'ex-bookcard' + (on ? '' : ' locked') + (seen[n] ? ' seen' : ''), g); c.dataset.n = n;
+          c.innerHTML = `<span class="em">${on ? bk.emoji : '🔒'}</span><b>${on ? bk.title : '???'}</b><small>${on ? (seen[n] ? '다시 보기' : '새 그림책') : n + '나라를 끝내면'}</small>`;
+          c.onclick = () => { if (!on) { GF.sfx('hmm'); UK.toast('이 나라를 끝까지 걸으면 열려요', r); return; } GF.sfx('pick'); seen[n] = 1; save(); GF.tale.play(bk.cuts, r, () => { draw(); }, { bg: 'field', force: true }); };
+        });
+      };
+      draw(); if (p && p.open && bookOpen(p.open) && B[p.open]) setTimeout(() => { const c = box.querySelector('.ex-bookcard[data-n="' + p.open + '"]'); if (c) c.click(); }, 350);
+    },
+  });
   GF.screen('xprofile', {
     bare: false,
     enter(r) {
@@ -473,7 +494,7 @@
       };
       const done = (stars, gold, gems, recruited, joinId) => {
         const after = () => { const sc = UK.modal({ parent: r, title: recruited ? '포섭 성공!' : '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('div', 'ex-stars', sh, '★'.repeat(stars) + '☆'.repeat(3 - stars)); const pose = el('div', 'ex-rrow', sh); S.party.forEach((id, i) => { const c = el('div', 'ex-mini ex-pose', pose); c.style.animationDelay = i * 90 + 'ms'; c.appendChild(art($(id), 'xs')); }); el('p', 'ex-rw', sh, `🪙 +${gold}${gems ? ` · 💎 +${gems}` : ''}${recruited ? ' · 새 친구: ' + $(st.recruit).name : ''}`); if (lootAt(st.id)) { const lt = lootAt(st.id); el('p', 'ex-tip', sh, `🎁 전리품 코드: ${lt.name} — ${lt.code} (원정 전리품 화면에서 복사해요)`); } if (st.boss && st.recruit && !recruited) el('p', 'ex-tip', sh, (boss ? boss.name : '친구') + '(이)가 쓰러졌어요… 다음엔 체력이 줄었을 때 말을 걸어 봐요.');
-          const a = el('div', 'acts', sh); const nxt = D.stages[st.id]; if (nxt) UK.btn({ text: GF.t('c16.exp.030'), icon: 'next', cls: 'green', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); UK.btn({ text: GF.t('c16.exp.005'), cls: 'sky sm', onclick: () => { sc.remove(); GF.replace('xparty', { from: 'xmap' }); } }, a); UK.btn({ text: GF.t('c16.exp.031'), cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
+          const a = el('div', 'acts', sh); const nxt = D.stages[st.id]; if (nxt) UK.btn({ text: GF.t('c16.exp.030'), icon: 'next', cls: 'green', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); if (st.id % 12 === 0 && D.story.book && D.story.book[st.id / 12]) UK.btn({ text: '그림책 보기', icon: 'heart', cls: 'pink', onclick: () => { sc.remove(); GF.replace('xbook', { open: st.id / 12 }); } }, a); UK.btn({ text: GF.t('c16.exp.005'), cls: 'sky sm', onclick: () => { sc.remove(); GF.replace('xparty', { from: 'xmap' }); } }, a); UK.btn({ text: GF.t('c16.exp.031'), cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
         if (joinId) setTimeout(() => GF.tale.play(D.story.join[joinId], r, () => { UK.toast('새 친구: ' + $(joinId).name, r); after(); }, { bg: 'hill' }), 500); else setTimeout(after, 500);
       };
       const lose = () => { const sc = UK.modal({ parent: r, title: GF.t('c16.exp.032'), body: '레벨업하거나 상성이 맞는 친구로 바꿔서 다시 도전해요. 벌은 없어요.', actions: [{ text: GF.t('c16.exp.033'), icon: 'replay', cls: 'green', onclick: () => GF.replace('xbattle', p.evt ? { evt: p.evt } : p.dun ? { dun: p.dun, target: p.target } : { stage: st.id, seed: seed + 1 }) }, { text: GF.t('c16.exp.005'), cls: 'sky', onclick: () => GF.replace('xparty', { from: p.evt ? 'xevent' : p.dun ? 'xdun' : 'xmap' }) }, { text: p.evt ? '이벤트' : p.dun ? '던전' : '원정 길', cls: 'ghost', onclick: () => GF.replace(p.evt ? 'xevent' : p.dun ? 'xdun' : 'xmap') }] }); void sc; };

@@ -165,7 +165,7 @@
           setTimeout(() => {
             if (e.type === 'move') { say('이사! 판이 한 줄 넓어졌어요'); GF.sfx('star'); draw(frame, []); return; }
             chain++; e.from.forEach((j) => { if (j !== e.at) fly(prev.cells[j], j, e.at); });
-            setTimeout(() => { draw(frame, [e.at]); GF.sfx('ok', { st: [0, 2, 4, 7, 9, 12, 14, 16][Math.min(chain - 1, 7)] }); try { const c = center(cells[e.at]); GF.burst(document.getElementById('safe'), c.x, c.y, e.t >= 5 ? 14 : 8); } catch (x) {} }, slow(190));
+            setTimeout(() => { draw(frame, [e.at]); GF.sfx('ok', { st: [0, 2, 4, 7, 9, 12, 14, 16][Math.min(chain - 1, 7)] }); if (e.t >= 5) GF.sfxSeq([['star', 90, { st: 0 }]]); if (chain >= 4) GF.sfxSeq([['star', 160, { st: 7 }]]); try { const c = center(cells[e.at]); GF.burst(document.getElementById('safe'), c.x, c.y, e.t >= 5 ? 14 : 8); } catch (x) {} }, slow(190));
             if (chain >= 2) say('연쇄 ×' + chain);
             if (e.jackpot) { say('대박! 두 단계 껑충'); GF.sfx('star'); } if (e.refund) say('조각 하나를 돌려받았어요');
             if (e.cleared) say('짐을 치웠어요');

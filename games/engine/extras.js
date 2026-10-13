@@ -17,7 +17,14 @@
 
   /* 진동: 성인 앱만(유아 앱엔 VIBRATE 권한이 없다). 소리 id 에 맞춰 아주 짧게 */
   const HAP = { drop: 10, pick: 6, ok: 18, star: [18, 40, 22], hmm: 32, celebrate: [20, 40, 20, 40, 30] };
-  GF.haptic = function (id) { if (!X.ready || !X.cfg || X.cfg.kid || S().vib === false || !navigator.vibrate) return; const p = HAP[id]; if (p) { try { navigator.vibrate(p); } catch (e) {} } };
+  // 연쇄(소리 높이 st): 높을수록 길고 박자가 늘어난다. 클리어 팡파르는 별 개수만큼 톡톡.
+  const CHAIN = [16, 20, [16, 24, 20], [16, 24, 22, 24, 26], [18, 24, 24, 24, 28, 24, 34]];
+  GF.haptic = function (id, opt) {
+    if (!X.ready || !X.cfg || X.cfg.kid || S().vib === false || !navigator.vibrate) return; let p = HAP[id];
+    if (id === 'ok' && opt && opt.st) p = CHAIN[Math.max(0, Math.min(4, Math.round(opt.st / 3)))] || p;           // 합치기 연쇄: 0 → 12반음까지 점점 강하게
+    else if (id === 'star' && opt && opt.st) p = [14 + Math.min(10, Math.round(opt.st)), 30, 10];                    // 별 하나씩 올라가는 소리에 맞춘 작은 톡
+    if (p) { try { navigator.vibrate(p); } catch (e) {} }
+  };
   /** 시트(팝업) 하나를 열고 본문 노드를 돌려 준다 */
   function sheet(title) {
     const sc = UK.modal({ title, dismiss: true, parent: document.getElementById('safe') }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet');

@@ -88,7 +88,9 @@
       if (o.onNext) acts.push({ text: o.nextText || '다음', cls: 'green', icon: 'next', onclick: o.onNext });
       if (o.onRetry) acts.push({ text: o.retryText || '다시', cls: 'ghost', icon: 'replay', onclick: o.onRetry });
       if (o.onHome) acts.push({ text: o.homeText || '처음으로', cls: 'ghost', icon: 'home', onclick: o.onHome });
-      const sc = UK.modal({ title: o.title, stars: o.stars, body: o.body, big: o.big, chips: o.chips, actions: acts, parent: o.parent }); UK.confetti(sc); sfx('celebrate'); return sc;
+      const sc = UK.modal({ title: o.title, stars: o.stars, body: o.body, big: o.big, chips: o.chips, actions: acts, parent: o.parent }); UK.confetti(sc);
+      try { const n = Math.max(0, Math.min(3, o.stars | 0)); if (window.GF && GF.sfxSeq && n) GF.sfxSeq([...Array(n)].map((_, i) => ['star', 120 + i * 230, { st: [0, 4, 7][i] }]).concat([['celebrate', 120 + n * 230 + 60]])); else sfx('celebrate'); } catch (e) { sfx('celebrate'); }      // 별 하나마다 한 음씩 올라가고 마지막에 팡파르(C4)
+      return sc;
     },
     confetti(parent) {
       const c = el('div', 'uk-confetti', parent || host()), cols = ['#FF8FA8', '#FFC933', '#6CCB8A', '#8FD3F4', '#F6C28B'];

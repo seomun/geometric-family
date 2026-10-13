@@ -94,7 +94,7 @@
   /** GF.sfx(id, {st}) — st: 반음 단위 음높이 이동(연쇄 콤보처럼 오를수록 높아지게). 같은 id 라도 파일은 하나, 재생 속도로만 바꾼다. */
   GF.sfx = function (n, opt) {
     ensureAudio(); loadSounds(); n = (snd().alias || {})[n] || n;
-    if (GF.haptic) GF.haptic(n);   // 성인 앱만, 설정에서 끌 수 있는 짧은 진동(engine/extras.js)
+    if (GF.haptic) GF.haptic(n, opt);   // 성인 앱만, 설정에서 끌 수 있는 짧은 진동(engine/extras.js) — 연쇄 높이(st)에 따라 강해진다
     if (!ac || GF.state.settings.mute) return;
     const b = bufs[n], e = snd().sfx[n], st = opt && opt.st ? opt.st : 0, mul = Math.pow(2, st / 12);
     if (!b) { if (SFX[n]) { pitch = mul; try { SFX[n](); } finally { pitch = 1; } } return; }                 // 파일이 없거나 아직 못 읽었으면 합성음으로 대신
@@ -102,6 +102,8 @@
     s.buffer = b; s.playbackRate.value = mul * (1 + (Math.random() - 0.5) * (st ? j * 0.2 : j));     // 같은 소리가 반복돼도 지루하지 않게
     g.gain.value = GF.state.settings.vol * ((e && e.vol) != null ? e.vol : 1); s.connect(g); g.connect(ac.destination); s.start();
   };
+  /** 소리 층 쌓기(C4): [[이름, 지연ms, {st}], …] 를 순서대로. 클리어 팡파르·큰 합치기처럼 한 소리로 모자랄 때 */
+  GF.sfxSeq = function (list) { (list || []).forEach(([n, ms, o]) => { setTimeout(() => { try { GF.sfx(n, o); } catch (e) { /* 소리 실패는 무시 */ } }, ms || 0); }); };
   // 음악: 슬롯(theme_main·theme_kids·night …)을 id 로 틀고, file 이 비어 있으면 fallback 슬롯을 쓴다. 같은 파일이면 끊지 않고 이어 간다.
   GF.bgm = {
     el: null, started: false, want: null, file: null, duck: false, vol: 0.22,

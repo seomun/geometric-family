@@ -91,7 +91,7 @@
     if (t === 'dong') { for (let i = S.chairs; i < B.tables.dong.chairs; i++) { const c = el('div', '', d); c.style.cssText = `position:absolute;left:${14 + i * 28}px;top:62px;width:20px;height:20px;border-radius:6px;border:3px dashed #7783B8;background:#D4D8EE88`; } }
     return d;
   }
-  const Rbtn = (t) => ({ nemo: '#E8870F', semo: '#2F8FD0', dong: '#3B4A7A' }[t]);
+  const Rbtn = (t) => ({ nemo: '#B5651D', semo: '#1F6FA8', dong: '#3B4A7A' }[t]);      // 흰 글자 대비 4.5:1 이상(접근성 C10/C11)
 
   /* 시즌 사건 카드: 해당 달에만 나타나고, 해마다 한 번씩 다시 읽을 수 있다(연도별 도장). */
   const seasonOn = () => IDLE.season || new Date(now()).getMonth() + 1;

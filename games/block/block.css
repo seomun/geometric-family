@@ -19,7 +19,7 @@
 .bk-goal { position: relative; display: flex; align-items: center; gap: 4px; height: 56px; padding: 0 10px 0 4px; border-radius: var(--uk-r-m); background: #fff; box-shadow: var(--uk-sh); font: 900 var(--uk-fs-body)/1 var(--uk-font); }
 .bk-goal .bk-pc { width: 48px; height: 48px; } .bk-goal.ok { background: #DDF6E5; outline: 3px solid var(--uk-green); }
 .bk-left { position: absolute; right: 10px; top: 70px; background: #fff; box-shadow: var(--uk-sh); padding: 6px 12px; font-size: calc(18px * var(--uk-fs-k, 1)); white-space: nowrap; z-index: 5; } .bk-left b { font-size: calc(22px * var(--uk-fs-k, 1)); margin-left: 4px; }
-.bk-btns3 { display: flex; flex-direction: column; gap: 8px; } .bk-btns3 .uk-btn.sm { min-height: 44px; padding: 0 12px; font-size: calc(18px * var(--uk-fs-k, 1)); border-radius: 16px; width: 124px; } .bk-btns3 .uk-btn svg { width: 24px; height: 24px; }
+.bk-btns3 { display: flex; flex-direction: column; gap: 8px; } .bk-btns3 .uk-btn.sm { min-height: 60px; padding: 0 12px; font-size: calc(18px * var(--uk-fs-k, 1)); border-radius: 16px; width: 124px; } .bk-btns3 .uk-btn svg { width: 24px; height: 24px; }
 .bk-tip { position: absolute; left: 12px; right: 12px; top: 74px; z-index: 6; font-size: calc(18px * var(--uk-fs-k, 1)) !important; }
 .bk-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .bk-grid .uk-btn { position: relative; padding: 0 10px; font-size: calc(18px * var(--uk-fs-k, 1)); min-height: 56px; }
@@ -48,7 +48,7 @@
 .bk-slot { position: relative; flex: 2; display: flex; align-items: center; justify-content: center; border-radius: 16px; background: rgba(255,255,255,.6); box-shadow: var(--uk-sh); touch-action: none; }
 .bk-slot.sel { outline: 4px solid var(--uk-pink); } .bk-slot.lift > .bk-pc { opacity: .35; } .bk-slot.dead > .bk-pc { opacity: .45; filter: grayscale(.6); }
 .bk-pc { position: relative; pointer-events: none; } .bk-pc img { position: absolute; display: block; pointer-events: none; }
-.bk-btns2 { position: absolute; left: 24px; right: 24px; top: 596px; display: flex; gap: 12px; } .bk-btns2 .uk-btn { flex: 1; min-height: 40px; padding: 0 10px; font-size: calc(18px * var(--uk-fs-k, 1)); border-radius: 14px; } .bk-btns2 .uk-btn svg { width: 22px; height: 22px; }
+.bk-btns2 { position: absolute; left: 24px; right: 24px; top: 586px; display: flex; gap: 12px; } .bk-btns2 .uk-btn { flex: 1; min-height: 52px; padding: 0 10px; font-size: calc(18px * var(--uk-fs-k, 1)); border-radius: 14px; } .bk-btns2 .uk-btn svg { width: 22px; height: 22px; }
 .bk-tip { position: absolute; left: 10px; right: 10px; top: 150px; height: 40px; line-height: 40px; text-align: center; z-index: 30; font-size: calc(18px * var(--uk-fs-k, 1)) !important; display: none; background: rgba(46,36,48,.88); color: #fff; border-radius: 22px; pointer-events: none; }
 .bk-grid .uk-btn, .bk-season .uk-btn { position: relative; padding: 0 10px; font-size: calc(18px * var(--uk-fs-k, 1)); min-height: 56px; }
 .bk-btns { position: absolute; left: 24px; right: 24px; top: 300px; } .bk-grid { position: absolute; left: 24px; right: 24px; top: 376px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }

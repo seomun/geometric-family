@@ -326,3 +326,6 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 [data-uk="kid"] .h2-fb::before, [data-uk="kid"] .h2-go::before, [data-uk="kid"] .uk-round::before, [data-uk="kid"] .h2-dreamchip::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, var(--hit-kid, 72px)); height: max(100%, var(--hit-kid, 72px)); transform: translate(-50%, -50%); }
 [data-uk="kid"] .h2-fb::before, [data-uk="kid"] .h2-dreamchip::before, [data-uk="kid"] .h2-go::before, [data-uk="kid"] .uk-round::before { width: max(100%, calc(var(--hit-kid, 72px) * 1.16)); height: max(100%, calc(var(--hit-kid, 72px) * 1.16)); } [data-uk="kid"] .h2-band, [data-uk="kid"] .h2-band.kid { min-height: 76px; }
 .h2-todochip { min-width: 52px; } .h2-todochip b { font-size: 20px; } .h2-todochip i { font: 900 17px/1.1 var(--uk-font); font-style: normal; }
+
+.sg-rb { min-height: 52px; } [data-uk="kid"] .sg-rb { position: relative; } [data-uk="kid"] .sg-rb::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, calc(var(--hit-kid, 72px) * 1.16)); height: max(100%, calc(var(--hit-kid, 72px) * 1.16)); transform: translate(-50%, -50%); }
+.uk-btn.sm { min-height: 54px; }

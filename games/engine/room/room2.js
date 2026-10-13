@@ -189,7 +189,7 @@
     if (!kid()) { el('h2', '', sh, it.name); el('p', 'h2-cozy', sh, '아늑함 +' + (it.cozy || 0)); } else el('p', 'h2-cozy', sh, '★ +' + (it.cozy || 0));
     const g = pos && pos.room ? rooms().find((r) => r.id === pos.room) : null; if (g) { const pv = el('div', 'h2-drop-pv', sh); R2.draw(pv, g.id, { mini: true, flash: id }); if (!kid()) el('small', '', sh, g.name + '에 놓였어요'); }
     if (after.lv > before.lv) { el('p', 'h2-lvup', sh, kid() ? '⭐ ' + after.lv : '집 레벨 ' + after.lv + '!'); try { UK.confetti(sc); } catch (e) {} ensure().lv = after.lv; Room.save(); }
-    const acts = el('div', 'acts', sh); UK.btn({ text: kid() ? null : '집에 놓기', icon: kid() ? 'home' : null, cls: 'green block', onclick: () => { sc.remove(); opts.openHouse ? opts.openHouse() : (cb && cb()); } }, acts);
+    const acts = el('div', 'acts', sh); UK.btn({ text: kid() ? null : (g ? '보러 가기' : '집에 놓기'), icon: kid() ? 'home' : null, cls: 'green block', onclick: () => { sc.remove(); opts.openHouse ? opts.openHouse() : (cb && cb()); } }, acts);
     if (!kid()) UK.btn({ text: '나중에', cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(); } }, acts); else UK.btn({ icon: 'next', cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(); } }, acts);
     try { GF.sfx && GF.sfx('star'); } catch (e) {} return sc;
   };
@@ -267,7 +267,7 @@
       }); else d.addEventListener('pointerup', () => use(room, d, it, p));
     });
     // 점선 칸: 비어 있는 anchors 중 할 일에 걸린 것 우선 최대 3개, 놓인 가구·다른 점선 칸과 겹치면 건너뛴다
-    if (!o.dream && !o.list) {
+    if (!o.dream && !o.list && !o.mini) {
       const wantNow = new Set(Room.tasks().show.map((t) => t.miss && t.miss.id)), shown = [];
       const cand = (R.anchors || []).filter((a) => !list.some((p) => p.id === a.want)).sort((a, b) => (wantNow.has(b.want) ? 1 : 0) - (wantNow.has(a.want) ? 1 : 0));
       for (const a of cand) { if (shown.length >= (o.mini ? 1 : 3)) break; const r = anchorRect(a); if (!r) continue; if (occ.some((q) => ov(r, q) > r.w * r.h * 0.05) || shown.some((q) => ov(r, q) > 0)) continue; shown.push(r);
@@ -526,20 +526,21 @@
   /* ---------------- 사진 꾸미기(A6): 프레임 6 · 스티커 20 · 「당신은 어느 도형인가요?」 도장 ---------------- */
   const FRAMES = [{ id: 'none', n: '없음' }, { id: 'white', n: '흰 테두리' }, { id: 'polaroid', n: '폴라로이드' }, { id: 'heart', n: '하트' }, { id: 'film', n: '필름' }, { id: 'shape', n: '세 도형' }];
   const STICKERS = ['⭐', '💛', '💗', '✨', '🎈', '🎀', '🏠', '🍚', '🌸', '🍁', '❄️', '🐶', '🐱', '🧸', '🎵', '☀️', '🌈', '📷', '👪', '🎉'];
-  const drawFrame = (x, W, H, kind, label) => {
-    x.save();
-    if (kind === 'white') { x.strokeStyle = '#fff'; x.lineWidth = 46; x.strokeRect(23, 23, W - 46, H - 46); x.strokeStyle = 'rgba(0,0,0,.12)'; x.lineWidth = 3; x.strokeRect(46, 46, W - 92, H - 92); }
-    else if (kind === 'polaroid') { x.fillStyle = '#fff'; x.fillRect(0, 0, W, 34); x.fillRect(0, 0, 34, H); x.fillRect(W - 34, 0, 34, H); x.fillRect(0, H - 130, W, 130); x.fillStyle = '#6b4a00'; x.font = '800 40px sans-serif'; x.textAlign = 'center'; x.fillText(label, W / 2, H - 52); }
-    else if (kind === 'heart') { x.strokeStyle = '#FF8FA8'; x.lineWidth = 40; x.strokeRect(20, 20, W - 40, H - 40); x.font = '56px sans-serif'; x.textAlign = 'center'; ['💗', '💗', '💗', '💗'].forEach((h, i) => x.fillText(h, i % 2 ? W - 52 : 52, i < 2 ? 70 : H - 24)); for (let i = 1; i < 7; i++) { x.fillText('💗', (W / 7) * i, 54); x.fillText('💗', (W / 7) * i, H - 20); } }
-    else if (kind === 'film') { x.fillStyle = '#1b1b1f'; x.fillRect(0, 0, W, 56); x.fillRect(0, H - 56, W, 56); x.fillStyle = '#f4f0e6'; for (let i = 0; i < 18; i++) { x.fillRect(14 + i * (W / 18), 16, 22, 24); x.fillRect(14 + i * (W / 18), H - 40, 22, 24); } }
-    else if (kind === 'shape') { x.strokeStyle = '#FFC933'; x.lineWidth = 30; x.strokeRect(15, 15, W - 30, H - 30); x.font = '900 64px sans-serif'; x.textAlign = 'center'; x.fillStyle = '#E5334A'; x.fillText('△', 56, 70); x.fillStyle = '#F08A3C'; x.fillText('◻', W - 56, 70); x.fillStyle = '#3B6FD6'; x.fillText('◯', 56, H - 26); x.fillStyle = '#E5334A'; x.fillText('△', W - 56, H - 26); }
+  const FMARGIN = { none: [0, 0, 0, 0], white: [40, 40, 40, 40], polaroid: [40, 40, 150, 40], heart: [56, 56, 56, 56], film: [76, 0, 76, 0], shape: [44, 44, 44, 44] };   // 위·오른·아래·왼 (사진을 가리지 않고 둘레에)
+  const drawFrame = (x, W, H, kind, label, m) => {      // W·H = 바깥 전체, m = 여백
+    x.save(); const [mt, mr, mb, ml] = m;
+    if (kind === 'white') { x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); }
+    else if (kind === 'polaroid') { x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); x.fillStyle = '#6b4a00'; x.font = '800 40px sans-serif'; x.textAlign = 'center'; x.fillText(label, W / 2, H - 56); }
+    else if (kind === 'heart') { x.fillStyle = '#FF8FA8'; x.fillRect(0, 0, W, H); x.font = '44px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; for (let i = 0; i < 9; i++) { x.fillText('💗', (W / 9) * (i + .5), mt / 2); x.fillText('💗', (W / 9) * (i + .5), H - mb / 2); } for (let i = 0; i < 11; i++) { x.fillText('💗', ml / 2, (H / 11) * (i + .5)); x.fillText('💗', W - mr / 2, (H / 11) * (i + .5)); } }
+    else if (kind === 'film') { x.fillStyle = '#1b1b1f'; x.fillRect(0, 0, W, H); x.fillStyle = '#f4f0e6'; for (let i = 0; i < 20; i++) { x.fillRect(12 + i * (W / 20), 24, 24, 28); x.fillRect(12 + i * (W / 20), H - 52, 24, 28); } }
+    else if (kind === 'shape') { x.fillStyle = '#FFC933'; x.fillRect(0, 0, W, H); x.font = '900 40px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#E5334A'; x.fillText('△', 22, 22); x.fillStyle = '#F08A3C'; x.fillText('◻', W - 22, 22); x.fillStyle = '#3B6FD6'; x.fillText('◯', 22, H - 22); x.fillStyle = '#E5334A'; x.fillText('△', W - 22, H - 22); }
     x.restore();
   };
   /** 방 그림(캔버스) — 사진 저장·꾸미기가 같이 쓴다 */
   Room.photoCanvas = async function (rid) {
     const R = roomDef(rid), S = ensure(), W = 1020, k = W / RW, c = document.createElement('canvas'); c.width = W; c.height = Math.round(RH * k); const x = c.getContext('2d');
     const load = (src) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
-    const bg = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bgSVG(R, Room.lightNow(S)))); if (bg) x.drawImage(bg, 0, 0, W, c.height);
+    const bg = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bgSVG(R, Room.lightNow(S)).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" '))); if (bg) x.drawImage(bg, 0, 0, W, c.height);
     const list = (S.placed[rid] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => (a.p.y + geo(a.it).h) - (b.p.y + geo(b.it).h));
     for (const { p, it } of list) { const im = await load(Room.src(it, p.c)); if (!im) continue; const g = geo(it), w = g.w * k, h = g.h * k; x.save(); if (p.flip) { x.translate(p.x * k + w, p.y * k); x.scale(-1, 1); x.drawImage(im, 0, 0, w, h); } else x.drawImage(im, p.x * k, p.y * k, w, h); x.restore(); }
     return c;
@@ -548,7 +549,7 @@
   /** 사진 스튜디오: 프레임 고르기 · 스티커 붙이기(끌어서 옮김) · 도장 · 저장 */
   Room.photoStudio = async function (rid, parent) {
     const R = roomDef(rid), sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh h2-ps', sc); el('h2', '', sh, kid() ? '📷' : '사진 꾸미기'); const stage = el('div', 'h2-psstage', sh), st = { frame: 'white', stickers: [], stamp: !kid() }; Room._ps = st;
-    const base = await Room.photoCanvas(rid), W = base.width, H = base.height, img = el('img', 'h2-psimg', stage); img.src = base.toDataURL('image/png'); img.draggable = false; const fr = el('div', 'h2-psframe', stage), layer = el('div', 'h2-pslayer', stage), stamp = el('div', 'h2-psstamp', stage);
+    const base = await Room.photoCanvas(rid), W = base.width, H = base.height, pw = el('div', 'h2-pswrap', stage), img = el('img', 'h2-psimg', pw); img.src = base.toDataURL('image/png'); img.draggable = false; const fr = el('div', 'h2-psframe', stage), layer = el('div', 'h2-pslayer', pw), stamp = el('div', 'h2-psstamp', pw);
     const label = (() => { const d = now0(); return d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate() + ' · ' + (R ? R.name : '우리 집'); })();
     const redraw = () => { fr.dataset.k = st.frame; fr.innerHTML = ''; stamp.style.display = st.stamp ? '' : 'none'; stamp.innerHTML = '<b>당신은 어느 도형인가요?</b> <span>△ ◻ ◯</span>'; if (st.frame === 'polaroid') fr.innerHTML = '<em>' + label + '</em>'; stage.dataset.frame = st.frame; };
     if (!kid()) {
@@ -557,25 +558,25 @@
     const sb = el('div', 'h2-psrow stick', sh); STICKERS.forEach((e) => { const b = el('button', 'h2-psst', sb, e); b.onclick = () => { const o = { e, x: 0.2 + Math.random() * 0.6, y: 0.2 + Math.random() * 0.5 }; st.stickers.push(o); addSticker(o); }; });
     const addSticker = (o) => { const f = el('i', 'h2-pssticker', layer, o.e); f.style.left = o.x * 100 + '%'; f.style.top = o.y * 100 + '%'; let drag = null; f.onpointerdown = (ev) => { drag = true; f.setPointerCapture(ev.pointerId); ev.preventDefault(); }; f.onpointermove = (ev) => { if (!drag) return; const r = layer.getBoundingClientRect(); o.x = Math.max(0.02, Math.min(0.98, (ev.clientX - r.left) / r.width)); o.y = Math.max(0.02, Math.min(0.98, (ev.clientY - r.top) / r.height)); f.style.left = o.x * 100 + '%'; f.style.top = o.y * 100 + '%'; }; f.onpointerup = () => { drag = null; }; f.ondblclick = () => { st.stickers.splice(st.stickers.indexOf(o), 1); f.remove(); }; };
     const acts = el('div', 'acts h2-psacts', sh);
-    if (!kid()) { const sb2 = UK.btn({ text: '도장 ' + (st.stamp ? '켬' : '끔'), cls: 'sky sm', onclick: () => { st.stamp = !st.stamp; sb2.textContent = '도장 ' + (st.stamp ? '켬' : '끔'); redraw(); } }, acts); UK.btn({ text: '스티커 지우기', cls: 'ghost sm', onclick: () => { st.stickers.length = 0; layer.innerHTML = ''; } }, acts); }
-    UK.btn({ text: kid() ? null : '저장', icon: kid() ? 'check' : null, cls: 'green', onclick: async () => {
+    if (!kid()) { const tg = el('label', 'h2-pstog', stage.parentNode.insertBefore(el('div', 'h2-psrow'), sb)); const cb = el('input', '', tg); cb.type = 'checkbox'; cb.checked = st.stamp; el('span', '', tg, '「당신은 어느 도형인가요?」 도장'); cb.onchange = () => { st.stamp = cb.checked; redraw(); }; const clr = el('button', 'h2-pschip', tg.parentNode, '스티커 지우기'); clr.onclick = () => { st.stickers.length = 0; layer.innerHTML = ''; }; }
+    UK.btn({ text: kid() ? null : '저장 · 공유', icon: kid() ? 'check' : null, cls: 'green block', onclick: async () => {
       try { const c = await Room.renderPhoto(rid, st, base, label); await saveCanvas(c, 'gihaha-house-' + rid + '.png'); UK.toast(kid() ? '📷' : '방 사진을 저장했어요', sc); } catch (e) { UK.toast(kid() ? '📷✕' : '사진을 저장하지 못했어요', sc); }
     } }, acts);
     UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, acts); redraw(); return sc;
   };
   /** 꾸민 사진을 최종 캔버스로(미리보기와 같은 모양) */
   Room.renderPhoto = async function (rid, st, base, label) {
-    const W = base.width, H = base.height, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); x.drawImage(base, 0, 0);
-    x.font = '84px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; st.stickers.forEach((o) => x.fillText(o.e, o.x * W, o.y * H));
-    if (st.frame && st.frame !== 'none') drawFrame(x, W, H, st.frame, label || '');
-    if (st.stamp) { const bw = 640, bh = 70, bx = W - bw - 40, by = H - bh - (st.frame === 'polaroid' ? 150 : 70); x.fillStyle = 'rgba(255,255,255,.92)'; x.beginPath(); x.roundRect ? x.roundRect(bx, by, bw, bh, 22) : x.rect(bx, by, bw, bh); x.fill(); x.fillStyle = '#6b4a00'; x.font = '900 38px sans-serif'; x.textAlign = 'left'; x.textBaseline = 'middle'; x.fillText('당신은 어느 도형인가요?', bx + 24, by + bh / 2 + 2); x.font = '900 40px sans-serif'; x.fillStyle = '#E5334A'; x.fillText('△', bx + 470, by + bh / 2); x.fillStyle = '#F08A3C'; x.fillText('◻', bx + 520, by + bh / 2); x.fillStyle = '#3B6FD6'; x.fillText('◯', bx + 570, by + bh / 2); }
-    x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.fillStyle = 'rgba(255,255,255,.9)'; x.font = '900 30px sans-serif'; x.fillText('기하학 가족 · 우리 집', 24, H - (st.frame === 'polaroid' ? 150 : 24) - 6); return c;
+    const w0 = base.width, h0 = base.height, kind = st.frame || 'none', m = FMARGIN[kind] || FMARGIN.none, W = w0 + m[1] + m[3], H = h0 + m[0] + m[2], c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+    if (kind !== 'none') drawFrame(x, W, H, kind, label || '', m); x.drawImage(base, m[3], m[0]);
+    x.save(); x.translate(m[3], m[0]); x.font = '84px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; st.stickers.forEach((o) => x.fillText(o.e, o.x * w0, o.y * h0));
+    if (st.stamp) { const bw = 640, bh = 70, bx = w0 - bw - 40, by = h0 - bh - 40; x.fillStyle = 'rgba(255,255,255,.92)'; x.beginPath(); x.roundRect ? x.roundRect(bx, by, bw, bh, 22) : x.rect(bx, by, bw, bh); x.fill(); x.fillStyle = '#6b4a00'; x.font = '900 38px sans-serif'; x.textAlign = 'left'; x.textBaseline = 'middle'; x.fillText('당신은 어느 도형인가요?', bx + 24, by + bh / 2 + 2); x.font = '900 40px sans-serif'; x.fillStyle = '#E5334A'; x.fillText('△', bx + 470, by + bh / 2); x.fillStyle = '#F08A3C'; x.fillText('◻', bx + 520, by + bh / 2); x.fillStyle = '#3B6FD6'; x.fillText('◯', bx + 570, by + bh / 2); }
+    x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.fillStyle = 'rgba(255,255,255,.9)'; x.font = '900 30px sans-serif'; x.fillText('기하학 가족 · 우리 집', 24, h0 - 80); x.restore(); return c;
   };
   Room.photo = async function (rid, parent) {
     try {
       const R = roomDef(rid), S = ensure(), W = 1020, k = W / RW, c = document.createElement('canvas'); c.width = W; c.height = Math.round(RH * k); const x = c.getContext('2d');
       const load = (src) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
-      const bg = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bgSVG(R, Room.lightNow(S)))); if (bg) x.drawImage(bg, 0, 0, W, c.height);
+      const bg = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bgSVG(R, Room.lightNow(S)).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" '))); if (bg) x.drawImage(bg, 0, 0, W, c.height);
       const list = (S.placed[rid] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => (a.p.y + geo(a.it).h) - (b.p.y + geo(b.it).h));
       for (const { p, it } of list) { const im = await load(Room.src(it, p.c)); if (!im) continue; const g = geo(it), w = g.w * k, h = g.h * k; x.save(); if (p.flip) { x.translate(p.x * k + w, p.y * k); x.scale(-1, 1); x.drawImage(im, 0, 0, w, h); } else x.drawImage(im, p.x * k, p.y * k, w, h); x.restore(); }
       x.fillStyle = 'rgba(255,255,255,.9)'; x.font = '900 34px sans-serif'; x.fillText('기하학 가족 · 우리 집', 24, c.height - 24);

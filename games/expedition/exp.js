@@ -67,6 +67,7 @@
     catch (e) { UK.toast(e.code === 'insufficient_gold' ? '금화가 모자라요' : e.code === 'insufficient_dups' ? '조각이 모자라요' : '서버에 연결하지 못했어요', document.getElementById('safe')); return false; }
   }
   function growSheet(r, id, after) {
+    if (tipOnce('grow', r, () => growSheet(r, id, after))) return;
     const u = $(id), G = D.bal.grow, sc = UK.modal({ parent: r, title: u.name + ' 키우기', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('ex-grow');
     const rd = () => {
       sh.querySelectorAll('.ex-grow-c').forEach((e) => e.remove()); const box = el('div', 'ex-grow-c', sh), st = stOf(id), have = { gold: S.gold, dups: S.dups[id] || 0 }, gr = SC.gradeOf(D, id, st);
@@ -192,7 +193,7 @@
     async enter(r) {
       r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '요일 던전', '하루 3번 · 졌을 땐 횟수를 안 써요'); back(r, 'xhome'); const box = el('div', 'ex-shop', r); el('p', 'ex-sub', box, '불러오는 중…');
       let info; try { info = await dunInfo(); } catch (e) { box.innerHTML = '서버에 연결하지 못했어요.'; return; } if (!r.isConnected) return; box.innerHTML = '';
-      el('div', 'ex-nation', box, `<b>${info.name}</b><small>오늘 ${info.left}/${info.perDay}번 남음</small>`);
+      el('div', 'ex-nation', box, `<b>${info.name}</b><small>오늘 ${info.left}/${info.perDay}번 남음</small>`); if (info.unlocked) setTimeout(() => { if (r.isConnected) tipOnce('dungeon', r); }, 250);
       if (!info.unlocked) { el('p', 'ex-warn', box, info.unlock + '단계를 깨면 열려요.'); return; }
       el('p', 'ex-sub', box, info.kind === 'gold' ? '오늘은 금화가 많이 나와요.' : info.kind === 'both' ? '오늘은 금화와 조각이 같이 나와요(아무 친구).' : info.el === 'any' ? '오늘은 아무 친구의 조각이 1.5배!' : '오늘은 ' + D.el[info.el].name + '(' + D.el[info.el].icon + ') 친구의 조각이 나와요.');
       const pickTarget = (el0, cb) => {
@@ -217,7 +218,7 @@
   GF.screen('xdex', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); const cnt = Object.keys(S.units).length; head(r, '동료 도감', `모은 친구 ${cnt}/${D.units.length}`); back(r, 'xhome');
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); const cnt = Object.keys(S.units).length; head(r, '동료 도감', `모은 친구 ${cnt}/${D.units.length}`); back(r, 'xhome'); setTimeout(() => { if (r.isConnected) tipOnce('dex', r); }, 350);
       const box = el('div', 'ex-shop', r), draw = () => {
         box.innerHTML = ''; const have = Object.keys(S.units).length, got = S.flags.dex || [], ms = el('div', 'ex-dexms', box);
         (D.bal.dex || []).forEach((m) => { const done = got.includes(m.n), can = !done && have >= m.n, c = el('div', 'ex-dm' + (done ? ' done' : can ? ' can' : ''), ms); c.innerHTML = `<b>${m.n}명</b><small>💎 ${m.gems}</small>`; if (can) UK.btn({ text: '받기', cls: 'gold sm', onclick: async () => { const g = await dexClaim(m.n); if (g) { GF.sfx('star'); el('i', 'ex-gain', c, '💎 +' + g); setTimeout(draw, 700); } } }, c); else el('em', '', c, done ? '✔ 받음' : have + '/' + m.n); });
@@ -238,6 +239,13 @@
     if (own && u.costume) el('small', 'ex-sub', sh, '의상: ' + u.costume + ' 이야기');
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
   }
+  /* ---------------- 스토리 = 튜토리얼(B7): 새 기능을 처음 열 때 한 번만 이야기 컷으로 ---------------- */
+  const tipKey = (k) => 'gfx:tip:' + ((AUTH && AUTH.account) || 'local') + ':' + k;
+  const tipSeen = (k) => { try { return !!localStorage.getItem(tipKey(k)); } catch (e) { return true; } };
+  const tipOnce = (k, r, cb) => {
+    const cuts = D.story.tips && D.story.tips[k], skip = !cuts || tipSeen(k) || (navigator.webdriver && !/[?&]story=1/.test(location.search)); if (skip) { cb && cb(); return false; }
+    try { localStorage.setItem(tipKey(k), '1'); } catch (e) { /* 저장 불가 */ } GF.tale.play(cuts, r, () => { cb && cb(); }, { bg: 'field' }); return true;
+  };
   /* ---------------- 원정 전리품 코드 (B6): 성인 「우리 집」에서 입력하면 가구가 생겨요 — 앱은 따로, 연결은 코드로만(D12) ---------------- */
   const lootAt = (stage) => (D.loot || []).find((x) => x.stage === stage);
   const copyText = (txt, r) => { let okc = false; try { navigator.clipboard.writeText(txt); okc = true; } catch (e) { try { const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t); t.select(); okc = document.execCommand('copy'); t.remove(); } catch (x) { /* 복사 불가 */ } } UK.toast(okc ? '코드를 복사했어요' : '코드를 눌러 직접 복사해요', r); };
@@ -374,7 +382,7 @@
   GF.screen('xgacha', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, G().banner, '랜덤 아이템 포함 · ' + G().note);
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, G().banner, '랜덤 아이템 포함 · ' + G().note); setTimeout(() => { if (r.isConnected) tipOnce('gacha', r); }, 350);
       const pk = D.units.find((u) => u.pickup), box = el('div', 'ex-banner', r); box.appendChild(art(pk, 'xl')); const tx = el('div', 'ex-btx', box); el('b', '', tx, '픽업 ★5 ' + pk.name); el('small', '', tx, `${D.el[pk.el].family} ${D.el[pk.el].name} · ${D.role[pk.role].skill}`); el('small', '', tx, '★5 확률 2.5% 중 절반이 픽업 · 천장 ' + S.pity.since5 + '/' + G().hard);
       const bar2 = el('div', 'uk-progress gold ex-pity', r); bar2.innerHTML = `<i style="width:${Math.round(S.pity.since5 / G().hard * 100)}%"></i>`;
       const row = el('div', 'ex-prow', r); const b1 = UK.btn({ text: '1회 💎' + G().cost, cls: 'gold', onclick: () => run(1) }, row), b10 = UK.btn({ text: '10회 💎' + G().ten, cls: 'green', onclick: () => run(10) }, row); void b1; void b10;

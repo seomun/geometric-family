@@ -4,13 +4,22 @@
   'use strict';
   const S = (GF.share = {});
   const esc = (t) => String(t == null ? '' : t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const me = () => { try { const m = window.Room && Room.me && Room.me(), T = m && Room.data.meTypes && Room.data.meTypes[m.f]; if (T) return { char: T.char, color: T.color, bg: T.bg, name: T.sub[m.s] || T.name }; } catch (e) {} const T0 = (window.Room && Room.data && Room.data.meTypes && Room.data.meTypes.nemo) || { char: 'nemo_dad.joy', color: '#E8870F', bg: '#FFE3C2', name: '네모' }; return { char: T0.char, color: T0.color, bg: T0.bg, name: '' }; };
+  const me = () => { try { const m = window.Room && Room.me && Room.me(), T = m && Room.data.meTypes && Room.data.meTypes[m.f]; if (T) return { char: T.char, f: m.f, s: m.s, color: T.color, bg: T.bg, name: T.sub[m.s] || T.name }; } catch (e) {} const T0 = (window.Room && Room.data && Room.data.meTypes && Room.data.meTypes.nemo) || { char: 'nemo_dad.joy', color: '#E8870F', bg: '#FFE3C2', name: '네모' }; return { char: T0.char, color: T0.color, bg: T0.bg, name: '' }; };
+  /** 결과형 이름의 인물 그림(D8): ops.shapeWho[f][s] 의 인물(1~2명). 그림이 없는 형(동그라미 엄마·아들)은 인물을 억지로 쓰지 않고 도형 얼굴을 그린다. box = x,y,w,h */
+  S.figure = function (f, s, T, x, y, w, h) {
+    const W = ((GF.data.ops.shapeWho || {})[f] || [])[s] || [];
+    if (W.length === 1) return `<image href="${GF.src(W[0])}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet"/>`;
+    if (W.length >= 2) { const iw = w * 0.62, ih = h * 0.86; return W.map((id, i) => `<image href="${GF.src(id)}" x="${x + (i ? w - iw : 0)}" y="${y + h - ih}" width="${iw}" height="${ih}" preserveAspectRatio="xMidYMid meet"/>`).join(''); }
+    const cx = x + w / 2, cy = y + h / 2 + 4, r = Math.min(w, h) * 0.38, col = (T && T.color) || '#3B4A7A';
+    const body = f === 'semo' ? `<path d="M${cx} ${cy - r * 1.1}L${cx + r * 1.15} ${cy + r * 0.85}H${cx - r * 1.15}z" fill="${col}" opacity=".9" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>` : f === 'dong' ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${col}" opacity=".9" stroke="#fff" stroke-width="4"/>` : `<rect x="${cx - r}" y="${cy - r}" width="${r * 2}" height="${r * 2}" rx="${r * 0.3}" fill="${col}" opacity=".9" stroke="#fff" stroke-width="4"/>`;
+    return body + `<circle cx="${cx - r * 0.36}" cy="${cy - r * 0.05}" r="${r * 0.11}" fill="#fff"/><circle cx="${cx + r * 0.36}" cy="${cy - r * 0.05}" r="${r * 0.11}" fill="#fff"/><path d="M${cx - r * 0.3} ${cy + r * 0.28}Q${cx} ${cy + r * 0.52} ${cx + r * 0.3} ${cy + r * 0.28}" fill="none" stroke="#fff" stroke-width="${r * 0.09}" stroke-linecap="round"/>`;
+  };
   /** SVG(360×450) 한 장: o = {title, stars, line} */
   S.svg = function (o) {
     const M = me(), W = 360, H = 450, appName = (GF.data.ops.appNames || {})[(GF.ops && GF.ops.app) || ''] || '', stars = '★'.repeat(o.stars || 0) + '☆'.repeat(3 - (o.stars || 0));
     const logo = `<g transform="translate(180 392)"><rect x="-58" y="-14" width="26" height="26" rx="6" fill="#E8870F"/><path d="M0 -16L16 12H-16z" fill="#FF8FA8" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><circle cx="46" cy="-1" r="14" fill="#6C7BD9"/></g>`;
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><rect width="${W}" height="${H}" rx="26" fill="${M.bg}"/><rect x="8" y="8" width="${W - 16}" height="${H - 16}" rx="20" fill="#fff" opacity=".55"/>`
-      + `<text x="180" y="44" font-size="22" font-weight="900" text-anchor="middle" fill="${M.color}">당신은 어느 도형인가요?</text><image href="${GF.src(M.char)}" x="100" y="58" width="160" height="184" preserveAspectRatio="xMidYMid meet"/>`
+      + `<text x="180" y="44" font-size="22" font-weight="900" text-anchor="middle" fill="${M.color}">당신은 어느 도형인가요?</text>${S.figure(M.f, M.s, M, 100, 58, 160, 184)}`
       + (M.name ? `<text x="180" y="262" font-size="16" font-weight="800" text-anchor="middle" fill="#3A2E39">${esc(M.name)}</text>` : '')
       + `<text x="180" y="300" font-size="24" font-weight="900" text-anchor="middle" fill="#3A2E39">${esc(o.title || '클리어!')}</text><text x="180" y="334" font-size="28" text-anchor="middle" fill="#F2B100">${stars}</text>`
       + (o.line ? `<text x="180" y="358" font-size="13" font-weight="700" text-anchor="middle" fill="#7a6f84">${esc(o.line)}</text>` : '') + logo

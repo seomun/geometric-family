@@ -387,6 +387,38 @@
   "ops.ip.plate.crown": "",
   "ops.ip.story": ""
  },
+ "shapeWho": {
+  "nemo": [
+   [
+    "nemo_dad.joy"
+   ],
+   [
+    "nemo_mom.joy"
+   ],
+   [
+    "baby.joy"
+   ]
+  ],
+  "semo": [
+   [
+    "husband.joy"
+   ],
+   [
+    "wife.joy"
+   ],
+   [
+    "husband.love",
+    "wife.love"
+   ]
+  ],
+  "dong": [
+   [
+    "dong_dad.joy"
+   ],
+   [],
+   []
+  ]
+ },
  "news": {
   "version": "1.0.0-rc11",
   "items": [

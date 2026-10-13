@@ -27,6 +27,7 @@ KIND = {'lead': '주인공', 'helper': '조력', 'funny': '웃긴 실패역', 'v
 FAM = {'nemo': '네모네', 'semo': '세모네', 'dong': '동그라미네', 'outside': '가족 밖'}
 
 # ---------------- ③·④ 성인 12장: "만들고 짓는" 옛이야기 (장당 4컷: 기·승·전·결) ----------------
+EXTRA_CH = ['선녀와 나무꾼', '토끼전', '은혜 갚은 까치', '호랑이와 곶감', '빨간 모자', '헨젤과 그레텔']      # 13~18장(D2): 퍼즐 4종이 새 옛이야기 6편으로 +60판. 장 이야기는 tools/puzzle_content2.py 가 넣고 여기선 지우지 않는다
 def emit_extra(new, path):
     """앱별 *_extra.json 에는 이 스크립트가 만드는 장(1..N)만 갱신한다. 다른 스크립트·손으로 더한 장(N+1~)·시즌·상품 같은 나머지 키는 그대로 둔다(덮어쓰기 방지, 2026-10-12)."""
     old = json.load(open(path, encoding='utf-8')) if path.exists() else {}
@@ -280,9 +281,9 @@ if __name__ == '__main__':
             else: a, k, fam = ACTORS[key]; CAST_OUT[tid].append(dict(role=row[0], adult=a, kid=k, kind=row[2], family=fam, only=only))
     open(R / 'data/tales.json', 'w', encoding='utf-8').write(nm(json.dumps({'version': 3, 'casting': CAST_OUT, 'casting_note': '이야기 id 기준 단일 배역표(원천 tools/tales_cast.py). 모든 앱이 같은 배역을 쓴다. adult=성인 앱(웹툰 호칭), kid=유아 앱(막둥이 시점 호칭).', 'principle': 'docs/20 D13 — 구조·모티브·상징물은 원작 그대로, 배역과 무서운 수위만 바꾼다. 진짜 악역은 가족 밖. 공유 저작물 원전만. 세모네는 아이 없음.', 'tales': tales}, ensure_ascii=False, indent=1)))
     p = R / 'data/merge_extra.json'; X = json.load(open(p, encoding='utf-8'))
-    X['stories'] = [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(T12)]
+    X['stories'] = [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(T12)] + [x for x in X.get('stories', []) if x.get('chapter', 0) > len(T12)]
     json.dump(X, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    names = [t['title'] for t in T12]
+    names = [t['title'] for t in T12] + EXTRA_CH
     p = R / 'data/merge_levels.json'; L = json.load(open(p, encoding='utf-8')); L['chapters'] = names; json.dump(L, open(p, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     p = R / 'games/merge/merge-gen.js'; s = open(p, encoding='utf-8').read()
     s = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + n + "'" for n in names) + "];", s, count=1); open(p, 'w', encoding='utf-8', newline='').write(s)
@@ -299,7 +300,7 @@ if __name__ == '__main__':
     emit_extra({'version': 1, 'note': '⑨ 세 가족 짝 맞추기 사연(장 끝 4컷, ③과 같은 옛이야기 배역)·시즌·오늘의 한 판 보상. 생성: tools/tales_build.py', 'shardsPerItem': 3, 'dailyItems': ['m_cat', 'm_rooster', 'm_duck'], 'seasons': TILE_SEASONS,
                'stories': [dict(chapter=i + 1, title=t['title'], tale=t['id'], cuts=[dict(text=c[0], chars=c[1], **({'bubble': c[2]} if c[2] else {})) for c in t['cuts']]) for i, t in enumerate(SPOT_STORIES)]}, R / 'data/tile_extra.json')
     p = R / 'games/block/block-gen.js'; g = open(p, encoding='utf-8', newline='').read()
-    g = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + t['title'] + "'" for t in TB) + "];", g, count=1); open(p, 'w', encoding='utf-8', newline='').write(g)
+    g = re.sub(r"const CHAPTERS = \[[^\]]*\];", lambda m: "const CHAPTERS = [" + ", ".join("'" + n + "'" for n in [t['title'] for t in TB] + EXTRA_CH) + "];", g, count=1); open(p, 'w', encoding='utf-8', newline='').write(g)
     p = R / 'data/story.json'; S = json.load(open(p, encoding='utf-8'))
     def cuts(bg, lst):
         out = []

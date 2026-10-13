@@ -5371,6 +5371,14 @@
     },
     {
      "bg": "hill",
+     "text": "은하수 위로 별똥별 하나가 길게 지나갔다. 하늘 어른이 다리 위에서 두 사람을 올려다보며 조용히 웃었다.",
+     "chars": [
+      "wife.joy",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "hill",
      "text": "하늘 어른이 원정대의 친구가 되었다!",
      "chars": [
       "baby.joy",
@@ -5397,6 +5405,15 @@
     },
     {
      "bg": "hill",
+     "text": "오븐에서 고소한 냄새가 났다. 갓 구운 쿠키를 아이들이 호호 불며 나눠 먹었다.",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid1",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "hill",
      "text": "과자집 할머니가 원정대의 친구가 되었다!",
      "chars": [
       "baby.joy",
@@ -5419,6 +5436,14 @@
      "chars": [
       "dong_dad.calm",
       "baby.joy"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "마법사는 이제 변신 대신 박수를 쳤다. 고양이가 장화로 또각 박자를 맞추자 모두가 웃었다.",
+     "chars": [
+      "wife.joy",
+      "nemo_kids.kid3"
      ]
     },
     {
@@ -5652,6 +5677,22 @@
     },
     {
      "bg": "hill",
+     "text": "강 한가운데에 까치와 까마귀가 날개를 맞대고 다리를 놓고 있었다. 세모 아내가 가슴에 손을 얹었다. 「일 년에 한 번이라니, 얼마나 보고 싶었을까요.」",
+     "chars": [
+      "wife.joy",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "두 사람이 만나려면 오작교를 지나야 해. 우리가 길을 살펴 줄까?",
+     "chars": [
+      "baby.joy",
+      "dong_dad.calm"
+     ]
+    },
+    {
+     "bg": "hill",
      "text": "7나라 견우직녀 은하수 오작교. 하늘의 적이에요. 번쩍(△) 적은 돌보기(◯) 친구가 잘 막아요.",
      "chars": [
       "dong_dad.calm",
@@ -5688,6 +5729,22 @@
     },
     {
      "bg": "hill",
+     "text": "세찌와 하나가 앞장섰다. 길에는 빵 부스러기가 하나씩 떨어져 있었다. 「이걸 따라가면 길 안 잃어요!」",
+     "chars": [
+      "nemo_kids.kid3",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "저 멀리 설탕 가루를 뒤집어쓴 집이 보였다. 막둥이가 침을 꼴깍 삼켰다.",
+     "chars": [
+      "baby.surprise",
+      "nemo_mom.good"
+     ]
+    },
+    {
+     "bg": "hill",
      "text": "8나라 헨젤과 그레텔 과자 숲. 달콤한 적이에요. 돌보기(◯) 적에겐 받치기(◻) 친구가 유리해요.",
      "chars": [
       "dong_dad.calm",
@@ -5720,6 +5777,22 @@
      "chars": [
       "wife.joy",
       "baby.joy"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "고양이는 장화를 또각또각 울리며 앞서 걸었다. 「주인님은 제게 맡기세요. 성까지 모시겠습니다!」",
+     "chars": [
+      "wife.joy",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "세찌가 눈을 반짝였다. 「우리 고양이, 진짜 멋있다!」 세모 아내가 윙크로 답했다.",
+     "chars": [
+      "nemo_kids.kid3",
+      "wife.joy"
      ]
     },
     {

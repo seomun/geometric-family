@@ -10779,6 +10779,426 @@
    "flat": false,
    "cls": "prop",
    "theme": "deco"
+  },
+  {
+   "no": 325,
+   "id": "t_fairywood_a",
+   "name": "선녀 날개옷",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👘",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "story"
+  },
+  {
+   "no": 326,
+   "id": "t_fairywood_k",
+   "name": "선녀 날개옷",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👘",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "story"
+  },
+  {
+   "no": 327,
+   "id": "t_rabbitliver_a",
+   "name": "용궁 진주",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🦪",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "story"
+  },
+  {
+   "no": 328,
+   "id": "t_rabbitliver_k",
+   "name": "용궁 진주",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🦪",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "story"
+  },
+  {
+   "no": 329,
+   "id": "t_magpie_a",
+   "name": "은혜 갚은 까치 둥지",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "story"
+  },
+  {
+   "no": 330,
+   "id": "t_magpie_k",
+   "name": "은혜 갚은 까치 둥지",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "story"
+  },
+  {
+   "no": 331,
+   "id": "t_tigerpersimmon_a",
+   "name": "곶감 꾸러미",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "story"
+  },
+  {
+   "no": 332,
+   "id": "t_tigerpersimmon_k",
+   "name": "곶감 꾸러미",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "story"
+  },
+  {
+   "no": 333,
+   "id": "t_redhood_a",
+   "name": "빨간 모자",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "story"
+  },
+  {
+   "no": 334,
+   "id": "t_redhood_k",
+   "name": "빨간 모자",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "story"
+  },
+  {
+   "no": 335,
+   "id": "t_hansel_a",
+   "name": "과자 부스러기 길",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍪",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "story"
+  },
+  {
+   "no": 336,
+   "id": "t_hansel_k",
+   "name": "과자 부스러기 길",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍪",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "story"
+  },
+  {
+   "no": 337,
+   "id": "t_puss_a",
+   "name": "장화 한 켤레",
+   "set": "story_a",
+   "room": "nemo",
+   "w": 46,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "tables",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "story"
+  },
+  {
+   "no": 338,
+   "id": "t_puss_k",
+   "name": "장화 한 켤레",
+   "set": "story_k",
+   "room": "kid",
+   "w": 56,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "story",
+    "kind": "card",
+    "hint": "이야기 카드 4장 모으기(그 옛이야기)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "story"
   }
  ],
  "meTypes": {

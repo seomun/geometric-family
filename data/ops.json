@@ -341,6 +341,34 @@
   "snowqueen": {
    "title": "눈의 여왕",
    "icon": "❄️"
+  },
+  "fairywood": {
+   "title": "선녀와 나무꾼",
+   "icon": "👘"
+  },
+  "rabbitliver": {
+   "title": "토끼전",
+   "icon": "🦪"
+  },
+  "magpie": {
+   "title": "은혜 갚은 까치",
+   "icon": "🪺"
+  },
+  "tigerpersimmon": {
+   "title": "호랑이와 곶감",
+   "icon": "🍡"
+  },
+  "redhood": {
+   "title": "빨간 모자(순한 판)",
+   "icon": "🧢"
+  },
+  "hansel": {
+   "title": "헨젤과 그레텔(순한 판)",
+   "icon": "🍪"
+  },
+  "puss": {
+   "title": "장화 신은 고양이",
+   "icon": "👢"
   }
  },
  "apps": {

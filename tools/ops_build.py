@@ -93,7 +93,8 @@ FAQ = [
 # ---- IP 층(games/22_IP_SYNERGY.md): 이야기 카드 배분표 · 도장 규칙 · 앱 목록 ----
 TALES = {'pigs': ('아기돼지 삼형제', '🐷'), 'bears': ('세 마리 곰', '🐻'), 'shoes': ('구두장이와 요정', '👞'), 'kongjwi': ('콩쥐팥쥐', '👡'), 'heungbu': ('흥부와 놀부', '🎃'), 'bremen': ('브레멘 음악대', '🎺'),
          'hok': ('혹부리 영감', '🍄'), 'axe': ('금도끼 은도끼', '🪓'), 'sun': ('해님 달님', '🌙'), 'ant': ('개미와 베짱이', '🐜'), 'pino': ('피노키오', '🪆'), 'jack': ('잭과 콩나무', '🌱'), 'gyeonwoo': ('견우와 직녀', '⭐'),
-         'ureng': ('우렁 각시', '🐚'), 'hare': ('토끼와 거북이', '🐇'), 'brothers': ('의좋은 형제', '🌾'), 'snowqueen': ('눈의 여왕', '❄️')}
+         'ureng': ('우렁 각시', '🐚'), 'hare': ('토끼와 거북이', '🐇'), 'brothers': ('의좋은 형제', '🌾'), 'snowqueen': ('눈의 여왕', '❄️'),
+         'fairywood': ('선녀와 나무꾼', '👘'), 'rabbitliver': ('토끼전', '🦪'), 'magpie': ('은혜 갚은 까치', '🪺'), 'tigerpersimmon': ('호랑이와 곶감', '🍡'), 'redhood': ('빨간 모자(순한 판)', '🧢'), 'hansel': ('헨젤과 그레텔(순한 판)', '🍪'), 'puss': ('장화 신은 고양이', '👢')}
 APPS_G = {'adult': ['idle', 'merge', 'quiz', 'spot', 'block', 'sort', 'tile'], 'kid': ['play', 'color', 'day']}
 APP_NAMES = {'play': '막둥이 놀이터', 'color': '색칠북', 'day': '막둥이의 하루', 'idle': '세 가족 식탁', 'merge': '도형 합치기', 'quiz': '당신은 어느 도형?', 'spot': '다른 그림 찾기', 'block': '도형 블록', 'sort': '정리의 달인', 'tile': '짝 맞추기'}
 PLAY_TALE = {11: 'brothers', 12: 'ant', 13: 'axe', 14: 'snowqueen', 15: 'kongjwi'}   # ① 놀이터 3권 11~15장

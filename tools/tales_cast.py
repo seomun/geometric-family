@@ -28,6 +28,11 @@ CAST = {
     'hare': [('거북이', 'nemo_dad', 'lead'), ('토끼', 'dong_dad', 'funny'), ('심판', 'semo_h', 'helper')],
     'brothers': [('형', 'kid3', 'lead'), ('아우', 'baby', 'lead')],
     'snowqueen': [('카이', 'baby', 'lead'), ('게르다', 'kid1', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper')],
+    'fairywood': [('나무꾼', 'nemo_dad', 'lead'), ('선녀', 'semo_w', 'lead'), ('도와주는 사슴', O('사슴(가족 밖)'), 'helper'), ('선녀의 아이들', 'kid2', 'helper')],      # D1 새 이야기(허브 2026-10-14)
+    'rabbitliver': [('토끼', 'kid1', 'lead'), ('거북(심부름꾼)', 'nemo_dad', 'helper'), ('아픈 용왕님(순한 판)', 'dong_dad', 'helper')],
+    'magpie': [('선비', 'nemo_dad', 'lead'), ('은혜 갚는 까치', O('까치(art.magpie)'), 'helper'), ('구렁이(순한 판)', O('구렁이(가족 밖, 소리·그림자·순한 판)'), 'villain')],
+    'tigerpersimmon': [('엄마', 'nemo_mom', 'lead'), ('우는 아기', 'baby', 'lead'), ('곶감 아저씨', 'dong_dad', 'helper'), ('호랑이(순한 판)', O('호랑이(가족 밖, 소리·그림자·순한 판)'), 'villain')],
+    'redhood': [('빨간 모자', 'kid1', 'lead'), ('할머니', 'nemo_gma', 'helper'), ('엄마', 'nemo_mom', 'helper'), ('늑대(순한 판)', O('늑대(가족 밖, 소리·그림자·순한 판)'), 'villain')],
     'hansel': [('헨젤', 'kid3', 'lead'), ('그레텔', 'kid1', 'lead'), ('길을 걱정하는 아버지', 'nemo_dad', 'helper'), ('과자집 할머니', O('과자집 할머니(가족 밖, 사탕을 너무 좋아함·순한 판)'), 'villain')],      # D1·B13 새 이야기(허브 2026-10-14)
     'puss': [('장화 신은 고양이', 'semo_w', 'lead'), ('막내 아들(주인)', 'kid3', 'lead'), ('나라의 임금님', 'dong_dad', 'helper'), ('변신 마법사', O('변신 마법사(가족 밖, 뭐든 변신하다 생쥐가 됨·순한 판)'), 'villain')],      # D1·B13 새 이야기(허브 2026-10-14)
 }

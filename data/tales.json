@@ -539,6 +539,160 @@
     "only": null
    }
   ],
+  "fairywood": [
+   {
+    "role": "나무꾼",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "선녀",
+    "adult": "세모 아내",
+    "kid": "세모 이모",
+    "kind": "lead",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "도와주는 사슴",
+    "adult": "사슴(가족 밖)",
+    "kid": "사슴(가족 밖)",
+    "kind": "helper",
+    "family": "outside",
+    "only": null
+   },
+   {
+    "role": "선녀의 아이들",
+    "adult": "네모네 두리",
+    "kid": "두리 누나",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   }
+  ],
+  "rabbitliver": [
+   {
+    "role": "토끼",
+    "adult": "네모네 하나",
+    "kid": "하나 누나",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "거북(심부름꾼)",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "아픈 용왕님(순한 판)",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "helper",
+    "family": "dong",
+    "only": null
+   }
+  ],
+  "magpie": [
+   {
+    "role": "선비",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "은혜 갚는 까치",
+    "adult": "까치(art.magpie)",
+    "kid": "까치(art.magpie)",
+    "kind": "helper",
+    "family": "outside",
+    "only": null
+   },
+   {
+    "role": "구렁이(순한 판)",
+    "adult": "구렁이(가족 밖, 소리·그림자·순한 판)",
+    "kid": "구렁이(가족 밖, 소리·그림자·순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "tigerpersimmon": [
+   {
+    "role": "엄마",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "우는 아기",
+    "adult": "네모 막둥이",
+    "kid": "막둥이",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "곶감 아저씨",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "helper",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "호랑이(순한 판)",
+    "adult": "호랑이(가족 밖, 소리·그림자·순한 판)",
+    "kid": "호랑이(가족 밖, 소리·그림자·순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "redhood": [
+   {
+    "role": "빨간 모자",
+    "adult": "네모네 하나",
+    "kid": "하나 누나",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "할머니",
+    "adult": "네모 할머니",
+    "kid": "할머니",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "엄마",
+    "adult": "네모 엄마",
+    "kid": "엄마",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "늑대(순한 판)",
+    "adult": "늑대(가족 밖, 소리·그림자·순한 판)",
+    "kid": "늑대(가족 밖, 소리·그림자·순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
   "hansel": [
    {
     "role": "헨젤",

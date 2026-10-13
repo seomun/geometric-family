@@ -181,3 +181,9 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-bandwrap.top { bottom: auto; top: 66px; } .h2-bandwrap.top .h2-band { min-height: 48px; margin: 0; padding: 3px 10px 3px 6px; } .h2-bandwrap.top .h2-band img { width: 34px; height: 34px; }
 [data-uk="kid"] .h2-bandwrap { bottom: auto; top: 470px; }
 [data-uk="kid"] .h2-bandwrap { top: 424px; } [data-uk="kid"] .h2-band { min-height: 50px; margin: 0; }
+
+.h2-presh { max-height: 86%; overflow-y: auto; }
+.h2-pcard { display: flex; align-items: center; gap: 10px; background: #fff8e6; border: 2px solid #ecd9a8; border-radius: 16px; padding: 10px 12px; margin: 8px 0; }
+.h2-pic { font-size: 34px; width: 46px; text-align: center; } .h2-ptx { flex: 1; min-width: 0; } .h2-ptx b { display: block; font-size: 16px; } .h2-ptx small { display: block; opacity: .8; font-weight: 700; line-height: 1.35; }
+.h2-pbar { height: 8px; border-radius: 6px; background: #eadfc4; margin: 6px 0 3px; overflow: hidden; } .h2-pbar i { display: block; height: 100%; background: #6CCB8A; }
+.h2-undo { position: absolute; left: 50%; transform: translateX(-50%); bottom: 54px; z-index: 30; }

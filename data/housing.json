@@ -2770,6 +2770,382 @@
    ]
   }
  ],
+ "presets": [
+  {
+   "id": "p_hansik",
+   "name": "한식 저녁상",
+   "icon": "🍚",
+   "room": "kitchen",
+   "group": "adult",
+   "note": "큰 상에 밥·김치·반찬. 냉장고와 반찬 선반까지.",
+   "parts": [
+    {
+     "id": "u_fridge",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "u_cart",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "b_table",
+     "x": 170,
+     "y": 368
+    },
+    {
+     "id": "t_bowl",
+     "x": 58,
+     "y": 428
+    },
+    {
+     "id": "u_crate",
+     "x": 282,
+     "y": 428
+    },
+    {
+     "id": "u_sidedish",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "u_shelf",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "u_label",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "p_pack1",
+     "on": "b_table"
+    },
+    {
+     "id": "p_rice",
+     "on": "b_table"
+    },
+    {
+     "id": "p_kimchi",
+     "on": "b_table"
+    },
+    {
+     "id": "p_label",
+     "on": "b_table"
+    },
+    {
+     "id": "y_bowl",
+     "on": "b_table"
+    },
+    {
+     "id": "y_spoon",
+     "on": "b_table"
+    },
+    {
+     "id": "g_lunch",
+     "on": null
+    },
+    {
+     "id": "g_teaset",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_tea",
+   "name": "차 한잔 코너",
+   "icon": "🍵",
+   "room": "kitchen",
+   "group": "adult",
+   "note": "찻주전자와 커플 컵, 꽃 한 송이.",
+   "parts": [
+    {
+     "id": "b_table",
+     "x": 170,
+     "y": 368
+    },
+    {
+     "id": "b_plant",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "u_basket",
+     "x": 58,
+     "y": 428
+    },
+    {
+     "id": "a_wallclock",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "a_garland",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "g_teaset",
+     "on": null
+    },
+    {
+     "id": "p_tea",
+     "on": null
+    },
+    {
+     "id": "p_pair",
+     "on": null
+    },
+    {
+     "id": "p_mix",
+     "on": null
+    },
+    {
+     "id": "p_flower",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_movie",
+   "name": "영화의 밤",
+   "icon": "🍿",
+   "room": "nemo",
+   "group": "adult",
+   "note": "소파에 쿠션, TV 앞에 리모컨.",
+   "parts": [
+    {
+     "id": "b_tv",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "b_sofa",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "b_lamp",
+     "x": 58,
+     "y": 428
+    },
+    {
+     "id": "g_cushion",
+     "x": 282,
+     "y": 428
+    },
+    {
+     "id": "b_plant",
+     "x": 282,
+     "y": 368
+    },
+    {
+     "id": "a_garland",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "a_wallclock",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "a_frame",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "p_film",
+     "on": "b_tv"
+    },
+    {
+     "id": "p_remote",
+     "on": "b_tv"
+    }
+   ]
+  },
+  {
+   "id": "p_travel",
+   "name": "여행 기념 벽",
+   "icon": "🧳",
+   "room": "semo",
+   "group": "adult",
+   "note": "엽서·지도·즉석 사진을 벽에 가득.",
+   "parts": [
+    {
+     "id": "b_semo_home",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "b_suitcase",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "a_album",
+     "x": 58,
+     "y": 428
+    },
+    {
+     "id": "a_camera",
+     "x": 282,
+     "y": 428
+    },
+    {
+     "id": "a_map",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "a_postcard",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "a_polaroid",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "p_world",
+     "on": null
+    },
+    {
+     "id": "p_pass",
+     "on": null
+    },
+    {
+     "id": "p_bagt",
+     "on": null
+    },
+    {
+     "id": "p_globe",
+     "on": null
+    },
+    {
+     "id": "g_compass",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_study",
+   "name": "조용한 서재",
+   "icon": "📚",
+   "room": "dong",
+   "group": "adult",
+   "note": "책장, 지구본, 체스판.",
+   "parts": [
+    {
+     "id": "b_shelf",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "b_dong_study",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "b_globe",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "g_stool",
+     "x": 282,
+     "y": 368
+    },
+    {
+     "id": "a_magnifier",
+     "x": 170,
+     "y": 428
+    },
+    {
+     "id": "b_clock",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "a_medal",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "a_ribbon",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "p_book",
+     "on": null
+    },
+    {
+     "id": "p_vio",
+     "on": null
+    },
+    {
+     "id": "g_chess",
+     "on": null
+    },
+    {
+     "id": "g_pen",
+     "on": null
+    }
+   ]
+  },
+  {
+   "id": "p_sleep",
+   "name": "포근한 잠자리",
+   "icon": "🌙",
+   "room": "upstairs",
+   "group": "adult",
+   "note": "침대와 러그, 벽엔 필름 줄.",
+   "parts": [
+    {
+     "id": "b_bed",
+     "x": 90,
+     "y": 298
+    },
+    {
+     "id": "b_rug",
+     "x": 250,
+     "y": 298
+    },
+    {
+     "id": "u_box",
+     "x": 58,
+     "y": 368
+    },
+    {
+     "id": "a_garland",
+     "x": 52,
+     "y": 108
+    },
+    {
+     "id": "a_cork",
+     "x": 118,
+     "y": 108
+    },
+    {
+     "id": "a_film",
+     "x": 184,
+     "y": 108
+    },
+    {
+     "id": "p_phone",
+     "on": null
+    },
+    {
+     "id": "p_clock",
+     "on": null
+    }
+   ]
+  }
+ ],
  "unlockLv": {
   "adult": {
    "kitchen": 3,

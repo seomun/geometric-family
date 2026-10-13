@@ -41,7 +41,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   for (const rule of [0, 1, 2]) await playLevel(new Function(`GF.stack = []; GF.go('mhome'); GF.go('mplay', { level: MERGE.debug.trioLevels(10)[${rule}] });`), '세 가족 판 규칙 ' + rule, rule === 0 ? 'trio' : null);
   // 집 연결: 만든 가구가 집 인벤토리에 있다
   const own = await pg.evaluate(() => Room.ownedCount()); ok(own >= 1, '집에 가구가 쌓임: ' + own + '개');
-  await pg.evaluate(() => { GF.stack = []; GF.go('mhome'); GF.go('mhouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');
+  await pg.evaluate(() => { GF.stack = []; GF.go('mhome'); GF.go('mhouse'); }); await pg.waitForSelector('.screen.on .rm-room, .screen.on .h2-room'); await shot('house');
   await pg.evaluate(() => { GF.stack = []; GF.go('mhome'); GF.go('mlevels'); }); await pg.waitForSelector('.screen.on .sg-node'); await shot('levels');
   ok(errs.length === 0, '콘솔 오류 없음 ' + errs.slice(0, 3).join(' | '));
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

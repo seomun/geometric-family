@@ -1,0 +1,1474 @@
+{
+ "version": 1,
+ "note": "[제안] 우리 집 2.0 데이터. tools/housing_build.py 로 생성.",
+ "levels": [
+  {
+   "lv": 1,
+   "cozy": 0
+  },
+  {
+   "lv": 2,
+   "cozy": 9
+  },
+  {
+   "lv": 3,
+   "cozy": 28
+  },
+  {
+   "lv": 4,
+   "cozy": 53
+  },
+  {
+   "lv": 5,
+   "cozy": 85
+  },
+  {
+   "lv": 6,
+   "cozy": 121
+  },
+  {
+   "lv": 7,
+   "cozy": 162
+  },
+  {
+   "lv": 8,
+   "cozy": 207
+  },
+  {
+   "lv": 9,
+   "cozy": 256
+  },
+  {
+   "lv": 10,
+   "cozy": 309
+  },
+  {
+   "lv": 11,
+   "cozy": 366
+  },
+  {
+   "lv": 12,
+   "cozy": 427
+  },
+  {
+   "lv": 13,
+   "cozy": 490
+  },
+  {
+   "lv": 14,
+   "cozy": 557
+  },
+  {
+   "lv": 15,
+   "cozy": 627
+  },
+  {
+   "lv": 16,
+   "cozy": 701
+  },
+  {
+   "lv": 17,
+   "cozy": 777
+  },
+  {
+   "lv": 18,
+   "cozy": 856
+  },
+  {
+   "lv": 19,
+   "cozy": 938
+  },
+  {
+   "lv": 20,
+   "cozy": 1023
+  },
+  {
+   "lv": 21,
+   "cozy": 1110
+  },
+  {
+   "lv": 22,
+   "cozy": 1200
+  },
+  {
+   "lv": 23,
+   "cozy": 1293
+  },
+  {
+   "lv": 24,
+   "cozy": 1389
+  },
+  {
+   "lv": 25,
+   "cozy": 1486
+  },
+  {
+   "lv": 26,
+   "cozy": 1587
+  },
+  {
+   "lv": 27,
+   "cozy": 1689
+  },
+  {
+   "lv": 28,
+   "cozy": 1795
+  },
+  {
+   "lv": 29,
+   "cozy": 1902
+  },
+  {
+   "lv": 30,
+   "cozy": 2012
+  }
+ ],
+ "formula": {
+  "set": [
+   [
+    3,
+    0.1
+   ],
+   [
+    5,
+    0.25
+   ],
+   [
+    "all",
+    0.6
+   ]
+  ],
+  "harmony": 30,
+  "style": 30,
+  "fill": 40,
+  "life": 20
+ },
+ "rooms": [
+  {
+   "id": "nemo",
+   "name": "네모네 거실",
+   "group": "adult",
+   "unlock": 1,
+   "wall": "#FFE3C2",
+   "floor": "#E3B27F",
+   "anchors": [
+    {
+     "id": "nemo_1",
+     "slot": "floor",
+     "x": 95,
+     "y": 240,
+     "want": "b_table"
+    },
+    {
+     "id": "nemo_2",
+     "slot": "floor",
+     "x": 225,
+     "y": 244,
+     "want": "b_sofa"
+    },
+    {
+     "id": "nemo_3",
+     "slot": "wall",
+     "x": 100,
+     "y": 92,
+     "want": "a_frame"
+    },
+    {
+     "id": "nemo_4",
+     "slot": "wall",
+     "x": 300,
+     "y": 108,
+     "want": "u_shelf"
+    }
+   ]
+  },
+  {
+   "id": "kitchen",
+   "name": "네모네 주방",
+   "group": "adult",
+   "unlock": 3,
+   "wall": "#FFF1C9",
+   "floor": "#D9B98A",
+   "anchors": [
+    {
+     "id": "kitchen_1",
+     "slot": "floor",
+     "x": 60,
+     "y": 235,
+     "want": "t_bowl"
+    },
+    {
+     "id": "kitchen_2",
+     "slot": "floor",
+     "x": 210,
+     "y": 225,
+     "want": "u_fridge"
+    },
+    {
+     "id": "kitchen_3",
+     "slot": "table",
+     "x": 120,
+     "y": 190,
+     "want": "p_rice"
+    },
+    {
+     "id": "kitchen_4",
+     "slot": "wall",
+     "x": 250,
+     "y": 50,
+     "want": "u_sidedish"
+    }
+   ]
+  },
+  {
+   "id": "semo",
+   "name": "세모네 신혼집",
+   "group": "adult",
+   "unlock": 5,
+   "wall": "#D8F0FF",
+   "floor": "#C9D8E8",
+   "anchors": [
+    {
+     "id": "semo_1",
+     "slot": "wall",
+     "x": 60,
+     "y": 40,
+     "want": "a_map"
+    },
+    {
+     "id": "semo_2",
+     "slot": "floor",
+     "x": 200,
+     "y": 235,
+     "want": "b_suitcase"
+    },
+    {
+     "id": "semo_3",
+     "slot": "table",
+     "x": 110,
+     "y": 195,
+     "want": "p_world"
+    },
+    {
+     "id": "semo_4",
+     "slot": "floor",
+     "x": 40,
+     "y": 232,
+     "want": "b_lamp"
+    }
+   ]
+  },
+  {
+   "id": "dong",
+   "name": "동그라미네 서재",
+   "group": "adult",
+   "unlock": 8,
+   "wall": "#E2E6FA",
+   "floor": "#B9BFD8",
+   "anchors": [
+    {
+     "id": "dong_1",
+     "slot": "floor",
+     "x": 40,
+     "y": 225,
+     "want": "b_shelf"
+    },
+    {
+     "id": "dong_2",
+     "slot": "floor",
+     "x": 200,
+     "y": 236,
+     "want": "p_chair"
+    },
+    {
+     "id": "dong_3",
+     "slot": "wall",
+     "x": 150,
+     "y": 40,
+     "want": "b_clock"
+    },
+    {
+     "id": "dong_4",
+     "slot": "floor",
+     "x": 270,
+     "y": 232,
+     "want": "b_globe"
+    }
+   ]
+  },
+  {
+   "id": "yard",
+   "name": "마당·골목",
+   "group": "adult",
+   "unlock": 10,
+   "wall": "#CFEFFF",
+   "floor": "#A9D68E",
+   "anchors": [
+    {
+     "id": "yard_1",
+     "slot": "floor",
+     "x": 40,
+     "y": 236,
+     "want": "o_fence"
+    },
+    {
+     "id": "yard_2",
+     "slot": "floor",
+     "x": 150,
+     "y": 240,
+     "want": "m_bench"
+    },
+    {
+     "id": "yard_3",
+     "slot": "floor",
+     "x": 260,
+     "y": 232,
+     "want": "o_mailbox"
+    },
+    {
+     "id": "yard_4",
+     "slot": "floor",
+     "x": 200,
+     "y": 220,
+     "want": "m_garden"
+    }
+   ]
+  },
+  {
+   "id": "entrance",
+   "name": "현관",
+   "group": "adult",
+   "unlock": 12,
+   "wall": "#F4E4D0",
+   "floor": "#C8A47A",
+   "anchors": [
+    {
+     "id": "entrance_1",
+     "slot": "wall",
+     "x": 100,
+     "y": 50,
+     "want": "n_plate"
+    },
+    {
+     "id": "entrance_2",
+     "slot": "floor",
+     "x": 40,
+     "y": 232,
+     "want": "u_shoerack"
+    },
+    {
+     "id": "entrance_3",
+     "slot": "wall",
+     "x": 230,
+     "y": 60,
+     "want": "q_plate_nemo"
+    }
+   ]
+  },
+  {
+   "id": "upstairs",
+   "name": "2층",
+   "group": "adult",
+   "unlock": 15,
+   "wall": "#FDE8F0",
+   "floor": "#E5C7B0",
+   "anchors": [
+    {
+     "id": "upstairs_1",
+     "slot": "floor",
+     "x": 40,
+     "y": 232,
+     "want": "b_bed"
+    },
+    {
+     "id": "upstairs_2",
+     "slot": "floor",
+     "x": 200,
+     "y": 236,
+     "want": "u_closet"
+    },
+    {
+     "id": "upstairs_3",
+     "slot": "wall",
+     "x": 130,
+     "y": 40,
+     "want": "a_diary"
+    }
+   ]
+  },
+  {
+   "id": "roof",
+   "name": "옥상",
+   "group": "adult",
+   "unlock": 20,
+   "wall": "#BFE6FF",
+   "floor": "#C9C2B8",
+   "anchors": [
+    {
+     "id": "roof_1",
+     "slot": "floor",
+     "x": 60,
+     "y": 236,
+     "want": "s_tree"
+    },
+    {
+     "id": "roof_2",
+     "slot": "floor",
+     "x": 200,
+     "y": 238,
+     "want": "t_pigs_a"
+    }
+   ]
+  },
+  {
+   "id": "kid",
+   "name": "아이 방",
+   "group": "kid",
+   "unlock": 1,
+   "wall": "#FFF0B8",
+   "floor": "#F2C98A",
+   "anchors": [
+    {
+     "id": "kid_1",
+     "slot": "floor",
+     "x": 50,
+     "y": 236,
+     "want": "k_train"
+    },
+    {
+     "id": "kid_2",
+     "slot": "wall",
+     "x": 150,
+     "y": 40,
+     "want": "w_frame"
+    },
+    {
+     "id": "kid_3",
+     "slot": "floor",
+     "x": 220,
+     "y": 236,
+     "want": "y_cup"
+    }
+   ]
+  },
+  {
+   "id": "wardrobe",
+   "name": "옷방",
+   "group": "kid",
+   "unlock": 3,
+   "wall": "#FFE0E8",
+   "floor": "#E8C7A8",
+   "anchors": [
+    {
+     "id": "wardrobe_1",
+     "slot": "wall",
+     "x": 80,
+     "y": 45,
+     "want": "y_hanger"
+    },
+    {
+     "id": "wardrobe_2",
+     "slot": "wall",
+     "x": 200,
+     "y": 50,
+     "want": "y_hat"
+    },
+    {
+     "id": "wardrobe_3",
+     "slot": "floor",
+     "x": 150,
+     "y": 236,
+     "want": "k_party"
+    }
+   ]
+  },
+  {
+   "id": "dining",
+   "name": "밥 먹는 곳",
+   "group": "kid",
+   "unlock": 6,
+   "wall": "#E8F5C8",
+   "floor": "#D8B98A",
+   "anchors": [
+    {
+     "id": "dining_1",
+     "slot": "floor",
+     "x": 60,
+     "y": 236,
+     "want": "y_bowl"
+    },
+    {
+     "id": "dining_2",
+     "slot": "table",
+     "x": 170,
+     "y": 195,
+     "want": "y_spoon"
+    },
+    {
+     "id": "dining_3",
+     "slot": "floor",
+     "x": 250,
+     "y": 236,
+     "want": "k_ch3"
+    }
+   ]
+  },
+  {
+   "id": "toyroom",
+   "name": "장난감 방",
+   "group": "kid",
+   "unlock": 9,
+   "wall": "#D8ECFF",
+   "floor": "#C8D8B8",
+   "anchors": [
+    {
+     "id": "toyroom_1",
+     "slot": "floor",
+     "x": 60,
+     "y": 236,
+     "want": "y_toybox"
+    },
+    {
+     "id": "toyroom_2",
+     "slot": "floor",
+     "x": 180,
+     "y": 240,
+     "want": "y_ball"
+    },
+    {
+     "id": "toyroom_3",
+     "slot": "floor",
+     "x": 270,
+     "y": 232,
+     "want": "k_ch5"
+    }
+   ]
+  },
+  {
+   "id": "bath",
+   "name": "욕실·잠자리",
+   "group": "kid",
+   "unlock": 12,
+   "wall": "#DDF3F8",
+   "floor": "#B8D8E8",
+   "anchors": [
+    {
+     "id": "bath_1",
+     "slot": "floor",
+     "x": 60,
+     "y": 238,
+     "want": "y_mat"
+    },
+    {
+     "id": "bath_2",
+     "slot": "floor",
+     "x": 200,
+     "y": 236,
+     "want": "y_pillow"
+    },
+    {
+     "id": "bath_3",
+     "slot": "table",
+     "x": 240,
+     "y": 195,
+     "want": "y_soap"
+    }
+   ]
+  }
+ ],
+ "story": [
+  {
+   "ch": 1,
+   "room": "nemo",
+   "group": "adult",
+   "title": "일곱 식구가 앉을 자리",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "b_table"
+     ],
+     "label": "큰 상"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "a_frame"
+     ],
+     "label": "벽 액자"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "u_shelf"
+     ],
+     "label": "벽 선반"
+    },
+    {
+     "id": "t4",
+     "need": [
+      "b_sofa"
+     ],
+     "label": "소파"
+    },
+    {
+     "id": "t5",
+     "need": [
+      "b_drawer"
+     ],
+     "label": "서랍장"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "indoor2",
+     "text": "빈 거실. 네모 아빠가 짐 상자 사이에 서서 말했다. 「일곱이 앉으려면 큰 상부터네.」",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "bg": "indoor2",
+     "text": "상을 놓자 아이들이 우르르 모였다. 막내가 와락 안겼다.",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "indoor2",
+     "text": "시끌시끌한 저녁. 이게 제일 좋은 하루인지도 모른다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy",
+      "baby.joy",
+      "nemo_kids.kid1"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 20,
+    "unlock": "kitchen"
+   }
+  },
+  {
+   "ch": 2,
+   "room": "kitchen",
+   "group": "adult",
+   "title": "엄마의 밥상",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "t_bowl"
+     ],
+     "label": "밥그릇"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "u_fridge"
+     ],
+     "label": "냉장고"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "p_rice"
+     ],
+     "label": "밥솥"
+    },
+    {
+     "id": "t4",
+     "need": [
+      "u_sidedish"
+     ],
+     "label": "반찬통 선반"
+    },
+    {
+     "id": "t5",
+     "need": [
+      "p_kimchi"
+     ],
+     "label": "김장 김치"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "indoor2",
+     "text": "엄마가 부엌을 둘러봤다. 「밥을 해 먹어야 집이지.」",
+     "chars": [
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "bg": "indoor2",
+     "text": "밥솥에서 김이 나자 식구들이 슬금슬금 모였다.",
+     "chars": [
+      "nemo_mom.joy",
+      "nemo_dad.joy",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "bg": "indoor2",
+     "text": "같이 먹는 밥 한 끼. 말이 필요 없다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy",
+      "baby.joy"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 25,
+    "unlock": "semo"
+   }
+  },
+  {
+   "ch": 3,
+   "room": "semo",
+   "group": "adult",
+   "title": "둘만의 여행 기념품 벽",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "b_suitcase"
+     ],
+     "label": "여행 가방"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "a_map"
+     ],
+     "label": "옛 지도"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "p_world"
+     ],
+     "label": "세계일주 지도"
+    },
+    {
+     "id": "t4",
+     "need": [
+      "b_lamp"
+     ],
+     "label": "세모 램프"
+    },
+    {
+     "id": "t5",
+     "need": [
+      "a_camera"
+     ],
+     "label": "필름 카메라"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "indoor",
+     "text": "세모네 신혼집은 아직 휑했다. 세모 남편이 벽을 보며 웃었다. 「여기에 유럽, 저기엔 남미.」",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "bg": "indoor",
+     "text": "가방을 놓고 지도를 붙이니, 둘은 벌써 비행기 안에 앉은 것 같았다.",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "bg": "indoor",
+     "text": "「다음엔 어디 갈까요?」 둘만의 계획이 벽에 가득 찼다.",
+     "chars": [
+      "husband.joy",
+      "wife.joy"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 30,
+    "unlock": "dong"
+   }
+  },
+  {
+   "ch": 4,
+   "room": "dong",
+   "group": "adult",
+   "title": "빈 의자 하나",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "b_shelf"
+     ],
+     "label": "책장"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "p_chair"
+     ],
+     "label": "네 번째 의자"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "b_clock"
+     ],
+     "label": "벽시계"
+    },
+    {
+     "id": "t4",
+     "need": [
+      "b_globe"
+     ],
+     "label": "지구본"
+    },
+    {
+     "id": "t5",
+     "need": [
+      "p_book"
+     ],
+     "label": "책"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "indoor",
+     "text": "동그라미 서재는 조용하고 정돈됐다. 의자 하나만 비어 있었다.",
+     "chars": [
+      "dong_dad.warm"
+     ]
+    },
+    {
+     "bg": "indoor",
+     "text": "아들이 의자를 끌어다 놓았다. 「아빠, 같이 먹어요.」",
+     "chars": [
+      "dong_dad.warm",
+      "dong_dad.good"
+     ]
+    },
+    {
+     "bg": "indoor",
+     "text": "조용한 서재에 처음으로 사람 소리가 났다.",
+     "chars": [
+      "dong_dad.warm",
+      "dong_dad.good"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 35,
+    "unlock": "yard"
+   }
+  },
+  {
+   "ch": 5,
+   "room": "yard",
+   "group": "adult",
+   "title": "다음 모임은 우리 집 마당에서",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "o_fence"
+     ],
+     "label": "담장"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "m_bench"
+     ],
+     "label": "평상"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "o_mailbox"
+     ],
+     "label": "우체통"
+    },
+    {
+     "id": "t4",
+     "need": [
+      "m_garden"
+     ],
+     "label": "텃밭"
+    },
+    {
+     "id": "t5",
+     "need": [
+      "o_gate"
+     ],
+     "label": "대문"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "field",
+     "text": "「다음 모임은 우리 집에서 하자.」 세 사람이 마당을 보았다.",
+     "chars": [
+      "nemo_dad.joy",
+      "wife.joy",
+      "dong_dad.warm"
+     ]
+    },
+    {
+     "bg": "field",
+     "text": "평상을 놓고 담장을 세우니 골목이 정겨워졌다.",
+     "chars": [
+      "nemo_dad.joy",
+      "dong_dad.warm"
+     ]
+    },
+    {
+     "bg": "field",
+     "text": "이 나이엔 그냥 건강하면 된다. 마당에 웃음이 퍼졌다.",
+     "chars": [
+      "nemo_dad.joy",
+      "wife.joy",
+      "dong_dad.warm"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 40,
+    "unlock": "entrance"
+   }
+  },
+  {
+   "ch": 6,
+   "room": "entrance",
+   "group": "adult",
+   "title": "우리 집 이름",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "n_plate"
+     ],
+     "label": "도형 문패"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "u_shoerack"
+     ],
+     "label": "신발장"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "q_plate_nemo"
+     ],
+     "label": "네모 문패"
+    },
+    {
+     "id": "t4",
+     "need": [
+      "o_doghouse"
+     ],
+     "label": "강아지 집"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "home",
+     "text": "문패를 달면 비로소 우리 집이다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "bg": "home",
+     "text": "신발이 가지런히 놓였다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 45,
+    "unlock": "upstairs"
+   }
+  },
+  {
+   "ch": 7,
+   "room": "upstairs",
+   "group": "adult",
+   "title": "아이들이 크면",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "b_bed"
+     ],
+     "label": "네모 침대"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "u_closet"
+     ],
+     "label": "옷장"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "a_diary"
+     ],
+     "label": "일기장"
+    },
+    {
+     "id": "t4",
+     "need": [
+      "b_rug"
+     ],
+     "label": "동그라미 러그"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "indoor2",
+     "text": "2층엔 아이들 자리가 필요하다. 축구화 신고 뛰어다닐 아이들 자리.",
+     "chars": [
+      "nemo_mom.joy",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "indoor2",
+     "text": "이불을 깔자 아이들이 먼저 누웠다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 50,
+    "unlock": "roof"
+   }
+  },
+  {
+   "ch": 8,
+   "room": "roof",
+   "group": "adult",
+   "title": "계절이 오는 집",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "s_tree"
+     ],
+     "label": "연말 트리"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "t_pigs_a"
+     ],
+     "label": "벽돌집 미니어처"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "t_bears_a"
+     ],
+     "label": "곰 세 식구 의자"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "night",
+     "text": "옥상에서 내려다보니 우리 집이 가득 찼다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy",
+      "wife.joy",
+      "dong_dad.warm"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "계절이 바뀔 때마다 이 집에 새 이야기가 놓일 것이다.",
+     "chars": [
+      "nemo_dad.joy",
+      "wife.joy",
+      "dong_dad.warm"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 60,
+    "unlock": null
+   }
+  },
+  {
+   "ch": 1,
+   "room": "kid",
+   "group": "kid",
+   "title": "막둥이의 첫 방",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "k_train"
+     ],
+     "label": "기차"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "y_cup"
+     ],
+     "label": "칫솔 컵"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "w_frame"
+     ],
+     "label": "내 그림 액자"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "home",
+     "text": "",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "bg": "home",
+     "text": "",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.joy"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 15,
+    "unlock": "wardrobe"
+   }
+  },
+  {
+   "ch": 2,
+   "room": "wardrobe",
+   "group": "kid",
+   "title": "옷방",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "y_hanger"
+     ],
+     "label": "옷걸이"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "y_hat"
+     ],
+     "label": "모자걸이"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "k_party"
+     ],
+     "label": "잔칫집"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "home",
+     "text": "",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.joy"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 20,
+    "unlock": "dining"
+   }
+  },
+  {
+   "ch": 3,
+   "room": "dining",
+   "group": "kid",
+   "title": "밥 먹는 곳",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "y_bowl"
+     ],
+     "label": "밥그릇"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "y_spoon"
+     ],
+     "label": "수저 통"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "k_ch3"
+     ],
+     "label": "무 인형"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "home",
+     "text": "",
+     "chars": [
+      "baby.joy",
+      "nemo_dad.joy"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 25,
+    "unlock": "toyroom"
+   }
+  },
+  {
+   "ch": 4,
+   "room": "toyroom",
+   "group": "kid",
+   "title": "장난감 방",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "y_toybox"
+     ],
+     "label": "장난감 상자"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "y_ball"
+     ],
+     "label": "공 바구니"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "k_ch5"
+     ],
+     "label": "도형 블록"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "home",
+     "text": "",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid3"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 30,
+    "unlock": "bath"
+   }
+  },
+  {
+   "ch": 5,
+   "room": "bath",
+   "group": "kid",
+   "title": "욕실·잠자리",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "y_mat"
+     ],
+     "label": "욕실 발판"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "y_pillow"
+     ],
+     "label": "베개"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "y_soap"
+     ],
+     "label": "비누"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "home",
+     "text": "",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.joy"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 35,
+    "unlock": null
+   }
+  }
+ ],
+ "guests": [
+  {
+   "id": "wife",
+   "char": "wife.smug",
+   "group": "adult",
+   "need": 60,
+   "likes": [
+    "b_sofa",
+    "u_fridge"
+   ],
+   "lines": [
+    "이 소파 앉아도 돼요?",
+    "냉장고가 이렇게 크니 좋겠다!"
+   ],
+   "gift": "p_pack1"
+  },
+  {
+   "id": "dong_dad",
+   "char": "dong_dad.calm",
+   "group": "adult",
+   "need": 140,
+   "likes": [
+    "b_shelf",
+    "b_clock"
+   ],
+   "lines": [
+    "책장이 정갈하군요.",
+    "시계 소리가 좋네요."
+   ],
+   "gift": "p_clock"
+  },
+  {
+   "id": "nemo_mom",
+   "char": "nemo_mom.good",
+   "group": "adult",
+   "need": 260,
+   "likes": [
+    "t_bowl",
+    "p_rice"
+   ],
+   "lines": [
+    "밥솥이 딱 우리 집 거네!",
+    "밥그릇이 예쁘네요."
+   ],
+   "gift": "p_label"
+  },
+  {
+   "id": "husband",
+   "char": "husband.joy",
+   "group": "adult",
+   "need": 420,
+   "likes": [
+    "b_suitcase",
+    "p_world"
+   ],
+   "lines": [
+    "이 가방이면 어디든 가겠는데?",
+    "지도에 우리 집도 표시해 줘요."
+   ],
+   "gift": "p_pass"
+  },
+  {
+   "id": "nemo_grandma",
+   "char": "nemo_grandma.good",
+   "group": "adult",
+   "need": 620,
+   "likes": [
+    "m_bench",
+    "m_garden"
+   ],
+   "lines": [
+    "평상에 앉으면 시간이 천천히 가지.",
+    "텃밭 상추 좀 뜯어 가도 되냐."
+   ],
+   "gift": "m_pepper"
+  },
+  {
+   "id": "hana",
+   "char": "nemo_kids.kid1",
+   "group": "kid",
+   "need": 40,
+   "likes": [
+    "k_train",
+    "y_ball"
+   ],
+   "lines": [],
+   "gift": "y_star"
+  },
+  {
+   "id": "dong_dad_k",
+   "char": "dong_dad.joy",
+   "group": "kid",
+   "need": 100,
+   "likes": [
+    "k_party",
+    "y_toybox"
+   ],
+   "lines": [],
+   "gift": "k_ch4"
+  },
+  {
+   "id": "wife_k",
+   "char": "wife.joy",
+   "group": "kid",
+   "need": 180,
+   "likes": [
+    "w_frame",
+    "y_pillow"
+   ],
+   "lines": [],
+   "gift": "w_stars"
+  }
+ ],
+ "unlockLv": {
+  "adult": {
+   "kitchen": 3,
+   "semo": 5,
+   "dong": 8,
+   "yard": 10,
+   "entrance": 12,
+   "upstairs": 15,
+   "roof": 20
+  },
+  "kid": {
+   "wardrobe": 3,
+   "dining": 6,
+   "toyroom": 9,
+   "bath": 12
+  }
+ }
+}

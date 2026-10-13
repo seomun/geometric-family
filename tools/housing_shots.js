@@ -1,13 +1,22 @@
-// 우리 집 현재(1.0) 화면 캡처: node tools/housing_shots.js [before|after] → notes/snapshots/housing_<tag>_<앱>.png
-const { chromium } = require('playwright-core'); const tag = process.argv[2] || 'before';
+// 우리 집 캡처: node tools/housing_shots.js before|after → notes/snapshots/housing_<tag>_<앱>_<장면>.png (before: 1.0 화면 · after: Room 2.0 — 집 메인·할 일·카탈로그·놓기 모드·집에 놓기 카드·다음 목표 띠·유아판)
+const { chromium } = require('playwright-core'); const tag = process.argv[2] || 'after';
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
-  for (const [a, scr, grant] of [['merge', 'mhouse', ['b_sofa', 'b_shelf', 'b_table']], ['day', 'dhouse', ['y_cup', 'y_paste']]]) {
-    const ctx = await b.newContext({ viewport: { width: 390, height: 780 }, deviceScaleFactor: 1 }), p = await ctx.newPage(); await p.addInitScript(() => { window.__noResume = true; });
-    await p.goto('http://localhost:8765/games/' + a + '/index.html'); await p.waitForTimeout(1600);
-    await p.evaluate(([s, g]) => { g.forEach((id) => Room.grant(id)); GF.stack = []; GF.go(s); }, [scr, grant]); await p.waitForTimeout(1200);
-    await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()));
-    await p.screenshot({ path: `notes/snapshots/housing_${tag}_${a}.png` }); await ctx.close();
+  const open = async (a) => { const ctx = await b.newContext({ viewport: { width: 390, height: 780 }, deviceScaleFactor: 1 }), p = await ctx.newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message)); await p.addInitScript(() => { window.__noResume = true; }); await p.goto('http://localhost:8765/games/' + a + '/index.html'); await p.waitForTimeout(1600); return [ctx, p, errs]; };
+  const shot = async (p, n, a) => { await p.waitForTimeout(900); await p.screenshot({ path: `notes/snapshots/housing_${tag}_${a}_${n}.png` }); };
+  const clean = (p) => p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast,.uk-confetti').forEach((e) => e.remove()));
+  for (const [a, scr, grant, home] of [['merge', 'mhouse', ['b_sofa', 'b_table', 'a_frame', 'p_rice', 'u_fridge'], 'mhome'], ['day', 'dhouse', ['y_cup', 'k_train', 'w_frame'], 'dhome']]) {
+    const [ctx, p, errs] = await open(a);
+    await p.evaluate(([s, g]) => { g.forEach((id) => Room.grant(id)); GF.stack = []; GF.go(s); }, [scr, grant]); await p.waitForTimeout(1200); await clean(p); await shot(p, '1_house', a);
+    if (tag === 'after') {
+      await p.evaluate(() => { const s = document.querySelector('.screen.on .mg-scroll, .screen.on .abs[style*="overflow"]') || document.querySelector('.h2').parentElement; s.scrollTop = 9999; }); await shot(p, '2_tasks', a);
+      await p.evaluate(() => { const t = document.querySelector('.h2-tools .uk-btn'); t && t.click(); }); await shot(p, '3_catalog', a);
+      await p.evaluate(() => { const c = document.querySelectorAll('.h2-card.off')[2]; c && c.click(); }); await shot(p, '4_catalog_sel', a); await clean(p);
+      await p.evaluate(() => { const t = document.querySelectorAll('.h2-tools .uk-btn')[1]; t && t.click(); }); await shot(p, '5_place', a);
+      await p.evaluate(([id]) => { Room.dropCard(id, document.getElementById('safe'), () => {}, {}); }, [a === 'merge' ? 'b_lamp' : 'y_paste']); await shot(p, '6_drop', a); await clean(p);
+      await p.evaluate((h) => { GF.stack = []; GF.go(h); }, home); await p.waitForTimeout(800); await clean(p); await shot(p, '7_home_band', a);
+    }
+    console.log(a, 'errors', errs.length ? errs[0] : 0); await ctx.close();
   }
   await b.close(); console.log('ok');
 })();

@@ -83,7 +83,8 @@
       b('세 가족 판', 'heart', 'pink', () => GF.go('mtrio'));
       b('우리 집', 'home', 'dong', () => GF.go('mhouse'));
       const ss = seasonNow(); if (ss.length) { const s = ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0], done = SV.seasonDone[seasonKey(s)]; const sb = UK.btn({ text: s.title, icon: 'star', cls: 'block ' + (done ? 'gray' : 'danger'), onclick: () => { const L = seasonLevel(s); if (L) GF.go('mplay', { level: L }); } }, el('div', 'mg-season', r)); el('i', 'mg-badge', sb, done ? '다시' : '시즌'); }   // 시즌은 배지 카드
-      el('div', 'mg-foot', r, '별 ' + totalStars() + ' · 가구 ' + Room.owned().filter((id) => (Room.item(id) || {}).set === 'build').length + '/' + D.roomTotal);
+      if (Room.H) { const bw = el('div', 'h2-bandwrap', r); Room.band(bw, { go: () => GF.go('mlevels'), toastParent: r }); }
+      if (!Room.H) el('div', 'mg-foot', r, '별 ' + totalStars() + ' · 가구 ' + Room.owned().filter((id) => (Room.item(id) || {}).set === 'build').length + '/' + D.roomTotal);
     },
   });
 
@@ -189,7 +190,8 @@
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }]; if (M.left(S) > 0) chips.push({ icon: 'gift', text: '남은 조각 ' + M.left(S) }); gained.forEach((id) => chips.push({ icon: 'home', text: NAME[id] || (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
-        UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('mplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
+        const show = () => { const sc = UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('mplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' }); try { Room.band(sc.querySelector('.uk-sheet') || sc, { go: () => GF.go('mlevels'), toastParent: r }); } catch (e) {} };
+        if (gained.length && roomOK && Room.H) Room.dropCard(gained[gained.length - 1], r, show, { openHouse: () => GF.go('mhouse') }); else show();   // 결과의 주인공 = 「집에 놓기」
       }
       function finish() {
         busy = true; const st = GF.polish.easy(M.stars(S, LV), LV);
@@ -215,16 +217,16 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'mg'); GF.bg('indoor', r); bar();
-      const sc = el('div', 'mg-scroll', r); sc.style.top = '70px'; Room.house(sc, {});
+      const sc = el('div', 'mg-scroll', r); sc.style.top = '70px'; Room.house2(sc, { go: () => GF.go('mlevels') });
     },
   });
 
   /* ---------------- 부팅 ---------------- */
   MG.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'merge_levels', 'merge_extra', 'story_merge', 'maps/merge', 'room_items', 'art_slots'], storeKey: 'gf:merge:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'merge_levels', 'merge_extra', 'story_merge', 'maps/merge', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:merge:ui:v1', async start() {
       D = GF.data.merge_levels; X = GF.data.merge_extra; GF.saga.init('merge', GF.data['maps/merge']); GF.tale.init('merge', GF.data.story_merge, { kid: false }); const RD = GF.data.room_items; D.roomTotal = RD.items.filter((i) => i.set === 'build').length;
-      Room.init({ data: RD, game: 'merge', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      Room.init({ housing: GF.data.housing, app: 'merge', data: RD, game: 'merge', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'merge', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps, d) => { const r = M.botPlay(Object.assign({}, L, { rule }), rng, eps); return { won: r.won, score: GF.rank.eff({ par: parOf(d, L), actions: r.moves, tools: 0, attempts: 1 }) }; } } } });
       GF.extras.init(Object.assign({ app: 'merge', kid: false, calendar: () => X.seasons.map((s) => ({ id: s.id, title: s.title, months: s.months, icon: '📅', done: !!SV.seasonDone[seasonKey(s)], play: () => { const L = seasonLevel(s); if (L) GF.go('mplay', { level: L }); } })), rewardSet: 'build', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'build', itemTotal: 16, icon: '🔷' })));
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('mhome');

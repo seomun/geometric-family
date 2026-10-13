@@ -43,7 +43,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     await pg.evaluate(() => { GF.stack = []; GF.go('dhome'); const L = DAY.debug.dailyLevel(); GF.go('dplay', { level: L }); DAY.fast = true; }); await pg.waitForSelector('.screen.on .dy-stage');
     await pg.evaluate(() => { const d = DAY.debug, L = d.level(), t = L.type; if (t === 'brush') L.spots.forEach((s, i) => d.brushTo(i)); if (t === 'dress') L.slots.forEach((s, i) => d.wear(i)); if (t === 'chew') d.chewAll(); if (t === 'tidy') L.toys.forEach((x, i) => d.put(i)); if (t === 'sleep') { L.lights.forEach((x, i) => d.light(i)); d.cover(); } });
     ok(await afterFinish(0), '오늘의 하루 클리어');
-    await pg.evaluate(() => { GF.stack = []; GF.go('dhome'); GF.go('dhouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');
+    await pg.evaluate(() => { GF.stack = []; GF.go('dhome'); GF.go('dhouse'); }); await pg.waitForSelector('.screen.on .rm-room, .screen.on .h2-room'); await shot('house');
   }
   ok(errs.length === 0, '콘솔 오류 없음 ' + errs.slice(0, 3).join(' | '));
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

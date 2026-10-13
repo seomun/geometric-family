@@ -46,3 +46,5 @@
 .ex-prod small { display: block; opacity: .75; font-weight: 700; } .ex-ads .uk-btn { margin: 6px 6px 0 0; }
 
 .ex-nation { flex: none; margin: 8px 2px 0; padding: 6px 12px; border-radius: 14px; background: #ffe9a8; font: 900 14px/1.2 var(--uk-font); color: #8A5A00; display: flex; justify-content: space-between; align-items: baseline; } .ex-nation small { font-weight: 700; opacity: .8; } .ex-nation.dim { opacity: .55; }
+
+.ex-grow .ex-gnote { font: 800 13px/1.4 var(--uk-font); margin: 4px 0 8px; } .ex-grow-r { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #fff8e6; border: 2px solid #ecd9a8; border-radius: 14px; padding: 6px 10px; margin: 5px 0; } .ex-grow-r b { display: block; font-size: 14px; } .ex-grow-r small { display: block; opacity: .75; font-weight: 700; font-size: 11px; line-height: 1.3; } .ex-grow { max-height: 88%; overflow-y: auto; }

@@ -109,3 +109,6 @@ STORY['recruit'].update(
 )
 
 NATIONS = [dict(id=1, name='아기돼지 마을', sub='1나라 · 바람과 늑대'), dict(id=2, name='해님 달님 고개', sub='2나라 · 밤과 별'), dict(id=3, name='콩쥐팥쥐 마을', sub='3나라 · 항아리와 잔치')]
+
+# 육성 깊이(B2): 스킬 레벨 · 각성 · 등급 승급 · 장비 4칸. 규칙은 games/expedition/stage-core.js upgrade()
+BAL['grow'] = dict(skillMax=5, skillMul=0.10, skillCost=[150, 400, 900, 1800], awkMax=5, awkMul=0.06, awkCost=[10, 20, 35, 55, 80], promoLv=10, promoCost={'4': 30, '5': 80}, gearSlots=['모자', '옷', '신발', '보따리'], gearMax=10, gearMul=0.005, gearBase=30, gearGrow=1.22)

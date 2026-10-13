@@ -35,9 +35,9 @@ export async function createAccount(env, { id, deviceHash, birthYm, now = Date.n
 }
 
 export async function profile(env, account, now = Date.now()) {
-  const db = env.DB, [acc, w, units, pr, py] = await Promise.all([first(db, 'SELECT age_band,cap_krw,guardian_notice_at,has_paid,no_inter,created_at FROM accounts WHERE id=?', account), first(db, 'SELECT free_gems,paid_gems,gold,tickets,ver FROM wallet WHERE account=?', account), all(db, 'SELECT unit_id,lv,dups FROM units WHERE account=?', account), first(db, 'SELECT cleared,stars,party,flags FROM progress WHERE account=?', account), first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, BANNER)]);
+  const db = env.DB, [acc, w, units, pr, py] = await Promise.all([first(db, 'SELECT age_band,cap_krw,guardian_notice_at,has_paid,no_inter,created_at FROM accounts WHERE id=?', account), first(db, 'SELECT free_gems,paid_gems,gold,tickets,ver FROM wallet WHERE account=?', account), all(db, 'SELECT unit_id,lv,dups,skl,awk,promo,gear FROM units WHERE account=?', account), first(db, 'SELECT cleared,stars,party,flags FROM progress WHERE account=?', account), first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, BANNER)]);
   if (!acc) throw new HttpError(404, 'no_account');
-  return { account, age_band: acc.age_band, cap_krw: acc.cap_krw, guardian_notice: !!acc.guardian_notice_at, wallet: { free_gems: w.free_gems, paid_gems: w.paid_gems, gold: w.gold, tickets: w.tickets }, has_paid: !!acc.has_paid, no_inter: !!acc.no_inter, ads: interstitialRule(acc, now), units: Object.fromEntries(units.map((u) => [u.unit_id, { lv: u.lv, dups: u.dups }])), progress: { cleared: pr.cleared, stars: JSON.parse(pr.stars), party: JSON.parse(pr.party), flags: JSON.parse(pr.flags) }, pity: { since5: py.since5, since4: py.since4, guard: !!py.guard, pulls: py.pulls }, odds_ver: ODDS_VER };
+  return { account, age_band: acc.age_band, cap_krw: acc.cap_krw, guardian_notice: !!acc.guardian_notice_at, wallet: { free_gems: w.free_gems, paid_gems: w.paid_gems, gold: w.gold, tickets: w.tickets }, has_paid: !!acc.has_paid, no_inter: !!acc.no_inter, ads: interstitialRule(acc, now), units: Object.fromEntries(units.map((u) => [u.unit_id, { lv: u.lv, dups: u.dups, skl: u.skl, awk: u.awk, promo: u.promo, gear: JSON.parse(u.gear) }])), progress: { cleared: pr.cleared, stars: JSON.parse(pr.stars), party: JSON.parse(pr.party), flags: JSON.parse(pr.flags) }, pity: { since5: py.since5, since4: py.since4, guard: !!py.guard, pulls: py.pulls }, odds_ver: ODDS_VER };
 }
 
 export async function setParty(env, account, party) {
@@ -96,9 +96,9 @@ const STAGE_TTL = 3600;
 export async function stageStart(env, account, stageId, now = Date.now(), secret = env.JWT_SECRET) {
   const st = D.stages.find((x) => x.id === stageId); if (!st) throw new HttpError(400, 'bad_stage');
   const pr = await first(env.DB, 'SELECT cleared,party FROM progress WHERE account=?', account); if (stageId > pr.cleared + 1) throw new HttpError(409, 'stage_locked', '앞 단계를 먼저 깨야 해요');
-  const party = JSON.parse(pr.party), lv = Object.fromEntries((await all(env.DB, 'SELECT unit_id,lv FROM units WHERE account=?', account)).map((r) => [r.unit_id, r.lv]));
+  const party = JSON.parse(pr.party), lv = Object.fromEntries((await all(env.DB, 'SELECT unit_id,lv,skl,awk,promo,gear FROM units WHERE account=?', account)).map((r) => [r.unit_id, { lv: r.lv, skl: r.skl, awk: r.awk, promo: r.promo, gear: JSON.parse(r.gear) }]));
   if (party.length !== 5 || !party.every((id) => lv[id])) throw new HttpError(409, 'bad_party');
-  const seed = Math.floor(csprng() * 4294967296), nonce = randomToken(12), snap = party.map((id) => ({ id, lv: lv[id] }));
+  const seed = Math.floor(csprng() * 4294967296), nonce = randomToken(12), snap = party.map((id) => ({ id, ...lv[id] }));
   const token = await signJwt({ typ: 'stage', sub: account, stage: stageId, seed, party: snap, nonce, exp: Math.floor(now / 1000) + STAGE_TTL }, secret);
   return { token, stage: stageId, seed, party: snap, nonce };
 }
@@ -124,3 +124,20 @@ export async function stageClear(env, account, { token, inputs, auto, requestId 
   } catch (e) { const dup = await first(db, 'SELECT body FROM requests WHERE request_id=?', 'stage:' + t.nonce); if (dup) return { ...JSON.parse(dup.body), replay: true }; throw e; }
   if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요'); return body;
 }
+
+/** 육성(B2): 스킬 레벨·각성·등급 승급·장비 강화. 규칙은 stage-core.upgrade — 금화는 지갑, 조각(dups)은 유닛에서 쓴다. 멱등(request_id). */
+export async function upgradeUnit(env, account, { unit, kind, slot, requestId }, now = Date.now()) {
+  const db = env.DB; if (!UNIT[unit]) throw new HttpError(400, 'bad_unit'); if (!requestId) throw new HttpError(400, 'no_request_id');
+  const done = await first(db, "SELECT 1 AS x FROM ledger WHERE account=? AND kind='upgrade' AND ref=?", account, requestId); if (done) return { ok: true, replay: true, ...(await unitView(db, account, unit)) };
+  const u = await first(db, 'SELECT lv,dups,skl,awk,promo,gear FROM units WHERE account=? AND unit_id=?', account, unit); if (!u) throw new HttpError(409, 'not_owned');
+  const w = await first(db, 'SELECT gold,ver FROM wallet WHERE account=?', account), r = SC.upgrade(D, unit, { lv: u.lv, skl: u.skl, awk: u.awk, promo: u.promo, gear: JSON.parse(u.gear) }, kind, slot, { gold: w.gold, dups: u.dups });
+  if (r.error) throw new HttpError(r.error === 'insufficient_gold' || r.error === 'insufficient_dups' ? 402 : 409, r.error, r.need ? '레벨 ' + r.need + ' 이상이어야 해요' : undefined);
+  const guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, requestId];
+  const res = await db.batch([
+    run(db, 'UPDATE wallet SET gold=gold-?, ver=ver+1, last_req=? WHERE account=? AND ver=? AND gold>=?', r.gold, requestId, account, w.ver, r.gold),
+    run(db, `UPDATE units SET skl=?, awk=?, promo=?, gear=?, dups=dups-? WHERE account=? AND unit_id=? AND dups>=? AND ${guard}`, r.st.skl, r.st.awk, r.st.promo, JSON.stringify(r.st.gear), r.dups, account, unit, r.dups, ...g),
+    run(db, `INSERT INTO ledger(account,ts,kind,d_gold,reason,ref) SELECT ?,?,'upgrade',?,?,? WHERE ${guard}`, account, now, -r.gold, unit + ':' + kind + (slot != null ? slot : '') + ':d' + r.dups, requestId, ...g),
+  ]); if (res[0].meta.changes !== 1 || res[1].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요');
+  return { ok: true, ...(await unitView(db, account, unit)) };
+}
+async function unitView(db, account, unit) { const w = await first(db, 'SELECT free_gems,paid_gems,gold FROM wallet WHERE account=?', account), u = await first(db, 'SELECT lv,dups,skl,awk,promo,gear FROM units WHERE account=? AND unit_id=?', account, unit); return { wallet: w, unit: { id: unit, lv: u.lv, dups: u.dups, skl: u.skl, awk: u.awk, promo: u.promo, gear: JSON.parse(u.gear) } }; }

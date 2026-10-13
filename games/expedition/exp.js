@@ -24,7 +24,7 @@
     if (!r.ok) { const e = new Error(j.error || 'http_' + r.status); e.status = r.status; e.code = j.error; e.msg = j.msg; throw e; } return j;
   }
   function applyProfile(p) {
-    S.gems = p.wallet.free_gems + p.wallet.paid_gems; S.gold = p.wallet.gold; S.units = {}; Object.keys(p.units).forEach((id) => { S.units[id] = { lv: p.units[id].lv }; S.dups[id] = p.units[id].dups; }); S.party = p.progress.party; S.pity = { since5: p.pity.since5, since4: p.pity.since4, guard: p.pity.guard ? 1 : 0 }; S.pulls = p.pity.pulls; S.cap = p.cap_krw; S.band = p.age_band; S.guardian = p.guardian_notice;
+    S.gems = p.wallet.free_gems + p.wallet.paid_gems; S.gold = p.wallet.gold; S.units = {}; Object.keys(p.units).forEach((id) => { S.units[id] = { lv: p.units[id].lv, skl: p.units[id].skl, awk: p.units[id].awk, promo: p.units[id].promo, gear: p.units[id].gear }; S.dups[id] = p.units[id].dups; }); S.party = p.progress.party; S.pity = { since5: p.pity.since5, since4: p.pity.since4, guard: p.pity.guard ? 1 : 0 }; S.pulls = p.pity.pulls; S.cap = p.cap_krw; S.band = p.age_band; S.guardian = p.guardian_notice;
     S.cleared = p.progress.cleared; S.stars = p.progress.stars; S.flags = p.progress.flags;   // 진행도의 진실은 서버(WP4)
   }
   async function remoteBoot() {
@@ -57,10 +57,36 @@
   const stageClearRemote = (srv, inputs, auto) => http('POST', '/stage/clear', { token: srv.token, inputs, auto, request_id: uid() });
   const GC_FRAG = (g) => (g === 5 ? 20 : g === 4 ? 5 : 1);
   async function pullRemote(n) { const r = await http('POST', '/gacha/pull', { n, request_id: uid() }); S.gems = r.wallet.free_gems + r.wallet.paid_gems; S.pity = { since5: r.pity.since5, since4: r.pity.since4, guard: r.pity.guard ? 1 : 0 }; S.pulls = r.pity.pulls; const res = r.results.map((x) => ({ id: x.unit, grade: x.grade, isNew: x.isNew })); res.forEach((x) => { if (x.isNew) S.units[x.id] = { lv: 1 }; else S.dups[x.id] = (S.dups[x.id] || 0) + GC_FRAG(x.grade); }); bar(); return res; }
+  /* ---------------- 육성 깊이(B2): 스킬 레벨 · 각성 · 등급 승급 · 장비 4칸 ---------------- */
+  const stOf = (id) => SC.stOf(S.units[id] || { lv: 1 });
+  async function growUp(id, kind, slot) {
+    const st = S.units[id], res = SC.upgrade(D, id, st, kind, slot, { gold: S.gold, dups: S.dups[id] || 0 });
+    if (res.error) { UK.toast(res.error === 'insufficient_gold' ? '금화가 모자라요' : res.error === 'insufficient_dups' ? '조각이 모자라요 (같은 친구가 또 나오면 모여요)' : res.error === 'need_level' ? '레벨 ' + res.need + ' 이상이어야 해요' : '더 올릴 수 없어요', document.getElementById('safe')); return false; }
+    if (!REMOTE) { Object.assign(st, res.st); S.gold -= res.gold; S.dups[id] = (S.dups[id] || 0) - res.dups; save(); bar(); return true; }
+    try { const r = await http('POST', '/unit/upgrade', { unit: id, kind, slot, request_id: uid() }); Object.assign(st, { lv: r.unit.lv, skl: r.unit.skl, awk: r.unit.awk, promo: r.unit.promo, gear: r.unit.gear }); S.dups[id] = r.unit.dups; S.gold = r.wallet.gold; bar(); return true; }
+    catch (e) { UK.toast(e.code === 'insufficient_gold' ? '금화가 모자라요' : e.code === 'insufficient_dups' ? '조각이 모자라요' : '서버에 연결하지 못했어요', document.getElementById('safe')); return false; }
+  }
+  function growSheet(r, id, after) {
+    const u = $(id), G = D.bal.grow, sc = UK.modal({ parent: r, title: u.name + ' 키우기', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('ex-grow');
+    const rd = () => {
+      sh.querySelectorAll('.ex-grow-c').forEach((e) => e.remove()); const box = el('div', 'ex-grow-c', sh), st = stOf(id), have = { gold: S.gold, dups: S.dups[id] || 0 }, gr = SC.gradeOf(D, id, st);
+      el('p', 'ex-gnote', box, `${'★'.repeat(gr)} Lv ${st.lv} · 전투력 ${Math.round(kOf(id) * 100)} · 🪙 ${S.gold} · 조각 ${have.dups}`);
+      const row = (title, sub, kind, slot) => {
+        const res = SC.upgrade(D, id, st, kind, slot, have), c = el('div', 'ex-grow-r', box); el('span', '', c, `<b>${title}</b><small>${sub}</small>`);
+        const txt = res.error === 'max' ? '최대' : res.error === 'need_level' ? 'Lv ' + res.need + '↑' : kind === 'skill' || kind === 'gear' ? '🪙 ' + (SC.upgrade(D, id, st, kind, slot, { gold: 1e9, dups: 1e9 }).gold) : '조각 ' + (SC.upgrade(D, id, st, kind, slot, { gold: 1e9, dups: 1e9 }).dups || '-');
+        UK.btn({ text: txt, cls: (!res.error ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (res.error === 'max') return; if (await growUp(id, kind, slot)) { GF.sfx('star'); rd(); after && after(); } } }, c);
+      };
+      row('스킬 Lv ' + st.skl + '/' + G.skillMax, `${D.role[u.role].skill} 효과 +${Math.round(G.skillMul * 100)}%씩` + (u.role === 'support' ? ' · Lv3·5 응원 한 턴 더' : ''), 'skill');
+      row('각성 ' + '◆'.repeat(st.awk) + '◇'.repeat(G.awkMax - st.awk), `능력 +${Math.round(G.awkMul * 100)}%씩 · 같은 친구의 조각으로`, 'awaken');
+      row('승급 ' + '★'.repeat(gr) + (gr < 5 ? ' → ' + '★'.repeat(gr + 1) : ''), `능력치 등급이 올라요 · Lv ${G.promoLv} 이상`, 'promote');
+      G.gearSlots.forEach((nm, i) => row(`${nm} +${st.gear[i]}/${G.gearMax}`, `능력 +${(G.gearMul * 100).toFixed(1)}%씩`, 'gear', i));
+    };
+    rd(); UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
+  }
   /* ---------------- 계산 ---------------- */
-  const kOf = (id) => SC.kOf(D, id, (S.units[id] || { lv: 1 }).lv);   // 서버 재현(stage-core.js)과 같은 식
+  const kOf = (id) => SC.kOf(D, id, S.units[id] || { lv: 1 });   // 서버 재현(stage-core.js)과 같은 식
   const cost = (L) => Math.round(D.bal.costBase * Math.pow(D.bal.costGrow, L - 1));
-  const defOf = (id, i, lv) => SC.defOf(D, id, lv || (S.units[id] || { lv: 1 }).lv, i);
+  const defOf = (id, i, st) => SC.defOf(D, id, st || S.units[id] || { lv: 1 }, i);
   const enemyDef = SC.enemyDef;
   const power = (ids) => Math.round(ids.reduce((s, id) => s + kOf(id), 0) / Math.max(1, ids.length) * 100);
   const elIcon = (e) => `<i class="ex-el ${e}" title="${D.el[e].name}">${D.el[e].icon}</i>`;
@@ -176,7 +202,7 @@
       const draw = () => {
         slots.innerHTML = ''; S.party.forEach((id, i) => { const u = $(id), c = el('button', 'ex-slot' + (sel && sel === id ? ' sel' : ''), slots); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el) + '<em>' + ROLEICON(u.role) + '</em>'); c.onclick = () => { if (sel && sel !== id) { const j = S.party.indexOf(sel); if (j >= 0) { S.party[j] = id; } S.party[i] = sel; save(); partySync(); sel = null; GF.sfx('drop'); draw(); } else { sel = id; draw(); } }; });
         info.innerHTML = ''; const u = sel && $(sel);
-        if (u) { const lv = S.units[sel].lv, c = cost(lv), can = S.gold >= c && lv < SC.lvCap(D, S.cleared); el('b', '', info, `${u.name} ${'★'.repeat(u.grade)} Lv ${lv} · ${D.role[u.role].skill}`); el('small', '', info, `${D.el[u.el].family} ${D.el[u.el].name} · 전투력 ${Math.round(kOf(sel) * 100)}`); UK.btn({ text: lv >= SC.lvCap(D, S.cleared) ? '레벨 상한 ' + lv : '레벨업 🪙' + c, cls: (can ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (!can) { UK.toast(lv >= SC.lvCap(D, S.cleared) ? '지금은 여기까지예요. 다음 단계를 깨면 상한이 올라요' : '금화가 모자라요. 전투로 모아요', r); return; } if (await levelUp(sel, c)) { GF.sfx('star'); draw(); drawGrid(); } } }, info); } else el('small', '', info, '카드를 눌러 보세요');
+        if (u) { const lv = S.units[sel].lv, c = cost(lv), can = S.gold >= c && lv < SC.lvCap(D, S.cleared); el('b', '', info, `${u.name} ${'★'.repeat(SC.gradeOf(D, sel, S.units[sel]))} Lv ${lv} · ${D.role[u.role].skill} ${stOf(sel).skl}`); el('small', '', info, `${D.el[u.el].family} ${D.el[u.el].name} · 전투력 ${Math.round(kOf(sel) * 100)}`); UK.btn({ text: '키우기', cls: 'sky sm', onclick: () => growSheet(r, sel, () => { draw(); drawGrid(); }) }, info); UK.btn({ text: lv >= SC.lvCap(D, S.cleared) ? '레벨 상한 ' + lv : '레벨업 🪙' + c, cls: (can ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (!can) { UK.toast(lv >= SC.lvCap(D, S.cleared) ? '지금은 여기까지예요. 다음 단계를 깨면 상한이 올라요' : '금화가 모자라요. 전투로 모아요', r); return; } if (await levelUp(sel, c)) { GF.sfx('star'); draw(); drawGrid(); } } }, info); } else el('small', '', info, '카드를 눌러 보세요');
         el('div', 'ex-pw', info, '원정대 전투력 ' + power(S.party));
       };
       const drawGrid = () => { grid.innerHTML = ''; D.units.forEach((u) => { const own = !!S.units[u.id], c = el('button', 'ex-card' + (own ? '' : ' dim') + (sel === u.id ? ' sel' : '') + (S.party.includes(u.id) ? ' inparty' : ''), grid); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, u.name.replace(/\(.*\)/, '')); el('small', '', c, own ? '★'.repeat(u.grade) + ' Lv' + S.units[u.id].lv : (u.route === 'gacha' ? '모집' : u.route === 'story' ? '이야기' : '포섭')); c.onclick = () => { if (!own) { UK.toast('아직 만나지 못한 친구예요 · ' + ({ gacha: '동료 모집에서', story: '이야기를 따라가면', recruit: '마음을 열어 주면' })[u.route], r); return; } sel = u.id; draw(); drawGrid(); }; }); };
@@ -193,7 +219,7 @@
         GF.bg('field', r); el('p', 'ex-wait', r, '전투 준비 중…'); stageStartRemote(st.id).then((srv) => { if (r.isConnected) GF.replace('xbattle', { stage: st.id, srv }); }).catch((e) => { UK.toast(e.code === 'stage_locked' ? '앞 단계를 먼저 깨야 해요' : '서버에 연결하지 못했어요', document.getElementById('safe')); GF.replace('xmap'); }); return;
       }
       const srv = REMOTE ? p.srv : null, seed = srv ? srv.seed : (p.seed != null ? p.seed : (st.id * 1009 + (S.stars[st.id] ? 17 : 3))), inputs = [], auto0 = S.autoSkill; let steps = 0;
-      const A = srv ? srv.party.map((x, i) => defOf(x.id, i, x.lv)) : S.party.map((id, i) => defOf(id, i)), En = st.enemies.map((e, i) => enemyDef(e, i, st.boss)), core = B.create(A, En, { seed, autoSkill: S.autoSkill });
+      const A = srv ? srv.party.map((x, i) => defOf(x.id, i, x)) : S.party.map((id, i) => defOf(id, i)), En = st.enemies.map((e, i) => enemyDef(e, i, st.boss)), core = B.create(A, En, { seed, autoSkill: S.autoSkill });
 
       const hd = el('div', 'ex-bhd', r); el('b', '', hd, st.id + '. ' + st.name); const ctl = el('div', 'ex-ctl', hd);
       const sp = UK.btn({ text: '×' + S.speed, cls: 'sky sm', onclick: () => { S.speed = S.speed % 3 + 1; save(); sp.textContent = '×' + S.speed; } }, ctl); sp.setAttribute('aria-label', 'speed');

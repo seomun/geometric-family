@@ -5,27 +5,36 @@ const U = Object.fromEntries(D.units.map((u) => [u.id, u])), capOf = (c) => Math
 const mul = +(process.argv[2] || 1), only = process.argv[3] === 'q';
 const stages = D.stages.map((st) => (mul === 1 ? st : Object.assign({}, st, { enemies: st.enemies.map((e) => Object.assign({}, e, { k: +(e.k * (st.id > 6 ? mul : 1)).toFixed(3) })) })));
 const DD = Object.assign({}, D, { stages });
-let seed = 1000; const owned = {}, lv = {}; D.units.filter((u) => u.route === 'start').forEach((u) => { owned[u.id] = 1; lv[u.id] = 1; });
+let seed = 1000; const owned = {}, lv = {}, ext = {}; D.units.filter((u) => u.route === 'start').forEach((u) => { owned[u.id] = 1; lv[u.id] = 1; ext[u.id] = { skl: 1, awk: 0, promo: 0, gear: [0, 0, 0, 0] }; });
 let gold = 0, cleared = 0; const rows = []; let farmTotal = 0, maxFarm = 0;
+const stOf = (id) => Object.assign({ lv: lv[id] }, ext[id] || {});
 const pickParty = (st) => {      // 최고 5명: 등급 가중 배율 + 상성 보너스(적과 유리한 속성 우선)
-  const ids = Object.keys(owned), enEl = st.enemies.map((e) => e.el), score = (id) => SC.kOf(DD, id, lv[id]) * (1 + 0.12 * enEl.filter((e) => B.BEATS[U[id].el] === e).length / Math.max(1, enEl.length));
+  const ids = Object.keys(owned), enEl = st.enemies.map((e) => e.el), score = (id) => SC.kOf(DD, id, stOf(id)) * (1 + 0.12 * enEl.filter((e) => B.BEATS[U[id].el] === e).length / Math.max(1, enEl.length));
   const top = ids.sort((a, b) => score(b) - score(a)).slice(0, 5), bossEl = (st.enemies.find((e) => e.lock) || {}).el;
   if (st.recruit && bossEl && !top.some((id) => B.BEATS[U[id].el] === bossEl)) { const c = ids.filter((id) => B.BEATS[U[id].el] === bossEl).sort((a, b) => score(b) - score(a))[0]; if (c) top[4] = c; }   // 포섭 보스: 말 걸 수 있는 친구를 데려간다
   return top;
 };
 const fight = (st, party) => {
-  seed++; const p = party.map((id) => ({ id, lv: lv[id] })), base = { stage: st.id, seed, party: p, auto: true, inputs: [] }; let r = SC.replay(DD, base);
+  seed++; const p = party.map((id) => Object.assign({ id }, stOf(id))), base = { stage: st.id, seed, party: p, auto: true, inputs: [] }; let r = SC.replay(DD, base);
   if (st.recruit) { for (let k = 0; k < 600; k++) { const t = SC.replay(DD, Object.assign({}, base, { inputs: [[k, 'p']] })); if (!t.error && t.recruited) return t; } }
   return r;
 };
-const spend = (party) => { for (;;) { const id = party.slice().sort((a, b) => lv[a] - lv[b])[0]; if (lv[id] >= capOf(cleared) || gold < cost(lv[id])) break; gold -= cost(lv[id]); lv[id]++; } };
+const spend = (party) => {
+  for (;;) { const id = party.slice().sort((a, b) => lv[a] - lv[b])[0]; if (lv[id] >= capOf(cleared) || gold < cost(lv[id])) break; gold -= cost(lv[id]); lv[id]++; }
+  // 레벨 상한에 막힌 뒤 남는 금화는 장비(싼 것부터)·스킬에
+  for (let guard = 0; guard < 400; guard++) {
+    const G = D.bal.grow; if (!G) break; let best = null;
+    party.forEach((id) => { const e = ext[id]; if (lv[id] < capOf(cleared)) return; e.gear.forEach((L, i) => { if (L < G.gearMax) { const c = Math.round(G.gearBase * Math.pow(G.gearGrow, L)); if (!best || c < best.c) best = { id, c, f: () => { e.gear[i]++; } }; } }); if (e.skl < G.skillMax) { const c = G.skillCost[e.skl - 1]; if (!best || c < best.c) best = { id, c, f: () => { e.skl++; } }; } });
+    if (!best || best.c > gold) break; gold -= best.c; best.f();
+  }
+};
 for (let guard = 0; guard < 4000 && cleared < stages.length; guard++) {
   const st = stages[cleared], party = pickParty(st); let farm = 0, res = fight(st, party), tries = 1;
   while (!res.win && farm < 40) {
     const fs = stages[Math.max(0, cleared - 1)]; const fr = fight(fs, pickParty(fs)); farm++; if (fr.win) { gold += Math.round(fs.gold * 0.5); } spend(pickParty(st)); res = fight(st, pickParty(st)); tries++;
   }
   if (!res.win) { rows.push({ s: st.id, blocked: true, avgLv: 0 }); break; }
-  gold += st.gold; if (st.join) { owned[st.join] = 1; lv[st.join] = lv[st.join] || 1; } if (res.recruited && st.recruit) { owned[st.recruit] = 1; lv[st.recruit] = lv[st.recruit] || 1; }
+  gold += st.gold; if (st.join) { owned[st.join] = 1; lv[st.join] = lv[st.join] || 1; ext[st.join] = ext[st.join] || { skl: 1, awk: 0, promo: 0, gear: [0, 0, 0, 0] }; } if (res.recruited && st.recruit) { owned[st.recruit] = 1; lv[st.recruit] = lv[st.recruit] || 1; ext[st.recruit] = ext[st.recruit] || { skl: 1, awk: 0, promo: 0, gear: [0, 0, 0, 0] }; }
   spend(pickParty(st)); cleared = st.id; farmTotal += farm; maxFarm = Math.max(maxFarm, farm); rows.push({ s: st.id, farm, stars: res.stars, avgLv: +(pickParty(st).reduce((a, id) => a + lv[id], 0) / 5).toFixed(1), gold });
 }
 if (!only) console.log(rows.map((r) => (r.blocked ? `${r.s}:막힘` : `${r.s}:파밍${r.farm}·Lv${r.avgLv}`)).join('  '));

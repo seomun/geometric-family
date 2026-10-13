@@ -11,7 +11,7 @@
   const mulberry = (seed) => { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
   const mult = (atkEl, defEl) => (BEATS[atkEl] === defEl ? ADV : (BEATS[defEl] === atkEl ? DIS : 1));
   /** 유닛 하나: def = {id,name,role,el,k(스탯 배율),spd?} → 전투용 */
-  function unit(d, i, side) { const r = ROLES[d.role], k = d.k == null ? 1 : d.k; return { id: d.id, name: d.name, role: d.role, el: d.el, side, i, hp: 1000 * r.hp * k, max: 1000 * r.hp * k, atk: 100 * r.atk * k, def: 50 * r.def * k, spd: d.spd == null ? 100 : d.spd, g: 0, cd: d.cd == null ? 3 - (i % 3) : d.cd, buff: 0, down: false, lock: d.lock || 0 }; }   /* lock: 체력 하한 비율(포섭 보스) — release 전에는 이 아래로 안 떨어진다 */
+  function unit(d, i, side) { const r = ROLES[d.role], k = d.k == null ? 1 : d.k; return { id: d.id, name: d.name, role: d.role, el: d.el, side, i, hp: 1000 * r.hp * k, max: 1000 * r.hp * k, atk: 100 * r.atk * k, def: 50 * r.def * k, spd: d.spd == null ? 100 : d.spd, g: 0, cd: d.cd == null ? 3 - (i % 3) : d.cd, buff: 0, down: false, lock: d.lock || 0, sk: d.sk || 1, skl: d.skl || 1 }; }   /* sk: 스킬 배율(스킬 레벨) · skl: 스킬 레벨(응원 지속) */   /* lock: 체력 하한 비율(포섭 보스) — release 전에는 이 아래로 안 떨어진다 */
   /** 시험·시뮬용: 역할 5종 고정 구성, 속성은 R() 로(또는 els) — tools/rpg_sim.js 와 같은 방식 */
   function makeTeam(R, k, els, side) { return COMP.map((r, i) => unit({ id: r + i, name: r, role: r, el: els ? els[i] : EL[Math.floor(R() * 3)], k, spd: 95 + R() * 15 }, i, side || 'A')); }
   function create(defsA, defsB, o) {
@@ -33,10 +33,10 @@
         u.cd--; let skill = u.cd <= 0; if (skill && u.side === 'A' && !api.autoSkill) { if (pending.has('A' + u.i)) pending.delete('A' + u.i); else { skill = false; u.cd = 0; } } if (skill) u.cd = 3; if (u.buff > 0) u.buff--;
         const hit = (t, m) => { const em = mult(u.el, t.el), dmg = u.atk * (u.buff > 0 ? 1.2 : 1) * m * em * 100 / (100 + t.def); t.hp -= dmg; if (t.lock && t.hp < t.lock * t.max) t.hp = t.lock * t.max; if (t.hp <= 0) { t.hp = 0; t.down = true; } ev.hits.push({ side: t.side, i: t.i, dmg, mult: em, hp: t.hp, down: t.down }); };
         const tk = fa.find((t) => t.role === 'tank'), tgt = tk && rng() < 0.4 ? tk : fa[Math.floor(rng() * fa.length)];
-        if (u.role === 'healer' && skill) { ev.kind = 'heal'; ma.forEach((a) => { const h = Math.min(a.max, a.hp + u.atk * 1.4) - a.hp; a.hp += h; ev.heals.push({ side: a.side, i: a.i, amount: h, hp: a.hp }); }); }
-        else if (u.role === 'support' && skill) { ev.kind = 'buff'; ma.forEach((a) => { a.buff = 2; ev.heals.push({ side: a.side, i: a.i, amount: 0, hp: a.hp, buff: true }); }); }
-        else if (u.role === 'mage' && skill) { ev.kind = 'aoe'; fa.forEach((t) => hit(t, 0.9)); }
-        else { ev.kind = skill ? 'skill' : 'attack'; hit(tgt, skill ? (u.role === 'attacker' ? 2.2 : 1.6) : 1.0); }
+        if (u.role === 'healer' && skill) { ev.kind = 'heal'; ma.forEach((a) => { const h = Math.min(a.max, a.hp + u.atk * 1.4 * u.sk) - a.hp; a.hp += h; ev.heals.push({ side: a.side, i: a.i, amount: h, hp: a.hp }); }); }
+        else if (u.role === 'support' && skill) { ev.kind = 'buff'; ma.forEach((a) => { a.buff = 2 + (u.skl >= 3 ? 1 : 0) + (u.skl >= 5 ? 1 : 0); ev.heals.push({ side: a.side, i: a.i, amount: 0, hp: a.hp, buff: true }); }); }
+        else if (u.role === 'mage' && skill) { ev.kind = 'aoe'; fa.forEach((t) => hit(t, 0.9 * u.sk)); }
+        else { ev.kind = skill ? 'skill' : 'attack'; hit(tgt, skill ? (u.role === 'attacker' ? 2.2 : 1.6) * u.sk : 1.0); }
         if (!alive(A).length) { over = true; win = false; } else if (!alive(B).length) { over = true; win = true; }
         ev.over = over; ev.win = win; return ev;
       },

@@ -5,8 +5,22 @@
 (function (root, factory) { if (typeof module === 'object' && module.exports) module.exports = factory(require('./battle-core.js')); else root.ExpStage = factory(root.ExpBattle || root.BattleCore); })(typeof self !== 'undefined' ? self : this, function (B) {
   'use strict';
   const unitOf = (D, id) => D.units.find((u) => u.id === id);
-  const kOf = (D, id, lv) => (1 + D.bal.lvMul * ((lv || 1) - 1)) * D.bal.gradeMul[String(unitOf(D, id).grade)];
-  const defOf = (D, id, lv, i) => { const u = unitOf(D, id); return { id, name: u.name, role: u.role, el: u.el, k: kOf(D, id, lv), spd: 100 + ((i * 7) % 11) }; };
+  /** 유닛 상태: 숫자(레벨만) 또는 {lv, skl 스킬레벨, awk 각성, promo 승급, gear [4칸 강화]} */
+  const stOf = (x) => (typeof x === 'object' && x ? { lv: x.lv || 1, skl: x.skl || 1, awk: x.awk || 0, promo: x.promo || 0, gear: x.gear || [0, 0, 0, 0] } : { lv: x || 1, skl: 1, awk: 0, promo: 0, gear: [0, 0, 0, 0] });
+  const gradeOf = (D, id, st) => Math.min(5, unitOf(D, id).grade + stOf(st).promo);
+  const kOf = (D, id, x) => { const st = stOf(x), G = D.bal.grow || {}; return (1 + D.bal.lvMul * (st.lv - 1)) * D.bal.gradeMul[String(gradeOf(D, id, st))] * (1 + (G.awkMul || 0) * st.awk) * (1 + (G.gearMul || 0) * st.gear.reduce((a, b) => a + b, 0)); };
+  const defOf = (D, id, x, i) => { const u = unitOf(D, id), st = stOf(x), G = D.bal.grow || {}; return { id, name: u.name, role: u.role, el: u.el, k: kOf(D, id, st), spd: 100 + ((i * 7) % 11), sk: 1 + (G.skillMul || 0) * (st.skl - 1), skl: st.skl }; };
+  /** 육성(서버·클라이언트 공유 규칙): 한 번에 한 칸. 돌려주는 값 {error} 또는 {st: 새 상태, gold, dups(소모량)}.
+      skill 스킬 레벨(금화) · awaken 각성(조각) · promote 등급 승급(조각, 레벨 조건) · gear 장비 4칸 강화(금화) */
+  const upgrade = (D, id, x, kind, slot, have) => {
+    const G = D.bal.grow, st = stOf(x), out = { st: JSON.parse(JSON.stringify(st)), gold: 0, dups: 0 }; if (!G) return { error: 'no_grow' }; have = have || {};
+    if (kind === 'skill') { if (st.skl >= G.skillMax) return { error: 'max' }; out.gold = G.skillCost[st.skl - 1]; out.st.skl++; }
+    else if (kind === 'awaken') { if (st.awk >= G.awkMax) return { error: 'max' }; out.dups = G.awkCost[st.awk]; out.st.awk++; }
+    else if (kind === 'promote') { const g = gradeOf(D, id, st); if (g >= 5) return { error: 'max' }; if (st.lv < G.promoLv) return { error: 'need_level', need: G.promoLv }; out.dups = G.promoCost[String(g + 1)]; out.st.promo++; }
+    else if (kind === 'gear') { if (!(slot >= 0 && slot < 4)) return { error: 'bad_slot' }; if (st.gear[slot] >= G.gearMax) return { error: 'max' }; out.gold = Math.round(G.gearBase * Math.pow(G.gearGrow, st.gear[slot])); out.st.gear[slot]++; }
+    else return { error: 'bad_kind' };
+    if ((have.gold || 0) < out.gold) return { error: 'insufficient_gold' }; if ((have.dups || 0) < out.dups) return { error: 'insufficient_dups' }; return out;
+  };
   const enemyDef = (e, i, boss) => ({ id: 'e' + i, name: e.name, role: e.role, el: e.el, k: e.k, spd: 98 + ((i * 5) % 9), emoji: e.emoji, lock: e.lock != null ? e.lock : (boss && e.name === '바람 친구' ? 0.25 : 0) });
   const MAX_STEPS = 1000, MAX_INPUTS = 800;
 
@@ -38,5 +52,5 @@
   const reward = (D, st, firstClear) => ({ gold: firstClear ? st.gold : Math.round(st.gold * 0.5), gems: firstClear ? (st.gems != null ? st.gems : D.gacha.clearGems) : 0 });
   /** 레벨 상한: 단계를 깰수록 올라간다(압박 없이 천천히) */
   const lvCap = (D, cleared) => Math.min(D.bal.lvCapMax || D.bal.lvCap, D.bal.lvCap + Math.floor(Math.max(0, (cleared || 0) - (D.bal.lvCapFrom || 0)) / (D.bal.lvCapEvery || 999)));
-  return { kOf, defOf, enemyDef, replay, reward, lvCap, MAX_STEPS };
+  return { kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
 });

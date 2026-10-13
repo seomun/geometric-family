@@ -172,3 +172,19 @@ test('3나라: 9단계 하나 합류 · 12단계 대장 · 24단계 바람 호�
   assert.equal(G.SC.lvCap(G.D, 0), 10); assert.equal(G.SC.lvCap(G.D, 6), 10); assert.equal(G.SC.lvCap(G.D, 12), 12); assert.equal(G.SC.lvCap(G.D, 36), 20);
   await env.DB.prepare('UPDATE progress SET cleared=10 WHERE account=?').bind(a.account).run(); assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 36 } })).body.error, 'stage_locked');
 });
+
+test('육성 깊이(B2): 스킬 레벨·각성·승급·장비 — 비용·한도·멱등·전투 반영', async () => {
+  const env = mkenv(), a = await signup(env), up = (unit, kind, slot, rid) => call(env, 'POST', '/unit/upgrade', { token: a.access, body: { unit, kind, slot, request_id: rid || R() } });
+  await env.DB.prepare('UPDATE wallet SET gold=20000 WHERE account=?').bind(a.account).run(); const U = 'u_nemo_dad';
+  let r = await up(U, 'skill'); assert.equal(r.status, 200, JSON.stringify(r.body)); assert.equal(r.body.unit.skl, 2); assert.equal(r.body.wallet.gold, 20000 - G.D.bal.grow.skillCost[0]);
+  const rid = R(); const x1 = await up(U, 'gear', 0, rid), x2 = await up(U, 'gear', 0, rid); assert.equal(x2.body.replay, true); assert.deepEqual(x1.body.unit.gear, [1, 0, 0, 0]); assert.equal(x2.body.wallet.gold, x1.body.wallet.gold, '같은 요청은 한 번만');
+  for (let i = 0; i < 12; i++) r = await up(U, 'gear', 1); assert.equal(r.body.error, 'max'); assert.equal((await up(U, 'gear', 9)).body.error, 'bad_slot');
+  assert.equal((await up(U, 'awaken')).body.error, 'insufficient_dups', '조각이 모자라면 각성 불가');
+  await env.DB.prepare('UPDATE units SET dups=200 WHERE account=? AND unit_id=?').bind(a.account, U).run(); r = await up(U, 'awaken'); assert.equal(r.body.unit.awk, 1); assert.equal(r.body.unit.dups, 200 - G.D.bal.grow.awkCost[0]);
+  assert.equal((await up(U, 'promote')).body.error, 'need_level', '승급은 레벨 조건'); await env.DB.prepare('UPDATE units SET lv=10 WHERE account=? AND unit_id=?').bind(a.account, U).run(); r = await up(U, 'promote'); assert.equal(r.body.unit.promo, 1); assert.equal(r.body.unit.dups, 200 - 10 - 30);
+  assert.equal((await up('u_wind', 'skill')).body.error, 'not_owned'); assert.equal((await up(U, 'zzz')).body.error, 'bad_kind');
+  // 전투 스냅샷에 육성 상태가 들어가고, 배율이 실제로 올라간다
+  const s = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 1 } })).body, me = s.party.find((p) => p.id === U); assert.equal(me.skl, 2); assert.equal(me.awk, 1); assert.equal(me.promo, 1); assert.equal(me.gear[0], 1);
+  assert.ok(SC.kOf(G.D, U, me) > SC.kOf(G.D, U, me.lv) * 1.2, '승급(★3→★4 ×1.2) + 각성 + 장비가 전투력에 반영');
+  assert.equal((await env.DB.prepare('SELECT COUNT(*) AS n FROM ledger WHERE account=? AND kind=?').bind(a.account, 'upgrade').first()).n >= 4, true);
+});

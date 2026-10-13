@@ -2168,6 +2168,40 @@
   "persuadeAt": 0.3,
   "lvCapFrom": 6,
   "lvCapEvery": 3,
-  "lvCapMax": 24
+  "lvCapMax": 24,
+  "grow": {
+   "skillMax": 5,
+   "skillMul": 0.1,
+   "skillCost": [
+    150,
+    400,
+    900,
+    1800
+   ],
+   "awkMax": 5,
+   "awkMul": 0.06,
+   "awkCost": [
+    10,
+    20,
+    35,
+    55,
+    80
+   ],
+   "promoLv": 10,
+   "promoCost": {
+    "4": 30,
+    "5": 80
+   },
+   "gearSlots": [
+    "모자",
+    "옷",
+    "신발",
+    "보따리"
+   ],
+   "gearMax": 10,
+   "gearMul": 0.005,
+   "gearBase": 30,
+   "gearGrow": 1.22
+  }
  }
 }

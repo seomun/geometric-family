@@ -25,7 +25,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   ok(await p.evaluate(() => GF.cur && GF.cur.name === 'xhome' && EXP.debug.S().gems === 1350 && EXP.debug.S().pulls === 1), '새로고침 뒤에도 로그인 유지 · 서버 상태 복원');
   // 레벨업(서버 금화) — 개발 보상으로 금화를 준 뒤
   await p.evaluate(async () => { await EXP.debug.http('POST', '/dev/grant', { gold: 200, gems: 0 }); await EXP.debug.refresh(); }); await p.evaluate(() => { GF.stack = []; GF.go('xhome'); GF.go('xparty'); }); await p.waitForTimeout(700);
-  await p.evaluate(() => { document.querySelectorAll('.ex-card')[0].click(); }); await p.waitForTimeout(300); await p.evaluate(() => { const b = [...document.querySelectorAll('.ex-info .uk-btn')][0]; b && b.click(); }); await p.waitForTimeout(800);
+  await p.evaluate(() => { document.querySelectorAll('.ex-card')[0].click(); }); await p.waitForTimeout(300); await p.evaluate(() => { const b = [...document.querySelectorAll('.ex-info .uk-btn')].find((x) => /레벨업/.test(x.textContent)); b && b.click(); }); await p.waitForTimeout(800);
   const p3 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(p3.wallet.gold === 200 - 25 && Object.values(p3.units).some((u) => u.lv === 2), '서버 레벨업: 금화 175 · 레벨 2');
   // 편성 저장
   await p.evaluate(() => { document.querySelectorAll('.ex-card')[1].click(); }); await p.waitForTimeout(200); await p.evaluate(() => { document.querySelectorAll('.ex-slot')[0].click(); }); await p.waitForTimeout(800);

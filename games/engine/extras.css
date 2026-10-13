@@ -312,3 +312,4 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-sprop { position: absolute; z-index: 45; font-style: normal; line-height: 1; filter: drop-shadow(0 3px 2px rgba(0,0,0,.25)); pointer-events: none; transition: opacity .5s; animation: h2propin .5s ease-out; } @keyframes h2propin { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .h2-room.scene .h2-say { z-index: 49 !important; opacity: 1; }
 .h2-view.h2-playing .h2-dreamchip { visibility: hidden !important; }
+.h2-room.scene .h2-under { opacity: 0 !important; transition: opacity .3s; }

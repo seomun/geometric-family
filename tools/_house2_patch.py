@@ -12,7 +12,11 @@ for app in sys.argv[1:]:
     d = APPFILE[app]; idx = f'games/{d}/index.html' if d else 'games/index.html'
     sub(idx, '<script src="../engine/room/room.js"></script>' if d else '<script src="engine/room/room.js"></script>', ('<script src="../engine/room/room.js"></script>\n<script src="../engine/room/room2.js"></script>' if d else '<script src="engine/room/room.js"></script>\n<script src="engine/room/room2.js"></script>'), 'index')
     sub('games/tools/' + BUILD[app], "'engine/room/room.js',", "'engine/room/room.js', 'engine/room/room2.js',", 'build js')
-    sub('games/tools/' + BUILD[app], "'room_items': room", "'room_items': room, 'housing': rd('housing')", 'build data')
+    bp = 'games/tools/' + BUILD[app]; t = open(bp, encoding='utf-8').read()
+    if "'housing'" in t: print('skip build data', bp)
+    elif app == 'play': t = t.replace("'anchors', 'room_items', 'names', 'ops']", "'anchors', 'room_items', 'housing', 'names', 'ops']", 1); open(bp, 'w', encoding='utf-8').write(t); print('ok build data', bp)
+    else:
+        import re as _re; t2 = _re.sub(r"'room_items': (\w+)", lambda m: "'room_items': %s, 'housing': rd('housing')" % m.group(1), t, count=1); assert t2 != t, bp; open(bp, 'w', encoding='utf-8').write(t2); print('ok build data', bp)
     if d:
         p = f'games/{d}/{d}.js'; s = open(p, encoding='utf-8').read()
         if "'housing'" not in s: s = s.replace("'room_items', 'art_slots'", "'room_items', 'housing', 'art_slots'", 1); open(p, 'w', encoding='utf-8').write(s); print('ok dataNames', p)

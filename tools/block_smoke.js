@@ -62,7 +62,7 @@ const solveLevel = async (pg) => {
       const { L, done } = await solveLevel(pg); ok(done, nm + ' 클리어(' + L.type + ')');
     }
     await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('bhome'); GF.go('btrio'); }); await pg.waitForSelector('.screen.on .bk-trio'); await shot('trio');
-    await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('bhome'); GF.go('bhouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');
+    await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('bhome'); GF.go('bhouse'); }); await pg.waitForSelector('.screen.on .rm-room, .screen.on .h2-room'); await shot('house');
     // 끝없이 모드: 아무 데나 놓다가 자리가 없으면 벌 없이 끝, 최고 기록 저장, 한 번 더
     await pg.evaluate(() => { BLOCK.fast = true; document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('bhome'); GF.go('blevels'); }); await pg.waitForSelector('.screen.on .sg-side .sg-rb >> nth=0'); await pg.click('.screen.on .sg-side .sg-rb >> nth=0'); await pg.waitForSelector('.screen.on .bk-board');
     const endL = await pg.evaluate(() => BLOCK.debug.level()); ok(endL.kind === 'endless' && endL.queue.length >= 1000, '끝없이: 조각 ' + endL.queue.length + '개 준비');

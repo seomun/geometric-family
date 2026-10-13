@@ -24,7 +24,7 @@ rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-
 chars, anchors, sounds, quiz, room = rd('chars'), rd('anchors'), rd('sounds'), rd('quiz_tests'), rd('room_items')
 import re as _re
 USED = sorted(set(['nemo_dad.joy', 'wife.joy', 'dong_dad.joy', 'baby.joy'] + _re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(quiz) + json.dumps(rd('story_quiz')) + json.dumps(rd('maps/quiz')))))
-data = {'ops': dict(rd('ops'), **({'supportEmail': __import__('os').environ['GF_SUPPORT_EMAIL']} if __import__('os').environ.get('GF_SUPPORT_EMAIL') else {})), 'chars': {}, 'anchors': {}, 'quiz_tests': quiz, 'story_quiz': rd('story_quiz'), 'maps/quiz': rd('maps/quiz'), 'room_items': room, 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
+data = {'ops': dict(rd('ops'), **({'supportEmail': __import__('os').environ['GF_SUPPORT_EMAIL']} if __import__('os').environ.get('GF_SUPPORT_EMAIL') else {})), 'chars': {}, 'anchors': {}, 'quiz_tests': quiz, 'story_quiz': rd('story_quiz'), 'maps/quiz': rd('maps/quiz'), 'room_items': room, 'housing': rd('housing'), 'names': rd('names'), 'base': '', 'art_slots': inline_slots(ROOT)}
 img = 0
 for k in USED:
     v = dict(chars[k]); raw = webp(ROOT / v['src']); img += len(raw); v['src'] = b64(raw, 'image/webp'); data['chars'][k] = v
@@ -48,7 +48,7 @@ for grp in ('sfx', 'music'):
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
 css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'engine/saga.css', 'quiz/quiz.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/ops.js', 'engine/ip.js', 'engine/sharecard.js', 'engine/polish.js', 'engine/saga.js', 'engine/extras.js', 'quiz/quiz-core.js', 'quiz/quiz.js'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/room/room2.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/ops.js', 'engine/ip.js', 'engine/sharecard.js', 'engine/polish.js', 'engine/saga.js', 'engine/extras.js', 'quiz/quiz-core.js', 'quiz/quiz.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'quiz' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 html = f'''<!DOCTYPE html>
 <html lang="ko" data-uk="adult"><head><meta charset="utf-8">

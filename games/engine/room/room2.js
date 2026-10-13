@@ -17,7 +17,23 @@
   const ensure = () => { const S = Room.S; if (!S) return null; S.story = S.story || {}; S.wish = S.wish || []; S.guests = S.guests || {}; S.light = S.light || 'day'; S.lv = S.lv || 1; return S; };
   const H = () => Room.H;
   const orig = Room.init;
-  Room.init = function (o) { const r = orig.call(Room, o); Room.H = (o && o.housing) || Room.H || null; ensure(); return r; };
+  Room.init = function (o) { const r = orig.call(Room, o); Room.H = (o && o.housing) || Room.H || null; ensure(); Room._recent = []; hookResult(); return r; };
+  /* 결과 화면 공통: 판에서 새 가구를 받았으면 「집에 놓기」 카드가 먼저 · 다음 목표 띠를 시트에 붙인다. UK.result 를 가장 바깥에서 감싼다(앱 초기화 때 — 광고 래퍼가 이미 감싼 뒤). 앱마다 고치지 않는다 */
+  function hookResult() {
+    if (!window.UK || UK.__h2 || !Room.H) return; UK.__h2 = 1; const r0 = UK.result;
+    const addBand = (sc, o) => { try { if (sc && sc.querySelector && !sc.querySelector('.h2-band')) Room.band(sc.querySelector('.uk-sheet') || sc, { go: Room.cfg.home, toastParent: o && o.parent }); } catch (e) { /* 띠는 덤 */ } };
+    UK.result = function (o) {
+      const rec = Room._recent || []; Room._recent = [];
+      if (!o || !o.parent || !rec.length || !Room.H) { const sc = r0.apply(this, arguments); addBand(sc, o); return sc; }
+      const self = this, args = arguments, dummy = document.createElement('div');
+      Room.dropCard(rec[rec.length - 1], o.parent, () => { const sc = r0.apply(self, args); addBand(sc, o); }, { openHouse: Room.cfg.openHouse });   // 결과의 주인공 = 집에 놓기
+      return dummy;
+    };
+  }
+  /* 홈 화면 공통: 다음 목표 띠(…home 화면) */
+  if (window.GF && GF.screen && !GF.__h2s) { GF.__h2s = 1; const s0 = GF.screen; GF.screen = function (name, def) {
+    if (/home$|^itable$/.test(name) && def && def.enter) { const e0 = def.enter; def.enter = function (r) { const x = e0.apply(this, arguments); try { if (Room.H && Room.S && !r.querySelector('.h2-bandwrap')) { const bw = el('div', 'h2-bandwrap' + (name === 'itable' ? ' top' : ''), r); Room.band(bw, { go: Room.cfg.home, toastParent: r }); } } catch (e) { /* 띠는 덤 */ } return x; }; }
+    return s0.apply(this, arguments); }; }
   const geo = (it) => { const F = ((H() && H().sizeF) || SIZEF)[it.cls || 'small'] || 1.2; return { w: it.w * F, h: it.h * F }; };
   const ovRoot = (parent) => (parent && parent.closest && parent.closest('.screen')) || document.getElementById('safe') || parent;   // 팝업은 스크롤하는 안쪽이 아니라 화면 루트에 붙인다
 
@@ -73,7 +89,7 @@
     opts = opts || {}; const old = parent.querySelector(':scope > .h2-band'); if (old) old.remove(); if (!H() || !Room.S) return null;
     const g = Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) return null; const b = el('button', 'h2-band' + (kid() ? ' kid' : ''), parent);
     const im = el('img', '', b); im.src = Room.src(g.item); im.alt = ''; const ic = APPICON[g.game] || '🎁';
-    if (kid()) { el('span', 'h2-bic', b, ic); el('span', 'h2-arrow', b, UK.icon('next')); } else { const tx = el('span', 'h2-btx', b); el('small', '', tx, g.why === 'wish' ? '♥ 위시' : '다음 목표'); el('b', '', tx, g.label + ' · ' + g.hint); el('span', 'h2-arrow', b, UK.icon('next')); }
+    if (kid()) { el('span', 'h2-bic', b, ic); el('span', 'h2-arrow', b, UK.icon('next')); } else { const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : '다음: ') + g.label + ' · ' + g.hint); el('span', 'h2-arrow', b, UK.icon('next')); }
     b.setAttribute('aria-label', 'next goal'); b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent: opts.toastParent || parent, home: opts.go }); }; return b;
   };
 
@@ -114,10 +130,11 @@
   const grant0 = Room.grant;
   Room.grant = function (id) {
     const auto = Room.cfg.autoPlace; Room.cfg.autoPlace = false; let r; try { r = grant0.call(Room, id); } finally { Room.cfg.autoPlace = auto; }
+    if (r && !Room._quiet) (Room._recent = Room._recent || []).push(id);   // 결과 화면의 「집에 놓기」 대상(집 안에서 받는 선물은 제외)
     if (r && auto) { if (H()) Room.placeAt(id); else Room.place(id, (Room.item(id) || {}).room); } return r;
   };
   Room.dropCard = function (id, parent, cb, opts) {
-    opts = opts || {}; const it = Room.item(id); if (!it || !parent) { cb && cb(); return null; } const sc = el('div', 'uk-scrim h2-drop', ovRoot(parent)), sh = el('div', 'uk-sheet', sc);
+    opts = opts || {}; Room._recent = []; const it = Room.item(id); if (!it || !parent) { cb && cb(); return null; } const sc = el('div', 'uk-scrim h2-drop', ovRoot(parent)), sh = el('div', 'uk-sheet', sc);
     const before = Room.levelInfo(), pos = H() ? Room.placeAt(id) : null, after = Room.levelInfo();
     const bg = el('div', 'h2-drop-big', sh); const im = el('img', '', bg); im.src = Room.src(it); im.alt = '';
     if (!kid()) { el('h2', '', sh, it.name); el('p', 'h2-cozy', sh, '아늑함 +' + (it.cozy || 0)); } else el('p', 'h2-cozy', sh, '★ +' + (it.cozy || 0));
@@ -271,11 +288,11 @@
         const im = el('img', 'h2-guest', room); im.src = Room.cfg.charSrc ? Room.cfg.charSrc(g.char) : ''; im.alt = ''; im.style.cssText = `left:${fr.x}px;top:${fr.y}px`; room.__occ.push({ x: fr.x, y: fr.y, w: GW, h: GH, guest: true });
         const line = g.lines.length ? g.lines[(n + Math.floor(Math.random() * 2)) % g.lines.length] : '', BW = kid() ? 40 : 150, BH = kid() ? 34 : 40, bp = freeRect(room, BW, BH, { x: fr.x + GW / 2, y: fr.y - BH }, { x0: 4, y0: 6, x1: RW - 4, y1: RH - BH });
         const bb = el('div', 'h2-bubble', room, kid() ? '💖' : line); bb.style.cssText = `left:${bp.x}px;top:${bp.y}px`;
-        setTimeout(() => { if (Room.grant(gift)) { UK.toast(kid() ? '🎁' : '손님 선물 · ' + (Room.item(gift) || {}).name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} } afterChange(); }, 2600); setTimeout(() => { im.remove(); bb.remove(); }, 4400); }, 900);
+        setTimeout(() => { Room._quiet = 1; const gg = Room.grant(gift); Room._quiet = 0; if (gg) { UK.toast(kid() ? '🎁' : '손님 선물 · ' + (Room.item(gift) || {}).name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} } afterChange(); }, 2600); setTimeout(() => { im.remove(); bb.remove(); }, 4400); }, 900);
     }
     function drawAll() { drawTop(); drawNav(); drawStage(); drawTools(); drawSheet(); drawSel(); }
     Room._redraw = () => { sel = null; drawAll(); };
-    function seasonCheck() { const g = Room.seasonCheck(); if (g) { UK.toast(kid() ? '🎁' : '계절 선물 · ' + g.name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} afterChange(); drawStage(); } }
+    function seasonCheck() { Room._quiet = 1; const g = Room.seasonCheck(); Room._quiet = 0; if (g) { UK.toast(kid() ? '🎁' : '계절 선물 · ' + g.name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} afterChange(); drawStage(); } }
     setTimeout(() => { drawAll(); const L0 = Room.levelInfo(); if (L0.lv > (S.lv || 1)) { S.lv = L0.lv; Room.save(); lvUp(L0); } S.lv = Math.max(S.lv || 1, L0.lv); seasonCheck(); setTimeout(() => Room.checkStory(parent, () => drawAll()), 400); }, 0);
     return { redraw: drawAll };
   };

@@ -176,3 +176,8 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-dreamchip { bottom: 8px; }
 .h2-drop-pv { display: block !important; height: auto !important; } .h2-drop-pv .h2-wrap { margin: 0 auto; }
 .h2-bg svg { width: 340px !important; height: 440px !important; max-width: none !important; }
+.h2-btx b { font-size: calc(17px * var(--uk-fs-k, 1)) !important; white-space: normal !important; line-height: 1.18; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; } .h2-band { min-height: 60px; }
+/* 홈 띠 위치: 방치형은 위(아래 버튼을 가리지 않게), 유아 홈은 캐릭터와 카드 사이 */
+.h2-bandwrap.top { bottom: auto; top: 66px; } .h2-bandwrap.top .h2-band { min-height: 48px; margin: 0; padding: 3px 10px 3px 6px; } .h2-bandwrap.top .h2-band img { width: 34px; height: 34px; }
+[data-uk="kid"] .h2-bandwrap { bottom: auto; top: 470px; }
+[data-uk="kid"] .h2-bandwrap { top: 424px; } [data-uk="kid"] .h2-band { min-height: 50px; margin: 0; }

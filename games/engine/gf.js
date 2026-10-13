@@ -388,6 +388,7 @@
       [['story', 'book', '#FFE0E8', () => GF.go('shelf')], ['play', 'game', '#E1F4FF', () => GF.go('playroom')], ['album', 'album', '#FFF3C2', () => GF.go('album', { book: 1 })], ['house', 'home', '#FFE3C2', () => GF.go('khouse')]].forEach((b) => {
         const k = el('button', 'card', row, IC[b[1]]); k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
       });
+      if (window.Room && Room.H && Room.S) { const bw = el('div', 'h2-bandwrap', r); bw.style.top = '372px'; Room.band(bw, { go: () => GF.go('map'), toastParent: r }); }   // 우리 집 2.0: 다음 목표 띠
       // 부모 메뉴: 로고를 3초 길게
       let pt = null; const logo = t;
       logo.addEventListener('pointerdown', () => { pt = setTimeout(() => Gate.open(), 3000); });
@@ -399,7 +400,7 @@
     wide: () => false,
     enter(r) {
       GF.bg('indoor', r); r.classList.add('uk');
-      const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house(sc, { room: 'kid' });
+      const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house2(sc, { go: () => GF.go('map') });
     },
   });
 
@@ -800,7 +801,7 @@
   /* ---------------- 부팅 ---------------- */
   async function loadData(namesOpt) {
     if (window.GF_DATA) return window.GF_DATA;
-    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items']).concat(['names', 'ops']), out = {};
+    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items', 'housing']).concat(['names', 'ops']), out = {};
     await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else if (n === 'ops') out[n] = null; else if (n === 'room_items') out[n] = null; else throw e; } }));
     return out;
   }
@@ -815,7 +816,7 @@
     if (GF.data.base != null) GF.base = GF.data.base;
     GF.state = Store.load();
     if (window.Room && GF.data.room_items && !opts.dataNames) {   // ① 놀이터: 유아 그룹 집(아이 방만 보임, 가족 집은 보호자 잠금 뒤)
-      Room.init({ data: GF.data.room_items, game: 'playground', mode: 'kid', autoPlace: true, guard: (cb) => Gate.ask(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      Room.init({ home: () => GF.go('map'), openHouse: () => GF.go('khouse'), housing: GF.data.housing, app: 'playground', data: GF.data.room_items, game: 'playground', mode: 'kid', autoPlace: true, guard: (cb) => Gate.ask(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       if (GF.extras) GF.extras.init({ app: 'play', kid: true, noHold: true, progress: () => Object.values(GF.state.stages || {}).filter((x) => x.stars > 0).length, stats: () => [['별', totalStars()], ['깬 단계', Object.values(GF.state.stages).filter((x) => x.stars > 0).length], ['스티커', Object.keys(GF.state.stickers || {}).length]], reset: () => GF.resetState() });
     }
     ensureAudio(); loadSounds();

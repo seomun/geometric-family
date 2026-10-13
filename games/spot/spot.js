@@ -193,13 +193,13 @@
   });
   GF.screen('phouse', {
     bare: false,
-    enter(r) { r.classList.add('uk', 'sp'); GF.bg('indoor', r); bar(); const sc = el('div', 'sp-scroll', r); sc.style.top = '70px'; Room.house(sc, { room: 'nemo' }); },
+    enter(r) { r.classList.add('uk', 'sp'); GF.bg('indoor', r); bar(); const sc = el('div', 'sp-scroll', r); sc.style.top = '70px'; Room.house2(sc, { go: () => GF.go('plevels') }); },
   });
   SP.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'spot_levels', 'spot_extra', 'story_spot', 'maps/spot', 'room_items', 'art_slots'], storeKey: 'gf:spot:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'spot_levels', 'spot_extra', 'story_spot', 'maps/spot', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:spot:ui:v1', async start() {
       D = GF.data.spot_levels; X = GF.data.spot_extra; GF.saga.init('spot', GF.data['maps/spot']); GF.tale.init('spot', GF.data.story_spot, { kid: false });
-      Room.init({ data: GF.data.room_items, game: 'spot', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      Room.init({ home: () => GF.go('plevels'), openHouse: () => GF.go('phouse'), housing: GF.data.housing, app: 'spot', data: GF.data.room_items, game: 'spot', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'spot', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, fam, rng, eps) => {   // 틀린 그림은 칸 상태가 없는 퍼즐이라 가족 맛으로 만든 모델(틀린 탭·힌트 수)
           let wrong, hints; if (fam === 0) { wrong = 1 + ((rng() * 4) | 0); hints = rng() < 0.4 ? 1 : 0; } else if (fam === 1) { if (eps < 0.2) { wrong = (rng() * 2) | 0; hints = 0; } else { wrong = 5 + ((rng() * 6) | 0); hints = 1 + ((rng() * 3) | 0); } } else { wrong = (rng() * 3) | 0; hints = 0; }
           return { won: true, score: GF.rank.eff({ par: L.goalN, actions: L.goalN + wrong, tools: hints, attempts: 1 }) }; } } } });

@@ -230,16 +230,16 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'bk'); GF.bg('indoor', r); bar();
-      const sc = el('div', 'bk-scroll', r); sc.style.top = '70px'; Room.house(sc, { room: 'yard' });
+      const sc = el('div', 'bk-scroll', r); sc.style.top = '70px'; Room.house2(sc, { go: () => GF.go('blevels') });
     },
   });
 
   /* ---------------- 부팅 ---------------- */
   BK.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'block_levels', 'block_extra', 'story_block', 'maps/block', 'room_items', 'art_slots'], storeKey: 'gf:block:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'block_levels', 'block_extra', 'story_block', 'maps/block', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:block:ui:v1', async start() {
       D = GF.data.block_levels; X = GF.data.block_extra; GF.saga.init('block', GF.data['maps/block']); GF.tale.init('block', GF.data.story_block, { kid: false });
-      Room.init({ data: GF.data.room_items, game: 'block', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      Room.init({ home: () => GF.go('blevels'), openHouse: () => GF.go('bhouse'), housing: GF.data.housing, app: 'block', data: GF.data.room_items, game: 'block', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'block', boards: {
         daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { const r = M.botPlay(L, rng, eps, rule); return { won: r.won, score: GF.rank.eff({ par: L.par, actions: r.used, tools: 0, attempts: 1 }) }; } },
         endless: { title: '끝없이', levelAt: null, bot: (L, rule, rng, eps, date) => { const E = G.makeEndless(date % 100000); if (rule === 0) E.lim = 60 + ((rng() * 30) | 0); else if (rule === 2) E.lim = 120 + ((rng() * 40) | 0);   // 네모는 꾸준히 중간쯤에서, 동그라미는 오래, 세모는 한계 없이(들쭉날쭉)

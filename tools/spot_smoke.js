@@ -51,7 +51,7 @@ const solveLevel = async (pg) => {
     const common = [['오늘의 한 판', 'SPOT.debug.dailyLevel()'], ['세 가족 판(네모)', 'SPOT.debug.trioLevels(8)[0]'], ['세 가족 판(세모)', 'SPOT.debug.trioLevels(8)[1]'], ['세 가족 판(동그라미)', 'SPOT.debug.trioLevels(8)[2]'], ['시즌 판', '(SPOT.season = "chuseok", SPOT.debug.seasonLevel(SPOT.debug.X().seasons[0]))']];
     for (const [nm, expr] of common) { await pg.evaluate((e) => { GF.stack = []; GF.go('phome'); const L = eval(e); GF.go('pplay', { level: L }); SPOT.fast = true; }, expr); await pg.waitForSelector('.screen.on .sp-area'); const { L, done } = await solveLevel(pg); ok(done, nm + ' 클리어(' + L.type + ')'); }
     await pg.evaluate(() => { GF.stack = []; GF.go('phome'); GF.go('ptrio'); }); await pg.waitForSelector('.screen.on .sp-trio'); await shot('trio');
-    await pg.evaluate(() => { GF.stack = []; GF.go('phome'); GF.go('phouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');
+    await pg.evaluate(() => { GF.stack = []; GF.go('phome'); GF.go('phouse'); }); await pg.waitForSelector('.screen.on .rm-room, .screen.on .h2-room'); await shot('house');
   }
   ok(errs.length === 0, '콘솔 오류 없음 ' + errs.slice(0, 3).join(' | '));
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

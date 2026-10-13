@@ -33,7 +33,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   await pg.evaluate(() => { GF.stack = []; GF.go('qhome'); GF.go('qmini', { g: 1 }); }); await pg.waitForSelector('.screen.on .qz-react'); await shot('mini1'); await pg.waitForSelector('.screen.on .qz-react.go', { timeout: 6000 }); for (let i = 0; i < 5; i++) { await pg.click('.screen.on .qz-react', { force: true }); await pg.waitForTimeout(150); if (i < 4) await pg.waitForSelector('.screen.on .qz-react.go', { timeout: 6000 }).catch(() => {}); } ok(await pg.waitForSelector('.screen.on .uk-sheet', { timeout: 3000 }).then(() => true).catch(() => false), '미니게임 1(반응) 5번 → 결과');
   await pg.evaluate(() => { GF.stack = []; GF.go('qhome'); GF.go('qmini', { g: 2 }); }); await pg.waitForSelector('.screen.on .qz-simon'); await shot('mini2'); await pg.evaluate(() => QUIZ.debug.memDone()); ok(await pg.waitForSelector('.screen.on .uk-sheet', { timeout: 3000 }).then(() => true).catch(() => false), '미니게임 2(기억) 결과');
   const trophies = await pg.evaluate(() => Room.owned().filter((x) => x.startsWith('q_game')).length); ok(trophies >= 3, '트로피 ' + trophies + '개 집에 생김');
-  await pg.evaluate(() => { GF.stack = []; GF.go('qhome'); GF.go('qhouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');
+  await pg.evaluate(() => { GF.stack = []; GF.go('qhome'); GF.go('qhouse'); }); await pg.waitForSelector('.screen.on .rm-room, .screen.on .h2-room'); await shot('house');
   ok(errs.length === 0, '콘솔 오류 없음 ' + errs.slice(0, 3).join(' | '));
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
 })();

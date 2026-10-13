@@ -167,13 +167,13 @@
   });
   GF.screen('shouse', {
     bare: false,
-    enter(r) { r.classList.add('uk', 'sr'); GF.bg('indoor', r); bar(); const sc = el('div', 'sr-scroll', r); sc.style.top = '70px'; Room.house(sc, { room: 'nemo' }); },
+    enter(r) { r.classList.add('uk', 'sr'); GF.bg('indoor', r); bar(); const sc = el('div', 'sr-scroll', r); sc.style.top = '70px'; Room.house2(sc, { go: () => GF.go('slevels') }); },
   });
   SR.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'sort_levels', 'sort_extra', 'story_sort', 'maps/sort', 'room_items', 'art_slots'], storeKey: 'gf:sort:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'sort_levels', 'sort_extra', 'story_sort', 'maps/sort', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:sort:ui:v1', async start() {
       D = GF.data.sort_levels; X = GF.data.sort_extra; GF.saga.init('sort', GF.data['maps/sort']); GF.tale.init('sort', GF.data.story_sort, { kid: false });
-      Room.init({ data: GF.data.room_items, game: 'sort', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      Room.init({ home: () => GF.go('slevels'), openHouse: () => GF.go('shouse'), housing: GF.data.housing, app: 'sort', data: GF.data.room_items, game: 'sort', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'sort', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { const r = C.botPlay(L, rng, eps, rule); return { won: r.won, score: GF.rank.eff({ par: L.par, actions: r.moves, tools: 0, attempts: 1 }) }; } } } });
       GF.extras.init(Object.assign({ app: 'sort', kid: false, calendar: () => X.seasons.map((s) => ({ id: s.id, title: s.title, months: s.months, icon: '📅', done: !!SV.seasonDone[seasonKey(s)], play: () => { const L = seasonLevel(s); if (L) GF.go('splay', { level: L }); } })), rewardSet: 'storage', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'storage', itemTotal: 20, icon: '🧹' })));
       document.getElementById('safe').classList.add('uk'); GF.go('shome');

@@ -179,13 +179,13 @@
   });
   GF.screen('thouse', {
     bare: false,
-    enter(r) { r.classList.add('uk', 'tl'); GF.bg('indoor', r); bar(); const sc = el('div', 'tl-scroll', r); sc.style.top = '70px'; Room.house(sc, { room: 'yard' }); },
+    enter(r) { r.classList.add('uk', 'tl'); GF.bg('indoor', r); bar(); const sc = el('div', 'tl-scroll', r); sc.style.top = '70px'; Room.house2(sc, { go: () => GF.go('tlevels') }); },
   });
   TL.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'tile_levels', 'tile_extra', 'story_tile', 'maps/tile', 'room_items', 'art_slots'], storeKey: 'gf:tile:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'tile_levels', 'tile_extra', 'story_tile', 'maps/tile', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:tile:ui:v1', async start() {
       D = GF.data.tile_levels; X = GF.data.tile_extra; GF.saga.init('tile', GF.data['maps/tile']); GF.tale.init('tile', GF.data.story_tile, { kid: false });
-      Room.init({ data: GF.data.room_items, game: 'tile', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
+      Room.init({ home: () => GF.go('tlevels'), openHouse: () => GF.go('thouse'), housing: GF.data.housing, app: 'tile', data: GF.data.room_items, game: 'tile', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'tile', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { let r = C.botPlay(L, rng, eps, rule), pen = 0; if (!r.won && rule === 2) { r = C.botPlay(L, rng, eps, -1); pen = 150; }   // 동그라미 규칙이 안 풀리면 한 번 평범하게 다시
           return { won: r.won, score: GF.rank.clamp(600 + 110 * (r.cap - r.maxTray) - pen) }; } } } });
       GF.extras.init(Object.assign({ app: 'tile', kid: false, calendar: () => X.seasons.map((s) => ({ id: s.id, title: s.title, months: s.months, icon: '📅', done: !!SV.seasonDone[seasonKey(s)], play: () => { const L = seasonLevel(s); if (L) GF.go('tplay', { level: L }); } })), rewardSet: 'yardlife', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'yardlife', itemTotal: 20, icon: '🧩' })));

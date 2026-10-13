@@ -48,7 +48,7 @@ const solveLevel = async (pg) => {
     const common = [['오늘의 한 판', 'TILE.debug.dailyLevel()'], ['세 가족 판(네모)', 'TILE.debug.trioLevels(8)[0]'], ['세 가족 판(세모)', 'TILE.debug.trioLevels(8)[1]'], ['세 가족 판(동그라미)', 'TILE.debug.trioLevels(8)[2]'], ['시즌 판', '(TILE.season = "chuseok", TILE.debug.seasonLevel(TILE.debug.X().seasons[0]))']];
     for (const [nm, expr] of common) { await pg.evaluate((e) => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('thome'); const L = eval(e); GF.go('tplay', { level: L }); TILE.fast = true; }, expr); await pg.waitForSelector('.screen.on .tl-board'); const { L, done } = await solveLevel(pg); ok(done, nm + ' 클리어(' + L.type + ')'); }
     await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('thome'); GF.go('ttrio'); }); await pg.waitForSelector('.screen.on .tl-trio'); await shot('trio');
-    await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('thome'); GF.go('thouse'); }); await pg.waitForSelector('.screen.on .rm-room'); await shot('house');
+    await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('thome'); GF.go('thouse'); }); await pg.waitForSelector('.screen.on .rm-room, .screen.on .h2-room'); await shot('house');
   }
   ok(errs.length === 0, '콘솔 오류 없음 ' + errs.slice(0, 3).join(' | '));
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

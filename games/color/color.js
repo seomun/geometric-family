@@ -243,7 +243,7 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'cl'); GF.bg('indoor2', r);
-      const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house(sc, { room: 'kid' });
+      const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house2(sc, { go: () => GF.go('cbook') });
       const dr = UK.round({ icon: 'book', cls: 'gold', label: '액자 서랍', onclick: () => drawer(r) }, r); dr.style.cssText += ';position:absolute;right:12px;top:72px;z-index:12';
     },
   });
@@ -266,9 +266,9 @@
 
   /* ---------------- 부팅 ---------------- */
   CL.start = async function (opts) {
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'color_pages', 'merge_extra', 'story_color', 'maps/color', 'room_items', 'art_slots'], storeKey: 'gf:color:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'color_pages', 'merge_extra', 'story_color', 'maps/color', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:color:ui:v1', async start() {
       D = GF.data.color_pages; X = GF.data.merge_extra;
-      Room.init({ data: GF.data.room_items, game: 'coloring', mode: 'kid', autoPlace: false, guard: (cb) => GF.gate(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), imageFor });
+      Room.init({ home: () => GF.go('cbook'), openHouse: () => GF.go('chouse'), housing: GF.data.housing, app: 'color', data: GF.data.room_items, game: 'coloring', mode: 'kid', autoPlace: false, guard: (cb) => GF.gate(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), imageFor });
       GF.saga.init('color', GF.data['maps/color']); GF.tale.init('color', GF.data.story_color, { kid: true }); GF.extras.init({ app: 'color', kid: true, progress: () => Object.keys(SV.done || {}).length, stats: () => [['완성한 그림', Object.keys(SV.done).length + ' / ' + D.pages.length], ['아이 방 액자', Room.placedIn('kid').filter((x) => x.img).length]], resetTips: () => { SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('chome');
       CL.debug.D = () => D; CL.debug.SV = () => SV; CL.debug.reset = () => { SV = blank(); save(); }; CL.debug.page = page;

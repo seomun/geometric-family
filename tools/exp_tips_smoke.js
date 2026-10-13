@@ -9,7 +9,10 @@ const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m
   for (const k of keys) {
     await p.evaluate((s) => { document.querySelectorAll('.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('xhome'); GF.go(s); }, scr[k]); await p.waitForTimeout(1300);
     const first = await p.evaluate(() => !!document.querySelector('.tale-ov')); ok(first, k + ': 처음 열면 이야기 컷'); if (k === 'gacha') await p.screenshot({ path: 'notes/snapshots/exp_tip_gacha.png' });
-    await p.evaluate(() => document.querySelectorAll('.tale-ov').forEach((e) => e.remove()));
+    ok(await p.evaluate(() => !!document.querySelector('.tale-ov .ex-mini-ic svg')), k + ': 첫 컷에 그림(주머니·달력·도감)'); if (k === 'dungeon' || k === 'dex') await p.screenshot({ path: 'notes/snapshots/exp_tip_' + k + '.png' });
+    for (let i = 0; i < 8 && (await p.evaluate(() => !!document.querySelector('.tale-ov'))); i++) { await p.evaluate(() => { const nx = document.querySelector('.tale-ov .nextbtn'); nx && nx.click(); }); await p.waitForTimeout(700); }
+    await p.waitForTimeout(900); ok(await p.evaluate(() => !!document.querySelector('.uk-finger')), k + ': 마지막 컷 뒤 실제 버튼에 손가락'); if (k === 'gacha') await p.screenshot({ path: 'notes/snapshots/exp_tip_finger.png' });
+    await p.evaluate(() => document.querySelectorAll('.tale-ov,.uk-finger').forEach((e) => e.remove()));
     await p.evaluate((s) => { GF.stack = []; GF.go('xhome'); GF.go(s); }, scr[k]); await p.waitForTimeout(1300);
     ok(!(await p.evaluate(() => !!document.querySelector('.tale-ov'))), k + ': 두 번째부터는 없음');
   }

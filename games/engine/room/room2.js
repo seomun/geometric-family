@@ -187,7 +187,7 @@
     const before = Room.levelInfo(), pos = H() ? Room.placeAt(id) : null, after = Room.levelInfo();
     const bg = el('div', 'h2-drop-big', sh); const im = el('img', '', bg); im.src = Room.src(it); im.alt = '';
     if (!kid()) { el('h2', '', sh, it.name); el('p', 'h2-cozy', sh, '아늑함 +' + (it.cozy || 0)); } else el('p', 'h2-cozy', sh, '★ +' + (it.cozy || 0));
-    const g = pos && pos.room ? rooms().find((r) => r.id === pos.room) : null; if (g) { const pv = el('div', 'h2-drop-pv', sh); R2.draw(pv, g.id, { mini: true, flash: id }); if (!kid()) el('small', '', sh, g.name + '에 놓였어요'); }
+    const g = pos && pos.room ? rooms().find((r) => r.id === pos.room) : null; if (g) { const pv = el('div', 'h2-drop-pv', sh), dd = R2.draw(pv, g.id, { mini: true, flash: id }); const pl = (ensure().placed[g.id] || []).find((q) => q.id === id); if (pl && dd && dd.room) { const gg = geo(it), sp = el('i', 'h2-spot', dd.room); sp.style.cssText = `left:${pl.x - 12}px;top:${pl.y - 12}px;width:${gg.w + 24}px;height:${gg.h + 24}px`; const st = el('em', 'h2-spotstar', dd.room, '✨'); st.style.cssText = `left:${pl.x + gg.w - 4}px;top:${pl.y - 16}px`; } if (!kid()) el('small', '', sh, g.name + '에 놓였어요'); }
     if (after.lv > before.lv) { el('p', 'h2-lvup', sh, kid() ? '⭐ ' + after.lv : '집 레벨 ' + after.lv + '!'); try { UK.confetti(sc); } catch (e) {} ensure().lv = after.lv; Room.save(); }
     const acts = el('div', 'acts', sh); UK.btn({ text: kid() ? null : (g ? '보러 가기' : '집에 놓기'), icon: kid() ? 'home' : null, cls: 'green block', onclick: () => { sc.remove(); opts.openHouse ? opts.openHouse() : (cb && cb()); } }, acts);
     if (!kid()) UK.btn({ text: '나중에', cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(); } }, acts); else UK.btn({ icon: 'next', cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(); } }, acts);
@@ -346,6 +346,25 @@
     if (miss.length) UK.btn({ text: '없는 가구 ' + miss.length + '개 위시에 담기', cls: 'gold sm block', onclick: () => { miss.forEach((id) => { if (!Room.wishOn(id)) Room.wish(id); }); UK.toast('♥ 위시에 담았어요', sc); } }, sh);
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
+  /* ---------------- 방 확장 연출(A7): 집 레벨이 올라 새 방이 열리면 「공사 → 완성」 짧은 컷 ---------------- */
+  /** 아직 연출을 안 본 열린 방. 처음 한 번은 지금 열린 방을 모두 본 것으로 치고 연출하지 않는다. */
+  Room.newRooms = function () {
+    const S = ensure(); if (!S || !H()) return []; S.roomSeen = S.roomSeen || {};
+    if (!S.roomSeenInit) { S.roomSeenInit = {}; }
+    if (!S.roomSeenInit[grp()]) { S.roomSeenInit[grp()] = 1; Room.unlockedRooms().forEach((r) => { S.roomSeen[r.id] = 1; }); Room.save(); return []; }
+    return Room.unlockedRooms().filter((r) => !S.roomSeen[r.id]);
+  };
+  Room.roomReveal = function (rid, parent, cb) {
+    const R = roomDef(rid), S = ensure(); if (!R) { cb && cb(false); return null; } S.roomSeen = S.roomSeen || {}; S.roomSeen[rid] = 1; Room.save();
+    const sc = el('div', 'uk-scrim h2-reveal', ovRoot(parent)), box = el('div', 'h2-rvbox', sc), pv = el('div', 'h2-rvpv', box); R2.draw(pv, rid, { dream: true, mini: true });
+    const wall = el('div', 'h2-rvwall', pv); wall.innerHTML = '<div class="h2-rvstripe"></div><div class="h2-rvwork"><i>🚧</i><i>🔨</i><i>🧱</i></div><div class="h2-rvbar"><b></b></div>';
+    const title = el('div', 'h2-rvtitle', box, kid() ? '🚪✨' : '<small>새 방이 열렸어요!</small><b>' + R.name + '</b>'); title.style.opacity = 0;
+    try { GF.sfx && GF.sfx('tukdak'); } catch (e) { /* 소리 */ }
+    setTimeout(() => { wall.classList.add('lift'); try { GF.sfx && GF.sfx('celebrate'); UK.confetti(sc); } catch (e) { /* 연출 */ } title.style.opacity = 1; }, 1700);
+    const acts = el('div', 'acts h2-rvacts', box); acts.style.opacity = 0; setTimeout(() => { acts.style.opacity = 1; }, 2400);
+    UK.btn({ text: kid() ? null : '들어가 보기', icon: kid() ? 'home' : null, cls: 'green block', onclick: () => { sc.remove(); cb && cb(true); } }, acts);
+    UK.btn({ text: kid() ? null : '나중에', icon: kid() ? 'close' : null, cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(false); } }, acts); return sc;
+  };
   /* ---------------- 가구 상호작용(A2): 가구마다 고유한 짧은 연출·소리 ---------------- */
   // fx: steam 김 · glow 불빛 · flicker 화면 깜빡 · notes 음표 · drops 물방울 · page 책장 넘김 · tick 시계 · door 문 여닫이 · hearts 하트 · zzz 졸음 · flash 번쩍 · spin 빙글 · sparkle 반짝
   const FXD = {
@@ -417,7 +436,8 @@
       if (!place) { guestCheck(d.room, R); walk(d.room, R); }
     }
     function afterChange() { drawTop(); drawSheet(); const L = Room.levelInfo(); if (L.lv > (S.lv || 1)) { S.lv = L.lv; Room.save(); lvUp(L); if (Room.sweep()) drawStage(); } }
-    function lvUp(L) { try { UK.confetti(parent); GF.sfx && GF.sfx('celebrate'); } catch (e) {} const nr = rooms().find((r) => r.unlock === L.lv); UK.toast(kid() ? '⭐' : '집 레벨 ' + L.lv + '!' + (nr ? ' ' + nr.name + ' 열림' : ''), parent); }
+    function checkRooms() { const nr = Room.newRooms(); if (!nr.length || !parent.isConnected || document.querySelector('.h2-reveal')) return; Room.roomReveal(nr[0].id, parent, (go) => { if (go) { cur = nr[0].id; sel = null; drawAll(); } setTimeout(checkRooms, 400); }); }
+    function lvUp(L) { setTimeout(checkRooms, 1400); try { UK.confetti(parent); GF.sfx && GF.sfx('celebrate'); } catch (e) {} const nr = rooms().find((r) => r.unlock === L.lv); UK.toast(kid() ? '⭐' : '집 레벨 ' + L.lv + '!' + (nr ? ' ' + nr.name + ' 열림' : ''), parent); }
     function drawSheet() {
       sheet.innerHTML = ''; sheet.className = 'h2-sheet' + (expanded ? ' open' : ''); const T = Room.tasks(), g = Room.nextGoal(Room.cfg.app || Room.cfg.game);
       const handle = el('div', 'h2-handle', sheet, '<i></i>'); const line = el('div', 'h2-line', sheet);
@@ -467,7 +487,7 @@
     function drawAll() { drawTop(); drawNav(); drawStage(); drawTools(); drawSheet(); drawSel(); }
     Room._redraw = () => { sel = null; drawAll(); };
     function seasonCheck() { Room._quiet = 1; const g = Room.seasonCheck(); Room._quiet = 0; if (g) { UK.toast(kid() ? '🎁' : '계절 선물 · ' + g.name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} afterChange(); drawStage(); } }
-    setTimeout(() => { Room.sweep(); drawAll(); const L0 = Room.levelInfo(); if (L0.lv > (S.lv || 1)) { S.lv = L0.lv; Room.save(); lvUp(L0); } S.lv = Math.max(S.lv || 1, L0.lv); seasonCheck(); setTimeout(() => Room.checkStory(parent, () => drawAll()), 400); }, 0);
+    setTimeout(() => { Room.sweep(); drawAll(); const L0 = Room.levelInfo(); if (L0.lv > (S.lv || 1)) { S.lv = L0.lv; Room.save(); lvUp(L0); } S.lv = Math.max(S.lv || 1, L0.lv); seasonCheck(); setTimeout(() => Room.checkStory(parent, () => drawAll()), 400); setTimeout(checkRooms, 1200); }, 0);
     return { redraw: drawAll };
   };
   /** 계절·이벤트 선물: 그 달에 집에 오면 하루에 하나씩(확정, 놓친 철은 다음 해에 다시) */

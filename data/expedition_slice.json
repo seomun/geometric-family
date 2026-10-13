@@ -2296,7 +2296,11 @@
      "chars": [
       "baby.surprise",
       "nemo_mom.good"
-     ]
+     ],
+     "mini": {
+      "app": "expedition",
+      "k": "pouch"
+     }
     },
     {
      "bg": "field",
@@ -2322,7 +2326,11 @@
      "chars": [
       "wife.joy",
       "baby.joy"
-     ]
+     ],
+     "mini": {
+      "app": "expedition",
+      "k": "anvil"
+     }
     },
     {
      "bg": "field",
@@ -2340,7 +2348,11 @@
      "chars": [
       "nemo_dad.good",
       "baby.joy"
-     ]
+     ],
+     "mini": {
+      "app": "expedition",
+      "k": "calendar"
+     }
     },
     {
      "bg": "field",
@@ -2358,7 +2370,11 @@
      "chars": [
       "baby.joy",
       "nemo_mom.good"
-     ]
+     ],
+     "mini": {
+      "app": "expedition",
+      "k": "book"
+     }
     },
     {
      "bg": "field",

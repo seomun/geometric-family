@@ -155,8 +155,8 @@ assert len(LOOT_CODES) == 12 and all(len(x['code']) == 6 for x in LOOT_CODES), L
 
 # 스토리 = 튜토리얼(B7): 새 기능을 처음 열 때 가족이 이야기 컷으로 알려 준다(한 번만, 건너뛰기 가능). 설명서 화면 없음.
 STORY['tips'] = dict(
-    gacha=[cut('막둥이가 반짝석 주머니를 흔들었다. 「이걸로 새 친구를 부를 수 있대!」', 'baby.surprise', 'nemo_mom.good'), cut('동그라미 아빠가 차분히 알려 주었다. 「10번 부르면 ★4 이상 한 명은 꼭 와요. 같은 친구가 또 오면 각성 조각이 돼요.」', 'dong_dad.calm', 'baby.joy'), cut('네모 엄마가 웃었다. 「확률은 「확률 공개」에서 언제든 볼 수 있어. 천천히, 무리하지 말자!」', 'nemo_mom.good', 'baby.joy')],
-    grow=[cut('세모 아내가 팔을 걷어붙였다. 「친구를 키워 볼까? 레벨·스킬·장비는 금화로 올려!」', 'wife.joy', 'baby.joy'), cut('동그라미 아빠가 덧붙였다. 「각성과 승급은 같은 친구의 조각으로 해요. 요일 던전에서도 조각이 나와요.」', 'dong_dad.calm', 'wife.joy')],
-    dungeon=[cut('네모 아빠가 달력을 가리켰다. 「요일마다 다른 훈련장이 열린대. 하루 세 번이면 충분해.」', 'nemo_dad.good', 'baby.joy'), cut('「월·금은 금화, 화·수·목은 그 속성 친구의 조각! 졌다고 횟수가 줄진 않으니 편하게 도전하자.」', 'nemo_mom.good', 'nemo_dad.good')],
-    dex=[cut('막둥이가 도감을 펼쳤다. 「만난 친구가 늘수록 선물이 있어!」', 'baby.joy', 'nemo_mom.good'), cut('동그라미 아빠가 한 줄 읽어 주었다. 「친구마다 옛이야기 한 줄이 적혀 있네요. 못 만난 친구는 얻는 방법만 알려 줘요.」', 'dong_dad.calm', 'baby.joy')],
+    gacha=[cut('막둥이가 반짝석 주머니를 흔들었다. 「이걸로 새 친구를 부를 수 있대!」', 'baby.surprise', 'nemo_mom.good', mini=dict(app='expedition', k='pouch')), cut('동그라미 아빠가 차분히 알려 주었다. 「10번 부르면 ★4 이상 한 명은 꼭 와요. 같은 친구가 또 오면 각성 조각이 돼요.」', 'dong_dad.calm', 'baby.joy'), cut('네모 엄마가 웃었다. 「확률은 「확률 공개」에서 언제든 볼 수 있어. 천천히, 무리하지 말자!」', 'nemo_mom.good', 'baby.joy')],
+    grow=[cut('세모 아내가 팔을 걷어붙였다. 「친구를 키워 볼까? 레벨·스킬·장비는 금화로 올려!」', 'wife.joy', 'baby.joy', mini=dict(app='expedition', k='anvil')), cut('동그라미 아빠가 덧붙였다. 「각성과 승급은 같은 친구의 조각으로 해요. 요일 던전에서도 조각이 나와요.」', 'dong_dad.calm', 'wife.joy')],
+    dungeon=[cut('네모 아빠가 달력을 가리켰다. 「요일마다 다른 훈련장이 열린대. 하루 세 번이면 충분해.」', 'nemo_dad.good', 'baby.joy', mini=dict(app='expedition', k='calendar')), cut('「월·금은 금화, 화·수·목은 그 속성 친구의 조각! 졌다고 횟수가 줄진 않으니 편하게 도전하자.」', 'nemo_mom.good', 'nemo_dad.good')],
+    dex=[cut('막둥이가 도감을 펼쳤다. 「만난 친구가 늘수록 선물이 있어!」', 'baby.joy', 'nemo_mom.good', mini=dict(app='expedition', k='book')), cut('동그라미 아빠가 한 줄 읽어 주었다. 「친구마다 옛이야기 한 줄이 적혀 있네요. 못 만난 친구는 얻는 방법만 알려 줘요.」', 'dong_dad.calm', 'baby.joy')],
 )

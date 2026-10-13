@@ -35,3 +35,12 @@
 .ex-bmid { top: 250px; bottom: 154px; }
 
 .ex-age { position: absolute; left: 20px; right: 20px; top: 120px; text-align: center; } .ex-age p { font: 700 16px/1.45 var(--uk-font); color: var(--uk-ink2); } .ex-sel { font: 800 18px/1 var(--uk-font); padding: 10px 12px; margin: 6px 6px 14px; border-radius: 12px; border: 2px solid #d9c9a8; background: #fff; } .ex-agemsg { min-height: 24px; color: #E5334A !important; }
+
+.ex-shop { position: absolute; left: 12px; right: 12px; top: 112px; bottom: 88px; overflow-y: auto; padding-bottom: 24px; }
+.ex-note, .ex-cap, .ex-ads { background: #fff8e6; border: 2px solid #ecd9a8; border-radius: 14px; padding: 10px 12px; margin: 8px 0; font: 700 13px/1.5 var(--uk-font); color: var(--uk-ink2); }
+.ex-note p { margin: 2px 0; } .ex-bold { font-weight: 900 !important; color: var(--uk-ink) !important; }
+.ex-warn { color: #E5334A; font: 800 13px/1.45 var(--uk-font); margin: 8px 2px; }
+.ex-cap b, .ex-ads b { display: block; font-size: 15px; } .ex-cap small, .ex-ads small { display: block; margin-top: 4px; opacity: .8; }
+.ex-plist { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+.ex-prod { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 2px solid #ecd9a8; border-radius: 14px; padding: 8px 10px; }
+.ex-prod small { display: block; opacity: .75; font-weight: 700; } .ex-ads .uk-btn { margin: 6px 6px 0 0; }

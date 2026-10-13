@@ -43,6 +43,8 @@ android {
         // `sort` 는 Groovy 컨테이너의 내장 메서드 이름이라 create() 로 만든다
         create('sort') { dimension 'app'; applicationId 'com.geometricfamily.sort'; resValue 'string', 'app_name', '기하학 가족: 정리의 달인' }
         day     { dimension 'app'; applicationId 'com.geometricfamily.day';    resValue 'string', 'app_name', '기하학 가족: 막둥이의 하루' }
+        // ⑪ 기하학 원정대(클로즈드 베타): 서버 연결·12+ 라이브 서비스. 집 공유(ShareStore)와 무관한 별도 앱 — 베타 서명 키는 나머지 앱과 따로 둔다(D23)
+        expedition { dimension 'app'; applicationId 'com.geometricfamily.expedition'; resValue 'string', 'app_name', '기하학 원정대 (베타)' }
     }
     buildTypes {
         release {
@@ -60,7 +62,7 @@ android {
 
 // ---- 광고(D19, games/16_ADS_RND.md §D19): AdMob. 실제 ID 는 ~/.gradle/gradle.properties 에서 flavor 별로 주입(없으면 구글 공식 테스트 ID).
 //   GF_ADMOB_APP_<FLAVOR>=ca-app-pub-…~…   GF_ADMOB_BANNER_<FLAVOR>=ca-app-pub-…/…   GF_ADMOB_INTERSTITIAL_<FLAVOR>=…   GF_ADMOB_REWARDED_<FLAVOR>=…
-//   <FLAVOR> = TODDLER COLOR TABLES MERGE QUIZ BLOCK SPOT TILE SORT DAY.  유아(Families) flavor: toddler·color·day — 배너만, 아동 대상 처리, AD_ID 권한 제거.
+//   <FLAVOR> = TODDLER COLOR TABLES MERGE QUIZ BLOCK SPOT TILE SORT DAY EXPEDITION.  유아(Families) flavor: toddler·color·day — 배너만, 아동 대상 처리, AD_ID 권한 제거.
 def GF_KIDS = ['toddler', 'color', 'day']
 def GF_TEST = [app: 'ca-app-pub-3940256099942544~3347511713', banner: 'ca-app-pub-3940256099942544/9214589741', interstitial: 'ca-app-pub-3940256099942544/1033173712', rewarded: 'ca-app-pub-3940256099942544/5224354917']
 android.productFlavors.configureEach { f ->

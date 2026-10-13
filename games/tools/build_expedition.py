@@ -20,6 +20,16 @@ def webp(path, max_h=420):
     im = Image.open(path).convert('RGBA')
     if im.height > max_h: im = im.resize((round(im.width * max_h / im.height), max_h), Image.LANCZOS)
     buf = io.BytesIO(); im.save(buf, 'WEBP', quality=84, alpha_quality=95, method=6); return buf.getvalue()
+APP = 'app' in sys.argv or bool(__import__('os').environ.get('GF_APP'))   # 앱(베타) 빌드: games/app/expedition.html, 서버 주소 주입
+def _api():
+    import os, pathlib
+    v = os.environ.get('GF_API', '')
+    if not v:
+        try:
+            for ln in (pathlib.Path.home() / '.gf' / 'store.env').read_text(encoding='utf-8').splitlines():
+                if ln.startswith('EXPEDITION_API='): v = ln.split('=', 1)[1].strip().strip('"').strip("'")
+        except Exception: pass
+    return v
 rd = lambda n: json.loads((ROOT / 'data' / f'{n}.json').read_text(encoding='utf-8'))
 chars, sounds, sl = rd('chars'), rd('sounds'), rd('expedition_slice')
 USED = sorted(set([u['art'] for u in sl['units'] if u['art']] + re.findall(r'"((?:nemo_dad|nemo_mom|nemo_grandma|nemo_kids|baby|wife|husband|dong_dad)\.\w+)"', json.dumps(sl['story']))))
@@ -58,5 +68,11 @@ html = f'''<!DOCTYPE html>
 <script>{js}</script>
 <script>EXP.start({{}});</script>
 </body></html>'''
-(OUT / 'expedition_slice.html').write_text(html, encoding='utf-8')
-print(f'expedition_slice.html {len(html.encode())/1e6:.2f} MB (이미지 {img/1e6:.2f} · 소리 {aud/1e6:.2f})')
+if APP:
+    api = _api()
+    html = html.replace('<script>window.GF_DATA =', '<script>window.GF_API = ' + json.dumps(api) + ';</script>\n<script>window.GF_DATA =', 1).replace('기하학 원정대 (슬라이스)', '기하학 원정대 (베타)')
+    (G / 'app').mkdir(exist_ok=True); (G / 'app' / 'expedition.html').write_text(html, encoding='utf-8')
+    print(f'app/expedition.html {len(html.encode())/1e6:.2f} MB · 서버 {api or "(미설정: GF_API 또는 ~/.gf/store.env EXPEDITION_API)"}')
+else:
+    (OUT / 'expedition_slice.html').write_text(html, encoding='utf-8')
+    print(f'expedition_slice.html {len(html.encode())/1e6:.2f} MB (이미지 {img/1e6:.2f} · 소리 {aud/1e6:.2f})')

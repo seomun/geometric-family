@@ -14,7 +14,7 @@
   const bar = () => GF.refreshBar && GF.refreshBar();
 
   /* ---------------- 서버 연결(S1 WP2~3): ?api=http://127.0.0.1:8788 — 없으면 S0 로컬 그대로 ---------------- */
-  const API = (new URLSearchParams(location.search)).get('api'), REMOTE = !!API, AUTHK = 'gfx:slice:auth', uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'r' + Date.now() + Math.random().toString(36).slice(2));
+  const API = (new URLSearchParams(location.search)).get('api') || window.GF_API || '', REMOTE = !!API, AUTHK = 'gfx:slice:auth', uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'r' + Date.now() + Math.random().toString(36).slice(2));
   let AUTH = null, AGE_DONE = null; try { AUTH = JSON.parse(localStorage.getItem(AUTHK)); } catch (e) { AUTH = null; }
   const setAuth = (a) => { AUTH = a; try { if (a) localStorage.setItem(AUTHK, JSON.stringify(a)); else localStorage.removeItem(AUTHK); } catch (e) { /* 저장 불가 */ } };
   async function http(method, path, body, noRetry) {
@@ -97,8 +97,50 @@
       UK.btn({ text: done ? '원정 길 다시 걷기' : '원정 · ' + next + '. ' + st.name, icon: 'play', cls: 'block', onclick: () => GF.go('xmap') }, btns);
       const row = el('div', 'ex-row', btns);
       UK.btn({ text: '편성·육성', icon: 'heart', cls: 'sky', onclick: () => GF.go('xparty') }, row); UK.btn({ text: '동료 모집', icon: 'gift', cls: 'gold', onclick: () => GF.go('xgacha') }, row);
+      if (REMOTE) UK.btn({ text: '상점·설정', icon: 'star', cls: 'ghost block', onclick: () => GF.go('xshop') }, btns);
       el('div', 'ex-foot', r, '전투력 ' + power(S.party) + ' · 동료 ' + Object.keys(S.units).length + '/' + D.units.length + ' · 랜덤 아이템 포함(동료 모집)');
       if (!S.flags.prologue && !(navigator.webdriver && !/[?&]story=1/.test(location.search))) { S.flags.prologue = 1; save(); setTimeout(() => GF.tale.play(D.story.prologue, r, () => {}, { bg: 'field' }), 400); }
+    },
+  });
+  /* ---------------- 상점·설정 (서버 연결 모드): 결제 전 고지 · 월 결제 한도 · 광고 보상 ---------------- */
+  const MOCKSTORE = REMOTE && /^(https?:\/\/)?(127\.0\.0\.1|localhost)/.test(API);   // 로컬 개발 서버에서만 모의 결제·광고
+  const won = (n) => n.toLocaleString('ko-KR') + '원';
+  GF.screen('xshop', {
+    bare: false,
+    async enter(r) {
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '상점·설정', '결제 전에 꼭 읽어 주세요'); back(r, 'xhome');
+      const box = el('div', 'ex-shop', r); el('p', 'ex-sub', box, '불러오는 중…');
+      let pr, pf; try { [pr, pf] = await Promise.all([http('GET', '/iap/products'), http('GET', '/profile')]); } catch (e) { box.innerHTML = '서버에 연결하지 못했어요.'; return; }
+      if (!r.isConnected) return; applyProfile(pf); bar(); box.innerHTML = '';
+      const pre = await http('POST', '/iap/precheck', { sku: pr.products[0].sku }), blocked = pf.age_band === '12_13';
+      const note = el('div', 'ex-note', box); ['unused_refund_7d', 'gacha_no_refund', 'store_policy', 'negative_balance'].forEach((k) => el('p', '', note, '· ' + pr.notice[k]));
+      el('p', 'ex-bold', note, '모집(뽑기)은 확률로 동료를 얻는 랜덤 아이템이에요. 확률은 모집 화면의 「확률 공개」에서 볼 수 있어요.');
+      if (blocked) el('p', 'ex-warn', box, '만 14세 미만은 보호자 동의 전까지 결제할 수 없어요. 광고 보상은 받을 수 있어요(맞춤 광고 없음).'); else if (pf.guardian_notice) el('p', 'ex-warn', box, '만 19세 미만은 한 달 결제 한도가 7만 원이에요. 보호자와 함께 이용해 주세요.');
+      if (pf.wallet.paid_gems < 0) el('p', 'ex-warn', box, '환불로 유료 반짝석이 ' + (-pf.wallet.paid_gems) + '개 모자라요. 다음 결제로 채워질 때까지 반짝석을 쓸 수 없어요.');
+      const capBox = el('div', 'ex-cap', box); el('b', '', capBox, '이번 달 결제 ' + won(pre.month_spent) + ' / 한도 ' + won(pre.cap));
+      if (!blocked) {
+        const sel = el('select', 'ex-sel', capBox); [0, 30000, 50000, 70000, 100000, 200000].filter((v) => v <= pf.cap_krw).forEach((v) => sel.appendChild(new Option(won(v), v))); sel.value = String(pre.cap);
+        sel.onchange = async () => { try { const c = await http('POST', '/iap/cap', { cap_krw: +sel.value }); UK.toast(c.pending ? '올리는 건 ' + c.effective_from + '월부터 적용돼요' : '한도를 ' + won(c.cap) + '으로 바꿨어요', r); GF.replace('xshop'); } catch (e) { UK.toast('바꾸지 못했어요', r); } };
+        el('small', '', capBox, '낮추는 건 바로, 올리는 건 다음 달부터 적용돼요');
+      }
+      const list = el('div', 'ex-plist', box);
+      pr.products.forEach((p) => {
+        const row = el('div', 'ex-prod', list), own = p.noInter && pf.no_inter; el('span', '', row, `<b>${p.name}</b><small>${p.noInter ? '전면 광고 제거' : '💎 ' + p.gems + (p.firstDouble ? ' · 첫 구매 2배' : '')}</small>`);
+        UK.btn({ text: own ? '구매함' : won(p.krw), cls: (blocked || own ? 'ghost' : 'gold') + ' sm', onclick: async () => {
+          if (blocked || own) return; const c = await http('POST', '/iap/precheck', { sku: p.sku }); if (!c.allowed) { UK.toast(c.msg || '지금은 살 수 없어요', r); return; }
+          UK.modal({ parent: r, title: p.name + ' · ' + won(p.krw), body: `이번 달 ${won(c.month_spent)} 사용 / 한도 ${won(c.cap)}<br>· ${pr.notice.unused_refund_7d}<br>· ${pr.notice.gacha_no_refund}<br>· ${pr.notice.store_policy}`, actions: [{ text: '결제하기', cls: 'gold', onclick: async () => {
+            if (!MOCKSTORE) { UK.toast('스토어 결제는 곧 열려요(준비 중)', r); return; }
+            const order = 'MOCK.' + uid(); try { const v = await http('POST', '/iap/verify', { store: 'mock', sku: p.sku, purchase_token: `mock:${order}:${p.sku}`, order_id: order, request_id: uid() }); UK.toast('💎 +' + v.granted + (v.warning ? ' · ' + v.warning : ''), r); } catch (e) { UK.toast(e.msg || '결제를 확인하지 못했어요', r); } GF.replace('xshop');
+          } }, { text: '취소', cls: 'ghost' }] });
+        } }, row);
+      });
+      const adbox = el('div', 'ex-ads', box); el('b', '', adbox, '광고 보고 받기 (선택)'); el('small', '', adbox, '맞춤 광고가 아니에요 · 하루 횟수가 정해져 있어요');
+      Object.entries(pf.ads.reward).forEach(([kind, rw]) => UK.btn({ text: (kind === 'gems' ? `반짝석 ${rw.grant}` : `소탕권 ${rw.grant}`) + ` (하루 ${rw.per_day}회)`, cls: 'sky sm', onclick: async () => {
+        if (!MOCKSTORE) { UK.toast('광고는 곧 열려요(준비 중)', r); return; }
+        try { const t = await http('POST', '/dev/ad', { kind }); const g = await http('POST', '/ads/reward', { kind, token: t.token }); UK.toast('받았어요 · 오늘 ' + g.left_today + '회 남음', r); } catch (e) { UK.toast(e.code === 'daily_limit' ? '오늘은 다 받았어요' : '받지 못했어요', r); } GF.replace('xshop');
+      } }, adbox));
+      el('p', 'ex-sub', box, '소탕권 ' + (pf.wallet.tickets || 0) + ' · ' + (pf.ads.allowed ? '전면 광고: 4번 싸울 때 한 번' : pf.ads.reason === 'first_30min' ? '전면 광고: 설치 직후 30분은 없어요' : '전면 광고 없음'));
+      UK.btn({ text: '계정·데이터 삭제 요청', cls: 'ghost sm', onclick: () => UK.modal({ parent: r, title: '계정 삭제', body: '계정과 보유 정보가 삭제돼요. 결제 기록은 법정 보존 기간 동안 남아요.', actions: [{ text: '삭제', cls: 'pink', onclick: async () => { try { await http('POST', '/account/delete', {}); setAuth(null); location.reload(); } catch (e) { UK.toast('삭제하지 못했어요', r); } } }, { text: '취소', cls: 'ghost' }] }) }, box);
     },
   });
   /* ---------------- 원정 길 ---------------- */

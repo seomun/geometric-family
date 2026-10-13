@@ -144,3 +144,9 @@ CREATE TABLE telemetry_daily (day TEXT, name TEXT, n INTEGER, PRIMARY KEY(day, n
 - 장부 대조: 결제·모집·레벨업·전투·광고·환불을 섞은 뒤 `audit` 가 비어 있음(지갑 = 장부 합).
 - **계정 준비 뒤에 할 것**(작가 몫 선행): Cloudflare 계정·D1 생성·`wrangler secret put JWT_SECRET WEBHOOK_SECRET`(실서버는 Pub/Sub 서명 검증으로 교체)·스토어 상품 등록(`data/expedition_shop.json` 7개 SKU)·`verifyStore` 의 google/samsung 구현·AdMob SSV 공개키 검증 교체·클라이언트 결제/광고 SDK 화면(S1 후반).
 - 결정 요청: ① 상품 구성·반짝석 수량은 제안값(1,100원=110개 … 55,000원=6,300개, 첫 구매 2배) — 확정 필요 ② 월정액·성장 패스·신규 패키지는 S2 로 미룸 ③ 마이너스 잔고 중 무상 반짝석도 막는 현재 방식(고지 문구 포함) 유지 여부.
+
+### 12-3. 클라이언트 상점·설정 + WP9 베타 flavor (2026-10-13)
+- 허브 결정 반영: 반짝석 팩 수량(제안값) 초안 확정(최종 가격은 퍼블리셔 협의) · 월정액·성장 패스·신규 패키지는 S2 · 마이너스 잔고 중 무상 반짝석도 사용 불가(결제 전 고지 유지).
+- 홈 → **상점·설정**(`xshop`, 서버 모드에서만): 결제 전 고지 4줄+랜덤 아이템 문구 상시 표시 · 이번 달 사용액/한도 · 한도 낮추기(즉시)/올리기(다음 달) 선택 · 상품 목록 → 결제 확인창에 고지 반복 → 결제 · 12~13세 결제 차단 안내 · 19세 미만 보호자 안내 · 마이너스 잔고 경고 · 보상형 광고 버튼(맞춤 아님·하루 횟수) · 계정 삭제 요청.
+- 결제·광고는 **로컬 개발 서버에서만 모의 동작**(`/dev/ad`·mock 영수증). 실제 스토어 결제·AdMob SDK 연결은 계정·상품 등록 뒤(버튼은 「곧 열려요」).
+- WP9: `expedition` flavor(`com.geometricfamily.expedition`, 광고 ID·알림 권한 제거, INTERNET 명시) · `build_expedition.py app`(서버 주소 `GF_API` 또는 `~/.gf/store.env EXPEDITION_API` 주입 → `games/app/expedition.html`) · `build_apk.py` 에 등록 · 시험 `tools/exp_app_smoke.js`(file:// 에서 서버 가입까지). **APK 실제 빌드는 여유 메모리 0.8GB 라 보류**(2GB 이상 확보 후 `python games/tools/build_apk.py release expedition`). 아이콘은 임시(day 것) — 그림 패스 때 교체.

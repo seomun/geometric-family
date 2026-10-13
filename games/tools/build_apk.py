@@ -1,10 +1,10 @@
-"""APK 다섯 개 한 번에: python games/tools/build_apk.py [debug|release] [flavor ...]
+"""APK 한 번에(원정대 베타 포함): python games/tools/build_apk.py [debug|release] [flavor ...]
 1) 앱 HTML 다섯 개를 다시 빌드 → android/app/src/<flavor>/assets/index.html
 2) gradle assemble<Flavor><Type> (JDK17, gradle 8.14.3)  3) games/demo/apk/<flavor>.apk 로 모은다.
 release 는 서명 키가 필요: ~/.gradle/gradle.properties 의 GF_STORE_* (없으면 TESTKEY=경로 로 테스트 키). 다섯 앱은 반드시 같은 키여야 집 공유가 된다."""
 import os, pathlib, shutil, subprocess, sys, glob
 G = pathlib.Path(__file__).resolve().parents[1]; A = G / 'android'
-FL = {'toddler': ('build.py', 'index.html'), 'tables': ('build_idle.py', 'idle.html'), 'merge': ('build_merge.py', 'merge.html'), 'color': ('build_color.py', 'color.html'), 'quiz': ('build_quiz.py', 'quiz.html'), 'block': ('build_block.py', 'block.html'), 'spot': ('build_spot.py', 'spot.html'), 'tile': ('build_tile.py', 'tile.html'), 'sort': ('build_sort.py', 'sort.html'), 'day': ('build_day.py', 'day.html')}
+FL = {'toddler': ('build.py', 'index.html'), 'tables': ('build_idle.py', 'idle.html'), 'merge': ('build_merge.py', 'merge.html'), 'color': ('build_color.py', 'color.html'), 'quiz': ('build_quiz.py', 'quiz.html'), 'block': ('build_block.py', 'block.html'), 'spot': ('build_spot.py', 'spot.html'), 'tile': ('build_tile.py', 'tile.html'), 'sort': ('build_sort.py', 'sort.html'), 'day': ('build_day.py', 'day.html'), 'expedition': ('build_expedition.py', 'expedition.html')}
 typ = 'debug'; sel = []
 for a in sys.argv[1:]:
     (typ := a) if a in ('debug', 'release') else sel.append(a)

@@ -36,10 +36,19 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   ok(won, '서버 판정 승리 화면'); await p.screenshot({ path: 'notes/snapshots/exp_r4_win.png' });
   const p5 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(p5.progress.cleared === 1 && p5.wallet.gold === before.wallet.gold + 50 && p5.wallet.free_gems === before.wallet.free_gems + 150, '서버가 진행도·보상 반영: 1단계 클리어 · 금화 +50 · 반짝석 +150'); ok(await p.evaluate(() => EXP.debug.S().cleared === 1 && EXP.debug.S().gold === (JSON.parse(JSON.stringify(EXP.debug.S())).gold)), '화면이 서버 값으로 갱신');
   await p.evaluate(() => document.querySelectorAll('.uk-scrim').forEach((e) => e.remove())); await p.reload(); await p.waitForTimeout(1800); ok(await p.evaluate(() => EXP.debug.S().cleared === 1), '새로고침 뒤에도 진행도(서버) 유지');
+  // 상점: 결제 전 고지 · 모의 결제 · 월 한도 · 광고 보상
+  await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.stack = []; GF.go('xhome'); GF.go('xshop'); }); await p.waitForTimeout(1500);
+  const shopTxt = await p.textContent('.ex-shop'); ok(/7일 안에는 쓰지 않은 유료/.test(shopTxt) && /환불되지 않아요/.test(shopTxt) && /랜덤 아이템/.test(shopTxt), '상점: 결제 전 고지(청약철회·환불 불가·랜덤 아이템)'); ok(/한도 200,000원/.test(shopTxt), '상점: 월 한도 표시'); await p.screenshot({ path: 'notes/snapshots/exp_r5_shop.png' });
+  await p.evaluate(() => { document.querySelectorAll('.ex-prod .uk-btn')[0].click(); }); await p.waitForTimeout(600); ok(/청약철회|7일 안에는/.test(await p.textContent('.uk-sheet')), '결제 확인창에 고지'); await p.screenshot({ path: 'notes/snapshots/exp_r6_buy.png' });
+  await p.evaluate(() => { [...document.querySelectorAll('.uk-sheet .uk-btn')].find((b) => /결제하기/.test(b.textContent)).click(); }); await p.waitForTimeout(1500);
+  const p6 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(p6.wallet.paid_gems === 220 && p6.has_paid === true, '모의 결제: 유료 반짝석 110 + 첫 구매 2배 = 220 · 결제 이력');
+  await p.evaluate(() => { const s = document.querySelector('.ex-cap select'); s.value = '50000'; s.dispatchEvent(new Event('change')); }); await p.waitForTimeout(1200); ok((await p.evaluate(() => EXP.debug.http('POST', '/iap/precheck', { sku: 'gems_1100' }))).cap === 50000, '월 한도를 5만 원으로 낮춤(즉시)');
+  await p.evaluate(() => { document.querySelectorAll('.ex-ads .uk-btn')[0].click(); }); await p.waitForTimeout(1500); const p7 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(p7.wallet.free_gems === p6.wallet.free_gems + 20, '보상형 광고: 반짝석 +20');
   // 12~13세: 결제 차단 안내
   const ctx2 = await b.newContext({ viewport: { width: 390, height: 780 } }), q = await ctx2.newPage(); await q.goto(url); await q.waitForTimeout(1500);
   await q.evaluate(() => { document.querySelectorAll('.ex-sel')[0].value = String(new Date().getFullYear() - 13); document.querySelectorAll('.ex-sel')[1].value = '1'; }); await q.click('.ex-age .uk-btn'); await q.waitForTimeout(1200);
   ok(/보호자 동의 전까지 결제/.test(await q.textContent('.uk-sheet')), '12~13세: 보호자 동의 전 결제 차단·광고 맞춤 없음 안내'); await q.screenshot({ path: 'notes/snapshots/exp_r3_minor.png' });
+  await q.evaluate(() => { GF.stack = []; GF.go('xhome'); GF.go('xshop'); }); await q.waitForTimeout(1500); ok(/보호자 동의 전까지 결제할 수 없어요/.test(await q.textContent('.ex-shop')), '12~13세 상점: 결제 차단 안내');
   ok(errs.length === 0, '오류 없음 ' + errs[0]); await b.close(); srv.kill(); try { fs.unlinkSync(dbf); } catch (e) { /* 임시 파일 */ }
   console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

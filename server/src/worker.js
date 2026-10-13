@@ -1,5 +1,5 @@
 // ⑪ 기하학 원정대 API Worker (S1 WP1~3). 라우팅·인증·오류 처리. 로직은 game.js. 배포·비밀값은 계정 준비 뒤(D27) — 로컬은 wrangler dev 또는 test/ 의 D1 shim.
-import { HttpError, json, readJson, signJwt, verifyJwt, sha256hex, randomToken, uuid, safeEq } from './lib.js';
+import { HttpError, json, readJson, signJwt, verifyJwt, sha256hex, randomToken, uuid, safeEq, dayKst } from './lib.js';
 import * as G from './game.js';
 import * as Shop from './shop.js';
 import * as Ops from './ops.js';
@@ -54,6 +54,8 @@ export async function handle(req, env, now = Date.now()) {
     case 'POST /gacha/pull': { const b = await readJson(req); return json(await retry(() => G.gachaPull(env, account, { banner: b.banner, n: b.n, requestId: b.request_id }, now))); }
     case 'POST /stage/start': return json(await G.stageStart(env, account, +(await readJson(req)).stage, now));
     case 'POST /stage/clear': { const b = await readJson(req); const out = await retry(() => G.stageClear(env, account, { token: b.token, inputs: b.inputs, auto: b.auto, requestId: b.request_id }, now)); return json({ ...out, profile: await G.profile(env, account, now) }); }
+    case 'POST /dev/ad': {   // 개발·시험 전용: 광고 완료 확인(SSV)을 흉내 낸다. prod 에서는 404.
+      if (!['dev', 'test'].includes(env.ENV)) throw new HttpError(404, 'not_found'); const b = await readJson(req), tok = 'dev-' + uuid(); await env.DB.prepare('INSERT INTO ad_claims(token,account,kind,ts,claimed,day) VALUES(?,?,?,?,0,?)').bind(tok, account, b.kind, now, dayKst(now)).run(); return json({ token: tok }); }
     case 'POST /dev/grant': {   // 개발·시험 전용(ENV=dev|test): 시험에서 재화를 바로 채울 때만 쓴다. prod 에서는 404.
       if (!['dev', 'test'].includes(env.ENV)) throw new HttpError(404, 'not_found'); const b = await readJson(req); const g = Math.max(0, Math.min(100000, +b.gems || 0)), c = Math.max(0, Math.min(100000, +b.gold || 0));
       await env.DB.batch([env.DB.prepare('UPDATE wallet SET free_gems=free_gems+?, gold=gold+?, ver=ver+1 WHERE account=?').bind(g, c, account), env.DB.prepare("INSERT INTO ledger(account,ts,kind,d_free,d_gold,reason,ref) VALUES(?,?,'grant',?,?,'dev',?)").bind(account, now, g, c, 'dev-' + now + '-' + Math.random())]); return json(await G.profile(env, account, now)); }

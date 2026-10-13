@@ -433,6 +433,7 @@
     const guestChip = el('button', 'h2-dreamchip h2-guestchip', view, kid() ? '👋' : '👋 손님'); guestChip.onclick = () => Room.guestBook(parent);
     const albChip = el('button', 'h2-dreamchip h2-albchip', view, kid() ? '📒' : '📒 앨범'); albChip.onclick = () => Room.albumSheet(parent);
     const sceneChip = el('button', 'h2-dreamchip h2-scenechip', view, ''); sceneChip.style.display = 'none';
+    if (kid()) { const tidyChip = el('button', 'h2-dreamchip h2-tidychip', view, '🧺'); tidyChip.onclick = () => Room.tidyGame(parent, (first) => { if (first) { try { UK.toast('⭐', parent); } catch (e) { /* 토스트 */ } } }); }
     function sceneCheck(auto) {      // 완성한 세트가 이 방의 것이면 칩을 보이고, 처음 열 땐 한 번 자동으로 보여 준다
       const c = Room.sceneFor(cur); if (!c) { sceneChip.style.display = 'none'; return; } sceneChip.style.display = ''; sceneChip.textContent = kid() ? c.icon : c.icon + ' 가족 모임'; const playIt = () => { const rm = stage.querySelector('.h2-room'); sceneChip.style.visibility = 'hidden'; if (!Room.playScene(rm, c, () => { sceneChip.style.visibility = ''; })) sceneChip.style.visibility = ''; }; sceneChip.onclick = playIt;
       if (auto) { S.sceneSeen = S.sceneSeen || {}; if (!S.sceneSeen[c.set]) { S.sceneSeen[c.set] = 1; Room.albumAdd('set:' + c.set, 'set', (Room.set(c.set) || {}).name || '세트 완성', c.text, c.room); Room.save(); setTimeout(() => { const rm = stage.querySelector('.h2-room'); if (rm && rm.isConnected) playIt(); }, 1500); } }
@@ -627,8 +628,34 @@
     });
     UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
+  /* ---------------- 유아 집 「오늘의 정리 놀이」(A12): 글자 없이, 흩어진 장난감을 같은 모양 그림자 자리에 끌어다 놓는다 ---------------- */
+  const TIDY = ['🧸', '🚂', '⚽', '🥁', '🎨', '🪁', '🚗', '🦆'];
+  Room.tidyToday = () => { const d = now0(), k = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); return { key: 'tidy:' + k, seed: k }; };
+  Room.tidyGame = function (parent, onEnd) {
+    const S = ensure(), T = Room.tidyToday(), sc = el('div', 'uk-scrim h2-tidy', ovRoot(parent)), box = el('div', 'h2-tidybox', sc), shelf = el('div', 'h2-tidyshelf', box), floor = el('div', 'h2-tidyfloor', box);
+    let r = T.seed % 2147483647; const rnd = () => (r = (r * 48271) % 2147483647) / 2147483647;
+    const pool = TIDY.slice(); const picks = []; while (picks.length < 5) picks.push(pool.splice(Math.floor(rnd() * pool.length), 1)[0]);
+    const slots = picks.map((e) => { const s2 = el('div', 'h2-tidyslot', shelf); el('span', '', s2, e); s2.dataset.e = e; return s2; });
+    let left = picks.length; const done = () => {
+      try { GF.sfx && GF.sfx('celebrate'); } catch (e) { /* 소리 */ } el('div', 'h2-tidystar', box, '⭐'); const first = Room.albumAdd(T.key, 'tidy', '오늘의 정리 놀이', '장난감을 모두 제자리에', null); if (first) { S.tidyN = (S.tidyN || 0) + 1; Room.save(); }
+      setTimeout(() => { sc.remove(); onEnd && onEnd(first); }, 1900);
+    };
+    picks.slice().sort(() => rnd() - 0.5).forEach((e, i) => {
+      const t = el('div', 'h2-tidytoy', floor, e), W = 340, x = 24 + ((i * 61 + Math.floor(rnd() * 30)) % (W - 100)), y = 14 + ((i * 47 + Math.floor(rnd() * 20)) % 120); t.style.cssText += `;left:${x}px;top:${y}px`; t.dataset.e = e; t.dataset.hx = x; t.dataset.hy = y;
+      let ox = 0, oy = 0, drag = false;
+      t.addEventListener('pointerdown', (ev) => { if (t.classList.contains('ok')) return; drag = true; t.setPointerCapture(ev.pointerId); const b = t.getBoundingClientRect(); ox = ev.clientX - b.left; oy = ev.clientY - b.top; t.classList.add('drag'); try { GF.sfx && GF.sfx('tap'); } catch (x2) { /* 소리 */ } });
+      t.addEventListener('pointermove', (ev) => { if (!drag) return; const fb = floor.getBoundingClientRect(), k = fb.width / floor.offsetWidth || 1; t.style.left = (ev.clientX - ox - fb.left) / k + 'px'; t.style.top = (ev.clientY - oy - fb.top) / k + 'px'; });
+      const end = (ev) => {
+        if (!drag) return; drag = false; t.classList.remove('drag'); const tb = t.getBoundingClientRect(), cx = tb.left + tb.width / 2, cy = tb.top + tb.height / 2, s2 = slots.find((q) => q.dataset.e === e), sb = s2.getBoundingClientRect();
+        if (Math.hypot(cx - (sb.left + sb.width / 2), cy - (sb.top + sb.height / 2)) <= Math.max(sb.width, 72) * 0.8) { t.classList.add('ok'); s2.classList.add('filled'); const fb = shelf.getBoundingClientRect(); t.style.transition = 'left .2s, top .2s'; const k = floor.getBoundingClientRect().width / floor.offsetWidth || 1, fl = floor.getBoundingClientRect(); t.style.left = (sb.left + sb.width / 2 - tb.width / 2 - fl.left) / k + 'px'; t.style.top = (sb.top + sb.height / 2 - tb.height / 2 - fl.top) / k + 'px'; try { GF.sfx && GF.sfx('star'); } catch (x2) { /* 소리 */ } if (--left === 0) done(); }
+        else { t.style.transition = 'left .25s, top .25s'; t.style.left = t.dataset.hx + 'px'; t.style.top = t.dataset.hy + 'px'; setTimeout(() => { t.style.transition = ''; }, 300); try { GF.sfx && GF.sfx('hmm'); } catch (x2) { /* 소리 */ } }
+      };
+      t.addEventListener('pointerup', end); t.addEventListener('pointercancel', end);
+    });
+    UK.btn({ icon: 'close', cls: 'ghost', onclick: () => { sc.remove(); onEnd && onEnd(false); } }, el('div', 'h2-tidyx', box)); return sc;
+  };
   /* ---------------- 우리 집 앨범(A10): 장 완료·집 레벨·새 방·첫 손님·사진 저장의 순간이 날짜 도장과 함께 자동으로 쌓인다 ---------------- */
-  const AL_ICON = { set: '🎬', chapter: '📖', level: '⭐', room: '🚪', guest: '👋', photo: '📷', loot: '🎁' };
+  const AL_ICON = { tidy: '🧺', set: '🎬', chapter: '📖', level: '⭐', room: '🚪', guest: '👋', photo: '📷', loot: '🎁' };
   Room.albumAdd = function (key, kind, title, sub, rid) {
     const S = ensure(); if (!S) return false; S.album = S.album || []; if (S.album.some((x) => x.k === key)) return false;
     const d = now0(), e = { k: key, kind, title, sub: sub || '', d: d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate(), t: d.getTime(), room: rid || null }; S.album.push(e); Room.save();

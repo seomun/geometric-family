@@ -88,13 +88,17 @@
     toastH('「' + (APPNAME[g] || g) + '」 앱에서 얻어요', opts.parent); return 'web';
   };
   /** 앱 홈 「오늘 할 일」 한 줄(C5, 성인): 오늘의 작은 일 중 아직 안 한 첫 줄 · 다 했으면 선물 안내 · 선물까지 받았으면 칭찬. 누르면 작은 일 목록. 못 해도 괜찮다는 말투 */
-  Room.todoLine = function (parent, onBand) {
+  Room.todoLine = function (parent, onBand) {      // onBand: 띠 요소(있으면 그 안 칩) · 없으면 띠 자리에 한 줄
     const old = parent.querySelector(':scope > .h2-todo'); if (old) old.remove();
     if (kid() || !parent.classList.contains('h2-bandwrap') || parent.classList.contains('top')) return null;
     const O = GF.ops; if (!O || !O.ready || O.kid || !O.missions) return null; let list; try { list = O.missions(); } catch (e) { return null; } if (!list || !list.length) return null;
     const left = list.find((x) => x.got < x.n), doneN = list.filter((x) => x.got >= x.n).length, gifted = !!(O.giftTaken && O.giftTaken());
     const text = left ? GF.t('ops.mis.' + left.id, { n: left.n }) + (left.n > 1 ? ' (' + left.got + '/' + left.n + ')' : '') : gifted ? GF.t('ops.mis.gifted') : GF.t('ops.mis.gift');
-    const b = el('button', 'h2-todo' + (left ? '' : ' ok') + (onBand ? ' tab' : ''), parent); b.setAttribute('aria-label', 'today');
+    if (onBand && onBand.nodeType) {      // 띠 안 오른쪽 작은 칩(아이콘 + 한 일/전체) — 누르면 작은 일 목록
+      const ar = onBand.querySelector('.h2-arrow'), c = el('span', 'h2-todochip' + (left ? '' : ' ok'), onBand); c.setAttribute('role', 'button'); c.setAttribute('aria-label', 'today'); c.title = left ? GF.t('ops.mis.' + left.id, { n: left.n }) : text;
+      el('b', '', c, left ? left.icon : '🎁'); el('i', '', c, doneN + '/' + list.length); if (ar) onBand.insertBefore(c, ar); c.onclick = (e) => { e.stopPropagation(); try { GF.sfx('tap'); } catch (x) { /* 소리 */ } O.openMissions(); }; return c;
+    }
+    const b = el('button', 'h2-todo' + (left ? '' : ' ok'), parent); b.setAttribute('aria-label', 'today');
     if (left) { el('span', 'ic', b, left.icon); el('span', 'tx', b, '오늘 · ' + text); } else el('span', 'tx', b, text); el('i', 'n', b, '✔ ' + doneN + '/' + list.length); b.onclick = (e) => { e.stopPropagation(); try { GF.sfx('tap'); } catch (x) { /* 소리 */ } O.openMissions(); }; return b;
   };
   Room.band = function (parent, opts) {
@@ -102,7 +106,7 @@
     const g = Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) { Room.todoLine(parent, false); return null; } const b = el('button', 'h2-band' + (kid() ? ' kid' : ''), parent);
     const im = el('img', '', b); im.src = Room.src(g.item); im.alt = ''; const ic = APPICON[g.game] || '🎁';
     if (kid()) { el('span', 'h2-bic', b, ic); el('span', 'h2-arrow', b, UK.icon('next')); } else { const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : '다음: ') + g.label + ' · ' + g.hint); el('span', 'h2-arrow', b, UK.icon('next')); }
-    b.setAttribute('aria-label', 'next goal'); b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent: opts.toastParent || parent, home: opts.go }); }; Room.todoLine(parent, true); return b;
+    b.setAttribute('aria-label', 'next goal'); b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent: opts.toastParent || parent, home: opts.go }); }; Room.todoLine(parent, b); return b;
   };
 
   /* ---------------- 놓기: 칸 → 면(소품) → 빈 자리 (겹침 회피) ---------------- */
@@ -123,10 +127,10 @@
     const anc = ((R && R.anchors) || []).filter((a) => a.want !== it.id && !list.some((q) => q.p.id === a.want)).map((a) => { const w = Room.item(a.want); if (!w) return null; const gw = geo(w); return { x: a.x - gw.w / 2, y: a.y - gw.h, w: gw.w, h: gw.h }; }).filter(Boolean);
     let best = null; const wall = it.slot === 'wall', y0 = wall ? 40 : 250, y1 = wall ? 112 : 420;
     for (let by = y0; by <= y1; by += wall ? 12 : 14) for (let cx = g.w / 2 + 6; cx <= RW - g.w / 2 - 6; cx += 12) {
-      const r = { x: cx - g.w / 2, y: by - g.h, w: g.w, h: g.h }; let pen = occ.reduce((s, q) => s + ov(r, q), 0) * 4 + anc.reduce((s, q) => s + ov(r, q), 0) * 2; if (wall) pen += ov(r, WINDOW) * 4; if (r.y < (wall ? 6 : WALLH - g.h * 0.4)) pen += 5000;
-      const d = o.near ? Math.abs(cx - o.near.x) + Math.abs(by - o.near.y) : Math.abs(cx - RW / 2) * 0.2 + (wall ? 0 : Math.abs(by - 340) * 0.3), c = pen * 10 + d; if (!best || c < best.c) best = { c, x: Math.round(r.x), y: Math.round(r.y) };
+      const r = { x: cx - g.w / 2, y: by - g.h, w: g.w, h: g.h }; const oc = occ.reduce((s, q) => s + ov(r, q), 0); let pen = oc * 4 + anc.reduce((s, q) => s + ov(r, q), 0) * 2; if (wall) pen += ov(r, WINDOW) * 4; if (r.y < (wall ? 6 : WALLH - g.h * 0.4)) pen += 5000;
+      const d = o.near ? Math.abs(cx - o.near.x) + Math.abs(by - o.near.y) : Math.abs(cx - RW / 2) * 0.2 + (wall ? 0 : Math.abs(by - 340) * 0.3), c = pen * 10 + d; if (!best || c < best.c) best = { c, x: Math.round(r.x), y: Math.round(r.y), occ: oc };
     }
-    return best || { x: 20, y: 300 };
+    return best || { x: 20, y: 300, occ: 1 };
   };
   Room.placeAt = function (id) {
     const it = Room.item(id), S = ensure(); if (!it) return null; const open = Room.unlockedRooms(), g = geo(it);
@@ -137,7 +141,10 @@
     if (it.slot === 'table') {       // 소품은 면 위에: 고정 가구/큰 가구 윗면에 순서대로
       for (const r of [home].concat(okRooms)) { const L = (S.placed[r.id] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it && q.it.slot === 'table'); for (const sf of Room.surfaces(r.id)) { const sitting = L.filter((q) => Math.abs(q.p.y + geo(q.it).h - sf.y) < 8 && q.p.x >= sf.x0 - 20 && q.p.x <= sf.x1); let x = sf.x0 + 2; sitting.sort((a, b) => a.p.x - b.p.x).forEach((q) => { x = Math.max(x, q.p.x + geo(q.it).w + 6); }); if (x + g.w <= sf.x1 + 6) { pos = { x: Math.round(x), y: Math.round(sf.y - g.h) }; target = r.id; break; } } if (pos) break; }
     }
-    if (!pos) pos = freeSpot(target, it, null);
+    if (!pos) {      // 자유 놓기: 자리 외 자유 놓기는 방마다 10개까지, 다른 가구와 겹치지 않는 방에만(자리 칸 가구는 항상 자기 자리) 다른 가구와 겹치지 않는 방에만. 없으면 놓지 않고 가진 채로 둔다(방이 열리거나 치우면 sweep 이 놓는다)
+      target = null; for (const r of [home].concat(okRooms.filter((x) => x !== home))) { const aw = new Set((r.anchors || []).map((a) => a.want)); if ((S.placed[r.id] || []).filter((q) => !aw.has(q.id) && (Room.item(q.id) || {}).slot !== 'table').length >= 10) continue; const p = freeSpot(r.id, it, null); if (!p.occ) { target = r.id; pos = p; break; } }
+      if (!target) return null;
+    }
     Room.placedIn(target).push({ id, x: pos.x, y: pos.y, flip: 0, c: it.colors[0] }); Room.save(); return { room: target };
   };
   /** 얻었지만 아직 맞는 방이 없어 못 놓은 가구를, 방이 열리면 놓는다 */
@@ -622,7 +629,7 @@
       list.forEach((r) => {
         const ok = unlocked(r), have = (S.placed[r.id] || []).length, tot = (r.anchors || []).length, c = el('button', 'h2-mapc' + (ok ? '' : ' lock') + (r.id === cur ? ' cur' : '') + (r.id === nextId ? ' next' : ''), cells);
         c.style.background = 'linear-gradient(180deg,' + r.wall + ' 0 55%,' + r.floor + ' 55%)'; el('span', 'ic', c, ok ? (MAPI[r.id] || '🏠') : '🔒');
-        if (kid()) { if (!ok) el('i', 'lv', c, '⭐' + Math.ceil(r.unlock / 2)); } else { el('b', '', c, r.name); el('i', 'lv', c, ok ? have + (tot ? '/' + tot : '') + '개' : (r.id === nextId ? '다음 · ' : '') + 'Lv ' + r.unlock); }
+        if (kid()) { if (!ok) el('i', 'lv', c, '⭐' + Math.ceil(r.unlock / 2)); } else { el('b', '', c, r.name); el('i', 'lv', c, ok ? '가구 ' + have + '개' : (r.id === nextId ? '다음 · ' : '') + 'Lv ' + r.unlock); }
         c.onclick = () => { if (ok) { sc.remove(); onGo && onGo(r.id); } else { try { GF.sfx && GF.sfx('hmm'); } catch (e) { /* 소리 */ } UK.toast(kid() ? '⭐ ' + Math.ceil(r.unlock / 2) : r.name + ': 집 레벨 ' + r.unlock + '에 열려요 (지금 ' + L + ')', sc); } };
       });
     });

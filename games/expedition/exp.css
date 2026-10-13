@@ -93,3 +93,8 @@
 .ex-party .ex-pvrow { gap: 4px; flex-wrap: nowrap; width: 100%; } .ex-party .ex-pv { flex: 1 1 0; justify-content: center; min-width: 0; padding: 1px 3px; font-size: 11px; } .ex-party .ex-pv em, .ex-party .ex-pv small { font-size: 11px; }
 .ex-gtabs { display: flex; gap: 8px; justify-content: center; position: absolute; left: 10px; right: 10px; top: 108px; z-index: 4; } .ex-gtabs .uk-btn { min-width: 84px; }
 .ex-gacha .ex-gtabs { top: 112px; } .ex-gacha .ex-banner { top: 170px; } .ex-gacha .ex-pity { top: 342px; } .ex-gacha .ex-prow { top: 376px; } .ex-gacha .ex-odds { top: 448px; } .ex-gacha .ex-gnote { top: 506px; }
+/* 로비 대사 말풍선(B21) */
+.ex-say { position: fixed; z-index: 9999; transform: translate(-50%, -100%); max-width: 260px; padding: 10px 14px; border-radius: 16px; background: #fffdf4; color: #3a2c1f; border: 3px solid #f2b100; font: 800 14px/1.4 var(--uk-font); text-align: center; box-shadow: 0 4px 0 rgba(0,0,0,.12); pointer-events: none; animation: ex-say-in .18s ease-out; }
+.ex-say::after { content: ''; position: absolute; left: 50%; bottom: -10px; width: 14px; height: 14px; background: #fffdf4; border-right: 3px solid #f2b100; border-bottom: 3px solid #f2b100; transform: translateX(-50%) rotate(45deg); }
+@keyframes ex-say-in { from { opacity: 0; transform: translate(-50%, -90%) scale(.9); } to { opacity: 1; transform: translate(-50%, -100%) scale(1); } }
+.ex-hint { opacity: .65; }

@@ -128,7 +128,7 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '기하학 원정대', '세 가족 도형 영웅과 옛이야기 나라를 걷는 RPG' + (REL ? '' : ' · 슬라이스'));
-      const fam = el('div', 'ex-fam', r); S.party.slice(0, 3).forEach((id) => fam.appendChild(art($(id), 'xl')));
+      const fam = el('div', 'ex-fam', r); S.party.slice(0, 3).forEach((id) => { const a = art($(id), 'xl'); a.style.cursor = 'pointer'; a.setAttribute('data-uid', id); a.onclick = () => say(r, $(id), a); fam.appendChild(a); });
       const next = Math.min(S.cleared + 1, D.stages.length), st = D.stages[next - 1], done = S.cleared >= D.stages.length;
       const btns = el('div', 'ex-btns', r);
       UK.btn({ text: done ? '원정 길 다시 걷기' : '원정 · ' + next + '. ' + st.name, icon: 'play', cls: 'block', onclick: () => GF.go('xmap') }, btns);
@@ -311,8 +311,16 @@
       draw();
     },
   });
+  /* 로비 대사(B21): 동료를 누르면 2줄을 번갈아 말풍선으로. 압박 없는 한 줄. */
+  const sayN = {};
+  function say(r, u, host) {
+    const L = u && u.lines; if (!L || !host) return; const n = (sayN[u.id] = ((sayN[u.id] == null ? -1 : sayN[u.id]) + 1) % L.length);
+    document.querySelectorAll('.ex-say').forEach((e) => e.remove()); const b = el('div', 'ex-say', document.body); b.textContent = L[n]; b.setAttribute('role', 'status');
+    const hb = host.getBoundingClientRect(), vw = document.documentElement.clientWidth; b.style.left = Math.max(136, Math.min(vw - 136, hb.left + hb.width / 2)) + 'px'; b.style.top = Math.max(60, hb.top - 4) + 'px';
+    try { GF.sfx('tap'); } catch (e) { /* 소리 */ } clearTimeout(say.t); say.t = setTimeout(() => b.remove(), 3600);
+  }
   function dexInfo(r, u) {
-    const own = !!S.units[u.id], sc = UK.modal({ parent: r, title: own ? u.name : '??? (' + ROUTE[u.route].replace(/해요$/, '') + ')', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'), top = el('div', 'ex-dexhd', sh); top.appendChild(art(u, 'xl')); const tx = el('div', '', top);
+    const own = !!S.units[u.id], sc = UK.modal({ parent: r, title: own ? u.name : '??? (' + ROUTE[u.route].replace(/해요$/, '') + ')', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'), top = el('div', 'ex-dexhd', sh); const xa = art(u, 'xl'); if (own) { xa.style.cursor = 'pointer'; xa.onclick = () => say(sh, u, xa); } top.appendChild(xa); const tx = el('div', '', top); if (own && u.lines) el('small', 'ex-hint', tx, '👆 눌러 보세요');
     const st = own ? SC.stOf(S.units[u.id]) : null; el('b', '', tx, `${'★'.repeat(own ? SC.gradeOf(D, u.id, st) : u.grade)} ${D.el[u.el].icon} ${D.el[u.el].family} ${D.el[u.el].name}`); el('small', '', tx, `${D.role[u.role].icon} ${D.role[u.role].name} · ${D.role[u.role].skill}`);
     if (own) el('small', '', tx, `Lv ${st.lv} · 스킬 ${st.skl} · 각성 ${st.awk} · 조각 ${S.dups[u.id] || 0} · 전투력 ${Math.round(kOf(u.id) * 100)}`);
     el('p', 'ex-tale', sh, own ? u.tale : '아직 만나지 못했어요. ' + (ROUTE[u.route] || '') + (u.route === 'story' || u.route === 'recruit' ? ' (' + (u.note || '').replace(/^[^·]*· /, '') + ')' : '') + (u.costume ? '' : ''));

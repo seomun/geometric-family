@@ -52,6 +52,7 @@ exec(open('tools/expedition_begin.py', encoding='utf-8').read())   # 초보자 �
 exec(open('tools/expedition_events.py', encoding='utf-8').read())   # 계절 이벤트 스테이지 틀(B9)
 exec(open('tools/expedition_ach.py', encoding='utf-8').read())   # 업적·칭호(B10)
 exec(open('tools/expedition_reserve.py', encoding='utf-8').read())   # 새 옛이야기 코스튬 동료 6종 — 풀 밖 보관(B17)
+exec(open('tools/expedition_lines.py', encoding='utf-8').read())   # 동료 로비 대사 2줄씩(B21)
 import os
 if os.path.exists('data/expedition_odds.json'): GACHA['effective'] = json.load(open('data/expedition_odds.json', encoding='utf-8'))['effective']   # tools/odds_effective.js 산출(실효 확률)
 D = dict(version=1, note='[제안] ⑪ 슬라이스 데이터. tools/expedition_slice_build.py 로 생성', el=EL, role=ROLE, units=UNITS, stages=STAGES, nations=NATIONS, dungeon=DUNGEON, loot=LOOT_CODES, story=STORY, gacha=GACHA, bal=BAL, reserve=RESERVE)

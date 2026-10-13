@@ -357,6 +357,7 @@
   GF.refit = () => { try { fit(); } catch (e) {} };   // 부팅 전(DOM 없음)에 네이티브가 불러도 오류 없이 넘어간다
   const GAME_ICON = { shadow: 'gshadow', faces: 'gfaces', puzzle: 'gpuzzle', paint: 'gpaint', shapes: 'gshapes', trace: 'gtrace', cups: 'gcups' };
   const GAME_HERO = { shadow: 'dong_dad.good', faces: 'wife.joy', puzzle: 'nemo_mom.good', paint: 'baby.joy', shapes: 'nemo_dad.good', trace: 'baby.joy', cups: 'nemo_kids.kid1' };
+  const GAME_TINT = { shadow: '#E4E0F7', faces: '#FFE1EA', puzzle: '#D9F3DD', paint: '#FFF1C4', shapes: '#DCEEFF', trace: '#F7E4C0', cups: '#CFF0FB' };
   const GAME_ORDER = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'trace', 'cups'];
 
   /* ---------------- 홈 ---------------- */
@@ -646,15 +647,16 @@
   GF.screen('playroom', {
     wide: () => true,
     enter(r) {
-      GF.bg('home', r);
+      GF.bg('field', r);
       GAME_ORDER.forEach((g, i) => {
         const open = !!GF.modes[g] && GF.modes[g].free;
         const b = el('button', 'card' + (open ? '' : ' locked'), r);
         const col = i % 2, row = Math.floor(i / 2);
         const step = Math.min(134, (GF.safe.w - 48 - 124) / (GAME_ORDER.length - 1));
         b.style.cssText += GF.safeWide ? 'left:' + (24 + i * step) + 'px;top:150px;width:124px;height:170px' : 'left:' + (20 + col * 170) + 'px;top:' + (66 + row * 148) + 'px;width:150px;height:136px';
-        b.appendChild(GF.img(GAME_HERO[g]));
-        const ic = el('div', '', b, IC[GAME_ICON[g]]); ic.style.cssText = 'position:absolute;left:8px;top:8px;width:40px;height:40px;background:#fff;border-radius:12px;padding:4px;box-shadow:0 2px 0 rgba(0,0,0,.12)';
+        b.style.background = GAME_TINT[g] || '#fff';      // 카드마다 배경색이 달라 글을 몰라도 구분된다
+        const ic = el('div', '', b, IC[GAME_ICON[g]]); ic.style.cssText = 'position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-48px 0 0 -42px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.14))';      // 놀이 그림이 카드 한가운데
+        const hh = GF.img(GAME_HERO[g]); hh.style.cssText = 'position:absolute;right:4px;bottom:2px;left:auto;top:auto;width:52px;height:56px;object-fit:contain;transform:none'; b.appendChild(hh);      // 캐릭터는 모서리에 작게
         if (!open) el('div', '', b, '<svg class="lock" viewBox="0 0 32 32">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
         b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } GF.sfx('pick'); pickLevel(r, g); };
       });

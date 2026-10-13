@@ -9,6 +9,8 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   const cards = await p.evaluate(() => { GF.go('playroom'); return 0; }); await p.waitForTimeout(700);
   const n = await p.evaluate(() => [...document.querySelectorAll('.screen.on .card')].length); ok(n === 7, '놀이방 카드 7장(기존 5 + 새 2) · ' + n);
   const lockN = await p.evaluate(() => document.querySelectorAll('.screen.on .card.locked').length); ok(lockN === 0, '새 놀이 카드가 잠겨 있지 않음'); await p.screenshot({ path: 'notes/snapshots/d9_playroom.png' });
+  const cd = await p.evaluate(() => [...document.querySelectorAll('.screen.on .card')].map((c) => { const i = c.querySelector('svg').getBoundingClientRect(), h = c.querySelector('img') && c.querySelector('img').getBoundingClientRect(), cr = c.getBoundingClientRect(); return { bg: c.style.background, iw: Math.round(i.width), hw: h ? Math.round(h.width) : 0, inside: i.left >= cr.left && i.right <= cr.right && i.top >= cr.top && i.bottom <= cr.bottom }; }));
+  ok(new Set(cd.map((c) => c.bg)).size === cd.length, '카드마다 배경색이 다름'); ok(cd.every((c) => c.iw >= 70 && c.inside), '놀이 그림이 카드 안에 크게(70px 이상)'); ok(cd.every((c) => c.hw <= 64), '캐릭터는 모서리에 작게');
   // ---- 길 따라가기 ----
   await open(5, 1);
   let o = await p.evaluate(() => { const a = document.querySelector('.playarea'), t = a.__trace; return { has: !!t, total: Math.round(t.total), txt: a.innerText.replace(/\s/g, '') }; });

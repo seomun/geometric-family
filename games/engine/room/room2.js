@@ -446,9 +446,11 @@
       setTimeout(mark, 0);
     }
     if (kid()) { const tidyChip = el('button', 'h2-dreamchip h2-tidychip', view, '🧺'); tidyChip.onclick = () => Room.tidyGame(parent, (first) => { if (first) { try { UK.toast('⭐', parent); } catch (e) { /* 토스트 */ } } }); }
-    function sceneCheck(auto) {      // 완성한 세트가 이 방의 것이면 칩을 보이고, 처음 열 땐 한 번 자동으로 보여 준다
-      const c = Room.sceneFor(cur); if (!c) { sceneChip.style.display = 'none'; return; } sceneChip.style.display = ''; sceneChip.textContent = kid() ? c.icon : c.icon + ' 가족 모임'; const playIt = () => { const rm = stage.querySelector('.h2-room'); sceneChip.style.visibility = 'hidden'; if (!Room.playScene(rm, c, () => { sceneChip.style.visibility = ''; })) sceneChip.style.visibility = ''; }; sceneChip.onclick = playIt;
-      if (auto) { S.sceneSeen = S.sceneSeen || {}; if (!S.sceneSeen[c.set]) { S.sceneSeen[c.set] = 1; Room.albumAdd('set:' + c.set, 'set', (Room.set(c.set) || {}).name || '세트 완성', c.text, c.room); Room.save(); setTimeout(() => { const rm = stage.querySelector('.h2-room'); if (rm && rm.isConnected) playIt(); }, 1500); } }
+    let sceneIx = 0;
+    function sceneCheck(auto) {      // 완성한 세트가 이 방의 것이면 칩을 보이고, 처음 보는 것은 한 번 자동으로 보여 준다(여러 개면 누를 때마다 다음 장면)
+      const L = Room.scenesFor(cur); if (!L.length) { sceneChip.style.display = 'none'; return; } sceneIx = Math.min(sceneIx, L.length - 1); const c = L[sceneIx]; sceneChip.style.display = ''; sceneChip.textContent = kid() ? c.icon : c.icon + (c.name ? ' ' + c.name.replace(/ 세트$/, '') : ' 가족 모임');
+      const playIt = (cc) => { const rm = stage.querySelector('.h2-room'); sceneChip.style.visibility = 'hidden'; if (!Room.playScene(rm, cc, () => { sceneChip.style.visibility = ''; sceneIx = (L.indexOf(cc) + 1) % L.length; sceneCheck(false); })) sceneChip.style.visibility = ''; }; sceneChip.onclick = () => playIt(L[sceneIx]);
+      if (auto) { S.sceneSeen = S.sceneSeen || {}; const nws = L.filter((q) => !S.sceneSeen[q.set]), nw = nws[0]; nws.forEach((q) => { S.sceneSeen[q.set] = 1; Room.albumAdd('set:' + q.set, 'set', (Room.set(q.set) || {}).name || q.name || '세트 완성', q.text, q.room); }); if (nw) { Room.save(); sceneIx = L.indexOf(nw); setTimeout(() => { const rm = stage.querySelector('.h2-room'); if (rm && rm.isConnected) playIt(nw); }, 1500); } }
     }
     function drawTop() {
       top.innerHTML = ''; const L = Room.levelInfo(); el('div', 'h2-lv', top, kid() ? `<b>⭐ ${Math.max(1, Math.ceil(L.lv / 2))}</b>` : `<b>Lv ${L.lv}</b><span>${L.cozy}</span>`); const bw = el('div', 'h2-barw', top); el('div', 'h2-bar', bw, `<i style="width:${Math.round(L.pct * 100)}%"></i>`);
@@ -598,10 +600,15 @@
     { set: 'photo', room: 'nemo', focus: ['a_album', 'a_shelf', 'a_camera'], chars: ['nemo_dad.joy', 'nemo_mom.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'baby.joy'], emo: '📸', text: '앨범을 펼치다 가족사진을 찍었어요', line: '하나, 둘, 김치~!', icon: '📸' },
     { set: 'kid', room: 'kid', focus: ['y_toybox', 'k_train'], chars: ['baby.joy', 'nemo_kids.kid3', 'nemo_kids.kid1'], emo: '🎵', text: '장난감 방에서 신나게 놀아요', line: '', icon: '🧸' },
     { set: 'storage', room: 'upstairs', focus: ['u_box', 'u_closet'], chars: ['nemo_mom.joy', 'nemo_kids.kid2', 'nemo_kids.kid3'], emo: '✨', text: '정리를 끝내고 모두 뿌듯해해요', line: '깔끔해졌다!', icon: '🧺' },
+    { set: 'season_spring', name: '봄 소풍 세트', items: ['s2_picnic', 's2_cherry', 's2_kite', 's2_tulip'], room: 'yard', focus: ['s2_picnic', 's2_cherry'], chars: ['nemo_mom.joy', 'nemo_dad.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'baby.joy'], emo: '🧺', text: '벚꽃 아래 돗자리를 펴고 봄 소풍을 즐겨요', line: '도시락 맛있다!', icon: '🌸' },
+    { set: 'season_summer', name: '여름 평상 세트', items: ['s2_chime', 's2_melon', 's2_tube', 's2_fan', 's2_ice'], room: 'yard', focus: ['m_bench', 's2_melon'], chars: ['nemo_grandma.good', 'nemo_dad.joy', 'nemo_kids.kid1', 'nemo_kids.kid3', 'baby.joy'], emo: '🍉', text: '평상에 둘러앉아 수박을 나눠 먹어요', line: '아, 시원하다!', icon: '🍉' },
+    { set: 'season_autumn', name: '가을 추석상 세트', items: ['s2_persimmon', 's2_moonlamp', 's2_acorn', 's2_leaf', 's_songpyeon'], room: 'nemo', focus: ['b_table'], chars: FAM_A, emo: '🌕', text: '보름달 아래 온 가족이 추석상에 모였어요', line: '보름달이 환하네!', icon: '🌕' },
+    { set: 'season_winter', name: '겨울 김장 세트', items: ['s2_tangerine', 's2_heater', 's2_blanket', 's2_wreath', 'p_kimchi'], room: 'kitchen', focus: ['p_rice'], chars: ['nemo_mom.joy', 'nemo_dad.joy', 'nemo_kids.kid2', 'baby.joy', 'nemo_grandma.good', 'wife.joy'], emo: '🥬', text: '다 같이 김장을 하고 귤을 까먹어요', line: '올해 김치 대박이다!', icon: '🥬' },
     { set: 'outer', room: 'yard', focus: ['m_bench', 'o_fence'], chars: ['nemo_dad.joy', 'wife.joy', 'dong_dad.warm', 'nemo_grandma.good'], emo: '😄', text: '이웃이 마당에 모여 담소를 나눠요', line: '다음 모임도 우리 집에서!', icon: '🏡' },
   ];
-  Room.setScenes = () => SCENES.filter((c) => { const its = Room.data.items.filter((i) => i.set === c.set && inGroup(i)); return its.length && its.every((i) => Room.has(i.id)); });
-  Room.sceneFor = (rid) => Room.setScenes().find((c) => c.room === rid) || null;
+  Room.setScenes = () => SCENES.filter((c) => { const its = c.items ? c.items.map((id) => Room.item(id)).filter(Boolean) : Room.data.items.filter((i) => i.set === c.set && inGroup(i)); return its.length && (!c.items || its.length === c.items.length) && its.every((i) => Room.has(i.id)); });
+  Room.scenesFor = (rid) => Room.setScenes().filter((c) => c.room === rid);      // 그 방에서 볼 수 있는 완성 장면들(칩을 누를 때마다 다음 것)
+  Room.sceneFor = (rid) => Room.scenesFor(rid)[0] || null;
   Room.playScene = function (room, c, onEnd) {
     if (!Room.cfg.charSrc || !room || room.querySelector('.h2-fam')) return null; const n = c.chars.length, out = [];
     room.classList.add('scene'); const stg = el('div', 'h2-stage-bg', room), bn = el('div', 'h2-scenebn', room, kid() ? c.icon : c.icon + ' ' + c.text);

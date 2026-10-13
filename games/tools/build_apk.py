@@ -26,6 +26,15 @@ if typ == 'release' and os.environ.get('TESTKEY'):
     extra = ['-PGF_STORE_FILE=' + os.environ['TESTKEY'], '-PGF_STORE_PASSWORD=gftest1234', '-PGF_KEY_ALIAS=gftest', '-PGF_KEY_PASSWORD=gftest1234']
 tasks = ['assemble' + f.capitalize() + typ.capitalize() for f in sel]
 subprocess.run([gr, '--no-daemon', '-q'] + extra + tasks, cwd=A, env=env, check=True)
+# APK 안 HTML = 방금 만든 최신 HTML 인지 해시로 단언(RC12 에서 원정대 APK 가 오래된 HTML 이었던 사고 방지)
+import hashlib, zipfile
+def _h(b): return hashlib.sha256(b).hexdigest()[:16]
+for f in sel:
+    apk = next((A / 'app' / 'build' / 'outputs' / 'apk' / f / typ).glob('*.apk'), None); assert apk, ('APK 없음', f)
+    want = (A / 'app' / 'src' / f / 'assets' / 'index.html').read_bytes(); got = zipfile.ZipFile(apk).read('assets/index.html')
+    assert _h(want) == _h(got), ('APK 안 HTML 이 src 와 다름', f, _h(want), _h(got))
+    if f == 'expedition': assert b'window.GF_RELEASE = true' in got and b'window.GF_API' in got and b'xdun' in got and b'xdex' in got, '원정대 APK 에 출시 플래그·서버 주소·던전·도감이 없음'
+    print('hash', f, _h(got))
 for f in sel:   # 웹판용 HTML 은 이메일 없이 다시 만든다(deploy_play.sh 가 games/app 을 그대로 복사)
     subprocess.run([sys.executable, str(G / 'tools' / FL[f][0])] + (['app'] if f == 'expedition' else []), check=True, stdout=subprocess.DEVNULL)
 out = G / 'demo' / 'apk'; out.mkdir(parents=True, exist_ok=True)

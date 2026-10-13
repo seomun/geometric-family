@@ -821,7 +821,7 @@
       Room.init({ home: () => GF.go('map'), openHouse: () => GF.go('khouse'), housing: GF.data.housing, app: 'playground', data: GF.data.room_items, game: 'playground', mode: 'kid', autoPlace: true, guard: (cb) => Gate.ask(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       if (GF.extras) GF.extras.init({ app: 'play', kid: true, noHold: true, progress: () => Object.values(GF.state.stages || {}).filter((x) => x.stars > 0).length, stats: () => [['별', totalStars()], ['깬 단계', Object.values(GF.state.stages).filter((x) => x.stars > 0).length], ['스티커', Object.keys(GF.state.stickers || {}).length]], reset: () => GF.resetState() });
     }
-    ensureAudio(); loadSounds();
+    (window.requestIdleCallback || ((fn) => setTimeout(fn, 900)))(() => { ensureAudio(); loadSounds(); }, { timeout: 2500 });      // 소리 준비는 첫 화면이 뜬 뒤(저사양 첫 진입 단축, C7). 첫 터치 때는 GF.sfx·pointerdown 이 바로 준비한다
     fit(); window.addEventListener('resize', () => { fit(); const s = GF.cur; if (s && wantWide(s, s.params) !== !!GF.safeWide) show(s.name, s.params); });
     document.addEventListener('contextmenu', (e) => e.preventDefault());
     // 상단 바

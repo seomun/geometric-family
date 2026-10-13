@@ -4,7 +4,7 @@
   'use strict';
   const C = typeof module !== 'undefined' ? require('./block-core.js') : root.BlockCore;
   const mulberry = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이'];
+  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이', '선녀와 나무꾼', '토끼전', '은혜 갚은 까치', '호랑이와 곶감', '빨간 모자', '헨젤과 그레텔'];
   const TYPE_NAME = { lines: '줄 지우기', family: '도형 모으기', junk: '짐 치우기', combo: '한꺼번에', star: '반짝 칸', limit: '조각 아껴 쓰기', solo: '한 가족만' };
   // 장마다 한 판 10개: 위치별 종류(쉬어 가기는 5·10번째, 새 종류는 장 앞쪽에 하나씩 소개)
   const A = ['lines', 'lines', 'lines', 'family', 'lines', 'junk', 'star', 'family', 'combo', 'lines'], B = ['limit', 'lines', 'solo', 'junk', 'lines', 'star', 'combo', 'limit', 'family', 'lines'], Cc = ['family', 'lines', 'junk', 'lines', 'lines', 'combo', 'solo', 'star', 'limit', 'lines'],

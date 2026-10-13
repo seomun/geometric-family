@@ -726,40 +726,40 @@
     "spot"
    ],
    "fairywood": [
-    "spot",
-    "spot",
-    "spot",
-    "spot"
+    "block",
+    "sort",
+    "tile",
+    "merge"
    ],
    "rabbitliver": [
-    "spot",
-    "spot",
-    "spot",
+    "sort",
+    "tile",
+    "merge",
     "spot"
    ],
    "magpie": [
+    "tile",
+    "merge",
     "spot",
-    "spot",
-    "spot",
-    "spot"
+    "block"
    ],
    "tigerpersimmon": [
+    "merge",
     "spot",
-    "spot",
-    "spot",
-    "spot"
+    "block",
+    "sort"
    ],
    "redhood": [
     "spot",
-    "spot",
-    "spot",
-    "spot"
+    "block",
+    "sort",
+    "tile"
    ],
    "hansel": [
-    "spot",
-    "spot",
-    "spot",
-    "spot"
+    "block",
+    "sort",
+    "tile",
+    "merge"
    ],
    "puss": [
     "spot",

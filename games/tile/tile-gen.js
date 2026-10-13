@@ -6,7 +6,7 @@
   'use strict';
   const C = typeof module !== 'undefined' ? require('./tile-core.js') : root.TileCore;
   const mulberry = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이'];
+  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이', '선녀와 나무꾼', '토끼전', '은혜 갚은 까치', '호랑이와 곶감', '빨간 모자', '헨젤과 그레텔'];
   const TYPE_NAME = { classic: '전부 지우기', pair: '짝 맞추기', goal: '목표 모으기', lock: '자물쇠', narrow: '좁은 바구니', trio: '세 가족 얼굴' };
   const A = ['pair', 'pair', 'classic', 'classic', 'classic', 'goal', 'lock', 'narrow', 'trio', 'classic'], B = ['classic', 'goal', 'narrow', 'lock', 'classic', 'trio', 'goal', 'classic', 'narrow', 'classic'], Cc = ['classic', 'lock', 'goal', 'narrow', 'classic', 'goal', 'trio', 'lock', 'classic', 'classic'];
   const SEQ = (() => { const q = []; for (let n = 1; n <= 400; n++) q.push([A, B, Cc][(((n - 1) / 10) | 0) % 3][(n - 1) % 10]); for (let i = 3; i < q.length; i++) if (q[i] === q[i - 1] && q[i] === q[i - 2] && q[i] === q[i - 3]) q[i] = 'goal'; return q; })();

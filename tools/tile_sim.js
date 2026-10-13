@@ -2,7 +2,7 @@
 const C = require('../games/tile/tile-core.js'), G = require('../games/tile/tile-gen.js'), D = require('../data/tile_levels.json');
 let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 const replay = (L, rule) => { const S = C.newGame(L, rule); for (const i of L.solution) { const ev = C.press(S, i); if (!ev || ev.lose) return false; if (S.won) return true; } return S.won; };
-ok(D.levels.length === 120 && D.levels.every((l) => replay(l)), '120판 풀이(제거 순서) 재생 모두 클리어');
+ok(D.levels.length === 180 && D.levels.every((l) => replay(l)), '180판 풀이(제거 순서) 재생 모두 클리어');
 const types = new Set(D.levels.map((l) => l.type)); ok(types.size >= 6, '판 종류 ' + types.size + '종: ' + [...types].join(','));
 let run = 1, mx = 1; for (let i = 1; i < D.levels.length; i++) { run = D.levels[i].type === D.levels[i - 1].type ? run + 1 : 1; mx = Math.max(mx, run); } ok(mx <= 3, '같은 종류 연속 최대 ' + mx + '판(≤3)');
 const rng = G.mulberry(5); console.log('--- 곡선(탐욕 사람 흉내 80회) ---'); console.log(' ' + D.levels.filter((l, i) => i % 6 === 0).map((l) => l.id + ':' + l.type + ' N' + l.tiles.length + ' ' + C.greedyWinRate(l, 60, rng).toFixed(2)).join(' | '));

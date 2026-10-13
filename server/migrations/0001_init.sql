@@ -1,0 +1,15 @@
+-- ⑪ 기하학 원정대 D1 스키마 v1 (games/29_EXPEDITION_S1.md §3). 재화의 진실은 ledger, wallet 은 캐시(+ver 낙관적 잠금).
+CREATE TABLE accounts (id TEXT PRIMARY KEY, created_at INTEGER NOT NULL, birth_ym TEXT, age_band TEXT NOT NULL, guardian_notice_at INTEGER, status TEXT NOT NULL DEFAULT 'active', cap_krw INTEGER NOT NULL DEFAULT 0, region TEXT);
+CREATE TABLE tokens (id INTEGER PRIMARY KEY AUTOINCREMENT, account TEXT NOT NULL, refresh_hash TEXT NOT NULL UNIQUE, device_hash TEXT, issued_at INTEGER NOT NULL, expires_at INTEGER NOT NULL, revoked INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE wallet (account TEXT PRIMARY KEY, free_gems INTEGER NOT NULL, paid_gems INTEGER NOT NULL DEFAULT 0, gold INTEGER NOT NULL DEFAULT 0, ver INTEGER NOT NULL DEFAULT 0, last_req TEXT);   -- ver = 낙관적 잠금, last_req = 이 요청의 갱신이 적용됐는지 확인하는 표지
+CREATE TABLE ledger (id INTEGER PRIMARY KEY AUTOINCREMENT, account TEXT NOT NULL, ts INTEGER NOT NULL, kind TEXT NOT NULL, d_free INTEGER NOT NULL DEFAULT 0, d_paid INTEGER NOT NULL DEFAULT 0, d_gold INTEGER NOT NULL DEFAULT 0, reason TEXT, ref TEXT);
+CREATE UNIQUE INDEX ledger_ref ON ledger(account, kind, ref) WHERE ref IS NOT NULL;
+CREATE TABLE units (account TEXT NOT NULL, unit_id TEXT NOT NULL, lv INTEGER NOT NULL DEFAULT 1, dups INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (account, unit_id));
+CREATE TABLE progress (account TEXT PRIMARY KEY, cleared INTEGER NOT NULL DEFAULT 0, stars TEXT NOT NULL DEFAULT '{}', party TEXT NOT NULL DEFAULT '[]', flags TEXT NOT NULL DEFAULT '{}');
+CREATE TABLE pity (account TEXT NOT NULL, banner TEXT NOT NULL, since5 INTEGER NOT NULL DEFAULT 0, since4 INTEGER NOT NULL DEFAULT 0, guard INTEGER NOT NULL DEFAULT 0, pulls INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (account, banner));
+CREATE TABLE gacha_log (id INTEGER PRIMARY KEY AUTOINCREMENT, account TEXT NOT NULL, ts INTEGER NOT NULL, banner TEXT NOT NULL, n INTEGER NOT NULL, results TEXT NOT NULL, response TEXT NOT NULL, odds_ver TEXT NOT NULL, rng_ref TEXT, request_id TEXT NOT NULL UNIQUE);
+CREATE TABLE purchases (order_id TEXT PRIMARY KEY, account TEXT NOT NULL, sku TEXT NOT NULL, store TEXT NOT NULL, state TEXT NOT NULL, amount_krw INTEGER NOT NULL, ts INTEGER NOT NULL, refunded_at INTEGER, raw TEXT);
+CREATE TABLE spend_month (account TEXT NOT NULL, ym TEXT NOT NULL, krw INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (account, ym));
+CREATE TABLE ad_claims (token TEXT PRIMARY KEY, account TEXT, kind TEXT, ts INTEGER, claimed INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE telemetry_daily (day TEXT NOT NULL, name TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, name));
+CREATE TABLE requests (request_id TEXT PRIMARY KEY, account TEXT NOT NULL, route TEXT NOT NULL, status INTEGER NOT NULL, body TEXT NOT NULL, ts INTEGER NOT NULL);   -- 쓰기 요청 멱등 저장

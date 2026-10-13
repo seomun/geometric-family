@@ -47,7 +47,7 @@ for grp in ('sfx', 'music'):
         aud += len(raw); audio[f] = b64(raw, mime)
 data['audio'] = audio
 css = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/ui-kit/ui-kit.css', 'engine/gf.css', 'engine/room/room.css', 'engine/extras.css', 'engine/saga.css', 'expedition/exp.css'])
-js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/room/room2.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/ops.js', 'engine/ip.js', 'engine/sharecard.js', 'engine/polish.js', 'engine/saga.js', 'engine/extras.js', 'expedition/battle-core.js', 'expedition/exp.js'])
+js = '\n'.join((G / f).read_text(encoding='utf-8') for f in ['engine/gf.js', 'engine/art.js', 'engine/ui-kit/ui-kit.js', 'engine/room/room-art.js', 'engine/room/room.js', 'engine/room/room2.js', 'engine/ads.js', 'engine/board.js', 'engine/rank.js', 'engine/tale.js', 'engine/ops.js', 'engine/ip.js', 'engine/sharecard.js', 'engine/polish.js', 'engine/saga.js', 'engine/extras.js', 'expedition/battle-core.js', 'expedition/gacha-core.js', 'expedition/exp.js'])
 body = re.search(r'<body>(.*?)<script src=', (G / 'expedition' / 'index.html').read_text(encoding='utf-8'), re.S).group(1)
 html = f'''<!DOCTYPE html>
 <html lang="ko" data-uk="adult"><head><meta charset="utf-8">

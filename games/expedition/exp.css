@@ -33,3 +33,5 @@
 .ex-brow { left: 14px; right: 14px; gap: 8px; } .ex-brow.e { top: 118px; } .ex-brow.p { bottom: 16px; }
 .ex-bc { width: 64px; height: 112px; border-radius: 16px; } .ex-bc .ex-art { width: 56px; height: 58px; font-size: 34px; } .ex-hp { width: 52px; height: 9px; } .ex-bc small { font-size: 13px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; }
 .ex-bmid { top: 250px; bottom: 154px; }
+
+.ex-age { position: absolute; left: 20px; right: 20px; top: 120px; text-align: center; } .ex-age p { font: 700 16px/1.45 var(--uk-font); color: var(--uk-ink2); } .ex-sel { font: 800 18px/1 var(--uk-font); padding: 10px 12px; margin: 6px 6px 14px; border-radius: 12px; border: 2px solid #d9c9a8; background: #fff; } .ex-agemsg { min-height: 24px; color: #E5334A !important; }

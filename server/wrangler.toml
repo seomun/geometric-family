@@ -1,0 +1,18 @@
+# ⑪ 기하학 원정대 API — 로컬: `npm run dev`(계정 불필요, 로컬 D1). 원격 배포·비밀값은 계정 준비 뒤(D27).
+name = "expedition-api"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+ENV = "dev"
+# JWT_SECRET 등 비밀값은 `wrangler secret put` 으로만 — 저장소에 두지 않는다.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "expedition-db"
+database_id = "00000000-0000-0000-0000-000000000000"   # 원격 생성 뒤 교체(로컬은 무시)
+migrations_dir = "migrations"
+
+# [[kv_namespaces]]
+# binding = "CONFIG"
+# id = "..."        # 원격 생성 뒤

@@ -1,0 +1,13 @@
+{
+  "name": "expedition-api",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "⑪ 기하학 원정대 서버(Cloudflare Workers + D1). S1 WP1~3: 골격·계정·저장·서버 뽑기. 로컬은 node:sqlite D1 shim 으로 시험(wrangler dev 는 계정 없이도 로컬 D1 로 가능).",
+  "scripts": {
+    "test": "node --test test/api.test.js",
+    "dev": "wrangler dev --local --persist-to .wrangler/state",
+    "migrate:local": "wrangler d1 migrations apply expedition-db --local --persist-to .wrangler/state"
+  },
+  "devDependencies": { "wrangler": "^4.0.0" }
+}

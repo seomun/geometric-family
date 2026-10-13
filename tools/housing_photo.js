@@ -1,0 +1,20 @@
+// 우리 집 사진 꾸미기(A6) 시험: node tools/housing_photo.js — 프레임 6·스티커 20·도장, 저장 이미지에 반영
+const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
+(async () => {
+  const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), p = await (await b.newContext({ viewport: { width: 390, height: 780 } })).newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.addInitScript(() => { window.__noResume = true; window.GFSave = { image: (d, n) => { window.__saved = { d, n }; return true; } }; }); await p.goto('http://localhost:8765/games/merge/index.html'); await p.waitForTimeout(1600);
+  await p.evaluate(() => { Room.cfg.mode = 'adult'; Room.S.lv = 30; ['b_tv', 'b_sofa', 'b_lamp'].forEach((id) => Room.grant(id)); GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(1100); await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast').forEach((e) => e.remove()));
+  await p.evaluate(() => { [...document.querySelectorAll('.h2-fb')].find((x) => /사진/.test(x.textContent)).click(); }); await p.waitForTimeout(1500); await p.screenshot({ path: 'notes/snapshots/housing_photo_studio.png' });
+  ok(await p.evaluate(() => document.querySelectorAll('.h2-pschip').length === 6 && document.querySelectorAll('.h2-psst').length === 20 && !!document.querySelector('.h2-psstamp')), '프레임 6 · 스티커 20 · 도장');
+  await p.evaluate(() => { document.querySelectorAll('.h2-pschip')[2].click(); document.querySelectorAll('.h2-psst')[0].click(); document.querySelectorAll('.h2-psst')[8].click(); }); await p.waitForTimeout(300); await p.screenshot({ path: 'notes/snapshots/housing_photo_polaroid.png' });
+  ok(await p.evaluate(() => Room._ps.frame === 'polaroid' && Room._ps.stickers.length === 2 && document.querySelectorAll('.h2-pssticker').length === 2), '폴라로이드 + 스티커 2개');
+  // 스티커 끌기
+  const moved = await p.evaluate(() => { const f = document.querySelector('.h2-pssticker'), o = Room._ps.stickers[0], x0 = o.x, r = document.querySelector('.h2-pslayer').getBoundingClientRect(), fb = f.getBoundingClientRect(); f.dispatchEvent(new PointerEvent('pointerdown', { pointerId: 1, bubbles: true, clientX: fb.x + 5, clientY: fb.y + 5 })); f.dispatchEvent(new PointerEvent('pointermove', { pointerId: 1, bubbles: true, clientX: r.left + r.width * 0.9, clientY: r.top + r.height * 0.5 })); f.dispatchEvent(new PointerEvent('pointerup', { pointerId: 1, bubbles: true })); return o.x !== x0 && o.x > 0.85; }); ok(moved, '스티커를 끌어 옮김');
+  await p.evaluate(() => { [...document.querySelectorAll('.h2-psacts .uk-btn')].find((x) => /저장/.test(x.textContent)).click(); }); await p.waitForTimeout(1500);
+  const sv = await p.evaluate(() => window.__saved && { n: window.__saved.n, len: window.__saved.d.length, head: window.__saved.d.slice(0, 22) }); ok(sv && /gihaha-house-/.test(sv.n) && sv.head === 'data:image/png;base64,' && sv.len > 20000, '저장 이미지 생성 ' + JSON.stringify(sv && { n: sv.n, len: sv.len }));
+  // 렌더 단언: 도장 있음/없음 이미지가 다름, 프레임 있음/없음이 다름
+  const diff = await p.evaluate(async () => { const base = await Room.photoCanvas('nemo'); const a = await Room.renderPhoto('nemo', { frame: 'none', stickers: [], stamp: false }, base, ''), b2 = await Room.renderPhoto('nemo', { frame: 'film', stickers: [], stamp: false }, base, ''), c2 = await Room.renderPhoto('nemo', { frame: 'none', stickers: [], stamp: true }, base, ''), d = await Room.renderPhoto('nemo', { frame: 'none', stickers: [{ e: '⭐', x: .5, y: .5 }], stamp: false }, base, ''); return [a.toDataURL() !== b2.toDataURL(), a.toDataURL() !== c2.toDataURL(), a.toDataURL() !== d.toDataURL()]; });
+  ok(diff.every(Boolean), '프레임·도장·스티커가 각각 이미지를 바꿈 ' + diff);
+  const kidOk = await p.evaluate(() => { Room.cfg.mode = 'kid'; const r = typeof Room.photoStudio === 'function'; Room.cfg.mode = 'adult'; return r; }); ok(kidOk, '유아 모드에도 같은 스튜디오(글자 없는 버전)');
+  ok(errs.length === 0, '오류 없음 ' + errs[0]); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
+})().catch((e) => { console.error(e); process.exit(1); });

@@ -324,8 +324,9 @@
     const rec = el('div', 'h2-codebox', sh); el('b', '', rec, '받은 코드로 구경'); const inp = el('textarea', 'h2-code', rec); inp.placeholder = 'GFH1-…'; const msg = el('p', 'h2-dsub', rec, '');
     UK.btn({ text: '구경하기', cls: 'green sm', onclick: () => { const r = Room.decodeLayout(inp.value); if (!r.ok) { msg.textContent = { format: '코드 모양이 달라요', check: '코드가 틀렸어요(한 글자씩 확인해 봐요)', room: '이 앱에서는 볼 수 없는 방이에요' }[r.why] || '코드를 읽지 못했어요'; return; } sc.remove(); Room.visitView(r, parent); } }, rec);
     if (!kid()) {      // 원정 전리품 코드(B6): 기하학 원정대에서 받은 6자리 코드를 입력하면 가구가 생긴다(앱 사이 연결은 코드로만 — D12)
-      const lt = el('div', 'h2-codebox', sh); el('b', '', lt, '원정 전리품 코드'); el('small', '', lt, '기하학 원정대에서 단계를 깨고 받은 6자리 코드'); const ci = el('input', 'h2-code1', lt); ci.maxLength = 8; ci.placeholder = 'A1B2C3'; const cm = el('p', 'h2-dsub', lt, '');
-      UK.btn({ text: '받기', cls: 'gold sm', onclick: () => { const r = Room.redeem(ci.value); if (!r.ok) { cm.textContent = { len: '6자리로 적어 주세요', check: '코드가 틀렸어요', item: '없는 코드예요' }[r.why] || '받지 못했어요'; return; } if (!r.isNew) { cm.textContent = '이미 가지고 있는 가구예요'; return; } GF.sfx && GF.sfx('star'); cm.textContent = '🎁 ' + r.item.name + ' — 우리 집에 생겼어요!'; ci.value = ''; Room._redraw && Room._redraw(); } }, lt);
+      const lt = el('div', 'h2-codebox', sh); el('b', '', lt, '원정 전리품 코드'); el('small', '', lt, '기하학 원정대에서 단계를 깨고 받은 6자리 코드'); const row = el('div', 'h2-coderow', lt), ci = el('input', 'h2-code1', row); ci.maxLength = 8; ci.placeholder = 'A1B2C3'; ci.autocomplete = 'off'; ci.autocapitalize = 'characters'; ci.spellcheck = false; ci.oninput = () => { const v = ci.value.toUpperCase().replace(/[^0-9A-Z]/g, ''); if (v !== ci.value) ci.value = v; };
+      UK.btn({ text: '붙여넣기', cls: 'sky sm', onclick: async () => { try { const t = await navigator.clipboard.readText(); ci.value = String(t || '').toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 8); ci.dispatchEvent(new Event('input')); } catch (e) { UK.toast('칸을 길게 눌러 붙여넣어요', sc); } } }, row); const cm = el('p', 'h2-dsub', lt, '');
+      UK.btn({ text: '받기', cls: 'gold block', onclick: () => { const r = Room.redeem(ci.value); if (!r.ok) { cm.textContent = { len: '6자리로 적어 주세요', check: '코드가 틀렸어요', item: '없는 코드예요' }[r.why] || '받지 못했어요'; return; } if (!r.isNew) { cm.textContent = '이미 가지고 있는 가구예요'; return; } sc.remove(); Room.dropCard(r.item.id, parent, () => { Room._redraw && Room._redraw(); }, { openHouse: () => { Room._redraw && Room._redraw(); } }); } }, lt);
     }
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
@@ -437,7 +438,7 @@
     function drawTools() {
       tools.innerHTML = ''; const B = (ic, label, fn, on) => { const b = el('button', 'h2-fb' + (on ? ' on' : ''), tools, kid() ? UK.icon(ic) : UK.icon(ic) + '<span>' + label + '</span>'); b.setAttribute('aria-label', label); b.onclick = fn; };
       const LM = ['auto', 'day', 'eve', 'night'], LI = { auto: '🕒', day: '☀️', eve: '🌇', night: '🌙' }, LN = { auto: '자동', day: '낮', eve: '저녁', night: '밤' }, cm = LM.includes(S.light) ? S.light : 'auto'; const lt = el('button', 'h2-fb', tools, LI[cm] + (kid() ? '' : '<span>' + LN[cm] + '</span>')); lt.setAttribute('aria-label', 'light'); lt.onclick = () => { S.light = LM[(LM.indexOf(cm) + 1) % LM.length]; Room.save(); drawAll(); };
-      B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, '🔗<span>구경 코드</span>'); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid() && Room.presets(cur).length) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); UK.toast(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: '되돌리기', cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photo(cur, parent));
+      B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, '🔗<span>구경 코드</span>'); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid() && Room.presets(cur).length) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); UK.toast(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: '되돌리기', cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photoStudio(cur, parent));
     }
     function drawSel() {
       selbar.innerHTML = ''; if (!place) return; if (sel == null) { el('p', 'h2-hint', selbar, kid() ? '' : '가구를 끌어서 옮겨 보세요'); return; } const p = (S.placed[cur] || [])[sel], it = p && Room.item(p.id); if (!it) return;
@@ -521,6 +522,54 @@
       else UK.btn({ text: kid() ? null : '어디서? ▶', icon: kid() ? 'next' : null, cls: 'gold sm', onclick: () => Room.goApp(sr.game, { parent: sc, home: opts.go && (() => { sc.remove(); opts.go(sr.game); }) }) }, a);
     }
     function drawAll() { drawTabs(); drawBody(); drawDet(); } drawAll(); return sc;
+  };
+  /* ---------------- 사진 꾸미기(A6): 프레임 6 · 스티커 20 · 「당신은 어느 도형인가요?」 도장 ---------------- */
+  const FRAMES = [{ id: 'none', n: '없음' }, { id: 'white', n: '흰 테두리' }, { id: 'polaroid', n: '폴라로이드' }, { id: 'heart', n: '하트' }, { id: 'film', n: '필름' }, { id: 'shape', n: '세 도형' }];
+  const STICKERS = ['⭐', '💛', '💗', '✨', '🎈', '🎀', '🏠', '🍚', '🌸', '🍁', '❄️', '🐶', '🐱', '🧸', '🎵', '☀️', '🌈', '📷', '👪', '🎉'];
+  const drawFrame = (x, W, H, kind, label) => {
+    x.save();
+    if (kind === 'white') { x.strokeStyle = '#fff'; x.lineWidth = 46; x.strokeRect(23, 23, W - 46, H - 46); x.strokeStyle = 'rgba(0,0,0,.12)'; x.lineWidth = 3; x.strokeRect(46, 46, W - 92, H - 92); }
+    else if (kind === 'polaroid') { x.fillStyle = '#fff'; x.fillRect(0, 0, W, 34); x.fillRect(0, 0, 34, H); x.fillRect(W - 34, 0, 34, H); x.fillRect(0, H - 130, W, 130); x.fillStyle = '#6b4a00'; x.font = '800 40px sans-serif'; x.textAlign = 'center'; x.fillText(label, W / 2, H - 52); }
+    else if (kind === 'heart') { x.strokeStyle = '#FF8FA8'; x.lineWidth = 40; x.strokeRect(20, 20, W - 40, H - 40); x.font = '56px sans-serif'; x.textAlign = 'center'; ['💗', '💗', '💗', '💗'].forEach((h, i) => x.fillText(h, i % 2 ? W - 52 : 52, i < 2 ? 70 : H - 24)); for (let i = 1; i < 7; i++) { x.fillText('💗', (W / 7) * i, 54); x.fillText('💗', (W / 7) * i, H - 20); } }
+    else if (kind === 'film') { x.fillStyle = '#1b1b1f'; x.fillRect(0, 0, W, 56); x.fillRect(0, H - 56, W, 56); x.fillStyle = '#f4f0e6'; for (let i = 0; i < 18; i++) { x.fillRect(14 + i * (W / 18), 16, 22, 24); x.fillRect(14 + i * (W / 18), H - 40, 22, 24); } }
+    else if (kind === 'shape') { x.strokeStyle = '#FFC933'; x.lineWidth = 30; x.strokeRect(15, 15, W - 30, H - 30); x.font = '900 64px sans-serif'; x.textAlign = 'center'; x.fillStyle = '#E5334A'; x.fillText('△', 56, 70); x.fillStyle = '#F08A3C'; x.fillText('◻', W - 56, 70); x.fillStyle = '#3B6FD6'; x.fillText('◯', 56, H - 26); x.fillStyle = '#E5334A'; x.fillText('△', W - 56, H - 26); }
+    x.restore();
+  };
+  /** 방 그림(캔버스) — 사진 저장·꾸미기가 같이 쓴다 */
+  Room.photoCanvas = async function (rid) {
+    const R = roomDef(rid), S = ensure(), W = 1020, k = W / RW, c = document.createElement('canvas'); c.width = W; c.height = Math.round(RH * k); const x = c.getContext('2d');
+    const load = (src) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
+    const bg = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bgSVG(R, Room.lightNow(S)))); if (bg) x.drawImage(bg, 0, 0, W, c.height);
+    const list = (S.placed[rid] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => (a.p.y + geo(a.it).h) - (b.p.y + geo(b.it).h));
+    for (const { p, it } of list) { const im = await load(Room.src(it, p.c)); if (!im) continue; const g = geo(it), w = g.w * k, h = g.h * k; x.save(); if (p.flip) { x.translate(p.x * k + w, p.y * k); x.scale(-1, 1); x.drawImage(im, 0, 0, w, h); } else x.drawImage(im, p.x * k, p.y * k, w, h); x.restore(); }
+    return c;
+  };
+  const saveCanvas = async (c, nm) => { if (window.GFSave && GFSave.image) { if (!GFSave.image(c.toDataURL('image/png'), nm)) throw new Error('save'); } else { const blob = await new Promise((r) => c.toBlob(r, 'image/png')); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nm; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); } };
+  /** 사진 스튜디오: 프레임 고르기 · 스티커 붙이기(끌어서 옮김) · 도장 · 저장 */
+  Room.photoStudio = async function (rid, parent) {
+    const R = roomDef(rid), sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh h2-ps', sc); el('h2', '', sh, kid() ? '📷' : '사진 꾸미기'); const stage = el('div', 'h2-psstage', sh), st = { frame: 'white', stickers: [], stamp: !kid() }; Room._ps = st;
+    const base = await Room.photoCanvas(rid), W = base.width, H = base.height, img = el('img', 'h2-psimg', stage); img.src = base.toDataURL('image/png'); img.draggable = false; const fr = el('div', 'h2-psframe', stage), layer = el('div', 'h2-pslayer', stage), stamp = el('div', 'h2-psstamp', stage);
+    const label = (() => { const d = now0(); return d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate() + ' · ' + (R ? R.name : '우리 집'); })();
+    const redraw = () => { fr.dataset.k = st.frame; fr.innerHTML = ''; stamp.style.display = st.stamp ? '' : 'none'; stamp.innerHTML = '<b>당신은 어느 도형인가요?</b> <span>△ ◻ ◯</span>'; if (st.frame === 'polaroid') fr.innerHTML = '<em>' + label + '</em>'; stage.dataset.frame = st.frame; };
+    if (!kid()) {
+      const fb = el('div', 'h2-psrow', sh); FRAMES.forEach((f) => { const b = el('button', 'h2-pschip' + (st.frame === f.id ? ' on' : ''), fb, f.n); b.onclick = () => { st.frame = f.id; fb.querySelectorAll('.h2-pschip').forEach((x) => x.classList.remove('on')); b.classList.add('on'); redraw(); }; });
+    }
+    const sb = el('div', 'h2-psrow stick', sh); STICKERS.forEach((e) => { const b = el('button', 'h2-psst', sb, e); b.onclick = () => { const o = { e, x: 0.2 + Math.random() * 0.6, y: 0.2 + Math.random() * 0.5 }; st.stickers.push(o); addSticker(o); }; });
+    const addSticker = (o) => { const f = el('i', 'h2-pssticker', layer, o.e); f.style.left = o.x * 100 + '%'; f.style.top = o.y * 100 + '%'; let drag = null; f.onpointerdown = (ev) => { drag = true; f.setPointerCapture(ev.pointerId); ev.preventDefault(); }; f.onpointermove = (ev) => { if (!drag) return; const r = layer.getBoundingClientRect(); o.x = Math.max(0.02, Math.min(0.98, (ev.clientX - r.left) / r.width)); o.y = Math.max(0.02, Math.min(0.98, (ev.clientY - r.top) / r.height)); f.style.left = o.x * 100 + '%'; f.style.top = o.y * 100 + '%'; }; f.onpointerup = () => { drag = null; }; f.ondblclick = () => { st.stickers.splice(st.stickers.indexOf(o), 1); f.remove(); }; };
+    const acts = el('div', 'acts h2-psacts', sh);
+    if (!kid()) { const sb2 = UK.btn({ text: '도장 ' + (st.stamp ? '켬' : '끔'), cls: 'sky sm', onclick: () => { st.stamp = !st.stamp; sb2.textContent = '도장 ' + (st.stamp ? '켬' : '끔'); redraw(); } }, acts); UK.btn({ text: '스티커 지우기', cls: 'ghost sm', onclick: () => { st.stickers.length = 0; layer.innerHTML = ''; } }, acts); }
+    UK.btn({ text: kid() ? null : '저장', icon: kid() ? 'check' : null, cls: 'green', onclick: async () => {
+      try { const c = await Room.renderPhoto(rid, st, base, label); await saveCanvas(c, 'gihaha-house-' + rid + '.png'); UK.toast(kid() ? '📷' : '방 사진을 저장했어요', sc); } catch (e) { UK.toast(kid() ? '📷✕' : '사진을 저장하지 못했어요', sc); }
+    } }, acts);
+    UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, acts); redraw(); return sc;
+  };
+  /** 꾸민 사진을 최종 캔버스로(미리보기와 같은 모양) */
+  Room.renderPhoto = async function (rid, st, base, label) {
+    const W = base.width, H = base.height, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); x.drawImage(base, 0, 0);
+    x.font = '84px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; st.stickers.forEach((o) => x.fillText(o.e, o.x * W, o.y * H));
+    if (st.frame && st.frame !== 'none') drawFrame(x, W, H, st.frame, label || '');
+    if (st.stamp) { const bw = 640, bh = 70, bx = W - bw - 40, by = H - bh - (st.frame === 'polaroid' ? 150 : 70); x.fillStyle = 'rgba(255,255,255,.92)'; x.beginPath(); x.roundRect ? x.roundRect(bx, by, bw, bh, 22) : x.rect(bx, by, bw, bh); x.fill(); x.fillStyle = '#6b4a00'; x.font = '900 38px sans-serif'; x.textAlign = 'left'; x.textBaseline = 'middle'; x.fillText('당신은 어느 도형인가요?', bx + 24, by + bh / 2 + 2); x.font = '900 40px sans-serif'; x.fillStyle = '#E5334A'; x.fillText('△', bx + 470, by + bh / 2); x.fillStyle = '#F08A3C'; x.fillText('◻', bx + 520, by + bh / 2); x.fillStyle = '#3B6FD6'; x.fillText('◯', bx + 570, by + bh / 2); }
+    x.textAlign = 'left'; x.textBaseline = 'alphabetic'; x.fillStyle = 'rgba(255,255,255,.9)'; x.font = '900 30px sans-serif'; x.fillText('기하학 가족 · 우리 집', 24, H - (st.frame === 'polaroid' ? 150 : 24) - 6); return c;
   };
   Room.photo = async function (rid, parent) {
     try {

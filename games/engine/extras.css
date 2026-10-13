@@ -283,4 +283,4 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-scenebn { z-index: 47; }
 .h2-toast-top { top: 6px !important; bottom: auto !important; z-index: 400 !important; }
 .h2-alb.th { padding-top: 6px; } .h2-albth { width: 100%; height: 96px; object-fit: cover; object-position: center 40%; border-radius: 9px; display: block; margin-bottom: 4px; background: #eee; } .h2-albbadge { position: absolute; left: 8px; top: 8px; font-size: 16px; background: rgba(255,255,255,.9); border-radius: 50%; width: 24px; height: 24px; line-height: 24px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
-.h2-room.scene .h2-it.h2-focus { opacity: 1 !important; filter: none !important; z-index: 20; }
+.h2-room.scene .h2-it.h2-focus { opacity: 1 !important; filter: none !important; z-index: 45 !important; }

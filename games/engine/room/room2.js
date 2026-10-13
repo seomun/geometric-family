@@ -583,13 +583,16 @@
     if (!Room.cfg.charSrc || !room || room.querySelector('.h2-fam')) return null; const n = c.chars.length, out = [];
     room.classList.add('scene'); const stg = el('div', 'h2-stage-bg', room), bn = el('div', 'h2-scenebn', room, kid() ? c.icon : c.icon + ' ' + c.text);
     // 가구 배치와 무관한 무대: 뒷줄·앞줄 반원. 크기 74px, 서로 겹치지 않게 간격을 잡는다(RW 340 안에 가운데 정렬)
-    const SCALE = { 'nemo_grandma.good': 1.3 }, back = Math.ceil(n / 2), front = n - back, CWm = 74;      // 그림 여백이 큰 인물은 크게 보정(할머니가 절반 크기로 보이던 문제)
+    const FIT = { 'nemo_grandma.good': 1 }, back = Math.ceil(n / 2), front = n - back, CWm = 74;      // 그림 여백이 큰 인물은 크게 보정(할머니가 절반 크기로 보이던 문제)
     const foc = []; Array.from(room.querySelectorAll('.h2-it')).forEach((im) => { if ((c.focus || []).includes(im.dataset.id)) { im.classList.add('h2-focus'); foc.push({ x: parseFloat(im.style.left), y: parseFloat(im.style.top), w: parseFloat(im.style.width), h: parseFloat(im.style.height) }); } });
     let cx = 170, ytop = 238; if (foc.length) { const x0 = Math.min(...foc.map((f) => f.x)), x1 = Math.max(...foc.map((f) => f.x + f.w)), yb = Math.max(...foc.map((f) => f.y + f.h)); cx = (x0 + x1) / 2; ytop = Math.max(180, Math.min(252, yb - 30)); }      // 소파·상 같은 초점 가구는 또렷이 두고 그 앞(둘레)에 앉힌다
     const mk = (cnt, y, i0) => { const gap = Math.min(82, (336 - 24) / Math.max(cnt, 1)), x0 = Math.max(CWm / 2 + 4, Math.min(340 - CWm / 2 - 4 - (cnt - 1) * gap, cx - (cnt - 1) * gap / 2)); return Array.from({ length: cnt }, (_, i) => ({ x: x0 + i * gap - CWm / 2, y, k: i0 + i })); };
     const slots = n <= 3 ? mk(n, Math.min(330, ytop + 40), 0) : mk(back, ytop, 0).concat(mk(front, Math.min(350, ytop + 96), back));
     c.chars.forEach((id, i) => {
-      const sl = slots[i], im = el('img', 'h2-char h2-fam', room); im.src = Room.cfg.charSrc(id); im.alt = ''; const wz = Math.round(CWm * (SCALE[id] || 1)); im.style.cssText = `left:${sl.x - (wz - CWm) / 2}px;top:${sl.y - (wz - CWm)}px;width:${wz}px;height:${wz}px;opacity:0;transition:opacity .45s ${i * 110}ms`; setTimeout(() => { im.style.opacity = 1; }, 60); out.push(im);
+      const sl = slots[i], im = el('img', 'h2-char h2-fam', room); im.src = Room.cfg.charSrc(id); im.alt = ''; im.style.cssText = `left:${sl.x}px;top:${sl.y}px;width:${CWm}px;height:${CWm}px;opacity:0;transition:opacity .45s ${i * 110}ms`;
+      if (FIT[id]) im.addEventListener('load', () => { try { const cv = document.createElement('canvas'); cv.width = cv.height = 100; const cx2 = cv.getContext('2d'); cx2.drawImage(im, 0, 0, 100, 100); const d = cx2.getImageData(0, 0, 100, 100).data; let t = 100, b = 0; for (let y = 0; y < 100; y++) for (let x = 0; x < 100; x++) if (d[(y * 100 + x) * 4 + 3] > 40) { if (y < t) t = y; if (y > b) b = y; } const vis = (b - t + 1) / 100; if (vis < 0.2) return; const wz = Math.round(Math.min(CWm * 1.6, CWm * 0.885 / vis)); im.style.width = im.style.height = wz + 'px'; im.style.left = (sl.x - (wz - CWm) / 2) + 'px'; im.style.top = (sl.y - (wz - CWm)) + 'px'; } catch (e) { /* 측정 실패는 그대로 */ } });
+      // (위) 그림 여백이 큰 인물은 보이는 그림 높이를 다른 어른(칸의 88%)에 맞춘다
+      setTimeout(() => { im.style.opacity = 1; }, 60); out.push(im);
       setTimeout(() => { if (!room.isConnected) return; const e = el('i', 'h2-emote', room, c.emo); e.style.cssText = `left:${sl.x + CWm / 2}px;top:${sl.y - 14}px;font-size:26px`; setTimeout(() => e.remove(), 1500); }, 800 + i * 150);
     });
     try { GF.sfx && GF.sfx('celebrate'); } catch (e) { /* 소리 */ } if (!kid() && c.line) setTimeout(() => { if (!room.isConnected) return; const t = el('i', 'h2-say', room, c.line); t.style.cssText = `left:170px;top:${slots[0].y - 46}px`; setTimeout(() => t.remove(), 2400); }, 1500);

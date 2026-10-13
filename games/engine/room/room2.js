@@ -701,6 +701,7 @@
     { id: 'bedding', room: 'upstairs', title: '이불 정리', props: [['🛏️', '침대', 60, 326, 48], ['🪻', '이불', 232, 326, 42]], must: ['침대', '이불'], chars: ['nemo_mom.joy', 'nemo_kids.kid2'], beats: [['🛏️', '아침 해가 침대 위로 들어와요.'], ['🪻', '이불을 탁탁 털어요.'], ['😌', '정리하니 방이 환해졌어요.']] },
     { id: 'hideseek', room: 'upstairs', title: '숨바꼭질', props: [['🚪', '옷장', 60, 326, 50], ['👀', '눈', 232, 326, 38]], must: ['옷장'], chars: ['nemo_kids.kid1', 'nemo_kids.kid3', 'baby.joy'], beats: [['🙈', '하나, 둘, 셋… 눈을 감아요.'], ['🚪', '옷장 문틈으로 눈이 반짝!'], ['🤭', '막둥이는 이불 속에서 웃음이 터졌어요.']] },
     { id: 'fireworks', room: 'roof', title: '옥상 불꽃놀이', props: [['🎆', '불꽃', 60, 326, 52], ['🏮', '등불', 232, 326, 44]], must: ['불꽃'], chars: ['nemo_dad.joy', 'wife.joy', 'nemo_kids.kid2'], beats: [['🏮', '옥상에 등불을 걸어요.'], ['🎆', '펑! 불꽃이 하늘에 피어나요.'], ['😍', '세 도형이 한 하늘을 올려다봐요.']] },
+    { id: 'worstday', room: 'nemo', title: '퇴근길 마중', props: [['🚌', '버스', 60, 326, 48], ['🛴', '씽씽이', 232, 326, 44]], must: ['버스', '씽씽이'], chars: ['nemo_dad.love', 'baby.joy', 'nemo_kids.kid3'], beats: [['🚌', '버스 앞에서 셋째가 씽씽이를 타고 기다려요.'], ['👋', '막내가 펄쩍펄쩍 손을 흔들어요.'], ['🤗', '와락 안기니 오늘 하루가 다르게 보여요.']] },      // 웹툰 E15 「최악의 날」 각색 [제안]
   ];
   Room.dailyEvents = () => D_EV;
   Room.dailyToday = function () {

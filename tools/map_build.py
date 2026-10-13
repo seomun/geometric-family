@@ -56,7 +56,7 @@ def build(app, kid):
     specs = [(int(ch), c['title'], c['tale'], c['faces']) for ch, c in sorted(st['chapters'].items(), key=lambda kv: int(kv[0]))]
     emit(app, kid, per, specs, base, [k for k in cnt if k != base])
 def light():
-    emit('idle', False, 10, [(1, '식탁 길 · 첫 사연들', 'bears', ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy']), (2, '식탁 길 · 이웃 사연', 'heungbu', ['nemo_mom.joy', 'husband.joy', 'dong_dad.joy']), (3, '식탁 길 · 큰 한 상', 'brothers', ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'])], None, [], 96)
+    emit('idle', False, 10, [(1, '식탁 길 · 첫 사연들', 'bears', ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy']), (2, '식탁 길 · 이웃 사연', 'heungbu', ['nemo_mom.joy', 'husband.joy', 'dong_dad.joy']), (3, '식탁 길 · 큰 한 상', 'brothers', ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy']), (4, '식탁 길 · 오늘의 사연', 'heungbu', ['nemo_dad.joy', 'baby.joy', 'nemo_kids.kid3'])], None, [], 96)
     emit('quiz', False, 10, [(1, '도형 테스트 1', 'bremen', ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy']), (2, '도형 테스트 2 · 동화', 'jack', ['nemo_mom.joy', 'baby.joy', 'wife.joy'])], None, [], 96)
 def light2():
     pal = ['pigs', 'bears', 'shoes', 'kongjwi', 'heungbu', 'bremen', 'hok', 'axe', 'sun', 'ant']

@@ -1860,6 +1860,66 @@
    "reward": {
     "laugh": 40
    }
+  },
+  {
+   "id": "s31",
+   "title": "최악의 날",
+   "source": "content/seeds/author/2026-10-08_최악의날.md (작가 원고 E15, 각색 [제안])",
+   "bg": "indoor",
+   "cuts": [
+    {
+     "text": "누구에게나 최악의 날이 있다.\n오늘은 역대급 3위 안에 든다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "사소한 실수 하나가 시스템을 멈췄다.\n스물여덟 시간 만에 겨우 수습했다. 한없이 길고 힘든 퇴근길.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.worry"
+     ]
+    },
+    {
+     "text": "버스 앞에서 셋째와 막내가 기다린다.\n막내가 펄쩍펄쩍 손을 흔든다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_kids.kid3",
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "와락 안기는 막내 냄새에\n하루가 다르게 보인다.",
+     "src": "각색 [제안]",
+     "chars": [
+      "nemo_dad.love",
+      "baby.love"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "question": {
+    "q": "최악의 날을 뒤집어 준 건?",
+    "options": [
+     {
+      "k": "nemo",
+      "t": "가족"
+     },
+     {
+      "k": "semo",
+      "t": "혼자만의 시간"
+     },
+     {
+      "k": "dong",
+      "t": "그래도 최악"
+     }
+    ]
+   },
+   "reward": {
+    "laugh": 40
+   }
   }
  ],
  "seasonMemo": [

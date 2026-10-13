@@ -81,12 +81,12 @@ TUT['idle'] = dict(
     pro=[('nemo_dad.joy', '세 가족이 한 동네에 산다. 오늘도 식탁이 차려졌다.', None),
          ('wife.joy', '음식을 톡 누르면 온기가 한 칸씩 쌓여요.', {'k': 'table'}),
          ('dong_dad.warm', '앱을 닫아도 온기는 천천히 쌓여요. 다 쌓이면 사연이 열려요.', {'k': 'story'})],
-    hook=None, cuts={'story': ('nemo_mom.joy', '온기가 가득 차면 가족 사연이 열려요.', {'k': 'story'})})
+    hook=None, cuts={'story': ('nemo_mom.joy', '온기가 가득 차면 가족 사연이 열려요.', {'k': 'story'}), 'season': ('nemo_grandma.good', '계절이 바뀌면 손님이 찾아와요. 놓쳐도 괜찮아요, 내년에 또 와요.', {'k': 'season'})})
 TUT['color'] = dict(
     pro=[('baby.joy', '막둥이가 크레파스를 꺼냈다. 「오늘은 뭘 칠할까?」', None),
          ('baby.joy', '쓱쓱 칠하자 그림에 색이 번졌다.', {'k': 'paint'}),
-         ('wife.joy', '세모 이모가 웃었다. 「마음대로 칠해도 돼!」', {'k': 'paint'})], hook=None, cuts={})
+         ('wife.joy', '세모 이모가 웃었다. 「마음대로 칠해도 돼!」', {'k': 'paint'})], hook=None, cuts={'trace': ('nemo_kids.kid2', '점에 번호가 있네! 1번부터 차례로 이어 볼까?', {'k': 'trace'}), 'sticker': ('baby.joy', '스티커를 톡! 그림이 더 반짝반짝해졌어.', {'k': 'sticker'})})
 TUT['quiz'] = dict(
     pro=[('nemo_dad.joy', '네모 아빠가 물었다. 「너는 어떤 도형이야?」', None),
          ('wife.wink', '둘 중 끌리는 쪽을 톡 눌러요. 정답은 없어요.', {'who': 1}),
-         ('dong_dad.calm', '고른 대로 나와 닮은 도형이 나와요.', {'who': 2})], hook=None, cuts={})
+         ('dong_dad.calm', '고른 대로 나와 닮은 도형이 나와요.', {'who': 2})], hook=None, cuts={'mini': ('wife.wink', '검사만 하면 심심하죠? 짧은 게임으로 가볍게 쉬어 가요. 빠를수록 별이 늘어요!', {'k': 'game'})})

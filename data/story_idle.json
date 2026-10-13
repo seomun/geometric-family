@@ -68,8 +68,20 @@
    "icon": "🍂",
    "title": "계절 손님",
    "text": "계절마다 손님이 찾아와요.",
+   "cuts": [
+    {
+     "text": "계절이 바뀌면 손님이 찾아와요. 놓쳐도 괜찮아요, 내년에 또 와요.",
+     "chars": [
+      "nemo_grandma.good"
+     ],
+     "mini": {
+      "k": "season",
+      "app": "idle"
+     }
+    }
+   ],
    "mini": {
-    "k": "table",
+    "k": "season",
     "app": "idle"
    }
   }

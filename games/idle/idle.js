@@ -300,7 +300,7 @@
       pb.onclick = () => { GF.sfx('pick'); GF.go('ihouse'); };
       if (S.end || endingReady()) { const eb = el('button', 'uk-btn', list, S.end ? '큰 한 상 다시 보기' : '큰 한 상 초대장'); eb.style.cssText += ';position:static;width:calc(100% - 20px);margin:0 10px 10px;background:#B8860B'; eb.onclick = () => { GF.sfx('pick'); GF.go('istory', { id: 'end', ending: true }); }; }
       const sp = el('div', 'panel2', list, '<h4>계절 사건 (해마다 돌아와요)</h4>');
-      (ST.seasons || []).forEach((x) => { const done = S.ss[seasonKey(x.id)], on = x.months.includes(seasonOn()); const b2 = el('button', 'trip', sp, `${done ? '✔ ' : on ? '● ' : '○ '}${x.title}<small>${x.months.join('·')}월 ${done ? '· 올해 도장 완료' : on ? '· 지금 읽을 수 있어요' : ''}</small>`); b2.disabled = !on && !done; b2.onclick = () => { GF.sfx('pick'); GF.go('istory', { id: x.id, season: true }); }; });
+      (ST.seasons || []).forEach((x) => { const done = S.ss[seasonKey(x.id)], on = x.months.includes(seasonOn()); const b2 = el('button', 'trip', sp, `${done ? '✔ ' : on ? '● ' : '○ '}${x.title}<small>${x.months.join('·')}월 ${done ? '· 올해 도장 완료' : on ? '· 지금 읽을 수 있어요' : ''}</small>`); b2.disabled = !on && !done; b2.onclick = () => { GF.sfx('pick'); const go = () => GF.go('istory', { id: x.id, season: true }); if (GF.tale && GF.tale.explain && GF.tale.explain('season', sp.closest('.screen') || document.getElementById('safe'), go)) return; go(); }; });
       const g = el('div', 'dexg', list);
       for (let k = 0; k < B.dexTotal; k++) {
         const s = ST.stories[k]; const got = s && S.sd[s.id]; const b = el('button', 'dexc' + (got ? '' : ' off'), g);

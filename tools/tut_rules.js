@@ -2,7 +2,7 @@
 const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
-  for (const a of (process.argv.slice(2).length ? process.argv.slice(2) : ['merge', 'spot', 'block', 'sort', 'tile', 'day'])) {
+  for (const a of (process.argv.slice(2).length ? process.argv.slice(2) : ['merge', 'spot', 'block', 'sort', 'tile', 'day', 'quiz', 'color', 'idle'])) {
     const ctx = await b.newContext({ viewport: { width: 390, height: 780 } }), p = await ctx.newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message + ' @ ' + String(e.stack).split(String.fromCharCode(10)).slice(1, 3).join(' | ')));
     await p.addInitScript(() => { window.__noResume = true; });
     await p.goto('http://localhost:8765/games/' + a + '/index.html'); await p.waitForTimeout(1600);

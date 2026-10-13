@@ -28,15 +28,25 @@
   /* 공용 간이 미니(그림 함수가 따로 없는 앱): ② 식탁 온기 · ④ 색칠 · ⑤ 질문 고르기. 이모지·세 가족 얼굴 그림만 쓴다 */
   M.reg('idle', (host, s, still) => {   // 식탁의 음식을 톡 → 온기 +1, 온기 막대가 차 오른다 (k:'story' 면 막대가 가득 차 사연 책이 열린다)
     const col = el('div', 'tm-col', host), tb = el('div', 'tm-table', col), bar = el('div', 'tm-bar', col); let food, f1, up;
-    const build = () => { tb.innerHTML = bar.innerHTML = ''; food = el('b', 'tm-food', tb, s.k === 'story' ? '📖' : '🍲'); ['🍚', '🥬', '🍳'].forEach((e) => el('b', 'tm-side', tb, e)); up = el('i', '', bar); up.style.width = s.k === 'story' ? '78%' : '20%'; f1 = el('em', 'tm-plus', tb, s.k === 'story' ? '✨' : '♨ +1'); f1.style.opacity = 0; };
+    const build = () => { tb.innerHTML = bar.innerHTML = ''; food = el('b', 'tm-food', tb, s.k === 'story' ? '📖' : s.k === 'season' ? '🍂' : '🍲'); (s.k === 'season' ? ['🌸', '🍉', '🎃'] : ['🍚', '🥬', '🍳']).forEach((e) => el('b', 'tm-side', tb, e)); up = el('i', '', bar); up.style.width = s.k === 'story' ? '78%' : '20%'; f1 = el('em', 'tm-plus', tb, s.k === 'story' ? '✨' : '♨ +1'); f1.style.opacity = 0; };
     M.loop(host, build, [[900, () => { food.style.transform = 'scale(1.25)'; f1.style.opacity = 1; f1.style.transform = 'translateY(-14px)'; up.style.width = s.k === 'story' ? '100%' : '45%'; }]], still);
   });
   M.reg('color', (host, s, still) => {   // 크레파스가 지나가며 그림에 색이 번진다
     const w = el('div', 'tm-paint', host); let pen, fill;
+    if (s.k === 'trace' || s.k === 'sticker') {      // 따라 그리기: 점이 차례로 이어짐 · 스티커: 그림 위에 톡
+      const d = el('div', 'tm-paint', host); let pts, st;
+      const bld = () => { d.innerHTML = s.k === 'trace' ? '<svg viewBox="0 0 160 130" width="190" height="150"><g fill="#fff" stroke="#8A5A3B" stroke-width="3"><circle cx="30" cy="100" r="10"/><circle cx="80" cy="24" r="10"/><circle cx="130" cy="100" r="10"/></g><g font-size="13" font-weight="900" text-anchor="middle" font-family="sans-serif" fill="#8A5A3B"><text x="30" y="105">1</text><text x="80" y="29">2</text><text x="130" y="105">3</text></g><path class="tp" d="M30 100L80 24L130 100Z" fill="none" stroke="#E5334A" stroke-width="5" stroke-linecap="round" stroke-dasharray="260" stroke-dashoffset="260" style="transition:stroke-dashoffset 1.4s"/></svg>' : '<svg viewBox="0 0 160 130" width="190" height="150"><path d="M20 62L80 12l60 50v56H20z" fill="#FFF0B8" stroke="#8A5A3B" stroke-width="5" stroke-linejoin="round"/><text class="ts" x="60" y="70" font-size="26" opacity="0" style="transition:opacity .4s">⭐</text><text class="ts" x="96" y="92" font-size="26" opacity="0" style="transition:opacity .4s .5s">🌸</text></svg>'; };
+      M.loop(host, bld, [[600, () => { const tp = d.querySelector('.tp'); if (tp) tp.style.strokeDashoffset = 0; d.querySelectorAll('.ts').forEach((e) => { e.setAttribute('opacity', 1); }); }]], still); return;
+    }
     const build = () => { w.innerHTML = '<svg viewBox="0 0 160 130" width="190" height="150"><path d="M20 62L80 12l60 50v56H20z" fill="#fff" stroke="#8A5A3B" stroke-width="5" stroke-linejoin="round"/><rect x="66" y="82" width="28" height="36" rx="4" fill="#fff" stroke="#8A5A3B" stroke-width="4"/></svg>'; fill = el('i', 'tm-fill', w); pen = el('b', 'tm-pen', w, '🖍️'); };
     M.loop(host, build, [[800, () => { pen.style.left = '120px'; pen.style.top = '60px'; fill.style.opacity = 1; }]], still);
   });
   M.reg('quiz', (host, s, still) => {   // 질문 → 하나를 톡 → 닮은 도형(세 가족 중 한 명)이 나온다
+    if (s.k === 'game') {      // 미니게임: 같은 도형을 빠르게 톡 — 별이 하나씩 쌓인다
+      const g = el('div', 'tm-col', host); let sh, stars;
+      const bg = () => { g.innerHTML = ''; const row = el('div', 'tm-opts', g); sh = ['△', '◻', '◯'].map((c, i) => el('b', '', row, c)); stars = el('div', 'tm-q', g, '☆☆☆'); };
+      M.loop(host, bg, [[700, () => { sh[0].classList.add('pick'); stars.textContent = '★☆☆'; }], [600, () => { sh[2].classList.add('pick'); stars.textContent = '★★☆'; }], [600, () => { sh[1].classList.add('pick'); stars.textContent = '★★★'; }]], still); return;
+    }
     const ids = ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'], who = ids[(s.who || 0) % 3], col = el('div', 'tm-col', host); let a, b, res;
     const build = () => { col.innerHTML = ''; const q = el('div', 'tm-q', col, '❓'); const row = el('div', 'tm-opts', col); a = el('b', '', row, '🛋️'); b = el('b', '', row, '🏃'); res = el('div', 'tm-res', host); res.style.opacity = 0; res.appendChild(GF.img(who)); el('span', '', host, ''); };
     M.loop(host, build, [[900, () => { b.classList.add('pick'); }], [700, () => { res.style.opacity = 1; res.style.transform = 'scale(1)'; }]], still);

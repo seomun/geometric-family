@@ -119,6 +119,7 @@
   GF.screen('qgames', {
     bare: false,
     enter(r) {
+      setTimeout(() => { if (r.isConnected && GF.tale && GF.tale.explain) GF.tale.explain('mini', r); }, 300);   // 처음 열면 미니게임 설명 컷(C1)
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r); const sc = el('div', 'qz-scroll', r);
       GAMES.forEach((g) => { const b = el('button', 'qz-test', sc), best = SV.game[g.id] || 0; el('div', 'th', b, UK.icon(g.icon)); el('div', 'tx', b, `<b>${g.name.split(' — ')[0]}</b><span>${g.name.split(' — ')[1]}</span>`); if (best) el('em', '', b, '★ ' + best).style.background = '#FFF3B0'; b.onclick = () => { GF.sfx('pick'); GF.go('qmini', { g: g.id }); }; });
     },

@@ -182,7 +182,7 @@
   GF.screen('ctrace', {
     bare: false,
     enter(r, p) {
-      r.classList.add('uk', 'cl'); GF.bg('home', r);
+      r.classList.add('uk', 'cl'); GF.bg('home', r); setTimeout(() => { if (r.isConnected && GF.tale && GF.tale.explain) GF.tale.explain('trace', r); }, 300);   // 처음 열면 따라 그리기 설명 컷(C1)
       const pg = page(p.id), art = el('div', 'cl-art', r), dots = pg.dots, svgNS = 'http://www.w3.org/2000/svg'; let idx = 0;
       const root = parse('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"></svg>'); art.appendChild(root);
       const path = document.createElementNS(svgNS, 'path'); path.setAttribute('fill', 'none'); path.setAttribute('stroke', '#FF6B6B'); path.setAttribute('stroke-width', 7); path.setAttribute('stroke-linecap', 'round'); path.setAttribute('stroke-linejoin', 'round'); root.appendChild(path);
@@ -203,7 +203,7 @@
   GF.screen('csticker', {
     bare: false,
     enter(r, p) {
-      r.classList.add('uk', 'cl'); const pg = page(p.id); GF.bg(pg.bg, r);
+      r.classList.add('uk', 'cl'); const pg = page(p.id); GF.bg(pg.bg, r); setTimeout(() => { if (r.isConnected && GF.tale && GF.tale.explain) GF.tale.explain('sticker', r); }, 300);   // 처음 열면 스티커 설명 컷(C1)
       const scene = el('div', 'cl-scene', r), tray = el('div', 'cl-tray', r), placed = []; let sel = null;
       (pg.deco || []).forEach((d) => { const im = el('img', 'cl-deco', scene); im.src = uri(RoomArt.make(d.art, '#F6C28B', {})); im.style.cssText = `position:absolute;left:${d.x - d.w / 2}px;top:${d.y - d.w / 2}px;width:${d.w}px;height:${d.w}px;object-fit:contain;pointer-events:none`; });   // 배경에 깔리는 고정 장식
       const SW = () => r.getBoundingClientRect().width / 360;

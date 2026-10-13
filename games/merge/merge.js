@@ -39,7 +39,7 @@
   GF.tale.mini.reg('merge', (host, s, still) => {
     const c = s.c || 0, t = s.t || 1, cell = (p) => { const d = el('div', 'mg-cell tm-cell', host); d.style.cssText = 'position:relative;width:84px;height:84px'; if (p) d.appendChild(p); return d; }; let a, b, o;
     const build = () => { host.innerHTML = ''; a = cell(pieceEl(c, t, 0)); el('b', 'tm-op', host, '＋'); b = cell(pieceEl(c, t, 0)); el('b', 'tm-op', host, '▶'); o = cell(null); o.style.opacity = '.4'; };
-    GF.tale.mini.loop(host, build, [[900, () => { a.style.transform = 'translateX(20px)'; b.style.transform = 'translateX(-20px)'; }], [650, () => { a.innerHTML = b.innerHTML = ''; a.style.transform = b.style.transform = ''; const p = pieceEl(c, t + 1, 0); p.classList.add('pop'); o.style.opacity = 1; o.appendChild(p); }]], still);
+    GF.tale.mini.loop(host, build, [[900, () => { a.style.transform = 'translateX(20px)'; b.style.transform = 'translateX(-20px)'; }], [650, () => { a.style.transform = b.style.transform = ''; a.style.opacity = b.style.opacity = '.4'; const p = pieceEl(c, t + 1, 0); p.classList.add('pop'); o.style.opacity = 1; o.appendChild(p); }]], still);
   });
 
   /* ---------------- 저장 ---------------- */

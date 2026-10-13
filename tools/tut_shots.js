@@ -15,6 +15,8 @@ const want = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(
       const hasMini = await p.evaluate(() => !!document.querySelector('.tale-ov .cut-mini'));
       await shot('pro' + (i + 1) + (hasMini ? 'm' : ''));
       if (i === 1) ok(hasMini, a + ' 프롤로그 2컷에 미니 판');
+      if (i === 1 && a === 'merge') ok(await p.evaluate(() => document.querySelectorAll('.tale-ov .cut-mini .mg-pc img').length === 3), a + ' 미니 판 조각 수 = 데이터 조각 수(합칠 둘 + 결과 하나, 빈칸 아님)');
+      if (i === 1 && a === 'tile') ok(await p.evaluate(() => document.querySelectorAll('.tale-ov .cut-mini .tl-slot.on').length >= 6), a + ' 미니 판 타일 수 = 데이터 타일 수');
       await p.evaluate(() => { const b = document.querySelector('.tale-ov .nextbtn'); b && b.click(); }); await p.waitForTimeout(400);
     }
     await p.waitForTimeout(600);

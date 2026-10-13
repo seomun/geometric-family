@@ -17,7 +17,7 @@ try:
 except Exception: pass
 _mail = _env.get('SUPPORT_EMAIL', '')
 for f in sel:
-    s, h = FL[f]; subprocess.run([sys.executable, str(G / 'tools' / s)], check=True, stdout=subprocess.DEVNULL, env=dict(os.environ, GF_SUPPORT_EMAIL=_mail) if _mail else None)
+    s, h = FL[f]; subprocess.run([sys.executable, str(G / 'tools' / s)] + (['app'] if f == 'expedition' else []), check=True, stdout=subprocess.DEVNULL, env=dict(os.environ, GF_SUPPORT_EMAIL=_mail) if _mail else None)   # 원정대는 앱 모드(games/app/expedition.html, 서버 주소·출시 플래그 주입)
     d = A / 'app' / 'src' / f / 'assets'; d.mkdir(parents=True, exist_ok=True); shutil.copy2(G / 'app' / h, d / 'index.html'); print('html', f, round((d / 'index.html').stat().st_size / 1e6, 2), 'MB')
 gr = glob.glob(os.path.expanduser('~/.gradle/wrapper/dists/gradle-8.14.3-all/*/gradle-8.14.3/bin/gradle.bat'))[0]
 env = dict(os.environ, JAVA_HOME=os.environ.get('JAVA_HOME', 'C:/Program Files/Eclipse Adoptium/jdk-17.0.18.8-hotspot'))
@@ -27,7 +27,7 @@ if typ == 'release' and os.environ.get('TESTKEY'):
 tasks = ['assemble' + f.capitalize() + typ.capitalize() for f in sel]
 subprocess.run([gr, '--no-daemon', '-q'] + extra + tasks, cwd=A, env=env, check=True)
 for f in sel:   # 웹판용 HTML 은 이메일 없이 다시 만든다(deploy_play.sh 가 games/app 을 그대로 복사)
-    subprocess.run([sys.executable, str(G / 'tools' / FL[f][0])], check=True, stdout=subprocess.DEVNULL)
+    subprocess.run([sys.executable, str(G / 'tools' / FL[f][0])] + (['app'] if f == 'expedition' else []), check=True, stdout=subprocess.DEVNULL)
 out = G / 'demo' / 'apk'; out.mkdir(parents=True, exist_ok=True)
 for f in sel:
     for p in (A / 'app' / 'build' / 'outputs' / 'apk' / f / typ).glob('*.apk'):

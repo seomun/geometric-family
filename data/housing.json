@@ -8,119 +8,119 @@
   },
   {
    "lv": 2,
-   "cozy": 7
+   "cozy": 8
   },
   {
    "lv": 3,
-   "cozy": 24
+   "cozy": 25
   },
   {
    "lv": 4,
-   "cozy": 48
+   "cozy": 50
   },
   {
    "lv": 5,
-   "cozy": 78
+   "cozy": 82
   },
   {
    "lv": 6,
-   "cozy": 114
+   "cozy": 120
   },
   {
    "lv": 7,
-   "cozy": 156
+   "cozy": 164
   },
   {
    "lv": 8,
-   "cozy": 202
+   "cozy": 213
   },
   {
    "lv": 9,
-   "cozy": 254
+   "cozy": 268
   },
   {
    "lv": 10,
-   "cozy": 310
+   "cozy": 327
   },
   {
    "lv": 11,
-   "cozy": 371
+   "cozy": 391
   },
   {
    "lv": 12,
-   "cozy": 436
+   "cozy": 460
   },
   {
    "lv": 13,
-   "cozy": 506
+   "cozy": 533
   },
   {
    "lv": 14,
-   "cozy": 579
+   "cozy": 611
   },
   {
    "lv": 15,
-   "cozy": 657
+   "cozy": 693
   },
   {
    "lv": 16,
-   "cozy": 739
+   "cozy": 779
   },
   {
    "lv": 17,
-   "cozy": 825
+   "cozy": 869
   },
   {
    "lv": 18,
-   "cozy": 914
+   "cozy": 964
   },
   {
    "lv": 19,
-   "cozy": 1007
+   "cozy": 1062
   },
   {
    "lv": 20,
-   "cozy": 1104
+   "cozy": 1164
   },
   {
    "lv": 21,
-   "cozy": 1205
+   "cozy": 1270
   },
   {
    "lv": 22,
-   "cozy": 1309
+   "cozy": 1380
   },
   {
    "lv": 23,
-   "cozy": 1417
+   "cozy": 1494
   },
   {
    "lv": 24,
-   "cozy": 1528
+   "cozy": 1611
   },
   {
    "lv": 25,
-   "cozy": 1643
+   "cozy": 1732
   },
   {
    "lv": 26,
-   "cozy": 1761
+   "cozy": 1856
   },
   {
    "lv": 27,
-   "cozy": 1882
+   "cozy": 1984
   },
   {
    "lv": 28,
-   "cozy": 2007
+   "cozy": 2115
   },
   {
    "lv": 29,
-   "cozy": 2135
+   "cozy": 2250
   },
   {
    "lv": 30,
-   "cozy": 2266
+   "cozy": 2389
   }
  ],
  "levelsKid": [
@@ -130,79 +130,79 @@
   },
   {
    "lv": 2,
-   "cozy": 6
+   "cozy": 7
   },
   {
    "lv": 3,
-   "cozy": 20
+   "cozy": 21
   },
   {
    "lv": 4,
-   "cozy": 41
+   "cozy": 42
   },
   {
    "lv": 5,
-   "cozy": 66
+   "cozy": 70
   },
   {
    "lv": 6,
-   "cozy": 97
+   "cozy": 102
   },
   {
    "lv": 7,
-   "cozy": 133
+   "cozy": 139
   },
   {
    "lv": 8,
-   "cozy": 172
+   "cozy": 181
   },
   {
    "lv": 9,
-   "cozy": 216
+   "cozy": 228
   },
   {
    "lv": 10,
-   "cozy": 264
+   "cozy": 278
   },
   {
    "lv": 11,
-   "cozy": 315
+   "cozy": 332
   },
   {
    "lv": 12,
-   "cozy": 371
+   "cozy": 391
   },
   {
    "lv": 13,
-   "cozy": 430
+   "cozy": 453
   },
   {
    "lv": 14,
-   "cozy": 492
+   "cozy": 519
   },
   {
    "lv": 15,
-   "cozy": 558
+   "cozy": 589
   },
   {
    "lv": 16,
-   "cozy": 628
+   "cozy": 662
   },
   {
    "lv": 17,
-   "cozy": 701
+   "cozy": 739
   },
   {
    "lv": 18,
-   "cozy": 777
+   "cozy": 819
   },
   {
    "lv": 19,
-   "cozy": 856
+   "cozy": 903
   },
   {
    "lv": 20,
-   "cozy": 938
+   "cozy": 989
   }
  ],
  "formula": {
@@ -347,6 +347,13 @@
      "y": 305,
      "want": "p_points"
     }
+   ],
+   "themes": [
+    "living",
+    "eat",
+    "store",
+    "deco",
+    "story"
    ]
   },
   {
@@ -420,7 +427,7 @@
      "slot": "floor",
      "x": 282,
      "y": 428,
-     "want": "u_umbrella"
+     "want": "g_lunch"
     },
     {
      "id": "kitchen_8",
@@ -471,6 +478,10 @@
      "y": 196,
      "want": "p_lunch"
     }
+   ],
+   "themes": [
+    "eat",
+    "store"
    ]
   },
   {
@@ -595,6 +606,12 @@
      "y": 236,
      "want": "p_globe"
     }
+   ],
+   "themes": [
+    "travel",
+    "deco",
+    "living",
+    "store"
    ]
   },
   {
@@ -719,6 +736,11 @@
      "y": 232,
      "want": "p_env"
     }
+   ],
+   "themes": [
+    "study",
+    "deco",
+    "living"
    ]
   },
   {
@@ -850,6 +872,11 @@
      "y": 228,
      "want": "g_teaset"
     }
+   ],
+   "themes": [
+    "outdoor",
+    "eat",
+    "story"
    ]
   },
   {
@@ -923,7 +950,7 @@
      "slot": "floor",
      "x": 282,
      "y": 428,
-     "want": "q_game_3"
+     "want": "u_umbrella"
     },
     {
      "id": "entrance_8",
@@ -972,8 +999,14 @@
      "slot": "table",
      "x": 288,
      "y": 220,
-     "want": "u_coffee"
+     "want": "p_pill"
     }
+   ],
+   "themes": [
+    "entry",
+    "store",
+    "deco",
+    "outdoor"
    ]
   },
   {
@@ -1089,15 +1122,22 @@
      "slot": "table",
      "x": 117,
      "y": 236,
-     "want": "p_pair"
+     "want": "p_clock"
     },
     {
      "id": "upstairs_14",
      "slot": "table",
      "x": 148,
      "y": 236,
-     "want": "p_ramen"
+     "want": "p_wreath"
     }
+   ],
+   "themes": [
+    "sleep",
+    "store",
+    "living",
+    "deco",
+    "story"
    ]
   },
   {
@@ -1199,29 +1239,34 @@
      "slot": "table",
      "x": 215,
      "y": 232,
-     "want": "p_pack3"
+     "want": "p_ra"
     },
     {
      "id": "roof_12",
      "slot": "table",
      "x": 244,
      "y": 232,
-     "want": "p_pack2"
+     "want": "g_lantern2"
     },
     {
      "id": "roof_13",
      "slot": "table",
      "x": 274,
      "y": 232,
-     "want": "p_glass"
+     "want": "e_candy"
     },
     {
      "id": "roof_14",
      "slot": "table",
      "x": 303,
      "y": 232,
-     "want": "p_ra"
+     "want": "s2_acorn"
     }
+   ],
+   "themes": [
+    "story",
+    "outdoor",
+    "deco"
    ]
   },
   {
@@ -1258,87 +1303,63 @@
     {
      "id": "bath_2",
      "slot": "floor",
-     "x": 58,
+     "x": 170,
      "y": 368,
      "want": "y_duck"
     },
     {
      "id": "bath_3",
-     "slot": "floor",
-     "x": 170,
-     "y": 368,
-     "want": "t_shoes_k"
-    },
-    {
-     "id": "bath_4",
-     "slot": "floor",
-     "x": 282,
-     "y": 368,
-     "want": "kc_tube"
-    },
-    {
-     "id": "bath_5",
-     "slot": "floor",
-     "x": 58,
-     "y": 428,
-     "want": "kg_ball2"
-    },
-    {
-     "id": "bath_6",
-     "slot": "floor",
-     "x": 170,
-     "y": 428,
-     "want": "k_ch14"
-    },
-    {
-     "id": "bath_7",
-     "slot": "floor",
-     "x": 282,
-     "y": 428,
-     "want": "k_ch10"
-    },
-    {
-     "id": "bath_8",
      "slot": "wall",
      "x": 52,
      "y": 108,
      "want": "y_hanger"
     },
     {
-     "id": "bath_9",
+     "id": "bath_4",
      "slot": "wall",
      "x": 118,
      "y": 108,
      "want": "y_towel"
     },
     {
-     "id": "bath_10",
+     "id": "bath_5",
      "slot": "wall",
      "x": 184,
      "y": 108,
      "want": "y_clock"
     },
     {
-     "id": "bath_11",
+     "id": "bath_6",
      "slot": "table",
-     "x": 85,
+     "x": 80,
      "y": 228,
      "want": "y_cup"
     },
     {
-     "id": "bath_12",
+     "id": "bath_7",
      "slot": "table",
-     "x": 127,
+     "x": 111,
      "y": 228,
      "want": "y_paste"
     },
     {
-     "id": "bath_13",
+     "id": "bath_8",
      "slot": "table",
-     "x": 169,
+     "x": 143,
      "y": 228,
      "want": "y_soap"
+    },
+    {
+     "id": "bath_9",
+     "slot": "table",
+     "x": 174,
+     "y": 228,
+     "want": "y_cup2"
     }
+   ],
+   "themes": [
+    "wash",
+    "deco"
    ]
   },
   {
@@ -1415,52 +1436,65 @@
     {
      "id": "kid_6",
      "slot": "floor",
-     "x": 58,
-     "y": 428,
-     "want": "t_pigs_k"
-    },
-    {
-     "id": "kid_7",
-     "slot": "floor",
-     "x": 170,
+     "x": 48,
      "y": 428,
      "want": "y_pillow"
     },
     {
-     "id": "kid_8",
+     "id": "kid_7",
      "slot": "floor",
-     "x": 282,
+     "x": 128,
      "y": 428,
      "want": "y_quilt"
     },
     {
+     "id": "kid_8",
+     "slot": "floor",
+     "x": 214,
+     "y": 428,
+     "want": "kg_ball2"
+    },
+    {
      "id": "kid_9",
+     "slot": "floor",
+     "x": 296,
+     "y": 428,
+     "want": "k_ch4"
+    },
+    {
+     "id": "kid_10",
      "slot": "wall",
      "x": 52,
      "y": 108,
      "want": "w_frame"
     },
     {
-     "id": "kid_10",
+     "id": "kid_11",
      "slot": "wall",
      "x": 118,
      "y": 108,
      "want": "y_moon"
     },
     {
-     "id": "kid_11",
+     "id": "kid_12",
      "slot": "wall",
      "x": 184,
      "y": 108,
      "want": "kg_cloud"
     },
     {
-     "id": "kid_12",
+     "id": "kid_13",
      "slot": "table",
      "x": 269,
      "y": 236,
      "want": "y_book"
     }
+   ],
+   "themes": [
+    "sleep",
+    "play",
+    "deco",
+    "story"
    ]
   },
   {
@@ -1486,7 +1520,7 @@
      "slot": "floor",
      "x": 250,
      "y": 298,
-     "want": "kc_snowman"
+     "want": "t_snowqueen_k"
     },
     {
      "id": "wardrobe_3",
@@ -1500,35 +1534,35 @@
      "slot": "floor",
      "x": 170,
      "y": 368,
-     "want": "t_snowqueen_k"
+     "want": "t_bears_k"
     },
     {
      "id": "wardrobe_5",
      "slot": "floor",
      "x": 282,
      "y": 368,
-     "want": "kg_train2"
+     "want": "t_hok_k"
     },
     {
      "id": "wardrobe_6",
      "slot": "floor",
      "x": 58,
      "y": 428,
-     "want": "t_bears_k"
+     "want": "t_pino_k"
     },
     {
      "id": "wardrobe_7",
      "slot": "floor",
      "x": 170,
      "y": 428,
-     "want": "t_hok_k"
+     "want": "t_shoes_k"
     },
     {
      "id": "wardrobe_8",
      "slot": "floor",
      "x": 282,
      "y": 428,
-     "want": "t_pino_k"
+     "want": "kc_mitten"
     },
     {
      "id": "wardrobe_9",
@@ -1542,15 +1576,20 @@
      "slot": "wall",
      "x": 118,
      "y": 108,
-     "want": "w_garland"
+     "want": "w_crown"
     },
     {
      "id": "wardrobe_11",
      "slot": "wall",
      "x": 184,
      "y": 108,
-     "want": "w_stars"
+     "want": "w_garland"
     }
+   ],
+   "themes": [
+    "wear",
+    "deco",
+    "story"
    ]
   },
   {
@@ -1610,7 +1649,7 @@
      "slot": "floor",
      "x": 282,
      "y": 368,
-     "want": "kc_acorn"
+     "want": "kc_icecream"
     },
     {
      "id": "dining_6",
@@ -1624,7 +1663,7 @@
      "slot": "floor",
      "x": 170,
      "y": 428,
-     "want": "t_axe_k"
+     "want": "k_ch10"
     },
     {
      "id": "dining_8",
@@ -1657,24 +1696,22 @@
     {
      "id": "dining_12",
      "slot": "table",
-     "x": 118,
+     "x": 130,
      "y": 276,
      "want": "y_bowl"
     },
     {
      "id": "dining_13",
      "slot": "table",
-     "x": 169,
+     "x": 208,
      "y": 276,
      "want": "y_spoon"
-    },
-    {
-     "id": "dining_14",
-     "slot": "table",
-     "x": 220,
-     "y": 276,
-     "want": "y_cup2"
     }
+   ],
+   "themes": [
+    "eat",
+    "deco",
+    "story"
    ]
   },
   {
@@ -1700,7 +1737,7 @@
      "slot": "floor",
      "x": 250,
      "y": 298,
-     "want": "k_ch4"
+     "want": "k_ch9"
     },
     {
      "id": "toyroom_3",
@@ -1721,50 +1758,62 @@
      "slot": "floor",
      "x": 282,
      "y": 368,
-     "want": "kc_icecream"
+     "want": "kc_tube"
     },
     {
      "id": "toyroom_6",
      "slot": "floor",
-     "x": 58,
+     "x": 48,
      "y": 428,
-     "want": "t_sun_k"
+     "want": "kg_train2"
     },
     {
      "id": "toyroom_7",
      "slot": "floor",
-     "x": 170,
+     "x": 128,
      "y": 428,
-     "want": "t_jack_k"
+     "want": "kc_snowman"
     },
     {
      "id": "toyroom_8",
      "slot": "floor",
-     "x": 282,
+     "x": 214,
      "y": 428,
-     "want": "t_gyeonwoo_k"
+     "want": "kc_acorn"
     },
     {
      "id": "toyroom_9",
+     "slot": "floor",
+     "x": 296,
+     "y": 428,
+     "want": "t_sun_k"
+    },
+    {
+     "id": "toyroom_10",
      "slot": "wall",
      "x": 52,
      "y": 108,
      "want": "w_rainbow"
     },
     {
-     "id": "toyroom_10",
+     "id": "toyroom_11",
      "slot": "wall",
      "x": 118,
      "y": 108,
-     "want": "w_crown"
+     "want": "kg_kite"
     },
     {
-     "id": "toyroom_11",
+     "id": "toyroom_12",
      "slot": "wall",
      "x": 184,
      "y": 108,
      "want": "kg_rainbow"
     }
+   ],
+   "themes": [
+    "play",
+    "deco",
+    "story"
    ]
   }
  ],
@@ -2498,9 +2547,9 @@
     {
      "id": "t1",
      "need": [
-      "k_ch4"
+      "k_ch7"
      ],
-     "label": "달 램프"
+     "label": "소리 나팔"
     },
     {
      "id": "t2",

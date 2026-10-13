@@ -18,15 +18,18 @@ const { chromium } = require('playwright-core'); const PER = +(process.argv[2] |
         const share = per / apps.length; apps.forEach((a) => { prog[a] += day === 0 ? Math.max(share, 4) : share; byApp[a].forEach((it) => { if (!Room.has(it.id) && effort(it) <= prog[a]) { Room.grant(it.id); } }); });
         const month = (Math.floor(day / 30) % 12) + 1; const sc = cal.find((it) => !Room.has(it.id) && (it.src.months || []).includes(month)); if (sc) { Room.grant(sc.id); lastGrant = day; }   // 계절·이벤트: 그 달에 하루 하나(1월 1일 시작)
         guests.forEach((g) => { const n = (Room.S.guests[g.id] || {}).n || 0; if (n < g.gifts.length && Room.cozy() >= g.need + 250 * n) { Room.S.guests[g.id] = { n: n + 1 }; Room.grant(g.gifts[n]); lastGrant = day; } });   // 손님: 문턱을 넘으면 선물
+        Room.sweep(); for (let k = 0; k < 3; k++) { const L1 = Room.level(); Room.sweep(); if (Room.level() === L1) break; }   // 방이 열리면 기다리던 가구를 놓는다
         const c = Room.chapter(); if (c && Room.tasks().done >= c.tasks.length) { Room.S.story[c.room] = { done: 1 }; }
         const L = Room.levelInfo(); if (day % 5 === 0 || L.lv !== lvPrev) rows.push([day, Room.ownedCount(), L.cozy, L.lv]); lvPrev = L.lv; Object.values(byApp).forEach((a) => a.forEach((it) => { if (Room.has(it.id) && !it.__d) { it.__d = 1; lastGrant = Math.max(lastGrant, day); } }));
       }
-      return { rows, own: Room.ownedCount(), cozy: Room.cozy(), lv: Room.level(), total: Room.data.items.filter(group).length, lastGrant };
+      const themeBad = []; Object.keys(Room.S.placed).forEach((rid) => { const R = Room.H.rooms.find((r) => r.id === rid); (Room.S.placed[rid] || []).forEach((p) => { const it = Room.item(p.id); if (R && R.themes && it && !R.themes.includes(it.theme)) themeBad.push(rid + ':' + p.id + '(' + it.theme + ')'); }); });
+      return { themeBad, rows, own: Room.ownedCount(), cozy: Room.cozy(), lv: Room.level(), total: Room.data.items.filter(group).length, lastGrant };
     }, [PER, kid]);
     console.log(`\n== ${app} (${kid ? '유아' : '성인'}) · 하루 ${PER}판 · 총 ${out.total}개 → 끝에 ${out.own}개 아늑함 ${out.cozy} 레벨 ${out.lv}`);
     const first = (lv) => (out.rows.find((r) => r[3] >= lv) || [null])[0]; console.log('  레벨 도달일: ' + [2, 5, 10, 15, 20, 25, 30].map((lv) => `Lv${lv}=${first(lv) == null ? '-' : first(lv) + '일'}`).join(' '));
     console.log('  ' + out.rows.filter((r, i) => i % 4 === 0).map((r) => `${r[0]}일:${r[1]}개/${r[2]}/Lv${r[3]}`).join('  '));
     ok(first(2) != null && first(2) <= 1, app + ' Lv2 ≤ 1일'); if (!kid) { const f30 = first(30); ok(f30 != null && f30 >= 120, app + ' Lv30 도달 ≥ 120일 (실제 ' + f30 + ')'); ok(f30 != null && f30 <= out.lastGrant, app + ' 가구가 소진되기 전에 Lv30 도달(마지막 획득 ' + out.lastGrant + '일)'); } if (!kid) { ok(first(5) != null && first(5) <= 5, app + ' Lv5 ≤ 5일'); ok(first(10) != null && first(10) <= 21, app + ' Lv10 ≤ 21일'); } else ok(first(5) != null && first(5) <= 10, app + ' 유아 Lv5 ≤ 10일');
+    ok(out.themeBad.length === 0, app + ' 방 주제 밖 가구 0 ' + out.themeBad.slice(0, 5).join(' '));
     ok(errs.length === 0, app + ' 오류 없음 ' + errs[0]); await ctx.close();
   }
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

@@ -120,13 +120,16 @@
     const it = Room.item(id), S = ensure(); if (!it) return null; const open = Room.unlockedRooms(), g = geo(it);
     for (const r of open) { const a = (r.anchors || []).find((q) => q.want === id); if (a && !(S.placed[r.id] || []).some((p) => p.id === id)) { Room.removeEverywhere(id); Room.placedIn(r.id).push({ id, x: Math.round(Math.max(4, Math.min(RW - g.w - 4, a.x - g.w / 2))), y: Math.round(a.y - g.h), flip: 0, c: it.colors[0] }); Room.save(); return { room: r.id, anchor: a }; } }
     if (Object.values(S.placed).some((L) => L.some((p) => p.id === id))) { const rr = Object.keys(S.placed).find((k) => S.placed[k].some((p) => p.id === id)); return { room: rr, already: true }; }
-    const home = open.find((x) => x.id === it.room) || open[0]; if (!home) return null; let target = home.id, pos = null;
+    const okRooms = open.filter((r) => !r.themes || !it.theme || r.themes.includes(it.theme));          // 주제가 맞는 열린 방에만 놓는다(욕실에 배구공 금지)
+    const home = okRooms.find((x) => x.id === it.room) || okRooms[0]; if (!home) return null; let target = home.id, pos = null;
     if (it.slot === 'table') {       // 소품은 면 위에: 고정 가구/큰 가구 윗면에 순서대로
-      for (const r of [home].concat(open)) { const L = (S.placed[r.id] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it && q.it.slot === 'table'); for (const sf of Room.surfaces(r.id)) { const sitting = L.filter((q) => Math.abs(q.p.y + geo(q.it).h - sf.y) < 8 && q.p.x >= sf.x0 - 20 && q.p.x <= sf.x1); let x = sf.x0 + 2; sitting.sort((a, b) => a.p.x - b.p.x).forEach((q) => { x = Math.max(x, q.p.x + geo(q.it).w + 6); }); if (x + g.w <= sf.x1 + 6) { pos = { x: Math.round(x), y: Math.round(sf.y - g.h) }; target = r.id; break; } } if (pos) break; }
+      for (const r of [home].concat(okRooms)) { const L = (S.placed[r.id] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it && q.it.slot === 'table'); for (const sf of Room.surfaces(r.id)) { const sitting = L.filter((q) => Math.abs(q.p.y + geo(q.it).h - sf.y) < 8 && q.p.x >= sf.x0 - 20 && q.p.x <= sf.x1); let x = sf.x0 + 2; sitting.sort((a, b) => a.p.x - b.p.x).forEach((q) => { x = Math.max(x, q.p.x + geo(q.it).w + 6); }); if (x + g.w <= sf.x1 + 6) { pos = { x: Math.round(x), y: Math.round(sf.y - g.h) }; target = r.id; break; } } if (pos) break; }
     }
     if (!pos) pos = freeSpot(target, it, null);
     Room.placedIn(target).push({ id, x: pos.x, y: pos.y, flip: 0, c: it.colors[0] }); Room.save(); return { room: target };
   };
+  /** 얻었지만 아직 맞는 방이 없어 못 놓은 가구를, 방이 열리면 놓는다 */
+  Room.sweep = function () { const S = ensure(); if (!S || !H()) return 0; let n = 0; Room.owned().forEach((id) => { if (!Object.values(S.placed).some((L) => L.some((p) => p.id === id))) { const r = Room.placeAt(id); if (r && !r.already) n++; } }); return n; };
   const grant0 = Room.grant;
   Room.grant = function (id) {
     const auto = Room.cfg.autoPlace; Room.cfg.autoPlace = false; let r; try { r = grant0.call(Room, id); } finally { Room.cfg.autoPlace = auto; }
@@ -242,7 +245,7 @@
       d.wrap.style.margin = '0 auto'; d.wrap.__fit && d.wrap.__fit();
       if (!place) { guestCheck(d.room, R); walk(d.room, R); }
     }
-    function afterChange() { drawTop(); drawSheet(); const L = Room.levelInfo(); if (L.lv > (S.lv || 1)) { S.lv = L.lv; Room.save(); lvUp(L); } }
+    function afterChange() { drawTop(); drawSheet(); const L = Room.levelInfo(); if (L.lv > (S.lv || 1)) { S.lv = L.lv; Room.save(); lvUp(L); if (Room.sweep()) drawStage(); } }
     function lvUp(L) { try { UK.confetti(parent); GF.sfx && GF.sfx('celebrate'); } catch (e) {} const nr = rooms().find((r) => r.unlock === L.lv); UK.toast(kid() ? '⭐' : '집 레벨 ' + L.lv + '!' + (nr ? ' ' + nr.name + ' 열림' : ''), parent); }
     function drawSheet() {
       sheet.innerHTML = ''; sheet.className = 'h2-sheet' + (expanded ? ' open' : ''); const T = Room.tasks(), g = Room.nextGoal(Room.cfg.app || Room.cfg.game);
@@ -293,7 +296,7 @@
     function drawAll() { drawTop(); drawNav(); drawStage(); drawTools(); drawSheet(); drawSel(); }
     Room._redraw = () => { sel = null; drawAll(); };
     function seasonCheck() { Room._quiet = 1; const g = Room.seasonCheck(); Room._quiet = 0; if (g) { UK.toast(kid() ? '🎁' : '계절 선물 · ' + g.name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} afterChange(); drawStage(); } }
-    setTimeout(() => { drawAll(); const L0 = Room.levelInfo(); if (L0.lv > (S.lv || 1)) { S.lv = L0.lv; Room.save(); lvUp(L0); } S.lv = Math.max(S.lv || 1, L0.lv); seasonCheck(); setTimeout(() => Room.checkStory(parent, () => drawAll()), 400); }, 0);
+    setTimeout(() => { Room.sweep(); drawAll(); const L0 = Room.levelInfo(); if (L0.lv > (S.lv || 1)) { S.lv = L0.lv; Room.save(); lvUp(L0); } S.lv = Math.max(S.lv || 1, L0.lv); seasonCheck(); setTimeout(() => Room.checkStory(parent, () => drawAll()), 400); }, 0);
     return { redraw: drawAll };
   };
   /** 계절·이벤트 선물: 그 달에 집에 오면 하루에 하나씩(확정, 놓친 철은 다음 해에 다시) */

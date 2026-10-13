@@ -8,7 +8,8 @@
   const LS = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || 'null'); localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} return null; };
   const DAY = 86400000, safe = () => document.getElementById('safe');
   /** 문자열 표: GF.t('키', {변수}) — 키가 없으면 키를 그대로 돌려줘 빠진 곳이 바로 보인다 */
-  GF.t = (k, v) => { const s = (GF.data && GF.data.ops && GF.data.ops.strings) || {}; let t = s[k]; if (t == null) return k; if (v) t = t.replace(/\{(\w+)\}/g, (m, x) => (v[x] != null ? v[x] : m)); return t; };
+  GF.lang = GF.lang || 'ko'; GF.t = (k, v) => { const o = (GF.data && GF.data.ops) || {}, s = o.strings || {}; let t = GF.lang === 'en' && o.strings_en && o.strings_en[k] ? o.strings_en[k] : s[k]; if (t == null) return k;      // 문자열 사전: ko 기본, en 은 비어 있으면 ko 로 대신(다국어 준비 C15)
+  if (v) t = t.replace(/\{(\w+)\}/g, (m, x) => (v[x] != null ? v[x] : m)); return t; };
   const key = () => 'gf:' + O.app + ':ops', st = () => Object.assign({ lastOpen: 0, newsSeen: '', giftWeek: '', reviewAt: 0, clears: 0 }, LS(key()) || {}), put = (s) => LS(key(), s);
   O.native = () => (window.GFOps && typeof window.GFOps.version === 'function' ? window.GFOps : null);
   /** 시험용 가짜 시계: GF.ops._now = () => 시각(ms) */

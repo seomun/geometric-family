@@ -165,7 +165,10 @@ STR.update({'ops.cam.title': '카메오 도감', 'ops.cam.card': '지나가던 �
             'ops.fam.title': '가족 코드', 'ops.fam.note': '아이 앱과 어른 앱은 따로 모아요. 코드를 넣으면 이야기 카드·도장·카메오가 서로 합쳐져요. 꼭 하지 않아도 돼요.', 'ops.fam.make': '코드 만들기', 'ops.fam.paste': '코드 붙여넣기', 'ops.fam.apply': '합치기', 'ops.fam.ok': '합쳤어요!', 'ops.fam.bad': '코드가 올바르지 않아요.',
             'ops.ip.share': '공유 카드 저장', 'ops.ip.shared': '사진첩에 저장했어요.', 'ops.ip.sharefail': '저장하지 못했어요.', 'ops.settings.webtoon': '웹툰 보기', 'ops.ip.card': '「{title}」 카드를 얻었어요 ({n}/4)', 'ops.ip.stamp': '도장: {name}', 'ops.ip.stamp.first': '첫 걸음', 'ops.ip.stamp.a': '쑥쑥 자라요', 'ops.ip.stamp.b': '반 넘었어요', 'ops.ip.stamp.end': '끝까지', 'ops.ip.stamp.story': '이야기 한 편',
             'ops.ip.plate': '문패 장식 「{name}」을 얻었어요', 'ops.ip.plate.ribbon': '리본', 'ops.ip.plate.sparkle': '반짝이', 'ops.ip.plate.crown': '왕관', 'ops.ip.story': '이야기를 완성했어요! 「{name}」을 집에 놓아 두었어요.'})
-D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', webtoonUrl='https://blog.naver.com/gihahakf', privacyUrl='', credits=CREDITS, strings=STR, news=NEWS, faq=FAQ, tales={k: dict(title=v[0], icon=v[1]) for k, v in TALES.items()}, apps=APPS_G, appNames=APP_NAMES, cardMap=card_map(), stamps=stamp_rules(), playTale={str(k): v for k, v in PLAY_TALE.items()}, cameos=cameos(), weekThemes=week_themes())
+_EN = json.load(open('data/i18n/en.json', encoding='utf-8'))['strings'] if (R / 'data/i18n/en.json').exists() else {}   # 영어 틀(C15): 키는 STR 과 같아야 한다
+assert set(_EN) <= set(STR), ('영어 사전에 없는 한국어 키', sorted(set(_EN) - set(STR))[:5])
+STR_EN = {k: _EN.get(k, '') for k in STR}
+D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', webtoonUrl='https://blog.naver.com/gihahakf', privacyUrl='', credits=CREDITS, strings=STR, strings_en=STR_EN, news=NEWS, faq=FAQ, tales={k: dict(title=v[0], icon=v[1]) for k, v in TALES.items()}, apps=APPS_G, appNames=APP_NAMES, cardMap=card_map(), stamps=stamp_rules(), playTale={str(k): v for k, v in PLAY_TALE.items()}, cameos=cameos(), weekThemes=week_themes())
 if __name__ == '__main__':
     p = R / 'data' / 'ops.json'; old = json.load(open(p, encoding='utf-8')) if p.exists() else {}
     for k in ('events', 'missions', 'album'):

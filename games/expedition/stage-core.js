@@ -82,5 +82,12 @@
   };
   /** 적 속성 미리보기: 속성별 적 수와, 그 적을 이기는 속성(추천) */
   const enemyPreview = (D, st) => { const cnt = {}; enemyEls(st).forEach((e) => { cnt[e] = (cnt[e] || 0) + 1; }); return Object.keys(cnt).map((e) => ({ el: e, n: cnt[e], beatenBy: Object.keys(D.el).find((x) => B.BEATS[x] === e) })); };
-  return { autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
+  /** 계절 이벤트(B9): 지금 달의 이벤트 · 3칸 무대(깬 단계에 맞춘 적에 철 테마 이름·그림) · 보상 */
+  const eventNow = (D, month) => (D.bal.events || []).find((e) => e.months.includes(month)) || null;
+  const eventStage = (D, ev, k, cleared) => {
+    const s = Math.min(D.stages.length, Math.max(1, Math.round(Math.max(1, cleared) * ev.tiers[k]))), base = D.stages[s - 1];
+    return { id: 3000 + ev.n * 10 + k, name: ev.names[k], gold: base.gold, enemies: base.enemies.map((e, i) => { const f = ev.foes[i % ev.foes.length]; return Object.assign({}, e, { k: Math.round(e.k * ev.kMul[k] * 1000) / 1000, lock: 0, name: f[0], emoji: f[1] }); }), event: true };
+  };
+  const eventReward = (D, ev, k, cleared, first) => { const st = eventStage(D, ev, k, cleared); return { gold: Math.round(st.gold * ev.goldMul[k] * (first ? 1 : 0.5)), gems: first ? ev.gems[k] : 0 }; };
+  return { eventNow, eventStage, eventReward, autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
 });

@@ -1,0 +1,22 @@
+// ⑪ 계절 이벤트 스테이지 틀(B9) 시험: node tools/exp_event_smoke.js (로컬 모드) — 철마다 이벤트 · 3칸 순서대로 · 처음 깨면 반짝석 · 다시 깨면 금화 절반 · 12개월 모두 이벤트 · 서버판엔 아직 안 나옴
+const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
+(async () => {
+  const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), p = await (await b.newContext({ viewport: { width: 390, height: 780 } })).newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.goto('http://localhost:8765/games/expedition/index.html'); await p.waitForTimeout(1500);
+  const cover = await p.evaluate(() => { const D = EXP.debug.D(), out = []; for (let m = 1; m <= 12; m++) out.push(ExpStage.eventNow(D, m).id); return out.join(); }); ok(cover.split(',').length === 12 && new Set(cover.split(',')).size === 4, '12개월 모두 이벤트가 있고 철마다 4종 · ' + cover);
+  await p.evaluate(() => { const E = EXP.debug; E.reset(); E.month = 10; const S = E.S(); S.flags.prologue = 1; S.cleared = 8; ['u_kid3', 'u_kid1', 'u_wind', 'u_swallow'].forEach((id) => { S.units[id] = { lv: 20, skl: 3, awk: 1, promo: 0, gear: [3, 3, 3, 3] }; }); Object.keys(S.units).forEach((id) => { S.units[id].lv = 20; }); S.party = ['u_kid3', 'u_kid1', 'u_wind', 'u_swallow', Object.keys(S.units).find((id) => !['u_kid3', 'u_kid1', 'u_wind', 'u_swallow'].includes(id))]; E.save(); GF.stack = []; GF.go('xhome'); }); await p.waitForTimeout(900);
+  ok(await p.evaluate(() => /추석 달맞이/.test(document.body.innerText) && !!document.querySelector('.ex-bdg')), '10월 홈: 「추석 달맞이」 버튼 + 새 이벤트 표시'); await p.screenshot({ path: 'notes/snapshots/exp_event_home.png' });
+  await p.evaluate(() => { [...document.querySelectorAll('.uk-btn')].find((x) => /추석 달맞이/.test(x.textContent)).click(); }); await p.waitForTimeout(700);
+  const l0 = await p.evaluate(() => ({ rows: document.querySelectorAll('.ex-bg').length, can: document.querySelectorAll('.ex-bg.can').length, txt: document.querySelector('.ex-shop').innerText })); ok(l0.rows === 3 && l0.can === 1, '3칸 · 처음엔 첫 칸만 열림'); ok(/송편 가게/.test(l0.txt) && /💎 20/.test(l0.txt), '칸 이름·보상 표시'); await p.screenshot({ path: 'notes/snapshots/exp_event_list.png' });
+  await p.evaluate(() => document.querySelectorAll('.ex-bg .uk-btn')[1].click()); await p.waitForTimeout(300); ok(await p.evaluate(() => GF.cur.name === 'xevent'), '잠긴 칸은 못 들어감');
+  const g0 = await p.evaluate(() => ({ gems: EXP.debug.S().gems, gold: EXP.debug.S().gold }));
+  await p.evaluate(() => document.querySelectorAll('.ex-bg .uk-btn')[0].click()); await p.waitForTimeout(800); ok(await p.evaluate(() => GF.cur.name === 'xbattle' && /송편 꼬마|감 꼬마|토끼 꼬마/.test(document.body.innerText)), '전투: 철 테마 적 이름');
+  // 승리까지 자동 진행
+  let won = false; for (let i = 0; i < 90 && !won; i++) { await p.waitForTimeout(700); won = await p.evaluate(() => /승리!/.test(document.body.innerText)); } ok(won, '자동 전투로 승리 · ' + (won ? '' : await p.evaluate(() => document.body.innerText.replace(/\s+/g, ' ').slice(0, 200)))); await p.screenshot({ path: 'notes/snapshots/exp_event_win.png' });
+  const g1 = await p.evaluate(() => ({ gems: EXP.debug.S().gems, gold: EXP.debug.S().gold, ev: EXP.debug.S().flags.ev })); ok(g1.gems === g0.gems + 20 && g1.gold > g0.gold && g1.ev.ev_autumn.join() === '0', '처음 깨면 반짝석 +20 · 금화 · 기록');
+  await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.stack = []; GF.go('xevent'); }); await p.waitForTimeout(600);
+  ok(await p.evaluate(() => document.querySelectorAll('.ex-bg.can').length === 1 && /깼어요/.test(document.querySelector('.ex-shop').innerText)), '첫 칸 완료 · 둘째 칸 열림');
+  const r2 = await p.evaluate(() => { const D = EXP.debug.D(), ev = D.bal.events.find((e) => e.id === 'ev_autumn'); return { first: ExpStage.eventReward(D, ev, 0, 8, true), again: ExpStage.eventReward(D, ev, 0, 8, false) }; }); ok(r2.again.gems === 0 && r2.again.gold === Math.round(r2.first.gold / 2), '다시 깨면 반짝석 없고 금화 절반');
+  await p.evaluate(() => { EXP.debug.month = 1; GF.stack = []; GF.go('xhome'); }); await p.waitForTimeout(700); ok(await p.evaluate(() => /겨울 김장 잔치/.test(document.body.innerText)), '1월엔 겨울 이벤트로 바뀜');
+  ok(errs.length === 0, '오류 없음 ' + (errs[0] || '')); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
+})().catch((e) => { console.error(e); process.exit(1); });

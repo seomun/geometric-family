@@ -186,7 +186,7 @@ const th = LV.theme || 'teeth', face = el('div', 'dy-face', stage); face.innerHT
   });
   GF.screen('dhouse', {
     bare: false,
-    enter(r) { r.classList.add('uk', 'dy'); GF.bg('home', r); bar(); const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house2(sc, { room: 'kid', go: () => GF.go('dmap') }); },
+    enter(r) { r.classList.add('uk', 'dy'); GF.bg('home', r); bar(); const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house2(sc, { go: () => GF.go('dmap') }); },
   });
   DY.start = async function (opts) {
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'day_levels', 'day_extra', 'story_day', 'maps/day', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:day:ui:v1', async start() {

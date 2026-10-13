@@ -129,6 +129,41 @@
    "game": "playground",
    "room": "kid",
    "story": "이야기 카드를 모아 한 편을 완성하면 방에 작은 소품이 놓여요."
+  },
+  {
+   "id": "season2",
+   "name": "계절 장식 세트(성인)",
+   "game": "all",
+   "room": "yard",
+   "story": "계절이 바뀔 때 집에 놀러 오면 하루에 하나씩 놓여요. 놓친 철도 다음 해에 다시 열려요."
+  },
+  {
+   "id": "event",
+   "name": "이벤트 소품 세트",
+   "game": "all",
+   "room": "yard",
+   "story": "명절과 기념일 소품. 그 달에 집에 오면 하나씩 받아요."
+  },
+  {
+   "id": "gift",
+   "name": "손님 선물 세트",
+   "game": "all",
+   "room": "nemo",
+   "story": "놀러 온 손님이 두고 가는 선물이에요."
+  },
+  {
+   "id": "kseason",
+   "name": "계절 장식 세트(유아)",
+   "game": "all",
+   "room": "kid",
+   "story": "계절마다 하나씩 방에 놓여요."
+  },
+  {
+   "id": "kgift",
+   "name": "손님 선물 세트(유아)",
+   "game": "all",
+   "room": "kid",
+   "story": "놀러 온 친구가 두고 가는 선물이에요."
   }
  ],
  "items": [
@@ -163,7 +198,8 @@
     "c": 0,
     "t": 6,
     "hint": "합치기 · 네모 6단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 2,
@@ -195,7 +231,8 @@
     "c": 1,
     "t": 5,
     "hint": "합치기 · 세모 5단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 3,
@@ -226,7 +263,8 @@
     "c": 2,
     "t": 4,
     "hint": "합치기 · 동그라미 4단계 조각 만들기"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 4,
@@ -258,7 +296,8 @@
     "c": 0,
     "t": 5,
     "hint": "합치기 · 네모 5단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 5,
@@ -288,7 +327,8 @@
     "c": 1,
     "t": 4,
     "hint": "합치기 · 세모 4단계 조각 만들기"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 6,
@@ -321,7 +361,8 @@
     "c": 2,
     "t": 5,
     "hint": "합치기 · 동그라미 5단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 7,
@@ -352,7 +393,8 @@
     "c": 0,
     "t": 4,
     "hint": "합치기 · 네모 4단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 8,
@@ -381,7 +423,8 @@
     "c": 1,
     "t": 3,
     "hint": "합치기 · 세모 3단계 조각 만들기"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 9,
@@ -411,7 +454,8 @@
     "c": 2,
     "t": 3,
     "hint": "합치기 · 동그라미 3단계 조각 만들기"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 10,
@@ -441,7 +485,8 @@
     "game": "merge",
     "kind": "tier",
     "hint": "합치기 · 아이 방 가구(합치기 보상)"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 11,
@@ -472,7 +517,8 @@
     "kind": "chapter",
     "n": 2,
     "hint": "놀이터 · 2장 끝"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 12,
@@ -501,7 +547,8 @@
     "kind": "chapter",
     "n": 1,
     "hint": "놀이터 · 1장 끝"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 13,
@@ -532,7 +579,8 @@
     "kind": "first",
     "n": 1,
     "hint": "색칠북 · 첫 그림 완성"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 14,
@@ -561,7 +609,8 @@
     "game": "idle",
     "kind": "other",
     "hint": "세 가족 식탁 보상"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 15,
@@ -591,7 +640,8 @@
     "game": "quiz",
     "kind": "first",
     "hint": "어느 도형 · 처음 열면"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 16,
@@ -616,8 +666,12 @@
    "src": {
     "game": "event",
     "kind": "season",
-    "hint": "시즌 이벤트(놓쳐도 다시 열려요)"
-   }
+    "months": [
+     12
+    ],
+    "hint": "12월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "big"
   },
   {
    "no": 17,
@@ -647,7 +701,8 @@
     "c": 0,
     "t": 3,
     "hint": "합치기 · 네모 3단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 18,
@@ -677,7 +732,8 @@
     "c": 1,
     "t": 6,
     "hint": "합치기 · 세모 6단계 조각 만들기"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 19,
@@ -706,7 +762,8 @@
     "c": 2,
     "t": 6,
     "hint": "합치기 · 동그라미 6단계 조각 만들기"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 20,
@@ -734,7 +791,8 @@
     "c": 0,
     "t": 7,
     "hint": "합치기 · 네모 7단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 21,
@@ -762,7 +820,8 @@
     "c": 1,
     "t": 7,
     "hint": "합치기 · 세모 7단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 22,
@@ -792,7 +851,8 @@
     "c": 2,
     "t": 7,
     "hint": "합치기 · 동그라미 7단계 조각 만들기"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 23,
@@ -824,7 +884,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 처음부터 있어요"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 24,
@@ -860,7 +921,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 네모네 식탁 Lv3"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 25,
@@ -896,7 +958,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 밥솥 늘리기 3번"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 26,
@@ -929,7 +992,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「에어컨 리모컨」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 27,
@@ -962,7 +1026,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「포인트 모으기」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 28,
@@ -995,7 +1060,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「돋보기」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 29,
@@ -1030,7 +1096,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 김장 주간 사건"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 30,
@@ -1063,7 +1130,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「혈압약 첫날」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 31,
@@ -1098,7 +1166,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 막둥이를 모시면"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 32,
@@ -1132,7 +1201,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 꾸미기 팩(준비 중)"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 33,
@@ -1166,7 +1236,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 처음부터 있어요"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 34,
@@ -1199,7 +1270,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 여행 가방을 모시면"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 35,
@@ -1233,7 +1305,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 세모네 식탁 Lv3"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 36,
@@ -1266,7 +1339,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「버킷리스트」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 37,
@@ -1301,7 +1375,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「결혼기념일」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 38,
@@ -1334,7 +1409,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「읽씹」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 39,
@@ -1367,7 +1443,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 연말 사건 ② 술자리 세모"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 40,
@@ -1401,7 +1478,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 세모네 식탁 Lv8"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 41,
@@ -1434,7 +1512,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「새벽 4시」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 42,
@@ -1466,7 +1545,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 꾸미기 팩(준비 중)"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 43,
@@ -1500,7 +1580,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 처음부터 있어요"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 44,
@@ -1533,7 +1614,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「결혼기념일」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 45,
@@ -1566,7 +1648,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「냉장고 정리」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 46,
@@ -1599,7 +1682,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「상갓집」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 47,
@@ -1632,7 +1716,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 사연 「청첩장」"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 48,
@@ -1665,7 +1750,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 동그라미 딸을 모시면"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 49,
@@ -1698,7 +1784,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 동그라미 아들을 모시면"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 50,
@@ -1733,7 +1820,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 의자 네 개가 모두 차면"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 51,
@@ -1766,7 +1854,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 누적 온기 10조"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 52,
@@ -1798,7 +1887,8 @@
     "game": "idle",
     "kind": "prop",
     "hint": "식탁 · 꾸미기 팩(준비 중)"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 53,
@@ -1828,7 +1918,8 @@
     "kind": "chapter",
     "n": 3,
     "hint": "놀이터 · 3장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 54,
@@ -1858,7 +1949,8 @@
     "kind": "chapter",
     "n": 4,
     "hint": "놀이터 · 4장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 55,
@@ -1888,7 +1980,8 @@
     "kind": "chapter",
     "n": 5,
     "hint": "놀이터 · 5장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 56,
@@ -1918,7 +2011,8 @@
     "kind": "chapter",
     "n": 6,
     "hint": "놀이터 · 6장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 57,
@@ -1948,7 +2042,8 @@
     "kind": "chapter",
     "n": 7,
     "hint": "놀이터 · 7장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 58,
@@ -1978,7 +2073,8 @@
     "kind": "chapter",
     "n": 8,
     "hint": "놀이터 · 8장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 59,
@@ -2008,7 +2104,8 @@
     "kind": "chapter",
     "n": 9,
     "hint": "놀이터 · 9장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 60,
@@ -2038,7 +2135,8 @@
     "kind": "chapter",
     "n": 10,
     "hint": "놀이터 · 10장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 61,
@@ -2064,8 +2162,13 @@
    "src": {
     "game": "event",
     "kind": "season",
-    "hint": "시즌 이벤트(놓쳐도 다시 열려요)"
-   }
+    "months": [
+     9,
+     10
+    ],
+    "hint": "9~10월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
   },
   {
    "no": 62,
@@ -2093,8 +2196,13 @@
    "src": {
     "game": "event",
     "kind": "season",
-    "hint": "시즌 이벤트(놓쳐도 다시 열려요)"
-   }
+    "months": [
+     1,
+     2
+    ],
+    "hint": "1~2월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
   },
   {
    "no": 63,
@@ -2120,8 +2228,12 @@
    "src": {
     "game": "event",
     "kind": "season",
-    "hint": "시즌 이벤트(놓쳐도 다시 열려요)"
-   }
+    "months": [
+     5
+    ],
+    "hint": "5월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
   },
   {
    "no": 64,
@@ -2151,7 +2263,8 @@
     "kind": "pages",
     "n": 5,
     "hint": "색칠북 · 그림 5장 완성"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 65,
@@ -2181,7 +2294,8 @@
     "kind": "pages",
     "n": 10,
     "hint": "색칠북 · 그림 10장 완성"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 66,
@@ -2210,7 +2324,8 @@
     "kind": "pages",
     "n": 15,
     "hint": "색칠북 · 그림 15장 완성"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 67,
@@ -2241,7 +2356,8 @@
     "kind": "pages",
     "n": 20,
     "hint": "색칠북 · 그림 20장 완성"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 68,
@@ -2270,7 +2386,8 @@
     "kind": "pages",
     "n": 30,
     "hint": "색칠북 · 그림 30장 완성"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 69,
@@ -2299,7 +2416,8 @@
     "kind": "pages",
     "n": 45,
     "hint": "색칠북 · 그림 45장 완성"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 70,
@@ -2328,7 +2446,8 @@
     "kind": "pages",
     "n": 60,
     "hint": "색칠북 · 그림 60장 완성"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 71,
@@ -2356,7 +2475,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 72,
@@ -2384,7 +2504,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 73,
@@ -2412,7 +2533,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 74,
@@ -2439,7 +2561,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 75,
@@ -2466,7 +2589,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 76,
@@ -2493,7 +2617,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 77,
@@ -2520,7 +2645,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 78,
@@ -2547,7 +2673,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 79,
@@ -2574,7 +2701,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 80,
@@ -2601,7 +2729,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 81,
@@ -2628,7 +2757,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 82,
@@ -2655,7 +2785,8 @@
     "game": "quiz",
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 83,
@@ -2682,7 +2813,8 @@
     "game": "quiz",
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 84,
@@ -2709,7 +2841,8 @@
     "game": "quiz",
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 85,
@@ -2736,7 +2869,8 @@
     "game": "quiz",
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 86,
@@ -2763,7 +2897,8 @@
     "game": "quiz",
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 87,
@@ -2790,7 +2925,8 @@
     "game": "quiz",
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 88,
@@ -2820,7 +2956,8 @@
     "kind": "chapter",
     "n": 11,
     "hint": "놀이터 · 11장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 89,
@@ -2851,7 +2988,8 @@
     "kind": "chapter",
     "n": 12,
     "hint": "놀이터 · 12장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 90,
@@ -2882,7 +3020,8 @@
     "kind": "chapter",
     "n": 13,
     "hint": "놀이터 · 13장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 91,
@@ -2912,7 +3051,8 @@
     "kind": "chapter",
     "n": 14,
     "hint": "놀이터 · 14장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 92,
@@ -2943,7 +3083,8 @@
     "kind": "chapter",
     "n": 15,
     "hint": "놀이터 · 15장 끝"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 93,
@@ -2971,7 +3112,8 @@
     "kind": "level",
     "n": 2,
     "hint": "블록 2판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 94,
@@ -2999,7 +3141,8 @@
     "kind": "level",
     "n": 4,
     "hint": "블록 4판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 95,
@@ -3027,7 +3170,8 @@
     "kind": "level",
     "n": 6,
     "hint": "블록 6판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 96,
@@ -3055,7 +3199,8 @@
     "kind": "level",
     "n": 8,
     "hint": "블록 8판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 97,
@@ -3083,7 +3228,8 @@
     "kind": "level",
     "n": 10,
     "hint": "블록 10판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 98,
@@ -3111,7 +3257,8 @@
     "kind": "level",
     "n": 12,
     "hint": "블록 12판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 99,
@@ -3139,7 +3286,8 @@
     "kind": "level",
     "n": 15,
     "hint": "블록 15판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 100,
@@ -3167,7 +3315,8 @@
     "kind": "level",
     "n": 18,
     "hint": "블록 18판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 101,
@@ -3195,7 +3344,8 @@
     "kind": "level",
     "n": 22,
     "hint": "블록 22판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 102,
@@ -3225,7 +3375,8 @@
     "kind": "level",
     "n": 28,
     "hint": "블록 28판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 103,
@@ -3253,7 +3404,8 @@
     "kind": "level",
     "n": 34,
     "hint": "블록 34판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 104,
@@ -3281,7 +3433,8 @@
     "kind": "level",
     "n": 40,
     "hint": "블록 40판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 105,
@@ -3311,7 +3464,8 @@
     "kind": "level",
     "n": 48,
     "hint": "블록 48판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 106,
@@ -3339,7 +3493,8 @@
     "kind": "level",
     "n": 56,
     "hint": "블록 56판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 107,
@@ -3367,7 +3522,8 @@
     "kind": "level",
     "n": 64,
     "hint": "블록 64판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 108,
@@ -3395,7 +3551,8 @@
     "kind": "level",
     "n": 72,
     "hint": "블록 72판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 109,
@@ -3423,7 +3580,8 @@
     "kind": "level",
     "n": 84,
     "hint": "블록 84판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 110,
@@ -3451,7 +3609,8 @@
     "kind": "level",
     "n": 96,
     "hint": "블록 96판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 111,
@@ -3479,7 +3638,8 @@
     "kind": "level",
     "n": 108,
     "hint": "블록 108판"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 112,
@@ -3509,7 +3669,8 @@
     "kind": "level",
     "n": 120,
     "hint": "블록 120판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 113,
@@ -3539,7 +3700,8 @@
     "kind": "level",
     "n": 2,
     "hint": "틀린 그림 2판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 114,
@@ -3569,7 +3731,8 @@
     "kind": "level",
     "n": 5,
     "hint": "틀린 그림 5판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 115,
@@ -3599,7 +3762,8 @@
     "kind": "level",
     "n": 8,
     "hint": "틀린 그림 8판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 116,
@@ -3629,7 +3793,8 @@
     "kind": "level",
     "n": 10,
     "hint": "틀린 그림 10판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 117,
@@ -3659,7 +3824,8 @@
     "kind": "level",
     "n": 13,
     "hint": "틀린 그림 13판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 118,
@@ -3687,7 +3853,8 @@
     "kind": "level",
     "n": 15,
     "hint": "틀린 그림 15판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 119,
@@ -3717,7 +3884,8 @@
     "kind": "level",
     "n": 18,
     "hint": "틀린 그림 18판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 120,
@@ -3747,7 +3915,8 @@
     "kind": "level",
     "n": 20,
     "hint": "틀린 그림 20판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 121,
@@ -3775,7 +3944,8 @@
     "kind": "level",
     "n": 25,
     "hint": "틀린 그림 25판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 122,
@@ -3803,7 +3973,8 @@
     "kind": "level",
     "n": 30,
     "hint": "틀린 그림 30판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 123,
@@ -3831,7 +4002,8 @@
     "kind": "level",
     "n": 36,
     "hint": "틀린 그림 36판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 124,
@@ -3859,7 +4031,8 @@
     "kind": "level",
     "n": 42,
     "hint": "틀린 그림 42판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 125,
@@ -3887,7 +4060,8 @@
     "kind": "level",
     "n": 50,
     "hint": "틀린 그림 50판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 126,
@@ -3915,7 +4089,8 @@
     "kind": "level",
     "n": 58,
     "hint": "틀린 그림 58판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 127,
@@ -3945,7 +4120,8 @@
     "kind": "level",
     "n": 66,
     "hint": "틀린 그림 66판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 128,
@@ -3973,7 +4149,8 @@
     "kind": "level",
     "n": 76,
     "hint": "틀린 그림 76판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 129,
@@ -4003,7 +4180,8 @@
     "kind": "level",
     "n": 88,
     "hint": "틀린 그림 88판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 130,
@@ -4031,7 +4209,8 @@
     "kind": "level",
     "n": 100,
     "hint": "틀린 그림 100판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 131,
@@ -4059,7 +4238,8 @@
     "kind": "level",
     "n": 110,
     "hint": "틀린 그림 110판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 132,
@@ -4087,7 +4267,8 @@
     "kind": "level",
     "n": 120,
     "hint": "틀린 그림 120판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 133,
@@ -4117,7 +4298,8 @@
     "kind": "level",
     "n": 2,
     "hint": "짝 맞추기 2판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 134,
@@ -4145,7 +4327,8 @@
     "kind": "level",
     "n": 5,
     "hint": "짝 맞추기 5판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 135,
@@ -4173,7 +4356,8 @@
     "kind": "level",
     "n": 8,
     "hint": "짝 맞추기 8판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 136,
@@ -4201,7 +4385,8 @@
     "kind": "level",
     "n": 10,
     "hint": "짝 맞추기 10판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 137,
@@ -4229,7 +4414,8 @@
     "kind": "level",
     "n": 13,
     "hint": "짝 맞추기 13판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 138,
@@ -4257,7 +4443,8 @@
     "kind": "level",
     "n": 15,
     "hint": "짝 맞추기 15판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 139,
@@ -4285,7 +4472,8 @@
     "kind": "level",
     "n": 18,
     "hint": "짝 맞추기 18판"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 140,
@@ -4313,7 +4501,8 @@
     "kind": "level",
     "n": 20,
     "hint": "짝 맞추기 20판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 141,
@@ -4341,7 +4530,8 @@
     "kind": "level",
     "n": 25,
     "hint": "짝 맞추기 25판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 142,
@@ -4369,7 +4559,8 @@
     "kind": "level",
     "n": 30,
     "hint": "짝 맞추기 30판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 143,
@@ -4399,7 +4590,8 @@
     "kind": "level",
     "n": 36,
     "hint": "짝 맞추기 36판"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 144,
@@ -4427,7 +4619,8 @@
     "kind": "level",
     "n": 42,
     "hint": "짝 맞추기 42판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 145,
@@ -4455,7 +4648,8 @@
     "kind": "level",
     "n": 50,
     "hint": "짝 맞추기 50판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 146,
@@ -4483,7 +4677,8 @@
     "kind": "level",
     "n": 58,
     "hint": "짝 맞추기 58판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 147,
@@ -4511,7 +4706,8 @@
     "kind": "level",
     "n": 66,
     "hint": "짝 맞추기 66판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 148,
@@ -4539,7 +4735,8 @@
     "kind": "level",
     "n": 76,
     "hint": "짝 맞추기 76판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 149,
@@ -4567,7 +4764,8 @@
     "kind": "level",
     "n": 88,
     "hint": "짝 맞추기 88판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 150,
@@ -4597,7 +4795,8 @@
     "kind": "level",
     "n": 100,
     "hint": "짝 맞추기 100판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 151,
@@ -4625,7 +4824,8 @@
     "kind": "level",
     "n": 110,
     "hint": "짝 맞추기 110판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 152,
@@ -4653,7 +4853,8 @@
     "kind": "level",
     "n": 120,
     "hint": "짝 맞추기 120판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 153,
@@ -4681,7 +4882,8 @@
     "kind": "level",
     "n": 18,
     "hint": "정리 18판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 154,
@@ -4709,7 +4911,8 @@
     "kind": "level",
     "n": 20,
     "hint": "정리 20판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 155,
@@ -4737,7 +4940,8 @@
     "kind": "level",
     "n": 90,
     "hint": "정리 90판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 156,
@@ -4765,7 +4969,8 @@
     "kind": "level",
     "n": 30,
     "hint": "정리 30판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 157,
@@ -4793,7 +4998,8 @@
     "kind": "level",
     "n": 8,
     "hint": "정리 8판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 158,
@@ -4821,7 +5027,8 @@
     "kind": "level",
     "n": 2,
     "hint": "정리 2판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 159,
@@ -4851,7 +5058,8 @@
     "kind": "level",
     "n": 12,
     "hint": "정리 12판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 160,
@@ -4879,7 +5087,8 @@
     "kind": "level",
     "n": 14,
     "hint": "정리 14판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 161,
@@ -4907,7 +5116,8 @@
     "kind": "level",
     "n": 25,
     "hint": "정리 25판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 162,
@@ -4935,7 +5145,8 @@
     "kind": "level",
     "n": 4,
     "hint": "정리 4판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 163,
@@ -4963,7 +5174,8 @@
     "kind": "level",
     "n": 36,
     "hint": "정리 36판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 164,
@@ -4991,7 +5203,8 @@
     "kind": "level",
     "n": 6,
     "hint": "정리 6판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 165,
@@ -5019,7 +5232,8 @@
     "kind": "level",
     "n": 10,
     "hint": "정리 10판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 166,
@@ -5047,7 +5261,8 @@
     "kind": "level",
     "n": 58,
     "hint": "정리 58판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 167,
@@ -5075,7 +5290,8 @@
     "kind": "level",
     "n": 42,
     "hint": "정리 42판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 168,
@@ -5103,7 +5319,8 @@
     "kind": "level",
     "n": 16,
     "hint": "정리 16판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 169,
@@ -5133,7 +5350,8 @@
     "kind": "level",
     "n": 66,
     "hint": "정리 66판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 170,
@@ -5161,7 +5379,8 @@
     "kind": "level",
     "n": 50,
     "hint": "정리 50판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 171,
@@ -5189,7 +5408,8 @@
     "kind": "level",
     "n": 100,
     "hint": "정리 100판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 172,
@@ -5217,7 +5437,8 @@
     "kind": "level",
     "n": 78,
     "hint": "정리 78판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 173,
@@ -5245,7 +5466,8 @@
     "kind": "level",
     "n": 3,
     "hint": "막둥이의 하루 3판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 174,
@@ -5273,7 +5495,8 @@
     "kind": "level",
     "n": 6,
     "hint": "막둥이의 하루 6판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 175,
@@ -5301,7 +5524,8 @@
     "kind": "level",
     "n": 9,
     "hint": "막둥이의 하루 9판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 176,
@@ -5329,7 +5553,8 @@
     "kind": "level",
     "n": 12,
     "hint": "막둥이의 하루 12판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 177,
@@ -5359,7 +5584,8 @@
     "kind": "level",
     "n": 15,
     "hint": "막둥이의 하루 15판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 178,
@@ -5389,7 +5615,8 @@
     "kind": "level",
     "n": 18,
     "hint": "막둥이의 하루 18판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 179,
@@ -5419,7 +5646,8 @@
     "kind": "level",
     "n": 21,
     "hint": "막둥이의 하루 21판"
-   }
+   },
+   "cls": "big"
   },
   {
    "no": 180,
@@ -5449,7 +5677,8 @@
     "kind": "level",
     "n": 24,
     "hint": "막둥이의 하루 24판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 181,
@@ -5479,7 +5708,8 @@
     "kind": "level",
     "n": 27,
     "hint": "막둥이의 하루 27판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 182,
@@ -5509,7 +5739,8 @@
     "kind": "level",
     "n": 30,
     "hint": "막둥이의 하루 30판"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 183,
@@ -5537,7 +5768,8 @@
     "kind": "level",
     "n": 33,
     "hint": "막둥이의 하루 33판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 184,
@@ -5567,7 +5799,8 @@
     "kind": "level",
     "n": 39,
     "hint": "막둥이의 하루 39판"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 185,
@@ -5597,7 +5830,8 @@
     "kind": "level",
     "n": 42,
     "hint": "막둥이의 하루 42판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 186,
@@ -5625,7 +5859,8 @@
     "kind": "level",
     "n": 36,
     "hint": "막둥이의 하루 36판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 187,
@@ -5653,7 +5888,8 @@
     "kind": "level",
     "n": 45,
     "hint": "막둥이의 하루 45판"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 188,
@@ -5683,7 +5919,8 @@
     "kind": "level",
     "n": 48,
     "hint": "막둥이의 하루 48판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 189,
@@ -5713,7 +5950,8 @@
     "kind": "level",
     "n": 51,
     "hint": "막둥이의 하루 51판"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 190,
@@ -5741,7 +5979,8 @@
     "kind": "level",
     "n": 54,
     "hint": "막둥이의 하루 54판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 191,
@@ -5769,7 +6008,8 @@
     "kind": "level",
     "n": 57,
     "hint": "막둥이의 하루 57판"
-   }
+   },
+   "cls": "prop"
   },
   {
    "no": 192,
@@ -5797,7 +6037,8 @@
     "kind": "level",
     "n": 60,
     "hint": "막둥이의 하루 60판"
-   }
+   },
+   "cls": "wall"
   },
   {
    "no": 193,
@@ -5824,7 +6065,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 194,
@@ -5851,7 +6093,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 195,
@@ -5880,7 +6123,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 196,
@@ -5909,7 +6153,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 197,
@@ -5936,7 +6181,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 198,
@@ -5963,7 +6209,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 199,
@@ -5990,7 +6237,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 200,
@@ -6017,7 +6265,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 201,
@@ -6044,7 +6293,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 202,
@@ -6071,7 +6321,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 203,
@@ -6100,7 +6351,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 204,
@@ -6127,7 +6379,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 205,
@@ -6154,7 +6407,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 206,
@@ -6181,7 +6435,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 207,
@@ -6208,7 +6463,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 208,
@@ -6235,7 +6491,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 209,
@@ -6262,7 +6519,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 210,
@@ -6289,7 +6547,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 211,
@@ -6318,7 +6577,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 212,
@@ -6347,7 +6607,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 213,
@@ -6374,7 +6635,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 214,
@@ -6401,7 +6663,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 215,
@@ -6428,7 +6691,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 216,
@@ -6455,7 +6719,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 217,
@@ -6482,7 +6747,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 218,
@@ -6509,7 +6775,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 219,
@@ -6536,7 +6803,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 220,
@@ -6563,7 +6831,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 221,
@@ -6590,7 +6859,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "small"
   },
   {
    "no": 222,
@@ -6617,7 +6887,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 223,
@@ -6644,7 +6915,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 224,
@@ -6671,7 +6943,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 225,
@@ -6700,7 +6973,8 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
   },
   {
    "no": 226,
@@ -6727,7 +7001,2074 @@
     "game": "story",
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
-   }
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 227,
+   "id": "s2_cherry",
+   "name": "벚꽃 가지",
+   "set": "season2",
+   "room": "yard",
+   "w": 52,
+   "h": 64,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    3,
+    4,
+    5
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     3,
+     4,
+     5
+    ],
+    "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 228,
+   "id": "s2_picnic",
+   "name": "봄 돗자리",
+   "set": "season2",
+   "room": "yard",
+   "w": 80,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    3,
+    4,
+    5
+   ],
+   "physical": null,
+   "cozy": 9,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     3,
+     4,
+     5
+    ],
+    "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 229,
+   "id": "s2_kite",
+   "name": "연",
+   "set": "season2",
+   "room": "yard",
+   "w": 46,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪁",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    3,
+    4,
+    5
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     3,
+     4,
+     5
+    ],
+    "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 230,
+   "id": "s2_tulip",
+   "name": "튤립 화분",
+   "set": "season2",
+   "room": "yard",
+   "w": 44,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌷",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    3,
+    4,
+    5
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     3,
+     4,
+     5
+    ],
+    "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 231,
+   "id": "s2_birdhouse",
+   "name": "새집",
+   "set": "season2",
+   "room": "yard",
+   "w": 44,
+   "h": 44,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🐦",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    3,
+    4,
+    5
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     3,
+     4,
+     5
+    ],
+    "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 232,
+   "id": "s2_chime",
+   "name": "풍경",
+   "set": "season2",
+   "room": "yard",
+   "w": 40,
+   "h": 56,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    6,
+    7,
+    8
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     6,
+     7,
+     8
+    ],
+    "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 233,
+   "id": "s2_melon",
+   "name": "수박 쟁반",
+   "set": "season2",
+   "room": "yard",
+   "w": 46,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍉",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    6,
+    7,
+    8
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     6,
+     7,
+     8
+    ],
+    "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 234,
+   "id": "s2_tube",
+   "name": "튜브",
+   "set": "season2",
+   "room": "yard",
+   "w": 60,
+   "h": 50,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛟",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    6,
+    7,
+    8
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     6,
+     7,
+     8
+    ],
+    "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 235,
+   "id": "s2_fan",
+   "name": "선풍기",
+   "set": "season2",
+   "room": "yard",
+   "w": 50,
+   "h": 66,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌀",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    6,
+    7,
+    8
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     6,
+     7,
+     8
+    ],
+    "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 236,
+   "id": "s2_ice",
+   "name": "빙수",
+   "set": "season2",
+   "room": "yard",
+   "w": 40,
+   "h": 46,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍧",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    6,
+    7,
+    8
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     6,
+     7,
+     8
+    ],
+    "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 237,
+   "id": "s2_leaf",
+   "name": "낙엽 화환",
+   "set": "season2",
+   "room": "yard",
+   "w": 54,
+   "h": 54,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🍂",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    9,
+    10,
+    11
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     9,
+     10,
+     11
+    ],
+    "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 238,
+   "id": "s2_persimmon",
+   "name": "감 바구니",
+   "set": "season2",
+   "room": "yard",
+   "w": 46,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    9,
+    10,
+    11
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     9,
+     10,
+     11
+    ],
+    "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 239,
+   "id": "s2_scarecrow",
+   "name": "허수아비",
+   "set": "season2",
+   "room": "yard",
+   "w": 52,
+   "h": 90,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧑‍🌾",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    9,
+    10,
+    11
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     9,
+     10,
+     11
+    ],
+    "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 240,
+   "id": "s2_moonlamp",
+   "name": "보름달 등",
+   "set": "season2",
+   "room": "yard",
+   "w": 44,
+   "h": 56,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🏮",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    9,
+    10,
+    11
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [
+    "sleep"
+   ],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     9,
+     10,
+     11
+    ],
+    "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 241,
+   "id": "s2_acorn",
+   "name": "도토리 그릇",
+   "set": "season2",
+   "room": "yard",
+   "w": 40,
+   "h": 36,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🌰",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    9,
+    10,
+    11
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [
+    "eat"
+   ],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     9,
+     10,
+     11
+    ],
+    "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 242,
+   "id": "s2_snowman",
+   "name": "눈사람",
+   "set": "season2",
+   "room": "yard",
+   "w": 56,
+   "h": 76,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "⛄",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12,
+    1,
+    2
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     12,
+     1,
+     2
+    ],
+    "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 243,
+   "id": "s2_heater",
+   "name": "난로",
+   "set": "season2",
+   "room": "yard",
+   "w": 56,
+   "h": 62,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🔥",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12,
+    1,
+    2
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     12,
+     1,
+     2
+    ],
+    "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 244,
+   "id": "s2_tangerine",
+   "name": "귤 바구니",
+   "set": "season2",
+   "room": "yard",
+   "w": 46,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍊",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12,
+    1,
+    2
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     12,
+     1,
+     2
+    ],
+    "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 245,
+   "id": "s2_wreath",
+   "name": "겨울 리스",
+   "set": "season2",
+   "room": "yard",
+   "w": 50,
+   "h": 50,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎄",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12,
+    1,
+    2
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     12,
+     1,
+     2
+    ],
+    "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 246,
+   "id": "s2_blanket",
+   "name": "털 담요",
+   "set": "season2",
+   "room": "yard",
+   "w": 70,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧣",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12,
+    1,
+    2
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     12,
+     1,
+     2
+    ],
+    "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 247,
+   "id": "e_bokjumoni",
+   "name": "복주머니",
+   "set": "event",
+   "room": "yard",
+   "w": 44,
+   "h": 50,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🧧",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    1
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     1
+    ],
+    "hint": "1월 기념일에 집에 오면"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 248,
+   "id": "e_yut",
+   "name": "윷놀이판",
+   "set": "event",
+   "room": "yard",
+   "w": 46,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🎲",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    1
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     1
+    ],
+    "hint": "1월 기념일에 집에 오면"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 249,
+   "id": "e_balloon",
+   "name": "어린이날 풍선",
+   "set": "event",
+   "room": "yard",
+   "w": 44,
+   "h": 60,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎈",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    5
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [
+    "play"
+   ],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     5
+    ],
+    "hint": "5월 기념일에 집에 오면"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 250,
+   "id": "e_flowerbasket",
+   "name": "꽃바구니",
+   "set": "event",
+   "room": "yard",
+   "w": 46,
+   "h": 46,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "💐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    5
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     5
+    ],
+    "hint": "5월 기념일에 집에 오면"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 251,
+   "id": "e_lantern",
+   "name": "연등",
+   "set": "event",
+   "room": "yard",
+   "w": 44,
+   "h": 50,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪔",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    5
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     5
+    ],
+    "hint": "5월 기념일에 집에 오면"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 252,
+   "id": "e_carp",
+   "name": "잉어 깃발",
+   "set": "event",
+   "room": "yard",
+   "w": 50,
+   "h": 60,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎏",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    5
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     5
+    ],
+    "hint": "5월 기념일에 집에 오면"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 253,
+   "id": "e_pumpkin",
+   "name": "호박등",
+   "set": "event",
+   "room": "yard",
+   "w": 52,
+   "h": 52,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎃",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    10
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     10
+    ],
+    "hint": "10월 기념일에 집에 오면"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 254,
+   "id": "e_candy",
+   "name": "사탕 단지",
+   "set": "event",
+   "room": "yard",
+   "w": 44,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍬",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    10
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     10
+    ],
+    "hint": "10월 기념일에 집에 오면"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 255,
+   "id": "e_gift",
+   "name": "선물 상자",
+   "set": "event",
+   "room": "yard",
+   "w": 52,
+   "h": 50,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🎁",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     12
+    ],
+    "hint": "12월 기념일에 집에 오면"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 256,
+   "id": "e_stocking",
+   "name": "크리스마스 양말",
+   "set": "event",
+   "room": "yard",
+   "w": 40,
+   "h": 56,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🧦",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     12
+    ],
+    "hint": "12월 기념일에 집에 오면"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 257,
+   "id": "e_cake",
+   "name": "케이크",
+   "set": "event",
+   "room": "yard",
+   "w": 46,
+   "h": 46,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🎂",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12
+   ],
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     12
+    ],
+    "hint": "12월 기념일에 집에 오면"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 258,
+   "id": "e_firework",
+   "name": "불꽃 병",
+   "set": "event",
+   "room": "yard",
+   "w": 46,
+   "h": 52,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎆",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "festive",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "event",
+    "months": [
+     12
+    ],
+    "hint": "12월 기념일에 집에 오면"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 259,
+   "id": "g_cushion",
+   "name": "꽃무늬 쿠션",
+   "set": "gift",
+   "room": "nemo",
+   "w": 52,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 260,
+   "id": "g_mirror",
+   "name": "손거울",
+   "set": "gift",
+   "room": "semo",
+   "w": 44,
+   "h": 56,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪞",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 261,
+   "id": "g_pen",
+   "name": "만년필 꽂이",
+   "set": "gift",
+   "room": "dong",
+   "w": 40,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🖋️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 262,
+   "id": "g_chess",
+   "name": "체스판",
+   "set": "gift",
+   "room": "dong",
+   "w": 46,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "♟️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 263,
+   "id": "g_lunch",
+   "name": "도시락 보자기",
+   "set": "gift",
+   "room": "nemo",
+   "w": 46,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [
+    "eat"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 264,
+   "id": "g_apron",
+   "name": "앞치마",
+   "set": "gift",
+   "room": "nemo",
+   "w": 44,
+   "h": 56,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "👚",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 265,
+   "id": "g_compass",
+   "name": "나침반",
+   "set": "gift",
+   "room": "semo",
+   "w": 40,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧭",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 266,
+   "id": "g_postcard",
+   "name": "엽서 꽂이",
+   "set": "gift",
+   "room": "semo",
+   "w": 46,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "💌",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 267,
+   "id": "g_teaset",
+   "name": "찻주전자",
+   "set": "gift",
+   "room": "nemo",
+   "w": 46,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🫖",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [
+    "eat"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 268,
+   "id": "g_flowerpot",
+   "name": "철쭉 화분",
+   "set": "gift",
+   "room": "yard",
+   "w": 46,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪴",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 269,
+   "id": "g_pepper",
+   "name": "고추 엮음",
+   "set": "gift",
+   "room": "yard",
+   "w": 40,
+   "h": 60,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🌶️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 270,
+   "id": "g_hanbok",
+   "name": "한복 인형",
+   "set": "gift",
+   "room": "nemo",
+   "w": 44,
+   "h": 70,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👘",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 271,
+   "id": "g_stool",
+   "name": "작은 의자",
+   "set": "gift",
+   "room": "dong",
+   "w": 50,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪑",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [
+    "sit"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 272,
+   "id": "g_lantern2",
+   "name": "손전등",
+   "set": "gift",
+   "room": "dong",
+   "w": 36,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🔦",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "prop"
+  },
+  {
+   "no": 273,
+   "id": "kc_cherry",
+   "name": "벚꽃",
+   "set": "kseason",
+   "room": "kid",
+   "w": 56,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    3,
+    4,
+    5
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     3,
+     4,
+     5
+    ],
+    "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 274,
+   "id": "kc_tulip",
+   "name": "튤립",
+   "set": "kseason",
+   "room": "kid",
+   "w": 50,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌷",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    3,
+    4,
+    5
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     3,
+     4,
+     5
+    ],
+    "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 275,
+   "id": "kc_tube",
+   "name": "튜브",
+   "set": "kseason",
+   "room": "kid",
+   "w": 60,
+   "h": 50,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛟",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    6,
+    7,
+    8
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     6,
+     7,
+     8
+    ],
+    "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 276,
+   "id": "kc_icecream",
+   "name": "아이스크림",
+   "set": "kseason",
+   "room": "kid",
+   "w": 44,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍦",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    6,
+    7,
+    8
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     6,
+     7,
+     8
+    ],
+    "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 277,
+   "id": "kc_acorn",
+   "name": "도토리",
+   "set": "kseason",
+   "room": "kid",
+   "w": 44,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌰",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    9,
+    10,
+    11
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     9,
+     10,
+     11
+    ],
+    "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 278,
+   "id": "kc_leaf",
+   "name": "단풍잎",
+   "set": "kseason",
+   "room": "kid",
+   "w": 50,
+   "h": 50,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🍁",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    9,
+    10,
+    11
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     9,
+     10,
+     11
+    ],
+    "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 279,
+   "id": "kc_snowman",
+   "name": "눈사람",
+   "set": "kseason",
+   "room": "kid",
+   "w": 56,
+   "h": 70,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "⛄",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12,
+    1,
+    2
+   ],
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     12,
+     1,
+     2
+    ],
+    "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "mid"
+  },
+  {
+   "no": 280,
+   "id": "kc_mitten",
+   "name": "벙어리장갑",
+   "set": "kseason",
+   "room": "kid",
+   "w": 46,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🧤",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": [
+    12,
+    1,
+    2
+   ],
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "season",
+    "months": [
+     12,
+     1,
+     2
+    ],
+    "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 281,
+   "id": "kg_star",
+   "name": "별 스티커 판",
+   "set": "kgift",
+   "room": "kid",
+   "w": 46,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "⭐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 282,
+   "id": "kg_cloud",
+   "name": "구름 모빌",
+   "set": "kgift",
+   "room": "kid",
+   "w": 56,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "☁️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 283,
+   "id": "kg_bear",
+   "name": "곰 인형",
+   "set": "kgift",
+   "room": "kid",
+   "w": 52,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 284,
+   "id": "kg_ball2",
+   "name": "풍선 공",
+   "set": "kgift",
+   "room": "kid",
+   "w": 44,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🏐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [
+    "play"
+   ],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 285,
+   "id": "kg_kite",
+   "name": "작은 연",
+   "set": "kgift",
+   "room": "kid",
+   "w": 46,
+   "h": 50,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪁",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 286,
+   "id": "kg_drum",
+   "name": "장난감 북",
+   "set": "kgift",
+   "room": "kid",
+   "w": 52,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🥁",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [
+    "play"
+   ],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "small"
+  },
+  {
+   "no": 287,
+   "id": "kg_rainbow",
+   "name": "무지개 깃발",
+   "set": "kgift",
+   "room": "kid",
+   "w": 56,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🏳️‍🌈",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "wall"
+  },
+  {
+   "no": 288,
+   "id": "kg_train2",
+   "name": "꼬마 기차",
+   "set": "kgift",
+   "room": "kid",
+   "w": 60,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🚂",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "all",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [
+    "play"
+   ],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "guest",
+    "hint": "집에 손님이 놀러 오면 선물"
+   },
+   "cls": "mid"
   }
  ],
  "meTypes": {

@@ -1,5 +1,5 @@
 {
- "version": 1,
+ "version": 2,
  "note": "[제안] 우리 집 2.0 데이터. tools/housing_build.py 로 생성.",
  "levels": [
   {
@@ -8,119 +8,119 @@
   },
   {
    "lv": 2,
-   "cozy": 9
+   "cozy": 7
   },
   {
    "lv": 3,
-   "cozy": 28
+   "cozy": 23
   },
   {
    "lv": 4,
-   "cozy": 53
+   "cozy": 46
   },
   {
    "lv": 5,
-   "cozy": 85
+   "cozy": 75
   },
   {
    "lv": 6,
-   "cozy": 121
+   "cozy": 110
   },
   {
    "lv": 7,
-   "cozy": 162
+   "cozy": 149
   },
   {
    "lv": 8,
-   "cozy": 207
+   "cozy": 194
   },
   {
    "lv": 9,
-   "cozy": 256
+   "cozy": 244
   },
   {
    "lv": 10,
-   "cozy": 309
+   "cozy": 297
   },
   {
    "lv": 11,
-   "cozy": 366
+   "cozy": 356
   },
   {
    "lv": 12,
-   "cozy": 427
+   "cozy": 418
   },
   {
    "lv": 13,
-   "cozy": 490
+   "cozy": 485
   },
   {
    "lv": 14,
-   "cozy": 557
+   "cozy": 556
   },
   {
    "lv": 15,
-   "cozy": 627
+   "cozy": 630
   },
   {
    "lv": 16,
-   "cozy": 701
+   "cozy": 709
   },
   {
    "lv": 17,
-   "cozy": 777
+   "cozy": 791
   },
   {
    "lv": 18,
-   "cozy": 856
+   "cozy": 877
   },
   {
    "lv": 19,
-   "cozy": 938
+   "cozy": 967
   },
   {
    "lv": 20,
-   "cozy": 1023
+   "cozy": 1060
   },
   {
    "lv": 21,
-   "cozy": 1110
+   "cozy": 1156
   },
   {
    "lv": 22,
-   "cozy": 1200
+   "cozy": 1256
   },
   {
    "lv": 23,
-   "cozy": 1293
+   "cozy": 1359
   },
   {
    "lv": 24,
-   "cozy": 1389
+   "cozy": 1466
   },
   {
    "lv": 25,
-   "cozy": 1486
+   "cozy": 1576
   },
   {
    "lv": 26,
-   "cozy": 1587
-  },
-  {
-   "lv": 27,
    "cozy": 1689
   },
   {
+   "lv": 27,
+   "cozy": 1806
+  },
+  {
    "lv": 28,
-   "cozy": 1795
+   "cozy": 1926
   },
   {
    "lv": 29,
-   "cozy": 1902
+   "cozy": 2048
   },
   {
    "lv": 30,
-   "cozy": 2012
+   "cozy": 2174
   }
  ],
  "formula": {
@@ -143,6 +143,18 @@
   "fill": 40,
   "life": 20
  },
+ "sizeF": {
+  "big": 1.75,
+  "mid": 1.4,
+  "small": 1.2,
+  "wall": 1.25,
+  "prop": 1.0
+ },
+ "geom": {
+  "RW": 340,
+  "RH": 440,
+  "WALLH": 150
+ },
  "rooms": [
   {
    "id": "nemo",
@@ -151,34 +163,44 @@
    "unlock": 1,
    "wall": "#FFE3C2",
    "floor": "#E3B27F",
+   "pattern": "square",
+   "floorKind": "wood",
+   "fixtures": [],
    "anchors": [
     {
      "id": "nemo_1",
-     "slot": "floor",
-     "x": 95,
-     "y": 240,
-     "want": "b_table"
-    },
-    {
-     "id": "nemo_2",
-     "slot": "floor",
-     "x": 225,
-     "y": 244,
-     "want": "b_sofa"
-    },
-    {
-     "id": "nemo_3",
      "slot": "wall",
-     "x": 100,
-     "y": 92,
+     "x": 84,
+     "y": 118,
      "want": "a_frame"
     },
     {
-     "id": "nemo_4",
+     "id": "nemo_2",
      "slot": "wall",
-     "x": 300,
-     "y": 108,
+     "x": 166,
+     "y": 124,
      "want": "u_shelf"
+    },
+    {
+     "id": "nemo_3",
+     "slot": "floor",
+     "x": 112,
+     "y": 392,
+     "want": "b_table"
+    },
+    {
+     "id": "nemo_4",
+     "slot": "floor",
+     "x": 252,
+     "y": 340,
+     "want": "b_sofa"
+    },
+    {
+     "id": "nemo_5",
+     "slot": "floor",
+     "x": 62,
+     "y": 318,
+     "want": "b_drawer"
     }
    ]
   },
@@ -188,35 +210,58 @@
    "group": "adult",
    "unlock": 3,
    "wall": "#FFF1C9",
-   "floor": "#D9B98A",
+   "floor": "#E8D8B8",
+   "pattern": "dot",
+   "floorKind": "tile",
+   "fixtures": [
+    {
+     "k": "counter",
+     "x": 70,
+     "y": 196,
+     "w": 200,
+     "h": 48,
+     "surf": {
+      "y": 196,
+      "x0": 80,
+      "x1": 262
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "kitchen_1",
      "slot": "floor",
-     "x": 60,
-     "y": 235,
-     "want": "t_bowl"
+     "x": 300,
+     "y": 330,
+     "want": "u_fridge"
     },
     {
      "id": "kitchen_2",
      "slot": "floor",
-     "x": 210,
-     "y": 225,
-     "want": "u_fridge"
+     "x": 160,
+     "y": 392,
+     "want": "t_bowl"
     },
     {
      "id": "kitchen_3",
      "slot": "table",
-     "x": 120,
-     "y": 190,
+     "x": 150,
+     "y": 196,
      "want": "p_rice"
     },
     {
      "id": "kitchen_4",
      "slot": "wall",
-     "x": 250,
-     "y": 50,
+     "x": 180,
+     "y": 120,
      "want": "u_sidedish"
+    },
+    {
+     "id": "kitchen_5",
+     "slot": "table",
+     "x": 220,
+     "y": 196,
+     "want": "p_kimchi"
     }
    ]
   },
@@ -226,35 +271,58 @@
    "group": "adult",
    "unlock": 5,
    "wall": "#D8F0FF",
-   "floor": "#C9D8E8",
+   "floor": "#D8E2EE",
+   "pattern": "triangle",
+   "floorKind": "wood",
+   "fixtures": [
+    {
+     "k": "desk",
+     "x": 70,
+     "y": 236,
+     "w": 150,
+     "h": 44,
+     "surf": {
+      "y": 236,
+      "x0": 80,
+      "x1": 210
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "semo_1",
      "slot": "wall",
-     "x": 60,
-     "y": 40,
+     "x": 100,
+     "y": 124,
      "want": "a_map"
     },
     {
      "id": "semo_2",
      "slot": "floor",
-     "x": 200,
-     "y": 235,
+     "x": 270,
+     "y": 352,
      "want": "b_suitcase"
     },
     {
      "id": "semo_3",
      "slot": "table",
-     "x": 110,
-     "y": 195,
+     "x": 140,
+     "y": 236,
      "want": "p_world"
     },
     {
      "id": "semo_4",
      "slot": "floor",
-     "x": 40,
-     "y": 232,
+     "x": 60,
+     "y": 360,
      "want": "b_lamp"
+    },
+    {
+     "id": "semo_5",
+     "slot": "floor",
+     "x": 190,
+     "y": 408,
+     "want": "a_camera"
     }
    ]
   },
@@ -264,35 +332,58 @@
    "group": "adult",
    "unlock": 8,
    "wall": "#E2E6FA",
-   "floor": "#B9BFD8",
+   "floor": "#C7CBE0",
+   "pattern": "circle",
+   "floorKind": "wood",
+   "fixtures": [
+    {
+     "k": "desk",
+     "x": 150,
+     "y": 232,
+     "w": 150,
+     "h": 44,
+     "surf": {
+      "y": 232,
+      "x0": 160,
+      "x1": 290
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "dong_1",
      "slot": "floor",
-     "x": 40,
-     "y": 225,
+     "x": 66,
+     "y": 330,
      "want": "b_shelf"
     },
     {
      "id": "dong_2",
      "slot": "floor",
      "x": 200,
-     "y": 236,
+     "y": 404,
      "want": "p_chair"
     },
     {
      "id": "dong_3",
      "slot": "wall",
-     "x": 150,
-     "y": 40,
+     "x": 130,
+     "y": 112,
      "want": "b_clock"
     },
     {
      "id": "dong_4",
      "slot": "floor",
-     "x": 270,
-     "y": 232,
+     "x": 292,
+     "y": 348,
      "want": "b_globe"
+    },
+    {
+     "id": "dong_5",
+     "slot": "table",
+     "x": 220,
+     "y": 232,
+     "want": "p_book"
     }
    ]
   },
@@ -302,34 +393,37 @@
    "group": "adult",
    "unlock": 10,
    "wall": "#CFEFFF",
-   "floor": "#A9D68E",
+   "floor": "#B4DE98",
+   "pattern": "none",
+   "floorKind": "grass",
+   "fixtures": [],
    "anchors": [
     {
      "id": "yard_1",
      "slot": "floor",
-     "x": 40,
-     "y": 236,
+     "x": 70,
+     "y": 340,
      "want": "o_fence"
     },
     {
      "id": "yard_2",
      "slot": "floor",
-     "x": 150,
-     "y": 240,
+     "x": 190,
+     "y": 400,
      "want": "m_bench"
     },
     {
      "id": "yard_3",
      "slot": "floor",
-     "x": 260,
-     "y": 232,
+     "x": 288,
+     "y": 350,
      "want": "o_mailbox"
     },
     {
      "id": "yard_4",
      "slot": "floor",
-     "x": 200,
-     "y": 220,
+     "x": 250,
+     "y": 300,
      "want": "m_garden"
     }
    ]
@@ -340,28 +434,38 @@
    "group": "adult",
    "unlock": 12,
    "wall": "#F4E4D0",
-   "floor": "#C8A47A",
+   "floor": "#CBA980",
+   "pattern": "square",
+   "floorKind": "tile",
+   "fixtures": [],
    "anchors": [
     {
      "id": "entrance_1",
      "slot": "wall",
-     "x": 100,
-     "y": 50,
+     "x": 110,
+     "y": 118,
      "want": "n_plate"
     },
     {
      "id": "entrance_2",
      "slot": "floor",
-     "x": 40,
-     "y": 232,
+     "x": 80,
+     "y": 340,
      "want": "u_shoerack"
     },
     {
      "id": "entrance_3",
      "slot": "wall",
-     "x": 230,
-     "y": 60,
+     "x": 232,
+     "y": 122,
      "want": "q_plate_nemo"
+    },
+    {
+     "id": "entrance_4",
+     "slot": "floor",
+     "x": 250,
+     "y": 396,
+     "want": "o_doghouse"
     }
    ]
   },
@@ -372,26 +476,29 @@
    "unlock": 15,
    "wall": "#FDE8F0",
    "floor": "#E5C7B0",
+   "pattern": "dot",
+   "floorKind": "wood",
+   "fixtures": [],
    "anchors": [
     {
      "id": "upstairs_1",
      "slot": "floor",
-     "x": 40,
-     "y": 232,
+     "x": 100,
+     "y": 340,
      "want": "b_bed"
     },
     {
      "id": "upstairs_2",
      "slot": "floor",
-     "x": 200,
-     "y": 236,
+     "x": 270,
+     "y": 340,
      "want": "u_closet"
     },
     {
      "id": "upstairs_3",
-     "slot": "wall",
-     "x": 130,
-     "y": 40,
+     "slot": "floor",
+     "x": 190,
+     "y": 408,
      "want": "a_diary"
     }
    ]
@@ -402,21 +509,111 @@
    "group": "adult",
    "unlock": 20,
    "wall": "#BFE6FF",
-   "floor": "#C9C2B8",
+   "floor": "#CFC8BE",
+   "pattern": "none",
+   "floorKind": "tile",
+   "fixtures": [],
    "anchors": [
     {
      "id": "roof_1",
      "slot": "floor",
-     "x": 60,
-     "y": 236,
+     "x": 90,
+     "y": 372,
      "want": "s_tree"
     },
     {
      "id": "roof_2",
      "slot": "floor",
-     "x": 200,
-     "y": 238,
+     "x": 240,
+     "y": 392,
      "want": "t_pigs_a"
+    }
+   ]
+  },
+  {
+   "id": "bath",
+   "name": "욕실",
+   "group": "kid",
+   "unlock": 1,
+   "wall": "#DDF3F8",
+   "floor": "#CFE6F0",
+   "pattern": "circle",
+   "floorKind": "tile",
+   "fixtures": [
+    {
+     "k": "sink",
+     "x": 80,
+     "y": 232,
+     "w": 150,
+     "h": 56,
+     "surf": {
+      "y": 224,
+      "x0": 96,
+      "x1": 206
+     }
+    },
+    {
+     "k": "shelf",
+     "x": 250,
+     "y": 104,
+     "w": 70,
+     "h": 10,
+     "surf": {
+      "y": 104,
+      "x0": 252,
+      "x1": 316
+     }
+    }
+   ],
+   "anchors": [
+    {
+     "id": "bath_1",
+     "slot": "table",
+     "x": 130,
+     "y": 224,
+     "want": "y_cup"
+    },
+    {
+     "id": "bath_2",
+     "slot": "table",
+     "x": 184,
+     "y": 224,
+     "want": "y_paste"
+    },
+    {
+     "id": "bath_3",
+     "slot": "wall",
+     "x": 270,
+     "y": 100,
+     "want": "y_hanger"
+    },
+    {
+     "id": "bath_4",
+     "slot": "floor",
+     "x": 90,
+     "y": 404,
+     "want": "y_mat"
+    },
+    {
+     "id": "bath_5",
+     "slot": "floor",
+     "x": 250,
+     "y": 392,
+     "want": "y_duck"
+    },
+    {
+     "id": "bath_6",
+     "slot": "table",
+     "x": 288,
+     "y": 104,
+     "want": "y_soap"
+    },
+    {
+     "id": "bath_7",
+     "slot": "wall",
+     "x": 130,
+     "y": 108,
+     "want": "y_towel"
     }
    ]
   },
@@ -424,30 +621,67 @@
    "id": "kid",
    "name": "아이 방",
    "group": "kid",
-   "unlock": 1,
+   "unlock": 3,
    "wall": "#FFF0B8",
    "floor": "#F2C98A",
+   "pattern": "triangle",
+   "floorKind": "wood",
+   "fixtures": [
+    {
+     "k": "bed",
+     "x": 24,
+     "y": 330,
+     "w": 150,
+     "h": 70,
+     "surf": {
+      "y": 300,
+      "x0": 40,
+      "x1": 160
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "kid_1",
      "slot": "floor",
-     "x": 50,
-     "y": 236,
-     "want": "k_train"
+     "x": 84,
+     "y": 322,
+     "want": "y_pillow"
     },
     {
      "id": "kid_2",
-     "slot": "wall",
-     "x": 150,
-     "y": 40,
-     "want": "w_frame"
+     "slot": "floor",
+     "x": 140,
+     "y": 330,
+     "want": "y_quilt"
     },
     {
      "id": "kid_3",
      "slot": "floor",
+     "x": 270,
+     "y": 352,
+     "want": "y_toybox"
+    },
+    {
+     "id": "kid_4",
+     "slot": "wall",
+     "x": 150,
+     "y": 116,
+     "want": "w_frame"
+    },
+    {
+     "id": "kid_5",
+     "slot": "wall",
+     "x": 62,
+     "y": 106,
+     "want": "y_moon"
+    },
+    {
+     "id": "kid_6",
+     "slot": "floor",
      "x": 220,
-     "y": 236,
-     "want": "y_cup"
+     "y": 410,
+     "want": "k_party"
     }
    ]
   },
@@ -455,30 +689,33 @@
    "id": "wardrobe",
    "name": "옷방",
    "group": "kid",
-   "unlock": 3,
+   "unlock": 6,
    "wall": "#FFE0E8",
    "floor": "#E8C7A8",
+   "pattern": "dot",
+   "floorKind": "wood",
+   "fixtures": [],
    "anchors": [
     {
      "id": "wardrobe_1",
      "slot": "wall",
-     "x": 80,
-     "y": 45,
-     "want": "y_hanger"
+     "x": 90,
+     "y": 108,
+     "want": "y_hat"
     },
     {
      "id": "wardrobe_2",
-     "slot": "wall",
+     "slot": "floor",
      "x": 200,
-     "y": 50,
-     "want": "y_hat"
+     "y": 400,
+     "want": "y_boots"
     },
     {
      "id": "wardrobe_3",
      "slot": "floor",
-     "x": 150,
-     "y": 236,
-     "want": "k_party"
+     "x": 90,
+     "y": 392,
+     "want": "k_train"
     }
    ]
   },
@@ -486,29 +723,45 @@
    "id": "dining",
    "name": "밥 먹는 곳",
    "group": "kid",
-   "unlock": 6,
+   "unlock": 9,
    "wall": "#E8F5C8",
-   "floor": "#D8B98A",
+   "floor": "#DDBF92",
+   "pattern": "square",
+   "floorKind": "wood",
+   "fixtures": [
+    {
+     "k": "table",
+     "x": 80,
+     "y": 280,
+     "w": 180,
+     "h": 56,
+     "surf": {
+      "y": 280,
+      "x0": 96,
+      "x1": 250
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "dining_1",
-     "slot": "floor",
-     "x": 60,
-     "y": 236,
+     "slot": "table",
+     "x": 130,
+     "y": 280,
      "want": "y_bowl"
     },
     {
      "id": "dining_2",
      "slot": "table",
-     "x": 170,
-     "y": 195,
+     "x": 200,
+     "y": 280,
      "want": "y_spoon"
     },
     {
      "id": "dining_3",
      "slot": "floor",
-     "x": 250,
-     "y": 236,
+     "x": 270,
+     "y": 400,
      "want": "k_ch3"
     }
    ]
@@ -517,61 +770,33 @@
    "id": "toyroom",
    "name": "장난감 방",
    "group": "kid",
-   "unlock": 9,
+   "unlock": 12,
    "wall": "#D8ECFF",
    "floor": "#C8D8B8",
+   "pattern": "circle",
+   "floorKind": "grass",
+   "fixtures": [],
    "anchors": [
     {
      "id": "toyroom_1",
      "slot": "floor",
-     "x": 60,
-     "y": 236,
+     "x": 80,
+     "y": 360,
      "want": "y_toybox"
     },
     {
      "id": "toyroom_2",
      "slot": "floor",
-     "x": 180,
-     "y": 240,
+     "x": 200,
+     "y": 404,
      "want": "y_ball"
     },
     {
      "id": "toyroom_3",
      "slot": "floor",
      "x": 270,
-     "y": 232,
+     "y": 340,
      "want": "k_ch5"
-    }
-   ]
-  },
-  {
-   "id": "bath",
-   "name": "욕실·잠자리",
-   "group": "kid",
-   "unlock": 12,
-   "wall": "#DDF3F8",
-   "floor": "#B8D8E8",
-   "anchors": [
-    {
-     "id": "bath_1",
-     "slot": "floor",
-     "x": 60,
-     "y": 238,
-     "want": "y_mat"
-    },
-    {
-     "id": "bath_2",
-     "slot": "floor",
-     "x": 200,
-     "y": 236,
-     "want": "y_pillow"
-    },
-    {
-     "id": "bath_3",
-     "slot": "table",
-     "x": 240,
-     "y": 195,
-     "want": "y_soap"
     }
    ]
   }
@@ -1119,6 +1344,57 @@
   },
   {
    "ch": 1,
+   "room": "bath",
+   "group": "kid",
+   "title": "깨끗이 씻자",
+   "tasks": [
+    {
+     "id": "t1",
+     "need": [
+      "y_cup"
+     ],
+     "label": "칫솔 컵"
+    },
+    {
+     "id": "t2",
+     "need": [
+      "y_paste"
+     ],
+     "label": "치약"
+    },
+    {
+     "id": "t3",
+     "need": [
+      "y_hanger"
+     ],
+     "label": "옷걸이"
+    }
+   ],
+   "cuts": [
+    {
+     "bg": "home",
+     "text": "",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "bg": "home",
+     "text": "",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid1"
+     ]
+    }
+   ],
+   "reward": {
+    "cozy": 15,
+    "unlock": "kid"
+   }
+  },
+  {
+   "ch": 2,
    "room": "kid",
    "group": "kid",
    "title": "막둥이의 첫 방",
@@ -1126,23 +1402,23 @@
     {
      "id": "t1",
      "need": [
-      "k_train"
+      "k_party"
      ],
-     "label": "기차"
+     "label": "잔칫집"
     },
     {
      "id": "t2",
      "need": [
-      "y_cup"
+      "w_frame"
      ],
-     "label": "칫솔 컵"
+     "label": "내 그림 액자"
     },
     {
      "id": "t3",
      "need": [
-      "w_frame"
+      "y_pillow"
      ],
-     "label": "내 그림 액자"
+     "label": "베개"
     }
    ],
    "cuts": [
@@ -1153,23 +1429,15 @@
       "baby.joy",
       "nemo_kids.kid1"
      ]
-    },
-    {
-     "bg": "home",
-     "text": "",
-     "chars": [
-      "baby.joy",
-      "nemo_mom.joy"
-     ]
     }
    ],
    "reward": {
-    "cozy": 15,
+    "cozy": 20,
     "unlock": "wardrobe"
    }
   },
   {
-   "ch": 2,
+   "ch": 3,
    "room": "wardrobe",
    "group": "kid",
    "title": "옷방",
@@ -1177,23 +1445,23 @@
     {
      "id": "t1",
      "need": [
-      "y_hanger"
-     ],
-     "label": "옷걸이"
-    },
-    {
-     "id": "t2",
-     "need": [
       "y_hat"
      ],
      "label": "모자걸이"
     },
     {
+     "id": "t2",
+     "need": [
+      "k_train"
+     ],
+     "label": "기차"
+    },
+    {
      "id": "t3",
      "need": [
-      "k_party"
+      "y_boots"
      ],
-     "label": "잔칫집"
+     "label": "장화"
     }
    ],
    "cuts": [
@@ -1207,12 +1475,12 @@
     }
    ],
    "reward": {
-    "cozy": 20,
+    "cozy": 25,
     "unlock": "dining"
    }
   },
   {
-   "ch": 3,
+   "ch": 4,
    "room": "dining",
    "group": "kid",
    "title": "밥 먹는 곳",
@@ -1250,12 +1518,12 @@
     }
    ],
    "reward": {
-    "cozy": 25,
+    "cozy": 30,
     "unlock": "toyroom"
    }
   },
   {
-   "ch": 4,
+   "ch": 5,
    "room": "toyroom",
    "group": "kid",
    "title": "장난감 방",
@@ -1293,49 +1561,6 @@
     }
    ],
    "reward": {
-    "cozy": 30,
-    "unlock": "bath"
-   }
-  },
-  {
-   "ch": 5,
-   "room": "bath",
-   "group": "kid",
-   "title": "욕실·잠자리",
-   "tasks": [
-    {
-     "id": "t1",
-     "need": [
-      "y_mat"
-     ],
-     "label": "욕실 발판"
-    },
-    {
-     "id": "t2",
-     "need": [
-      "y_pillow"
-     ],
-     "label": "베개"
-    },
-    {
-     "id": "t3",
-     "need": [
-      "y_soap"
-     ],
-     "label": "비누"
-    }
-   ],
-   "cuts": [
-    {
-     "bg": "home",
-     "text": "",
-     "chars": [
-      "baby.joy",
-      "nemo_mom.joy"
-     ]
-    }
-   ],
-   "reward": {
     "cozy": 35,
     "unlock": null
    }
@@ -1346,7 +1571,7 @@
    "id": "wife",
    "char": "wife.smug",
    "group": "adult",
-   "need": 60,
+   "need": 150,
    "likes": [
     "b_sofa",
     "u_fridge"
@@ -1355,13 +1580,16 @@
     "이 소파 앉아도 돼요?",
     "냉장고가 이렇게 크니 좋겠다!"
    ],
-   "gift": "p_pack1"
+   "gifts": [
+    "g_cushion",
+    "g_mirror"
+   ]
   },
   {
    "id": "dong_dad",
    "char": "dong_dad.calm",
    "group": "adult",
-   "need": 140,
+   "need": 320,
    "likes": [
     "b_shelf",
     "b_clock"
@@ -1370,13 +1598,16 @@
     "책장이 정갈하군요.",
     "시계 소리가 좋네요."
    ],
-   "gift": "p_clock"
+   "gifts": [
+    "g_pen",
+    "g_chess"
+   ]
   },
   {
    "id": "nemo_mom",
    "char": "nemo_mom.good",
    "group": "adult",
-   "need": 260,
+   "need": 520,
    "likes": [
     "t_bowl",
     "p_rice"
@@ -1385,13 +1616,16 @@
     "밥솥이 딱 우리 집 거네!",
     "밥그릇이 예쁘네요."
    ],
-   "gift": "p_label"
+   "gifts": [
+    "g_lunch",
+    "g_apron"
+   ]
   },
   {
    "id": "husband",
    "char": "husband.joy",
    "group": "adult",
-   "need": 420,
+   "need": 760,
    "likes": [
     "b_suitcase",
     "p_world"
@@ -1400,13 +1634,16 @@
     "이 가방이면 어디든 가겠는데?",
     "지도에 우리 집도 표시해 줘요."
    ],
-   "gift": "p_pass"
+   "gifts": [
+    "g_compass",
+    "g_postcard"
+   ]
   },
   {
    "id": "nemo_grandma",
    "char": "nemo_grandma.good",
    "group": "adult",
-   "need": 620,
+   "need": 1050,
    "likes": [
     "m_bench",
     "m_garden"
@@ -1415,43 +1652,106 @@
     "평상에 앉으면 시간이 천천히 가지.",
     "텃밭 상추 좀 뜯어 가도 되냐."
    ],
-   "gift": "m_pepper"
+   "gifts": [
+    "g_teaset",
+    "g_flowerpot"
+   ]
+  },
+  {
+   "id": "nemo_dad_g",
+   "char": "nemo_dad.good",
+   "group": "adult",
+   "need": 1400,
+   "likes": [
+    "o_fence",
+    "o_mailbox"
+   ],
+   "lines": [
+    "담장이 튼튼하네요.",
+    "우체통에 편지 왔나?"
+   ],
+   "gifts": [
+    "g_pepper",
+    "g_hanbok"
+   ]
+  },
+  {
+   "id": "dong_dad_w",
+   "char": "dong_dad.warm",
+   "group": "adult",
+   "need": 1750,
+   "likes": [
+    "p_chair",
+    "b_globe"
+   ],
+   "lines": [
+    "의자가 하나 더 있으니 든든하네요.",
+    "지구본 돌려 보고 싶어요."
+   ],
+   "gifts": [
+    "g_stool",
+    "g_lantern2"
+   ]
   },
   {
    "id": "hana",
    "char": "nemo_kids.kid1",
    "group": "kid",
-   "need": 40,
+   "need": 60,
    "likes": [
     "k_train",
     "y_ball"
    ],
    "lines": [],
-   "gift": "y_star"
+   "gifts": [
+    "kg_star",
+    "kg_cloud"
+   ]
   },
   {
    "id": "dong_dad_k",
    "char": "dong_dad.joy",
    "group": "kid",
-   "need": 100,
+   "need": 150,
    "likes": [
     "k_party",
     "y_toybox"
    ],
    "lines": [],
-   "gift": "k_ch4"
+   "gifts": [
+    "kg_bear",
+    "kg_ball2"
+   ]
   },
   {
    "id": "wife_k",
    "char": "wife.joy",
    "group": "kid",
-   "need": 180,
+   "need": 260,
    "likes": [
     "w_frame",
     "y_pillow"
    ],
    "lines": [],
-   "gift": "w_stars"
+   "gifts": [
+    "kg_kite",
+    "kg_drum"
+   ]
+  },
+  {
+   "id": "nemo_dad_k",
+   "char": "nemo_dad.joy",
+   "group": "kid",
+   "need": 380,
+   "likes": [
+    "y_bowl",
+    "y_cup"
+   ],
+   "lines": [],
+   "gifts": [
+    "kg_rainbow",
+    "kg_train2"
+   ]
   }
  ],
  "unlockLv": {
@@ -1465,10 +1765,10 @@
    "roof": 20
   },
   "kid": {
-   "wardrobe": 3,
-   "dining": 6,
-   "toyroom": 9,
-   "bath": 12
+   "kid": 3,
+   "wardrobe": 6,
+   "dining": 9,
+   "toyroom": 12
   }
  }
 }

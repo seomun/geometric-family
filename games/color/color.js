@@ -121,7 +121,7 @@
       const swatches = (num ? nums : PAL).map((c, k) => { const b = el('button', 'cl-sw' + (c === '#FFFFFF' ? ' white' : '') + (k === 0 ? ' on' : ''), pal, num ? String(k + 1) : ''); b.style.background = c; if (num) { const m = /#(..)(..)(..)/.exec(c), lum = m ? (0.299 * parseInt(m[1], 16) + 0.587 * parseInt(m[2], 16) + 0.114 * parseInt(m[3], 16)) : 0; if (lum > 150) { b.style.color = '#3A2E39'; b.style.textShadow = '0 0 3px #fff, 0 0 3px #fff'; } }   /* 번호 글자는 칸 색이 밝으면 어둡게(색만으로 구분하지 않도록 번호를 또렷이) */ b.setAttribute('aria-label', '색 ' + (k + 1)); b.onclick = () => { color = c; swatches.forEach((x) => x.classList.remove('on')); b.classList.add('on'); GF.sfx('tap'); }; return b; });
       color = (num ? nums : PAL)[0];
       const filled = () => Object.keys(fills).length;
-      const done = UK.round({ icon: 'check', cls: 'lg', label: '완성', onclick: () => complete(false) }, acts), undo = UK.round({ icon: 'replay', cls: 'pink', label: '되돌리기', onclick: () => { const h = hist.pop(); if (!h) return; if (h.prev == null) delete fills[h.i]; else fills[h.i] = h.prev; R.regions[h.i].setAttribute('fill', h.prev || '#FFFFFF'); refresh(); } }, acts);
+      const done = UK.round({ icon: 'check', cls: 'lg', label: GF.t('c16.color.001'), onclick: () => complete(false) }, acts), undo = UK.round({ icon: 'replay', cls: 'pink', label: GF.t('c16.block.004'), onclick: () => { const h = hist.pop(); if (!h) return; if (h.prev == null) delete fills[h.i]; else fills[h.i] = h.prev; R.regions[h.i].setAttribute('fill', h.prev || '#FFFFFF'); refresh(); } }, acts);
       acts.insertBefore(undo, done);
       const need = () => (num ? target.size : Math.max(2, Math.ceil(R.regions.length * 0.5)));
       const refresh = () => { done.classList.toggle('dim', filled() < need()); };
@@ -207,8 +207,8 @@
       const scene = el('div', 'cl-scene', r), tray = el('div', 'cl-tray', r), placed = []; let sel = null;
       (pg.deco || []).forEach((d) => { const im = el('img', 'cl-deco', scene); im.src = uri(RoomArt.make(d.art, '#F6C28B', {})); im.style.cssText = `position:absolute;left:${d.x - d.w / 2}px;top:${d.y - d.w / 2}px;width:${d.w}px;height:${d.w}px;object-fit:contain;pointer-events:none`; });   // 배경에 깔리는 고정 장식
       const SW = () => r.getBoundingClientRect().width / 360;
-      const done = UK.round({ icon: 'check', cls: 'lg dim', label: '완성', onclick: () => complete() }, r); done.style.cssText += ';position:absolute;right:14px;bottom:112px;z-index:7';
-      const bin = UK.round({ icon: 'close', cls: 'gray', label: '지우기', onclick: () => { if (sel != null) { placed[sel].el.remove(); placed.splice(sel, 1); sel = null; GF.sfx('hmm'); refresh(); } } }, r); bin.style.cssText += ';position:absolute;left:14px;bottom:112px;z-index:7';
+      const done = UK.round({ icon: 'check', cls: 'lg dim', label: GF.t('c16.color.001'), onclick: () => complete() }, r); done.style.cssText += ';position:absolute;right:14px;bottom:112px;z-index:7';
+      const bin = UK.round({ icon: 'close', cls: 'gray', label: GF.t('c16.color.002'), onclick: () => { if (sel != null) { placed[sel].el.remove(); placed.splice(sel, 1); sel = null; GF.sfx('hmm'); refresh(); } } }, r); bin.style.cssText += ';position:absolute;left:14px;bottom:112px;z-index:7';
       const refresh = () => done.classList.toggle('dim', placed.length < 3);
       const addSt = (key, x, y) => { const d = el('div', 'cl-st', scene); d.style.left = x + 'px'; d.style.top = y + 'px'; const i = el('img', '', d); i.src = stickerSrc(key); const o = { k: key, x, y, el: d }; placed.push(o); GF.sfx('drop'); refresh(); bindMove(o); return o; };
       function bindMove(o) { o.el.addEventListener('pointerdown', (e) => { e.preventDefault(); sel = placed.indexOf(o); placed.forEach((q) => q.el.classList.remove('sel')); o.el.classList.add('sel'); const k = SW(), sx = e.clientX, sy = e.clientY, ox = o.x, oy = o.y; try { o.el.setPointerCapture(e.pointerId); } catch (x) {}
@@ -232,7 +232,7 @@
       const sw2 = [['bg', d.bg], ['fg', d.fg]].map(([t, c]) => { const b = el('button', 'cl-sw' + (t === 'fg' ? ' on' : ''), pat); b.style.background = c; b.onclick = () => { target = t; [...pat.querySelectorAll('.cl-sw')].forEach((x) => x.classList.remove('on')); b.classList.add('on'); GF.sfx('tap'); }; b.dataset.t = t; return b; });
       PAL.forEach((c) => { const b = el('button', 'cl-sw' + (c === '#FFFFFF' ? ' white' : ''), pal); b.style.background = c; b.onclick = () => { d[target] = c; sw2.find((x) => x.dataset.t === target).style.background = c; GF.sfx('drop'); show(); }; });
       show();
-      const ok = UK.round({ icon: 'check', cls: 'lg', label: '완성', onclick: () => complete() }, acts);
+      const ok = UK.round({ icon: 'check', cls: 'lg', label: GF.t('c16.color.001'), onclick: () => complete() }, acts);
       function complete() { SV.done[pg.id] = { desc: Object.assign({}, d) }; save(); GF.refreshBar(); if (roomOK) { Room.setWall('kid', d); Room.data.items.filter((x) => x.needPages && x.needPages <= doneCount()).forEach((x) => Room.grant(x.id)); } GF.sfx('celebrate'); GF.sfx('star'); GF.replace('chouse'); }
       CL.debug.wallDone = complete;
     },
@@ -244,7 +244,7 @@
     enter(r) {
       r.classList.add('uk', 'cl'); GF.bg('indoor2', r);
       const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house2(sc, { go: () => GF.go('cbook') });
-      const dr = UK.round({ icon: 'book', cls: 'gold', label: '액자 서랍', onclick: () => drawer(r) }, r); dr.style.cssText += ';position:absolute;right:12px;top:72px;z-index:12';
+      const dr = UK.round({ icon: 'book', cls: 'gold', label: GF.t('c16.color.003'), onclick: () => drawer(r) }, r); dr.style.cssText += ';position:absolute;right:12px;top:72px;z-index:12';
     },
   });
   /* 액자 서랍(앨범): 지금까지 완성한 그림 전부. 벽에는 최대 6개 — 눌러서 걸고 내린다 */
@@ -259,7 +259,7 @@
           else { const used = new Set(hung.map((x) => x.slot)); let k = [0, 1, 2, 3, 4, 5].find((s2) => !used.has(s2)); if (k == null) { const o = hung[0]; o.drawer = 1; k = o.slot; delete o.slot; } e.drawer = 0; e.slot = k; e.x = 14 + (k % 3) * 104; e.y = 6 + ((k / 3) | 0) * 72; }
           Room.save(); draw();
         }; });
-      if (!L().length) el('div', 'uk-text', grid, '아직 그림이 없어요');
+      if (!L().length) el('div', 'uk-text', grid, GF.t('c16.color.004'));
     };
     draw(); UK.round({ icon: 'close', cls: 'lg', onclick: () => { sc.remove(); GF.screens.chouse.enter(GF.screens.chouse.el.firstChild ? (GF.screens.chouse.el.innerHTML = '', GF.screens.chouse.el) : GF.screens.chouse.el); } }, acts);
   }

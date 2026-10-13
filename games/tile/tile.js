@@ -88,7 +88,7 @@
       r.classList.add('uk', 'tl'); GF.bg('indoor', r); bar(); GF.extras.retryBanner(el('div', 'sg-banner', r), SV.stars, (n) => GF.go('tplay', { n }));
       GF.saga.open(r, { levels: D.levels, kid: false, stars: (id) => SV.stars[id] || 0, unlocked, title: (c) => D.chapters[c - 1],
         onNode: (l) => GF.go('tplay', { n: l.id }), onGate: (c) => GF.tale.replay(c, r), onChest: () => GF.go('thouse'),
-        side: [{ icon: 'heart', text: '세 가족', fn: () => GF.go('ttrio') }, { icon: 'home', text: '우리 집', fn: () => GF.go('thouse') }] });
+        side: [{ icon: 'heart', text: GF.t('c16.block.002'), fn: () => GF.go('ttrio') }, { icon: 'home', text: GF.t('c16.block.003'), fn: () => GF.go('thouse') }] });
     },
   });
   GF.screen('ttrio', {
@@ -96,7 +96,7 @@
     enter(r) {
       r.classList.add('uk', 'tl'); GF.bg('indoor2', r); bar(); const n = Math.max(6, Math.min(60, (SV.last || 1) + 4)), Ls = trioLevels(n);
       el('div', 'tl-ttl', r, '<div class="uk-title" style="font-size:30px">세 가족 판</div><div class="tl-sub">같은 판, 세 가지 규칙</div>').style.top = '84px';
-      el('div', 'tl-line', r, '모든 판이 한 가족의 규칙을 따라요. 어느 쪽이 편한가요?').style.top = '172px';
+      el('div', 'tl-line', r, GF.t('c16.sort.004')).style.top = '172px';
       const box = el('div', 'tl-trio', r); box.style.top = '226px';
       Ls.forEach((L, i) => { const st = SV.trio[n + ':' + i] || 0, b = UK.btn({ text: RULE_TXT[i][0] + (st ? '  ' + '★'.repeat(st) : ''), cls: RULE_TXT[i][2] + ' block', onclick: () => { if (L) GF.go('tplay', { level: L }); } }, box); el('small', '', b, RULE_TXT[i][1]); });
     },
@@ -114,7 +114,7 @@
       TL._ch = typeof LV.chapter === 'number' ? LV.chapter : 1; let S = C.newGame(LV), hist = [], busy = false, hintI = -1, streak = 0, maxTray = 0, rankRes = null; const gained = [], rng = G.mulberry(LV.id === 'daily' ? 5 : (typeof LV.id === 'number' ? LV.id : 9) * 13 + 7);
       const goals = el('div', 'tl-goals', r), boardW = el('div', 'tl-boardw', r), board = el('div', 'tl-board', boardW), trayW = el('div', 'tl-trayw', r), btns = el('div', 'tl-btns2', r), tip = el('div', 'tl-tip', r);
       const u = 27; board.style.width = G.GW * u + 'px'; board.style.height = G.GH * u + 'px';   // 타일 한 변 = 54(화면 폭 360 기준 15%, 실제 기기에서 56dp 안팎 이상)
-      const bu = UK.btn({ text: '되돌리기', icon: 'replay', cls: 'ghost sm', onclick: undo }, btns), bs = UK.btn({ text: '섞기', icon: 'shapes', cls: 'ghost sm', onclick: doShuffle }, btns); UK.btn({ text: '힌트', icon: 'info', cls: 'sky sm', onclick: hint }, btns);
+      const bu = UK.btn({ text: GF.t('c16.block.004'), icon: 'replay', cls: 'ghost sm', onclick: undo }, btns), bs = UK.btn({ text: GF.t('c16.tile.001'), icon: 'shapes', cls: 'ghost sm', onclick: doShuffle }, btns); UK.btn({ text: GF.t('c16.block.005'), icon: 'info', cls: 'sky sm', onclick: hint }, btns);
       const tiles = LV.tiles.map((t, i) => { const d = el('button', 'tl-t', board); d.dataset.i = i; d.style.cssText = `left:${t.x * u}px;top:${t.y * u}px;width:${2 * u}px;height:${2 * u}px;z-index:${t.z * 40 + (t.y | 0)}`; d.setAttribute('aria-label', '타일 ' + (i + 1)); d.onclick = () => tap(i); return d; });
       function goalChips() {
         goals.innerHTML = ''; const ch = el('div', 'tl-goal' + (S.won ? ' ok' : ''), goals);
@@ -143,18 +143,18 @@
         } else streak = 0;
         if (S.won) { busy = true; setTimeout(finish, slow(700)); } else if (ev.lose || C.lost(S)) { busy = true; setTimeout(lose, slow(500)); }
       }
-      function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: '되돌리기 1번 더', parent: r, onReward: () => { S.used.undo = 0; say('한 번 더 되돌릴 수 있어요'); draw(); } }); }
-      function offerShuffle() { return GF.ads && GF.ads.offer({ placement: 'extra', ask: '섞기 1번 더', parent: r, onReward: () => { S.used.shuffle = 0; doShuffle(); } }); }
-      function undo() { if (busy || !hist.length || S.used.undo >= GF.polish.cap(1, LV)) { if (S.used.undo >= GF.polish.cap(1, LV) && !offerUndo()) say('되돌리기는 한 판 한 번'); return; } const u0 = S.used.undo + 1, sh = S.used.shuffle, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.shuffle = sh; S.used.hint = hn; hist = []; hintI = -1; streak = 0; TL._new = false; GF.sfx('tap'); draw(); }
-      function doShuffle() { if (busy || S.won || S.used.shuffle >= GF.polish.cap(1, LV)) { if (S.used.shuffle >= GF.polish.cap(1, LV) && !offerShuffle()) say('섞기는 한 판 한 번'); return; } if (C.shuffle(S, rng)) { S.used.shuffle++; hist = []; hintI = -1; GF.sfx('star'); draw(); say('다시 섞었어요'); } }
+      function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: GF.t('c16.block.012'), parent: r, onReward: () => { S.used.undo = 0; say(GF.t('c16.tile.003')); draw(); } }); }
+      function offerShuffle() { return GF.ads && GF.ads.offer({ placement: 'extra', ask: GF.t('c16.tile.002'), parent: r, onReward: () => { S.used.shuffle = 0; doShuffle(); } }); }
+      function undo() { if (busy || !hist.length || S.used.undo >= GF.polish.cap(1, LV)) { if (S.used.undo >= GF.polish.cap(1, LV) && !offerUndo()) say(GF.t('c16.tile.004')); return; } const u0 = S.used.undo + 1, sh = S.used.shuffle, hn = S.used.hint; S = hist.pop(); S.used.undo = u0; S.used.shuffle = sh; S.used.hint = hn; hist = []; hintI = -1; streak = 0; TL._new = false; GF.sfx('tap'); draw(); }
+      function doShuffle() { if (busy || S.won || S.used.shuffle >= GF.polish.cap(1, LV)) { if (S.used.shuffle >= GF.polish.cap(1, LV) && !offerShuffle()) say(GF.t('c16.tile.005')); return; } if (C.shuffle(S, rng)) { S.used.shuffle++; hist = []; hintI = -1; GF.sfx('star'); draw(); say(GF.t('c16.tile.006')); } }
       function hint() { if (busy || S.won) return; const i = C.hintTile(S); if (i < 0) return; S.used.hint++; hintI = i; GF.sfx('pick'); draw(); setTimeout(() => { if (hintI === i) { hintI = -1; if (board.isConnected) draw(); } }, slow(2600)); }
       function result(stars) {
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
         GF.polish && GF.polish.failReset && GF.polish.failReset('tile', LV.id || LV.kind);
-        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
+        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: GF.t('c16.block.013'), onReward: bonusShard };
         const tools = S.used.undo + S.used.shuffle + S.used.hint, chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '도움 ' + tools + '번' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
-        UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('tplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
+        UK.result({ title: GF.t('c16.block.006'), stars, chips, parent: r, onNext: next ? () => GF.replace('tplay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
       }
       function finish() {
         busy = true; GF.extras && GF.extras.resumeClear(); const tools = S.used.undo + S.used.shuffle + S.used.hint, st = GF.polish.easy(tools === 0 ? 3 : tools <= 2 ? 2 : 1, LV);
@@ -168,7 +168,7 @@
           GF.polish.finished(); GF.polish.setNext(GF.polish.nextText(LV, D)); GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
       }
-      function lose() { busy = true; GF.extras && GF.extras.resumeClear(); if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); const retry = () => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }); if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'tile', id: LV.id || LV.kind, near: '바구니가 가득 찼어요! 남은 타일 ' + C.left(S) + '개', hint: true, onRetry: retry }); else { say('가득 찼어요! 한 번 더'); GF.sfx('hmm'); setTimeout(retry, slow(900)); } }
+      function lose() { busy = true; GF.extras && GF.extras.resumeClear(); if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); const retry = () => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }); if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'tile', id: LV.id || LV.kind, near: '바구니가 가득 찼어요! 남은 타일 ' + C.left(S) + '개', hint: true, onRetry: retry }); else { say(GF.t('c16.tile.007')); GF.sfx('hmm'); setTimeout(retry, slow(900)); } }
       TL.debug.lose = () => lose(); TL.debug.adOffer = () => offerUndo(); TL.debug.level = () => LV; TL.debug.state = () => S; TL.debug.press = (i) => tap(i); TL.debug.undo = undo; TL.debug.shuffle = doShuffle; TL.debug.hint = hint; TL.debug.busy = () => busy; TL.debug.tiles = () => tiles;
       if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();
@@ -187,7 +187,7 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'tile_levels', 'tile_extra', 'story_tile', 'maps/tile', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:tile:ui:v1', async start() {
       D = GF.data.tile_levels; X = GF.data.tile_extra; GF.saga.init('tile', GF.data['maps/tile']); GF.tale.init('tile', GF.data.story_tile, { kid: false });
       Room.init({ home: () => GF.go('tlevels'), openHouse: () => GF.go('thouse'), housing: GF.data.housing, app: 'tile', data: GF.data.room_items, game: 'tile', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
-      GF.rank.init({ app: 'tile', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { let r = C.botPlay(L, rng, eps, rule), pen = 0; if (!r.won && rule === 2) { r = C.botPlay(L, rng, eps, -1); pen = 150; }   // 동그라미 규칙이 안 풀리면 한 번 평범하게 다시
+      GF.rank.init({ app: 'tile', boards: { daily: { title: GF.t('c16.block.010'), levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { let r = C.botPlay(L, rng, eps, rule), pen = 0; if (!r.won && rule === 2) { r = C.botPlay(L, rng, eps, -1); pen = 150; }   // 동그라미 규칙이 안 풀리면 한 번 평범하게 다시
           return { won: r.won, score: GF.rank.clamp(600 + 110 * (r.cap - r.maxTray) - pen) }; } } } });
       GF.extras.init(Object.assign({ app: 'tile', kid: false, calendar: () => X.seasons.map((s) => ({ id: s.id, title: s.title, months: s.months, icon: '📅', done: !!SV.seasonDone[seasonKey(s)], play: () => { const L = seasonLevel(s); if (L) GF.go('tplay', { level: L }); } })), rewardSet: 'yardlife', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'yardlife', itemTotal: 20, icon: '🧩' })));
       document.getElementById('safe').classList.add('uk'); GF.go('thome');

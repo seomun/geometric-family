@@ -151,7 +151,7 @@
         });
       });
       const sb = el('button', 'uk-btn nemo sbtn', sc, '오늘의 사연 <span class="badge" style="display:none"></span>'); sb.style.cssText += ';position:absolute;left:10px;width:196px;bottom:12px;background:#E8870F';
-      const db = el('button', 'uk-btn dong dbtn', sc, '도감'); db.style.cssText += ';position:absolute;left:216px;right:10px;bottom:12px;background:#3B4A7A';
+      const db = el('button', 'uk-btn dong dbtn', sc, GF.t('c16.idle.006')); db.style.cssText += ';position:absolute;left:216px;right:10px;bottom:12px;background:#3B4A7A';
       sb.onclick = () => { const rs = readyStories(); if (!rs.length) { const n = nextStory(); const i = n ? ST.stories.indexOf(n) : -1; GF.sfx('hmm'); toast(n ? '다음 사연은 온기를 ' + fmt(B.storyThresholds[i]) + ' 모으면 와요 (지금 ' + fmt(S.tot) + ')' : '지금은 새 사연이 없어요. 곧 새 이야기가 와요!'); return; } GF.sfx('pick'); GF.go('istory', { id: rs[0].id }); };
       db.onclick = () => { GF.sfx('pick'); GF.go('idex'); };
       UI.upd.push(() => {
@@ -161,7 +161,7 @@
       });
       const rb = el('button', 'ribbon', sc, ''); rb.style.display = 'none';
       rb.onclick = () => { if (endingReady() && !S.end) { GF.sfx('pick'); GF.go('istory', { id: 'end', ending: true }); return; } const t = seasonTodo()[0] || seasonList()[0]; if (t) { GF.sfx('pick'); GF.go('istory', { id: t.id, season: true }); } };
-      UI.upd.push(() => { const l = seasonList(), todo = seasonTodo(), en = endingReady() && !S.end; rb.style.display = l.length || en ? 'flex' : 'none'; rb.classList.toggle('gold', en); if (en) rb.textContent = '세 식탁 한자리 · 초대장이 왔어요'; else if (l.length) rb.textContent = todo.length ? todo[0].season + ' 사건 · ' + todo[0].title : l[0].season + ' 사건 · 다시 보기'; rb.classList.toggle('done', !en && !todo.length); });
+      UI.upd.push(() => { const l = seasonList(), todo = seasonTodo(), en = endingReady() && !S.end; rb.style.display = l.length || en ? 'flex' : 'none'; rb.classList.toggle('gold', en); if (en) rb.textContent = GF.t('c16.idle.010'); else if (l.length) rb.textContent = todo.length ? todo[0].season + ' 사건 · ' + todo[0].title : l[0].season + ' 사건 · 다시 보기'; rb.classList.toggle('done', !en && !todo.length); });
       { const pl = Room.mePlate(hd); if (pl) { pl.style.cssText += ';position:absolute;right:6px;top:6px;transform:scale(.74);transform-origin:right top;'; } }   // 내 도형 문패(⑤ 결과)
       UI.upd.forEach((f) => f());
       if (UI.welcome) { const w = UI.welcome; UI.welcome = null; welcomeBack(sc, w); }
@@ -170,9 +170,9 @@
 
   function welcomeBack(parent, w) {
     const hrs = w.ms / 3600000, cap = w.capped;
-    const acts = [{ text: '받았어요', onclick: () => GF.sfx('star') }];
-    if (IDLE.hooks.adAvailable()) acts.push({ text: '광고 보고 2배 받기', cls: 'dong', onclick: () => IDLE.hooks.rewardedAd('offline2x', (ok) => { if (ok) { S.w += w.gained; S.tot += w.gained; save(); } }) });
-    UK.modal({ parent, title: '다녀오셨어요?', body: (hrs >= 1 ? Math.floor(hrs) + '시간 ' + Math.floor((hrs % 1) * 60) + '분' : Math.max(1, Math.floor(w.ms / 60000)) + '분') + ' 동안' + (cap ? ' (최대 8시간)' : '') + ' 식탁이 데워졌어요.', big: '+' + fmt(w.gained) + ' 온기', actions: acts });
+    const acts = [{ text: GF.t('c16.idle.001'), onclick: () => GF.sfx('star') }];
+    if (IDLE.hooks.adAvailable()) acts.push({ text: GF.t('c16.idle.002'), cls: 'dong', onclick: () => IDLE.hooks.rewardedAd('offline2x', (ok) => { if (ok) { S.w += w.gained; S.tot += w.gained; save(); } }) });
+    UK.modal({ parent, title: GF.t('c16.idle.003'), body: (hrs >= 1 ? Math.floor(hrs) + '시간 ' + Math.floor((hrs % 1) * 60) + '분' : Math.max(1, Math.floor(w.ms / 60000)) + '분') + ' 동안' + (cap ? ' (최대 8시간)' : '') + ' 식탁이 데워졌어요.', big: '+' + fmt(w.gained) + ' 온기', actions: acts });
     GF.sfx('celebrate');
   }
 
@@ -235,7 +235,7 @@
           const pn = el('div', 'panel2', special, `<h4>🪑 빈 의자</h4><div class="chairs"></div><p id="dstat"></p>`);
           const ch = $q(pn, '.chairs'); for (let i = 0; i < T.chairs; i++) el('div', 'chair' + (i < S.chairs ? ' on' : ''), ch, i < S.chairs ? '●' : '');
           const avail = invitesAvailable(); const dst = $q(pn, '#dstat');
-          if (avail.length) { const iv = T.invites[avail[0]]; dst.textContent = iv.text; const ab = el('button', 'uk-btn', pn, '초대 받아들이기'); ab.style.cssText += ';position:static;width:100%;background:#3B4A7A;margin-top:6px'; ab.onclick = () => { S.inv.push(avail[0]); S.chairs++; S.l += 20 * S.chairs; GF.sfx('celebrate'); GF.burst(sc, 180, 220, 18); toast('의자 하나가 찼어요. 웃음이 늘었어요'); renderAll(); }; }
+          if (avail.length) { const iv = T.invites[avail[0]]; dst.textContent = iv.text; const ab = el('button', 'uk-btn', pn, GF.t('c16.idle.007')); ab.style.cssText += ';position:static;width:100%;background:#3B4A7A;margin-top:6px'; ab.onclick = () => { S.inv.push(avail[0]); S.chairs++; S.l += 20 * S.chairs; GF.sfx('celebrate'); GF.burst(sc, 180, 220, 18); toast(GF.t('c16.idle.005')); renderAll(); }; }
           else dst.textContent = S.chairs >= T.chairs ? '모두 모였어요. 이제 온기도 웃음도 가득해요.' : '다른 식탁이 풍성해지면 초대장이 와요. (네모네·세모네 식탁을 넓혀 보세요)';
           UI.upd.push(() => {});
         }
@@ -265,7 +265,7 @@
       function answer(o) {
         if (p.ending) S.end = now(); else if (p.season) S.ss[seasonKey(st.id)] = { k: o.k, t: now() }; else S.sd[st.id] = { k: o.k, t: now() };
         const lg = st.reward.laugh; S.l += lg; GF.sfx('celebrate'); const pct = Math.round(dexCount() / B.dexTotal * 100);
-        UK.modal({ parent: r, title: '당신은 ' + FAM[o.k] + ' 쪽이군요', body: B.tables[o.k].tag + '<br>' + (p.ending ? '세 식탁이 큰 한 상에 모였어요.' : p.season ? '올해의 ' + st.season + ' 도장을 찍었어요' : '도감 ' + dexCount() + '/' + B.dexTotal + ' (' + pct + '%)') + (st.stat ? '<br><small>' + st.stat + '</small>' : ''), big: '웃음 +' + lg, actions: [{ text: '식탁으로', onclick: () => GF.back() }] });
+        UK.modal({ parent: r, title: '당신은 ' + FAM[o.k] + ' 쪽이군요', body: B.tables[o.k].tag + '<br>' + (p.ending ? '세 식탁이 큰 한 상에 모였어요.' : p.season ? '올해의 ' + st.season + ' 도장을 찍었어요' : '도감 ' + dexCount() + '/' + B.dexTotal + ' (' + pct + '%)') + (st.stat ? '<br><small>' + st.stat + '</small>' : ''), big: '웃음 +' + lg, actions: [{ text: GF.t('c16.idle.004'), onclick: () => GF.back() }] });
         save();
       }
     },
@@ -281,7 +281,7 @@
       const got = (id) => !!S.sd[ST.stories[id - 1].id], open = (id) => id === 1 || got(id) || S.tot >= B.storyThresholds[id - 1];
       GF.saga.open(sc, { levels: lv, kid: false, noGate: true, hideStars: true, goText: (l) => '이어서 · 사연 ' + l.id, stars: (id) => (got(id) ? 3 : 0), unlocked: open, title: (c) => ['첫 사연들', '이웃 사연', '큰 한 상'][c - 1] || '', 
         lockedMsg: (l) => '온기를 ' + fmt(B.storyThresholds[l.id - 1]) + ' 모으면 열려요', onNode: (l) => { GF.go('istory', { id: ST.stories[l.id - 1].id }); }, onChest: () => GF.go('ihouse'),
-        side: [{ icon: 'home', text: '우리 집', fn: () => GF.go('ihouse') }] });
+        side: [{ icon: 'home', text: GF.t('c16.block.003'), fn: () => GF.go('ihouse') }] });
     },
   });
   GF.screen('idex', {
@@ -305,14 +305,14 @@
       for (let k = 0; k < B.dexTotal; k++) {
         const s = ST.stories[k]; const got = s && S.sd[s.id]; const b = el('button', 'dexc' + (got ? '' : ' off'), g);
         if (s) { if (got) { b.appendChild(GF.img(s.cuts[0].chars[0])); b.insertAdjacentHTML('beforeend', s.title); } else b.textContent = S.tot >= B.storyThresholds[k] ? '새 사연!' : '???'; b.onclick = () => { if (got) { GF.sfx('pick'); GF.go('istory', { id: s.id }); } else if (S.tot >= B.storyThresholds[k]) { GF.sfx('pick'); GF.go('istory', { id: s.id }); } else GF.sfx('hmm'); }; }
-        else b.textContent = '곧 와요';
+        else b.textContent = GF.t('c16.idle.011');
       }
       const set = el('div', 'panel2', list, '<h4>설정</h4>'); const sb = el('button', 'uk-btn', set); sb.style.cssText += ';position:static;width:100%;background:#7A6F84;margin-bottom:8px';
       const sUp = () => { sb.textContent = '소리 ' + (GF.state.settings.mute ? '꺼짐 → 켜기' : '켜짐 → 끄기'); }; sUp();
       sb.onclick = () => { GF.state.settings.mute = !GF.state.settings.mute; GF.Store.save(); GF.bgm.sync(); sUp(); };
-      const rb = el('button', 'uk-btn', set, '처음부터 다시'); rb.style.cssText += ';position:static;width:100%;background:#B04040'; let armed = false;
-      rb.onclick = () => { if (!armed) { armed = true; rb.textContent = '정말요? 한 번 더 누르면 지워져요'; setTimeout(() => { armed = false; rb.textContent = '처음부터 다시'; }, 3000); return; } S = fresh(); save(); GF.stack = []; GF.go('itable'); };
-      el('p', '', set, '버전 0.1 (MVP 1주차) · 기기 안에만 저장돼요').style.cssText = 'font-size:calc(18px * var(--uk-fs-k, 1));color:#5B4F60;margin-top:8px';
+      const rb = el('button', 'uk-btn', set, GF.t('c16.idle.008')); rb.style.cssText += ';position:static;width:100%;background:#B04040'; let armed = false;
+      rb.onclick = () => { if (!armed) { armed = true; rb.textContent = GF.t('c16.idle.012'); setTimeout(() => { armed = false; rb.textContent = GF.t('c16.idle.008'); }, 3000); return; } S = fresh(); save(); GF.stack = []; GF.go('itable'); };
+      el('p', '', set, GF.t('c16.idle.009')).style.cssText = 'font-size:calc(18px * var(--uk-fs-k, 1));color:#5B4F60;margin-top:8px';
     },
   });
 
@@ -383,7 +383,7 @@
       IDLE.hooks.adAvailable = () => GF.ads.eligible();
       IDLE.hooks.rewardedAd = (placement, cb) => { if (!GF.ads.run({ placement, onReward: () => cb && cb(true) })) cb && cb(false); };
       GF.saga.init('idle', GF.data['maps/idle']); GF.tale.init('idle', GF.data.story_idle, { kid: false }); GF.extras.init({ app: 'idle', kid: false, progress: () => Object.keys(S.sd || {}).length, calendar: () => (ST.seasons || []).map((x) => ({ id: x.id, title: x.title, months: x.months, icon: '🍂', done: !!S.ss[seasonKey(x.id)], play: () => GF.go('istory', { id: x.id, season: 1 }) })), rewardSet: 'kitchen', stats: () => [['본 사연', Object.keys(S.sd).length + ' / ' + ST.stories.length], ['식탁 단계', ['nemo', 'semo', 'dong'].map((k) => S.tl[k]).join(' · ')], ['의자', S.chairs]],
-        badges: [{ id: 's1', icon: '📖', name: '첫 사연', desc: '사연 1편', ok: () => Object.keys(S.sd).length >= 1 }, { id: 's10', icon: '📚', name: '열 편', desc: '사연 10편', ok: () => Object.keys(S.sd).length >= 10 }, { id: 's30', icon: '👑', name: '서른 편', desc: '사연을 모두 봤어요', ok: () => Object.keys(S.sd).length >= ST.stories.length }, { id: 'c2', icon: '🪑', name: '의자가 늘었어요', desc: '의자 2개 이상', ok: () => S.chairs >= 2 }],
+        badges: [{ id: 's1', icon: '📖', name: '첫 사연', desc: GF.t('c16.idle.013'), ok: () => Object.keys(S.sd).length >= 1 }, { id: 's10', icon: '📚', name: '열 편', desc: GF.t('c16.idle.014'), ok: () => Object.keys(S.sd).length >= 10 }, { id: 's30', icon: '👑', name: '서른 편', desc: GF.t('c16.idle.015'), ok: () => Object.keys(S.sd).length >= ST.stories.length }, { id: 'c2', icon: '🪑', name: '의자가 늘었어요', desc: GF.t('c16.idle.016'), ok: () => S.chairs >= 2 }],
         resetTips: () => {}, reset: () => { S = fresh(); save(); } });
       if (!B || !ST) return; GF.go('itable');
       setInterval(tick, 250); document.addEventListener('visibilitychange', () => { if (document.hidden) save(); else { const o2 = offline(); if (o2 && o2.gained > 0 && GF.cur.name === 'itable') { UI.welcome = o2; const e = GF.screens.itable.el; e.innerHTML = ''; GF.screens.itable.enter(e); } else if (o2 && o2.gained > 0) UI.welcome = o2; } });

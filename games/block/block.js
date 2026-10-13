@@ -83,7 +83,7 @@
       const rows = D.levels.map((l) => l);
       GF.saga.open(r, { levels: rows, kid: false, stars: (id) => SV.stars[id] || 0, unlocked, title: (c) => D.chapters[c - 1],
         onNode: (l) => GF.go('bplay', { n: l.id }), onGate: (c) => GF.tale.replay(c, r), onChest: () => GF.go('bhouse'),
-        side: [{ icon: 'play', text: '끝없이', fn: () => { GF.sfx('pick'); GF.go('bplay', { level: G.makeEndless(Date.now() % 100000) }); }, badge: best ? String(best) : '' }, { icon: 'heart', text: '세 가족', fn: () => GF.go('btrio') }, { icon: 'home', text: '우리 집', fn: () => GF.go('bhouse') }] });
+        side: [{ icon: 'play', text: GF.t('c16.block.001'), fn: () => { GF.sfx('pick'); GF.go('bplay', { level: G.makeEndless(Date.now() % 100000) }); }, badge: best ? String(best) : '' }, { icon: 'heart', text: GF.t('c16.block.002'), fn: () => GF.go('btrio') }, { icon: 'home', text: GF.t('c16.block.003'), fn: () => GF.go('bhouse') }] });
     },
   });
 
@@ -94,7 +94,7 @@
       r.classList.add('uk', 'bk'); GF.bg('indoor2', r); bar();
       const n = Math.max(6, Math.min(60, (SV.last || 1) + 4)), Ls = trioLevels(n);
       el('div', 'bk-ttl', r, '<div class="uk-title" style="font-size:30px">세 가족 판</div><div class="bk-sub">같은 일, 세 가지 규칙</div>').style.top = '84px';
-      el('div', 'bk-line', r, '모든 조각이 한 가족의 규칙을 따라요. 어느 쪽이 편한가요?').style.top = '172px';
+      el('div', 'bk-line', r, GF.t('c16.block.011')).style.top = '172px';
       const box = el('div', 'bk-trio', r); box.style.top = '226px';
       Ls.forEach((L, i) => { const st = SV.trio[n + ':' + i] || 0, b = UK.btn({ text: RULE_TXT[i][0] + (st ? '  ' + '★'.repeat(st) : ''), cls: RULE_TXT[i][2] + ' block', onclick: () => { if (L) GF.go('bplay', { level: L }); } }, box); el('small', '', b, RULE_TXT[i][1]); });
     },
@@ -114,7 +114,7 @@
       const goals = el('div', 'bk-goals', r), board = el('div', 'bk-board', r), tray = el('div', 'bk-tray', r), tip = el('div', 'uk-caption bk-tip', r), btns = el('div', 'bk-btns2', r);
       const cs = 36, gap = 2, pitch = cs + gap; board.style.width = board.style.height = N * pitch + gap + 'px';
       const cells = []; for (let i = 0; i < 64; i++) { const c = el('button', 'bk-cell', board); c.dataset.i = i; c.style.cssText = `left:${(i % N) * pitch + gap}px;top:${((i / N) | 0) * pitch + gap}px;width:${cs}px;height:${cs}px`; c.setAttribute('aria-label', '칸 ' + (i + 1)); cells.push(c); }
-      const bu = UK.btn({ text: '되돌리기', icon: 'replay', cls: 'ghost sm', onclick: undo }, btns); UK.btn({ text: '힌트', icon: 'info', cls: 'sky sm', onclick: showHint }, btns);
+      const bu = UK.btn({ text: GF.t('c16.block.004'), icon: 'replay', cls: 'ghost sm', onclick: undo }, btns); UK.btn({ text: GF.t('c16.block.005'), icon: 'info', cls: 'sky sm', onclick: showHint }, btns);
       const lbl = { endless: () => `점수 ${endScore(S)} · 최고 ${Math.max((SV.endless || {}).best || 0, endScore(S))}`, lines: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, solo: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, limit: () => `줄 ${Math.min(S.got.lines, LV.goal.n)}/${LV.goal.n}`, combo: () => `한꺼번에 ${S.got.combo}/${LV.goal.n}`, junk: () => `짐 ${M.junkLeft(S)}`, star: () => `별 ${S.got.stars}/${LV.stars.length}`, family: () => `${Math.min(S.got.fam[LV.goal.f], LV.goal.n)}/${LV.goal.n}` };
       function goalChips() {
         goals.innerHTML = ''; const ch = el('div', 'bk-goal' + (M.won(S) ? ' ok' : ''), goals);
@@ -157,14 +157,14 @@
           try { const c = center(cells[ev.cleared[(ev.cleared.length / 2) | 0]]); GF.burst(document.getElementById('safe'), c.x, c.y, 8 + ev.lines * 4); } catch (x) {}
           GF.sfx('ok', { st });
           if (ev.lines >= 2) say('한꺼번에 ' + ev.lines + '줄!'); else if (streak >= 2) say('이어서 ×' + streak);
-          if (ev.bonus) setTimeout(() => say('점 조각을 돌려받았어요'), 400);
-          if (ev.stars) setTimeout(() => { say('별을 모았어요'); GF.sfx('star'); }, 300);
+          if (ev.bonus) setTimeout(() => say(GF.t('c16.block.017')), 400);
+          if (ev.stars) setTimeout(() => { say(GF.t('c16.block.018')); GF.sfx('star'); }, 300);
         } else streak = 0;
         setTimeout(() => { busy = false; draw(); if (M.won(S)) finish(); else if (M.lost(S)) lose(); }, slow(ev.cleared.length ? 480 : 120));
         return true;
       }
-      function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: '되돌리기 1번 더', parent: r, onReward: () => { undone = 0; undo(); } }); }
-      function undo() { if (!hist.length || busy || undone >= GF.polish.cap(1, LV)) { if (undone >= GF.polish.cap(1, LV) && !offerUndo()) say('되돌리기는 한 판에 한 번이에요'); return; } undone++; S = hist.pop(); hint = null; streak = 0; GF.sfx('tap'); draw(); }
+      function offerUndo() { return GF.ads && GF.ads.offer({ placement: 'undo', ask: GF.t('c16.block.012'), parent: r, onReward: () => { undone = 0; undo(); } }); }
+      function undo() { if (!hist.length || busy || undone >= GF.polish.cap(1, LV)) { if (undone >= GF.polish.cap(1, LV) && !offerUndo()) say(GF.t('c16.block.019')); return; } undone++; S = hist.pop(); hint = null; streak = 0; GF.sfx('tap'); draw(); }
       function showHint() {
         if (busy) return;
         // 지금 판 상태에서 이길 수 있는 첫 수를 찾기 어렵다 → 놓을 수 있는 수 중 가장 많이 지우는 수를 보여 준다
@@ -193,10 +193,10 @@
       function result(stars) {
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
         GF.polish && GF.polish.failReset && GF.polish.failReset('block', LV.id || LV.kind);
-        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
+        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: GF.t('c16.block.013'), onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'gift', text: '조각 ' + S.used + '개' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
-        UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('bplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
+        UK.result({ title: GF.t('c16.block.006'), stars, chips, parent: r, onNext: next ? () => GF.replace('bplay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
       }
       function finish() {
         busy = true; GF.extras && GF.extras.resumeClear(); const st = GF.polish.easy(S.used <= LV.s3 ? 3 : S.used <= LV.s2 ? 2 : 1, LV);
@@ -214,7 +214,7 @@
         GF.extras && GF.extras.resumeClear(); if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily');
         if (LV.kind === 'endless') {   // 끝없이: 벌 없음. 점수와 최고 기록만 남기고 한 번 더
           busy = true; const sc = endScore(S), e = SV.endless || (SV.endless = { best: 0, plays: 0 }), isBest = sc > e.best; e.plays++; if (isBest) e.best = sc; save(); GF.extras && GF.extras.check(); const rr = GF.rank && GF.rank.ready ? GF.rank.record('endless', sc) : null; if (rr) setTimeout(() => GF.rank.announce(rr, r), slow(1500)); GF.sfx(isBest ? 'star' : 'hmm');
-          setTimeout(() => { const m = UK.modal({ title: isBest ? '새 최고 기록!' : '끝!', big: String(sc), chips: [{ icon: 'star', text: '최고 ' + e.best }, { icon: 'gift', text: '조각 ' + S.used + '개' }, { icon: 'info', text: '지운 줄 ' + S.got.lines }], parent: r, actions: [{ text: '한 번 더', cls: 'green', icon: 'replay', onclick: () => GF.replace('bplay', { level: G.makeEndless(Date.now() % 100000) }) }, { text: '순위표', cls: 'sky', icon: 'star', keep: true, onclick: () => GF.rank.open('endless') }, { text: '처음으로', cls: 'ghost', icon: 'home', onclick: () => GF.home2() }] }); UK.confetti(m); }, slow(500)); return;
+          setTimeout(() => { const m = UK.modal({ title: isBest ? '새 최고 기록!' : '끝!', big: String(sc), chips: [{ icon: 'star', text: '최고 ' + e.best }, { icon: 'gift', text: '조각 ' + S.used + '개' }, { icon: 'info', text: '지운 줄 ' + S.got.lines }], parent: r, actions: [{ text: GF.t('c16.block.007'), cls: 'green', icon: 'replay', onclick: () => GF.replace('bplay', { level: G.makeEndless(Date.now() % 100000) }) }, { text: GF.t('c16.block.008'), cls: 'sky', icon: 'star', keep: true, onclick: () => GF.rank.open('endless') }, { text: GF.t('c16.block.009'), cls: 'ghost', icon: 'home', onclick: () => GF.home2() }] }); UK.confetti(m); }, slow(500)); return;
         }
         busy = true; const retry = () => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), why = LV.lim != null && S.used >= LV.lim ? '조각을 다 썼어요!' : '놓을 자리가 없어요!', rem = LV.goal && LV.goal.t === 'lines' ? Math.max(0, LV.goal.n - (S.got.lines || 0)) : 0; if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'block', id: LV.id || LV.kind, near: why + (rem ? ' 목표까지 ' + rem + '줄!' : ''), hint: true, onRetry: retry }); else { say(why + ' 한 번 더'); GF.sfx('hmm'); setTimeout(retry, slow(900)); } }
       BK.debug.lose = () => lose(); BK.debug.adOffer = () => offerUndo(); BK.debug.cells = () => cells; BK.debug.endScore = () => endScore(S); BK.debug.place = (slot, r0, c0) => doPlace(slot, r0, c0); BK.debug.state = () => S; BK.debug.level = () => LV; BK.debug.undo = undo; BK.debug.hint = showHint; BK.debug.busy = () => busy; BK.debug.drag = dragStart;
@@ -242,10 +242,10 @@
       D = GF.data.block_levels; X = GF.data.block_extra; GF.saga.init('block', GF.data['maps/block']); GF.tale.init('block', GF.data.story_block, { kid: false });
       Room.init({ home: () => GF.go('blevels'), openHouse: () => GF.go('bhouse'), housing: GF.data.housing, app: 'block', data: GF.data.room_items, game: 'block', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'block', boards: {
-        daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { const r = M.botPlay(L, rng, eps, rule); return { won: r.won, score: GF.rank.eff({ par: L.par, actions: r.used, tools: 0, attempts: 1 }) }; } },
-        endless: { title: '끝없이', levelAt: null, bot: (L, rule, rng, eps, date) => { const E = G.makeEndless(date % 100000); if (rule === 0) E.lim = 60 + ((rng() * 30) | 0); else if (rule === 2) E.lim = 120 + ((rng() * 40) | 0);   // 네모는 꾸준히 중간쯤에서, 동그라미는 오래, 세모는 한계 없이(들쭉날쭉)
+        daily: { title: GF.t('c16.block.010'), levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { const r = M.botPlay(L, rng, eps, rule); return { won: r.won, score: GF.rank.eff({ par: L.par, actions: r.used, tools: 0, attempts: 1 }) }; } },
+        endless: { title: GF.t('c16.block.001'), levelAt: null, bot: (L, rule, rng, eps, date) => { const E = G.makeEndless(date % 100000); if (rule === 0) E.lim = 60 + ((rng() * 30) | 0); else if (rule === 2) E.lim = 120 + ((rng() * 40) | 0);   // 네모는 꾸준히 중간쯤에서, 동그라미는 오래, 세모는 한계 없이(들쭉날쭉)
           const r = M.botPlay(E, rng, eps, rule); return { won: true, score: r.lines * 10 + r.combo * 10 + r.used }; } } } });
-      GF.extras.init(Object.assign({ app: 'block', kid: false, calendar: () => X.seasons.map((s) => ({ id: s.id, title: s.title, months: s.months, icon: '📅', done: !!SV.seasonDone[seasonKey(s)], play: () => { const L = seasonLevel(s); if (L) GF.go('bplay', { level: L }); } })), rewardSet: 'outer', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, (() => { const la = GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'outer', itemTotal: 20, icon: '🧱' }); const st = la.stats; la.stats = () => st().concat([['끝없이 최고', (SV.endless || {}).best || 0]]); la.badges.push({ id: 'e100', icon: '♾️', name: '끝없이 100점', desc: '끝없이 모드에서 100점', ok: () => ((SV.endless || {}).best || 0) >= 100 }, { id: 'e300', icon: '🚀', name: '끝없이 300점', desc: '끝없이 모드에서 300점', ok: () => ((SV.endless || {}).best || 0) >= 300 }); return la; })()));
+      GF.extras.init(Object.assign({ app: 'block', kid: false, calendar: () => X.seasons.map((s) => ({ id: s.id, title: s.title, months: s.months, icon: '📅', done: !!SV.seasonDone[seasonKey(s)], play: () => { const L = seasonLevel(s); if (L) GF.go('bplay', { level: L }); } })), rewardSet: 'outer', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, (() => { const la = GF.extras.levelApp({ SV: () => SV, total: 120, roomSet: 'outer', itemTotal: 20, icon: '🧱' }); const st = la.stats; la.stats = () => st().concat([['끝없이 최고', (SV.endless || {}).best || 0]]); la.badges.push({ id: 'e100', icon: '♾️', name: '끝없이 100점', desc: GF.t('c16.block.015'), ok: () => ((SV.endless || {}).best || 0) >= 100 }, { id: 'e300', icon: '🚀', name: '끝없이 300점', desc: GF.t('c16.block.016'), ok: () => ((SV.endless || {}).best || 0) >= 300 }); return la; })()));
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('bhome');
       BK.debug.D = () => D; BK.debug.endless = (seed) => G.makeEndless(seed); BK.debug.SV = () => SV; BK.debug.reset = () => { SV = blank(); save(); }; BK.debug.dailyLevel = dailyLevel; BK.debug.seasonLevel = seasonLevel; BK.debug.trioLevels = trioLevels; BK.debug.X = () => X; BK.debug.REW = REW;
     } }, opts || {}));

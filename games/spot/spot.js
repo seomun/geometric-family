@@ -97,7 +97,7 @@
       r.classList.add('uk', 'sp'); GF.bg('indoor', r); bar(); GF.extras.retryBanner(el('div', 'sg-banner', r), SV.stars, (n) => GF.go('pplay', { n }));
       GF.saga.open(r, { levels: D.levels, kid: false, stars: (id) => SV.stars[id] || 0, unlocked, title: (c) => D.chapters[c - 1],
         onNode: (l) => GF.go('pplay', { n: l.id }), onGate: (c) => GF.tale.replay(c, r), onChest: () => GF.go('phouse'),
-        side: [{ icon: 'heart', text: '세 가족', fn: () => GF.go('ptrio') }, { icon: 'home', text: '우리 집', fn: () => GF.go('phouse') }] });
+        side: [{ icon: 'heart', text: GF.t('c16.block.002'), fn: () => GF.go('ptrio') }, { icon: 'home', text: GF.t('c16.block.003'), fn: () => GF.go('phouse') }] });
     },
   });
   GF.screen('ptrio', {
@@ -105,7 +105,7 @@
     enter(r) {
       r.classList.add('uk', 'sp'); GF.bg('indoor2', r); bar(); const n = Math.max(6, Math.min(60, (SV.last || 1) + 4)), Ls = trioLevels(n);
       el('div', 'sp-ttl', r, '<div class="uk-title" style="font-size:30px">세 가족 판</div><div class="sp-sub">같은 그림, 세 가지 규칙</div>').style.top = '84px';
-      el('div', 'sp-line', r, '모든 판이 한 가족의 규칙을 따라요. 어느 쪽이 편한가요?').style.top = '172px';
+      el('div', 'sp-line', r, GF.t('c16.sort.004')).style.top = '172px';
       const box = el('div', 'sp-trio', r); box.style.top = '226px';
       Ls.forEach((L, i) => { const st = SV.trio[n + ':' + i] || 0, b = UK.btn({ text: RULE_TXT[i][0] + (st ? '  ' + '★'.repeat(st) : ''), cls: RULE_TXT[i][2] + ' block', onclick: () => { if (L) GF.go('pplay', { level: L }); } }, box); el('small', '', b, RULE_TXT[i][1]); });
     },
@@ -123,7 +123,7 @@
       const goals = el('div', 'sp-goals', r), area = el('div', 'sp-area', r), btns = el('div', 'sp-btns2', r), tip = el('div', 'sp-tip', r);
       let ri = 0, found = LV.rounds.map((R) => R.diffs.map(() => false)), wrong = 0, hints = 0, busy = false, phase = LV.type === 'memory' ? 'study' : 'find', zoomed = LV.type === 'zoom', hintIdx = -1, total = 0;
       const R0 = () => LV.rounds[ri], foundN = () => found.flat().filter(Boolean).length;
-      const hb = UK.btn({ text: '힌트', icon: 'info', cls: 'sky sm', onclick: hint }, btns), sb = LV.type === 'memory' ? UK.btn({ text: '원본 보기', icon: 'replay', cls: 'ghost sm', onclick: peek }, btns) : LV.type === 'zoom' ? UK.btn({ text: '확대/원래', icon: 'shapes', cls: 'ghost sm', onclick: () => { zoomed = !zoomed; GF.sfx('tap'); draw(); } }, btns) : null; void sb;
+      const hb = UK.btn({ text: GF.t('c16.block.005'), icon: 'info', cls: 'sky sm', onclick: hint }, btns), sb = LV.type === 'memory' ? UK.btn({ text: GF.t('c16.spot.001'), icon: 'replay', cls: 'ghost sm', onclick: peek }, btns) : LV.type === 'zoom' ? UK.btn({ text: GF.t('c16.spot.002'), icon: 'shapes', cls: 'ghost sm', onclick: () => { zoomed = !zoomed; GF.sfx('tap'); draw(); } }, btns) : null; void sb;
       function goalChips() {
         goals.innerHTML = ''; const ch = el('div', 'sp-goal' + (foundN() >= LV.goalN ? ' ok' : ''), goals);
         if (LV.type !== 'hidden') { const dots = el('span', 'sp-dots', ch); for (let i = 0; i < LV.goalN; i++) el('i', i < foundN() ? 'on' : '', dots); }
@@ -146,7 +146,7 @@
         if (LV.type === 'odd') pic(R, R.B, null, null);
         else if (LV.type === 'hidden') { pic(R, R.B, null, null); const names = el('div', 'sp-names', area); LV.targets.forEach((nm, i) => { const c = el('b', found[0][i] ? 'on' : '', names); c.innerHTML = `<svg viewBox="-26 -26 52 52" width="22" height="22">${(DECO[LV.targetIcons[i]] || DECO.star)({ c: '#C98F5A' })}</svg><span>${nm}</span>`; }); }
         else if (LV.type === 'memory') {
-          if (phase === 'study') { pic(R, R.A, '원본', null); const w = pic(R, R.B, null, '<div class="sp-covtxt">위 그림을 잘 보고<br>준비되면 눌러요</div>'); const b = UK.btn({ text: '다 봤어요', icon: 'play', cls: 'block', onclick: () => { phase = 'find'; GF.sfx('pick'); draw(); } }, w.querySelector('.sp-cov')); b.style.marginTop = '8px'; }
+          if (phase === 'study') { pic(R, R.A, '원본', null); const w = pic(R, R.B, null, '<div class="sp-covtxt">위 그림을 잘 보고<br>준비되면 눌러요</div>'); const b = UK.btn({ text: GF.t('c16.spot.003'), icon: 'play', cls: 'block', onclick: () => { phase = 'find'; GF.sfx('pick'); draw(); } }, w.querySelector('.sp-cov')); b.style.marginTop = '8px'; }
           else { pic(R, R.A, null, '<div class="sp-covtxt">원본은 가렸어요</div>'); pic(R, R.B, null, null); }
         } else { pic(R, R.A, LV.type === 'three' ? '네모네' : null, null); pic(R, R.B, LV.type === 'three' ? '세모네' : null, null); }
         hb.style.opacity = phase === 'find' ? 1 : 0.4;
@@ -164,11 +164,11 @@
       }
       function result(stars) {
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
-        if (!LV.kind && hints > 0 && stars < 3 && GF.ads) GF.ads.resultHook = { placement: 'hint2', ask: '힌트 쓴 것 지우기', sub: '별을 다시 세어요', onReward: () => { const st2 = C.stars(0, wrong); if (st2 > (SV.stars[LV.id] || 0)) { SV.stars[LV.id] = st2; save(); GF.refreshBar(); } } };
-        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
+        if (!LV.kind && hints > 0 && stars < 3 && GF.ads) GF.ads.resultHook = { placement: 'hint2', ask: GF.t('c16.spot.005'), sub: GF.t('c16.spot.004'), onReward: () => { const st2 = C.stars(0, wrong); if (st2 > (SV.stars[LV.id] || 0)) { SV.stars[LV.id] = st2; save(); GF.refreshBar(); } } };
+        if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: GF.t('c16.block.013'), onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '힌트 ' + hints }, { icon: 'gift', text: '틀린 탭 ' + wrong }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
-        UK.result({ title: '클리어!', stars, chips, parent: r, onNext: next ? () => GF.replace('pplay', { n: next.id }) : null, nextText: '다음 레벨', onRetry: () => GF.replace('pplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: '다시', onHome: () => GF.home2(), homeText: '처음으로' });
+        UK.result({ title: GF.t('c16.block.006'), stars, chips, parent: r, onNext: next ? () => GF.replace('pplay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('pplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
       }
       const gained = []; let rankRes = null;
       function finish() {
@@ -200,7 +200,7 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'spot_levels', 'spot_extra', 'story_spot', 'maps/spot', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:spot:ui:v1', async start() {
       D = GF.data.spot_levels; X = GF.data.spot_extra; GF.saga.init('spot', GF.data['maps/spot']); GF.tale.init('spot', GF.data.story_spot, { kid: false });
       Room.init({ home: () => GF.go('plevels'), openHouse: () => GF.go('phouse'), housing: GF.data.housing, app: 'spot', data: GF.data.room_items, game: 'spot', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
-      GF.rank.init({ app: 'spot', boards: { daily: { title: '오늘의 한 판', levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, fam, rng, eps) => {   // 틀린 그림은 칸 상태가 없는 퍼즐이라 가족 맛으로 만든 모델(틀린 탭·힌트 수)
+      GF.rank.init({ app: 'spot', boards: { daily: { title: GF.t('c16.block.010'), levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, fam, rng, eps) => {   // 틀린 그림은 칸 상태가 없는 퍼즐이라 가족 맛으로 만든 모델(틀린 탭·힌트 수)
           let wrong, hints; if (fam === 0) { wrong = 1 + ((rng() * 4) | 0); hints = rng() < 0.4 ? 1 : 0; } else if (fam === 1) { if (eps < 0.2) { wrong = (rng() * 2) | 0; hints = 0; } else { wrong = 5 + ((rng() * 6) | 0); hints = 1 + ((rng() * 3) | 0); } } else { wrong = (rng() * 3) | 0; hints = 0; }
           return { won: true, score: GF.rank.eff({ par: L.goalN, actions: L.goalN + wrong, tools: hints, attempts: 1 }) }; } } } });
       GF.extras.init(Object.assign({ app: 'spot', kid: false, calendar: () => X.seasons.map((s) => ({ id: s.id, title: s.title, months: s.months, icon: '📅', done: !!SV.seasonDone[seasonKey(s)], play: () => { const L = seasonLevel(s); if (L) GF.go('pplay', { level: L }); } })), rewardSet: 'photo', resetTips: () => { SV.tips = {}; SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } }, GF.extras.levelApp({ SV: () => SV, total: 140, roomSet: 'photo', itemTotal: 20, icon: '🔍' })));

@@ -28,7 +28,7 @@
       const id = ++A._id; A._cb[id] = done; const n = A.native();
       if (n) { try { n.show(kind, id, placement || ''); } catch (e) { A._event(id, 'fail'); } return; }
       // JS 테스트 광고(네이티브 없음): 흐름 시험용 팝업
-      const m = UK.modal({ parent: document.getElementById('safe'), title: '테스트 광고', body: '실제 광고가 나올 자리예요(개발용)', actions: [{ text: '끝까지 보기', cls: 'green', onclick: () => A._event(id, 'reward') }, { text: GF.t('common.close'), cls: 'ghost', onclick: () => A._event(id, 'close') }], dismiss: false });
+      const m = UK.modal({ parent: document.getElementById('safe'), title: GF.t('c16.ads.001'), body: '실제 광고가 나올 자리예요(개발용)', actions: [{ text: GF.t('c16.ads.002'), cls: 'green', onclick: () => A._event(id, 'reward') }, { text: GF.t('common.close'), cls: 'ghost', onclick: () => A._event(id, 'close') }], dismiss: false });
       m.dataset.adtest = '1';
     },
     _event(id, ev) { const cb = A._cb[id]; if (!cb) return; delete A._cb[id]; cb(ev); },
@@ -90,7 +90,7 @@
       on = !!on && A.config.banner && A.live() && !A.config.adFree; if (on === A._banner) return; A._banner = on;   // 광고 제거 구매자는 배너 없음
       const n = A.native(); if (n && typeof n.banner === 'function') { try { n.banner(on); } catch (e) {} return; }
       let d = document.getElementById('gf-adbanner');   // JS 시험 배너(?ads=1)
-      if (on && !d) { d = document.createElement('div'); d.id = 'gf-adbanner'; d.textContent = '배너 광고 자리(테스트)'; d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;height:50px;background:#ddd;color:#555;font:12px sans-serif;text-align:center;line-height:50px;z-index:5;pointer-events:none'; document.body.appendChild(d); }
+      if (on && !d) { d = document.createElement('div'); d.id = 'gf-adbanner'; d.textContent = GF.t('c16.ads.003'); d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;height:50px;background:#ddd;color:#555;font:12px sans-serif;text-align:center;line-height:50px;z-index:5;pointer-events:none'; document.body.appendChild(d); }
       if (d) d.style.display = on ? 'block' : 'none';
     },
   });

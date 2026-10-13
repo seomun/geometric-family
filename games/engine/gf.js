@@ -791,10 +791,10 @@
       rg.oninput = () => { s.vol = +rg.value; Store.save(); GF.bgm.sync(); GF.sfx('tap'); };
       const l2 = el('div', 'line', pn, '<span>자막 보기</span>'), b2 = el('button', 't', l2, !s.capOff ? '켜짐' : '꺼짐');
       b2.onclick = () => { s.capOff = !s.capOff; b2.textContent = !s.capOff ? '켜짐' : '꺼짐'; Store.save(); };
-      const l3 = el('div', 'line', pn, '<span>진행 지우기</span>'), b3 = el('button', 't', l3, '지우기'); let armed = false;
-      b3.onclick = () => { if (!armed) { armed = true; b3.textContent = '한 번 더'; return; } Store.reset(); Gate.close(); GF.home(); };
-      el('small', '', pn, '이 앱은 이름·사진·위치·기기 정보를 수집하지 않고, 광고와 결제가 없으며, 인터넷에 연결하지 않습니다. 진행 기록은 이 기기 안에만 저장됩니다.');
-      const c = el('div', 'line', pn); const cb = el('button', 't', c, '닫기'); cb.onclick = Gate.close;
+      const l3 = el('div', 'line', pn, '<span>진행 지우기</span>'), b3 = el('button', 't', l3, GF.t('c16.color.002')); let armed = false;
+      b3.onclick = () => { if (!armed) { armed = true; b3.textContent = GF.t('c16.block.007'); return; } Store.reset(); Gate.close(); GF.home(); };
+      el('small', '', pn, GF.t('c16.gf.001'));
+      const c = el('div', 'line', pn); const cb = el('button', 't', c, GF.t('c16.gf.002')); cb.onclick = Gate.close;
     },
   };
   GF.gate = (cb) => Gate.ask(cb);                   // 다른 화면(가족 집·코드 입력)도 같은 잠금을 쓴다

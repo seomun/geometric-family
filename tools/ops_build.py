@@ -168,6 +168,8 @@ STR.update({'ops.cam.title': '카메오 도감', 'ops.cam.card': '지나가던 �
 SHAPE_WHO = {'nemo': [['nemo_dad.joy'], ['nemo_mom.joy'], ['baby.joy']], 'semo': [['husband.joy'], ['wife.joy'], ['husband.love', 'wife.love']], 'dong': [['dong_dad.joy'], [], []]}      # 결과형 이름의 인물(그림이 없는 형은 빈 목록 → 카드는 도형 얼굴). 카드 이름과 그림 인물이 어긋나지 않게(D8)
 _EN = json.load(open('data/i18n/en.json', encoding='utf-8'))['strings'] if (R / 'data/i18n/en.json').exists() else {}   # 영어 틀(C15): 키는 STR 과 같아야 한다
 assert set(_EN) <= set(STR), ('영어 사전에 없는 한국어 키', sorted(set(_EN) - set(STR))[:5])
+import os as _os
+if _os.path.exists('tools/i18n_c16.json'): STR.update(json.load(open('tools/i18n_c16.json', encoding='utf-8')))   # 다국어 추출 1단계(C16): tools/i18n_extract.py 산출
 STR_EN = {k: _EN.get(k, '') for k in STR}
 D = dict(version=1, note='[제안] 운영 공통 층 데이터. tools/ops_build.py 로 생성.', supportEmail='', webtoonUrl='https://blog.naver.com/gihahakf', privacyUrl='', credits=CREDITS, strings=STR, strings_en=STR_EN, shapeWho=SHAPE_WHO, news=NEWS, faq=FAQ, tales={k: dict(title=v[0], icon=v[1]) for k, v in TALES.items()}, apps=APPS_G, appNames=APP_NAMES, cardMap=card_map(), stamps=stamp_rules(), playTale={str(k): v for k, v in PLAY_TALE.items()}, cameos=cameos(), weekThemes=week_themes())
 if __name__ == '__main__':

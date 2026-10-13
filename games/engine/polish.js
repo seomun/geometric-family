@@ -100,9 +100,9 @@
     const key = o.app + ':' + (o.id == null ? '' : o.id), n = (FAILS[key] = (FAILS[key] || 0) + 1), easyOffer = n >= 3 && !P.assist();
     const lines = []; if (o.near) lines.push('<b>' + o.near + '</b>'); lines.push(n === 1 ? '조금만 더 하면 돼요!' : n === 2 ? (o.hint ? '막히면 💡 힌트를 눌러 보세요.' : '천천히 해도 괜찮아요.') : '여러 번 해 봤네요! 쉬운 모드는 되돌리기·섞기가 무제한이에요.');
     let done = false; const go = () => { if (done) return; done = true; sc.close ? sc.close() : sc.remove(); again(); };
-    const acts = [{ text: '한 번 더', cls: 'green', icon: 'replay', onclick: go }];
-    if (easyOffer) acts.push({ text: '쉬운 모드로 한 번 더', cls: 'sky', onclick: () => { GF.state.settings.assist = 1; GF.save && GF.save(); GF.sfx && GF.sfx('ok'); go(); } });
-    const sc = UK.modal({ title: '아깝다!', body: lines.join('<br>'), actions: acts, parent, dismiss: false }); GF.sfx && GF.sfx('hmm');
+    const acts = [{ text: GF.t('c16.block.007'), cls: 'green', icon: 'replay', onclick: go }];
+    if (easyOffer) acts.push({ text: GF.t('c16.polish.001'), cls: 'sky', onclick: () => { GF.state.settings.assist = 1; GF.save && GF.save(); GF.sfx && GF.sfx('ok'); go(); } });
+    const sc = UK.modal({ title: GF.t('c16.polish.002'), body: lines.join('<br>'), actions: acts, parent, dismiss: false }); GF.sfx && GF.sfx('hmm');
     sc.classList.add('pol-fail');      // 카드는 아래쪽에 — 멈춘 판(위)을 보면서 「목표까지 N줄」을 듣는다
     if (!easyOffer && n < 3) { const bar = el('div', 'pol-failbar', sc.querySelector('.uk-sheet') || sc); bar.innerHTML = '<i></i>'; setTimeout(go, 2300); }
     return sc;

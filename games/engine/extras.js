@@ -87,8 +87,8 @@
     for (let d = 1; d <= last; d++) { const on = s.days.includes(y * 10000 + (m + 1) * 100 + d); el('i', 'd' + (on ? ' on' : '') + (d === now.getDate() ? ' today' : ''), cal, on ? '⭐' : String(d)); }
     const total = s.days.length, earnedN = Math.floor(total / 5), can = earnedN > s.claimed, it = nextItem();
     el('p', 'xt-p', body, '도장 ' + total + '개 · 5개마다 집 소품 1개. 쉬어도 도장은 그대로예요.');
-    if (it) { const ri = Room.item(it); const b = el('button', 'xt-claim' + (can ? ' on' : ''), body, can ? '🎁 ' + (ri ? ri.name : '소품') + ' 받기' : '다음 소품까지 ' + (5 - (total % 5)) + '개'); b.disabled = !can; b.onclick = () => { if (!can) return; if (Room.grant(it)) { s.claimed++; save(s); GF.sfx('star'); b.textContent = '받았어요!'; b.disabled = true; GF.refreshBar && GF.refreshBar(); } }; }
-    else el('p', 'xt-p', body, '이 앱의 소품을 모두 모았어요.');
+    if (it) { const ri = Room.item(it); const b = el('button', 'xt-claim' + (can ? ' on' : ''), body, can ? '🎁 ' + (ri ? ri.name : '소품') + ' 받기' : '다음 소품까지 ' + (5 - (total % 5)) + '개'); b.disabled = !can; b.onclick = () => { if (!can) return; if (Room.grant(it)) { s.claimed++; save(s); GF.sfx('star'); b.textContent = GF.t('c16.extras.002'); b.disabled = true; GF.refreshBar && GF.refreshBar(); } }; }
+    else el('p', 'xt-p', body, GF.t('c16.extras.001'));
   }
 
   /* ---------------- 쉬어요 알림(유아, 보호자가 정함) ---------------- */
@@ -143,16 +143,16 @@
       progress: done,
       stats: () => [['깬 판', done() + ' / ' + o.total], ['별', sum() + ' / ' + o.total * 3], ['별 3개 판', full()], ['집 소품', items() + ' / ' + o.itemTotal], ['오늘의 한 판 도장', (SV().shards || 0)], ['세 가족 판', Object.keys(SV().trio || {}).length + ' / 3']],
       badges: [
-        { id: 'p1', icon: o.icon || '🌟', name: '첫 걸음', desc: '첫 판을 깼어요', ok: () => done() >= 1 },
-        { id: 'p10', icon: '🎈', name: '열 판', desc: '10판을 깼어요', ok: () => done() >= 10 },
-        { id: 'p30', icon: '🎀', name: '서른 판', desc: '30판을 깼어요', ok: () => done() >= 30 },
-        { id: 'p60', icon: '🏅', name: '예순 판', desc: '60판을 깼어요', ok: () => done() >= 60 },
+        { id: 'p1', icon: o.icon || '🌟', name: '첫 걸음', desc: GF.t('c16.extras.003'), ok: () => done() >= 1 },
+        { id: 'p10', icon: '🎈', name: '열 판', desc: GF.t('c16.extras.004'), ok: () => done() >= 10 },
+        { id: 'p30', icon: '🎀', name: '서른 판', desc: GF.t('c16.extras.005'), ok: () => done() >= 30 },
+        { id: 'p60', icon: '🏅', name: '예순 판', desc: GF.t('c16.extras.006'), ok: () => done() >= 60 },
         { id: 'p120', icon: '👑', name: '끝까지', desc: o.total + '판을 모두 깼어요', ok: () => done() >= o.total },
-        { id: 's3', icon: '⭐', name: '별 세 개', desc: '별 3개 판이 10개예요', ok: () => full() >= 10 },
-        { id: 'r10', icon: '🏠', name: '집이 북적', desc: '집 소품 10개', ok: () => items() >= 10 },
-        { id: 'r20', icon: '🛋️', name: '세트 완성', desc: '이 앱의 집 소품을 모두 모았어요', ok: () => items() >= o.itemTotal },
-        { id: 'd1', icon: '📅', name: '오늘의 한 판', desc: '오늘의 한 판을 깼어요', ok: () => (SV().shards || 0) >= 1 },
-        { id: 'tr', icon: '💞', name: '세 가족', desc: '세 가족 규칙 판을 모두 깼어요', ok: () => Object.keys(SV().trio || {}).length >= 3 },
+        { id: 's3', icon: '⭐', name: '별 세 개', desc: GF.t('c16.extras.007'), ok: () => full() >= 10 },
+        { id: 'r10', icon: '🏠', name: '집이 북적', desc: GF.t('c16.extras.008'), ok: () => items() >= 10 },
+        { id: 'r20', icon: '🛋️', name: '세트 완성', desc: GF.t('c16.extras.009'), ok: () => items() >= o.itemTotal },
+        { id: 'd1', icon: '📅', name: '오늘의 한 판', desc: GF.t('c16.extras.010'), ok: () => (SV().shards || 0) >= 1 },
+        { id: 'tr', icon: '💞', name: '세 가족', desc: GF.t('c16.extras.011'), ok: () => Object.keys(SV().trio || {}).length >= 3 },
       ],
     };
   };

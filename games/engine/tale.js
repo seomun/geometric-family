@@ -121,7 +121,7 @@
   T.help = function () {
     if (!T.ready || !T.d.rules) return; const sc = UK.modal({ parent: safe(), title: GF.t('ui.set.rules'), dismiss: true }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet'); const body = el('div', 'tale-help', sh);
     Object.keys(T.d.rules).forEach((k) => { const r = T.d.rules[k], d = el('div', 'tale-hr', body); el('span', 'ic', d, r.icon || '•'); const t = el('div', 'tx', d); el('b', '', t, r.title); el('small', '', t, r.text); });
-    const a = el('div', 'acts row', sh); UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.close() }, a);
+    const a = el('div', 'acts row', sh); UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.close() }, a);
   };
   /* ---------------- 레벨 앱 공통 연결 ---------------- */
   const idxOf = (LV, per) => LV.idx || ((LV.id - 1) % per) + 1;

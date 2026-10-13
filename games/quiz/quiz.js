@@ -49,8 +49,8 @@
       if (!doneN()) setTimeout(() => { if (go.isConnected) UK.finger(r, go); }, 900);
       const g = el('div', 'qz-grid', r), b = (t, icon, cls, fn) => UK.btn({ text: t, icon, cls, onclick: fn }, g);
       b('테스트 ' + doneN() + '/' + D.tests.length, 'star', 'gold', () => GF.go('qtests')); b('미니게임', 'play', 'sky', () => GF.go('qgames'));
-      b('내 도형 카드', 'heart', 'pink', () => { if (m) GF.go('qcard'); else { GF.sfx('hmm'); UK.toast('테스트를 하나 끝내면 카드가 생겨요', r); } }); b('우리 집', 'home', 'dong', () => GF.go('qhouse'));
-      el('div', 'qz-foot', r, '결과는 이 기기에만 저장돼요');
+      b('내 도형 카드', 'heart', 'pink', () => { if (m) GF.go('qcard'); else { GF.sfx('hmm'); UK.toast(GF.t('c16.quiz.007'), r); } }); b('우리 집', 'home', 'dong', () => GF.go('qhouse'));
+      el('div', 'qz-foot', r, GF.t('c16.quiz.010'));
     },
   });
 
@@ -61,7 +61,7 @@
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r);
       const lv = D.tests.map((t, k) => ({ id: k + 1, chapter: Math.floor(k / 10) + 1, type: 'test', label: t.title + (t.season ? ' · 시즌' : t.kind === 'tale' ? ' · 동화' : '') }));
       GF.saga.open(r, { levels: lv, kid: false, noGate: true, hideStars: true, goText: (l) => '이어서 · 테스트 ' + l.id, stars: (id) => (SV.res[D.tests[id - 1].id] ? 3 : 0), unlocked: () => true, title: (c) => ['도형 테스트', '도형 테스트 · 동화·시즌'][c - 1] || '',
-        onNode: (l) => GF.go('qplay', { id: D.tests[l.id - 1].id }), onChest: () => GF.go('qhouse'), side: [{ icon: 'home', text: '우리 집', fn: () => GF.go('qhouse') }] });
+        onNode: (l) => GF.go('qplay', { id: D.tests[l.id - 1].id }), onChest: () => GF.go('qhouse'), side: [{ icon: 'home', text: GF.t('c16.block.003'), fn: () => GF.go('qhouse') }] });
     },
   });
 
@@ -95,10 +95,10 @@
       const box = el('div', 'qz-card', r), im = el('img', '', box); im.src = uri(cardSVG(res, t.title));
       const txt = el('div', 'qz-res', r, `<p>${S.plus}</p><p class="st">${S.step}</p>` + (p.first ? '<p class="hang">문패와 배지가 집에 걸렸어요</p>' : ''));
       const acts = el('div', 'qz-acts', r);
-      UK.btn({ text: '이미지 저장', icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, t.title); GF.sfx('star'); UK.toast('이미지로 저장했어요', r); } catch (e) { GF.sfx('hmm'); UK.toast('저장하지 못했어요', r); } } }, acts);
-      UK.btn({ text: '집에 걸기', icon: 'home', cls: 'dong', onclick: () => GF.go('qhouse') }, acts);
+      UK.btn({ text: GF.t('c16.quiz.001'), icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, t.title); GF.sfx('star'); UK.toast(GF.t('c16.quiz.008'), r); } catch (e) { GF.sfx('hmm'); UK.toast(GF.t('c16.quiz.009'), r); } } }, acts);
+      UK.btn({ text: GF.t('c16.quiz.002'), icon: 'home', cls: 'dong', onclick: () => GF.go('qhouse') }, acts);
       const stk = () => GF.ads && GF.ads.run({ placement: 'cardsticker', onReward: () => { res.stk = 1; save(); im.src = uri(cardSVG(res, t.title)); GF.sfx('star'); } });
-      if (!res.stk && GF.ads && GF.ads.eligible()) { const sb = UK.btn({ text: '광고 보고 카드에 스티커', icon: 'star', cls: 'sky ad', onclick: () => { stk(); sb.style.display = 'none'; } }, acts); }
+      if (!res.stk && GF.ads && GF.ads.eligible()) { const sb = UK.btn({ text: GF.t('c16.quiz.003'), icon: 'star', cls: 'sky ad', onclick: () => { stk(); sb.style.display = 'none'; } }, acts); }
       QZ.debug.adCard = stk;
     },
   });
@@ -108,7 +108,7 @@
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r); const m = me(), rs = Object.values(SV.res), cnt = { nemo: 0, semo: 0, dong: 0 }; rs.forEach((x) => FAMS.forEach((f) => { cnt[f] += x.cnt[f]; }));
       const res = { f: m.f, s: m.s, cnt }; const box = el('div', 'qz-card', r), im = el('img', '', box); im.src = uri(cardSVG(res, '내 도형 · 테스트 ' + rs.length + '개'));
       el('div', 'qz-res', r, `<p>${tsub(m.f, m.s).plus}</p><p class="st">${tsub(m.f, m.s).step}</p>`);
-      const acts = el('div', 'qz-acts', r); UK.btn({ text: '이미지 저장', icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, '내 도형'); GF.sfx('star'); UK.toast('이미지로 저장했어요', r); } catch (e) { GF.sfx('hmm'); } } }, acts); UK.btn({ text: '다른 테스트', icon: 'star', cls: 'sky', onclick: () => GF.go('qtests') }, acts);
+      const acts = el('div', 'qz-acts', r); UK.btn({ text: GF.t('c16.quiz.001'), icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, '내 도형'); GF.sfx('star'); UK.toast(GF.t('c16.quiz.008'), r); } catch (e) { GF.sfx('hmm'); } } }, acts); UK.btn({ text: GF.t('c16.quiz.004'), icon: 'star', cls: 'sky', onclick: () => GF.go('qtests') }, acts);
     },
   });
 
@@ -133,22 +133,22 @@
     enter(r, p) {
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r); const g = p.g, area = el('div', 'qz-mini', r), head = el('div', 'qz-mh', r); let score = 0, round = 0;
       const rng = () => Math.random(), shuffle = (a) => a.map((x) => [rng(), x]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
-      const end = (stars, chips) => { SV.game[g] = Math.max(SV.game[g] || 0, stars); save(); if (stars >= 2 && roomOK) { if (Room.grant('q_game_' + g)) chips.push({ icon: 'home', text: GAMES[g - 1].name.split(' — ')[0] + ' 트로피' }); } UK.result({ title: stars >= 3 ? '대단해요!' : stars === 2 ? '잘했어요!' : '좋아요, 한 번 더!', stars, chips, parent: r, onNext: null, onRetry: () => GF.replace('qmini', { g }), retryText: '한 번 더', onHome: () => GF.back(), homeText: '목록으로' }); };
+      const end = (stars, chips) => { SV.game[g] = Math.max(SV.game[g] || 0, stars); save(); if (stars >= 2 && roomOK) { if (Room.grant('q_game_' + g)) chips.push({ icon: 'home', text: GAMES[g - 1].name.split(' — ')[0] + ' 트로피' }); } UK.result({ title: stars >= 3 ? '대단해요!' : stars === 2 ? '잘했어요!' : '좋아요, 한 번 더!', stars, chips, parent: r, onNext: null, onRetry: () => GF.replace('qmini', { g }), retryText: GF.t('c16.block.007'), onHome: () => GF.back(), homeText: GF.t('c16.quiz.014') }); };
       CL_END = end;
       if (g === 1) {   // 반응: 5번, 초록으로 바뀌면 탭 — 평균 ms
         const circle = el('button', 'qz-react', area), info = el('div', 'qz-info', area); let t0 = 0, armed = false, to, ms = [];
-        const next = () => { circle.className = 'qz-react'; circle.textContent = ''; info.textContent = round + '/5 · 기다려요…'; armed = false; clearTimeout(to); to = setTimeout(() => { circle.classList.add('go'); circle.innerHTML = '<img src="' + GF.src('baby.joy') + '">'; t0 = performance.now(); armed = true; info.textContent = '지금!'; }, 1200 + rng() * 2200); };
-        circle.onclick = () => { if (!armed) { GF.sfx('hmm'); clearTimeout(to); info.textContent = '아직이에요! 다시'; next(); return; } const d = performance.now() - t0; ms.push(d); GF.sfx('ok'); round++; if (round >= 5) { const avg = ms.reduce((a, b) => a + b, 0) / ms.length; end(avg < 420 ? 3 : avg < 620 ? 2 : 1, [{ icon: 'star', text: '평균 ' + Math.round(avg) + 'ms' }]); } else next(); };
+        const next = () => { circle.className = 'qz-react'; circle.textContent = ''; info.textContent = round + '/5 · 기다려요…'; armed = false; clearTimeout(to); to = setTimeout(() => { circle.classList.add('go'); circle.innerHTML = '<img src="' + GF.src('baby.joy') + '">'; t0 = performance.now(); armed = true; info.textContent = GF.t('c16.quiz.011'); }, 1200 + rng() * 2200); };
+        circle.onclick = () => { if (!armed) { GF.sfx('hmm'); clearTimeout(to); info.textContent = GF.t('c16.quiz.012'); next(); return; } const d = performance.now() - t0; ms.push(d); GF.sfx('ok'); round++; if (round >= 5) { const avg = ms.reduce((a, b) => a + b, 0) / ms.length; end(avg < 420 ? 3 : avg < 620 ? 2 : 1, [{ icon: 'star', text: '평균 ' + Math.round(avg) + 'ms' }]); } else next(); };
         QZ.debug.reactDone = () => { clearTimeout(to); end(3, []); }; next();
       } else if (g === 2) {   // 기억: 가족 셋이 켜지는 순서 따라하기
         const row = el('div', 'qz-simon', area), info = el('div', 'qz-info', area), btns = ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].map((id, k) => { const b = el('button', '', row); b.style.background = D.types[FAMS[k]].bg; b.appendChild(GF.img(id)); return b; });
         let seq = [], pos = 0, lock = true; const flash = (k) => new Promise((res) => { btns[k].classList.add('lit'); GF.sfx('pick'); setTimeout(() => { btns[k].classList.remove('lit'); setTimeout(res, 160); }, 420); });
-        const play = async () => { lock = true; seq.push((rng() * 3) | 0); info.textContent = '잘 보세요 (' + seq.length + ')'; await new Promise((r2) => setTimeout(r2, 500)); for (const k of seq) await flash(k); pos = 0; lock = false; info.textContent = '따라 눌러요'; };
+        const play = async () => { lock = true; seq.push((rng() * 3) | 0); info.textContent = '잘 보세요 (' + seq.length + ')'; await new Promise((r2) => setTimeout(r2, 500)); for (const k of seq) await flash(k); pos = 0; lock = false; info.textContent = GF.t('c16.quiz.013'); };
         btns.forEach((b, k) => { b.onclick = async () => { if (lock) return; await flash(k); if (k !== seq[pos]) { GF.sfx('hmm'); const len = seq.length - 1; end(len >= 6 ? 3 : len >= 4 ? 2 : 1, [{ icon: 'star', text: len + '개 기억' }]); return; } pos++; if (pos === seq.length) { GF.sfx('ok'); await play(); } }; });
         QZ.debug.memDone = () => end(3, []); seq = [(rng() * 3) | 0, (rng() * 3) | 0]; play();
       } else if (g === 3) {   // 선택: 이럴 땐 어느 쪽 — 집계 없음, 따뜻한 한마디
         const q = el('div', 'qz-info', area), box = el('div', 'qz-bal', area); const list = shuffle(BAL).slice(0, 6); let k = 0;
-        const show = () => { box.innerHTML = ''; q.textContent = '이럴 땐? (' + (k + 1) + '/6)'; list[k].forEach((t, idx) => UK.btn({ text: t, cls: idx ? 'sky block' : 'pink block', onclick: () => { GF.sfx('pick'); k++; if (k >= 6) end(3, [{ icon: 'check', text: '6개 모두 골랐어요' }, { icon: 'heart', text: '정답 없는 질문이에요' }]); else show(); } }, box)); }; QZ.debug.balDone = () => end(3, []); show();
+        const show = () => { box.innerHTML = ''; q.textContent = '이럴 땐? (' + (k + 1) + '/6)'; list[k].forEach((t, idx) => UK.btn({ text: t, cls: idx ? 'sky block' : 'pink block', onclick: () => { GF.sfx('pick'); k++; if (k >= 6) end(3, [{ icon: 'check', text: GF.t('c16.quiz.005') }, { icon: 'heart', text: GF.t('c16.quiz.006') }]); else show(); } }, box)); }; QZ.debug.balDone = () => end(3, []); show();
       } else if (g === 4) {   // 그림: 이 물건은 누구 방?
         const art = el('div', 'qz-art', area), box = el('div', 'qz-bal', area), info = el('div', 'qz-info', area); const items = shuffle(Object.keys(ROOMOF)).slice(0, 8); let k = 0;
         const show = () => { const a = items[k]; info.textContent = '이 물건은 누구 방에 있을까요? (' + (k + 1) + '/8)'; art.innerHTML = ''; const im = el('img', '', art); im.src = uri(RoomArt.make(a, '#F6C28B', {})); box.innerHTML = ''; ['nemo', 'semo', 'dong'].forEach((f, idx) => UK.btn({ text: ['네모네 거실', '세모네 신혼집', '동그라미네 서재'][idx], cls: f + ' block', onclick: () => { if (ROOMOF[a] === f) { score++; GF.sfx('ok'); } else GF.sfx('hmm'); k++; if (k >= 8) end(score >= 7 ? 3 : score >= 5 ? 2 : 1, [{ icon: 'star', text: score + '/8 맞힘' }]); else show(); } }, box)); }; QZ.debug.picDone = () => end(3, []); show();
@@ -172,7 +172,7 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'quiz_tests', 'story_quiz', 'maps/quiz', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:quiz:ui:v1', async start() {
       D = GF.data.quiz_tests; Room.init({ home: () => GF.go('qtests'), openHouse: () => GF.go('qhouse'), housing: GF.data.housing, app: 'quiz', data: GF.data.room_items, game: 'quiz', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.saga.init('quiz', GF.data['maps/quiz']); GF.tale.init('quiz', GF.data.story_quiz, { kid: false }); GF.extras.init({ app: 'quiz', kid: false, progress: () => Object.keys(SV.res || {}).length, rewardSet: 'badge', stats: () => [['끝낸 테스트', Object.keys(SV.res).length + ' / ' + D.tests.length], ['한 미니게임', Object.keys(SV.game || {}).length + ' / 5'], ['집 배지', Room.owned().filter((id) => (Room.item(id) || {}).set === 'badge').length + ' / 18']],
-        badges: [{ id: 't1', icon: '🔮', name: '첫 테스트', desc: '테스트 1개를 끝냈어요', ok: () => Object.keys(SV.res).length >= 1 }, { id: 't5', icon: '🎴', name: '다섯 장', desc: '테스트 5개', ok: () => Object.keys(SV.res).length >= 5 }, { id: 't10', icon: '🃏', name: '열 장', desc: '테스트 10개', ok: () => Object.keys(SV.res).length >= 10 }, { id: 'tall', icon: '👑', name: '전부 해 봤어요', desc: '테스트를 모두 끝냈어요', ok: () => Object.keys(SV.res).length >= D.tests.length }, { id: 'g1', icon: '🎮', name: '미니게임', desc: '미니게임을 해 봤어요', ok: () => Object.keys(SV.game || {}).length >= 1 }, { id: 'g5', icon: '🏆', name: '미니게임 다섯', desc: '미니게임 5종을 모두 했어요', ok: () => Object.keys(SV.game || {}).length >= 5 }],
+        badges: [{ id: 't1', icon: '🔮', name: '첫 테스트', desc: GF.t('c16.quiz.015'), ok: () => Object.keys(SV.res).length >= 1 }, { id: 't5', icon: '🎴', name: '다섯 장', desc: GF.t('c16.quiz.016'), ok: () => Object.keys(SV.res).length >= 5 }, { id: 't10', icon: '🃏', name: '열 장', desc: GF.t('c16.quiz.017'), ok: () => Object.keys(SV.res).length >= 10 }, { id: 'tall', icon: '👑', name: '전부 해 봤어요', desc: GF.t('c16.quiz.018'), ok: () => Object.keys(SV.res).length >= D.tests.length }, { id: 'g1', icon: '🎮', name: '미니게임', desc: GF.t('c16.quiz.019'), ok: () => Object.keys(SV.game || {}).length >= 1 }, { id: 'g5', icon: '🏆', name: '미니게임 다섯', desc: GF.t('c16.quiz.020'), ok: () => Object.keys(SV.game || {}).length >= 5 }],
         resetTips: () => { SV.last = null; save(); }, reset: () => { SV = blank(); save(); } });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('qhome');
       QZ.debug.D = () => D; QZ.debug.SV = () => SV; QZ.debug.reset = () => { SV = blank(); save(); }; QZ.debug.me = me; QZ.debug.cardSVG = cardSVG;

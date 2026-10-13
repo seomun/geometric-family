@@ -87,12 +87,22 @@
     try { if (n && n.hasApp && n.hasApp(pkg)) { n.launch(pkg); return 'launch'; } if (n && n.openStore) { n.openStore(pkg); return 'store'; } } catch (e) { /* 네이티브 없음(웹) */ }
     toastH('「' + (APPNAME[g] || g) + '」 앱에서 얻어요', opts.parent); return 'web';
   };
+  /** 앱 홈 「오늘 할 일」 한 줄(C5, 성인): 오늘의 작은 일 중 아직 안 한 첫 줄 · 다 했으면 선물 안내 · 선물까지 받았으면 칭찬. 누르면 작은 일 목록. 못 해도 괜찮다는 말투 */
+  Room.todoLine = function (parent, onBand) {
+    const old = parent.querySelector(':scope > .h2-todo'); if (old) old.remove();
+    if (kid() || !parent.classList.contains('h2-bandwrap') || parent.classList.contains('top')) return null;
+    const O = GF.ops; if (!O || !O.ready || O.kid || !O.missions) return null; let list; try { list = O.missions(); } catch (e) { return null; } if (!list || !list.length) return null;
+    const left = list.find((x) => x.got < x.n), doneN = list.filter((x) => x.got >= x.n).length, gifted = !!(O.giftTaken && O.giftTaken());
+    const text = left ? GF.t('ops.mis.' + left.id, { n: left.n }) + (left.n > 1 ? ' (' + left.got + '/' + left.n + ')' : '') : gifted ? GF.t('ops.mis.gifted') : GF.t('ops.mis.gift');
+    const b = el('button', 'h2-todo' + (left ? '' : ' ok') + (onBand ? ' tab' : ''), parent); b.setAttribute('aria-label', 'today');
+    if (left) { el('span', 'ic', b, left.icon); el('span', 'tx', b, '오늘 · ' + text); } else el('span', 'tx', b, text); el('i', 'n', b, '✔ ' + doneN + '/' + list.length); b.onclick = (e) => { e.stopPropagation(); try { GF.sfx('tap'); } catch (x) { /* 소리 */ } O.openMissions(); }; return b;
+  };
   Room.band = function (parent, opts) {
     opts = opts || {}; const old = parent.querySelector(':scope > .h2-band'); if (old) old.remove(); if (!H() || !Room.S) return null;
-    const g = Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) return null; const b = el('button', 'h2-band' + (kid() ? ' kid' : ''), parent);
+    const g = Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) { Room.todoLine(parent, false); return null; } const b = el('button', 'h2-band' + (kid() ? ' kid' : ''), parent);
     const im = el('img', '', b); im.src = Room.src(g.item); im.alt = ''; const ic = APPICON[g.game] || '🎁';
     if (kid()) { el('span', 'h2-bic', b, ic); el('span', 'h2-arrow', b, UK.icon('next')); } else { const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : '다음: ') + g.label + ' · ' + g.hint); el('span', 'h2-arrow', b, UK.icon('next')); }
-    b.setAttribute('aria-label', 'next goal'); b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent: opts.toastParent || parent, home: opts.go }); }; return b;
+    b.setAttribute('aria-label', 'next goal'); b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent: opts.toastParent || parent, home: opts.go }); }; Room.todoLine(parent, true); return b;
   };
 
   /* ---------------- 놓기: 칸 → 면(소품) → 빈 자리 (겹침 회피) ---------------- */

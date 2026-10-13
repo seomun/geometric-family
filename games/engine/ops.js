@@ -108,6 +108,7 @@
   O.note = function (id) { if (!O.ready || O.kid) return; const s = st(), m = misToday(s); if (m.ids.includes(id)) { const def = POOL.find((q) => q.id === id); m.prog[id] = Math.min(def.n, (m.prog[id] || 0) + 1); } put(s); };
   O.noteResult = function (stars) { O.note('clear'); if ((stars || 0) >= 3) O.note('star3'); };
   O.missions = function () { const s = st(), m = misToday(s); put(s); return m.ids.map((id) => { const d = POOL.find((q) => q.id === id); return { id, n: d.n, icon: d.icon, got: m.prog[id] || 0 }; }); };
+  O.giftTaken = () => !!misToday(st()).gift;
   O.openMissions = function () {
     const { sc, body } = sheet(GF.t('ops.mis.title')), s = st(), m = misToday(s), list = O.missions();
     list.forEach((x) => { const r = el('div', 'ops-mis' + (x.got >= x.n ? ' ok' : ''), body); el('span', 'ic', r, x.icon); el('span', 'tx', r, GF.t('ops.mis.' + x.id, { n: x.n })); el('b', '', r, x.got >= x.n ? '✔' : x.got + '/' + x.n); });

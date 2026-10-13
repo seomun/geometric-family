@@ -43,6 +43,8 @@ GACHA = dict(cost=150, ten=1425, rates=dict(five=0.025, four=0.135, three=0.84),
 for _st in STAGES:
     for _e in _st['enemies']: _e['k'] = round(_e['k'] * _st['scale'], 3)
 BAL = dict(lvMul=0.065, gradeMul={'3': 1.0, '4': 1.2, '5': 1.45}, costBase=25, costGrow=1.15, lvCap=10, stages=len(STAGES), startGold=0, persuadeAt=0.3)
+import os
+if os.path.exists('data/expedition_odds.json'): GACHA['effective'] = json.load(open('data/expedition_odds.json', encoding='utf-8'))['effective']   # tools/odds_effective.js 산출(실효 확률)
 D = dict(version=1, note='[제안] ⑪ 슬라이스 데이터. tools/expedition_slice_build.py 로 생성', el=EL, role=ROLE, units=UNITS, stages=STAGES, story=STORY, gacha=GACHA, bal=BAL)
 json.dump(D, open('data/expedition_slice.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('units', len(UNITS), 'stages', len(STAGES), 'chars used', sorted({u['art'] for u in UNITS if u['art']}))

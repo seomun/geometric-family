@@ -16,6 +16,7 @@ test('healthz · config · odds', async () => {
   const env = mkenv(); assert.equal((await call(env, 'GET', '/healthz')).body.ok, true);
   const c = (await call(env, 'GET', '/config')).body; assert.equal(c.caps['19p'], 200000); assert.equal(c.caps['14_18'], 70000); assert.equal(c.ads.personalized, false);
   const o = (await call(env, 'GET', '/gacha/odds')).body; const sum = o.rows.reduce((s, r) => s + r.rate, 0); assert.ok(Math.abs(sum - 1) < 1e-9, '개별 확률 합 100%'); assert.equal(o.hard, 80);
+  assert.equal(o.effective.ver, 'eff-1'); assert.ok(o.effective.grade[5] > 0.025 && o.effective.grade[4] > 0.135, '실효 확률이 기본보다 높다(천장·10회 보장)'); assert.ok(o.rows.every((r) => r.eff > 0), '모든 동료에 실효 확률'); const es = o.rows.reduce((t, r) => t + r.eff, 0); assert.ok(Math.abs(es - 1) < 0.001, '실효 합 100%');
 });
 
 test('연령 대역: 12 미만 차단 · 12~13 결제 차단 · 14~18 7만 · 19+ 20만', async () => {
@@ -104,4 +105,57 @@ test('삭제 요청: 계정 비활성·데이터 삭제', async () => {
   const env = mkenv(), a = await signup(env), t = a.access; assert.equal((await call(env, 'POST', '/account/delete', { token: t })).body.ok, true);
   assert.equal((await call(env, 'GET', '/profile', { token: t })).body.error, 'account_inactive');
   assert.equal((await env.DB.prepare('SELECT COUNT(*) AS c FROM units WHERE account=?').bind(a.account).first()).c, 0);
+});
+
+/* ---------------- WP4: 전투 판정 ---------------- */
+import SC from '../../games/expedition/stage-core.js';
+const clear = (env, a, tok, extra = {}) => call(env, 'POST', '/stage/clear', { token: a.access, body: { token: tok.token, inputs: [], auto: true, request_id: R(), ...extra } });
+const grantAll = async (env, a, gold = 5000) => call(env, 'POST', '/dev/grant', { token: a.access, body: { gold, gems: 0 } });
+const levelAll = async (env, a, times) => { const p = (await call(env, 'GET', '/profile', { token: a.access })).body; for (const id of p.progress.party) for (let i = 0; i < times; i++) await call(env, 'POST', '/unit/levelup', { token: a.access, body: { unit: id, request_id: R() } }); };
+
+test('전투: 시작 토큰(서버 시드) → 같은 입력으로 재현 → 보상·진행 · 중복 제출은 같은 응답', async () => {
+  const env = mkenv(), a = await signup(env);
+  const s = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 1 } })).body; assert.ok(s.token && Number.isInteger(s.seed) && s.party.length === 5);
+  const exp = SC.replay(G.D, { stage: 1, seed: s.seed, party: s.party, auto: true, inputs: [] }); assert.equal(exp.win, true, '시작 파티로 1단계는 이긴다');
+  const c = await clear(env, a, s); assert.equal(c.status, 200, JSON.stringify(c.body)); assert.equal(c.body.win, true); assert.equal(c.body.hash, exp.hash, '서버 재현 해시 = 직접 재현'); assert.equal(c.body.first, true);
+  assert.equal(c.body.profile.wallet.gold, 50); assert.equal(c.body.profile.wallet.free_gems, 1500 + G.D.gacha.clearGems); assert.equal(c.body.profile.progress.cleared, 1); assert.equal(c.body.profile.progress.stars['1'], exp.stars);
+  const again = await clear(env, a, s); assert.equal(again.body.replay, true); assert.equal((await call(env, 'GET', '/profile', { token: a.access })).body.wallet.gold, 50, '같은 토큰으로 두 번 받지 않는다');
+  const s2 = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 1 } })).body, c2 = await clear(env, a, s2); assert.equal(c2.body.first, false); assert.equal(c2.body.reward.gold, 25, '다시 깨면 금화 절반'); assert.equal(c2.body.reward.gems, 0);
+});
+
+test('전투: 잠긴 단계 · 남의/위조 토큰 · 접근 토큰 구분 · 잘못된 기록', async () => {
+  const env = mkenv(), a = await signup(env), b = await signup(env, '1985-01');
+  assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 3 } })).body.error, 'stage_locked'); assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 99 } })).body.error, 'bad_stage');
+  const s = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 1 } })).body;
+  assert.equal((await clear(env, b, s)).body.error, 'bad_stage_token', '남의 토큰은 안 된다'); assert.equal((await clear(env, a, { token: s.token + 'x' })).body.error, 'bad_token');
+  assert.equal((await call(env, 'GET', '/profile', { token: s.token })).status, 401, '전투 토큰은 로그인 토큰이 아니다');
+  assert.equal((await clear(env, a, s, { inputs: [[5, 'c', 9]] })).body.error, 'bad_inputs'); assert.equal((await clear(env, a, s, { inputs: [[5, 'p']] })).body.error, 'bad_persuade');
+  assert.equal((await clear(env, a, s, { inputs: Array.from({ length: 900 }, () => [1, 'a', 1]) })).body.error, 'bad_inputs');
+  assert.equal((await call(env, 'GET', '/profile', { token: a.access })).body.wallet.gold, 0, '거부된 요청은 아무것도 주지 않는다');
+});
+
+test('전투: 졌을 때는 보상·진행 없음(벌도 없음)', async () => {
+  const env = mkenv(), a = await signup(env);
+  // 1단계는 이기지만, 파티 레벨이 같을 때 5단계는 약한 파티로 지는지 — 강제로 잠금을 풀어 시험
+  await env.DB.prepare('UPDATE progress SET cleared=4 WHERE account=?').bind(a.account).run();
+  const s = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 5 } })).body, c = await clear(env, a, s);
+  assert.equal(c.body.win, false); const p = (await call(env, 'GET', '/profile', { token: a.access })).body; assert.equal(p.progress.cleared, 4); assert.equal(p.wallet.gold, 0);
+});
+
+test('전투: 3단계 첫 클리어 → 합류, 6단계 포섭 → 바람 친구', async () => {
+  const env = mkenv(), a = await signup(env); await grantAll(env, a, 60000); await levelAll(env, a, 9);
+  await env.DB.prepare('UPDATE progress SET cleared=2 WHERE account=?').bind(a.account).run();
+  const s3 = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 3 } })).body, c3 = await clear(env, a, s3); assert.equal(c3.body.win, true, JSON.stringify(c3.body)); assert.deepEqual(c3.body.joined, ['u_kid3']); assert.ok(c3.body.profile.units.u_kid3);
+  await env.DB.prepare('UPDATE progress SET cleared=5 WHERE account=?').bind(a.account).run();
+  // 6단계: 보스 체력이 30% 아래가 되면 말 걸기. 입력 기록은 시뮬로 만든다(클라이언트가 하는 것과 같음)
+  const s6 = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 6 } })).body, st = G.D.stages[5];
+  let n = null; for (let k = 0; k < 400 && n == null; k++) { const r = SC.replay(G.D, { stage: 6, seed: s6.seed, party: s6.party, auto: true, inputs: [[k, 'p']] }); if (!r.error) n = k; }
+  assert.ok(n != null, '말 걸 수 있는 순간이 있다'); const c6 = await clear(env, a, s6, { inputs: [[n, 'p']] });
+  assert.equal(c6.body.win, true, JSON.stringify(c6.body)); assert.equal(c6.body.recruited, true); assert.equal(c6.body.stars, 3); assert.ok(c6.body.profile.units.u_wind, '바람 친구 합류'); assert.equal(c6.body.profile.progress.flags.recruited, 1); void st;
+});
+
+test('전투: 입력 기록이 결과를 바꾼다(수동 스킬) — 서버가 같은 기록으로 같은 결과를 낸다', async () => {
+  const s = { stage: 2, seed: 777, party: G.D.units.filter((u) => u.route === 'start').map((u) => ({ id: u.id, lv: 3 })) };
+  const auto = SC.replay(G.D, { ...s, auto: true, inputs: [] }), man = SC.replay(G.D, { ...s, auto: false, inputs: [[0, 'c', 0], [3, 'c', 1], [6, 'c', 2]] });
+  assert.notEqual(auto.hash, man.hash); assert.equal(man.hash, SC.replay(G.D, { ...s, auto: false, inputs: [[0, 'c', 0], [3, 'c', 1], [6, 'c', 2]] }).hash, '같은 기록 → 같은 결과');
 });

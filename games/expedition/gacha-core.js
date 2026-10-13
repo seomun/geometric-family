@@ -18,8 +18,8 @@
   const dupFrag = (grade) => (grade === 5 ? 20 : grade === 4 ? 5 : 1);
   /** 확률 공개용 표(화면·서버 /gacha/odds 가 같은 값을 쓴다) */
   function odds(G, units) {
-    const rows = []; [5, 4, 3].forEach((gr) => { const list = pool(units, gr), tot = gr === 5 ? G.rates.five : gr === 4 ? G.rates.four : G.rates.three; list.forEach((u) => { const p = gr === 5 ? tot * (u.pickup ? G.pickup.share : (1 - G.pickup.share) / (list.length - 1 || 1)) : tot / list.length; rows.push({ id: u.id, name: u.name, grade: gr, pickup: !!u.pickup, rate: p }); }); });
-    return { rates: G.rates, soft: G.soft + 1, softUp: G.softUp, hard: G.hard, pickup: G.pickup, tenGuarantee: '★4 이상 1명', rows };
+    const rows = []; [5, 4, 3].forEach((gr) => { const list = pool(units, gr), tot = gr === 5 ? G.rates.five : gr === 4 ? G.rates.four : G.rates.three; list.forEach((u) => { const p = gr === 5 ? tot * (u.pickup ? G.pickup.share : (1 - G.pickup.share) / (list.length - 1 || 1)) : tot / list.length; rows.push({ id: u.id, name: u.name, grade: gr, pickup: !!u.pickup, rate: p, eff: G.effective ? G.effective.unit[u.id] / 100 : null }); }); });
+    return { rates: G.rates, soft: G.soft + 1, softUp: G.softUp, hard: G.hard, pickup: G.pickup, tenGuarantee: '★4 이상 1명', effective: G.effective ? { ver: G.effective.ver, grade: { 5: G.effective.grade[5] / 100, 4: G.effective.grade[4] / 100, 3: G.effective.grade[3] / 100 }, expected5: G.effective.expected5 } : null, rows };
   }
   return { pool, pullOnce, price, dupFrag, odds };
 });

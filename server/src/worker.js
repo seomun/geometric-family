@@ -10,7 +10,7 @@ async function issue(env, account, deviceHash, ageBand, now) {
   await env.DB.prepare('INSERT INTO tokens(account,refresh_hash,device_hash,issued_at,expires_at) VALUES(?,?,?,?,?)').bind(account, await sha256hex(refresh), deviceHash || null, now, now + REFRESH_TTL * 1000).run(); return { access, refresh, expires_in: ACCESS_TTL };
 }
 async function auth(req, env, now) {
-  const h = req.headers.get('authorization') || ''; if (!/^Bearer /.test(h)) throw new HttpError(401, 'no_token'); const p = await verifyJwt(h.slice(7), env.JWT_SECRET, now);
+  const h = req.headers.get('authorization') || ''; if (!/^Bearer /.test(h)) throw new HttpError(401, 'no_token'); const p = await verifyJwt(h.slice(7), env.JWT_SECRET, now); if (p.typ === 'stage') throw new HttpError(401, 'bad_token');
   const acc = await env.DB.prepare('SELECT status FROM accounts WHERE id=?').bind(p.sub).first(); if (!acc || acc.status !== 'active') throw new HttpError(403, 'account_inactive'); return p.sub;
 }
 
@@ -43,7 +43,9 @@ export async function handle(req, env, now = Date.now()) {
     case 'POST /party': return json(await G.setParty(env, account, (await readJson(req)).party));
     case 'POST /unit/levelup': { const b = await readJson(req); if (!b.request_id) throw new HttpError(400, 'no_request_id'); return json(await retry(() => G.levelUp(env, account, b.unit, b.request_id, now))); }
     case 'POST /gacha/pull': { const b = await readJson(req); return json(await retry(() => G.gachaPull(env, account, { banner: b.banner, n: b.n, requestId: b.request_id }, now))); }
-    case 'POST /dev/grant': {   // 개발·시험 전용(ENV=dev|test): WP4(/stage/clear 서버 보상) 전까지 클리어 보상을 흉내 낸다. prod 에서는 404.
+    case 'POST /stage/start': return json(await G.stageStart(env, account, +(await readJson(req)).stage, now));
+    case 'POST /stage/clear': { const b = await readJson(req); const out = await retry(() => G.stageClear(env, account, { token: b.token, inputs: b.inputs, auto: b.auto, requestId: b.request_id }, now)); return json({ ...out, profile: await G.profile(env, account) }); }
+    case 'POST /dev/grant': {   // 개발·시험 전용(ENV=dev|test): 시험에서 재화를 바로 채울 때만 쓴다. prod 에서는 404.
       if (!['dev', 'test'].includes(env.ENV)) throw new HttpError(404, 'not_found'); const b = await readJson(req); const g = Math.max(0, Math.min(100000, +b.gems || 0)), c = Math.max(0, Math.min(100000, +b.gold || 0));
       await env.DB.batch([env.DB.prepare('UPDATE wallet SET free_gems=free_gems+?, gold=gold+?, ver=ver+1 WHERE account=?').bind(g, c, account), env.DB.prepare("INSERT INTO ledger(account,ts,kind,d_free,d_gold,reason,ref) VALUES(?,?,'grant',?,?,'dev',?)").bind(account, now, g, c, 'dev-' + now + '-' + Math.random())]); return json(await G.profile(env, account)); }
     case 'POST /account/delete': return json(await G.deleteAccount(env, account));

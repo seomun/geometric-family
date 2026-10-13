@@ -30,6 +30,12 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   // 편성 저장
   await p.evaluate(() => { document.querySelectorAll('.ex-card')[1].click(); }); await p.waitForTimeout(200); await p.evaluate(() => { document.querySelectorAll('.ex-slot')[0].click(); }); await p.waitForTimeout(800);
   const p4 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(JSON.stringify(p4.progress.party) !== JSON.stringify(p1.progress.party), '편성이 서버에 저장됨');
+  // 전투: 서버가 시드·파티를 주고, 기록을 다시 돌려 판정(WP4)
+  await p.evaluate(() => { GF.stack = []; EXP.debug.S().speed = 3; EXP.debug.S().autoSkill = true; GF.go('xhome'); GF.go('xbattle', { stage: 1 }); }); await p.waitForTimeout(1200);
+  const before = await p.evaluate(() => EXP.debug.http('GET', '/profile')); let won = false; for (let i = 0; i < 90 && !won; i++) { await p.waitForTimeout(1000); won = await p.evaluate(() => /승리/.test((document.querySelector('.uk-sheet') || {}).textContent || '')); }
+  ok(won, '서버 판정 승리 화면'); await p.screenshot({ path: 'notes/snapshots/exp_r4_win.png' });
+  const p5 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(p5.progress.cleared === 1 && p5.wallet.gold === before.wallet.gold + 50 && p5.wallet.free_gems === before.wallet.free_gems + 150, '서버가 진행도·보상 반영: 1단계 클리어 · 금화 +50 · 반짝석 +150'); ok(await p.evaluate(() => EXP.debug.S().cleared === 1 && EXP.debug.S().gold === (JSON.parse(JSON.stringify(EXP.debug.S())).gold)), '화면이 서버 값으로 갱신');
+  await p.evaluate(() => document.querySelectorAll('.uk-scrim').forEach((e) => e.remove())); await p.reload(); await p.waitForTimeout(1800); ok(await p.evaluate(() => EXP.debug.S().cleared === 1), '새로고침 뒤에도 진행도(서버) 유지');
   // 12~13세: 결제 차단 안내
   const ctx2 = await b.newContext({ viewport: { width: 390, height: 780 } }), q = await ctx2.newPage(); await q.goto(url); await q.waitForTimeout(1500);
   await q.evaluate(() => { document.querySelectorAll('.ex-sel')[0].value = String(new Date().getFullYear() - 13); document.querySelectorAll('.ex-sel')[1].value = '1'; }); await q.click('.ex-age .uk-btn'); await q.waitForTimeout(1200);

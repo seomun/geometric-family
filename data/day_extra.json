@@ -729,6 +729,260 @@
      "bubble": "zzz"
     }
    ]
+  },
+  {
+   "chapter": 21,
+   "title": "빨래 헹구기",
+   "tale": "fairywood",
+   "cuts": [
+    {
+     "text": "아빠가 마당에서 빨래를 헹궈요. 막둥이도 작은 손으로 보글보글!",
+     "chars": [
+      "nemo_dad.good",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "「선녀의 날개옷처럼 하늘하늘하네!」 {sib_kid1}가 하얀 옷을 들어 올렸어요.",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.surprise"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "깨끗이 헹군 빨래가 햇빛에 반짝반짝. 사슴이 구경 와서 눈을 깜빡!",
+     "chars": [
+      "baby.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "text": "세모 이모가 웃었어요. 「이 옷은 어디든 날아갈 것 같아!」 막둥이도 두 팔을 활짝!",
+     "chars": [
+      "wife.joy",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 22,
+   "title": "토끼의 점심",
+   "tale": "rabbitliver",
+   "cuts": [
+    {
+     "text": "점심시간. 막둥이 접시에 당근이 쏙 올라왔어요.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.good"
+     ]
+    },
+    {
+     "text": "{sib_kid1}가 토끼처럼 귀를 쫑긋. 「당근은 토끼가 제일 좋아하지!」",
+     "chars": [
+      "nemo_kids.kid1"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "거북이 아빠는 천천히 천천히 한 입. 동그라미 아저씨 용왕님도 껄껄!",
+     "chars": [
+      "nemo_dad.joy",
+      "dong_dad.warm"
+     ]
+    },
+    {
+     "text": "접시가 싹 비었어요. 토끼는 꾀가 아니라 맛있게 먹어서 힘이 났대요.",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid1"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 23,
+   "title": "둥지 정리",
+   "tale": "magpie",
+   "cuts": [
+    {
+     "text": "책장 위 둥지 모양 상자가 어질러졌어요.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "까치가 은혜를 갚듯, 막둥이가 책을 한 권씩 제자리에 꽂아요.",
+     "chars": [
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "아빠 선비가 책 먼지를 후후. 「고마워, 막둥이.」",
+     "chars": [
+      "nemo_dad.good",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "깨끗해진 둥지 상자 위에서 까치 인형이 고개를 까딱!",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ]
+  },
+  {
+   "chapter": 24,
+   "title": "곶감 간식",
+   "tale": "tigerpersimmon",
+   "cuts": [
+    {
+     "text": "간식 시간이에요. 엄마가 곶감을 한 접시 내왔어요.",
+     "chars": [
+      "nemo_mom.joy",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "「호랑이도 울음을 그친다는 그 곶감이야!」 막둥이가 눈을 동그랗게.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "bang"
+    },
+    {
+     "text": "호랑이가 창밖에서 슬쩍 구경하다 곶감 한 조각에 순해졌어요.",
+     "chars": [
+      "dong_dad.warm",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "호랑이도 막둥이도 냠냠. 달콤한 간식은 같이 먹는 게 제일이에요.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 25,
+   "title": "빨간 모자 쓰기",
+   "tale": "redhood",
+   "cuts": [
+    {
+     "text": "할머니 댁에 가는 날이에요. 막둥이가 옷장 앞에서 두리번.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "「빨간 모자가 있었네!」 {sib_kid1}가 모자를 꾹 씌워 줘요.",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "엄마가 바구니를 안겨 주며 말했어요. 「길에서 낯선 소리가 나면 엄마 손 잡자.」",
+     "chars": [
+      "nemo_mom.good",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "할머니가 문 앞에서 반겨 주었어요. 빨간 모자가 환하게 웃었어요.",
+     "chars": [
+      "nemo_grandma.good",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 26,
+   "title": "빵 부스러기 줍기",
+   "tale": "hansel",
+   "cuts": [
+    {
+     "text": "식탁 밑에 빵 부스러기가 한가득! 막둥이가 쪼그리고 앉았어요.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "헨젤처럼 하나씩, 그레텔처럼 하나씩. {sib_kid3}과 {sib_kid1}가 같이 주워요.",
+     "chars": [
+      "nemo_kids.kid3",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "text": "부스러기가 길이 되어 쓰레받기까지 이어졌어요. 길 잃을 걱정은 없어요!",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.good"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "과자집 할머니 인형이 웃으며 말했어요. 「정리하고 같이 과자 구울까?」",
+     "chars": [
+      "nemo_grandma.good",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
+  },
+  {
+   "chapter": 27,
+   "title": "장화 신기",
+   "tale": "puss",
+   "cuts": [
+    {
+     "text": "외출 준비! 막둥이가 현관에서 장화를 들고 끙끙.",
+     "chars": [
+      "baby.joy"
+     ],
+     "bubble": "question"
+    },
+    {
+     "text": "세모 이모가 고양이처럼 윙크. 「장화는 이렇게 쏙!」 한 짝, 두 짝.",
+     "chars": [
+      "wife.joy",
+      "baby.joy"
+     ],
+     "bubble": "sparkle"
+    },
+    {
+     "text": "또각또각! 장화 소리에 {sib_kid3}도 따라 나왔어요. 「우리 주인님 같다!」",
+     "chars": [
+      "nemo_kids.kid3",
+      "baby.joy"
+     ]
+    },
+    {
+     "text": "세모 이모가 앞장서고 막둥이가 뒤따라요. 오늘도 좋은 하루가 될 거예요.",
+     "chars": [
+      "wife.joy",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ]
   }
  ]
 }

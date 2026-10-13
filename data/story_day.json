@@ -3,7 +3,7 @@
  "version": 1,
  "note": "[제안] 이야기 진행 층. tools/story_build.py 로 생성.",
  "per": 5,
- "last": 20,
+ "last": 27,
  "prologue": [
   {
    "text": "막둥이가 아침에 눈을 떴다. 「오늘은 뭐 할까?」",
@@ -1763,6 +1763,610 @@
      },
      {
       "who": "nemo_mom.love",
+      "text": "멋져!"
+     }
+    ]
+   }
+  },
+  "21": {
+   "title": "빨래 헹구기",
+   "tale": "fairywood",
+   "faces": [
+    "nemo_dad.good",
+    "baby.joy",
+    "nemo_kids.kid1"
+   ],
+   "midAt1": 2,
+   "midAt2": 4,
+   "start": [
+    {
+     "text": "아빠가 마당에서 빨래를 헹궈요. 막둥이도 작은 손으로 보글보글!",
+     "chars": [
+      "nemo_dad.good",
+      "baby.joy"
+     ]
+    }
+   ],
+   "mid": [
+    {
+     "after": 2,
+     "cuts": [
+      {
+       "text": "「선녀의 날개옷처럼 하늘하늘하네!」 {sib_kid1}가 하얀 옷을 들어 올렸어요.",
+       "chars": [
+        "nemo_kids.kid1",
+        "baby.surprise"
+       ],
+       "bubble": "sparkle"
+      }
+     ]
+    },
+    {
+     "after": 4,
+     "cuts": [
+      {
+       "text": "깨끗이 헹군 빨래가 햇빛에 반짝반짝. 사슴이 구경 와서 눈을 깜빡!",
+       "chars": [
+        "baby.joy",
+        "wife.joy"
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    {
+     "text": "세모 이모가 웃었어요. 「이 옷은 어디든 날아갈 것 같아!」 막둥이도 두 팔을 활짝!",
+     "chars": [
+      "wife.joy",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "say": {
+    "start": [
+     {
+      "who": "nemo_dad.good",
+      "text": "오늘도 해 볼까?"
+     },
+     {
+      "who": "baby.joy",
+      "text": "같이 하자!"
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "text": "천천히 해도 돼."
+     }
+    ],
+    "clear": [
+     {
+      "who": "nemo_dad.good",
+      "text": "잘했어!"
+     },
+     {
+      "who": "baby.joy",
+      "text": "또 하나 끝났네."
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "text": "멋져!"
+     }
+    ]
+   }
+  },
+  "22": {
+   "title": "토끼의 점심",
+   "tale": "rabbitliver",
+   "faces": [
+    "baby.joy",
+    "nemo_mom.good",
+    "nemo_kids.kid1"
+   ],
+   "midAt1": 2,
+   "midAt2": 4,
+   "start": [
+    {
+     "text": "점심시간. 막둥이 접시에 당근이 쏙 올라왔어요.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.good"
+     ]
+    }
+   ],
+   "mid": [
+    {
+     "after": 2,
+     "cuts": [
+      {
+       "text": "{sib_kid1}가 토끼처럼 귀를 쫑긋. 「당근은 토끼가 제일 좋아하지!」",
+       "chars": [
+        "nemo_kids.kid1"
+       ],
+       "bubble": "question"
+      }
+     ]
+    },
+    {
+     "after": 4,
+     "cuts": [
+      {
+       "text": "거북이 아빠는 천천히 천천히 한 입. 동그라미 아저씨 용왕님도 껄껄!",
+       "chars": [
+        "nemo_dad.joy",
+        "dong_dad.warm"
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    {
+     "text": "접시가 싹 비었어요. 토끼는 꾀가 아니라 맛있게 먹어서 힘이 났대요.",
+     "chars": [
+      "baby.joy",
+      "nemo_kids.kid1"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "say": {
+    "start": [
+     {
+      "who": "baby.joy",
+      "text": "오늘도 해 볼까?"
+     },
+     {
+      "who": "nemo_mom.good",
+      "text": "같이 하자!"
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "text": "천천히 해도 돼."
+     }
+    ],
+    "clear": [
+     {
+      "who": "baby.joy",
+      "text": "잘했어!"
+     },
+     {
+      "who": "nemo_mom.good",
+      "text": "또 하나 끝났네."
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "text": "멋져!"
+     }
+    ]
+   }
+  },
+  "23": {
+   "title": "둥지 정리",
+   "tale": "magpie",
+   "faces": [
+    "baby.surprise",
+    "baby.joy",
+    "nemo_dad.good"
+   ],
+   "midAt1": 2,
+   "midAt2": 4,
+   "start": [
+    {
+     "text": "책장 위 둥지 모양 상자가 어질러졌어요.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "mid": [
+    {
+     "after": 2,
+     "cuts": [
+      {
+       "text": "까치가 은혜를 갚듯, 막둥이가 책을 한 권씩 제자리에 꽂아요.",
+       "chars": [
+        "baby.joy"
+       ]
+      }
+     ]
+    },
+    {
+     "after": 4,
+     "cuts": [
+      {
+       "text": "아빠 선비가 책 먼지를 후후. 「고마워, 막둥이.」",
+       "chars": [
+        "nemo_dad.good",
+        "baby.joy"
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    {
+     "text": "깨끗해진 둥지 상자 위에서 까치 인형이 고개를 까딱!",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.joy"
+     ],
+     "bubble": "sparkle"
+    }
+   ],
+   "say": {
+    "start": [
+     {
+      "who": "baby.surprise",
+      "text": "오늘도 해 볼까?"
+     },
+     {
+      "who": "baby.joy",
+      "text": "같이 하자!"
+     },
+     {
+      "who": "nemo_dad.good",
+      "text": "천천히 해도 돼."
+     }
+    ],
+    "clear": [
+     {
+      "who": "baby.surprise",
+      "text": "잘했어!"
+     },
+     {
+      "who": "baby.joy",
+      "text": "또 하나 끝났네."
+     },
+     {
+      "who": "nemo_dad.good",
+      "text": "멋져!"
+     }
+    ]
+   }
+  },
+  "24": {
+   "title": "곶감 간식",
+   "tale": "tigerpersimmon",
+   "faces": [
+    "nemo_mom.joy",
+    "baby.joy",
+    "baby.surprise"
+   ],
+   "midAt1": 2,
+   "midAt2": 4,
+   "start": [
+    {
+     "text": "간식 시간이에요. 엄마가 곶감을 한 접시 내왔어요.",
+     "chars": [
+      "nemo_mom.joy",
+      "baby.joy"
+     ]
+    }
+   ],
+   "mid": [
+    {
+     "after": 2,
+     "cuts": [
+      {
+       "text": "「호랑이도 울음을 그친다는 그 곶감이야!」 막둥이가 눈을 동그랗게.",
+       "chars": [
+        "baby.surprise"
+       ],
+       "bubble": "bang"
+      }
+     ]
+    },
+    {
+     "after": 4,
+     "cuts": [
+      {
+       "text": "호랑이가 창밖에서 슬쩍 구경하다 곶감 한 조각에 순해졌어요.",
+       "chars": [
+        "dong_dad.warm",
+        "baby.joy"
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    {
+     "text": "호랑이도 막둥이도 냠냠. 달콤한 간식은 같이 먹는 게 제일이에요.",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.love"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "say": {
+    "start": [
+     {
+      "who": "nemo_mom.joy",
+      "text": "오늘도 해 볼까?"
+     },
+     {
+      "who": "baby.joy",
+      "text": "같이 하자!"
+     },
+     {
+      "who": "baby.surprise",
+      "text": "천천히 해도 돼."
+     }
+    ],
+    "clear": [
+     {
+      "who": "nemo_mom.joy",
+      "text": "잘했어!"
+     },
+     {
+      "who": "baby.joy",
+      "text": "또 하나 끝났네."
+     },
+     {
+      "who": "baby.surprise",
+      "text": "멋져!"
+     }
+    ]
+   }
+  },
+  "25": {
+   "title": "빨간 모자 쓰기",
+   "tale": "redhood",
+   "faces": [
+    "baby.surprise",
+    "nemo_kids.kid1",
+    "baby.joy"
+   ],
+   "midAt1": 2,
+   "midAt2": 4,
+   "start": [
+    {
+     "text": "할머니 댁에 가는 날이에요. 막둥이가 옷장 앞에서 두리번.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "mid": [
+    {
+     "after": 2,
+     "cuts": [
+      {
+       "text": "「빨간 모자가 있었네!」 {sib_kid1}가 모자를 꾹 씌워 줘요.",
+       "chars": [
+        "nemo_kids.kid1",
+        "baby.joy"
+       ]
+      }
+     ]
+    },
+    {
+     "after": 4,
+     "cuts": [
+      {
+       "text": "엄마가 바구니를 안겨 주며 말했어요. 「길에서 낯선 소리가 나면 엄마 손 잡자.」",
+       "chars": [
+        "nemo_mom.good",
+        "baby.joy"
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    {
+     "text": "할머니가 문 앞에서 반겨 주었어요. 빨간 모자가 환하게 웃었어요.",
+     "chars": [
+      "nemo_grandma.good",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "say": {
+    "start": [
+     {
+      "who": "baby.surprise",
+      "text": "오늘도 해 볼까?"
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "text": "같이 하자!"
+     },
+     {
+      "who": "baby.joy",
+      "text": "천천히 해도 돼."
+     }
+    ],
+    "clear": [
+     {
+      "who": "baby.surprise",
+      "text": "잘했어!"
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "text": "또 하나 끝났네."
+     },
+     {
+      "who": "baby.joy",
+      "text": "멋져!"
+     }
+    ]
+   }
+  },
+  "26": {
+   "title": "빵 부스러기 줍기",
+   "tale": "hansel",
+   "faces": [
+    "baby.surprise",
+    "nemo_kids.kid3",
+    "nemo_kids.kid1"
+   ],
+   "midAt1": 2,
+   "midAt2": 4,
+   "start": [
+    {
+     "text": "식탁 밑에 빵 부스러기가 한가득! 막둥이가 쪼그리고 앉았어요.",
+     "chars": [
+      "baby.surprise"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "mid": [
+    {
+     "after": 2,
+     "cuts": [
+      {
+       "text": "헨젤처럼 하나씩, 그레텔처럼 하나씩. {sib_kid3}과 {sib_kid1}가 같이 주워요.",
+       "chars": [
+        "nemo_kids.kid3",
+        "nemo_kids.kid1"
+       ]
+      }
+     ]
+    },
+    {
+     "after": 4,
+     "cuts": [
+      {
+       "text": "부스러기가 길이 되어 쓰레받기까지 이어졌어요. 길 잃을 걱정은 없어요!",
+       "chars": [
+        "baby.joy",
+        "nemo_mom.good"
+       ],
+       "bubble": "sparkle"
+      }
+     ]
+    }
+   ],
+   "end": [
+    {
+     "text": "과자집 할머니 인형이 웃으며 말했어요. 「정리하고 같이 과자 구울까?」",
+     "chars": [
+      "nemo_grandma.good",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "say": {
+    "start": [
+     {
+      "who": "baby.surprise",
+      "text": "오늘도 해 볼까?"
+     },
+     {
+      "who": "nemo_kids.kid3",
+      "text": "같이 하자!"
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "text": "천천히 해도 돼."
+     }
+    ],
+    "clear": [
+     {
+      "who": "baby.surprise",
+      "text": "잘했어!"
+     },
+     {
+      "who": "nemo_kids.kid3",
+      "text": "또 하나 끝났네."
+     },
+     {
+      "who": "nemo_kids.kid1",
+      "text": "멋져!"
+     }
+    ]
+   }
+  },
+  "27": {
+   "title": "장화 신기",
+   "tale": "puss",
+   "faces": [
+    "baby.joy",
+    "wife.joy",
+    "nemo_kids.kid3"
+   ],
+   "midAt1": 2,
+   "midAt2": 4,
+   "start": [
+    {
+     "text": "외출 준비! 막둥이가 현관에서 장화를 들고 끙끙.",
+     "chars": [
+      "baby.joy"
+     ],
+     "bubble": "question"
+    }
+   ],
+   "mid": [
+    {
+     "after": 2,
+     "cuts": [
+      {
+       "text": "세모 이모가 고양이처럼 윙크. 「장화는 이렇게 쏙!」 한 짝, 두 짝.",
+       "chars": [
+        "wife.joy",
+        "baby.joy"
+       ],
+       "bubble": "sparkle"
+      }
+     ]
+    },
+    {
+     "after": 4,
+     "cuts": [
+      {
+       "text": "또각또각! 장화 소리에 {sib_kid3}도 따라 나왔어요. 「우리 주인님 같다!」",
+       "chars": [
+        "nemo_kids.kid3",
+        "baby.joy"
+       ]
+      }
+     ]
+    }
+   ],
+   "end": [
+    {
+     "text": "세모 이모가 앞장서고 막둥이가 뒤따라요. 오늘도 좋은 하루가 될 거예요.",
+     "chars": [
+      "wife.joy",
+      "baby.joy"
+     ],
+     "bubble": "heart"
+    }
+   ],
+   "say": {
+    "start": [
+     {
+      "who": "baby.joy",
+      "text": "오늘도 해 볼까?"
+     },
+     {
+      "who": "wife.joy",
+      "text": "같이 하자!"
+     },
+     {
+      "who": "nemo_kids.kid3",
+      "text": "천천히 해도 돼."
+     }
+    ],
+    "clear": [
+     {
+      "who": "baby.joy",
+      "text": "잘했어!"
+     },
+     {
+      "who": "wife.joy",
+      "text": "또 하나 끝났네."
+     },
+     {
+      "who": "nemo_kids.kid3",
       "text": "멋져!"
      }
     ]

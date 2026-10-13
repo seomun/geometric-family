@@ -17,6 +17,8 @@ const APPS = [['merge', 'merge'], ['block', 'block'], ['tile', 'tile'], ['spot',
     for (let i = 0; i < 6; i++) {
       await p.evaluate((i) => { const bs = [...document.querySelectorAll('.screen.on .uk-btn, .uk-sheet .uk-btn')].filter((x) => !/replay|close/.test(x.className) && x.offsetParent); if (bs.length) bs[Math.min(i, bs.length - 1)].click(); }, i).catch(() => {}); await p.waitForTimeout(700); await hook().catch(() => {}); await grab('s' + i);
     }
+    const names = await p.evaluate(() => Object.keys(GF.screens || {}).filter((n) => /house|home|dex|party|gacha|profile|begin|event|dun|map|trio|levels|shop|album/.test(n)));
+    for (const n of names.slice(0, 14)) { await p.evaluate((n) => { try { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go(n); } catch (e) { /* 인자가 필요한 화면은 건너뜀 */ } }, n).catch(() => {}); await p.waitForTimeout(450); await hook().catch(() => {}); await grab('screen:' + n); }
     await p.evaluate(() => { try { if (GF.ops && GF.ops.openSettings) GF.ops.openSettings(); } catch (e) { /* 설정 없음 */ } }).catch(() => {}); await p.waitForTimeout(500); await grab('settings');
     const m2 = await p.evaluate(() => window.__miss || []).catch(() => []); m2.forEach((k) => miss.add(k));
     ok(miss.size === 0, name + ': 화면에 사전 키가 그대로 보이지 않음' + (miss.size ? ' → ' + [...miss].slice(0, 6).join(', ') : '')); ok(errs.length === 0, name + ': 오류 없음 ' + (errs[0] || ''));

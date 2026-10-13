@@ -34,13 +34,19 @@
   };
   let bgCache = {}; const bgUri = (n) => bgCache[n] || (bgCache[n] = uri(GF.bgSVG(n)));
   function elSVG(e) {
-    const f = e.hue ? `filter:hue-rotate(${e.hue}deg) saturate(1.1)` : '';
+    const lum = e._lum ? ' brightness(1.32) contrast(1.06)' : '';      // 색 구분 돕기(C14): 색만 다른 곳은 밝기도 다르게
+    const f = e.hue ? `filter:hue-rotate(${e.hue}deg) saturate(1.1)${lum}` : lum ? `filter:${lum.trim()}` : '';
     if (e.k === 'chr') { const w = e.h * (GF.aspect(e.id) || C.ASP); return `<image href="${GF.src(e.id)}" x="${(e.x - w / 2).toFixed(1)}" y="${e.y - e.h}" width="${w.toFixed(1)}" height="${e.h}" style="${f}" ${e.flip ? `transform="translate(${2 * e.x} 0) scale(-1 1)"` : ''}/>`; }
     if (e.k === 'item') { const it = Room.item(e.id); if (!it) return ''; return `<image href="${Room.src(it, it.colors[0])}" x="${e.x - e.w / 2}" y="${e.y - e.h}" width="${e.w}" height="${e.h}" style="${f}" preserveAspectRatio="xMidYMax meet" ${e.flip ? `transform="translate(${2 * e.x} 0) scale(-1 1)"` : ''}/>`; }
     if (e.k === 'emo') return `<text x="${e.x}" y="${e.y}" font-size="${(e.s * 0.92).toFixed(1)}" text-anchor="middle" dominant-baseline="central" style="${f}" ${e.flip ? `transform="translate(${2 * e.x} 0) scale(-1 1)"` : ''}>${e.e}</text>`;
     const d = DECO[e.d] || DECO.star; return `<g transform="translate(${e.x} ${e.y}) scale(${(e.s / 50).toFixed(3)})" style="${f}">${d(e)}</g>`;
   }
-  const sceneSVG = (R, els) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${R.w} ${R.h}" class="sp-svg"><rect width="${R.w}" height="${R.h}" fill="#CFEFFF"/><svg x="0" y="0" width="${R.w}" height="${R.h}" viewBox="0 392 360 ${R.h > 300 ? 248 : 226}" preserveAspectRatio="none"><image href="${bgUri(R.bg)}" x="0" y="0" width="360" height="640"/></svg>${C.drawOrder(els).map(elSVG).join('')}</svg>`;   // 배경은 아래쪽(언덕·땅)만 잘라 쓴다: 하늘의 큰 장식(나비·해)이 가장자리에 잘려 보이지 않게
+  /** 색 구분 돕기(C14): B 그림에서 A 와 색(c)·색조(hue)만 다른 요소에 _lum 표시 → 밝기 차이를 더한다 */
+  const cbOn = () => document.documentElement.dataset.cb === '1';
+  const cbMark = (R, els) => { if (!cbOn() || els !== R.B) return els; const A = new Map(R.A.map((a) => [a.u, a])); return els.map((b) => { const a = A.get(b.u); return a && (a.c !== b.c || (a.hue || 0) !== (b.hue || 0)) ? Object.assign({}, b, { _lum: 1 }) : b; }); };
+  const sceneSVG = (R, els0) => { const els = cbMark(R, els0); return sceneSVG0(R, els); };
+  const sceneSVG0 = (R, els) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${R.w} ${R.h}" class="sp-svg"><rect width="${R.w}" height="${R.h}" fill="#CFEFFF"/><svg x="0" y="0" width="${R.w}" height="${R.h}" viewBox="0 392 360 ${R.h > 300 ? 248 : 226}" preserveAspectRatio="none"><image href="${bgUri(R.bg)}" x="0" y="0" width="360" height="640"/></svg>${C.drawOrder(els).map(elSVG).join('')}</svg>`;   // 배경은 아래쪽(언덕·땅)만 잘라 쓴다: 하늘의 큰 장식(나비·해)이 가장자리에 잘려 보이지 않게
+  SP.debug.sceneSVG = sceneSVG;
 
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });

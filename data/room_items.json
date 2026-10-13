@@ -11870,7 +11870,8 @@
    },
    "flat": false,
    "cls": "prop",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "「곶감이다!」 하는 소리에 호랑이가 도망갔다는 바로 그 곶감 꾸러미."
   },
   {
    "no": 352,
@@ -11901,7 +11902,8 @@
    },
    "flat": false,
    "cls": "mid",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "곶감 한 조각에 순해진 호랑이 인형. 배가 불러서 눈을 가늘게 뜬다."
   },
   {
    "no": 353,
@@ -11932,7 +11934,8 @@
    },
    "flat": false,
    "cls": "wall",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "외양간 문에 걸려 밤마다 딸랑딸랑 울던 방울."
   },
   {
    "no": 354,
@@ -11965,7 +11968,8 @@
    },
    "flat": false,
    "cls": "mid",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "호랑이가 앉았다 간 자리에 깔아 둔 줄무늬 방석."
   },
   {
    "no": 355,
@@ -11996,7 +12000,8 @@
    },
    "flat": false,
    "cls": "prop",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "할머니 댁 가는 길에 하나가 꾹 눌러 쓰던 빨간 모자."
   },
   {
    "no": 356,
@@ -12027,7 +12032,8 @@
    },
    "flat": false,
    "cls": "small",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "네모 엄마가 빵과 수프를 담아 준 심부름 바구니."
   },
   {
    "no": 357,
@@ -12058,7 +12064,8 @@
    },
    "flat": false,
    "cls": "small",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "「큰길은 이쪽」이라고 적힌 숲길 표지판. 샛길은 예쁘지만 길을 잃는다."
   },
   {
    "no": 358,
@@ -12089,7 +12096,8 @@
    },
    "flat": false,
    "cls": "small",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "같이 놀고 싶어서 말을 걸었던 늑대 인형. 이제는 큰길로 다닌다."
   },
   {
    "no": 359,
@@ -12120,38 +12128,8 @@
    },
    "flat": false,
    "cls": "small",
-   "theme": "deco"
-  },
-  {
-   "no": 360,
-   "id": "x_bluestar",
-   "name": "파란 요정 별",
-   "set": "exp",
-   "room": "yard",
-   "w": 46,
-   "h": 46,
-   "slot": "wall",
-   "art": "emoji",
-   "emoji": "⭐",
-   "colors": [
-    "#FFFFFF"
-   ],
-   "game": "expedition",
-   "season": null,
-   "physical": null,
-   "cozy": 5,
-   "tags": [],
-   "style": "warm",
-   "color": "white",
-   "src": {
-    "game": "expedition",
-    "kind": "code",
-    "n": 174,
-    "hint": "기하학 원정대 · 174단계 클리어 전리품 코드"
-   },
-   "flat": false,
-   "cls": "wall",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "제페토 아저씨가 깎은 나무 인형. 거짓말을 안 하니 코가 그대로다."
   },
   {
    "no": 361,
@@ -12184,7 +12162,8 @@
    },
    "flat": false,
    "cls": "mid",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "톱밥 냄새가 나는 제페토 아저씨의 작업대."
   },
   {
    "no": 362,
@@ -12215,6 +12194,38 @@
    },
    "flat": false,
    "cls": "small",
+   "theme": "deco",
+   "line": "사기꾼 흉내만 내던 여우가 이제는 인형 마을의 친구가 되었다."
+  },
+  {
+   "no": 363,
+   "id": "x_fairyribbon",
+   "name": "요정의 파란 리본",
+   "set": "exp",
+   "room": "yard",
+   "w": 46,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎀",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 174,
+    "hint": "기하학 원정대 · 174단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
    "theme": "deco"
   }
  ],

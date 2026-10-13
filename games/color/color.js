@@ -5,6 +5,8 @@
   let bloomId = 0;
   const el = UK.el, CL = (window.COLOR = { debug: {} });
   const KEY = 'gf:color:v1', INK = '#4A3030';
+  /** 색 구분 돕기(C14): 팔레트 칸마다 다른 모양 기호를 얹는다(색만으로 구분하지 않게) */
+  const GLYPH = ['●', '▲', '■', '★', '◆', '♥', '✚', '✖', '○', '▬'], cbGlyph = (b, k) => { b.textContent = GLYPH[k % GLYPH.length]; b.style.color = '#3A2E39'; b.style.fontSize = '20px'; b.style.textShadow = '0 0 3px #fff, 0 0 3px #fff'; };
   const PAL = ['#FF6B6B', '#FFA94D', '#FFD43B', '#69DB7C', '#4DABF7', '#9775FA', '#F783AC', '#A9744F', '#FFFFFF', '#868E96'];
   const TYPES = ['free', 'number', 'trace', 'sticker', 'wall', 'webtoon'];
   const s32 = (b) => '<svg viewBox="0 0 32 32">' + b + '</svg>';
@@ -118,7 +120,7 @@
       const target = new Set(colorable);
       const nums = num ? [...new Set(colorable.map((i) => R.orig[i]))].slice(0, 7) : null;
       if (num) { colorable.forEach((i) => R.regions[i].setAttribute('data-n', nums.indexOf(R.orig[i]) + 1)); R.regions.forEach((n, i) => { if (!target.has(i)) n.removeAttribute('data-r'); }); }
-      const swatches = (num ? nums : PAL).map((c, k) => { const b = el('button', 'cl-sw' + (c === '#FFFFFF' ? ' white' : '') + (k === 0 ? ' on' : ''), pal, num ? String(k + 1) : ''); b.style.background = c; if (num) { const m = /#(..)(..)(..)/.exec(c), lum = m ? (0.299 * parseInt(m[1], 16) + 0.587 * parseInt(m[2], 16) + 0.114 * parseInt(m[3], 16)) : 0; if (lum > 150) { b.style.color = '#3A2E39'; b.style.textShadow = '0 0 3px #fff, 0 0 3px #fff'; } }   /* 번호 글자는 칸 색이 밝으면 어둡게(색만으로 구분하지 않도록 번호를 또렷이) */ b.setAttribute('aria-label', '색 ' + (k + 1)); b.onclick = () => { color = c; swatches.forEach((x) => x.classList.remove('on')); b.classList.add('on'); GF.sfx('tap'); }; return b; });
+      const swatches = (num ? nums : PAL).map((c, k) => { const b = el('button', 'cl-sw' + (c === '#FFFFFF' ? ' white' : '') + (k === 0 ? ' on' : ''), pal, num ? String(k + 1) : ''); b.style.background = c; if (num) { const m = /#(..)(..)(..)/.exec(c), lum = m ? (0.299 * parseInt(m[1], 16) + 0.587 * parseInt(m[2], 16) + 0.114 * parseInt(m[3], 16)) : 0; if (lum > 150) { b.style.color = '#3A2E39'; b.style.textShadow = '0 0 3px #fff, 0 0 3px #fff'; } }   /* 번호 글자는 칸 색이 밝으면 어둡게(색만으로 구분하지 않도록 번호를 또렷이) */ b.setAttribute('aria-label', '색 ' + (k + 1)); if (document.documentElement.dataset.cb === '1' && !num) cbGlyph(b, k); b.onclick = () => { color = c; swatches.forEach((x) => x.classList.remove('on')); b.classList.add('on'); GF.sfx('tap'); }; return b; });
       color = (num ? nums : PAL)[0];
       const filled = () => Object.keys(fills).length;
       const done = UK.round({ icon: 'check', cls: 'lg', label: GF.t('c16.color.001'), onclick: () => complete(false) }, acts), undo = UK.round({ icon: 'replay', cls: 'pink', label: GF.t('c16.block.004'), onclick: () => { const h = hist.pop(); if (!h) return; if (h.prev == null) delete fills[h.i]; else fills[h.i] = h.prev; R.regions[h.i].setAttribute('fill', h.prev || '#FFFFFF'); refresh(); } }, acts);
@@ -230,7 +232,7 @@
       const show = () => { prev.style.cssText += ';' + Room.wallStyle(d); };
       [0, 1, 2].forEach((k) => { const b = el('button', 'cl-tab' + (d.pat === k ? ' on' : ''), pat, `<svg viewBox="0 0 32 32">${k === 0 ? '<rect x="5" y="5" width="22" height="22" rx="6" fill="#F6C28B"/>' : k === 1 ? '<path d="M16 4L29 27H3z" fill="#8FD3F4"/>' : '<circle cx="16" cy="16" r="12" fill="#B7C2F2"/>'}</svg>`); b.onclick = () => { d.pat = k; [...pat.children].forEach((x, i) => x.classList.toggle('on', i === k)); GF.sfx('pick'); show(); }; });
       const sw2 = [['bg', d.bg], ['fg', d.fg]].map(([t, c]) => { const b = el('button', 'cl-sw' + (t === 'fg' ? ' on' : ''), pat); b.style.background = c; b.onclick = () => { target = t; [...pat.querySelectorAll('.cl-sw')].forEach((x) => x.classList.remove('on')); b.classList.add('on'); GF.sfx('tap'); }; b.dataset.t = t; return b; });
-      PAL.forEach((c) => { const b = el('button', 'cl-sw' + (c === '#FFFFFF' ? ' white' : ''), pal); b.style.background = c; b.onclick = () => { d[target] = c; sw2.find((x) => x.dataset.t === target).style.background = c; GF.sfx('drop'); show(); }; });
+      PAL.forEach((c, ci) => { const b = el('button', 'cl-sw' + (c === '#FFFFFF' ? ' white' : ''), pal); b.style.background = c; if (document.documentElement.dataset.cb === '1') cbGlyph(b, ci); b.onclick = () => { d[target] = c; sw2.find((x) => x.dataset.t === target).style.background = c; GF.sfx('drop'); show(); }; });
       show();
       const ok = UK.round({ icon: 'check', cls: 'lg', label: GF.t('c16.color.001'), onclick: () => complete() }, acts);
       function complete() { SV.done[pg.id] = { desc: Object.assign({}, d) }; save(); GF.refreshBar(); if (roomOK) { Room.setWall('kid', d); Room.data.items.filter((x) => x.needPages && x.needPages <= doneCount()).forEach((x) => Room.grant(x.id)); } GF.sfx('celebrate'); GF.sfx('star'); GF.replace('chouse'); }

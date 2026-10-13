@@ -200,9 +200,9 @@
   /** 테마 시트: 현재 방의 프리셋 목록 → 놓기(되돌리기 가능) */
   Room.presetSheet = function (rid, parent, onDone) {
     const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), list = Room.presets(rid);
-    el('h2', '', sh, '테마로 꾸미기'); el('p', 'h2-dsub', sh, '가지고 있는 가구만 한 번에 놓아요. 마음에 안 들면 되돌릴 수 있어요.');
-    const rec = Room.recommendList(rid); if (rec.length) { const c0 = el('div', 'h2-pcard h2-reccard', sh), tx0 = el('div', 'h2-ptx', c0); el('b', '', tx0, '✨ 추천 배치'); el('small', '', tx0, '가졌지만 아직 안 놓은 가구 ' + rec.length + '개 중 이 방에 어울리는 것을 아늑한 순서로 빈 자리에 놓아요.'); UK.btn({ text: '놓기', cls: 'gold sm', onclick: () => { const r = Room.recommend(rid); if (!r.ok) { toastH(r.full ? '더 놓을 자리가 없어요' : '놓을 가구가 없어요', sc); return; } sc.remove(); try { GF.sfx && GF.sfx('star'); } catch (e) { /* 소리 */ } onDone && onDone({ have: r.placed.length, missing: [] }, { name: '추천 배치' }); } }, c0); }
-    if (!list.length) el('p', 'h2-empty', sh, '이 방엔 아직 테마가 없어요');
+    el('h2', '', sh, GF.t('c16.room2.007')); el('p', 'h2-dsub', sh, GF.t('c16.room2.008'));
+    const rec = Room.recommendList(rid); if (rec.length) { const c0 = el('div', 'h2-pcard h2-reccard', sh), tx0 = el('div', 'h2-ptx', c0); el('b', '', tx0, GF.t('c16.room2.009')); el('small', '', tx0, '가졌지만 아직 안 놓은 가구 ' + rec.length + '개 중 이 방에 어울리는 것을 아늑한 순서로 빈 자리에 놓아요.'); UK.btn({ text: GF.t('c16.room2.001'), cls: 'gold sm', onclick: () => { const r = Room.recommend(rid); if (!r.ok) { toastH(r.full ? '더 놓을 자리가 없어요' : '놓을 가구가 없어요', sc); return; } sc.remove(); try { GF.sfx && GF.sfx('star'); } catch (e) { /* 소리 */ } onDone && onDone({ have: r.placed.length, missing: [] }, { name: '추천 배치' }); } }, c0); }
+    if (!list.length) el('p', 'h2-empty', sh, GF.t('c16.room2.010'));
     list.forEach((P) => {
       const st = Room.presetStatus(P.id), c = el('div', 'h2-pcard', sh), pvw = el('div', 'h2-ppv', c); R2.draw(pvw, P.room, { mini: true, list: Room.presetLayout(P.id) }); el('i', 'h2-pic', pvw, P.icon); const tx = el('div', 'h2-ptx', c); el('b', '', tx, P.name); el('small', '', tx, P.note);
       const pg = el('div', 'h2-pbar', tx, `<i style="width:${Math.round(st.have / st.total * 100)}%"></i>`); el('small', 'h2-pcnt', tx, `가구 ${st.have}/${st.total}` + (st.missing.length ? ' · 아직 없어요: ' + st.missing.slice(0, 3).join(', ') + (st.missing.length > 3 ? ' 외 ' + (st.missing.length - 3) : '') : ' · 다 모였어요!')); void pg;
@@ -210,7 +210,7 @@
         if (!st.have) return; const r = Room.applyPreset(P.id); if (!r.ok) { toastH('놓지 못했어요', sc); return; } sc.remove(); try { GF.sfx && GF.sfx('star'); } catch (e) { /* 소리 */ } onDone && onDone(r, P);
       } }, c);
     });
-    UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
+    UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
   const grant0 = Room.grant;
   Room.grant = function (id) {
@@ -226,7 +226,7 @@
     const g = pos && pos.room ? rooms().find((r) => r.id === pos.room) : null; if (g) { const pv = el('div', 'h2-drop-pv', sh), dd = R2.draw(pv, g.id, { mini: true, flash: id }); const pl = (ensure().placed[g.id] || []).find((q) => q.id === id); if (pl && dd && dd.room) { const gg = geo(it), sp = el('i', 'h2-spot', dd.room); sp.style.cssText = `left:${pl.x - 12}px;top:${pl.y - 12}px;width:${gg.w + 24}px;height:${gg.h + 24}px`; const st = el('em', 'h2-spotstar', dd.room, '✨'); st.style.cssText = `left:${pl.x + gg.w - 4}px;top:${pl.y - 16}px`; } if (!kid()) el('small', '', sh, g.name + '에 놓였어요'); }
     if (after.lv > before.lv) { Room.albumAdd('lv:' + after.lv, 'level', '집 레벨 ' + after.lv, '아늑함 ' + Number(after.cozy).toLocaleString('ko-KR'), g ? g.id : null); el('p', 'h2-lvup', sh, kid() ? '⭐ ' + after.lv : '집 레벨 ' + after.lv + '!'); try { UK.confetti(sc); } catch (e) {} ensure().lv = after.lv; Room.save(); }
     const acts = el('div', 'acts', sh); UK.btn({ text: kid() ? null : (g ? '보러 가기' : '집에 놓기'), icon: kid() ? 'home' : null, cls: 'green block', onclick: () => { sc.remove(); opts.openHouse ? opts.openHouse() : (cb && cb()); } }, acts);
-    if (!kid()) UK.btn({ text: '나중에', cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(); } }, acts); else UK.btn({ icon: 'next', cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(); } }, acts);
+    if (!kid()) UK.btn({ text: GF.t('c16.room2.002'), cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(); } }, acts); else UK.btn({ icon: 'next', cls: 'ghost sm', onclick: () => { sc.remove(); cb && cb(); } }, acts);
     try { GF.sfx && GF.sfx('star'); } catch (e) {} return sc;
   };
 
@@ -334,7 +334,7 @@
   Room.guestBook = function (parent) {
     const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), S = ensure(), L0 = Room.guestList().filter((g) => !g.cam || g.got), by = {}; L0.forEach((g) => { const k = g.who || whoName(g.char), q = by[k] || (by[k] = { who: k, char: g.char, apps: [], props: [], n: 0, max: 0, need: g.need, lines: [], ids: [] }); if (g.app && !q.apps.includes(g.app)) q.apps.push(g.app); if (g.cam && g.prop) q.props.push(g.prop); const n = (S.guests[g.id] || {}).n || 0; q.n += n; q.max += g.max; q.need = Math.min(q.need, g.need); q.ids.push(g.id); if (n) q.lines.push(g.lines[Math.min(n - 1, g.lines.length - 1)]); });
     const L = Object.values(by).sort((x, y) => ((y.n > 0) - (x.n > 0)) || x.need - y.need), seen = L.filter((g) => g.n > 0).length;
-    el('h2', '', sh, kid() ? '👋' : '손님 도감 ' + seen + '/' + L.length); if (!kid()) el('p', 'h2-dsub', sh, '아늑함이 쌓이면 손님이 놀러 와요. 앱에서 만난 카메오도 찾아와요.');
+    el('h2', '', sh, kid() ? '👋' : '손님 도감 ' + seen + '/' + L.length); if (!kid()) el('p', 'h2-dsub', sh, GF.t('c16.room2.011'));
     L.forEach((g) => { const n = g.n, c = el('div', 'h2-pcard' + (n ? '' : ' off'), sh), pv = el('div', 'h2-gface', c); if (Room.cfg.charSrc) { const im = el('img', '', pv); im.src = Room.cfg.charSrc(g.char); im.alt = ''; } const tx = el('div', 'h2-ptx', c);
       if (!kid()) { el('b', '', tx, g.who + ' · ' + g.apps.join(' · ') + (g.props.length ? ' ' + g.props.join('') : '')); el('small', '', tx, n ? (g.lines[g.lines.length - 1] || '') : '아직 안 왔어요 · 아늑함 ' + g.need + ' 이상'); el('small', 'h2-pcnt', tx, `방문 ${n}/${g.max}`); } else el('small', '', tx, '⭐'.repeat(n)); });
     UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
@@ -354,17 +354,17 @@
     return { ok: true, room: m[1], list, name: R.name };
   };
   Room.visitSheet = function (parent) {
-    const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc); el('h2', '', sh, '집 구경 코드'); el('p', 'h2-dsub', sh, '내 방의 코드를 알려 주거나, 받은 코드로 친구 집을 구경해요. 구경만 하고 바뀌는 건 없어요.');
+    const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc); el('h2', '', sh, GF.t('c16.room2.012')); el('p', 'h2-dsub', sh, GF.t('c16.room2.013'));
     const mine = el('div', 'h2-codebox', sh), R0 = (rooms().find((r) => r.id === Room._curRoom) || rooms()[0]); el('b', '', mine, '내 방 코드 · ' + (R0 ? R0.name : '')); const out = el('textarea', 'h2-code', mine); out.readOnly = true; out.value = R0 ? Room.layoutCode(R0.id) : '';
-    UK.btn({ text: '복사', cls: 'sky sm', onclick: () => { out.select(); let okc = false; try { navigator.clipboard.writeText(out.value); okc = true; } catch (e) { try { okc = document.execCommand('copy'); } catch (x) { /* 복사 불가 */ } } toastH(okc ? '코드를 복사했어요' : '코드를 길게 눌러 복사해요', sc); } }, mine);
-    const rec = el('div', 'h2-codebox', sh); el('b', '', rec, '받은 코드로 구경'); const inp = el('textarea', 'h2-code', rec); inp.placeholder = 'GFH1-…'; const msg = el('p', 'h2-dsub', rec, '');
-    UK.btn({ text: '구경하기', cls: 'green sm', onclick: () => { const r = Room.decodeLayout(inp.value); if (!r.ok) { msg.textContent = { format: '코드 모양이 달라요', check: '코드가 틀렸어요(한 글자씩 확인해 봐요)', room: '이 앱에서는 볼 수 없는 방이에요' }[r.why] || '코드를 읽지 못했어요'; return; } sc.remove(); Room.visitView(r, parent); } }, rec);
+    UK.btn({ text: GF.t('c16.room2.003'), cls: 'sky sm', onclick: () => { out.select(); let okc = false; try { navigator.clipboard.writeText(out.value); okc = true; } catch (e) { try { okc = document.execCommand('copy'); } catch (x) { /* 복사 불가 */ } } toastH(okc ? '코드를 복사했어요' : '코드를 길게 눌러 복사해요', sc); } }, mine);
+    const rec = el('div', 'h2-codebox', sh); el('b', '', rec, GF.t('c16.room2.014')); const inp = el('textarea', 'h2-code', rec); inp.placeholder = 'GFH1-…'; const msg = el('p', 'h2-dsub', rec, '');
+    UK.btn({ text: GF.t('c16.room2.004'), cls: 'green sm', onclick: () => { const r = Room.decodeLayout(inp.value); if (!r.ok) { msg.textContent = { format: '코드 모양이 달라요', check: '코드가 틀렸어요(한 글자씩 확인해 봐요)', room: '이 앱에서는 볼 수 없는 방이에요' }[r.why] || '코드를 읽지 못했어요'; return; } sc.remove(); Room.visitView(r, parent); } }, rec);
     if (!kid()) {      // 원정 전리품 코드(B6): 기하학 원정대에서 받은 6자리 코드를 입력하면 가구가 생긴다(앱 사이 연결은 코드로만 — D12)
-      const lt = el('div', 'h2-codebox', sh); el('b', '', lt, '원정 전리품 코드'); el('small', '', lt, '기하학 원정대에서 단계를 깨고 받은 6자리 코드'); const row = el('div', 'h2-coderow', lt), ci = el('input', 'h2-code1', row); ci.maxLength = 8; ci.placeholder = 'A1B2C3'; ci.autocomplete = 'off'; ci.autocapitalize = 'characters'; ci.spellcheck = false; ci.oninput = () => { const v = ci.value.toUpperCase().replace(/[^0-9A-Z]/g, ''); if (v !== ci.value) ci.value = v; };
-      UK.btn({ text: '붙여넣기', cls: 'sky sm', onclick: async () => { try { const t = await navigator.clipboard.readText(); ci.value = String(t || '').toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 8); ci.dispatchEvent(new Event('input')); } catch (e) { toastH('칸을 길게 눌러 붙여넣어요', sc); } } }, row); const cm = el('p', 'h2-dsub', lt, '');
-      UK.btn({ text: '받기', cls: 'gold block', onclick: () => { const r = Room.redeem(ci.value); if (!r.ok) { cm.textContent = { len: '6자리로 적어 주세요', check: '코드가 틀렸어요', item: '없는 코드예요' }[r.why] || '받지 못했어요'; return; } if (!r.isNew) { cm.textContent = '이미 가지고 있는 가구예요'; return; } sc.remove(); Room.dropCard(r.item.id, parent, () => { Room._redraw && Room._redraw(); }, { openHouse: () => { Room._redraw && Room._redraw(); } }); } }, lt);
+      const lt = el('div', 'h2-codebox', sh); el('b', '', lt, GF.t('c16.room2.015')); el('small', '', lt, GF.t('c16.room2.016')); const row = el('div', 'h2-coderow', lt), ci = el('input', 'h2-code1', row); ci.maxLength = 8; ci.placeholder = 'A1B2C3'; ci.autocomplete = 'off'; ci.autocapitalize = 'characters'; ci.spellcheck = false; ci.oninput = () => { const v = ci.value.toUpperCase().replace(/[^0-9A-Z]/g, ''); if (v !== ci.value) ci.value = v; };
+      UK.btn({ text: GF.t('c16.room2.005'), cls: 'sky sm', onclick: async () => { try { const t = await navigator.clipboard.readText(); ci.value = String(t || '').toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 8); ci.dispatchEvent(new Event('input')); } catch (e) { toastH('칸을 길게 눌러 붙여넣어요', sc); } } }, row); const cm = el('p', 'h2-dsub', lt, '');
+      UK.btn({ text: GF.t('c16.room2.006'), cls: 'gold block', onclick: () => { const r = Room.redeem(ci.value); if (!r.ok) { cm.textContent = { len: '6자리로 적어 주세요', check: '코드가 틀렸어요', item: '없는 코드예요' }[r.why] || '받지 못했어요'; return; } if (!r.isNew) { cm.textContent = GF.t('c16.room2.027'); return; } sc.remove(); Room.dropCard(r.item.id, parent, () => { Room._redraw && Room._redraw(); }, { openHouse: () => { Room._redraw && Room._redraw(); } }); } }, lt);
     }
-    UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
+    UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
   /** 구경 화면: 이 집의 가족이 가구를 돌아다니며 생활 동작을 한다(남의 집 느낌) */
   const OWNERS = ['nemo_dad.good', 'nemo_mom.good', 'dong_dad.calm', 'wife.joy', 'husband.joy', 'nemo_grandma.good'];
@@ -380,7 +380,7 @@
     const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), ids = [...new Set(r.list.map((q) => q.id))], miss = ids.filter((id) => !Room.has(id));
     el('h2', '', sh, '친구의 ' + r.name); el('p', 'h2-dsub', sh, `가구 ${ids.length}개 · 내가 가진 것 ${ids.length - miss.length}개 (구경만 해요)`); const pv = el('div', 'h2-drop-pv big', sh), dv = R2.draw(pv, r.room, { mini: true, list: r.list }); Room.ownerLife(dv, r.list, r.room);
     if (miss.length) UK.btn({ text: '없는 가구 ' + miss.length + '개 위시에 담기', cls: 'gold sm block', onclick: () => { miss.forEach((id) => { if (!Room.wishOn(id)) Room.wish(id); }); toastH('♥ 위시에 담았어요', sc); } }, sh);
-    UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
+    UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
   /* ---------------- 방 확장 연출(A7): 집 레벨이 올라 새 방이 열리면 「공사 → 완성」 짧은 컷 ---------------- */
   /** 아직 연출을 안 본 열린 방. 처음 한 번은 지금 열린 방을 모두 본 것으로 치고 연출하지 않는다. */
@@ -395,7 +395,7 @@
     const sc = el('div', 'uk-scrim h2-reveal', ovRoot(parent)), box = el('div', 'h2-rvbox', sc), pv = el('div', 'h2-rvpv', box); R2.draw(pv, rid, { mini: true, anchors: true });      // 실제 방 상태 + 점선 자리(가구를 미리 채워 보이지 않는다)
     const wall = el('div', 'h2-rvwall', pv); wall.innerHTML = '<div class="h2-rvstripe"></div><div class="h2-rvwork"><i>🚧</i><i>🔨</i><i>🧱</i></div><div class="h2-rvbar"><b></b></div>';
     const title = el('div', 'h2-rvtitle', box, kid() ? '🚪✨' : '<small>새 방이 열렸어요!</small><b>' + R.name + '</b><em>점선 자리에 가구를 채워 봐요</em>'); title.style.opacity = 0; title.style.display = 'none';
-    const wk = el('div', 'h2-rvworker', box); if (Room.cfg.charSrc) { const wi = el('img', '', wk); wi.src = Room.cfg.charSrc(OWNERS[[...String(rid)].reduce((a, c) => a + c.charCodeAt(0), 0) % OWNERS.length]); wi.alt = ''; } el('b', '', wk, kid() ? '🔨🔨' : '🔨 뚝딱뚝딱…'); if (!kid()) el('small', '', wk, '새 방을 만들고 있어요');
+    const wk = el('div', 'h2-rvworker', box); if (Room.cfg.charSrc) { const wi = el('img', '', wk); wi.src = Room.cfg.charSrc(OWNERS[[...String(rid)].reduce((a, c) => a + c.charCodeAt(0), 0) % OWNERS.length]); wi.alt = ''; } el('b', '', wk, kid() ? '🔨🔨' : '🔨 뚝딱뚝딱…'); if (!kid()) el('small', '', wk, GF.t('c16.room2.017'));
     try { GF.sfx && GF.sfx('tukdak'); } catch (e) { /* 소리 */ }
     setTimeout(() => { wall.classList.add('lift'); try { GF.sfx && GF.sfx('celebrate'); UK.confetti(sc); } catch (e) { /* 연출 */ } wk.style.display = 'none'; title.style.display = ''; requestAnimationFrame(() => { title.style.opacity = 1; }); }, 1700);
     const acts = el('div', 'acts h2-rvacts', box); acts.style.display = 'none'; setTimeout(() => { acts.style.display = ''; }, 2000);
@@ -458,7 +458,7 @@
     const albChip = el('button', 'h2-dreamchip h2-albchip', view, kid() ? '📒' : '📒 앨범'); albChip.onclick = () => Room.albumSheet(parent);
     const sceneChip = el('button', 'h2-dreamchip h2-scenechip', view, ''); sceneChip.style.display = 'none';
     if (!kid()) {      // 오늘의 집 한 장면(A14): 안 본 날은 점이 붙고, 누르면 그 방으로 가서 보여 준다
-      const dayChip = el('button', 'h2-dreamchip h2-daychip', view, '📅 오늘의 장면'); const mark = () => { dayChip.classList.toggle('new', !Room.dailyToday().seen); };
+      const dayChip = el('button', 'h2-dreamchip h2-daychip', view, GF.t('c16.room2.018')); const mark = () => { dayChip.classList.toggle('new', !Room.dailyToday().seen); };
       dayChip.onclick = () => { const T = Room.dailyToday(); if (cur !== T.ev.room) { cur = T.ev.room; sel = null; drawAll(); } setTimeout(() => { const rm = stage.querySelector('.h2-room'); if (!rm) return; dayChip.style.visibility = 'hidden'; const first = !T.seen; if (!Room.playDaily(rm, T, () => { dayChip.style.visibility = ''; if (first) { Room.albumAdd(T.key, 'day', T.ev.title, T.ev.beats[2][1], T.ev.room); } mark(); })) dayChip.style.visibility = ''; }, cur === T.ev.room ? 60 : 700); };
       setTimeout(mark, 0);
     }
@@ -501,15 +501,15 @@
       T.show.forEach((t) => { const it = t.miss.it, sr = (it && it.src) || {}, row = el('div', 'h2-task' + (kid() ? ' kid' : ''), body); const im = el('img', '', row); im.src = it ? Room.src(it) : ''; im.alt = '';
         const go = () => Room.goApp(sr.game, { parent, home: opts.go && (() => opts.go(sr.game)) });
         if (kid()) { el('span', 'h2-tic', row, APPICON[sr.game] || '🎁'); const b = el('button', 'h2-go', row, UK.icon('next')); b.setAttribute('aria-label', 'go'); b.onclick = go; }
-        else { const tx = el('div', 'h2-ttx', row); el('b', '', tx, t.label); el('small', '', tx, sr.hint || ''); const b = el('button', 'h2-go', row, '어디서? ▶'); b.onclick = go; } });
-      if (!T.show.length && T.chapter && !kid()) el('p', 'h2-tt', body, '이 장의 가구를 다 모았어요!');
+        else { const tx = el('div', 'h2-ttx', row); el('b', '', tx, t.label); el('small', '', tx, sr.hint || ''); const b = el('button', 'h2-go', row, GF.t('c16.room2.019')); b.onclick = go; } });
+      if (!T.show.length && T.chapter && !kid()) el('p', 'h2-tt', body, GF.t('c16.room2.020'));
       if (kid()) { el('div', 'h2-bar wide', body, `<i style="width:${c.pct}%"></i>`); return; }
       const pr = el('div', 'h2-prog', body); el('span', '', pr, `방 완성도 <b>${c.pct}%</b>`); const ids = []; (R.anchors || []).forEach((a) => { const it = Room.item(a.want); if (it && !ids.includes(it.set)) ids.push(it.set); }); ids.slice(0, 2).map((id) => Room.set(id)).filter(Boolean).forEach((s) => { const its = Room.data.items.filter((i) => i.set === s.id), got = its.filter((i) => Room.has(i.id)).length; el('em', '', pr, `${s.name.replace(/ 세트.*/, '')} ${got}/${its.length}`); }); el('span', 'h2-cz', pr, `이 방 아늑함 <b>${c.total}</b>`);
     }
     function drawTools() {
       tools.innerHTML = ''; const B = (ic, label, fn, on) => { const b = el('button', 'h2-fb' + (on ? ' on' : ''), tools, kid() ? UK.icon(ic) : UK.icon(ic) + '<span>' + label + '</span>'); b.setAttribute('aria-label', label); b.onclick = fn; };
       const LM = ['auto', 'day', 'eve', 'night'], LI = { auto: '🕒', day: '☀️', eve: '🌇', night: '🌙' }, LN = { auto: '자동', day: '낮', eve: '저녁', night: '밤' }, cm = LM.includes(S.light) ? S.light : 'auto'; const lt = el('button', 'h2-fb', tools, LI[cm] + (kid() ? '' : '<span>' + LN[cm] + '</span>')); lt.setAttribute('aria-label', 'light'); lt.onclick = () => { S.light = LM[(LM.indexOf(cm) + 1) % LM.length]; Room.save(); drawAll(); };
-      B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, '🔗<span>구경 코드</span>'); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid()) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); toastH(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: '되돌리기', cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photoStudio(cur, parent));
+      B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, '🔗<span>구경 코드</span>'); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid()) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); toastH(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: GF.t('c16.block.004'), cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photoStudio(cur, parent));
     }
     function drawSel() {
       selbar.innerHTML = ''; if (!place) return; if (sel == null) { el('p', 'h2-hint', selbar, kid() ? '' : '가구를 끌어서 옮겨 보세요'); return; } const p = (S.placed[cur] || [])[sel], it = p && Room.item(p.id); if (!it) return;
@@ -561,7 +561,7 @@
   /* ---------------- 카탈로그 · 꿈의 방(완성 모습) ---------------- */
   Room.dreamRoom = function (rid, parent) {
     const R = roomDef(rid); if (!R) return; const sc = el('div', 'uk-scrim h2-dream-ov', ovRoot(parent)), sh = el('div', 'uk-sheet', sc);
-    if (!kid()) { el('h2', '', sh, R.name + ' · 완성 모습'); el('p', 'h2-dsub', sh, '이렇게 채우면 완성이에요'); } const pv = el('div', 'h2-drop-pv big', sh); R2.draw(pv, rid, { dream: true, mini: true });
+    if (!kid()) { el('h2', '', sh, R.name + ' · 완성 모습'); el('p', 'h2-dsub', sh, GF.t('c16.room2.021')); } const pv = el('div', 'h2-drop-pv big', sh); R2.draw(pv, rid, { dream: true, mini: true });
     UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
   };
   Room.dream = function (setId, parent) {
@@ -585,12 +585,12 @@
       body.innerHTML = '';
       if (tab === 'set') {
         const R = roomDef(opts.room); if (R) { const bn = el('button', 'h2-dreambn', body, kid() ? '✨' : '✨ <b>' + R.name + ' 완성 모습</b> 보기'); bn.onclick = () => Room.dreamRoom(R.id, sh); }          // 세트 탭 맨 위: 꿈의 방
-        sets().filter((s) => Room.data.items.some((i) => i.set === s.id && inGroup(i))).forEach((s) => { const its = Room.data.items.filter((i) => i.set === s.id && inGroup(i)), got = its.filter((i) => Room.has(i.id)).length; const h = el('div', 'h2-sh2', body, (kid() ? '' : `<b>${s.name}</b>`) + `<span>${got}/${its.length}</span>`); const pg = el('div', 'uk-progress gold', h); pg.innerHTML = `<i style="width:${got / its.length * 100}%"></i>`; if (!kid()) { const dr = el('button', 'h2-dream', h, '완성 모습'); dr.onclick = () => Room.dream(s.id, sh); } const g = el('div', 'h2-grid', body); its.forEach((it) => card(g, it)); }); return;
+        sets().filter((s) => Room.data.items.some((i) => i.set === s.id && inGroup(i))).forEach((s) => { const its = Room.data.items.filter((i) => i.set === s.id && inGroup(i)), got = its.filter((i) => Room.has(i.id)).length; const h = el('div', 'h2-sh2', body, (kid() ? '' : `<b>${s.name}</b>`) + `<span>${got}/${its.length}</span>`); const pg = el('div', 'uk-progress gold', h); pg.innerHTML = `<i style="width:${got / its.length * 100}%"></i>`; if (!kid()) { const dr = el('button', 'h2-dream', h, GF.t('c16.room2.022')); dr.onclick = () => Room.dream(s.id, sh); } const g = el('div', 'h2-grid', body); its.forEach((it) => card(g, it)); }); return;
       }
       const g = el('div', 'h2-grid', body); const L = items(); if (!L.length) el('p', 'h2-empty', body, kid() ? '' : (tab === 'wish' ? '갖고 싶은 가구에 ♥ 를 눌러 보세요' : '여기엔 아직 없어요')); L.forEach((it) => card(g, it));
     }
     function drawDet() {
-      det.innerHTML = ''; const it = selId && Room.item(selId); if (!it) { if (!kid()) el('p', 'h2-hint', det, '가구를 눌러 보세요'); return; } const own = Room.has(it.id), sr = it.src || {};
+      det.innerHTML = ''; const it = selId && Room.item(selId); if (!it) { if (!kid()) el('p', 'h2-hint', det, GF.t('c16.room2.023')); return; } const own = Room.has(it.id), sr = it.src || {};
       const row = el('div', 'h2-detrow', det); const im = el('img', '', row); im.src = Room.src(it); im.alt = ''; const tx = el('div', 'h2-dtx', row);
       if (!kid()) { el('b', '', tx, it.name); el('small', '', tx, (own ? '가지고 있어요' : sr.hint ? '어디서 얻나 · ' + sr.hint : '') + ' · 아늑함 +' + (it.cozy || 0)); } else el('span', 'h2-tic', tx, APPICON[sr.game] || '🎁');
       if (!kid() && it.line) el('p', 'h2-dline' + (own ? '' : ' lock'), det, own ? '“' + it.line + '”' : '🔒 가지면 이 가구의 이야기가 열려요');
@@ -769,7 +769,7 @@
   Room.albumList = () => ((ensure() || {}).album || []).slice().sort((a, b) => b.t - a.t);
   Room.albumSheet = function (parent) {
     const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), L = Room.albumList();
-    el('h2', '', sh, kid() ? '📒' : '우리 집 앨범 ' + L.length + '장'); if (!kid()) el('p', 'h2-dsub', sh, '집에서 있었던 좋은 순간이 날짜 도장과 함께 저절로 모여요.');
+    el('h2', '', sh, kid() ? '📒' : '우리 집 앨범 ' + L.length + '장'); if (!kid()) el('p', 'h2-dsub', sh, GF.t('c16.room2.024'));
     if (!L.length) el('p', 'h2-empty', sh, kid() ? '' : '아직 비어 있어요. 가구를 놓고 이야기를 열면 한 장씩 쌓여요.');
     const grid = el('div', 'h2-albgrid', sh);
     L.forEach((x) => { const c = el('div', 'h2-alb' + (x.th ? ' th' : ''), grid); if (x.th) { const im = el('img', 'h2-albth', c); im.src = x.th; im.alt = ''; el('span', 'h2-albbadge', c, AL_ICON[x.kind] || '✨'); } else el('div', 'h2-albic', c, AL_ICON[x.kind] || '✨'); if (!kid()) { el('b', '', c, x.title); if (x.sub) el('small', '', c, x.sub); } el('i', 'h2-albstamp', c, x.d); });
@@ -808,7 +808,7 @@
     const sb = el('div', 'h2-psrow stick', sh); STICKERS.forEach((e) => { const b = el('button', 'h2-psst', sb, e); b.onclick = () => { const o = { e, x: 0.2 + Math.random() * 0.6, y: 0.2 + Math.random() * 0.5 }; st.stickers.push(o); addSticker(o); }; });
     const addSticker = (o) => { const f = el('i', 'h2-pssticker', layer, o.e); f.style.left = o.x * 100 + '%'; f.style.top = o.y * 100 + '%'; let drag = null; f.onpointerdown = (ev) => { drag = true; f.setPointerCapture(ev.pointerId); ev.preventDefault(); }; f.onpointermove = (ev) => { if (!drag) return; const r = layer.getBoundingClientRect(); o.x = Math.max(0.02, Math.min(0.98, (ev.clientX - r.left) / r.width)); o.y = Math.max(0.02, Math.min(0.98, (ev.clientY - r.top) / r.height)); f.style.left = o.x * 100 + '%'; f.style.top = o.y * 100 + '%'; }; f.onpointerup = () => { drag = null; }; f.ondblclick = () => { st.stickers.splice(st.stickers.indexOf(o), 1); f.remove(); }; };
     const acts = el('div', 'acts h2-psacts', sh);
-    if (!kid()) { const tg = el('label', 'h2-pstog', stage.parentNode.insertBefore(el('div', 'h2-psrow'), sb)); const cb = el('input', '', tg); cb.type = 'checkbox'; cb.checked = st.stamp; el('span', '', tg, '「당신은 어느 도형인가요?」 도장'); cb.onchange = () => { st.stamp = cb.checked; redraw(); }; const clr = el('button', 'h2-pschip', tg.parentNode, '스티커 지우기'); clr.onclick = () => { st.stickers.length = 0; layer.innerHTML = ''; }; }
+    if (!kid()) { const tg = el('label', 'h2-pstog', stage.parentNode.insertBefore(el('div', 'h2-psrow'), sb)); const cb = el('input', '', tg); cb.type = 'checkbox'; cb.checked = st.stamp; el('span', '', tg, GF.t('c16.room2.025')); cb.onchange = () => { st.stamp = cb.checked; redraw(); }; const clr = el('button', 'h2-pschip', tg.parentNode, GF.t('c16.room2.026')); clr.onclick = () => { st.stickers.length = 0; layer.innerHTML = ''; }; }
     UK.btn({ text: kid() ? null : '저장 · 공유', icon: kid() ? 'check' : null, cls: 'green block', onclick: async () => {
       try { const c = await Room.renderPhoto(rid, st, base, label); await saveCanvas(c, 'gihaha-house-' + rid + '.png'); Room.albumAdd('photo:' + rid + ':' + Math.floor(Date.now() / 60000), 'photo', (R ? R.name : '우리 집') + ' 사진', '꾸민 사진을 저장했어요', rid); toastH(kid() ? '📷' : '방 사진을 저장했어요', sc); } catch (e) { toastH(kid() ? '📷✕' : '사진을 저장하지 못했어요', sc); }
     } }, acts);

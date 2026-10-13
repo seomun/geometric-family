@@ -48,7 +48,7 @@ LOOT = [  # id, 이름, 이모지, 슬롯, (w,h), 단계
     # 13~15나라(B23)
     ('x_driedpersimmon', '곶감 꾸러미', '🍡', 'table', (44, 40), 147), ('x_tigerdoll', '호랑이 인형', '🐅', 'floor', (56, 48), 150), ('x_cowbell', '외양간 방울', '🔔', 'wall', (42, 48), 153), ('x_tigerrug', '호랑이 무늬 방석', '🟧', 'floor', (60, 44), 156),
     ('x_redhat', '빨간 모자', '🧢', 'table', (44, 40), 159), ('x_basket', '심부름 바구니', '🧺', 'floor', (54, 50), 162), ('x_woodsign', '숲길 표지판', '🪧', 'floor', (46, 64), 165), ('x_wolfdoll', '늑대 인형', '🐺', 'floor', (54, 52), 168),
-    ('x_puppet', '나무 인형', '🪆', 'floor', (48, 62), 171), ('x_bluestar', '파란 요정 별', '⭐', 'wall', (46, 46), 174), ('x_workbench', '제페토 작업대', '🔨', 'floor', (60, 56), 177), ('x_foxdoll', '여우 인형', '🦊', 'floor', (52, 54), 180)]
+    ('x_puppet', '나무 인형', '🪆', 'floor', (48, 62), 171), ('x_fairyribbon', '요정의 파란 리본', '🎀', 'wall', (46, 40), 174), ('x_workbench', '제페토 작업대', '🔨', 'floor', (60, 56), 177), ('x_foxdoll', '여우 인형', '🦊', 'floor', (52, 54), 180)]
 LOOT_STAGE = {i: st for i, n, e, sl, wh, st in LOOT}
 for i, n, e, sl, (w, h), st in LOOT: new(i, n, e, sl, 'yard', w, h, 'exp', 'expedition')
 if not any(x['id'] == 'exp' for x in R['sets']): R['sets'].append(dict(id='exp', name='원정 전리품 세트(성인)', game='expedition', room='yard', story='원정을 다녀온 가족의 짐에서 나온 것들. 기하학 원정대에서 받은 코드로 놓아요.'))

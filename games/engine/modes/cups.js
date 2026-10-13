@@ -6,15 +6,15 @@ GF.mode('cups', {
   setup(root, cfg, ctx) {
     const W = ctx.W, H = ctx.H, N = Math.max(2, Math.min(4, cfg.cups | 0 || 3)), swaps = cfg.swaps | 0 || 3, sp = cfg.speed | 0 || 700, hero = cfg.hero || 'baby.joy';
     const CW = N === 4 ? 70 : 84, gap = Math.min(30, (W - 24 - CW * N) / Math.max(1, N - 1)), x0 = (W - (N * CW + (N - 1) * gap)) / 2, slotX = (s) => x0 + s * (CW + gap), baseY = Math.round(H * 0.5);
-    const COL = ['#F6C28B', '#8FD3F4', '#B7C2F2', '#FFB3C7'];
-    const cupSVG = (c) => `<svg viewBox="0 0 100 100" style="width:100%;height:100%"><path d="M18 14h64l-8 80H26z" fill="${c}" stroke="#4A3030" stroke-width="4.4" stroke-linejoin="round"/><path d="M14 14h72" stroke="#4A3030" stroke-width="6" stroke-linecap="round"/><path d="M30 34h40" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".7"/><circle cx="42" cy="58" r="3.4" fill="#4A3030"/><circle cx="60" cy="58" r="3.4" fill="#4A3030"/><path d="M45 70q6 5 12 0" fill="none" stroke="#4A3030" stroke-width="3.2" stroke-linecap="round"/></svg>`;
+    const COL = ['#F6C28B', '#8FD3F4', '#C8E86E', '#C79BF2'], cb = document.documentElement.dataset.cb === '1';      // 색 구분 돕기(C14): 켜면 컵마다 다른 무늬(줄·점·빗금)를 더한다
+    const cupSVG = (c, i) => `<svg viewBox="0 0 100 100" style="width:100%;height:100%"><path d="M18 14h64l-8 80H26z" fill="${c}" stroke="#4A3030" stroke-width="4.4" stroke-linejoin="round"/><path d="M14 14h72" stroke="#4A3030" stroke-width="6" stroke-linecap="round"/><path d="M30 34h40" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".7"/>${cb ? ['', '<path d="M24 28h52M23 44h54M22 60h56M21 76h58" stroke="#4A3030" stroke-width="3" opacity=".45"/>', '<g fill="#4A3030" opacity=".45"><circle cx="34" cy="34" r="3"/><circle cx="52" cy="34" r="3"/><circle cx="70" cy="34" r="3"/><circle cx="42" cy="76" r="3"/><circle cx="62" cy="76" r="3"/><circle cx="52" cy="88" r="3"/></g>', '<path d="M26 30l44 56M40 22l38 48M24 52l30 38" stroke="#4A3030" stroke-width="3" opacity=".45"/>'][i % 4] : ''}<circle cx="42" cy="58" r="3.4" fill="#4A3030"/><circle cx="60" cy="58" r="3.4" fill="#4A3030"/><path d="M45 70q6 5 12 0" fill="none" stroke="#4A3030" stroke-width="3.2" stroke-linecap="round"/></svg>`;
     const dots = GF.el('div', 'seqdots', root); dots.style.top = '14px';
     const table = GF.el('div', 'abs cuptable', root); table.style.cssText += `;left:0;right:0;top:${baseY + CW * 1.05}px;height:14px;border-radius:7px;background:rgba(201,143,90,.55)`;
     let slotOf = Array.from({ length: N }, (_, i) => i), heroCup = (Math.random() * N) | 0, phase = 'show', wrong = 0, finished = false;       // slotOf[cup] = 지금 자리
     const cups = Array.from({ length: N }, (_, i) => {
       const box = GF.el('div', 'abs cupbox', root); box.style.cssText += `;left:${slotX(i)}px;top:${baseY}px;width:${CW}px;height:${CW * 1.05}px;transition:left ${sp}ms ease-in-out, transform ${Math.round(sp / 2)}ms ease-in-out`;
       const h = GF.el('div', 'abs cuphero', box); if (i === heroCup) { h.appendChild(ctx.img(hero)); } h.style.cssText += `;left:${CW * 0.2}px;bottom:4px;width:${CW * 0.6}px;height:${CW * 0.78}px`;
-      const cup = GF.el('div', 'abs cupcup', box, cupSVG(COL[i % COL.length])); cup.style.cssText += `;left:0;top:0;width:${CW}px;height:${CW * 1.05}px;transition:transform .4s cubic-bezier(.3,1.4,.5,1)`;
+      const cup = GF.el('div', 'abs cupcup', box, cupSVG(COL[i % COL.length], i)); cup.style.cssText += `;left:0;top:0;width:${CW}px;height:${CW * 1.05}px;transition:transform .4s cubic-bezier(.3,1.4,.5,1)`;
       const hit = GF.el('div', 'abs', box); hit.style.cssText += ';inset:-14px;z-index:4;touch-action:none';
       hit.addEventListener('pointerdown', (e) => { e.preventDefault(); pick(i); });
       return { box, cup, h, hit };

@@ -61,12 +61,12 @@ PATS = [
     re.compile(r"(\bel\(\s*'[a-z0-9]+'\s*,\s*'[^'\n]*'\s*,\s*[A-Za-z_.$()\[\]0-9]+\s*,\s*)'(" + KO + r")'(\s*\))"),
     re.compile(r"(\.(?:textContent|innerText)\s*=\s*)'(" + KO + r")'"),
 ]
-SKIP_FILE = re.compile(r'-gen|core|android|room2|expedition|node_modules|/demo|/store|/media|/audio')
+SKIP_FILE = re.compile(r'-gen|core|android|node_modules|/demo|/store|/media|/audio|expedition/(?!exp\.js)')
 D = {}
 DP = 'tools/i18n_c16.json'
 if os.path.exists(DP): D = json.load(open(DP, encoding='utf-8'))
 by_text = {v: k for k, v in D.items()}
-files = sorted({f.replace(BS, '/') for f in glob.glob('games/engine/*.js') + glob.glob('games/engine/ui-kit/*.js') + glob.glob('games/engine/room/room.js') + glob.glob('games/*/*.js')})
+files = sorted({f.replace(BS, '/') for f in glob.glob('games/engine/*.js') + glob.glob('games/engine/ui-kit/*.js') + glob.glob('games/engine/room/room.js') + glob.glob('games/engine/room/room2.js') + glob.glob('games/expedition/exp.js') + glob.glob('games/*/*.js')})
 tot = 0; per = {}; skipped_top = 0
 for f in files:
     if SKIP_FILE.search(f): continue

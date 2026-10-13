@@ -220,3 +220,13 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 
 .h2-fab { left: 86px !important; right: 6px !important; justify-content: flex-end; }
 .h2-top { right: auto !important; width: 74px !important; flex-direction: column !important; align-items: stretch !important; gap: 3px !important; } .h2-top .h2-lv { justify-content: center; } .h2-barw { padding: 3px 5px !important; } .h2-nx { display: none !important; }
+
+/* 시간·계절·날씨(A5) */
+.h2-room.night::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,20,60,.50), rgba(20,16,50,.40)); pointer-events: none; z-index: 40; border-radius: inherit; }
+.h2-glow { position: absolute; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(rgba(255,226,120,.85), rgba(255,226,120,0) 66%); mix-blend-mode: screen; pointer-events: none; z-index: 41; animation: h2glw 3.6s ease-in-out infinite; } @keyframes h2glw { 50% { opacity: .78; transform: scale(1.06); } }
+.h2-wx { position: absolute; overflow: hidden; border-radius: 6px; pointer-events: none; z-index: 1; } .h2-wxp { position: absolute; top: -12%; font-style: normal; font-size: 12px; line-height: 1; color: #fff; animation: h2fallwx linear infinite; }
+.h2-wx.rain .h2-wxp { color: #5B8FD6; font-weight: 900; font-size: 13px; } .h2-wx.snow .h2-wxp { font-size: 11px; } .h2-wx.cloud .h2-wxp, .h2-wx.clear .h2-wxp { font-size: 22px; animation-name: h2drift; } .h2-wx.clear .h2-wxp { left: 62% !important; top: 8%; animation: h2sun 5s ease-in-out infinite; }
+@keyframes h2fallwx { to { transform: translate(8px, 90px); opacity: .3; } } @keyframes h2drift { from { transform: translateX(-30px); } to { transform: translateX(110px); } } @keyframes h2sun { 50% { transform: scale(1.12) rotate(8deg); } }
+.h2-sdecor { position: absolute; left: 0; top: 4px; width: 210px; height: 40px; pointer-events: none; z-index: 2; } .h2-sdecor i { position: absolute; font-style: normal; font-size: 20px; filter: drop-shadow(0 1px 1px rgba(0,0,0,.2)); }
+
+.h2-owner { transition: left 1.2s ease-in-out, top 1.2s ease-in-out; z-index: 20; }

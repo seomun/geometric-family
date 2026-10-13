@@ -16,6 +16,7 @@ const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m
   const before = await p.evaluate(() => JSON.stringify(Room.S.placed));
   await p.evaluate((c) => { const ta = document.querySelectorAll('.h2-codebox .h2-code')[1]; ta.value = c; [...document.querySelectorAll('.h2-codebox .uk-btn')].find((x) => /구경하기/.test(x.textContent)).click(); }, r.code); await p.waitForTimeout(700); await p.screenshot({ path: 'notes/snapshots/housing_visit_view.png' });
   ok(await p.evaluate(() => /친구의/.test(document.querySelector('.h2-presh h2').textContent) && document.querySelectorAll('.h2-presh .h2-it').length > 0), '구경 화면: 가구가 그려짐'); ok((await p.evaluate(() => JSON.stringify(Room.S.placed))) === before, '구경해도 내 집은 바뀌지 않음');
-  await p.evaluate(() => { document.querySelectorAll('.h2-codebox .h2-code')[1]; });
+  let life = false; for (let k = 0; k < 8 && !life; k++) { await p.waitForTimeout(1000); life = await p.evaluate(() => !!document.querySelector('.h2-presh .h2-owner') && document.querySelectorAll('.h2-presh .h2-fx, .h2-presh .h2-say, .h2-presh .h2-flashfx, .h2-presh .h2-tvfx, .h2-presh .h2-glowfx').length > 0); }
+  ok(life, '구경 화면: 이 집 가족이 가구 곁에서 생활 동작'); await p.screenshot({ path: 'notes/snapshots/housing_visit_life.png' });
   ok(errs.length === 0, '오류 없음 ' + errs[0]); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

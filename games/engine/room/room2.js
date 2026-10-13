@@ -214,11 +214,30 @@
     bed: (f) => `<rect x="${f.x}" y="${f.y - 50}" width="14" height="${f.h + 50}" rx="4" fill="#C98F5A" stroke="${INK}" stroke-width="2.4"/><rect x="${f.x + 10}" y="${f.y - 6}" width="${f.w - 10}" height="40" rx="8" fill="#F2F0FF" stroke="${INK}" stroke-width="2.4"/><rect x="${f.x + 10}" y="${f.y + 26}" width="${f.w - 10}" height="${f.h - 24}" rx="5" fill="#E0B07C" stroke="${INK}" stroke-width="2.4"/>`,
     table: (f) => `<rect x="${f.x}" y="${f.y - 8}" width="${f.w}" height="12" rx="5" fill="#C98F5A" stroke="${INK}" stroke-width="2.4"/><path d="M${f.x + 12} ${f.y + 4}v${f.h}M${f.x + f.w - 12} ${f.y + 4}v${f.h}" stroke="${INK}" stroke-width="6" stroke-linecap="round"/>`,
   };
+  /* ---------------- 시간·계절·날씨(A5): 낮/저녁/밤 자동 · 창밖 날씨 · 계절 장식 ---------------- */
+  const now0 = () => Room._date || new Date();
+  /** 방 빛: S.light = auto|day|eve|night. auto 는 기기 시계(6~16 낮 · 16~19 저녁 · 19~6 밤) */
+  Room.lightNow = function (S) { S = S || ensure(); const m = S && S.light; if (m === 'day' || m === 'eve' || m === 'night') return m; const h = now0().getHours(); return h >= 6 && h < 16 ? 'day' : h >= 16 && h < 19 ? 'eve' : 'night'; };
+  Room.season = (d) => { const m = (d || now0()).getMonth() + 1; return m >= 3 && m <= 5 ? 'spring' : m >= 6 && m <= 8 ? 'summer' : m >= 9 && m <= 11 ? 'autumn' : 'winter'; };
+  /** 그날의 창밖 날씨(같은 날은 모든 앱이 같다): clear·cloud·rain·snow·blossom·leaves */
+  Room.weather = function (d) {
+    d = d || now0(); const seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(), r = ((seed * 2654435761) >>> 0) % 100, se = Room.season(d);
+    const pool = { spring: ['clear', 'clear', 'blossom', 'cloud', 'rain'], summer: ['clear', 'clear', 'cloud', 'rain', 'rain'], autumn: ['clear', 'leaves', 'leaves', 'cloud', 'rain'], winter: ['clear', 'snow', 'snow', 'cloud', 'clear'] }[se];
+    return pool[Math.floor(r / 20)];
+  };
+  const SEASON_DECOR = { spring: ['🌸', '🌷', '🌸', '🦋'], summer: ['🎐', '🌻', '🍉', '🎐'], autumn: ['🍁', '🍂', '🎃', '🍁'], winter: ['❄️', '🎄', '⛄', '❄️'] };
+  const LIGHT_IDS = ['b_lamp', 'g_lantern2'];
+  const wxFx = (room, kind) => {
+    const box = el('div', 'h2-wx ' + kind, room), n = { rain: 14, snow: 12, blossom: 9, leaves: 8, cloud: 3, clear: 1 }[kind] || 0, ch = { rain: '│', snow: '•', blossom: '🌸', leaves: '🍂', cloud: '☁️', clear: '☀️' }[kind];
+    for (let i = 0; i < n; i++) { const f = el('i', 'h2-wxp', box, ch); f.style.cssText = `left:${(i * 83 + 11) % 100}%;animation-delay:${-((i * 37) % 30) / 10}s;animation-duration:${kind === 'rain' ? 0.7 + (i % 3) * 0.15 : kind === 'cloud' ? 14 + i * 5 : 3 + (i % 4) * 0.8}s;${kind === 'cloud' ? 'top:' + (6 + i * 18) + '%;' : ''}`; }
+    return box;
+  };
+  const seasonDecor = (room, se) => { const box = el('div', 'h2-sdecor', room); (SEASON_DECOR[se] || []).forEach((e, i) => { const f = el('i', '', box, e); f.style.cssText = `left:${14 + i * 62}px;top:${i % 2 ? 6 : 12}px`; }); return box; };
   const bgSVG = (R, light) => {
-    const wall = R.wall, eve = light === 'eve', sky = eve ? '#F7B27A' : '#BFE6FF', W = WINDOW; const out = [];
+    const wall = R.wall, eve = light === 'eve', night = light === 'night', sky = night ? '#1B2A5C' : eve ? '#F7B27A' : '#BFE6FF', W = WINDOW; const out = [];
     out.push(`<defs>${pattern(R.pattern, wall)}</defs><rect width="${RW}" height="${WALLH}" fill="${wall}"/>`); if (R.pattern && R.pattern !== 'none') out.push(`<rect width="${RW}" height="${WALLH}" fill="url(#wp)"/>`);
     out.push(`<rect y="${WALLH - 40}" width="${RW}" height="40" fill="${sh2(wall, -0.08)}"/><rect y="${WALLH - 42}" width="${RW}" height="5" fill="${sh2(wall, -0.16)}"/><rect y="${WALLH - 8}" width="${RW}" height="8" fill="rgba(0,0,0,.14)"/>`);
-    out.push(`<rect x="${W.x}" y="${W.y}" width="${W.w}" height="${W.h}" rx="8" fill="${sky}" stroke="#fff" stroke-width="6"/><path d="M${W.x + W.w / 2} ${W.y}v${W.h}M${W.x} ${W.y + W.h / 2}h${W.w}" stroke="#fff" stroke-width="4"/><circle cx="${W.x + 24}" cy="${W.y + 20}" r="9" fill="${eve ? '#FFD27A' : '#fff'}" opacity=".85"/>`);
+    out.push(`<rect x="${W.x}" y="${W.y}" width="${W.w}" height="${W.h}" rx="8" fill="${sky}" stroke="#fff" stroke-width="6"/><path d="M${W.x + W.w / 2} ${W.y}v${W.h}M${W.x} ${W.y + W.h / 2}h${W.w}" stroke="#fff" stroke-width="4"/><circle cx="${W.x + 24}" cy="${W.y + 20}" r="9" fill="${night ? '#FFF3B0' : eve ? '#FFD27A' : '#fff'}" opacity="${night ? 1 : .85}"/>${night ? `<circle cx="${W.x + 28}" cy="${W.y + 18}" r="8" fill="${sky}"/><circle cx="${W.x + 62}" cy="${W.y + 16}" r="1.6" fill="#fff"/><circle cx="${W.x + 74}" cy="${W.y + 34}" r="1.3" fill="#fff"/><circle cx="${W.x + 48}" cy="${W.y + 52}" r="1.5" fill="#fff"/><circle cx="${W.x + 20}" cy="${W.y + 56}" r="1.2" fill="#fff"/>` : ''}`);
     out.push(floorSVG(R)); (R.fixtures || []).forEach((f) => { if (FIXT[f.k]) out.push(FIXT[f.k](f)); });
     return `<svg viewBox="0 0 ${RW} ${RH}" width="${RW}" height="${RH}">${out.join('')}</svg>`;
   };
@@ -228,15 +247,16 @@
   /** parent 안에 방 하나를 그린다. o: {mini, place, flash, dream, onChange, onSel} → {room, wrap, occ} */
   R2.draw = function (parent, rid, o) {
     o = o || {}; const R = rooms().find((r) => r.id === rid) || rooms()[0], S = ensure(); if (!R) return null;
-    const wrap = el('div', 'h2-wrap' + (o.mini ? ' mini' : ''), parent), room = el('div', 'h2-room' + (S.light === 'eve' ? ' eve' : ''), wrap); wrap.__room = room; room.__occ = [];
+    const wrap = el('div', 'h2-wrap' + (o.mini ? ' mini' : ''), parent), LT = Room.lightNow(S), room = el('div', 'h2-room' + (LT === 'eve' ? ' eve' : LT === 'night' ? ' night' : ''), wrap); wrap.__room = room; room.__occ = [];
     const fit = () => { const w = wrap.clientWidth || parent.clientWidth || RW, hh = o.maxH || 0, k = Math.min(1.3, w / RW, hh ? hh / RH : 9); room.style.transform = `scale(${k})`; room.__k = k; wrap.style.height = Math.round(RH * k) + 'px'; if (o.fitWidth) wrap.style.width = Math.round(RW * k) + 'px'; }; fit(); setTimeout(fit, 0); wrap.__fit = fit;
-    el('div', 'h2-bg', room, bgSVG(R, S.light));
+    el('div', 'h2-bg', room, bgSVG(R, LT)); if (!o.mini || o.wx) { const wk = Room.weather(); const wx = wxFx(room, wk); wx.style.cssText = `left:${WINDOW.x + 3}px;top:${WINDOW.y + 3}px;width:${WINDOW.w - 6}px;height:${WINDOW.h - 6}px`; seasonDecor(room, Room.season()); room.dataset.wx = wk; room.dataset.light = LT; }
     let list = o.list || (S.placed[R.id] || []);
     if (o.dream) list = (R.anchors || []).map((a) => { const r = anchorRect(a); return r ? { id: a.want, x: Math.round(r.x), y: Math.round(r.y), c: (Room.item(a.want) || { colors: ['#fff'] }).colors[0] } : null; }).filter(Boolean);
     const order = list.map((p, i) => ({ p, i, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => key(a) - key(b)); const occ = room.__occ;
     order.forEach(({ p, i, it }) => {
       const g = geo(it); occ.push({ x: p.x, y: p.y, w: g.w, h: g.h, wall: it.slot === 'wall' });
       if (it.slot === 'floor' && !it.flat) { const sh = el('i', 'h2-sh', room); sh.style.cssText = `left:${p.x + g.w * 0.08}px;top:${p.y + g.h - 7}px;width:${g.w * 0.84}px`; }
+      if (LT === 'night' && LIGHT_IDS.includes(p.id)) { const gl = el('i', 'h2-glow', room); gl.style.cssText = `left:${p.x + g.w / 2 - 70}px;top:${p.y + g.h * 0.2 - 70}px`; }
       const d = el('img', 'h2-it' + (o.flash === p.id ? ' flash' : ''), room); d.src = Room.src(it, p.c); d.alt = ''; d.draggable = false; d.style.cssText = `left:${p.x}px;top:${p.y}px;width:${g.w}px;height:${g.h}px${p.flip ? ';transform:scaleX(-1)' : ''}`; d.dataset.i = i;
       if (o.mini || o.dream) return;
       if (o.place) d.addEventListener('pointerdown', (e) => {
@@ -305,9 +325,19 @@
     UK.btn({ text: '구경하기', cls: 'green sm', onclick: () => { const r = Room.decodeLayout(inp.value); if (!r.ok) { msg.textContent = { format: '코드 모양이 달라요', check: '코드가 틀렸어요(한 글자씩 확인해 봐요)', room: '이 앱에서는 볼 수 없는 방이에요' }[r.why] || '코드를 읽지 못했어요'; return; } sc.remove(); Room.visitView(r, parent); } }, rec);
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
+  /** 구경 화면: 이 집의 가족이 가구를 돌아다니며 생활 동작을 한다(남의 집 느낌) */
+  const OWNERS = ['nemo_dad.good', 'nemo_mom.good', 'dong_dad.calm', 'wife.joy', 'husband.joy', 'nemo_grandma.good'];
+  Room.ownerLife = function (d, list, rid) {
+    if (!d || !d.room || !Room.cfg.charSrc) return; const room = d.room, hosts = list.map((q, i) => ({ q, i, it: Room.item(q.id) })).filter((x) => x.it && FXD[x.it.id]); if (!hosts.length) return;
+    const who = OWNERS[[...String(rid)].reduce((a, c) => a + c.charCodeAt(0), 0) % OWNERS.length], im = el('img', 'h2-guest h2-owner', room); im.src = Room.cfg.charSrc(who); im.alt = ''; let k = 0;
+    const step = () => {
+      if (!room.isConnected) return; const h = hosts[k++ % hosts.length], g = geo(h.it), x = Math.max(4, Math.min(RW - 60, h.q.x + g.w + 2)), y = Math.max(WALLH + 4, Math.min(RH - 80, h.q.y + g.h - 46)); im.style.left = x + 'px'; im.style.top = y + 'px';
+      setTimeout(() => { if (!room.isConnected) return; const el0 = room.querySelector('.h2-it[data-i="' + h.i + '"]'); if (el0) use(room, el0, h.it, h.q); }, 1300); setTimeout(step, 3400);
+    }; im.style.left = '10px'; im.style.top = (RH - 90) + 'px'; setTimeout(step, 500);
+  };
   Room.visitView = function (r, parent) {
     const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), ids = [...new Set(r.list.map((q) => q.id))], miss = ids.filter((id) => !Room.has(id));
-    el('h2', '', sh, '친구의 ' + r.name); el('p', 'h2-dsub', sh, `가구 ${ids.length}개 · 내가 가진 것 ${ids.length - miss.length}개 (구경만 해요)`); const pv = el('div', 'h2-drop-pv big', sh); R2.draw(pv, r.room, { mini: true, list: r.list });
+    el('h2', '', sh, '친구의 ' + r.name); el('p', 'h2-dsub', sh, `가구 ${ids.length}개 · 내가 가진 것 ${ids.length - miss.length}개 (구경만 해요)`); const pv = el('div', 'h2-drop-pv big', sh), dv = R2.draw(pv, r.room, { mini: true, list: r.list }); Room.ownerLife(dv, r.list, r.room);
     if (miss.length) UK.btn({ text: '없는 가구 ' + miss.length + '개 위시에 담기', cls: 'gold sm block', onclick: () => { miss.forEach((id) => { if (!Room.wishOn(id)) Room.wish(id); }); UK.toast('♥ 위시에 담았어요', sc); } }, sh);
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
@@ -402,7 +432,7 @@
     }
     function drawTools() {
       tools.innerHTML = ''; const B = (ic, label, fn, on) => { const b = el('button', 'h2-fb' + (on ? ' on' : ''), tools, kid() ? UK.icon(ic) : UK.icon(ic) + '<span>' + label + '</span>'); b.setAttribute('aria-label', label); b.onclick = fn; };
-      const lt = el('button', 'h2-fb', tools, (S.light === 'eve' ? '🌙' : '☀️') + (kid() ? '' : '<span>' + (S.light === 'eve' ? '밤' : '낮') + '</span>')); lt.setAttribute('aria-label', 'light'); lt.onclick = () => { S.light = S.light === 'eve' ? 'day' : 'eve'; Room.save(); drawAll(); };
+      const LM = ['auto', 'day', 'eve', 'night'], LI = { auto: '🕒', day: '☀️', eve: '🌇', night: '🌙' }, LN = { auto: '자동', day: '낮', eve: '저녁', night: '밤' }, cm = LM.includes(S.light) ? S.light : 'auto'; const lt = el('button', 'h2-fb', tools, LI[cm] + (kid() ? '' : '<span>' + LN[cm] + '</span>')); lt.setAttribute('aria-label', 'light'); lt.onclick = () => { S.light = LM[(LM.indexOf(cm) + 1) % LM.length]; Room.save(); drawAll(); };
       B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, '🔗<span>구경 코드</span>'); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid() && Room.presets(cur).length) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); UK.toast(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: '되돌리기', cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photo(cur, parent));
     }
     function drawSel() {
@@ -492,7 +522,7 @@
     try {
       const R = roomDef(rid), S = ensure(), W = 1020, k = W / RW, c = document.createElement('canvas'); c.width = W; c.height = Math.round(RH * k); const x = c.getContext('2d');
       const load = (src) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
-      const bg = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bgSVG(R, S.light))); if (bg) x.drawImage(bg, 0, 0, W, c.height);
+      const bg = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bgSVG(R, Room.lightNow(S)))); if (bg) x.drawImage(bg, 0, 0, W, c.height);
       const list = (S.placed[rid] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => (a.p.y + geo(a.it).h) - (b.p.y + geo(b.it).h));
       for (const { p, it } of list) { const im = await load(Room.src(it, p.c)); if (!im) continue; const g = geo(it), w = g.w * k, h = g.h * k; x.save(); if (p.flip) { x.translate(p.x * k + w, p.y * k); x.scale(-1, 1); x.drawImage(im, 0, 0, w, h); } else x.drawImage(im, p.x * k, p.y * k, w, h); x.restore(); }
       x.fillStyle = 'rgba(255,255,255,.9)'; x.font = '900 34px sans-serif'; x.fillText('기하학 가족 · 우리 집', 24, c.height - 24);

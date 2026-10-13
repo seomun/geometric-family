@@ -118,6 +118,8 @@
   "ui.set.caption": "자막",
   "ui.set.vibrate": "진동",
   "ui.set.big": "큰 글씨",
+  "ui.set.bigbtn": "큰 버튼",
+  "ui.set.cb": "색 구분 돕기",
   "ui.set.rest": "쉬어요 알림",
   "ui.set.off": "끔",
   "ui.set.stats": "통계",

@@ -13,7 +13,7 @@
   const save = (s) => LS(key(), s);
   const S = () => GF.state.settings;
   const persist = () => { if (GF.save) GF.save(); };
-  function applyBig() { document.documentElement.dataset.big = S().big ? '1' : '0'; }
+  function applyBig() { const d = document.documentElement.dataset; d.big = S().big ? '1' : '0'; d.bigbtn = S().bigBtn ? '1' : '0'; d.cb = S().cb ? '1' : '0'; }      // 큰 글씨 · 큰 버튼(터치 판정·버튼 키움) · 색 구분 돕기(색약 팔레트)
 
   /* 진동: 성인 앱만(유아 앱엔 VIBRATE 권한이 없다). 소리 id 에 맞춰 아주 짧게 */
   const HAP = { drop: 10, pick: 6, ok: 18, star: [18, 40, 22], hmm: 32, celebrate: [20, 40, 20, 40, 30] };
@@ -42,6 +42,8 @@
     row(body, GF.t('ui.set.caption'), UK.switch(!s.capOff, (on) => { s.capOff = !on; persist(); }));
     if (!kid && navigator.vibrate) row(body, GF.t('ui.set.vibrate'), UK.switch(s.vib !== false, (on) => { s.vib = on; persist(); if (on) GF.haptic('ok'); }));
     if (!kid) row(body, GF.t('ui.set.big'), UK.switch(!!s.big, (on) => { s.big = on ? 1 : 0; persist(); applyBig(); }));
+    if (!kid) row(body, GF.t('ui.set.bigbtn'), UK.switch(!!s.bigBtn, (on) => { s.bigBtn = on ? 1 : 0; persist(); applyBig(); }));
+    if (!kid) row(body, GF.t('ui.set.cb'), UK.switch(!!s.cb, (on) => { s.cb = on ? 1 : 0; persist(); applyBig(); }));
     if (kid) {   // 쉬어요 알림: 보호자가 정하는 놀이 시간 알림(아이에게 압박 없음, 설정 안 하면 없음)
       const opts = [0, 10, 20, 30], b = tbtn(s.rest ? s.rest + '분' : GF.t('ui.set.off'), () => { const i = (opts.indexOf(s.rest || 0) + 1) % opts.length; s.rest = opts[i]; b.textContent = s.rest ? s.rest + '분' : GF.t('ui.set.off'); persist(); X.restReset(); }); row(body, GF.t('ui.set.rest'), b);
       if (c.stats) { el('h4', 'xt-h', body, GF.t('ui.set.summary')); c.stats().forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); }

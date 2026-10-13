@@ -329,3 +329,10 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 
 .sg-rb { min-height: 52px; } [data-uk="kid"] .sg-rb { position: relative; } [data-uk="kid"] .sg-rb::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, calc(var(--hit-kid, 72px) * 1.16)); height: max(100%, calc(var(--hit-kid, 72px) * 1.16)); transform: translate(-50%, -50%); }
 .uk-btn.sm { min-height: 54px; }
+/* 접근성 2차(C6): 큰 버튼 · 색 구분 돕기(색약) — 성인 앱 설정에서 켠다 */
+html[data-bigbtn="1"] .uk-btn { position: relative; } html[data-bigbtn="1"] .uk-btn.sm { min-height: 64px; } html[data-bigbtn="1"] .round-btn, html[data-bigbtn="1"] .uk-round:not(.lg) { width: 62px; height: 62px; }      /* 큰 버튼 = 작은 버튼(둥근·칩·sm)을 키우고 모든 버튼의 터치 판정을 80 이상으로. 기본 큰 버튼(64)은 레이아웃이 빡빡해 그대로 */ html[data-bigbtn="1"] .h2-dreamchip { min-height: 56px; } html[data-bigbtn="1"] .h2-fb { min-height: 62px; }
+html[data-bigbtn="1"] .uk-btn::before, html[data-bigbtn="1"] .h2-dreamchip::before, html[data-bigbtn="1"] .h2-fb::before, html[data-bigbtn="1"] .h2-go::before, html[data-bigbtn="1"] .uk-round::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, calc(var(--hit-kid, 72px) * 1.15)); height: max(100%, calc(var(--hit-kid, 72px) * 1.15)); transform: translate(-50%, -50%); }
+html[data-bigbtn="1"] .round-btn::before, html[data-bigbtn="1"] .tok::before, html[data-bigbtn="1"] .fcard::before, html[data-bigbtn="1"] .card::before { width: max(100%, calc(var(--hit-kid, 72px) * 1.18)); height: max(100%, calc(var(--hit-kid, 72px) * 1.18)); }
+/* 색 구분 돕기: 초록·분홍·하늘·금색 버튼을 Okabe-Ito 계열(파랑·주황·보라·노랑)로 — 붉은 계열과 초록 계열이 서로 같아 보이지 않게. 글자는 진한 색 그대로(대비 4.5:1 이상) */
+html[data-cb="1"] { --uk-green: #56B4E9; --uk-pink: #F0A93A; --uk-sky: #D9A9CB; --uk-gold: #F5E653; --uk-danger: #A8420F; }
+html[data-cb="1"] .uk-btn.pink { background: #F0A93A; } html[data-cb="1"] .uk-btn.danger, html[data-cb="1"] .uk-btn.dong { color: #fff; }

@@ -32,6 +32,8 @@
     game: '<svg viewBox="0 0 64 64"><rect x="10" y="10" width="20" height="20" rx="4" fill="#F6C28B"/><path d="M46 8l12 22H34z" fill="#8FD3F4"/><circle cx="20" cy="46" r="11" fill="#3B4A7A"/><rect x="36" y="38" width="20" height="16" rx="4" fill="#6CCB8A"/></svg>',
     album: '<svg viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48" rx="8" fill="#8FD3F4"/><path d="M32 17l4.6 9.9 10.8 1.2-8 7.3 2.3 10.7L32 40.6l-9.7 5.5 2.3-10.7-8-7.3 10.8-1.2z" fill="#FFC933"/></svg>',
     gshadow: '<svg viewBox="0 0 32 32"><path d="M16 4l12 22H4z" fill="#3A2E39" opacity=".5"/></svg>',
+    gtrace: '<svg viewBox="0 0 32 32"><path d="M6 6q20 2 4 10t16 10" fill="none" stroke="#E8C77A" stroke-width="6" stroke-linecap="round"/><circle cx="6" cy="6" r="3" fill="#FF8FA8"/></svg>',
+    gcups: '<svg viewBox="0 0 32 32"><path d="M7 8h18l-2.4 18H9.4z" fill="#8FD3F4" stroke="#3A2E39" stroke-width="1.5" stroke-linejoin="round"/><circle cx="13" cy="18" r="1.2" fill="#3A2E39"/><circle cx="19" cy="18" r="1.2" fill="#3A2E39"/></svg>',
     gfaces: '<svg viewBox="0 0 32 32"><rect x="3" y="7" width="12" height="18" rx="3" fill="#8FD3F4"/><rect x="17" y="7" width="12" height="18" rx="3" fill="#fff" stroke="#3A2E39" stroke-width="1.5"/><circle cx="23" cy="16" r="3" fill="#FF8FA8"/></svg>',
     gpuzzle: '<svg viewBox="0 0 32 32"><path d="M4 4h12v6a3 3 0 1 1 0 6v12H4z" fill="#6CCB8A"/><path d="M16 4h12v24H16V16a3 3 0 1 0 0-6z" fill="#FFC933"/></svg>',
     gpaint: '<svg viewBox="0 0 32 32"><path d="M16 3C8 3 3 9 3 15s4 12 10 12c3 0 3-3 5-3 4 0 11-2 11-9C29 9 24 3 16 3z" fill="#FFC933"/><circle cx="10" cy="14" r="2.5" fill="#FF8FA8"/><circle cx="16" cy="9" r="2.5" fill="#8FD3F4"/><circle cx="22" cy="14" r="2.5" fill="#6CCB8A"/></svg>',
@@ -353,9 +355,9 @@
   // 안드로이드 껍데기가 호출: 앱이 백그라운드로 가면 소리를 멈추고, 돌아오면 이어 간다 / 노치 인셋이 바뀌면 다시 맞춘다
   GF.setHidden = (h) => { GF.appHidden = !!h; if (!h && GF.ip && GF.ip.refresh) { try { GF.ip.refresh(); } catch (e) {} } if (GF.bgm) GF.bgm.sync(); if (!h && window.Room && Room.refresh) { try { Room.refresh(); } catch (e) { /* 형제 앱 집 불러오기 실패는 무시 */ } } };
   GF.refit = () => { try { fit(); } catch (e) {} };   // 부팅 전(DOM 없음)에 네이티브가 불러도 오류 없이 넘어간다
-  const GAME_ICON = { shadow: 'gshadow', faces: 'gfaces', puzzle: 'gpuzzle', paint: 'gpaint', shapes: 'gshapes' };
-  const GAME_HERO = { shadow: 'dong_dad.good', faces: 'wife.joy', puzzle: 'nemo_mom.good', paint: 'baby.joy', shapes: 'nemo_dad.good' };
-  const GAME_ORDER = ['shadow', 'faces', 'puzzle', 'paint', 'shapes'];
+  const GAME_ICON = { shadow: 'gshadow', faces: 'gfaces', puzzle: 'gpuzzle', paint: 'gpaint', shapes: 'gshapes', trace: 'gtrace', cups: 'gcups' };
+  const GAME_HERO = { shadow: 'dong_dad.good', faces: 'wife.joy', puzzle: 'nemo_mom.good', paint: 'baby.joy', shapes: 'nemo_dad.good', trace: 'baby.joy', cups: 'nemo_kids.kid1' };
+  const GAME_ORDER = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'trace', 'cups'];
 
   /* ---------------- 홈 ---------------- */
   GF.screen('home', {
@@ -649,7 +651,8 @@
         const open = !!GF.modes[g] && GF.modes[g].free;
         const b = el('button', 'card' + (open ? '' : ' locked'), r);
         const col = i % 2, row = Math.floor(i / 2);
-        b.style.cssText += GF.safeWide ? 'left:' + (24 + i * 134) + 'px;top:150px;width:124px;height:170px' : 'left:' + (20 + col * 170) + 'px;top:' + (84 + row * 180) + 'px;width:150px;height:160px';
+        const step = Math.min(134, (GF.safe.w - 48 - 124) / (GAME_ORDER.length - 1));
+        b.style.cssText += GF.safeWide ? 'left:' + (24 + i * step) + 'px;top:150px;width:124px;height:170px' : 'left:' + (20 + col * 170) + 'px;top:' + (66 + row * 148) + 'px;width:150px;height:136px';
         b.appendChild(GF.img(GAME_HERO[g]));
         const ic = el('div', '', b, IC[GAME_ICON[g]]); ic.style.cssText = 'position:absolute;left:8px;top:8px;width:40px;height:40px;background:#fff;border-radius:12px;padding:4px;box-shadow:0 2px 0 rgba(0,0,0,.12)';
         if (!open) el('div', '', b, '<svg class="lock" viewBox="0 0 32 32">' + IC.lock.slice(IC.lock.indexOf('>') + 1));

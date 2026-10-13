@@ -324,3 +324,6 @@ img { -webkit-user-drag: none; pointer-events: none; }
 #safe.wide .homeplay { left: 24px; margin-left: 122px; top: auto; bottom: 168px; }
 
 .hero-art { position: absolute; left: 14px; right: 14px; top: 150px; height: 210px; background-size: contain; background-repeat: no-repeat; background-position: center; opacity: .5; pointer-events: none; }
+/* D9 새 놀이: 길 따라가기 · 컵 속 친구 찾기 */
+.trtok { cursor: grab; z-index: 5; } .trtok.drag { transform: scale(1.1); filter: drop-shadow(0 6px 4px rgba(0,0,0,.25)); } .trtok img, .cuphero img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; } .trhome { z-index: 2; pointer-events: none; } .trglow { position: absolute; border-radius: 50%; background: radial-gradient(#FFF3A0, rgba(255,243,160,0)); animation: trglow .6s ease-in-out infinite alternate; pointer-events: none; z-index: 4; } @keyframes trglow { to { transform: scale(1.5); opacity: .5; } }
+.cupbox { z-index: 3; } .cuphero { z-index: 1; pointer-events: none; } .cupcup { z-index: 2; } .cupbox.wiggle { animation: cupwig .4s ease-in-out 3; } @keyframes cupwig { 25% { transform: rotate(-7deg); } 75% { transform: rotate(7deg); } }

@@ -137,3 +137,18 @@ TALE_LINES = {
 for _u in UNITS:
     assert _u['id'] in TALE_LINES, ('도감 한 줄 없음', _u['id']); _u['tale'] = TALE_LINES[_u['id']]
 BAL['dex'] = [dict(n=5, gems=100), dict(n=10, gems=150), dict(n=15, gems=200), dict(n=20, gems=300), dict(n=len(UNITS), gems=500)]   # 수집 보상(반짝석, 한 번씩)
+
+# 원정 전리품(B6, D12): 별도 앱이라 저장소를 잇지 않는다. 단계 클리어 때 받는 6자리 코드를 성인 그룹 「우리 집」에서 입력하면 가구가 생긴다.
+# 코드식은 games/engine/room/room.js codeFor 와 같다(번호 2 + 잡음 2 + 검사 2, 36진수 대문자) — tools/housing_loot.js 가 둘이 같은지 단언.
+def _b36(n):
+    d = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'; r = ''
+    while n: r = d[n % 36] + r; n //= 36
+    return (r or '0').rjust(2, '0')
+def _chk(a):
+    h = 7
+    for ch in a: h = (h * 31 + ord(ch)) % 1296
+    return _b36(h)
+def _code(no):
+    a = _b36(no) + _b36((no * 7 + 11) % 1296); return a + _chk(a)
+LOOT_CODES = sorted([dict(stage=i['src']['n'], id=i['id'], name=i['name'], emoji=i['emoji'], code=_code(i['no'])) for i in json.load(open('data/room_items.json', encoding='utf-8'))['items'] if i.get('set') == 'exp'], key=lambda x: x['stage'])
+assert len(LOOT_CODES) == 12 and all(len(x['code']) == 6 for x in LOOT_CODES), LOOT_CODES

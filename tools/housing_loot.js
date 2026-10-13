@@ -1,0 +1,16 @@
+// 원정 전리품 코드(B6, D12) 시험: node tools/housing_loot.js — ⑪ 코드식 = 우리 집 코드식 · 입력하면 가구 · 틀린 코드·중복 방어 · 유아 집엔 없음
+const { chromium } = require('playwright-core'); const fs = require('fs'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
+(async () => {
+  const D = JSON.parse(fs.readFileSync('data/expedition_slice.json', 'utf8')); ok(D.loot.length === 12 && D.loot.every((x, i) => x.stage === 3 * (i + 1)), '전리품 12개 · 3단계마다');
+  const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), p = await (await b.newContext({ viewport: { width: 390, height: 780 } })).newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.addInitScript(() => { window.__noResume = true; }); await p.goto('http://localhost:8765/games/merge/index.html'); await p.waitForTimeout(1600);
+  const same = await p.evaluate((loot) => { Room.cfg.mode = 'adult'; return loot.every((x) => Room.codeFor(x.id) === x.code); }, D.loot); ok(same, '⑪ 데이터의 코드 = 우리 집 codeFor (12개 모두)');
+  const kidHas = await p.evaluate((loot) => { Room.cfg.mode = 'kid'; const r = loot.some((x) => Room.data.items.some((i) => i.id === x.id) && Room.data.items.find((i) => i.id === x.id).set !== 'exp'); Room.cfg.mode = 'adult'; return r; }, D.loot); ok(!kidHas, '전리품 세트는 별도 세트(exp)');
+  const r1 = await p.evaluate((c) => { const a = Room.redeem(c); const again = Room.redeem(c); return { ok: a.ok, isNew: a.isNew, again: again.isNew, has: Room.has(a.item.id), bad: Room.redeem('ZZZZZZ').ok, short: Room.redeem('AB').why }; }, D.loot[0].code); ok(r1.ok && r1.isNew && r1.has && r1.again === false && !r1.bad && r1.short === 'len', '코드 입력 → 가구 · 중복은 이미 있음 · 틀린 코드 거절');
+  await p.evaluate(() => { Room.S.lv = 30; GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(1100); await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast').forEach((e) => e.remove()));
+  await p.evaluate(() => { [...document.querySelectorAll('.h2-fb')].find((x) => /구경 코드/.test(x.textContent)).click(); }); await p.waitForTimeout(500);
+  ok(await p.evaluate(() => /원정 전리품 코드/.test(document.querySelector('.h2-presh').textContent)), '구경 코드 시트에 「원정 전리품 코드」 입력칸');
+  await p.evaluate((c) => { const i = document.querySelector('.h2-code1'); i.value = c; [...document.querySelectorAll('.h2-codebox .uk-btn')].find((x) => /받기/.test(x.textContent)).click(); }, D.loot[1].code); await p.waitForTimeout(500); await p.screenshot({ path: 'notes/snapshots/housing_loot_redeem.png' });
+  ok(await p.evaluate((id) => Room.has(id), D.loot[1].id), '화면에서 입력해 가구를 받음'); ok(await p.evaluate(() => /우리 집에 생겼어요/.test(document.querySelector('.h2-presh').textContent)), '받았다는 안내');
+  ok(errs.length === 0, '오류 없음 ' + errs[0]); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
+})().catch((e) => { console.error(e); process.exit(1); });

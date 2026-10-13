@@ -46,6 +46,6 @@ BAL = dict(lvMul=0.065, gradeMul={'3': 1.0, '4': 1.2, '5': 1.45}, costBase=25, c
 exec(open('tools/expedition_nations.py', encoding='utf-8').read())   # 3나라 확장(36칸)
 import os
 if os.path.exists('data/expedition_odds.json'): GACHA['effective'] = json.load(open('data/expedition_odds.json', encoding='utf-8'))['effective']   # tools/odds_effective.js 산출(실효 확률)
-D = dict(version=1, note='[제안] ⑪ 슬라이스 데이터. tools/expedition_slice_build.py 로 생성', el=EL, role=ROLE, units=UNITS, stages=STAGES, nations=NATIONS, dungeon=DUNGEON, story=STORY, gacha=GACHA, bal=BAL)
+D = dict(version=1, note='[제안] ⑪ 슬라이스 데이터. tools/expedition_slice_build.py 로 생성', el=EL, role=ROLE, units=UNITS, stages=STAGES, nations=NATIONS, dungeon=DUNGEON, loot=LOOT_CODES, story=STORY, gacha=GACHA, bal=BAL)
 json.dump(D, open('data/expedition_slice.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('units', len(UNITS), 'stages', len(STAGES), 'chars used', sorted({u['art'] for u in UNITS if u['art']}))

@@ -8,7 +8,7 @@
   const el = (t, c, p, h) => { const e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; if (p) p.appendChild(e); return e; };
   const RW = 340, RH = 440, WALLH = 150, SIZEF = { big: 1.75, mid: 1.4, small: 1.2, wall: 1.25, prop: 1 };
   const APPICON = { merge: '✨', spot: '🔍', block: '🧱', sort: '🗄️', tile: '🀄', day: '☀️', idle: '🍲', quiz: '❓', color: '🖍️', playground: '🎠', story: '📖', event: '🎉', other: '🎁' };
-  const APPNAME = { merge: '합치기', spot: '틀린 그림', block: '블록', sort: '정리', tile: '짝 맞추기', day: '막둥이의 하루', idle: '세 가족 식탁', quiz: '어느 도형', color: '색칠북', playground: '놀이터', story: '이야기 카드', event: '이벤트' };
+  const APPNAME = { expedition: '기하학 원정대', merge: '합치기', spot: '틀린 그림', block: '블록', sort: '정리', tile: '짝 맞추기', day: '막둥이의 하루', idle: '세 가족 식탁', quiz: '어느 도형', color: '색칠북', playground: '놀이터', story: '이야기 카드', event: '이벤트' };
   const EMOTE = { sit: '💛', eat: '🍚', read: '📖', sleep: '💤', play: '🎵', watch: '👀' };
   const KIDSETS = ['kid', 'daybath', 'wall', 'story_k', 'kseason', 'kgift'];
   const R2 = (Room.v2 = { view: 'diorama' });
@@ -323,6 +323,10 @@
     UK.btn({ text: '복사', cls: 'sky sm', onclick: () => { out.select(); let okc = false; try { navigator.clipboard.writeText(out.value); okc = true; } catch (e) { try { okc = document.execCommand('copy'); } catch (x) { /* 복사 불가 */ } } UK.toast(okc ? '코드를 복사했어요' : '코드를 길게 눌러 복사해요', sc); } }, mine);
     const rec = el('div', 'h2-codebox', sh); el('b', '', rec, '받은 코드로 구경'); const inp = el('textarea', 'h2-code', rec); inp.placeholder = 'GFH1-…'; const msg = el('p', 'h2-dsub', rec, '');
     UK.btn({ text: '구경하기', cls: 'green sm', onclick: () => { const r = Room.decodeLayout(inp.value); if (!r.ok) { msg.textContent = { format: '코드 모양이 달라요', check: '코드가 틀렸어요(한 글자씩 확인해 봐요)', room: '이 앱에서는 볼 수 없는 방이에요' }[r.why] || '코드를 읽지 못했어요'; return; } sc.remove(); Room.visitView(r, parent); } }, rec);
+    if (!kid()) {      // 원정 전리품 코드(B6): 기하학 원정대에서 받은 6자리 코드를 입력하면 가구가 생긴다(앱 사이 연결은 코드로만 — D12)
+      const lt = el('div', 'h2-codebox', sh); el('b', '', lt, '원정 전리품 코드'); el('small', '', lt, '기하학 원정대에서 단계를 깨고 받은 6자리 코드'); const ci = el('input', 'h2-code1', lt); ci.maxLength = 8; ci.placeholder = 'A1B2C3'; const cm = el('p', 'h2-dsub', lt, '');
+      UK.btn({ text: '받기', cls: 'gold sm', onclick: () => { const r = Room.redeem(ci.value); if (!r.ok) { cm.textContent = { len: '6자리로 적어 주세요', check: '코드가 틀렸어요', item: '없는 코드예요' }[r.why] || '받지 못했어요'; return; } if (!r.isNew) { cm.textContent = '이미 가지고 있는 가구예요'; return; } GF.sfx && GF.sfx('star'); cm.textContent = '🎁 ' + r.item.name + ' — 우리 집에 생겼어요!'; ci.value = ''; Room._redraw && Room._redraw(); } }, lt);
+    }
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
   /** 구경 화면: 이 집의 가족이 가구를 돌아다니며 생활 동작을 한다(남의 집 느낌) */

@@ -1855,6 +1855,92 @@
    }
   ]
  },
+ "loot": [
+  {
+   "stage": 3,
+   "id": "x_straw",
+   "name": "짚단 의자",
+   "emoji": "🌾",
+   "code": "81KILQ"
+  },
+  {
+   "stage": 6,
+   "id": "x_pinwheel",
+   "name": "바람개비",
+   "emoji": "🎡",
+   "code": "82KPCM"
+  },
+  {
+   "stage": 9,
+   "id": "x_wood",
+   "name": "장작 더미",
+   "emoji": "🪵",
+   "code": "83KW3I"
+  },
+  {
+   "stage": 12,
+   "id": "x_brickhouse",
+   "name": "벽돌집 모형",
+   "emoji": "🏠",
+   "code": "84L3U2"
+  },
+  {
+   "stage": 15,
+   "id": "x_ricecake",
+   "name": "달 떡 접시",
+   "emoji": "🥮",
+   "code": "85LAL5"
+  },
+  {
+   "stage": 18,
+   "id": "x_cloudlamp",
+   "name": "구름 조명",
+   "emoji": "☁️",
+   "code": "86LHC1"
+  },
+  {
+   "stage": 21,
+   "id": "x_bucket",
+   "name": "달빛 두레박",
+   "emoji": "🪣",
+   "code": "87LO2X"
+  },
+  {
+   "stage": 24,
+   "id": "x_tiger",
+   "name": "호랑이 인형",
+   "emoji": "🐯",
+   "code": "88LVTT"
+  },
+  {
+   "stage": 27,
+   "id": "x_jar",
+   "name": "큰 항아리",
+   "emoji": "🏺",
+   "code": "89M2KD"
+  },
+  {
+   "stage": 30,
+   "id": "x_lantern",
+   "name": "잔치 등롱",
+   "emoji": "🏮",
+   "code": "8AM9I4"
+  },
+  {
+   "stage": 33,
+   "id": "x_shoes",
+   "name": "꽃 짚신",
+   "emoji": "👞",
+   "code": "8BMG97"
+  },
+  {
+   "stage": 36,
+   "id": "x_flag",
+   "name": "잔치 깃발",
+   "emoji": "🚩",
+   "code": "8CMN03"
+  }
+ ],
  "story": {
   "prologue": [
    {

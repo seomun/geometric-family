@@ -226,6 +226,7 @@
           list.forEach((u) => { const own = !!S.units[u.id], c = el('button', 'ex-card' + (own ? '' : ' dim'), g); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, own ? u.name.replace(/\(.*\)/, '') : '???'); el('small', '', c, '★'.repeat(own ? SC.gradeOf(D, u.id, S.units[u.id]) : u.grade)); c.onclick = () => dexInfo(r, u); });
         });
       };
+      UK.btn({ text: '전리품 코드 (우리 집 가구)', icon: 'gift', cls: 'gold block', onclick: () => GF.go('xloot') }, r); r.lastChild.style.cssText = 'position:absolute;left:14px;right:14px;bottom:8px;width:auto;z-index:20';
       draw();
     },
   });
@@ -237,6 +238,17 @@
     if (own && u.costume) el('small', 'ex-sub', sh, '의상: ' + u.costume + ' 이야기');
     UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
   }
+  /* ---------------- 원정 전리품 코드 (B6): 성인 「우리 집」에서 입력하면 가구가 생겨요 — 앱은 따로, 연결은 코드로만(D12) ---------------- */
+  const lootAt = (stage) => (D.loot || []).find((x) => x.stage === stage);
+  const copyText = (txt, r) => { let okc = false; try { navigator.clipboard.writeText(txt); okc = true; } catch (e) { try { const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t); t.select(); okc = document.execCommand('copy'); t.remove(); } catch (x) { /* 복사 불가 */ } } UK.toast(okc ? '코드를 복사했어요' : '코드를 눌러 직접 복사해요', r); };
+  GF.screen('xloot', {
+    bare: false,
+    enter(r) {
+      const got = (D.loot || []).filter((x) => S.cleared >= x.stage).length; r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '원정 전리품', `코드 ${got}/${(D.loot || []).length}`); back(r, 'xdex'); const box = el('div', 'ex-shop', r);
+      el('p', 'ex-note', box, '단계를 깰 때마다 「우리 집」 가구 코드를 받아요. 성인용 앱(합치기·식탁 등)의 우리 집 → 「구경 코드」 → 「전리품 코드」에 입력하면 가구가 생겨요. 우리 집과는 코드로만 이어져요.');
+      (D.loot || []).forEach((x) => { const open = S.cleared >= x.stage, row = el('div', 'ex-prod' + (open ? '' : ' dim'), box); el('span', '', row, `<b>${x.emoji} ${open ? x.name : '???'}</b><small>${open ? '' : '🔒 '}${x.stage}단계 클리어${open ? ' · ' + x.code : ''}</small>`); if (open) UK.btn({ text: '복사', cls: 'sky sm', onclick: () => copyText(x.code, r) }, row); });
+    },
+  });
   /* ---------------- 원정 길 ---------------- */
   GF.screen('xmap', {
     bare: false,
@@ -324,7 +336,7 @@
         const downs = core.A.filter((u) => u.hp <= 0).length, stars = recruited ? 3 : downs === 0 ? 3 : downs <= 2 ? 2 : 1, first = S.cleared < st.id, rw = SC.reward(D, st, first); S.gold += rw.gold; S.gems += rw.gems; if (first) S.cleared = st.id; S.stars[st.id] = Math.max(S.stars[st.id] || 0, stars); let joinId = null; if (st.join && first && !S.units[st.join]) { S.units[st.join] = { lv: 1 }; joinId = st.join; } save(); bar(); GF.sfx('celebrate'); done(stars, rw.gold, rw.gems, recruited, joinId);
       };
       const done = (stars, gold, gems, recruited, joinId) => {
-        const after = () => { const sc = UK.modal({ parent: r, title: recruited ? '포섭 성공!' : '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('div', 'ex-stars', sh, '★'.repeat(stars) + '☆'.repeat(3 - stars)); const pose = el('div', 'ex-rrow', sh); S.party.forEach((id, i) => { const c = el('div', 'ex-mini ex-pose', pose); c.style.animationDelay = i * 90 + 'ms'; c.appendChild(art($(id), 'xs')); }); el('p', 'ex-rw', sh, `🪙 +${gold}${gems ? ` · 💎 +${gems}` : ''}${recruited ? ' · 새 친구: ' + $(st.recruit).name : ''}`); if (st.boss && st.recruit && !recruited) el('p', 'ex-tip', sh, (boss ? boss.name : '친구') + '(이)가 쓰러졌어요… 다음엔 체력이 줄었을 때 말을 걸어 봐요.');
+        const after = () => { const sc = UK.modal({ parent: r, title: recruited ? '포섭 성공!' : '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('div', 'ex-stars', sh, '★'.repeat(stars) + '☆'.repeat(3 - stars)); const pose = el('div', 'ex-rrow', sh); S.party.forEach((id, i) => { const c = el('div', 'ex-mini ex-pose', pose); c.style.animationDelay = i * 90 + 'ms'; c.appendChild(art($(id), 'xs')); }); el('p', 'ex-rw', sh, `🪙 +${gold}${gems ? ` · 💎 +${gems}` : ''}${recruited ? ' · 새 친구: ' + $(st.recruit).name : ''}`); if (lootAt(st.id)) { const lt = lootAt(st.id); el('p', 'ex-tip', sh, `🎁 전리품 코드: ${lt.name} — ${lt.code} (원정 전리품 화면에서 복사해요)`); } if (st.boss && st.recruit && !recruited) el('p', 'ex-tip', sh, (boss ? boss.name : '친구') + '(이)가 쓰러졌어요… 다음엔 체력이 줄었을 때 말을 걸어 봐요.');
           const a = el('div', 'acts', sh); const nxt = D.stages[st.id]; if (nxt) UK.btn({ text: '다음 단계', icon: 'next', cls: 'green', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); UK.btn({ text: '편성·육성', cls: 'sky sm', onclick: () => { sc.remove(); GF.replace('xparty', { from: 'xmap' }); } }, a); UK.btn({ text: '원정 길', cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
         if (joinId) setTimeout(() => GF.tale.play(D.story.join[joinId], r, () => { UK.toast('새 친구: ' + $(joinId).name, r); after(); }, { bg: 'hill' }), 500); else setTimeout(after, 500);
       };

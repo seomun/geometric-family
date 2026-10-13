@@ -28,6 +28,14 @@ for i, n, e, sl, (w, h), ms in EVT: new(i, n, e, sl, 'yard', w, h, 'event', 'all
 GIFT = [('g_cushion', '꽃무늬 쿠션', '🌺', 'floor', (52, 44), 'nemo'), ('g_mirror', '손거울', '🪞', 'wall', (44, 56), 'semo'), ('g_pen', '만년필 꽂이', '🖋️', 'table', (40, 44), 'dong'), ('g_chess', '체스판', '♟️', 'table', (46, 40), 'dong'), ('g_lunch', '도시락 보자기', '🍱', 'table', (46, 40), 'nemo'), ('g_apron', '앞치마', '👚', 'wall', (44, 56), 'nemo'),
         ('g_compass', '나침반', '🧭', 'table', (40, 40), 'semo'), ('g_postcard', '엽서 꽂이', '💌', 'wall', (46, 46), 'semo'), ('g_teaset', '찻주전자', '🫖', 'table', (46, 44), 'nemo'), ('g_flowerpot', '철쭉 화분', '🪴', 'floor', (46, 60), 'yard'), ('g_pepper', '고추 엮음', '🌶️', 'wall', (40, 60), 'yard'), ('g_hanbok', '한복 인형', '👘', 'floor', (44, 70), 'nemo'), ('g_stool', '작은 의자', '🪑', 'floor', (50, 56), 'dong'), ('g_lantern2', '손전등', '🔦', 'table', (36, 44), 'dong')]
 for i, n, e, sl, (w, h), rm in GIFT: new(i, n, e, sl, rm, w, h, 'gift', 'all')
+# 원정 전리품(B6, D12): ⑪ 기하학 원정대는 별도 앱이라 저장소를 잇지 않는다 — 단계 클리어 보상으로 6자리 코드를 받아 성인 그룹 「우리 집」에서 입력(유아 집에는 없음).
+LOOT = [  # id, 이름, 이모지, 슬롯, (w,h), 단계
+    ('x_straw', '짚단 의자', '🌾', 'floor', (56, 50), 3), ('x_pinwheel', '바람개비', '🎡', 'floor', (46, 62), 6), ('x_wood', '장작 더미', '🪵', 'floor', (60, 46), 9), ('x_brickhouse', '벽돌집 모형', '🏠', 'table', (44, 44), 12),
+    ('x_ricecake', '달 떡 접시', '🥮', 'table', (44, 40), 15), ('x_cloudlamp', '구름 조명', '☁️', 'wall', (56, 46), 18), ('x_bucket', '달빛 두레박', '🪣', 'floor', (48, 52), 21), ('x_tiger', '호랑이 인형', '🐯', 'floor', (56, 60), 24),
+    ('x_jar', '큰 항아리', '🏺', 'floor', (52, 64), 27), ('x_lantern', '잔치 등롱', '🏮', 'wall', (44, 56), 30), ('x_shoes', '꽃 짚신', '👞', 'table', (44, 36), 33), ('x_flag', '잔치 깃발', '🚩', 'wall', (46, 56), 36)]
+LOOT_STAGE = {i: st for i, n, e, sl, wh, st in LOOT}
+for i, n, e, sl, (w, h), st in LOOT: new(i, n, e, sl, 'yard', w, h, 'exp', 'expedition')
+if not any(x['id'] == 'exp' for x in R['sets']): R['sets'].append(dict(id='exp', name='원정 전리품 세트(성인)', game='expedition', room='yard', story='원정을 다녀온 가족의 짐에서 나온 것들. 기하학 원정대에서 받은 코드로 놓아요.'))
 KS = [('kc_cherry', '벚꽃', '🌸', 'floor', (56, 60), [3, 4, 5]), ('kc_tulip', '튤립', '🌷', 'floor', (50, 56), [3, 4, 5]), ('kc_tube', '튜브', '🛟', 'floor', (60, 50), [6, 7, 8]), ('kc_icecream', '아이스크림', '🍦', 'floor', (44, 56), [6, 7, 8]), ('kc_acorn', '도토리', '🌰', 'floor', (44, 44), [9, 10, 11]), ('kc_leaf', '단풍잎', '🍁', 'wall', (50, 50), [9, 10, 11]), ('kc_snowman', '눈사람', '⛄', 'floor', (56, 70), [12, 1, 2]), ('kc_mitten', '벙어리장갑', '🧤', 'wall', (46, 46), [12, 1, 2])]
 for i, n, e, sl, (w, h), ms in KS: new(i, n, e, sl, 'kid', w, h, 'kseason', 'all', season=ms)
 KGIFT = [('kg_star', '별 스티커 판', '⭐', 'wall', (46, 46)), ('kg_cloud', '구름 모빌', '☁️', 'wall', (56, 46)), ('kg_bear', '곰 인형', '🧸', 'floor', (52, 56)), ('kg_ball2', '풍선 공', '🏐', 'floor', (44, 44)), ('kg_kite', '작은 연', '🪁', 'wall', (46, 50)), ('kg_drum', '장난감 북', '🥁', 'floor', (52, 46)), ('kg_rainbow', '무지개 깃발', '🏳️‍🌈', 'wall', (56, 40)), ('kg_train2', '꼬마 기차', '🚂', 'floor', (60, 44))]
@@ -61,6 +69,7 @@ for i in items:
     elif re.match(r't_[a-z]+_[ak]$', iid): SRC[iid] = dict(game='story', kind='card', hint='이야기 카드 4장 모으기(그 옛이야기)')
     elif iid.startswith(('s2_', 'kc_')) or iid.startswith('s_'): ms = i['season'] if isinstance(i['season'], list) else ([int(x) for x in re.findall(r'\d+', str(i['season']))] or [12]); SRC[iid] = dict(game='event', kind='season', months=ms, hint=f'{MON(ms)}에 집에 놀러 오면 · 계절 선물')
     elif iid.startswith('e_'): ms = i['season']; SRC[iid] = dict(game='event', kind='event', months=ms, hint=f'{MON(ms)} 기념일에 집에 오면')
+    elif iid.startswith('x_'): SRC[iid] = dict(game='expedition', kind='code', n=LOOT_STAGE[iid], hint=f'기하학 원정대 · {LOOT_STAGE[iid]}단계 클리어 전리품 코드')
     elif iid.startswith(('g_', 'kg_')): SRC[iid] = dict(game='event', kind='guest', hint='집에 손님이 놀러 오면 선물')
     elif iid in ('b_bed', 'b_rug'): SRC[iid] = dict(game='merge', kind='tier', hint='합치기 · 아이 방 가구(합치기 보상)')
     else: SRC[iid] = dict(game=APPK.get(i['game'], i['game']), kind='other', hint=f"{APPN.get(APPK.get(i['game'], i['game']), '')} 보상")

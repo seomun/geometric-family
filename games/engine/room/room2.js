@@ -257,7 +257,7 @@
       const g = geo(it); occ.push({ x: p.x, y: p.y, w: g.w, h: g.h, wall: it.slot === 'wall' });
       if (it.slot === 'floor' && !it.flat) { const sh = el('i', 'h2-sh', room); sh.style.cssText = `left:${p.x + g.w * 0.08}px;top:${p.y + g.h - 7}px;width:${g.w * 0.84}px`; }
       if (LT === 'night' && LIGHT_IDS.includes(p.id)) { const gl = el('i', 'h2-glow', room); gl.style.cssText = `left:${p.x + g.w / 2 - 70}px;top:${p.y + g.h * 0.2 - 70}px`; }
-      const d = el('img', 'h2-it' + (o.flash === p.id ? ' flash' : ''), room); d.src = Room.src(it, p.c); d.alt = ''; d.draggable = false; d.style.cssText = `left:${p.x}px;top:${p.y}px;width:${g.w}px;height:${g.h}px${p.flip ? ';transform:scaleX(-1)' : ''}`; d.dataset.i = i;
+      const d = el('img', 'h2-it' + (o.flash === p.id ? ' flash' : ''), room); d.src = Room.src(it, p.c); d.alt = ''; d.draggable = false; d.style.cssText = `left:${p.x}px;top:${p.y}px;width:${g.w}px;height:${g.h}px${p.flip ? ';transform:scaleX(-1)' : ''}${Room.variantFilter(it, p) !== 'none' ? ';filter:' + Room.variantFilter(it, p) : ''}`; d.dataset.i = i;
       if (o.mini || o.dream) return;
       if (o.place) d.addEventListener('pointerdown', (e) => {
         e.preventDefault(); o.sel = i; room.querySelectorAll('.h2-it').forEach((x) => x.classList.remove('sel')); d.classList.add('sel'); o.onSel && o.onSel(i); const k = room.__k || 1, rc = room.getBoundingClientRect(), ox = (e.clientX - rc.left) / k - p.x, oy = (e.clientY - rc.top) / k - p.y; try { d.setPointerCapture(e.pointerId); } catch (x) {}
@@ -307,14 +307,14 @@
   // 형식: GFH1-<방>-<가구>.<가구>…-<검사>  가구 = 번호~x~y~(뒤집힘 0/1)(색 번호) 모두 36진수. 검사 = Room._chk(앞부분).
   Room.layoutCode = function (rid) {
     const S = ensure(), L = (S.placed[rid] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it && q.it.no).slice(0, 60);
-    const body = L.map(({ p, it }) => [it.no.toString(36), Math.max(0, p.x | 0).toString(36), Math.max(0, p.y | 0).toString(36), (p.flip ? 1 : 0) + '' + Math.max(0, it.colors.indexOf(p.c))].join('~')).join('.'), head = 'GFH1-' + rid + '-' + body;
+    const body = L.map(({ p, it }) => [it.no.toString(36), Math.max(0, p.x | 0).toString(36), Math.max(0, p.y | 0).toString(36), (p.flip ? 1 : 0) + '' + Math.max(0, Math.min(3, p.v != null ? p.v : it.colors.indexOf(p.c)))].join('~')).join('.'), head = 'GFH1-' + rid + '-' + body;
     return head + '-' + Room._chk(head);
   };
   /** 코드 → {ok, room, list} | {ok:false, why}. 모르는 가구·범위 밖 값은 버리거나 고쳐서 안전하게. */
   Room.decodeLayout = function (code) {
     code = String(code || '').trim().replace(/\s+/g, ''); const m = /^GFH1-([a-z0-9_]+)-([0-9a-z~.]*)-([0-9A-Z]{2})$/.exec(code); if (!m) return { ok: false, why: 'format' };
     if (Room._chk(code.slice(0, code.lastIndexOf('-'))) !== m[3]) return { ok: false, why: 'check' }; const R = roomDef(m[1]); if (!R || R.group !== grp()) return { ok: false, why: 'room' };
-    const list = []; (m[2] ? m[2].split('.') : []).slice(0, 60).forEach((ch) => { const f = ch.split('~'); if (f.length !== 4) return; const no = parseInt(f[0], 36), it = Room.data.items.find((i) => i.no === no); if (!it || !inGroup(it)) return; const g = geo(it), x = Math.max(0, Math.min(RW - g.w, parseInt(f[1], 36) || 0)), y = Math.max(0, Math.min(RH - g.h, parseInt(f[2], 36) || 0)), c = it.colors[Math.max(0, Math.min(it.colors.length - 1, parseInt(f[3].slice(1), 10) || 0))]; list.push({ id: it.id, x, y, flip: f[3][0] === '1' ? 1 : 0, c }); });
+    const list = []; (m[2] ? m[2].split('.') : []).slice(0, 60).forEach((ch) => { const f = ch.split('~'); if (f.length !== 4) return; const no = parseInt(f[0], 36), it = Room.data.items.find((i) => i.no === no); if (!it || !inGroup(it)) return; const g = geo(it), x = Math.max(0, Math.min(RW - g.w, parseInt(f[1], 36) || 0)), y = Math.max(0, Math.min(RH - g.h, parseInt(f[2], 36) || 0)), v = Math.max(0, Math.min(Room.variants(it).length - 1, parseInt(f[3].slice(1), 10) || 0)), c = Room.variants(it)[v].c; list.push({ id: it.id, x, y, flip: f[3][0] === '1' ? 1 : 0, c, v }); });
     return { ok: true, room: m[1], list, name: R.name };
   };
   Room.visitSheet = function (parent) {
@@ -464,7 +464,7 @@
     function drawSel() {
       selbar.innerHTML = ''; if (!place) return; if (sel == null) { el('p', 'h2-hint', selbar, kid() ? '' : '가구를 끌어서 옮겨 보세요'); return; } const p = (S.placed[cur] || [])[sel], it = p && Room.item(p.id); if (!it) return;
       const B = (txt, ic, fn) => UK.btn({ text: kid() ? null : txt, icon: ic, cls: 'ghost sm', onclick: fn }, selbar);
-      B('돌리기', 'replay', () => { p.flip = p.flip ? 0 : 1; Room.save(); drawStage(); drawSel(); }); B('색', 'brush', () => { const cs = it.colors; p.c = cs[(cs.indexOf(p.c) + 1) % cs.length]; Room.save(); drawStage(); drawSel(); }); B('치우기', 'close', () => { S.placed[cur].splice(sel, 1); sel = null; Room.save(); drawAll(); });
+      B('돌리기', 'replay', () => { p.flip = p.flip ? 0 : 1; Room.save(); drawStage(); drawSel(); }); B('색', 'brush', () => { const j = Room.nextVariant(it, p); if (j == null) { const need = [1, 2, 3].map((i) => Room.variantNeed(i)).filter((n) => n > 0)[0]; UK.toast(kid() ? '🎨🔒' : '가구를 ' + (need || 1) + '개 더 모으면 다른 색이 열려요', parent); return; } p.v = j; p.c = Room.variants(it)[j].c; Room.save(); drawStage(); drawSel(); }); B('치우기', 'close', () => { S.placed[cur].splice(sel, 1); sel = null; Room.save(); drawAll(); });
     }
     function walk(room, R) {           // 살아 있는 집: 가족이 가구 앞을 돌아다니며 쓴다 — 점선 칸·손님·다른 가구와 겹치지 않는 자리로만 간다
       const char = R.char || (kid() ? 'baby.joy' : 'nemo_kids.kid1'), g = el('img', 'h2-char', room); g.src = Room.cfg.charSrc ? Room.cfg.charSrc(char) : ''; g.alt = ''; const CW = 54, CH = 70; let me = null;
@@ -539,6 +539,8 @@
       const row = el('div', 'h2-detrow', det); const im = el('img', '', row); im.src = Room.src(it); im.alt = ''; const tx = el('div', 'h2-dtx', row);
       if (!kid()) { el('b', '', tx, it.name); el('small', '', tx, (own ? '가지고 있어요' : sr.hint ? '어디서 얻나 · ' + sr.hint : '') + ' · 아늑함 +' + (it.cozy || 0)); } else el('span', 'h2-tic', tx, APPICON[sr.game] || '🎁');
       const hb = el('button', 'h2-hbtn' + (Room.wishOn(it.id) ? ' on' : ''), row, '♥'); hb.onclick = () => { Room.wish(it.id); drawAll(); };
+      { const vs = Room.variants(it), sw = el('div', 'h2-swrow', det); vs.forEach((v) => { const open = Room.variantOpen(v.i), d = el('i', 'h2-sw' + (open ? '' : ' lock'), sw); d.style.background = v.sw; if (!open) d.textContent = '🔒'; d.title = open ? '' : '가구 ' + Room.variantNeed(v.i) + '개 더'; });
+        if (!kid()) { const op = vs.filter((v) => Room.variantOpen(v.i)).length, nx = vs.find((v) => !Room.variantOpen(v.i)); el('small', '', sw, `색 ${op}/${vs.length}` + (nx ? ` · 가구 ${Room.variantNeed(nx.i)}개 더 모으면 다음 색` : ' · 모두 열렸어요')); } }
       const a = el('div', 'h2-acts', det); if (own) UK.btn({ text: kid() ? null : '집에 놓기', icon: kid() ? 'home' : null, cls: 'green sm', onclick: () => { Room.placeAt(it.id); sc.remove(); opts.onClose && opts.onClose(); } }, a);
       else UK.btn({ text: kid() ? null : '어디서? ▶', icon: kid() ? 'next' : null, cls: 'gold sm', onclick: () => Room.goApp(sr.game, { parent: sc, home: opts.go && (() => { sc.remove(); opts.go(sr.game); }) }) }, a);
     }
@@ -557,13 +559,24 @@
     else if (kind === 'shape') { x.fillStyle = '#FFC933'; x.fillRect(0, 0, W, H); x.font = '900 40px sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#E5334A'; x.fillText('△', 22, 22); x.fillStyle = '#F08A3C'; x.fillText('◻', W - 22, 22); x.fillStyle = '#3B6FD6'; x.fillText('◯', 22, H - 22); x.fillStyle = '#E5334A'; x.fillText('△', W - 22, H - 22); }
     x.restore();
   };
+  /* ---------------- 가구 색 변형(A8): 모은 가구가 늘수록 같은 가구의 다른 색이 열린다 ---------------- */
+  const HUE = ['none', 'hue-rotate(60deg) saturate(1.1)', 'hue-rotate(160deg) saturate(1.05)', 'hue-rotate(250deg) saturate(1.2)'], SWATCH = ['#E8D8B8', '#FF8FA8', '#8FD3F4', '#6CCB8A'];
+  const VTHR = () => (kid() ? [0, 4, 12, 24] : [0, 10, 30, 60]);      // 모은 가구 수 문턱(첫 색은 처음부터)
+  /** 가구의 색 변형 목록. 색이 여러 개인 가구는 그 색들, 한 가지뿐인 그림(이모지·임시)은 색조를 돌린 3가지가 더 */
+  Room.variants = (it) => (it.colors.length > 1 ? it.colors.slice(0, 4).map((c, i) => ({ i, c, f: 'none', sw: c })) : [0, 1, 2, 3].map((i) => ({ i, c: it.colors[0], f: HUE[i], sw: SWATCH[i] })));
+  Room.variantOpen = (i) => Room.owned().length >= VTHR()[i];
+  Room.variantNeed = (i) => Math.max(0, VTHR()[i] - Room.owned().length);
+  Room.variantFilter = (it, p) => (it.colors.length > 1 ? 'none' : HUE[(p && p.v) || 0] || 'none');
+  Room.nextVariant = function (it, p) {      // 열린 다음 색으로 — 열린 색이 하나뿐이면 null
+    const vs = Room.variants(it), k = p.v || 0; for (let t = 1; t <= vs.length; t++) { const j = (k + t) % vs.length; if (Room.variantOpen(j)) return j === k ? null : j; } return null;
+  };
   /** 방 그림(캔버스) — 사진 저장·꾸미기가 같이 쓴다 */
   Room.photoCanvas = async function (rid) {
     const R = roomDef(rid), S = ensure(), W = 1020, k = W / RW, c = document.createElement('canvas'); c.width = W; c.height = Math.round(RH * k); const x = c.getContext('2d');
     const load = (src) => new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = src; });
     const bg = await load('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(bgSVG(R, Room.lightNow(S)).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" '))); if (bg) x.drawImage(bg, 0, 0, W, c.height);
     const list = (S.placed[rid] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => (a.p.y + geo(a.it).h) - (b.p.y + geo(b.it).h));
-    for (const { p, it } of list) { const im = await load(Room.src(it, p.c)); if (!im) continue; const g = geo(it), w = g.w * k, h = g.h * k; x.save(); if (p.flip) { x.translate(p.x * k + w, p.y * k); x.scale(-1, 1); x.drawImage(im, 0, 0, w, h); } else x.drawImage(im, p.x * k, p.y * k, w, h); x.restore(); }
+    for (const { p, it } of list) { const im = await load(Room.src(it, p.c)); if (!im) continue; const g = geo(it), w = g.w * k, h = g.h * k; x.save(); x.filter = Room.variantFilter(it, p); if (p.flip) { x.translate(p.x * k + w, p.y * k); x.scale(-1, 1); x.drawImage(im, 0, 0, w, h); } else x.drawImage(im, p.x * k, p.y * k, w, h); x.restore(); }
     return c;
   };
   const saveCanvas = async (c, nm) => { if (window.GFSave && GFSave.image) { if (!GFSave.image(c.toDataURL('image/png'), nm)) throw new Error('save'); } else { const blob = await new Promise((r) => c.toBlob(r, 'image/png')); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nm; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); } };

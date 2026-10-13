@@ -188,3 +188,17 @@ export async function idleClaim(env, account, requestId, now = Date.now()) {
     run(db, `INSERT INTO ledger(account,ts,kind,d_gold,reason,ref) SELECT ?,?,'idle',?,'scout',? WHERE ${guard}`, account, now, gold, requestId, ...g),
   ]); if (res[0].meta.changes !== 1 || res[1].meta.changes !== 1) throw new HttpError(409, 'conflict'); return { ok: true, gold, capH: Dn.idleCapH };
 }
+
+/** 도감 수집 보상(B5): 모은 동료 수가 문턱 이상이면 반짝석을 한 번씩. 받은 문턱은 progress.flags.dex 에 기록(멱등). */
+export async function dexClaim(env, account, n, now = Date.now()) {
+  const db = env.DB, m = (D.bal.dex || []).find((x) => x.n === n); if (!m) throw new HttpError(400, 'bad_milestone');
+  const cnt = (await first(db, 'SELECT COUNT(*) AS c FROM units WHERE account=?', account)).c; if (cnt < m.n) throw new HttpError(409, 'not_yet', '동료를 더 모아요 (' + cnt + '/' + m.n + ')');
+  const pr = await first(db, 'SELECT flags FROM progress WHERE account=?', account), flags = JSON.parse(pr.flags), got = flags.dex || []; if (got.includes(n)) return { ok: true, replay: true, ...(await walletView(db, account)) };
+  flags.dex = got.concat(n); const w = await first(db, 'SELECT ver FROM wallet WHERE account=?', account), tag = 'dex:' + n, guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, tag];
+  const res = await db.batch([
+    run(db, 'UPDATE wallet SET free_gems=free_gems+?, ver=ver+1, last_req=? WHERE account=? AND ver=?', m.gems, tag, account, w.ver),
+    run(db, `UPDATE progress SET flags=? WHERE account=? AND ${guard}`, JSON.stringify(flags), account, ...g),
+    run(db, `INSERT INTO ledger(account,ts,kind,d_free,reason,ref) SELECT ?,?,'dex',?,?,? WHERE ${guard}`, account, now, m.gems, 'dex' + n, tag, ...g),
+  ]); if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict'); return { ok: true, gems: m.gems, ...(await walletView(db, account)) };
+}
+async function walletView(db, account) { return { wallet: await first(db, 'SELECT free_gems,paid_gems,gold FROM wallet WHERE account=?', account) }; }

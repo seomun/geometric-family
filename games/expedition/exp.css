@@ -60,3 +60,9 @@
 .exb.shake { animation: exshake .3s linear; } @keyframes exshake { 20% { transform: translate(-3px, 2px); } 40% { transform: translate(3px, -2px); } 60% { transform: translate(-2px, -1px); } 80% { transform: translate(2px, 1px); } }
 .ex-bc.fall { animation: exfall .5s ease forwards; } @keyframes exfall { to { transform: translateY(10px) rotate(8deg); opacity: .35; } }
 .ex-stars + .ex-rw { animation: none; } .ex-pose { animation: expose .7s ease-in-out 3; } @keyframes expose { 50% { transform: translateY(-10px) scale(1.08); } }
+
+/* 팝업: 카드 위로 띄움·진한 테두리 글씨 / 카드 이름 두 줄 */
+.ex-pop { top: -30px !important; left: 50% !important; z-index: 30 !important; color: #fff !important; -webkit-text-stroke: 5px #3a1f0f; paint-order: stroke fill; text-shadow: none !important; letter-spacing: -.5px; } .ex-pop.adv { color: #FFE066 !important; } .ex-pop.dis { color: #D9E2FF !important; -webkit-text-stroke: 4px #2a3550; } .ex-pop.heal { color: #A8F5C0 !important; -webkit-text-stroke: 5px #134d2b; }
+@keyframes ex-pop { 0% { opacity: 0; transform: translate(-50%, 8px) scale(.7); } 15% { opacity: 1; transform: translate(-50%, 0) scale(1.1); } to { transform: translate(-50%, -26px); opacity: 0; } }
+.ex-bc small { white-space: normal !important; font-size: 10px !important; line-height: 1.08 !important; word-break: keep-all; max-height: 2.3em; overflow: hidden; display: block; text-align: center; }
+.ex-pop { top: -40px !important; text-align: center; line-height: 1.05 !important; } .ex-pop small { display: block; font-size: 11px; letter-spacing: 0; -webkit-text-stroke: 3px #3a1f0f; }

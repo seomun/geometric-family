@@ -310,8 +310,9 @@
         const a = cu(ev.actor.side, ev.actor.i), ac = (ev.actor.side === 'A' ? cardsP : cardsE)[ev.actor.i]; ac.classList.add('act'); setTimeout(() => ac.classList.remove('act'), 260 / S.speed);
         logEl.textContent = `${(a.name || '').replace(/\(.*\)/, '')} · ${KIND[ev.kind]}`;
         if (ev.kind !== 'attack') cutIn(a, ev);          // 스킬 컷인(B4)
-        ev.hits.forEach((h) => { const c = (h.side === 'A' ? cardsP : cardsE)[h.i], tgt = cu(h.side, h.i), big = h.dmg >= tgt.max * 0.28 || ev.kind === 'skill' || ev.kind === 'aoe'; pop(c, (h.mult > 1 ? '굉장! ' : h.mult < 1 ? '약함 ' : '') + '-' + Math.round(h.dmg), (h.mult > 1 ? 'adv' : h.mult < 1 ? 'dis' : '') + (big ? ' hard' : '')); elemFx(c, a.el, h.mult, big); c.classList.add('hit'); setTimeout(() => c.classList.remove('hit'), 220 / S.speed); if (big) shake(); if (h.down) { c.classList.add('fall'); } });
-        ev.heals.forEach((h) => { const c = (h.side === 'A' ? cardsP : cardsE)[h.i]; pop(c, h.buff ? '↑' : '+' + Math.round(h.amount), 'heal'); });
+        const shown = new Set(ev.hits.slice().sort((x, y) => y.dmg - x.dmg).slice(0, 2));      // 팝업은 동시에 2개까지(가장 큰 타격)
+        ev.hits.forEach((h) => { const c = (h.side === 'A' ? cardsP : cardsE)[h.i], tgt = cu(h.side, h.i), big = h.dmg >= tgt.max * 0.28 || ev.kind === 'skill' || ev.kind === 'aoe'; if (shown.has(h)) pop(c, (h.mult > 1 ? '<small>굉장!</small>' : h.mult < 1 ? '<small>약함</small>' : '') + '-' + Math.round(h.dmg), (h.mult > 1 ? 'adv' : h.mult < 1 ? 'dis' : '') + (big ? ' hard' : '')); elemFx(c, a.el, h.mult, big && shown.has(h)); c.classList.add('hit'); setTimeout(() => c.classList.remove('hit'), 220 / S.speed); if (big) shake(); if (h.down) { c.classList.add('fall'); } });
+        ev.heals.slice(0, 2).forEach((h) => { const c = (h.side === 'A' ? cardsP : cardsE)[h.i]; pop(c, h.buff ? '↑' : '+' + Math.round(h.amount), 'heal'); });
         hp(); drawReady(); persuadeUI();
       };
       const loop = () => {

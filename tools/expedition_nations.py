@@ -117,3 +117,23 @@ BAL['grow'] = dict(skillMax=5, skillMul=0.10, skillCost=[150, 400, 900, 1800], a
 DUNGEON = dict(unlock=3, perDay=3, kMul=0.9, tiers=[0.5, 0.75, 1.0], tierNames=['쉬움', '보통', '어려움'], goldMul=[0.6, 1.0, 1.5], frag=[2, 4, 7], goldDay=1.7, idleCapH=8, idleRate=0.35, idleMinMin=10,
                days=[dict(day=0, name='월요일 금화 광산', kind='gold'), dict(day=1, name='화요일 번쩍 훈련장', kind='frag', el='flash'), dict(day=2, name='수요일 받치기 훈련장', kind='frag', el='support'),
                      dict(day=3, name='목요일 돌보기 훈련장', kind='frag', el='care'), dict(day=4, name='금요일 금화 광산', kind='gold'), dict(day=5, name='토요일 아무 친구 훈련장', kind='frag', el='any', mul=1.5), dict(day=6, name='일요일 큰 잔치', kind='both', mul=1.0)])
+
+# 동료 도감(B5): 옛이야기 한 줄 · 수집 보상(처음 모은 수가 문턱을 넘을 때 한 번)
+TALE_LINES = {
+    'u_nemo_dad': '흥부도 나무꾼도 구두장이도 — 이야기마다 착한 일꾼은 늘 이 아빠예요.', 'u_semo_wife': '고양이도 직녀도 우렁 각시도 — 번쩍 나서는 이야기 속 해결사예요.',
+    'u_dong_dad': '산신령도 수탉도 두꺼비도 — 조용히 도와주는 믿음직한 도우미예요.', 'u_nemo_mom': '엄마 돼지, 흥부 아내, 개미 — 늘 식구들을 먼저 챙겨요.',
+    'u_baby': '피노키오도 카이도 아우도 — 이야기 속에서도 막내는 사랑받는 장난꾸러기예요.',
+    'u_kid3': '벽돌집을 지은 셋째 돼지, 구름 위로 오른 잭 — 튼튼하고 용감해요.', 'u_kid1': '콩쥐도 게르다도 해님도 — 맏이의 씩씩함으로 길을 열어요.',
+    'u_kid2': '팥쥐 역을 맡아도 마지막엔 박수를 치는 둘째예요.', 'u_husband': '놀부도 견우도 개도 — 허세를 부리다 정이 많아지는 사람이에요.',
+    'u_grandma': '호랑이 고개를 넘을 때도 김치는 꼭 챙기시는 할머니예요.',
+    'u_wind': '아기돼지 마을에서 후— 불던 장난꾸러기. 같이 놀고 싶었을 뿐이에요.', 'u_tiger': '해님 달님 고개의 배고픈 바람 소리. 도시락 한 입에 마음을 열었어요.',
+    'u_ajumma': '콩쥐네 새엄마 역 — 깐깐한 목소리 뒤엔 잔치를 잘 치르고 싶은 마음이 있어요.',
+    'u_nolbu_husband': '제비 다리를 고쳐 주려다 소동이 난 세모 남편의 흥부·놀부 의상이에요.', 'u_heungbu_dad': '박씨를 심어 복을 받은 네모 아빠의 흥부 의상이에요.',
+    'u_sun_hana': '동생과 함께 하늘로 올라가 해님이 된 하나의 의상이에요.', 'u_woodcutter_dad': '금도끼 은도끼 앞에서도 정직했던 나무꾼 의상이에요.',
+    'u_bear_dong': '세 마리 곰 가운데 든든한 큰 곰, 동그라미 아빠의 의상이에요.', 'u_ant_mom': '여름내 열심히 열매를 모은 개미 엄마 의상이에요.',
+    'u_dokkaebi': '혹부리 영감 이야기에 나오는 순한 도깨비예요(가족 밖).', 'u_swallow': '박씨를 물어다 준 고마운 제비예요(가족 밖).',
+    'u_toad': '독 구멍을 막아 콩쥐를 도운 두꺼비예요(가족 밖).', 'u_magpie': '오작교를 놓은 까치 떼의 한 마리예요(가족 밖).', 'u_fairy': '밤마다 몰래 구두를 지어 준 작은 요정이에요(가족 밖).',
+}
+for _u in UNITS:
+    assert _u['id'] in TALE_LINES, ('도감 한 줄 없음', _u['id']); _u['tale'] = TALE_LINES[_u['id']]
+BAL['dex'] = [dict(n=5, gems=100), dict(n=10, gems=150), dict(n=15, gems=200), dict(n=20, gems=300), dict(n=len(UNITS), gems=500)]   # 수집 보상(반짝석, 한 번씩)

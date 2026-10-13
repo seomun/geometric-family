@@ -22,5 +22,7 @@ const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m
   ok(got3, '카메오 손님 3번째 방문: 자기 앱 가구 1개 선물');
   await p.evaluate(() => { document.querySelector('.h2-guestchip').click(); }); await p.waitForTimeout(500); await p.screenshot({ path: 'notes/snapshots/housing_guestbook.png' });
   ok(await p.evaluate(() => /손님 도감 1\//.test(document.querySelector('.h2-presh h2').textContent)), '손님 도감: 방문한 손님 1명 표시');
+  const names = await p.evaluate(() => [...document.querySelectorAll('.h2-presh .h2-ptx b')].map((x) => x.textContent.split(' · ')[0])); ok(new Set(names).size === names.length, '손님 도감: 같은 사람은 한 줄 ' + names.join(','));
+  ok(await p.evaluate(() => [...document.querySelectorAll('.h2-presh .h2-ptx b')].some((x) => /동그라미 아빠 · .* · /.test(x.textContent))), '동그라미 아빠: 앱 이름 여러 개로 합쳐 표시');
   ok(errs.length === 0, '오류 없음 ' + errs[0]); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

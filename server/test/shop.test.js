@@ -168,3 +168,11 @@ test('방치 정찰: 처음엔 시계만 · 10분 미만 0 · 시간 비례 · 8
   const per = GG.D.stages[11].gold * GG.D.dungeon.idleRate, id = rid(); r = await claim(NOW + 3 * 3600000, id); assert.equal(r.body.gold, Math.floor(3 * per)); const again = await claim(NOW + 3 * 3600000 + 100, id); assert.equal(again.body.replay, true); assert.equal(again.body.gold, r.body.gold);
   r = await claim(NOW + 3 * 3600000 + 20 * 3600000); assert.equal(r.body.gold, Math.floor(GG.D.dungeon.idleCapH * per), '8시간까지만'); assert.equal(r.body.profile.wallet.gold, Math.floor(3 * per) + Math.floor(8 * per));
 });
+
+test('도감 수집 보상(B5): 문턱 미달 거절 · 한 번만 · 장부', async () => {
+  const env = mkenv(), a = await signup(env), claim = (n) => call(env, 'POST', '/dex/claim', { token: a.access, body: { n } });
+  assert.equal((await claim(10)).body.error, 'not_yet'); assert.equal((await claim(7)).body.error, 'bad_milestone');   // 시작 동료 5명 = 첫 문턱
+  const r = await claim(5); assert.equal(r.body.gems, 100); assert.equal(r.body.profile.wallet.free_gems, 1600); assert.deepEqual(r.body.profile.progress.flags.dex, [5]);
+  assert.equal((await claim(5)).body.replay, true); assert.equal((await prof(env, a)).wallet.free_gems, 1600, '한 번만'); assert.equal((await claim(10)).body.error, 'not_yet');
+  assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM ledger WHERE account=? AND kind='dex'").bind(a.account).first()).n, 1);
+});

@@ -85,7 +85,7 @@
       const tt = el('div', 'sp-ttl', r, '<div class="uk-title">다른 그림 찾기</div><div class="sp-sub">옛이야기 속 달라진 곳을 찾아요</div>'); const pl = Room.mePlate(tt); if (pl) { tt.querySelector('.sp-sub').style.display = 'none'; pl.style.marginTop = '6px'; }
       GF.hero(r, 'spot'); const fam = el('div', 'sp-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));
-      const cont = UK.btn({ text: '이어서 하기 · 레벨 ' + last, icon: 'play', cls: 'block', onclick: () => GF.go('pplay', { n: last }) }, el('div', 'sp-btns', r));
+      const cont = UK.btn({ text: GF.t('c16.block.020', { last: last }), icon: 'play', cls: 'block', onclick: () => GF.go('pplay', { n: last }) }, el('div', 'sp-btns', r));
       if (!Object.keys(SV.stars).length) setTimeout(() => { if (cont.isConnected) UK.finger(r, cont); }, 900);
       const g = el('div', 'sp-grid', r), dailyDone = SV.daily.date === today() && SV.daily.done;
       const b = (t, icon, cls, fn, badge) => { const x = UK.btn({ text: t, icon, cls, onclick: fn }, g); if (badge) el('i', 'sp-badge', x, badge); return x; };
@@ -94,7 +94,7 @@
       b('세 가족 판', 'heart', 'pink', () => GF.go('ptrio'));
       b('우리 집', 'home', 'dong', () => GF.go('phouse'));
       const ss = seasonNow(); if (ss.length) { const s = ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0], done = SV.seasonDone[seasonKey(s)]; UK.btn({ text: s.title, icon: 'star', cls: 'block ' + (done ? 'gray' : 'danger'), onclick: () => { const L = seasonLevel(s); if (L) GF.go('pplay', { level: L }); } }, el('div', 'sp-season', r)); }
-      el('div', 'sp-foot', r, '별 ' + totalStars() + ' · 사진 ' + Room.owned().filter((id) => (Room.item(id) || {}).set === 'photo').length + '/' + Object.keys(REW).length);
+      el('div', 'sp-foot', r, GF.t('c16.spot.006', { totalStars: totalStars() }) + Room.owned().filter((id) => (Room.item(id) || {}).set === 'photo').length + '/' + Object.keys(REW).length);
     },
   });
   GF.screen('plevels', {
@@ -124,7 +124,7 @@
       r.classList.add('uk', 'sp'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
       const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));z-index:30;pointer-events:none'; return t; };
-      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
+      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : GF.t('c16.block.022', { id: LV.id });
       el('div', 'sp-hd', r, `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'diff' ? `<em class="sp-type">${D.types[LV.type]}</em>` : ''));
       const goals = el('div', 'sp-goals', r), area = el('div', 'sp-area', r), btns = el('div', 'sp-btns2', r), tip = el('div', 'sp-tip', r);
       let ri = 0, found = LV.rounds.map((R) => R.diffs.map(() => false)), wrong = 0, hints = 0, busy = false, phase = LV.type === 'memory' ? 'study' : 'find', zoomed = LV.type === 'zoom', hintIdx = -1, total = 0;
@@ -172,7 +172,7 @@
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
         if (!LV.kind && hints > 0 && stars < 3 && GF.ads) GF.ads.resultHook = { placement: 'hint2', ask: GF.t('c16.spot.005'), sub: GF.t('c16.spot.004'), onReward: () => { const st2 = C.stars(0, wrong); if (st2 > (SV.stars[LV.id] || 0)) { SV.stars[LV.id] = st2; save(); GF.refreshBar(); } } };
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: GF.t('c16.block.013'), onReward: bonusShard };
-        const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '힌트 ' + hints }, { icon: 'gift', text: '틀린 탭 ' + wrong }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
+        const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: GF.t('c16.spot.007', { hints: hints }) }, { icon: 'gift', text: GF.t('c16.spot.008', { wrong: wrong }) }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: GF.t('c16.block.006'), stars, chips, parent: r, onNext: next ? () => GF.replace('pplay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('pplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
       }

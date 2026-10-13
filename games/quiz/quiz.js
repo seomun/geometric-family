@@ -45,10 +45,10 @@
       GF.hero(r, 'quiz'); const m = me(), fam = el('div', 'qz-fam', r);
       if (m) { const T = D.types[m.f], card = el('button', 'qz-mine', fam, `<img src="${GF.src(T.char)}"><div><small>내 도형</small><b>${tsub(m.f, m.s).n}</b></div>`); card.style.background = T.bg; card.onclick = () => GF.go('qcard'); }
       else ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
-      const nxt = D.tests.find((t) => !SV.res[t.id]) || D.tests[0], go = UK.btn({ text: doneN() ? '다음 테스트 · ' + nxt.title : '바로 시작 · ' + nxt.title, icon: 'play', cls: 'block', onclick: () => GF.go('qplay', { id: nxt.id }) }, el('div', 'qz-go', r));   // 한 번 눌러 첫 문항까지
+      const nxt = D.tests.find((t) => !SV.res[t.id]) || D.tests[0], go = UK.btn({ text: doneN() ? GF.t('c16.quiz.021', { title: nxt.title }) : GF.t('c16.quiz.022', { title: nxt.title }), icon: 'play', cls: 'block', onclick: () => GF.go('qplay', { id: nxt.id }) }, el('div', 'qz-go', r));   // 한 번 눌러 첫 문항까지
       if (!doneN()) setTimeout(() => { if (go.isConnected) UK.finger(r, go); }, 900);
       const g = el('div', 'qz-grid', r), b = (t, icon, cls, fn) => UK.btn({ text: t, icon, cls, onclick: fn }, g);
-      b('테스트 ' + doneN() + '/' + D.tests.length, 'star', 'gold', () => GF.go('qtests')); b('미니게임', 'play', 'sky', () => GF.go('qgames'));
+      b(GF.t('c16.quiz.023', { doneN: doneN(), length: D.tests.length }), 'star', 'gold', () => GF.go('qtests')); b('미니게임', 'play', 'sky', () => GF.go('qgames'));
       b('내 도형 카드', 'heart', 'pink', () => { if (m) GF.go('qcard'); else { GF.sfx('hmm'); UK.toast(GF.t('c16.quiz.007'), r); } }); b('우리 집', 'home', 'dong', () => GF.go('qhouse'));
       el('div', 'qz-foot', r, GF.t('c16.quiz.010'));
     },
@@ -60,7 +60,7 @@
     enter(r) {
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r);
       const lv = D.tests.map((t, k) => ({ id: k + 1, chapter: Math.floor(k / 10) + 1, type: 'test', label: t.title + (t.season ? ' · 시즌' : t.kind === 'tale' ? ' · 동화' : '') }));
-      GF.saga.open(r, { levels: lv, kid: false, noGate: true, hideStars: true, goText: (l) => '이어서 · 테스트 ' + l.id, stars: (id) => (SV.res[D.tests[id - 1].id] ? 3 : 0), unlocked: () => true, title: (c) => ['도형 테스트', '도형 테스트 · 동화·시즌'][c - 1] || '',
+      GF.saga.open(r, { levels: lv, kid: false, noGate: true, hideStars: true, goText: (l) => GF.t('c16.quiz.024', { id: l.id }), stars: (id) => (SV.res[D.tests[id - 1].id] ? 3 : 0), unlocked: () => true, title: (c) => ['도형 테스트', '도형 테스트 · 동화·시즌'][c - 1] || '',
         onNode: (l) => GF.go('qplay', { id: D.tests[l.id - 1].id }), onChest: () => GF.go('qhouse'), side: [{ icon: 'home', text: GF.t('c16.block.003'), fn: () => GF.go('qhouse') }] });
     },
   });
@@ -106,7 +106,7 @@
     bare: false,
     enter(r) {
       r.classList.add('uk', 'qz'); GF.bg('indoor2', r); const m = me(), rs = Object.values(SV.res), cnt = { nemo: 0, semo: 0, dong: 0 }; rs.forEach((x) => FAMS.forEach((f) => { cnt[f] += x.cnt[f]; }));
-      const res = { f: m.f, s: m.s, cnt }; const box = el('div', 'qz-card', r), im = el('img', '', box); im.src = uri(cardSVG(res, '내 도형 · 테스트 ' + rs.length + '개'));
+      const res = { f: m.f, s: m.s, cnt }; const box = el('div', 'qz-card', r), im = el('img', '', box); im.src = uri(cardSVG(res, GF.t('c16.quiz.025', { length: rs.length })));
       el('div', 'qz-res', r, `<p>${tsub(m.f, m.s).plus}</p><p class="st">${tsub(m.f, m.s).step}</p>`);
       const acts = el('div', 'qz-acts', r); UK.btn({ text: GF.t('c16.quiz.001'), icon: 'share', cls: 'gold', onclick: async () => { try { await savePNG(res, '내 도형'); GF.sfx('star'); UK.toast(GF.t('c16.quiz.008'), r); } catch (e) { GF.sfx('hmm'); } } }, acts); UK.btn({ text: GF.t('c16.quiz.004'), icon: 'star', cls: 'sky', onclick: () => GF.go('qtests') }, acts);
     },
@@ -137,24 +137,24 @@
       CL_END = end;
       if (g === 1) {   // 반응: 5번, 초록으로 바뀌면 탭 — 평균 ms
         const circle = el('button', 'qz-react', area), info = el('div', 'qz-info', area); let t0 = 0, armed = false, to, ms = [];
-        const next = () => { circle.className = 'qz-react'; circle.textContent = ''; info.textContent = round + '/5 · 기다려요…'; armed = false; clearTimeout(to); to = setTimeout(() => { circle.classList.add('go'); circle.innerHTML = '<img src="' + GF.src('baby.joy') + '">'; t0 = performance.now(); armed = true; info.textContent = GF.t('c16.quiz.011'); }, 1200 + rng() * 2200); };
+        const next = () => { circle.className = 'qz-react'; circle.textContent = ''; info.textContent = GF.t('c16.quiz.026', { round: round }); armed = false; clearTimeout(to); to = setTimeout(() => { circle.classList.add('go'); circle.innerHTML = '<img src="' + GF.src('baby.joy') + '">'; t0 = performance.now(); armed = true; info.textContent = GF.t('c16.quiz.011'); }, 1200 + rng() * 2200); };
         circle.onclick = () => { if (!armed) { GF.sfx('hmm'); clearTimeout(to); info.textContent = GF.t('c16.quiz.012'); next(); return; } const d = performance.now() - t0; ms.push(d); GF.sfx('ok'); round++; if (round >= 5) { const avg = ms.reduce((a, b) => a + b, 0) / ms.length; end(avg < 420 ? 3 : avg < 620 ? 2 : 1, [{ icon: 'star', text: '평균 ' + Math.round(avg) + 'ms' }]); } else next(); };
         QZ.debug.reactDone = () => { clearTimeout(to); end(3, []); }; next();
       } else if (g === 2) {   // 기억: 가족 셋이 켜지는 순서 따라하기
         const row = el('div', 'qz-simon', area), info = el('div', 'qz-info', area), btns = ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].map((id, k) => { const b = el('button', '', row); b.style.background = D.types[FAMS[k]].bg; b.appendChild(GF.img(id)); return b; });
         let seq = [], pos = 0, lock = true; const flash = (k) => new Promise((res) => { btns[k].classList.add('lit'); GF.sfx('pick'); setTimeout(() => { btns[k].classList.remove('lit'); setTimeout(res, 160); }, 420); });
-        const play = async () => { lock = true; seq.push((rng() * 3) | 0); info.textContent = '잘 보세요 (' + seq.length + ')'; await new Promise((r2) => setTimeout(r2, 500)); for (const k of seq) await flash(k); pos = 0; lock = false; info.textContent = GF.t('c16.quiz.013'); };
-        btns.forEach((b, k) => { b.onclick = async () => { if (lock) return; await flash(k); if (k !== seq[pos]) { GF.sfx('hmm'); const len = seq.length - 1; end(len >= 6 ? 3 : len >= 4 ? 2 : 1, [{ icon: 'star', text: len + '개 기억' }]); return; } pos++; if (pos === seq.length) { GF.sfx('ok'); await play(); } }; });
+        const play = async () => { lock = true; seq.push((rng() * 3) | 0); info.textContent = GF.t('c16.quiz.027', { length: seq.length }); await new Promise((r2) => setTimeout(r2, 500)); for (const k of seq) await flash(k); pos = 0; lock = false; info.textContent = GF.t('c16.quiz.013'); };
+        btns.forEach((b, k) => { b.onclick = async () => { if (lock) return; await flash(k); if (k !== seq[pos]) { GF.sfx('hmm'); const len = seq.length - 1; end(len >= 6 ? 3 : len >= 4 ? 2 : 1, [{ icon: 'star', text: GF.t('c16.quiz.028', { len: len }) }]); return; } pos++; if (pos === seq.length) { GF.sfx('ok'); await play(); } }; });
         QZ.debug.memDone = () => end(3, []); seq = [(rng() * 3) | 0, (rng() * 3) | 0]; play();
       } else if (g === 3) {   // 선택: 이럴 땐 어느 쪽 — 집계 없음, 따뜻한 한마디
         const q = el('div', 'qz-info', area), box = el('div', 'qz-bal', area); const list = shuffle(BAL).slice(0, 6); let k = 0;
         const show = () => { box.innerHTML = ''; q.textContent = '이럴 땐? (' + (k + 1) + '/6)'; list[k].forEach((t, idx) => UK.btn({ text: t, cls: idx ? 'sky block' : 'pink block', onclick: () => { GF.sfx('pick'); k++; if (k >= 6) end(3, [{ icon: 'check', text: GF.t('c16.quiz.005') }, { icon: 'heart', text: GF.t('c16.quiz.006') }]); else show(); } }, box)); }; QZ.debug.balDone = () => end(3, []); show();
       } else if (g === 4) {   // 그림: 이 물건은 누구 방?
         const art = el('div', 'qz-art', area), box = el('div', 'qz-bal', area), info = el('div', 'qz-info', area); const items = shuffle(Object.keys(ROOMOF)).slice(0, 8); let k = 0;
-        const show = () => { const a = items[k]; info.textContent = '이 물건은 누구 방에 있을까요? (' + (k + 1) + '/8)'; art.innerHTML = ''; const im = el('img', '', art); im.src = uri(RoomArt.make(a, '#F6C28B', {})); box.innerHTML = ''; ['nemo', 'semo', 'dong'].forEach((f, idx) => UK.btn({ text: ['네모네 거실', '세모네 신혼집', '동그라미네 서재'][idx], cls: f + ' block', onclick: () => { if (ROOMOF[a] === f) { score++; GF.sfx('ok'); } else GF.sfx('hmm'); k++; if (k >= 8) end(score >= 7 ? 3 : score >= 5 ? 2 : 1, [{ icon: 'star', text: score + '/8 맞힘' }]); else show(); } }, box)); }; QZ.debug.picDone = () => end(3, []); show();
+        const show = () => { const a = items[k]; info.textContent = '이 물건은 누구 방에 있을까요? (' + (k + 1) + '/8)'; art.innerHTML = ''; const im = el('img', '', art); im.src = uri(RoomArt.make(a, '#F6C28B', {})); box.innerHTML = ''; ['nemo', 'semo', 'dong'].forEach((f, idx) => UK.btn({ text: ['네모네 거실', '세모네 신혼집', '동그라미네 서재'][idx], cls: f + ' block', onclick: () => { if (ROOMOF[a] === f) { score++; GF.sfx('ok'); } else GF.sfx('hmm'); k++; if (k >= 8) end(score >= 7 ? 3 : score >= 5 ? 2 : 1, [{ icon: 'star', text: GF.t('c16.quiz.029', { score: score }) }]); else show(); } }, box)); }; QZ.debug.picDone = () => end(3, []); show();
       } else {   // 가족 맞히기: 누가 한 말?
         const bubble = el('div', 'qz-bub', area), box = el('div', 'qz-bal', area), info = el('div', 'qz-info', area); const list = shuffle(LINES).slice(0, 8); let k = 0;
-        const show = () => { info.textContent = '누가 한 말일까요? (' + (k + 1) + '/8)'; bubble.textContent = '“' + list[k][0] + '”'; box.innerHTML = ''; FAMS.forEach((f) => UK.btn({ text: D.types[f].name, cls: f + ' block', onclick: () => { if (list[k][1] === f) { score++; GF.sfx('ok'); } else GF.sfx('hmm'); k++; if (k >= 8) end(score >= 7 ? 3 : score >= 5 ? 2 : 1, [{ icon: 'star', text: score + '/8 맞힘' }]); else show(); } }, box)); }; QZ.debug.guessDone = () => end(3, []); show();
+        const show = () => { info.textContent = '누가 한 말일까요? (' + (k + 1) + '/8)'; bubble.textContent = '“' + list[k][0] + '”'; box.innerHTML = ''; FAMS.forEach((f) => UK.btn({ text: D.types[f].name, cls: f + ' block', onclick: () => { if (list[k][1] === f) { score++; GF.sfx('ok'); } else GF.sfx('hmm'); k++; if (k >= 8) end(score >= 7 ? 3 : score >= 5 ? 2 : 1, [{ icon: 'star', text: GF.t('c16.quiz.029', { score: score }) }]); else show(); } }, box)); }; QZ.debug.guessDone = () => end(3, []); show();
       }
     },
   });

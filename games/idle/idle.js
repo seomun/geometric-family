@@ -143,8 +143,8 @@
         if (t === 'nemo' && !S.tot && !Object.keys(S.g).length) setTimeout(() => { if (c.isConnected) UK.finger(r, c); }, 900);   // 첫 실행: 네모네 식탁 → 첫 식구 사기
         UI.upd.push(() => {
           const r_ = rates(now()), tn = { nemo: r_.n.w + r_.n.l, semo: r_.s.w, dong: r_.d.w }[t];
-          $q(c, '.lv').textContent = '식탁 Lv ' + S.tl[t]; $q(c, '.rt').textContent = fmtRate(tn);
-          $q(c, '.st').textContent = t === 'nemo' ? (r_.n.sat < 1 ? '밥그릇이 모자라요' : '넉넉하게 먹어요') : t === 'semo' ? (tripCd() > 0 ? (buffAt(now()) !== 1 ? '여행 중!' : '다음 여행 준비 중') : '여행 갈 수 있어요') : (r_.d.empty ? '빈 의자 ' + r_.d.empty + '개' : '모두 모였어요');
+          $q(c, '.lv').textContent = GF.t('c16.idle.017', { t: S.tl[t] }); $q(c, '.rt').textContent = fmtRate(tn);
+          $q(c, '.st').textContent = t === 'nemo' ? (r_.n.sat < 1 ? '밥그릇이 모자라요' : '넉넉하게 먹어요') : t === 'semo' ? (tripCd() > 0 ? (buffAt(now()) !== 1 ? '여행 중!' : '다음 여행 준비 중') : '여행 갈 수 있어요') : (r_.d.empty ? GF.t('c16.idle.018', { empty: r_.d.empty }) : '모두 모였어요');
           const need = tlCost(t); $q(c, '.bar i').style.width = Math.min(100, S.w / need * 100) + '%';
           const alert = t === 'semo' ? (tripCd() === 0 && gross('semo') > 0 ? '!' : '') : t === 'dong' ? (invitesAvailable().length ? '초대' : '') : '';
           dot.style.display = alert ? 'flex' : 'none'; dot.textContent = alert;
@@ -161,7 +161,7 @@
       });
       const rb = el('button', 'ribbon', sc, ''); rb.style.display = 'none';
       rb.onclick = () => { if (endingReady() && !S.end) { GF.sfx('pick'); GF.go('istory', { id: 'end', ending: true }); return; } const t = seasonTodo()[0] || seasonList()[0]; if (t) { GF.sfx('pick'); GF.go('istory', { id: t.id, season: true }); } };
-      UI.upd.push(() => { const l = seasonList(), todo = seasonTodo(), en = endingReady() && !S.end; rb.style.display = l.length || en ? 'flex' : 'none'; rb.classList.toggle('gold', en); if (en) rb.textContent = GF.t('c16.idle.010'); else if (l.length) rb.textContent = todo.length ? todo[0].season + ' 사건 · ' + todo[0].title : l[0].season + ' 사건 · 다시 보기'; rb.classList.toggle('done', !en && !todo.length); });
+      UI.upd.push(() => { const l = seasonList(), todo = seasonTodo(), en = endingReady() && !S.end; rb.style.display = l.length || en ? 'flex' : 'none'; rb.classList.toggle('gold', en); if (en) rb.textContent = GF.t('c16.idle.010'); else if (l.length) rb.textContent = todo.length ? GF.t('c16.idle.019', { season: todo[0].season, title: todo[0].title }) : GF.t('c16.idle.020', { season: l[0].season }); rb.classList.toggle('done', !en && !todo.length); });
       { const pl = Room.mePlate(hd); if (pl) { pl.style.cssText += ';position:absolute;right:6px;top:6px;transform:scale(.74);transform-origin:right top;'; } }   // 내 도형 문패(⑤ 결과)
       UI.upd.forEach((f) => f());
       if (UI.welcome) { const w = UI.welcome; UI.welcome = null; welcomeBack(sc, w); }
@@ -204,7 +204,7 @@
           const gi = el('div', 'gi', row); const buy = el('button', 'buy', row); buy.style.background = Rbtn(t);
           const upg = () => {
             const c = genCost(g), L = lvl(g.id);
-            gi.innerHTML = `<b>${g.name}${g.premium ? ' ★' : ''}${L ? ' Lv ' + L : ''}</b><span>${g.pot ? (g.note + ' · 지금 ' + (T.bowlsBase + L) + '개') : (L ? '지금 ' + fmtRate(L * g.rate) : '합류하면 ' + fmtRate(g.rate))}</span>`;
+            gi.innerHTML = `<b>${g.name}${g.premium ? ' ★' : ''}${L ? ' Lv ' + L : ''}</b><span>${g.pot ? (GF.t('c16.idle.021', { note: g.note }) + (T.bowlsBase + L) + '개') : (L ? '지금 ' + fmtRate(L * g.rate) : '합류하면 ' + fmtRate(g.rate))}</span>`;
             buy.innerHTML = `${L ? '올리기' : '모시기'}<small>${fmt(c)}</small>`; buy.disabled = !prevOk || S.w < c;
           };
           buy.onclick = () => { const c = genCost(g); if (S.w < c) return; S.w -= c; S.g[g.id] = lvl(g.id) + 1; GF.sfx('ok'); const b_ = buy.getBoundingClientRect(); floatText(sc, 220, 160, '+' + (g.pot ? '1' : fmtRate(g.rate))); renderAll(); };
@@ -228,7 +228,7 @@
             else { S.buffs.push({ from: tt, until: tt + c.pauseSec * 1000, mult: 0 }); S.buffs.push({ from: tt + c.pauseSec * 1000, until: tt + (c.pauseSec + c.sec) * 1000, mult: c.mult }); }
             S.tripReady = tt + T.trip.cooldownSec * 1000; GF.sfx(k === 'sweet' ? 'ok' : 'wind'); S.l += 5; toast(k === 'sweet' ? '손잡고 온천으로~' : '공항에서 대판! …그리고 온천 화해'); upd2(); };
           a.onclick = () => go('sweet'); b.onclick = () => go('extreme');
-          const upd2 = () => { const cd = Math.ceil(tripCd() / 1000), act = buffAt(now()) !== 1, can = gross('semo') > 0 && cd === 0; a.disabled = b.disabled = !can; $q(pn, '#tstat').textContent = gross('semo') <= 0 ? '두 사람을 먼저 모셔 오세요' : act ? '여행 중! 곧 온기가 터져요' : cd ? '다음 여행까지 ' + cd + '초' : '둘 중 하나를 골라 떠나요 (손해 없음)'; };
+          const upd2 = () => { const cd = Math.ceil(tripCd() / 1000), act = buffAt(now()) !== 1, can = gross('semo') > 0 && cd === 0; a.disabled = b.disabled = !can; $q(pn, '#tstat').textContent = gross('semo') <= 0 ? '두 사람을 먼저 모셔 오세요' : act ? '여행 중! 곧 온기가 터져요' : cd ? GF.t('c16.idle.022', { cd: cd }) : '둘 중 하나를 골라 떠나요 (손해 없음)'; };
           upd2(); UI.upd.push(upd2);
         }
         if (t === 'dong') {
@@ -265,7 +265,7 @@
       function answer(o) {
         if (p.ending) S.end = now(); else if (p.season) S.ss[seasonKey(st.id)] = { k: o.k, t: now() }; else S.sd[st.id] = { k: o.k, t: now() };
         const lg = st.reward.laugh; S.l += lg; GF.sfx('celebrate'); const pct = Math.round(dexCount() / B.dexTotal * 100);
-        UK.modal({ parent: r, title: '당신은 ' + FAM[o.k] + ' 쪽이군요', body: B.tables[o.k].tag + '<br>' + (p.ending ? '세 식탁이 큰 한 상에 모였어요.' : p.season ? '올해의 ' + st.season + ' 도장을 찍었어요' : '도감 ' + dexCount() + '/' + B.dexTotal + ' (' + pct + '%)') + (st.stat ? '<br><small>' + st.stat + '</small>' : ''), big: '웃음 +' + lg, actions: [{ text: GF.t('c16.idle.004'), onclick: () => GF.back() }] });
+        UK.modal({ parent: r, title: GF.t('c16.idle.023', { k: FAM[o.k] }), body: B.tables[o.k].tag + '<br>' + (p.ending ? '세 식탁이 큰 한 상에 모였어요.' : p.season ? GF.t('c16.idle.024', { season: st.season }) : GF.t('c16.idle.025', { dexCount: dexCount(), dexTotal: B.dexTotal, pct: pct })) + (st.stat ? '<br><small>' + st.stat + '</small>' : ''), big: GF.t('c16.idle.026', { lg: lg }), actions: [{ text: GF.t('c16.idle.004'), onclick: () => GF.back() }] });
         save();
       }
     },
@@ -279,7 +279,7 @@
       r.classList.add('idle'); const sc = el('div', 'scr', r); GF.bg('indoor', sc); bar();
       const lv = ST.stories.map((s, k) => ({ id: k + 1, chapter: Math.floor(k / 10) + 1, type: 'story', label: S.sd[s.id] || S.tot >= B.storyThresholds[k] ? s.title : '' }));
       const got = (id) => !!S.sd[ST.stories[id - 1].id], open = (id) => id === 1 || got(id) || S.tot >= B.storyThresholds[id - 1];
-      GF.saga.open(sc, { levels: lv, kid: false, noGate: true, hideStars: true, goText: (l) => '이어서 · 사연 ' + l.id, stars: (id) => (got(id) ? 3 : 0), unlocked: open, title: (c) => ['첫 사연들', '이웃 사연', '큰 한 상'][c - 1] || '', 
+      GF.saga.open(sc, { levels: lv, kid: false, noGate: true, hideStars: true, goText: (l) => GF.t('c16.idle.027', { id: l.id }), stars: (id) => (got(id) ? 3 : 0), unlocked: open, title: (c) => ['첫 사연들', '이웃 사연', '큰 한 상'][c - 1] || '', 
         lockedMsg: (l) => '온기를 ' + fmt(B.storyThresholds[l.id - 1]) + ' 모으면 열려요', onNode: (l) => { GF.go('istory', { id: ST.stories[l.id - 1].id }); }, onChest: () => GF.go('ihouse'),
         side: [{ icon: 'home', text: GF.t('c16.block.003'), fn: () => GF.go('ihouse') }] });
     },
@@ -375,7 +375,7 @@
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'idle_balance', 'idle_stories', 'story_idle', 'maps/idle', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:idle:ui:v1', async start() {
       await loadCodeChars();
       B = GF.data.idle_balance; ST = GF.data.idle_stories; S = load();
-      Room.init({ home: () => GF.go('itable'), openHouse: () => GF.go('ihouse'), housing: GF.data.housing, app: 'idle', data: GF.data.room_items, game: 'tables', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), onGrant: (it) => { if (UI.toastOk) { toast('새 소품 · ' + it.name); GF.sfx('star'); } } });
+      Room.init({ home: () => GF.go('itable'), openHouse: () => GF.go('ihouse'), housing: GF.data.housing, app: 'idle', data: GF.data.room_items, game: 'tables', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), onGrant: (it) => { if (UI.toastOk) { toast(GF.t('c16.idle.028', { name: it.name })); GF.sfx('star'); } } });
       PR = GF.data.room_items.items.filter((x) => x.set === 'kitchen' && x.cond);
       Object.keys(S.pr || {}).forEach((id) => { if (Room.item(id)) Room.grant(id); });   // 예전 저장(S.pr)을 집으로 옮긴다
       checkProps(); UI.toastOk = true; S.last = S.last || Date.now();

@@ -61,7 +61,7 @@
       const tt = el('div', 'sr-ttl', r, '<div class="uk-title">정리의 달인</div><div class="sr-sub">뒤섞인 물건을 종류별로 정리해요</div>'); const pl = Room.mePlate(tt); if (pl) { tt.querySelector('.sr-sub').style.display = 'none'; pl.style.marginTop = '6px'; }
       GF.hero(r, 'sort'); const fam = el('div', 'sr-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));
-      const cont = UK.btn({ text: '이어서 하기 · 레벨 ' + last, icon: 'play', cls: 'block', onclick: () => GF.go('splay', { n: last }) }, el('div', 'sr-btns', r));
+      const cont = UK.btn({ text: GF.t('c16.block.020', { last: last }), icon: 'play', cls: 'block', onclick: () => GF.go('splay', { n: last }) }, el('div', 'sr-btns', r));
       if (!Object.keys(SV.stars).length) setTimeout(() => { if (cont.isConnected) UK.finger(r, cont); }, 900);
       const g = el('div', 'sr-grid', r), dailyDone = SV.daily.date === today() && SV.daily.done;
       const b = (t, icon, cls, fn, badge) => { const x = UK.btn({ text: t, icon, cls, onclick: fn }, g); if (badge) el('i', 'sr-badge', x, badge); return x; };
@@ -70,7 +70,7 @@
       b('세 가족 판', 'heart', 'pink', () => GF.go('strio'));
       b('우리 집', 'home', 'dong', () => GF.go('shouse'));
       const ss = seasonNow(); if (ss.length) { const s = ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0], done = SV.seasonDone[seasonKey(s)]; UK.btn({ text: s.title, icon: 'star', cls: 'block ' + (done ? 'gray' : 'danger'), onclick: () => { const L = seasonLevel(s); if (L) GF.go('splay', { level: L }); } }, el('div', 'sr-season', r)); }
-      el('div', 'sr-foot', r, '별 ' + totalStars() + ' · 수납 소품 ' + Room.owned().filter((id) => (Room.item(id) || {}).set === 'storage').length + '/' + Object.keys(REW).length);
+      el('div', 'sr-foot', r, GF.t('c16.sort.012', { totalStars: totalStars() }) + Room.owned().filter((id) => (Room.item(id) || {}).set === 'storage').length + '/' + Object.keys(REW).length);
     },
   });
   GF.screen('slevels', {
@@ -100,7 +100,7 @@
       r.classList.add('uk', 'sr'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
       const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:102px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
-      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
+      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : GF.t('c16.block.022', { id: LV.id });
       el('div', 'sr-hd', r, `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'sort' ? `<em class="sr-type">${D.types[LV.type]}</em>` : ''));
       let S = C.newGame(LV), hist = [], sel = -1, busy = false, hintP = null, streak = 0, rankRes = null; const gained = [];
       const info = el('div', 'sr-info', r), area = el('div', 'sr-area', r), btns = el('div', 'sr-btns2', r), tip = el('div', 'sr-tip', r);
@@ -119,7 +119,7 @@
             if (C.isLocked(S, i)) el('i', 'lk', t, '🔒'); tubeEls[i] = t;
           }
         }
-        info.textContent = (LV.kind === 'trio' ? RULE_TXT[LV.rule][1] + ' · ' : '') + '옮긴 횟수 ' + S.moves + ' · 정리한 칸 ' + C.doneCount(S);
+        info.textContent = (LV.kind === 'trio' ? RULE_TXT[LV.rule][1] + ' · ' : '') + GF.t('c16.sort.013', { moves: S.moves }) + C.doneCount(S);
         const ur = 3 - S.used.undo; bdU.textContent = ur; bu.style.opacity = hist.length && ur > 0 ? 1 : 0.45; bdX.textContent = S.used.extra ? '0' : '1'; bx.style.opacity = S.used.extra ? 0.45 : 1;
       }
       function shake(i) { const t = tubeEls[i]; if (!t) return; t.classList.add('shake'); setTimeout(() => t && t.classList.remove('shake'), 400); }
@@ -140,7 +140,7 @@
       function result(stars) {
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: GF.t('c16.block.013'), onReward: bonusShard };
-        const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '옮긴 횟수 ' + S.moves }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
+        const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: GF.t('c16.sort.014', { moves: S.moves }) }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: GF.t('c16.sort.003'), stars, chips, parent: r, onNext: next ? () => GF.replace('splay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
       }

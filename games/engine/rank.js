@@ -118,7 +118,7 @@
   }
   R.open = function (boardId, tab) {
     if (!R.ready) return; const b = R.cfg.boards[boardId]; tab = tab || 'day';
-    const sc = UK.modal({ title: b.title + ' 순위표', dismiss: true, parent: document.getElementById('safe') }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet', 'rk-sheet');
+    const sc = UK.modal({ title: GF.t('c16.extras.013', { title: b.title }), dismiss: true, parent: document.getElementById('safe') }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet', 'rk-sheet');
     const tabs = el('div', 'rk-tabs', sh), body = el('div', 'rk-body', sh), note = el('small', 'xt-note rk-note', sh), acts = el('div', 'acts row', sh); UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.close() }, acts);
     const draw = (t) => {
       tabs.innerHTML = ''; body.innerHTML = ''; note.textContent = ''; [['day', '오늘'], ['week', '이번 주'], ['mine', '내 기록']].forEach(([k, n]) => { const x = el('button', 'rk-tab' + (k === t ? ' on' : ''), tabs, n); x.onclick = () => { GF.sfx('tap'); draw(k); }; });

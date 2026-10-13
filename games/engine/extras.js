@@ -45,7 +45,7 @@
     if (!kid) row(body, GF.t('ui.set.bigbtn'), UK.switch(!!s.bigBtn, (on) => { s.bigBtn = on ? 1 : 0; persist(); applyBig(); }));
     if (!kid) row(body, GF.t('ui.set.cb'), UK.switch(!!s.cb, (on) => { s.cb = on ? 1 : 0; persist(); applyBig(); }));
     if (kid) {   // 쉬어요 알림: 보호자가 정하는 놀이 시간 알림(아이에게 압박 없음, 설정 안 하면 없음)
-      const opts = [0, 10, 20, 30], b = tbtn(s.rest ? s.rest + '분' : GF.t('ui.set.off'), () => { const i = (opts.indexOf(s.rest || 0) + 1) % opts.length; s.rest = opts[i]; b.textContent = s.rest ? s.rest + '분' : GF.t('ui.set.off'); persist(); X.restReset(); }); row(body, GF.t('ui.set.rest'), b);
+      const opts = [0, 10, 20, 30], b = tbtn(s.rest ? GF.t('c16.extras.012', { rest: s.rest }) : GF.t('ui.set.off'), () => { const i = (opts.indexOf(s.rest || 0) + 1) % opts.length; s.rest = opts[i]; b.textContent = s.rest ? GF.t('c16.extras.012', { rest: s.rest }) : GF.t('ui.set.off'); persist(); X.restReset(); }); row(body, GF.t('ui.set.rest'), b);
       if (c.stats) { el('h4', 'xt-h', body, GF.t('ui.set.summary')); c.stats().forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); }
     } else {
       row(body, GF.t('ui.set.stats'), tbtn(GF.t('common.view'), () => { sc.close(); openStats(); }));
@@ -59,7 +59,7 @@
     const ads = GF.ads && GF.ads.live && GF.ads.live() && !kid;
     el('small', 'xt-note', body, kid ? GF.t('ui.set.note.kid') : (ads ? GF.t('ui.set.note.ads') : GF.t('ui.set.note.plain')));
   }
-  function openStats() { const { sc, body } = sheet(GF.t('ui.set.stats')); (X.cfg.stats ? X.cfg.stats() : []).forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); if (GF.rank && GF.rank.ready) GF.rank.boards().forEach((b) => row(body, b.title + ' 순위표', tbtn(GF.t('common.view'), () => { sc.close(); GF.rank.open(b.id); }))); }
+  function openStats() { const { sc, body } = sheet(GF.t('ui.set.stats')); (X.cfg.stats ? X.cfg.stats() : []).forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); if (GF.rank && GF.rank.ready) GF.rank.boards().forEach((b) => row(body, GF.t('c16.extras.013', { title: b.title }), tbtn(GF.t('common.view'), () => { sc.close(); GF.rank.open(b.id); }))); }
 
   /* ---------------- 업적(배지): 보상 압박 없이 모아 보기 ---------------- */
   function earned() { const s = load(); return X.cfg.badges.filter((b) => s.badges.includes(b.id)); }
@@ -69,11 +69,11 @@
   X.check = function (quiet) {
     if (GF.ip && GF.ip.ready) GF.ip.syncStamps();   // 진행이 늘었으면 도장
     if (!X.ready || !X.cfg.badges) return []; const s = load(), fresh = X.cfg.badges.filter((b) => !s.badges.includes(b.id) && safe(b.ok));
-    if (fresh.length) { fresh.forEach((b) => s.badges.push(b.id)); save(s); if (!quiet) fresh.slice(0, 2).forEach((b, i) => setTimeout(() => { try { UK.toast(b.icon + ' 업적: ' + b.name, document.getElementById('safe')); GF.sfx('star'); } catch (e) {} }, 400 + i * 1300)); }
+    if (fresh.length) { fresh.forEach((b) => s.badges.push(b.id)); save(s); if (!quiet) fresh.slice(0, 2).forEach((b, i) => setTimeout(() => { try { UK.toast(GF.t('c16.extras.014', { icon: b.icon, name: b.name }), document.getElementById('safe')); GF.sfx('star'); } catch (e) {} }, 400 + i * 1300)); }
     return fresh;
   };
   function openBadges() {
-    X.check(true); const s = load(), { body } = sheet('업적 ' + s.badges.length + '/' + X.cfg.badges.length), g = el('div', 'xt-badges', body);
+    X.check(true); const s = load(), { body } = sheet(GF.t('c16.extras.015', { length: s.badges.length, length2: X.cfg.badges.length })), g = el('div', 'xt-badges', body);
     X.cfg.badges.forEach((b) => { const got = s.badges.includes(b.id), d = el('div', 'xt-bd' + (got ? ' on' : ''), g); el('div', 'ic', d, got ? b.icon : '🔒'); el('b', '', d, b.name); el('small', '', d, b.desc); });
   }
 
@@ -81,12 +81,12 @@
   X.attend = function () { if (!X.ready || X.cfg.kid) return; const s = load(), t = ymd(new Date()); if (!s.days.includes(t)) { s.days.push(t); s.days = s.days.slice(-400); save(s); } };
   function nextItem() { const c = X.cfg; return (c.rewardItems || []).find((id) => window.Room && !Room.has(id)); }
   function openAttend() {
-    X.attend(); const s = load(), now = new Date(), y = now.getFullYear(), m = now.getMonth(), { body } = sheet(y + '년 ' + (m + 1) + '월 출석 도장');
+    X.attend(); const s = load(), now = new Date(), y = now.getFullYear(), m = now.getMonth(), { body } = sheet(GF.t('c16.extras.016', { y: y }) + (m + 1) + '월 출석 도장');
     const cal = el('div', 'xt-cal', body); ['일', '월', '화', '수', '목', '금', '토'].forEach((d) => el('i', 'h', cal, d));
     const first = new Date(y, m, 1).getDay(), last = new Date(y, m + 1, 0).getDate(); for (let i = 0; i < first; i++) el('i', '', cal, '');
     for (let d = 1; d <= last; d++) { const on = s.days.includes(y * 10000 + (m + 1) * 100 + d); el('i', 'd' + (on ? ' on' : '') + (d === now.getDate() ? ' today' : ''), cal, on ? '⭐' : String(d)); }
     const total = s.days.length, earnedN = Math.floor(total / 5), can = earnedN > s.claimed, it = nextItem();
-    el('p', 'xt-p', body, '도장 ' + total + '개 · 5개마다 집 소품 1개. 쉬어도 도장은 그대로예요.');
+    el('p', 'xt-p', body, GF.t('c16.extras.017', { total: total }));
     if (it) { const ri = Room.item(it); const b = el('button', 'xt-claim' + (can ? ' on' : ''), body, can ? '🎁 ' + (ri ? ri.name : '소품') + ' 받기' : '다음 소품까지 ' + (5 - (total % 5)) + '개'); b.disabled = !can; b.onclick = () => { if (!can) return; if (Room.grant(it)) { s.claimed++; save(s); GF.sfx('star'); b.textContent = GF.t('c16.extras.002'); b.disabled = true; GF.refreshBar && GF.refreshBar(); } }; }
     else el('p', 'xt-p', body, GF.t('c16.extras.001'));
   }
@@ -120,7 +120,7 @@
   /** 레벨 목록 맨 위: 별을 다 못 모은 판이 있으면 가장 앞 판으로 가는 부담 없는 버튼 */
   X.retryBanner = function (parent, stars, go) {
     const ids = Object.keys(stars || {}).map(Number).filter((n) => stars[n] > 0 && stars[n] < 3).sort((a, b) => a - b); if (!ids.length) return null;
-    const w = el('div', 'xt-retry', parent), b = UK.btn({ text: '별 더 모으기 · ' + ids.length + '판', icon: 'star', cls: 'gold block', onclick: () => { GF.sfx('pick'); go(ids[0]); } }, w); return b;
+    const w = el('div', 'xt-retry', parent), b = UK.btn({ text: GF.t('c16.extras.018', { length: ids.length }), icon: 'star', cls: 'gold block', onclick: () => { GF.sfx('pick'); go(ids[0]); } }, w); return b;
   };
   X.applyBig = applyBig; X.open = openSettings; X.openStats = openStats; X.openBadges = openBadges; X.openAttend = openAttend;
   X.init = function (cfg) {
@@ -147,7 +147,7 @@
         { id: 'p10', icon: '🎈', name: '열 판', desc: GF.t('c16.extras.004'), ok: () => done() >= 10 },
         { id: 'p30', icon: '🎀', name: '서른 판', desc: GF.t('c16.extras.005'), ok: () => done() >= 30 },
         { id: 'p60', icon: '🏅', name: '예순 판', desc: GF.t('c16.extras.006'), ok: () => done() >= 60 },
-        { id: 'p120', icon: '👑', name: '끝까지', desc: o.total + '판을 모두 깼어요', ok: () => done() >= o.total },
+        { id: 'p120', icon: '👑', name: '끝까지', desc: GF.t('c16.extras.019', { total: o.total }), ok: () => done() >= o.total },
         { id: 's3', icon: '⭐', name: '별 세 개', desc: GF.t('c16.extras.007'), ok: () => full() >= 10 },
         { id: 'r10', icon: '🏠', name: '집이 북적', desc: GF.t('c16.extras.008'), ok: () => items() >= 10 },
         { id: 'r20', icon: '🛋️', name: '세트 완성', desc: GF.t('c16.extras.009'), ok: () => items() >= o.itemTotal },

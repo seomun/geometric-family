@@ -62,6 +62,35 @@ PATS = [
     re.compile(r"(\.(?:textContent|innerText)\s*=\s*)'(" + KO + r")'"),
 ]
 SKIP_FILE = re.compile(r'-gen|core|android|node_modules|/demo|/store|/media|/audio|expedition/(?!exp\.js)')
+
+# ---- 이어 붙이는 문장(C18b): '조각 ' + n + '개' → GF.t('키', {n}) — 조각이 모두 따옴표 글자이거나 단순한 값(이름·점 접근·빈 괄호 호출)일 때만 ----
+LIT = r"'(?:[^'\
+])*'"
+EXPR = r"[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\[[A-Za-z0-9_$.]+\]|\(\))*"
+TOK = '(?:' + LIT + '|' + EXPR + ')'
+CHAIN = re.compile(r"(?<![\w$.\])\]'\"`])(" + TOK + r"(?:\s*\+\s*" + TOK + r")+)(?![\w$.\[(\]*/%+\-'\"`])")
+def chain_sub(m):
+    global tot, skipped_top
+    parts = [t.strip() for t in re.split(r"\s*\+\s*(?=(?:[A-Za-z_$']))", m.group(1))]
+    # 분해: 따옴표 글자 안의 '+' 는 나누지 않도록 토큰 정규식으로 다시 자른다
+    toks = re.findall(TOK, m.group(1))
+    if '+'.join(t.strip() for t in toks) != re.sub(r"\s*\+\s*", '+', m.group(1)).strip() and len(toks) < 2: return m.group(0)
+    if not any(t.startswith("'") and re.search('[가-힣]', t) for t in toks): return m.group(0)
+    if not any(not t.startswith("'") for t in toks): return m.group(0)
+    if any(t.startswith("'") and ('{' in t or '<' in t or '${' in t or BS in t) for t in toks): return m.group(0)
+    if not any(a < m.start(1) < b for a, b in FN): skipped_top += 1; return m.group(0)
+    names = []; text = ''; args = []
+    for t in toks:
+        if t.startswith("'"): text += t[1:-1]
+        else:
+            base = re.findall(r"[A-Za-z_$][\w$]*", t)[-1].replace('$', '_'); nm = base; i = 2
+            while nm in names: nm = base + str(i); i += 1
+            names.append(nm); args.append(nm + ': ' + t); text += '{' + nm + '}'
+    k = by_text.get(text)
+    if not k:
+        i = 1 + sum(1 for x in D if x.startswith('c16.' + stem + '.')); k = 'c16.' + stem + '.' + str(i).zfill(3); D[k] = text; by_text[text] = k
+    tot += 1
+    return "GF.t('" + k + "', { " + ', '.join(args) + " })"
 D = {}
 DP = 'tools/i18n_c16.json'
 if os.path.exists(DP): D = json.load(open(DP, encoding='utf-8'))
@@ -88,6 +117,8 @@ for f in files:
         return m.group(1) + "GF.t('" + k + "')" + (m.group(3) if m.lastindex and m.lastindex >= 3 else '')
     for p in PATS:
         FN = fn_intervals(s); s = p.sub(sub, s)
+    if '--chain' in sys.argv:
+        FN = fn_intervals(s); s = CHAIN.sub(chain_sub, s)
     if s != orig:
         per[f] = len(re.findall(r"GF\.t\('c16\.", s)) - len(re.findall(r"GF\.t\('c16\.", orig))
         if not DRY: open(f, 'w', encoding='utf-8', newline='').write(s)

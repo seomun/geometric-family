@@ -147,12 +147,12 @@
           const g = el('div', 'rm-grid', into);
           its.forEach((it) => {
             const own = Room.has(it.id), b = el('button', 'rm-cell' + (own ? '' : ' off'), g, `<img src="${Room.src(it)}" alt="">${own ? '' : (window.UK ? UK.icon('lock') : '')}`); b.setAttribute('aria-label', own ? it.name : '잠김');
-            b.onclick = () => { if (!own) { window.UK && UK.toast(it.season ? '시즌 아이템이에요 (' + it.season + '월)' : (kid ? '아직 못 얻었어요' : '아직 못 얻었어요 · ' + Room.set(it.set).name), parent); return; } const p = Room.place(it.id, it.room === cur || true ? cur : it.room); sel = Room.placedIn(cur).length - 1; window.GF && GF.sfx && GF.sfx('drop'); draw(); };
+            b.onclick = () => { if (!own) { window.UK && UK.toast(it.season ? GF.t('c16.room.003', { season: it.season }) : (kid ? '아직 못 얻었어요' : '아직 못 얻었어요 · ' + Room.set(it.set).name), parent); return; } const p = Room.place(it.id, it.room === cur || true ? cur : it.room); sel = Room.placedIn(cur).length - 1; window.GF && GF.sfx && GF.sfx('drop'); draw(); };
           });
         };
         mineSets.forEach((s) => block(s, inv));
         if (others.length) {
-          const tog = el('button', 'rm-more', inv, (kid && !Room.family ? '' : '다른 게임 세트 ' + others.length + '개 ') + (more ? '▲' : '▼')); tog.setAttribute('aria-expanded', more ? 'true' : 'false'); tog.onclick = () => { more = !more; GF.sfx && GF.sfx('tap'); drawInv(); };
+          const tog = el('button', 'rm-more', inv, (kid && !Room.family ? '' : GF.t('c16.room.004', { length: others.length })) + (more ? '▲' : '▼')); tog.setAttribute('aria-expanded', more ? 'true' : 'false'); tog.onclick = () => { more = !more; GF.sfx && GF.sfx('tap'); drawInv(); };
           if (more) others.forEach((s) => block(s, inv));
         }
       }

@@ -35,7 +35,7 @@
     bare: true,
     enter(r) {
       r.classList.add('uk', 'ex'); GF.bg('field', r); const w = el('div', 'ex-age', r); el('div', 'uk-title', w, GF.t('c16.exp.054')); el('p', '', w, GF.t('c16.exp.055'));
-      const y = el('select', 'ex-sel', w), m = el('select', 'ex-sel', w), now = new Date().getFullYear(); for (let k = now; k >= now - 90; k--) y.appendChild(new Option(k + '년', k)); for (let k = 1; k <= 12; k++) m.appendChild(new Option(k + '월', k)); y.value = now - 25;
+      const y = el('select', 'ex-sel', w), m = el('select', 'ex-sel', w), now = new Date().getFullYear(); for (let k = now; k >= now - 90; k--) y.appendChild(new Option(GF.t('c16.exp.076', { k: k }), k)); for (let k = 1; k <= 12; k++) m.appendChild(new Option(GF.t('c16.exp.077', { k: k }), k)); y.value = now - 25;
       const msg = el('p', 'ex-agemsg', w);
       const go = UK.btn({ text: GF.t('c16.exp.001'), icon: 'play', cls: 'green block', onclick: async () => {
         go.disabled = true;
@@ -61,14 +61,14 @@
   const stOf = (id) => SC.stOf(S.units[id] || { lv: 1 });
   async function growUp(id, kind, slot) {
     const st = S.units[id], res = SC.upgrade(D, id, st, kind, slot, { gold: S.gold, dups: S.dups[id] || 0 });
-    if (res.error) { UK.toast(res.error === 'insufficient_gold' ? '금화가 모자라요' : res.error === 'insufficient_dups' ? '조각이 모자라요 (같은 친구가 또 나오면 모여요)' : res.error === 'need_level' ? '레벨 ' + res.need + ' 이상이어야 해요' : '더 올릴 수 없어요', document.getElementById('safe')); return false; }
+    if (res.error) { UK.toast(res.error === 'insufficient_gold' ? '금화가 모자라요' : res.error === 'insufficient_dups' ? '조각이 모자라요 (같은 친구가 또 나오면 모여요)' : res.error === 'need_level' ? GF.t('c16.exp.078', { need: res.need }) : '더 올릴 수 없어요', document.getElementById('safe')); return false; }
     if (!REMOTE) { Object.assign(st, res.st); S.gold -= res.gold; S.dups[id] = (S.dups[id] || 0) - res.dups; dqTick('upgrade'); save(); bar(); return true; }
     try { const r = await http('POST', '/unit/upgrade', { unit: id, kind, slot, request_id: uid() }); Object.assign(st, { lv: r.unit.lv, skl: r.unit.skl, awk: r.unit.awk, promo: r.unit.promo, gear: r.unit.gear }); S.dups[id] = r.unit.dups; S.gold = r.wallet.gold; bar(); return true; }
     catch (e) { UK.toast(e.code === 'insufficient_gold' ? '금화가 모자라요' : e.code === 'insufficient_dups' ? '조각이 모자라요' : '서버에 연결하지 못했어요', document.getElementById('safe')); return false; }
   }
   function growSheet(r, id, after) {
     if (tipOnce('grow', r, () => growSheet(r, id, after))) return;
-    const u = $(id), G = D.bal.grow, sc = UK.modal({ parent: r, title: u.name + ' 키우기', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('ex-grow');
+    const u = $(id), G = D.bal.grow, sc = UK.modal({ parent: r, title: GF.t('c16.exp.079', { name: u.name }), body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('ex-grow');
     const rd = () => {
       sh.querySelectorAll('.ex-grow-c').forEach((e) => e.remove()); const box = el('div', 'ex-grow-c', sh), st = stOf(id), have = { gold: S.gold, dups: S.dups[id] || 0 }, gr = SC.gradeOf(D, id, st);
       el('p', 'ex-gnote', box, `${'★'.repeat(gr)} Lv ${st.lv} · 전투력 ${Math.round(kOf(id) * 100)} · 🪙 ${S.gold} · 조각 ${have.dups}`);
@@ -77,7 +77,7 @@
         const txt = res.error === 'max' ? '최대' : res.error === 'need_level' ? 'Lv ' + res.need + '↑' : kind === 'skill' || kind === 'gear' ? '🪙 ' + (SC.upgrade(D, id, st, kind, slot, { gold: 1e9, dups: 1e9 }).gold) : '조각 ' + (SC.upgrade(D, id, st, kind, slot, { gold: 1e9, dups: 1e9 }).dups || '-');
         UK.btn({ text: txt, cls: (!res.error ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (res.error === 'max') return; if (await growUp(id, kind, slot)) { GF.sfx('star'); rd(); after && after(); } } }, c);
       };
-      row('스킬 Lv ' + st.skl + '/' + G.skillMax, `${D.role[u.role].skill} 효과 +${Math.round(G.skillMul * 100)}%씩` + (u.role === 'support' ? ' · Lv3·5 응원 한 턴 더' : ''), 'skill');
+      row(GF.t('c16.exp.080', { skl: st.skl, skillMax: G.skillMax }), `${D.role[u.role].skill} 효과 +${Math.round(G.skillMul * 100)}%씩` + (u.role === 'support' ? ' · Lv3·5 응원 한 턴 더' : ''), 'skill');
       row('각성 ' + '◆'.repeat(st.awk) + '◇'.repeat(G.awkMax - st.awk), `능력 +${Math.round(G.awkMul * 100)}%씩 · 같은 친구의 조각으로`, 'awaken');
       row('승급 ' + '★'.repeat(gr) + (gr < 5 ? ' → ' + '★'.repeat(gr + 1) : ''), `능력치 등급이 올라요 · Lv ${G.promoLv} 이상`, 'promote');
       G.gearSlots.forEach((nm, i) => row(`${nm} +${st.gear[i]}/${G.gearMax}`, `능력 +${(G.gearMul * 100).toFixed(1)}%씩`, 'gear', i));
@@ -131,12 +131,12 @@
       const fam = el('div', 'ex-fam', r); S.party.slice(0, 3).forEach((id) => { const a = art($(id), 'xl'); a.style.cursor = 'pointer'; a.setAttribute('data-uid', id); a.onclick = () => say(r, $(id), a); fam.appendChild(a); });
       const next = Math.min(S.cleared + 1, D.stages.length), st = D.stages[next - 1], done = S.cleared >= D.stages.length;
       const btns = el('div', 'ex-btns', r);
-      UK.btn({ text: done ? '원정 길 다시 걷기' : '원정 · ' + next + '. ' + st.name, icon: 'play', cls: 'block', onclick: () => GF.go('xmap') }, btns);
+      UK.btn({ text: done ? '원정 길 다시 걷기' : GF.t('c16.exp.081', { next: next, name: st.name }), icon: 'play', cls: 'block', onclick: () => GF.go('xmap') }, btns);
       const row = el('div', 'ex-row', btns);
       UK.btn({ text: GF.t('c16.exp.005'), icon: 'heart', cls: 'sky', onclick: () => GF.go('xparty') }, row); UK.btn({ text: GF.t('c16.exp.006'), icon: 'gift', cls: 'gold', onclick: () => GF.go('xgacha') }, row);
       if (!REMOTE && !S.idleTs) { S.idleTs = Date.now(); save(); }
       const row2 = el('div', 'ex-row', btns); UK.btn({ text: GF.t('c16.exp.007'), icon: 'gift', cls: 'sky', onclick: () => GF.go('xdun') }, row2);
-      const scout = UK.btn({ text: GF.t('c16.exp.008'), icon: 'star', cls: 'gold', onclick: async () => { try { const g = await idleClaim(); UK.toast(g ? '🪙 +' + g + ' (정찰 보상)' : (REMOTE || S.idleTs ? '아직 모이는 중이에요 (10분 뒤부터)' : '정찰을 시작했어요. 나중에 받으러 와요'), r); scout.querySelector('span') && void 0; GF.replace('xhome'); } catch (e) { UK.toast(GF.t('c16.exp.038'), r); } } }, row2);
+      const scout = UK.btn({ text: GF.t('c16.exp.008'), icon: 'star', cls: 'gold', onclick: async () => { try { const g = await idleClaim(); UK.toast(g ? GF.t('c16.exp.082', { g: g }) : (REMOTE || S.idleTs ? '아직 모이는 중이에요 (10분 뒤부터)' : '정찰을 시작했어요. 나중에 받으러 와요'), r); scout.querySelector('span') && void 0; GF.replace('xhome'); } catch (e) { UK.toast(GF.t('c16.exp.038'), r); } } }, row2);
       if (!REMOTE) { const g0 = idleNow(); if (g0 > 0) scout.insertAdjacentHTML('beforeend', ' <em class="adv">' + g0 + '</em>'); }
       const evB = evOpen(); if (evB) { const eb = UK.btn({ text: evB.icon + ' ' + evB.name, cls: 'gold sm', onclick: () => GF.go('xevent') }, r); eb.style.cssText += ';position:absolute;left:50%;top:206px;min-height:40px;height:40px;padding:0 16px;font-size:16px;transform:translateX(-50%);z-index:6;width:auto;white-space:nowrap'; if (evTodo()) el('i', 'ex-bdg', eb, '!'); }
       const row3 = el('div', 'ex-row', btns); UK.btn({ text: GF.t('c16.exp.009'), icon: 'heart', cls: 'pink', onclick: () => GF.go('xdex') }, row3);
@@ -144,7 +144,7 @@
       const bkb = UK.btn({ icon: 'heart', cls: 'ghost', onclick: () => GF.go('xbook') }, r); bkb.setAttribute('aria-label', 'storybook'); bkb.style.cssText += ';position:absolute;left:76px;top:10px;z-index:6;width:60px;height:60px;min-width:60px;padding:0;border-radius:50%'; bkb.insertAdjacentHTML('beforeend', '<span style="font-size:26px">📖</span>'); if (D.story.book && Object.keys(D.story.book).some((n) => bookOpen(+n) && !bookSeen()[n])) el('i', 'ex-bdg', bkb, '!');
       const bg = UK.btn({ text: GF.t('c16.exp.010'), icon: 'star', cls: 'green', onclick: () => GF.go('xbegin') }, row3); bg.style.position = 'relative'; Promise.all([begLoad(), dqLoad()]).then(([b, q]) => { const n = begBadge(b) + dqBadge(q); if (n && bg.isConnected) el('i', 'ex-bdg', bg, n); });
       if (REMOTE) UK.btn({ text: GF.t('c16.exp.011'), icon: 'star', cls: 'ghost', onclick: () => GF.go('xshop') }, row3);
-      el('div', 'ex-foot', r, '전투력 ' + power(S.party) + ' · 동료 ' + Object.keys(S.units).length + '/' + D.units.length + ' · 랜덤 아이템 포함(동료 모집)');
+      el('div', 'ex-foot', r, '전투력 ' + power(S.party) + ' · 동료 ' + Object.keys(S.units).length + GF.t('c16.exp.083', { length: D.units.length }));
       if (!S.flags.prologue && !(navigator.webdriver && !/[?&]story=1/.test(location.search))) { S.flags.prologue = 1; save(); setTimeout(() => GF.tale.play(D.story.prologue, r, () => {}, { bg: 'field' }), 400); }
     },
   });
@@ -166,7 +166,7 @@
       const capBox = el('div', 'ex-cap', box); el('b', '', capBox, '이번 달 결제 ' + won(pre.month_spent) + ' / 한도 ' + won(pre.cap));
       if (!blocked) {
         const sel = el('select', 'ex-sel', capBox); [0, 30000, 50000, 70000, 100000, 200000].filter((v) => v <= pf.cap_krw).forEach((v) => sel.appendChild(new Option(won(v), v))); sel.value = String(pre.cap);
-        sel.onchange = async () => { try { const c = await http('POST', '/iap/cap', { cap_krw: +sel.value }); UK.toast(c.pending ? '올리는 건 ' + c.effective_from + '월부터 적용돼요' : '한도를 ' + won(c.cap) + '으로 바꿨어요', r); GF.replace('xshop'); } catch (e) { UK.toast(GF.t('c16.exp.039'), r); } };
+        sel.onchange = async () => { try { const c = await http('POST', '/iap/cap', { cap_krw: +sel.value }); UK.toast(c.pending ? GF.t('c16.exp.084', { effective_from: c.effective_from }) : '한도를 ' + won(c.cap) + '으로 바꿨어요', r); GF.replace('xshop'); } catch (e) { UK.toast(GF.t('c16.exp.039'), r); } };
         el('small', '', capBox, GF.t('c16.exp.060'));
       }
       const list = el('div', 'ex-plist', box);
@@ -183,7 +183,7 @@
       const adbox = el('div', 'ex-ads', box); el('b', '', adbox, GF.t('c16.exp.061')); el('small', '', adbox, GF.t('c16.exp.062'));
       Object.entries(pf.ads.reward).forEach(([kind, rw]) => UK.btn({ text: (kind === 'gems' ? `반짝석 ${rw.grant}` : `소탕권 ${rw.grant}`) + ` (하루 ${rw.per_day}회)`, cls: 'sky sm', onclick: async () => {
         if (!MOCKSTORE) { UK.toast(GF.t('c16.exp.041'), r); return; }
-        try { const t = await http('POST', '/dev/ad', { kind }); const g = await http('POST', '/ads/reward', { kind, token: t.token }); UK.toast('받았어요 · 오늘 ' + g.left_today + '회 남음', r); } catch (e) { UK.toast(e.code === 'daily_limit' ? '오늘은 다 받았어요' : '받지 못했어요', r); } GF.replace('xshop');
+        try { const t = await http('POST', '/dev/ad', { kind }); const g = await http('POST', '/ads/reward', { kind, token: t.token }); UK.toast(GF.t('c16.exp.085', { left_today: g.left_today }), r); } catch (e) { UK.toast(e.code === 'daily_limit' ? '오늘은 다 받았어요' : '받지 못했어요', r); } GF.replace('xshop');
       } }, adbox));
       el('p', 'ex-sub', box, '소탕권 ' + (pf.wallet.tickets || 0) + ' · ' + (pf.ads.allowed ? '전면 광고: 4번 싸울 때 한 번' : pf.ads.reason === 'first_30min' ? '전면 광고: 설치 직후 30분은 없어요' : '전면 광고 없음'));
       UK.btn({ text: GF.t('c16.exp.014'), cls: 'ghost sm', onclick: () => UK.modal({ parent: r, title: GF.t('c16.exp.015'), body: '계정과 보유 정보가 삭제돼요. 결제 기록은 법정 보존 기간 동안 남아요.', actions: [{ text: GF.t('c16.exp.016'), cls: 'pink', onclick: async () => { try { await http('POST', '/account/delete', {}); setAuth(null); location.reload(); } catch (e) { UK.toast(GF.t('c16.exp.042'), r); } } }, { text: GF.t('c16.exp.013'), cls: 'ghost' }] }) }, box);
@@ -208,15 +208,15 @@
       r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '요일 던전', '하루 3번 · 졌을 땐 횟수를 안 써요'); back(r, 'xhome'); const box = el('div', 'ex-shop', r); el('p', 'ex-sub', box, GF.t('c16.exp.056'));
       let info; try { info = await dunInfo(); } catch (e) { box.innerHTML = '서버에 연결하지 못했어요.'; return; } if (!r.isConnected) return; box.innerHTML = '';
       el('div', 'ex-nation', box, `<b>${info.name}</b><small>오늘 ${info.left}/${info.perDay}번 남음</small>`); if (info.unlocked) setTimeout(() => { if (r.isConnected) tipOnce('dungeon', r); }, 250);
-      if (!info.unlocked) { el('p', 'ex-warn', box, info.unlock + '단계를 깨면 열려요.'); return; }
-      el('p', 'ex-sub', box, info.kind === 'gold' ? '오늘은 금화가 많이 나와요.' : info.kind === 'both' ? '오늘은 금화와 조각이 같이 나와요(아무 친구).' : info.el === 'any' ? '오늘은 아무 친구의 조각이 1.5배!' : '오늘은 ' + D.el[info.el].name + '(' + D.el[info.el].icon + ') 친구의 조각이 나와요.');
+      if (!info.unlocked) { el('p', 'ex-warn', box, GF.t('c16.exp.086', { unlock: info.unlock })); return; }
+      el('p', 'ex-sub', box, info.kind === 'gold' ? '오늘은 금화가 많이 나와요.' : info.kind === 'both' ? '오늘은 금화와 조각이 같이 나와요(아무 친구).' : info.el === 'any' ? '오늘은 아무 친구의 조각이 1.5배!' : GF.t('c16.exp.087', { name: D.el[info.el].name, icon: D.el[info.el].icon }));
       const pickTarget = (el0, cb) => {
         const owned = Object.keys(S.units).filter((id) => !el0 || el0 === 'any' || $(id).el === el0); if (!owned.length) { UK.toast(GF.t('c16.exp.043'), r); return; }
         const sc = UK.modal({ parent: r, title: GF.t('c16.exp.017'), body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'), g = el('div', 'ex-dexgrid', sh); owned.forEach((id) => { const u = $(id), c = el('button', 'ex-card', g); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, u.name.replace(/\(.*\)/, '')); el('small', '', c, '조각 ' + (S.dups[id] || 0)); c.onclick = () => { sc.remove(); cb(id); }; });
         UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
       };
       info.tiers.forEach((t) => {
-        const row = el('div', 'ex-prod', box), rw = t.reward; el('span', '', row, `<b>${t.name}</b><small>${rw.gold ? '🪙 ' + rw.gold : ''}${rw.gold && rw.frag ? ' · ' : ''}${rw.frag ? '조각 ' + rw.frag : ''}</small>`);
+        const row = el('div', 'ex-prod', box), rw = t.reward; el('span', '', row, `<b>${t.name}</b><small>${rw.gold ? '🪙 ' + rw.gold : ''}${rw.gold && rw.frag ? ' · ' : ''}${rw.frag ? GF.t('c16.exp.088', { frag: rw.frag }) : ''}</small>`);
         UK.btn({ text: info.left ? '도전' : '내일 또', cls: (info.left ? 'green' : 'ghost') + ' sm', onclick: () => { if (!info.left) { UK.toast(GF.t('c16.exp.044'), r); return; } if (rw.frag) pickTarget(rw.el, (id) => GF.go('xbattle', { dun: { day: info.day, tier: t.tier }, target: id })); else GF.go('xbattle', { dun: { day: info.day, tier: t.tier } }); } }, row);
       });
       el('p', 'ex-sub', box, GF.t('c16.exp.063'));
@@ -250,8 +250,8 @@
         const g = el('div', 'ex-bookgrid', box);
         Object.keys(B).map(Number).sort((a, b) => a - b).forEach((n) => {
           const bk = B[n], on = bookOpen(n), c = el('button', 'ex-bookcard' + (on ? '' : ' locked') + (seen[n] ? ' seen' : ''), g); c.dataset.n = n;
-          c.innerHTML = `<span class="em">${on ? bk.emoji : '🔒'}</span><b>${on ? bk.title : '???'}</b><small>${on ? (seen[n] ? '다시 보기' : '새 그림책') : n + '나라를 끝내면'}</small>`;
-          c.onclick = () => { if (!on) { GF.sfx('hmm'); UK.toast('이 나라를 끝까지 걸으면 열려요', r); return; } GF.sfx('pick'); seen[n] = 1; save(); GF.tale.play(bk.cuts, r, () => { draw(); }, { bg: 'field', force: true }); };
+          c.innerHTML = `<span class="em">${on ? bk.emoji : '🔒'}</span><b>${on ? bk.title : '???'}</b><small>${on ? (seen[n] ? '다시 보기' : '새 그림책') : GF.t('c16.exp.089', { n: n })}</small>`;
+          c.onclick = () => { if (!on) { GF.sfx('hmm'); UK.toast(GF.t('c16.exp.075'), r); return; } GF.sfx('pick'); seen[n] = 1; save(); GF.tale.play(bk.cuts, r, () => { draw(); }, { bg: 'field', force: true }); };
         });
       };
       draw(); if (p && p.open && bookOpen(p.open) && B[p.open]) setTimeout(() => { const c = box.querySelector('.ex-bookcard[data-n="' + p.open + '"]'); if (c) c.click(); }, 350);
@@ -266,7 +266,7 @@
         const card = el('div', 'ex-pcard', box), lead = $(S.party[0]); const ar = el('div', 'ex-pfart', card); ar.appendChild(art(lead, 'xl')); const tx = el('div', 'ex-pftx', card);
         el('small', '', tx, cur ? '「' + cur + '」' : '칭호는 업적을 달성하면 생겨요'); el('b', '', tx, lead.name.replace(/\(.*\)/, '') + ' 원정대'); el('div', 'ex-pfn', tx, `${D.stages.length}단계 중 ${S.cleared} · 동료 ${Object.keys(S.units).length}/${D.units.length} · 전투력 ${power(S.party)}`); el('div', 'ex-pfn', tx, `업적 ${got.length}/${list.length}`);
         el('div', 'ex-nation', box, '<b>칭호 고르기</b><small>' + titles.length + '개</small>'); const tr = el('div', 'ex-titles', box); if (!titles.length) el('em', '', tr, GF.t('c16.exp.065')); titles.forEach((t) => { const c = el('button', 'ex-title' + (t === cur ? ' on' : ''), tr, t); c.onclick = () => { pfSet({ title: t }); GF.sfx('pick'); draw(); }; });
-        el('div', 'ex-nation', box, '<b>업적</b><small>보상 없이 자랑만 해요</small>'); list.slice().sort((x, y) => (y.done ? 1 : 0) - (x.done ? 1 : 0)).forEach((a) => { const c = el('div', 'ex-bg' + (a.done ? ' can' : ''), box); c.innerHTML = `<div class="tx"><b>${a.done ? '🏅 ' : ''}${a.name}</b><div class="bar"><i style="width:${Math.round(a.got / a.need * 100)}%"></i></div><small>${a.t} · ${a.got}/${a.need}${a.title ? ' · 칭호 「' + a.title + '」' : ''}</small></div>`; });
+        el('div', 'ex-nation', box, '<b>업적</b><small>보상 없이 자랑만 해요</small>'); list.slice().sort((x, y) => (y.done ? 1 : 0) - (x.done ? 1 : 0)).forEach((a) => { const c = el('div', 'ex-bg' + (a.done ? ' can' : ''), box); c.innerHTML = `<div class="tx"><b>${a.done ? '🏅 ' : ''}${a.name}</b><div class="bar"><i style="width:${Math.round(a.got / a.need * 100)}%"></i></div><small>${a.t} · ${a.got}/${a.need}${a.title ? GF.t('c16.exp.090', { title: a.title }) : ''}</small></div>`; });
       };
       draw();
     },
@@ -316,13 +316,13 @@
         if (q) {
           el('div', 'ex-nation', box, `<b>오늘의 임무</b><small>${q.missions.filter((m) => m.claimed).length}/${q.missions.length}</small>`); const dl = el('div', 'ex-dq', box);
           q.missions.forEach((m) => { const c = el('div', 'ex-bg dq' + (m.done && !m.claimed ? ' can' : '') + (m.claimed ? ' got' : ''), dl); c.dataset.id = m.id; c.innerHTML = `<div class="tx"><b>${m.claimed ? '✔ ' : ''}${m.t}</b><small>${rwText(m.gems, m.gold)}</small></div>`; if (m.done && !m.claimed) UK.btn({ text: GF.t('c16.room2.006'), cls: 'gold sm', onclick: async () => { const g = await dqClaim(m.id); if (g) { GF.sfx('star'); el('i', 'ex-gain', c, rwText(g.gems, g.gold)); setTimeout(draw, 700); } } }, c); });
-          const wc = el('div', 'ex-wk' + (q.week.ready ? ' can' : ''), dl); wc.innerHTML = `<span>🎁</span><div class="tx"><b>주간 상자</b><small>${q.week.box ? '이번 주 상자를 열었어요' : '임무를 마친 날 ' + q.week.days + '/' + q.week.need + '일 · 💎 ' + q.week.gems + ' · 🪙 ' + q.week.gold}</small><div class="pips">${Array.from({ length: q.week.need }, (x, i) => '<i' + (i < q.week.days ? ' class="on"' : '') + '></i>').join('')}</div></div>`;
+          const wc = el('div', 'ex-wk' + (q.week.ready ? ' can' : ''), dl); wc.innerHTML = `<span>🎁</span><div class="tx"><b>주간 상자</b><small>${q.week.box ? '이번 주 상자를 열었어요' : GF.t('c16.exp.091', { days: q.week.days, need: q.week.need, gems: q.week.gems, gold: q.week.gold })}</small><div class="pips">${Array.from({ length: q.week.need }, (x, i) => '<i' + (i < q.week.days ? ' class="on"' : '') + '></i>').join('')}</div></div>`;
           if (q.week.ready) UK.btn({ text: GF.t('c16.exp.018'), cls: 'gold sm', onclick: async () => { const g = await wkClaim(); if (g) { GF.sfx('celebrate'); UK.toast('상자 열림! ' + rwText(g.gems, g.gold), r); setTimeout(draw, 700); } } }, wc); el('p', 'ex-sub', box, GF.t('c16.exp.067'));
         }
         const att = b.att || { n: 0, last: '' }, A = D.bal.attend || [], ready = attReady(b), strip = el('div', 'ex-att', box);
         A.forEach((a) => { const done = att.n >= a.day, now = !done && att.n + 1 === a.day, c = el('div', 'ex-ad' + (done ? ' done' : now && ready ? ' can' : ''), strip); c.innerHTML = `<b>${a.day}일째</b><small>${rwText(a.gems, a.gold) || ''}</small>` + (done ? '<em>✔</em>' : ''); });
         el('p', 'ex-sub', box, att.n >= A.length ? '출석 7일을 다 모았어요. 고마워요!' : ready ? '오늘 출석 도장을 받아요. 쉬어도 괜찮아요, 이어서 찍어요.' : '오늘 출석은 받았어요. 내일 또 만나요.');
-        if (ready) UK.btn({ text: GF.t('c16.exp.019'), icon: 'gift', cls: 'gold block', onclick: async () => { const g = await attClaim(); if (g) { GF.sfx('star'); UK.toast(g.day + '일째 출석! ' + rwText(g.gems, g.gold), r); setTimeout(draw, 500); } } }, box);
+        if (ready) UK.btn({ text: GF.t('c16.exp.019'), icon: 'gift', cls: 'gold block', onclick: async () => { const g = await attClaim(); if (g) { GF.sfx('star'); UK.toast(GF.t('c16.exp.092', { day: g.day }) + rwText(g.gems, g.gold), r); setTimeout(draw, 500); } } }, box);
         const ms = b.missions, open = ms.filter((m) => !m.claimed), claimed = ms.length - open.length; el('div', 'ex-nation', box, `<b>미션</b><small>${claimed}/${ms.length} 받음</small>`);
         open.slice().sort((x, y) => (y.done ? 1 : 0) - (x.done ? 1 : 0)).forEach((m) => {
           const c = el('div', 'ex-bg' + (m.done ? ' can' : ''), box); c.innerHTML = `<div class="tx"><b>${m.t}</b><div class="bar"><i style="width:${Math.round(m.got / m.need * 100)}%"></i></div><small>${m.got}/${m.need} · ${rwText(m.gems, m.gold)}</small></div>`;
@@ -369,7 +369,7 @@
     const st = own ? SC.stOf(S.units[u.id]) : null; el('b', '', tx, `${'★'.repeat(own ? SC.gradeOf(D, u.id, st) : u.grade)} ${D.el[u.el].icon} ${D.el[u.el].family} ${D.el[u.el].name}`); el('small', '', tx, `${D.role[u.role].icon} ${D.role[u.role].name} · ${D.role[u.role].skill}`);
     if (own) el('small', '', tx, `Lv ${st.lv} · 스킬 ${st.skl} · 각성 ${st.awk} · 조각 ${S.dups[u.id] || 0} · 전투력 ${Math.round(kOf(u.id) * 100)}`);
     el('p', 'ex-tale', sh, own ? u.tale : '아직 만나지 못했어요. ' + (ROUTE[u.route] || '') + (u.route === 'story' || u.route === 'recruit' ? ' (' + (u.note || '').replace(/^[^·]*· /, '') + ')' : '') + (u.costume ? '' : ''));
-    if (own && u.costume) el('small', 'ex-sub', sh, '의상: ' + u.costume + ' 이야기');
+    if (own && u.costume) el('small', 'ex-sub', sh, GF.t('c16.exp.093', { costume: u.costume }));
     UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
   }
   /* ---------------- 스토리 = 튜토리얼(B7): 새 기능을 처음 열 때 한 번만 이야기 컷으로 ---------------- */
@@ -424,14 +424,14 @@
       r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '편성·육성'); r.classList.add('ex-party');
       let sel = null; const prev = el('div', 'ex-prev', r), tools = el('div', 'ex-ptools', r), slots = el('div', 'ex-slots', r), info = el('div', 'ex-info', r), grid = el('div', 'ex-roster', r);
       const nextSt = () => D.stages[Math.min(S.cleared + 1, D.stages.length) - 1];
-      const drawPrev = () => { prev.innerHTML = ''; const st = nextSt(), pv = SC.enemyPreview(D, st), pw = power(S.party), rec = pv.map((x) => x.beatenBy).filter(Boolean); const have = S.party.filter((id) => rec.includes(D.units.find((u) => u.id === id).el)).length; el('b', '', prev, '다음 원정 ' + st.id + '. ' + st.name + ' · 유리한 친구 ' + have + '/5'); const row = el('div', 'ex-pvrow', prev); pv.forEach((x) => { const c = el('span', 'ex-pv', row); c.innerHTML = `${elIcon(x.el)}<em>적 ${x.n}</em>` + (x.beatenBy ? `<small>· ${D.el[x.beatenBy].icon}가 유리</small>` : ''); c.title = D.el[x.el].name + ' 적 ' + x.n + '명 · ' + (x.beatenBy ? D.el[x.beatenBy].name + ' 친구가 유리' : ''); }); };
+      const drawPrev = () => { prev.innerHTML = ''; const st = nextSt(), pv = SC.enemyPreview(D, st), pw = power(S.party), rec = pv.map((x) => x.beatenBy).filter(Boolean); const have = S.party.filter((id) => rec.includes(D.units.find((u) => u.id === id).el)).length; el('b', '', prev, GF.t('c16.exp.094', { id: st.id, name: st.name, have: have })); const row = el('div', 'ex-pvrow', prev); pv.forEach((x) => { const c = el('span', 'ex-pv', row); c.innerHTML = `${elIcon(x.el)}<em>적 ${x.n}</em>` + (x.beatenBy ? `<small>· ${D.el[x.beatenBy].icon}가 유리</small>` : ''); c.title = GF.t('c16.exp.095', { name: D.el[x.el].name, n: x.n }) + (x.beatenBy ? GF.t('c16.exp.096', { name: D.el[x.beatenBy].name }) : ''); }); };
       const doPreset = (i) => { const P = presetsGet(), cur = presetsGet()[i]; if (!cur) { P[i] = S.party.slice(); presetsSet(P); UK.toast('편성 ' + (i + 1) + '번에 저장했어요', r); drawTools(); return; } if (cur.every((id) => S.units[id])) { S.party = cur.slice(); save(); partySync(); sel = null; GF.sfx('drop'); draw(); drawGrid(); drawPrev(); } else UK.toast(GF.t('c16.exp.047'), r); };
       const drawTools = () => { tools.innerHTML = ''; const P = presetsGet(); P.forEach((x, i) => { const b = UK.btn({ text: x ? '편성 ' + (i + 1) : '＋ 편성 ' + (i + 1), cls: (x ? 'sky' : 'ghost') + ' sm', onclick: () => doPreset(i) }, tools); b.dataset.preset = i; if (x) { const sv = el('i', 'ex-psv', b, '↻'); sv.title = '지금 편성으로 덮어쓰기'; sv.onclick = (e) => { e.stopPropagation(); const Q = presetsGet(); Q[i] = S.party.slice(); presetsSet(Q); UK.toast('편성 ' + (i + 1) + '번을 지금 편성으로 바꿨어요', r); }; } }); UK.btn({ text: GF.t('c16.exp.023'), icon: 'star', cls: 'gold sm', onclick: () => { const top = SC.autoParty(D, nextSt(), S.units); if (top.length === 5) { S.party = top; save(); partySync(); sel = null; GF.sfx('star'); draw(); drawGrid(); drawPrev(); UK.toast(GF.t('c16.exp.048'), r); } else UK.toast(GF.t('c16.exp.049'), r); } }, tools).dataset.auto = 1; };
 
       const draw = () => {
         slots.innerHTML = ''; S.party.forEach((id, i) => { const u = $(id), c = el('button', 'ex-slot' + (sel && sel === id ? ' sel' : ''), slots); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el) + '<em>' + ROLEICON(u.role) + '</em><b class="ex-sn">' + u.name.replace(/\(.*\)/, '') + '</b>'); c.onclick = () => { if (sel && sel !== id) { const j = S.party.indexOf(sel); if (j >= 0) { S.party[j] = id; } S.party[i] = sel; save(); partySync(); sel = null; GF.sfx('drop'); draw(); } else { sel = id; draw(); } }; });
         info.innerHTML = ''; const u = sel && $(sel);
-        if (u) { const lv = S.units[sel].lv, c = cost(lv), can = S.gold >= c && lv < SC.lvCap(D, S.cleared); el('b', '', info, `${u.name} ${'★'.repeat(SC.gradeOf(D, sel, S.units[sel]))} Lv ${lv} · ${D.role[u.role].skill} ${stOf(sel).skl}`); el('small', '', info, `${D.el[u.el].family} ${D.el[u.el].name} · 전투력 ${Math.round(kOf(sel) * 100)}`); UK.btn({ text: GF.t('c16.exp.024'), cls: 'sky sm', onclick: () => growSheet(r, sel, () => { draw(); drawGrid(); }) }, info); UK.btn({ text: lv >= SC.lvCap(D, S.cleared) ? '레벨 상한 ' + lv : '레벨업 🪙' + c, cls: (can ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (!can) { UK.toast(lv >= SC.lvCap(D, S.cleared) ? '지금은 여기까지예요. 다음 단계를 깨면 상한이 올라요' : '금화가 모자라요. 전투로 모아요', r); return; } if (await levelUp(sel, c)) { GF.sfx('star'); draw(); drawGrid(); } } }, info); } else el('small', '', info, GF.t('c16.exp.071'));
+        if (u) { const lv = S.units[sel].lv, c = cost(lv), can = S.gold >= c && lv < SC.lvCap(D, S.cleared); el('b', '', info, `${u.name} ${'★'.repeat(SC.gradeOf(D, sel, S.units[sel]))} Lv ${lv} · ${D.role[u.role].skill} ${stOf(sel).skl}`); el('small', '', info, `${D.el[u.el].family} ${D.el[u.el].name} · 전투력 ${Math.round(kOf(sel) * 100)}`); UK.btn({ text: GF.t('c16.exp.024'), cls: 'sky sm', onclick: () => growSheet(r, sel, () => { draw(); drawGrid(); }) }, info); UK.btn({ text: lv >= SC.lvCap(D, S.cleared) ? GF.t('c16.exp.097', { lv: lv }) : GF.t('c16.exp.098', { c: c }), cls: (can ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (!can) { UK.toast(lv >= SC.lvCap(D, S.cleared) ? '지금은 여기까지예요. 다음 단계를 깨면 상한이 올라요' : '금화가 모자라요. 전투로 모아요', r); return; } if (await levelUp(sel, c)) { GF.sfx('star'); draw(); drawGrid(); } } }, info); } else el('small', '', info, GF.t('c16.exp.071'));
         el('div', 'ex-pw', info, '원정대 전투력 ' + power(S.party)); if (typeof drawPrev === 'function' && prev.isConnected) drawPrev();
       };
       const drawGrid = () => { grid.innerHTML = ''; D.units.forEach((u) => { const own = !!S.units[u.id], c = el('button', 'ex-card' + (own ? '' : ' dim') + (sel === u.id ? ' sel' : '') + (S.party.includes(u.id) ? ' inparty' : ''), grid); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, u.name.replace(/\(.*\)/, '')); el('small', '', c, own ? '★'.repeat(u.grade) + ' Lv' + S.units[u.id].lv : (u.route === 'gacha' ? '모집' : u.route === 'story' ? '이야기' : '포섭')); c.onclick = () => { if (!own) { UK.toast('아직 만나지 못한 친구예요 · ' + ({ gacha: '동료 모집에서', story: '이야기를 따라가면', recruit: '마음을 열어 주면' })[u.route], r); return; } sel = u.id; draw(); drawGrid(); }; }); };
@@ -468,13 +468,13 @@
       const canPersuade = () => !!boss && !!st.recruit && core.A.some((u) => u.hp > 0 && beats(u.el, boss.el));
       const persuadeUI = () => {
         pbtn.innerHTML = ''; if (!boss || persuaded || boss.hp <= 0 || boss.hp / boss.max > D.bal.persuadeAt) return; const ok = canPersuade();
-        UK.btn({ text: GF.t('c16.exp.025'), icon: 'heart', cls: (ok ? 'pink' : 'ghost') + ' block', onclick: () => { if (!ok) { UK.toast(D.el[needEl].name + '(' + D.el[needEl].icon + ') 친구가 파티에 필요해요', r); return; } doPersuade(); } }, pbtn);
-        if (!askedOnce) { askedOnce = true; logEl.textContent = boss.name + '(이)가 주춤해요. ' + (ok ? '말을 걸어 볼까?' : D.el[needEl].name + '(' + D.el[needEl].icon + ') 친구가 있어야 해요.'); }
+        UK.btn({ text: GF.t('c16.exp.025'), icon: 'heart', cls: (ok ? 'pink' : 'ghost') + ' block', onclick: () => { if (!ok) { UK.toast(GF.t('c16.exp.099', { name: D.el[needEl].name, icon: D.el[needEl].icon }), r); return; } doPersuade(); } }, pbtn);
+        if (!askedOnce) { askedOnce = true; logEl.textContent = GF.t('c16.exp.100', { name: boss.name }) + (ok ? '말을 걸어 볼까?' : GF.t('c16.exp.101', { name: D.el[needEl].name, icon: D.el[needEl].icon })); }
       };
       const doPersuade = () => { stopped = true; persuaded = true; inputs.push([steps, 'p']); pbtn.innerHTML = ''; GF.tale.play(D.story.recruit[st.recruit], r, () => { if (!REMOTE) { S.units[st.recruit] = S.units[st.recruit] || { lv: 1 }; S.flags.recruited = 1; } boss.hp = 0; boss.down = true; hp(); win(true); }, { bg: 'hill' }); };
       const finish = (won) => { if (finished) return; finished = true; stopped = true; if (won) win(false); else lose(); };
       const dunWin = () => {
-        const done2 = (rw) => { GF.sfx('celebrate'); const sc = UK.modal({ parent: r, title: GF.t('c16.exp.026'), body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('p', 'ex-rw', sh, `🪙 +${rw.gold}${rw.frag ? ' · 조각 +' + rw.frag + ' (' + $(rw.target).name + ')' : ''}`); const a = el('div', 'acts', sh); UK.btn({ text: GF.t('c16.exp.027'), cls: 'green', onclick: () => { sc.remove(); GF.replace('xdun'); } }, a); UK.btn({ text: GF.t('c16.exp.028'), cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xhome'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
+        const done2 = (rw) => { GF.sfx('celebrate'); const sc = UK.modal({ parent: r, title: GF.t('c16.exp.026'), body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('p', 'ex-rw', sh, `🪙 +${rw.gold}${rw.frag ? GF.t('c16.exp.102', { frag: rw.frag }) + $(rw.target).name + ')' : ''}`); const a = el('div', 'acts', sh); UK.btn({ text: GF.t('c16.exp.027'), cls: 'green', onclick: () => { sc.remove(); GF.replace('xdun'); } }, a); UK.btn({ text: GF.t('c16.exp.028'), cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xhome'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
         if (REMOTE) { http('POST', '/dungeon/clear', { token: srv.token, inputs, auto: auto0, target: p.target }).then((res) => { if (!res.win) { UK.toast(GF.t('c16.exp.050'), r); lose(); return; } applyProfile(res.profile); bar(); done2(res.reward); }).catch((e) => { UK.toast(e.code === 'no_runs_left' ? '오늘은 다 했어요' : '서버에 연결하지 못했어요', r); GF.replace('xdun'); }); return; }
         const rw = SC.dungeonReward(D, p.dun.day, p.dun.tier, S.cleared); S.gold += rw.gold; if (rw.frag && p.target) S.dups[p.target] = (S.dups[p.target] || 0) + rw.frag; dunLocal().n++; dqTick('dungeon'); S.flags.dunN = (S.flags.dunN || 0) + 1; save(); bar(); done2({ gold: rw.gold, frag: rw.frag, target: p.target });
       };
@@ -494,7 +494,7 @@
       };
       const done = (stars, gold, gems, recruited, joinId) => {
         const after = () => { const sc = UK.modal({ parent: r, title: recruited ? '포섭 성공!' : '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('div', 'ex-stars', sh, '★'.repeat(stars) + '☆'.repeat(3 - stars)); const pose = el('div', 'ex-rrow', sh); S.party.forEach((id, i) => { const c = el('div', 'ex-mini ex-pose', pose); c.style.animationDelay = i * 90 + 'ms'; c.appendChild(art($(id), 'xs')); }); el('p', 'ex-rw', sh, `🪙 +${gold}${gems ? ` · 💎 +${gems}` : ''}${recruited ? ' · 새 친구: ' + $(st.recruit).name : ''}`); if (lootAt(st.id)) { const lt = lootAt(st.id); el('p', 'ex-tip', sh, `🎁 전리품 코드: ${lt.name} — ${lt.code} (원정 전리품 화면에서 복사해요)`); } if (st.boss && st.recruit && !recruited) el('p', 'ex-tip', sh, (boss ? boss.name : '친구') + '(이)가 쓰러졌어요… 다음엔 체력이 줄었을 때 말을 걸어 봐요.');
-          const a = el('div', 'acts', sh); const nxt = D.stages[st.id]; if (nxt) UK.btn({ text: GF.t('c16.exp.030'), icon: 'next', cls: 'green', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); if (st.id % 12 === 0 && D.story.book && D.story.book[st.id / 12]) UK.btn({ text: '그림책 보기', icon: 'heart', cls: 'pink', onclick: () => { sc.remove(); GF.replace('xbook', { open: st.id / 12 }); } }, a); UK.btn({ text: GF.t('c16.exp.005'), cls: 'sky sm', onclick: () => { sc.remove(); GF.replace('xparty', { from: 'xmap' }); } }, a); UK.btn({ text: GF.t('c16.exp.031'), cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
+          const a = el('div', 'acts', sh); const nxt = D.stages[st.id]; if (nxt) UK.btn({ text: GF.t('c16.exp.030'), icon: 'next', cls: 'green', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); if (st.id % 12 === 0 && D.story.book && D.story.book[st.id / 12]) UK.btn({ text: GF.t('c16.exp.074'), icon: 'heart', cls: 'pink', onclick: () => { sc.remove(); GF.replace('xbook', { open: st.id / 12 }); } }, a); UK.btn({ text: GF.t('c16.exp.005'), cls: 'sky sm', onclick: () => { sc.remove(); GF.replace('xparty', { from: 'xmap' }); } }, a); UK.btn({ text: GF.t('c16.exp.031'), cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
         if (joinId) setTimeout(() => GF.tale.play(D.story.join[joinId], r, () => { UK.toast('새 친구: ' + $(joinId).name, r); after(); }, { bg: 'hill' }), 500); else setTimeout(after, 500);
       };
       const lose = () => { const sc = UK.modal({ parent: r, title: GF.t('c16.exp.032'), body: '레벨업하거나 상성이 맞는 친구로 바꿔서 다시 도전해요. 벌은 없어요.', actions: [{ text: GF.t('c16.exp.033'), icon: 'replay', cls: 'green', onclick: () => GF.replace('xbattle', p.evt ? { evt: p.evt } : p.dun ? { dun: p.dun, target: p.target } : { stage: st.id, seed: seed + 1 }) }, { text: GF.t('c16.exp.005'), cls: 'sky', onclick: () => GF.replace('xparty', { from: p.evt ? 'xevent' : p.dun ? 'xdun' : 'xmap' }) }, { text: p.evt ? '이벤트' : p.dun ? '던전' : '원정 길', cls: 'ghost', onclick: () => GF.replace(p.evt ? 'xevent' : p.dun ? 'xdun' : 'xmap') }] }); void sc; };
@@ -534,9 +534,9 @@
       const bid = (p && p.banner) || 'main', B0 = ExpGacha.bannerOf(G(), bid) || ExpGacha.bannerOf(G(), 'main'), P0 = pityOf(B0.id);
       r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, B0.name || G().banner); r.classList.add('ex-gacha'); setTimeout(() => { if (r.isConnected) tipOnce('gacha', r); }, 350);
       const tabs = el('div', 'ex-gtabs', r); (G().banners || []).forEach((bn) => { const t = UK.btn({ text: bn.id === 'main' ? '기본' : '2탄', cls: (bn.id === B0.id ? 'gold' : 'ghost') + ' sm', onclick: () => { if (bn.id !== B0.id) GF.replace('xgacha', { banner: bn.id }); } }, tabs); t.dataset.banner = bn.id; });
-      const pk = ExpGacha.pickupOf(G(), D.units, B0.id), box = el('div', 'ex-banner', r); box.appendChild(art(pk, 'xl')); const tx = el('div', 'ex-btx', box); el('b', '', tx, '픽업 ★5 ' + pk.name); el('small', '', tx, `${D.el[pk.el].family} ${D.el[pk.el].name} · ${D.role[pk.role].skill}`); el('small', '', tx, '★5 확률 2.5% 중 절반이 픽업 · 천장 ' + P0.since5 + '/' + ExpGacha.ceiling(G()));
+      const pk = ExpGacha.pickupOf(G(), D.units, B0.id), box = el('div', 'ex-banner', r); box.appendChild(art(pk, 'xl')); const tx = el('div', 'ex-btx', box); el('b', '', tx, GF.t('c16.exp.103', { name: pk.name })); el('small', '', tx, `${D.el[pk.el].family} ${D.el[pk.el].name} · ${D.role[pk.role].skill}`); el('small', '', tx, GF.t('c16.exp.104', { since5: P0.since5 }) + ExpGacha.ceiling(G()));
       const bar2 = el('div', 'uk-progress gold ex-pity', r); bar2.innerHTML = `<i style="width:${Math.round(P0.since5 / ExpGacha.ceiling(G()) * 100)}%"></i>`;
-      const row = el('div', 'ex-prow', r); const b1 = UK.btn({ text: '1회 💎' + G().cost, cls: 'gold', onclick: () => run(1) }, row), b10 = UK.btn({ text: '10회 💎' + G().ten, cls: 'green', onclick: () => run(10) }, row); void b1; void b10;
+      const row = el('div', 'ex-prow', r); const b1 = UK.btn({ text: GF.t('c16.exp.105', { cost: G().cost }), cls: 'gold', onclick: () => run(1) }, row), b10 = UK.btn({ text: GF.t('c16.exp.106', { ten: G().ten }), cls: 'green', onclick: () => run(10) }, row); void b1; void b10;
       UK.btn({ text: GF.t('c16.exp.035'), cls: 'sky sm ex-odds', onclick: () => odds(r, B0.id) }, r); el('div', 'ex-gnote', r, '랜덤 아이템 포함' + (REL ? '' : ' · 무상 반짝석으로만 모집해요(슬라이스). 모집 결과는 이 기기에서 계산되고, 정식 서비스에서는 서버가 판정하고 기록해요.'));
       const run = async (n) => { let res; try { res = REMOTE ? await pullRemote(n, B0.id) : pull(n, rng, B0.id); } catch (e) { UK.toast(e.code === 'insufficient_gems' ? '반짝석이 모자라요. 전투를 깨면 받아요' : '서버에 연결하지 못했어요', r); return; } if (!res) { UK.toast(GF.t('c16.exp.053'), r); return; } showPull(r, res, B0.id); };
       back(r, 'xhome');
@@ -553,7 +553,7 @@
     const E = O.effective, ef = (gr) => (E ? pct(E.grade[gr]) : '-'), list = (gr) => O.rows.filter((x) => x.grade === gr), line = (x) => x.name + (x.pickup ? '(픽업)' : '') + ' ' + pct(x.rate) + ' → ' + (x.eff == null ? '-' : pct(x.eff));
     row('<b>등급</b>', '<b>기본·실효</b>', '<b>개별(기본 → 실효)</b>');
     row('★5', pct(g.rates.five) + '<br>→ ' + ef(5), list(5).map(line).join('<br>')); row('★4', pct(g.rates.four) + '<br>→ ' + ef(4), list(4).map(line).join('<br>')); row('★3', pct(g.rates.three) + '<br>→ ' + ef(3), list(3).map(line).join('<br>'));
-    el('p', 'ex-onote', sh, `· <b>기본</b>=한 회 기본 확률, <b>실효</b>=천장·10회 보장을 모두 넣고 길게 모았을 때의 평균${E ? '(★5 평균 약 ' + E.expected5 + '회)' : ''}<br>· 소프트 천장: ${g.soft + 1}회째부터 ★5 확률이 매 회 +${pct(g.softUp)}<br>· ★5 최대 횟수: ${O.hard}회째에는 반드시 ★5 (소프트 천장 이후 확률이 100%가 돼요)<br>· 픽업 보장: ★5가 픽업이 아니면 다음 ★5는 픽업 확정 · 픽업은 최대 ${O.pickupMax}회 안에 반드시<br>· 천장 횟수는 배너마다 따로 세요 · 한정 동료는 그 배너에서만 나와요<br>· 10회 모집은 ★4 이상 1명 보장 · 중복은 각성 조각으로 바뀜<br>· 지금 이 배너에서 ★5까지 ${P0.since5}회 · 보장 ${P0.guard ? '있음' : '없음'}<br>· <b>랜덤 아이템 포함</b>${REL ? '' : ' · 슬라이스는 무상 반짝석만 쓰고 결제가 없어요'}`);
+    el('p', 'ex-onote', sh, `· <b>기본</b>=한 회 기본 확률, <b>실효</b>=천장·10회 보장을 모두 넣고 길게 모았을 때의 평균${E ? GF.t('c16.exp.107', { expected5: E.expected5 }) : ''}<br>· 소프트 천장: ${g.soft + 1}회째부터 ★5 확률이 매 회 +${pct(g.softUp)}<br>· ★5 최대 횟수: ${O.hard}회째에는 반드시 ★5 (소프트 천장 이후 확률이 100%가 돼요)<br>· 픽업 보장: ★5가 픽업이 아니면 다음 ★5는 픽업 확정 · 픽업은 최대 ${O.pickupMax}회 안에 반드시<br>· 천장 횟수는 배너마다 따로 세요 · 한정 동료는 그 배너에서만 나와요<br>· 10회 모집은 ★4 이상 1명 보장 · 중복은 각성 조각으로 바뀜<br>· 지금 이 배너에서 ★5까지 ${P0.since5}회 · 보장 ${P0.guard ? '있음' : '없음'}<br>· <b>랜덤 아이템 포함</b>${REL ? '' : ' · 슬라이스는 무상 반짝석만 쓰고 결제가 없어요'}`);
     UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh));
   }
   /* ---------------- 시작 ---------------- */

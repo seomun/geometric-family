@@ -70,7 +70,7 @@
       const tt = el('div', 'tl-ttl', r, '<div class="uk-title">세 가족 짝 맞추기</div><div class="tl-sub">같은 그림 세 개를 모아요</div>'); const pl = Room.mePlate(tt); if (pl) { tt.querySelector('.tl-sub').style.display = 'none'; pl.style.marginTop = '6px'; }
       GF.hero(r, 'tile'); const fam = el('div', 'tl-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));
-      const cont = UK.btn({ text: '이어서 하기 · 레벨 ' + last, icon: 'play', cls: 'block', onclick: () => GF.go('tplay', { n: last }) }, el('div', 'tl-btns', r));
+      const cont = UK.btn({ text: GF.t('c16.block.020', { last: last }), icon: 'play', cls: 'block', onclick: () => GF.go('tplay', { n: last }) }, el('div', 'tl-btns', r));
       if (!Object.keys(SV.stars).length) setTimeout(() => { if (cont.isConnected) UK.finger(r, cont); }, 900);
       const g = el('div', 'tl-grid', r), dailyDone = SV.daily.date === today() && SV.daily.done;
       const b = (t, icon, cls, fn, badge) => { const x = UK.btn({ text: t, icon, cls, onclick: fn }, g); if (badge) el('i', 'tl-badge', x, badge); return x; };
@@ -79,7 +79,7 @@
       b('세 가족 판', 'heart', 'pink', () => GF.go('ttrio'));
       b('우리 집', 'home', 'dong', () => GF.go('thouse'));
       const ss = seasonNow(); if (ss.length) { const s = ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0], done = SV.seasonDone[seasonKey(s)]; UK.btn({ text: s.title, icon: 'star', cls: 'block ' + (done ? 'gray' : 'danger'), onclick: () => { const L = seasonLevel(s); if (L) GF.go('tplay', { level: L }); } }, el('div', 'tl-season', r)); }
-      el('div', 'tl-foot', r, '별 ' + totalStars() + ' · 마당 소품 ' + Room.owned().filter((id) => (Room.item(id) || {}).set === 'yardlife').length + '/' + Object.keys(REW).length);
+      el('div', 'tl-foot', r, GF.t('c16.tile.008', { totalStars: totalStars() }) + Room.owned().filter((id) => (Room.item(id) || {}).set === 'yardlife').length + '/' + Object.keys(REW).length);
     },
   });
   GF.screen('tlevels', {
@@ -109,7 +109,7 @@
       r.classList.add('uk', 'tl'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
       const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
-      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
+      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : GF.t('c16.block.022', { id: LV.id });
       el('div', 'tl-hd', r, `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'classic' ? `<em class="tl-type">${D.types[LV.type]}</em>` : ''));
       TL._ch = typeof LV.chapter === 'number' ? LV.chapter : 1; let S = C.newGame(LV), hist = [], busy = false, hintI = -1, streak = 0, maxTray = 0, rankRes = null; const gained = [], rng = G.mulberry(LV.id === 'daily' ? 5 : (typeof LV.id === 'number' ? LV.id : 9) * 13 + 7);
       const goals = el('div', 'tl-goals', r), boardW = el('div', 'tl-boardw', r), board = el('div', 'tl-board', boardW), trayW = el('div', 'tl-trayw', r), btns = el('div', 'tl-btns2', r), tip = el('div', 'tl-tip', r);
@@ -139,7 +139,7 @@
         if (busy || S.won) return; if (!C.isFree(S, i)) { GF.sfx('hmm'); tiles[i].classList.add('shake'); setTimeout(() => tiles[i] && tiles[i].classList.remove('shake'), 400); return; }
         hist.push(C.clone(S)); tip.style.display = 'none'; hintI = -1; TL._new = true; const ev = C.press(S, i); maxTray = Math.max(maxTray, S.tray.length); GF.sfx('drop'); draw();
         if (ev.cleared.length) {
-          streak++; const st = [0, 2, 4, 7, 9, 12, 14, 16][Math.min(streak - 1, 7)]; setTimeout(() => { GF.sfx('ok', { st }); try { const rc = trayW.getBoundingClientRect(), sr = r.getBoundingClientRect(), k = sr.width / 360; GF.burst(document.getElementById('safe'), (rc.left + rc.width / 2 - sr.left) / k, (rc.top - sr.top) / k, 12); } catch (e) {} if (streak >= 2) say('이어서 ×' + streak); }, slow(120));
+          streak++; const st = [0, 2, 4, 7, 9, 12, 14, 16][Math.min(streak - 1, 7)]; setTimeout(() => { GF.sfx('ok', { st }); try { const rc = trayW.getBoundingClientRect(), sr = r.getBoundingClientRect(), k = sr.width / 360; GF.burst(document.getElementById('safe'), (rc.left + rc.width / 2 - sr.left) / k, (rc.top - sr.top) / k, 12); } catch (e) {} if (streak >= 2) say(GF.t('c16.block.024', { streak: streak })); }, slow(120));
         } else streak = 0;
         if (S.won) { busy = true; setTimeout(finish, slow(700)); } else if (ev.lose || C.lost(S)) { busy = true; setTimeout(lose, slow(500)); }
       }
@@ -152,7 +152,7 @@
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
         GF.polish && GF.polish.failReset && GF.polish.failReset('tile', LV.id || LV.kind);
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: GF.t('c16.block.013'), onReward: bonusShard };
-        const tools = S.used.undo + S.used.shuffle + S.used.hint, chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '도움 ' + tools + '번' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
+        const tools = S.used.undo + S.used.shuffle + S.used.hint, chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: GF.t('c16.tile.009', { tools: tools }) }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: GF.t('c16.block.006'), stars, chips, parent: r, onNext: next ? () => GF.replace('tplay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
       }

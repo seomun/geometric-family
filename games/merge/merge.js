@@ -74,7 +74,7 @@
       const tt = el('div', 'mg-ttl', r, '<div class="uk-title">도형 합치기</div><div class="mg-sub">같은 도형을 합쳐 집을 채워요</div>'); const pl = Room.mePlate(tt); if (pl) { tt.querySelector('.mg-sub').style.display = 'none'; pl.style.marginTop = '6px'; }   // 내 도형 문패(⑤ 결과)
       GF.hero(r, 'merge'); const fam = el('div', 'mg-fam', r); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id)));
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1));
-      const cont = UK.btn({ text: '이어서 하기 · 레벨 ' + last, icon: 'play', cls: 'block', onclick: () => GF.go('mplay', { n: last }) }, el('div', 'mg-btns', r));   // 첫 실행: 한 번 눌러 첫 판
+      const cont = UK.btn({ text: GF.t('c16.block.020', { last: last }), icon: 'play', cls: 'block', onclick: () => GF.go('mplay', { n: last }) }, el('div', 'mg-btns', r));   // 첫 실행: 한 번 눌러 첫 판
       if (!Object.keys(SV.stars).length) setTimeout(() => { if (cont.isConnected) UK.finger(r, cont); }, 900);
       const g = el('div', 'mg-grid', r), dailyDone = SV.daily.date === today() && SV.daily.done;
       const b = (t, icon, cls, fn, badge) => { const x = UK.btn({ text: t, icon, cls, onclick: fn }, g); if (badge) el('i', 'mg-badge', x, badge); return x; };
@@ -84,7 +84,7 @@
       b('우리 집', 'home', 'dong', () => GF.go('mhouse'));
       const ss = seasonNow(); if (ss.length) { const s = ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0], done = SV.seasonDone[seasonKey(s)]; const sb = UK.btn({ text: s.title, icon: 'star', cls: 'block ' + (done ? 'gray' : 'danger'), onclick: () => { const L = seasonLevel(s); if (L) GF.go('mplay', { level: L }); } }, el('div', 'mg-season', r)); el('i', 'mg-badge', sb, done ? '다시' : '시즌'); }   // 시즌은 배지 카드
       if (Room.H) { const bw = el('div', 'h2-bandwrap', r); Room.band(bw, { go: () => GF.go('mlevels'), toastParent: r }); }
-      if (!Room.H) el('div', 'mg-foot', r, '별 ' + totalStars() + ' · 가구 ' + Room.owned().filter((id) => (Room.item(id) || {}).set === 'build').length + '/' + D.roomTotal);
+      if (!Room.H) el('div', 'mg-foot', r, GF.t('c16.merge.007', { totalStars: totalStars() }) + Room.owned().filter((id) => (Room.item(id) || {}).set === 'build').length + '/' + D.roomTotal);
     },
   });
 
@@ -123,7 +123,7 @@
       if (!p.level) { SV.last = LV.id; save(); }
       bar();
       const hd = el('div', 'mg-hd', r), leftChip = el('span', 'uk-chip mg-left', r), goals = el('div', 'mg-goals', r), board = el('div', 'mg-board', r), dock = el('div', 'mg-dock', r), tip = el('div', 'uk-caption mg-tip', r);
-      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : '레벨 ' + LV.id;
+      const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : GF.t('c16.block.022', { id: LV.id });
       hd.innerHTML = `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type && LV.type !== 'make' ? `<em class="mg-type">${D.types[LV.type]}</em>` : '');
       const finalRows = LV.rows + (LV.moveAt ? 1 : 0), cs = Math.max(48, Math.min(76, Math.floor(Math.min(336 / LV.cols, 330 / finalRows))));
       let cells = [];
@@ -137,7 +137,7 @@
       function goalChips() {
         goals.innerHTML = '';
         S.goals.forEach((g) => { const have = Math.min(g.n, S.made[M.key(g.c, g.t)] || 0), ch = el('div', 'mg-goal' + (have >= g.n ? ' ok' : ''), goals); ch.appendChild(pieceEl(g.c, g.t, 0)); el('span', '', ch, have + '/' + g.n); });
-        if (S.clear) { const jl = M.junkLeft(S), ch = el('div', 'mg-goal' + (jl === 0 ? ' ok' : ''), goals), j = el('div', 'mg-pc', ch); el('img', '', j).src = JUNK; el('span', '', ch, '짐 ' + jl); }
+        if (S.clear) { const jl = M.junkLeft(S), ch = el('div', 'mg-goal' + (jl === 0 ? ' ok' : ''), goals), j = el('div', 'mg-pc', ch); el('img', '', j).src = JUNK; el('span', '', ch, GF.t('c16.merge.008', { jl: jl })); }
         leftChip.innerHTML = UK.icon('gift') + '<span>남은 조각 <b>' + M.left(S) + '</b></span>';
       }
       function draw(frame, popAt) {
@@ -166,10 +166,10 @@
             if (e.type === 'move') { say(GF.t('c16.merge.002')); GF.sfx('star'); draw(frame, []); return; }
             chain++; e.from.forEach((j) => { if (j !== e.at) fly(prev.cells[j], j, e.at); });
             setTimeout(() => { draw(frame, [e.at]); GF.sfx('ok', { st: [0, 2, 4, 7, 9, 12, 14, 16][Math.min(chain - 1, 7)] }); if (e.t >= 5) GF.sfxSeq([['star', 90, { st: 0 }]]); if (chain >= 4) GF.sfxSeq([['star', 160, { st: 7 }]]); try { const c = center(cells[e.at]); GF.burst(document.getElementById('safe'), c.x, c.y, e.t >= 5 ? 14 : 8); } catch (x) {} }, slow(190));
-            if (chain >= 2) say('연쇄 ×' + chain);
+            if (chain >= 2) say(GF.t('c16.merge.009', { chain: chain }));
             if (e.jackpot) { say(GF.t('c16.merge.003')); GF.sfx('star'); } if (e.refund) say(GF.t('c16.merge.004'));
             if (e.cleared) say(GF.t('c16.merge.005'));
-            const T = TIER[e.c + ':' + e.t]; if (T && T.item && roomOK) { if (Room.grant(T.item)) { gained.push(T.item); setTimeout(() => { say('새 가구 · ' + NAME[T.item]); GF.sfx('star'); }, 300); } }
+            const T = TIER[e.c + ':' + e.t]; if (T && T.item && roomOK) { if (Room.grant(T.item)) { gained.push(T.item); setTimeout(() => { say(GF.t('c16.merge.010', { item: NAME[T.item] })); GF.sfx('star'); }, 300); } }
           }, t);
         });
         setTimeout(() => { busy = false; draw(); if (M.won(S)) finish(); else if (M.lost(S)) lose(); }, t + slow(520));
@@ -206,7 +206,7 @@
           GF.polish.finished(); GF.polish.setNext(GF.polish.nextText(LV, D)); GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, 650);
       }
-      function lose() { busy = true; if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); const left = (S.goals || []).reduce((a, g) => a + Math.max(0, g.n - (S.made[M.key(g.c, g.t)] || 0)), 0), retry = () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }); if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'merge', id: LV.id || LV.kind, near: left ? '목표 조각까지 ' + left + '개!' : '', hint: false, onRetry: retry }); else { say(GF.t('c16.merge.006')); GF.sfx('hmm'); setTimeout(retry, 650); } }   // 지면 벌 없이 즉시 다시
+      function lose() { busy = true; if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); const left = (S.goals || []).reduce((a, g) => a + Math.max(0, g.n - (S.made[M.key(g.c, g.t)] || 0)), 0), retry = () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }); if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'merge', id: LV.id || LV.kind, near: left ? GF.t('c16.merge.011', { left: left }) : '', hint: false, onRetry: retry }); else { say(GF.t('c16.merge.006')); GF.sfx('hmm'); setTimeout(retry, 650); } }   // 지면 벌 없이 즉시 다시
       MG.debug.lose = () => lose(); MG.debug.adOffer = () => offerUndo(); MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
       buildBoard(); draw(); showTip(); GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id })); GF.polish.goal(r, GF.t('polish.goal.merge', { n: LV.stars ? LV.stars[1] : 0 }));
       if (!LV.kind && LV.id <= 2 && !hist.length) { r.__demo = () => { if (GF.tale.cardOpen) return; const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }; setTimeout(r.__demo, 1200); }   // 처음 두 판: 첫 칸을 손가락이 알려 준다

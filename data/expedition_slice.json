@@ -1,0 +1,569 @@
+{
+ "version": 1,
+ "note": "[제안] ⑪ 슬라이스 데이터. tools/expedition_slice_build.py 로 생성",
+ "el": {
+  "support": {
+   "icon": "◻",
+   "name": "받치기",
+   "family": "네모",
+   "color": "#F08A3C"
+  },
+  "flash": {
+   "icon": "△",
+   "name": "번쩍",
+   "family": "세모",
+   "color": "#E5334A"
+  },
+  "care": {
+   "icon": "◯",
+   "name": "돌보기",
+   "family": "동그라미",
+   "color": "#3B6FD6"
+  }
+ },
+ "role": {
+  "tank": {
+   "icon": "🛡️",
+   "name": "든든이",
+   "skill": "든든 막기"
+  },
+  "attacker": {
+   "icon": "⚔️",
+   "name": "번쩍이",
+   "skill": "번쩍 한 방"
+  },
+  "mage": {
+   "icon": "✨",
+   "name": "휘익이",
+   "skill": "휘익 전체"
+  },
+  "healer": {
+   "icon": "💗",
+   "name": "토닥이",
+   "skill": "토닥토닥"
+  },
+  "support": {
+   "icon": "📣",
+   "name": "힘내기",
+   "skill": "힘내기"
+  }
+ },
+ "units": [
+  {
+   "id": "u_nemo_dad",
+   "name": "네모 아빠",
+   "art": "nemo_dad.good",
+   "role": "tank",
+   "el": "support",
+   "grade": 3,
+   "route": "start"
+  },
+  {
+   "id": "u_semo_wife",
+   "name": "세모 이모",
+   "art": "wife.joy",
+   "role": "attacker",
+   "el": "flash",
+   "grade": 3,
+   "route": "start"
+  },
+  {
+   "id": "u_dong_dad",
+   "name": "동그라미 아저씨",
+   "art": "dong_dad.calm",
+   "role": "mage",
+   "el": "care",
+   "grade": 3,
+   "route": "start"
+  },
+  {
+   "id": "u_nemo_mom",
+   "name": "네모 엄마",
+   "art": "nemo_mom.good",
+   "role": "healer",
+   "el": "support",
+   "grade": 3,
+   "route": "start"
+  },
+  {
+   "id": "u_baby",
+   "name": "막둥이",
+   "art": "baby.joy",
+   "role": "support",
+   "el": "support",
+   "grade": 3,
+   "route": "start"
+  },
+  {
+   "id": "u_kid3",
+   "name": "세찌(셋째 돼지)",
+   "art": "nemo_kids.kid3",
+   "role": "tank",
+   "el": "support",
+   "grade": 4,
+   "route": "story",
+   "note": "이야기 합류 · 벽돌집 공사장"
+  },
+  {
+   "id": "u_wind",
+   "name": "바람 친구",
+   "art": null,
+   "role": "attacker",
+   "el": "flash",
+   "grade": 4,
+   "route": "recruit",
+   "emoji": "🌬️",
+   "note": "포섭 · 바람 친구(가족 밖, 장난을 그만두고 친구가 됨)"
+  },
+  {
+   "id": "u_husband",
+   "name": "세모 남편",
+   "art": "husband.joy",
+   "role": "attacker",
+   "el": "flash",
+   "grade": 5,
+   "route": "gacha",
+   "pickup": true
+  },
+  {
+   "id": "u_grandma",
+   "name": "네모 할머니",
+   "art": "nemo_grandma.good",
+   "role": "healer",
+   "el": "support",
+   "grade": 5,
+   "route": "gacha"
+  },
+  {
+   "id": "u_kid1",
+   "name": "하나",
+   "art": "nemo_kids.kid1",
+   "role": "support",
+   "el": "support",
+   "grade": 4,
+   "route": "gacha"
+  },
+  {
+   "id": "u_dong_n",
+   "name": "동그라미 이웃",
+   "art": "dong_dad.warm",
+   "role": "tank",
+   "el": "care",
+   "grade": 4,
+   "route": "gacha"
+  },
+  {
+   "id": "u_semo_n",
+   "name": "세모 이웃",
+   "art": "husband.wink",
+   "role": "mage",
+   "el": "flash",
+   "grade": 4,
+   "route": "gacha"
+  },
+  {
+   "id": "u_nemo_n",
+   "name": "네모 이웃",
+   "art": "nemo_dad.wink",
+   "role": "support",
+   "el": "support",
+   "grade": 3,
+   "route": "gacha"
+  },
+  {
+   "id": "u_dong_n2",
+   "name": "동그라미 이웃(둘)",
+   "art": "dong_dad.good",
+   "role": "healer",
+   "el": "care",
+   "grade": 3,
+   "route": "gacha"
+  },
+  {
+   "id": "u_semo_n2",
+   "name": "세모 이웃(둘)",
+   "art": "husband.good",
+   "role": "attacker",
+   "el": "flash",
+   "grade": 3,
+   "route": "gacha"
+  }
+ ],
+ "stages": [
+  {
+   "id": 1,
+   "name": "볏짚집 앞",
+   "scale": 1.0,
+   "gold": 50,
+   "enemies": [
+    {
+     "name": "먼지 꼬마",
+     "emoji": "💨",
+     "role": "attacker",
+     "el": "flash",
+     "k": 0.55
+    },
+    {
+     "name": "낙엽 꼬마",
+     "emoji": "🍂",
+     "role": "support",
+     "el": "support",
+     "k": 0.55
+    },
+    {
+     "name": "물방울 꼬마",
+     "emoji": "💧",
+     "role": "mage",
+     "el": "care",
+     "k": 0.5
+    }
+   ],
+   "tip": "상성: 번쩍 → 받치기 → 돌보기 → 번쩍"
+  },
+  {
+   "id": 2,
+   "name": "나무집 앞",
+   "scale": 2.0,
+   "gold": 70,
+   "enemies": [
+    {
+     "name": "먼지 꼬마",
+     "emoji": "💨",
+     "role": "attacker",
+     "el": "flash",
+     "k": 1.24
+    },
+    {
+     "name": "그림자 꼬마",
+     "emoji": "🌫️",
+     "role": "tank",
+     "el": "care",
+     "k": 1.2
+    },
+    {
+     "name": "낙엽 꼬마",
+     "emoji": "🍂",
+     "role": "support",
+     "el": "support",
+     "k": 1.2
+    },
+    {
+     "name": "물방울 꼬마",
+     "emoji": "💧",
+     "role": "mage",
+     "el": "care",
+     "k": 1.16
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "name": "벽돌집 공사장",
+   "scale": 1.5,
+   "gold": 100,
+   "join": "u_kid3",
+   "enemies": [
+    {
+     "name": "돌멩이 꼬마",
+     "emoji": "🪨",
+     "role": "tank",
+     "el": "support",
+     "k": 1.05
+    },
+    {
+     "name": "먼지 꼬마",
+     "emoji": "💨",
+     "role": "attacker",
+     "el": "flash",
+     "k": 1.02
+    },
+    {
+     "name": "물방울 꼬마",
+     "emoji": "💧",
+     "role": "mage",
+     "el": "care",
+     "k": 0.99
+    },
+    {
+     "name": "낙엽 꼬마",
+     "emoji": "🍂",
+     "role": "support",
+     "el": "support",
+     "k": 0.99
+    },
+    {
+     "name": "이슬 꼬마",
+     "emoji": "🫧",
+     "role": "healer",
+     "el": "care",
+     "k": 0.99
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "name": "바람 소리",
+   "scale": 1.35,
+   "gold": 140,
+   "enemies": [
+    {
+     "name": "그림자 꼬마",
+     "emoji": "🌫️",
+     "role": "tank",
+     "el": "care",
+     "k": 1.08
+    },
+    {
+     "name": "회오리 꼬마",
+     "emoji": "🌪️",
+     "role": "attacker",
+     "el": "flash",
+     "k": 1.053
+    },
+    {
+     "name": "물방울 꼬마",
+     "emoji": "💧",
+     "role": "mage",
+     "el": "care",
+     "k": 1.026
+    },
+    {
+     "name": "낙엽 꼬마",
+     "emoji": "🍂",
+     "role": "support",
+     "el": "support",
+     "k": 1.026
+    },
+    {
+     "name": "이슬 꼬마",
+     "emoji": "🫧",
+     "role": "healer",
+     "el": "care",
+     "k": 1.026
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "name": "굴뚝 위",
+   "scale": 1.25,
+   "gold": 190,
+   "enemies": [
+    {
+     "name": "돌멩이 꼬마",
+     "emoji": "🪨",
+     "role": "tank",
+     "el": "support",
+     "k": 1.125
+    },
+    {
+     "name": "회오리 꼬마",
+     "emoji": "🌪️",
+     "role": "attacker",
+     "el": "flash",
+     "k": 1.125
+    },
+    {
+     "name": "번개 꼬마",
+     "emoji": "⚡",
+     "role": "mage",
+     "el": "flash",
+     "k": 1.1
+    },
+    {
+     "name": "낙엽 꼬마",
+     "emoji": "🍂",
+     "role": "support",
+     "el": "support",
+     "k": 1.075
+    },
+    {
+     "name": "이슬 꼬마",
+     "emoji": "🫧",
+     "role": "healer",
+     "el": "care",
+     "k": 1.075
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "name": "바람 친구",
+   "scale": 1.3,
+   "gold": 260,
+   "boss": true,
+   "recruit": "u_wind",
+   "enemies": [
+    {
+     "name": "그림자 꼬마",
+     "emoji": "🌫️",
+     "role": "tank",
+     "el": "care",
+     "k": 1.17
+    },
+    {
+     "name": "바람 친구",
+     "emoji": "🌬️",
+     "role": "attacker",
+     "el": "flash",
+     "k": 1.3
+    },
+    {
+     "name": "번개 꼬마",
+     "emoji": "⚡",
+     "role": "mage",
+     "el": "flash",
+     "k": 1.17
+    },
+    {
+     "name": "낙엽 꼬마",
+     "emoji": "🍂",
+     "role": "support",
+     "el": "support",
+     "k": 1.144
+    },
+    {
+     "name": "이슬 꼬마",
+     "emoji": "🫧",
+     "role": "healer",
+     "el": "care",
+     "k": 1.144
+    }
+   ]
+  }
+ ],
+ "story": {
+  "prologue": [
+   {
+    "bg": "field",
+    "text": "아기돼지 삼형제 마을에 바람이 슝슝 불었다. 막둥이가 지붕이 날아가는 걸 보았다!",
+    "chars": [
+     "baby.surprise",
+     "nemo_kids.kid3"
+    ]
+   },
+   {
+    "bg": "field",
+    "text": "세모 이모가 앞으로 나섰다. 「내가 번쩍 막아 볼게!」 번쩍은 네모를, 네모는 동그라미를, 동그라미는 번쩍을 이겨요.",
+    "chars": [
+     "wife.joy",
+     "baby.joy"
+    ],
+    "mini": {
+     "app": "expedition",
+     "k": "triangle"
+    }
+   },
+   {
+    "bg": "field",
+    "text": "동그라미 아저씨가 고개를 끄덕였다. 「같이 가요, 우리 원정대.」 첫 걸음은 볏짚집 앞이에요.",
+    "chars": [
+     "dong_dad.calm",
+     "nemo_dad.good",
+     "nemo_mom.good",
+     "baby.joy"
+    ]
+   }
+  ],
+  "join": {
+   "u_kid3": [
+    {
+     "bg": "hill",
+     "text": "벽돌집 공사장에서 셋째 돼지 세찌가 손을 흔들었다.",
+     "chars": [
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "「바람이 불어도 안 무너지게 튼튼히 지었어. 같이 가도 될까?」",
+     "chars": [
+      "nemo_kids.kid3",
+      "baby.joy"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "세찌가 원정대에 합류했다!",
+     "chars": [
+      "nemo_kids.kid3",
+      "nemo_dad.good",
+      "wife.joy"
+     ]
+    }
+   ]
+  },
+  "recruit": {
+   "u_wind": [
+    {
+     "bg": "hill",
+     "text": "바람 친구가 멈칫했다. 「나는 그냥… 같이 놀고 싶었어. 날려 보내면 쳐다봐 줄 줄 알았거든.」",
+     "chars": [
+      "dong_dad.warm"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "동그라미 아저씨가 조용히 말했다. 「그럼 같이 가요. 지붕은 이제 우리가 같이 고쳐요.」",
+     "chars": [
+      "dong_dad.calm",
+      "baby.joy"
+     ]
+    },
+    {
+     "bg": "hill",
+     "text": "바람 친구가 원정대의 친구가 되었다!",
+     "chars": [
+      "baby.joy",
+      "wife.joy",
+      "dong_dad.calm"
+     ]
+    }
+   ]
+  },
+  "stage6_pre": [
+   {
+    "bg": "hill",
+    "text": "바람 친구는 사나운 것이 아니었다. 힘이 약해지면 마음을 열지도 몰라. 상성이 맞는 친구가 말을 걸어 보자.",
+    "chars": [
+     "baby.surprise",
+     "dong_dad.calm"
+    ]
+   }
+  ]
+ },
+ "gacha": {
+  "cost": 150,
+  "ten": 1425,
+  "rates": {
+   "five": 0.025,
+   "four": 0.135,
+   "three": 0.84
+  },
+  "soft": 60,
+  "softUp": 0.06,
+  "hard": 80,
+  "pickup": {
+   "id": "u_husband",
+   "share": 0.5
+  },
+  "startGems": 1500,
+  "clearGems": 150,
+  "banner": "아기돼지 마을 모집",
+  "note": "슬라이스: 무상 반짝석만 · 결제 없음 · 판정은 이 기기에서(정식은 서버)"
+ },
+ "bal": {
+  "lvMul": 0.065,
+  "gradeMul": {
+   "3": 1.0,
+   "4": 1.2,
+   "5": 1.45
+  },
+  "costBase": 25,
+  "costGrow": 1.15,
+  "lvCap": 10,
+  "stages": 6,
+  "startGold": 0,
+  "persuadeAt": 0.3
+ }
+}

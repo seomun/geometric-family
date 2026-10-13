@@ -4,39 +4,17 @@
 // 3부 뽑기: 확률표(2.5/13.5/84, 소프트 천장 60, 하드 천장 80)로 평균·분포·천장 도달을 센다. 단언 실패 시 종료 코드 1.
 const arg = {}; process.argv.slice(2).forEach((a) => { const m = /^(\w+)=(.+)$/.exec(a); if (m) arg[m[1]] = JSON.parse(m[2]); });
 const rng = (seed) => { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
-// ---------------- 1부: 전투 ----------------
-const EL = ['flash', 'support', 'care'];                 // 번쩍(세모) > 받치기(네모) > 돌보기(동그라미) > 번쩍
-const BEATS = { flash: 'support', support: 'care', care: 'flash' };
-const ROLES = { tank: { hp: 1.7, atk: 0.7, def: 1.5 }, attacker: { hp: 1.0, atk: 1.3, def: 0.9 }, mage: { hp: 0.8, atk: 1.2, def: 0.7 }, healer: { hp: 1.0, atk: 0.8, def: 1.0 }, support: { hp: 0.9, atk: 0.9, def: 1.0 } };
-const COMP = ['tank', 'attacker', 'mage', 'healer', 'support'];
-const ADV = arg.adv || 1.5, DIS = arg.dis || 0.7;
-function team(R, k, els) { return COMP.map((r, i) => ({ role: r, el: els ? els[i] : EL[Math.floor(R() * 3)], hp: 1000 * ROLES[r].hp * k, atk: 100 * ROLES[r].atk * k, def: 50 * ROLES[r].def * k, spd: 95 + R() * 15, g: 0, cd: 3 - (i % 3), buff: 0 })); }
-function battle(R, A, B) {
-  A.forEach((u) => { u.max = u.hp; }); B.forEach((u) => { u.max = u.hp; });
-  const alive = (T) => T.filter((u) => u.hp > 0);
-  for (let tick = 0; tick < 4000; tick++) {
-    for (const u of A.concat(B)) if (u.hp > 0) u.g += u.spd;
-    const ready = A.concat(B).filter((u) => u.hp > 0 && u.g >= 1000).sort((x, y) => y.g - x.g);
-    for (const u of ready) {
-      if (u.hp <= 0) continue; u.g -= 1000; const me = A.includes(u) ? A : B, foe = me === A ? B : A, fa = alive(foe), ma = alive(me); if (!fa.length || !ma.length) break;
-      const hit = (t, mult) => { const em = BEATS[u.el] === t.el ? ADV : (BEATS[t.el] === u.el ? DIS : 1); t.hp -= u.atk * (u.buff > 0 ? 1.2 : 1) * mult * em * 100 / (100 + t.def); };
-      u.cd--; const skill = u.cd <= 0; if (skill) u.cd = 3; if (u.buff > 0) u.buff--;
-      const tk = fa.find((t) => t.role === 'tank'), tgt = tk && R() < 0.4 ? tk : fa[Math.floor(R() * fa.length)];
-      if (u.role === 'healer' && skill) ma.forEach((a) => { a.hp = Math.min(a.max, a.hp + u.atk * 1.4); });
-      else if (u.role === 'support' && skill) ma.forEach((a) => { a.buff = 2; });
-      else if (u.role === 'mage' && skill) fa.forEach((t) => hit(t, 0.9));
-      else hit(tgt, skill ? (u.role === 'attacker' ? 2.2 : 1.6) : 1.0);
-    }
-    if (!alive(A).length) return false; if (!alive(B).length) return true;
-  }
-  return false;
-}
+// ---------------- 1부: 전투 — 게임(games/expedition/battle-core.js)과 같은 결정론 코어를 쓴다 ----------------
+const Core = require('../games/expedition/battle-core.js');
+const { EL, BEATS, COMP } = Core;
+function battle(R, A, B) { return Core.create(A, B, { rng: R }).run().win; }
+const team = (R, k, els, side) => Core.makeTeam(R, k, els, side);
 function winProb(k, n, mode) {
   const R = rng(12345 + Math.round(k * 1000)); let w = 0;
   for (let i = 0; i < n; i++) {
     const eEls = COMP.map(() => EL[Math.floor(R() * 3)]);
     const pEls = mode === 'counter' ? eEls.map((e) => EL.find((x) => BEATS[x] === e)) : mode === 'bad' ? eEls.map((e) => BEATS[e]) : null;
-    if (battle(R, team(R, k, pEls), team(R, 1, eEls))) w++;
+    if (battle(R, team(R, k, pEls, 'A'), team(R, 1, eEls, 'B'))) w++;
   }
   return w / n;
 }

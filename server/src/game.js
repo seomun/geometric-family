@@ -105,7 +105,8 @@ export async function stageStart(env, account, stageId, now = Date.now(), secret
 }
 export async function stageClear(env, account, { token, inputs, auto, requestId }, now = Date.now()) {
   const db = env.DB, t = await verifyJwt(String(token || ''), env.JWT_SECRET, now); if (t.typ !== 'stage' || t.sub !== account) throw new HttpError(403, 'bad_stage_token');
-  const prev = await first(db, 'SELECT body FROM requests WHERE request_id=?', 'stage:' + t.nonce); if (prev) return { ...JSON.parse(prev.body), replay: true };
+  const replayOf = async () => { const l = await first(db, "SELECT reason FROM ledger WHERE account=? AND kind='stage' AND ref=?", account, 'stage:' + t.nonce); return l && l.reason && l.reason.includes('|') ? { ...JSON.parse(l.reason.slice(l.reason.indexOf('|') + 1)), replay: true } : null; };      // 같은 토큰 재전송: 장부 한 줄에 응답을 같이 적어 두고(요청 기록 행을 따로 쓰지 않음, B19) 그대로 돌려준다
+  const prev = await replayOf(); if (prev) return prev;
   const out = SC.replay(D, { stage: t.stage, seed: t.seed, party: t.party, auto: auto !== false, inputs }); if (out.error) { await flag(env, account, 'bad_replay', out.error + ':s' + t.stage, now); throw new HttpError(422, out.error, '전투 기록이 맞지 않아요'); }
   const st = D.stages.find((x) => x.id === t.stage);
   if (!out.win) { const body = { win: false, stars: 0, steps: out.steps, hash: out.hash }; return body; }   // 졌을 때는 기록하지 않는다(벌 없음). 같은 토큰으로 다시 시도할 수 있다
@@ -117,12 +118,11 @@ export async function stageClear(env, account, { token, inputs, auto, requestId 
   try {
     res = await db.batch([
       run(db, 'UPDATE wallet SET free_gems=free_gems+?, gold=gold+?, ver=ver+1, last_req=? WHERE account=? AND ver=?', rw.gems, rw.gold, 'stage:' + t.nonce, account, w.ver),
-      run(db, `INSERT INTO requests(request_id,account,route,status,body,ts) SELECT ?,?,?,?,?,? WHERE ${guard}`, 'stage:' + t.nonce, account, '/stage/clear', 200, JSON.stringify(body), now, ...g),
       run(db, `UPDATE progress SET cleared=MAX(cleared,?), stars=?, flags=? WHERE account=? AND ${guard}`, st.id, JSON.stringify(stars), JSON.stringify(flags), account, ...g),
-      run(db, `INSERT INTO ledger(account,ts,kind,d_free,d_gold,reason,ref) SELECT ?,?,'stage',?,?,?,? WHERE ${guard}`, account, now, rw.gems, rw.gold, 'stage' + st.id + (firstClear ? ':first' : ''), 'stage:' + t.nonce, ...g),
+      run(db, `INSERT INTO ledger(account,ts,kind,d_free,d_gold,reason,ref) SELECT ?,?,'stage',?,?,?,? WHERE ${guard}`, account, now, rw.gems, rw.gold, 'stage' + st.id + (firstClear ? ':first' : '') + '|' + JSON.stringify(body), 'stage:' + t.nonce, ...g),
       ...newUnits.map((id) => run(db, `INSERT INTO units(account,unit_id,lv,dups) SELECT ?,?,1,0 WHERE ${guard}`, account, id, ...g)),
     ]);
-  } catch (e) { const dup = await first(db, 'SELECT body FROM requests WHERE request_id=?', 'stage:' + t.nonce); if (dup) return { ...JSON.parse(dup.body), replay: true }; throw e; }
+  } catch (e) { const dup = await replayOf(); if (dup) return dup; throw e; }
   if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요'); return body;
 }
 

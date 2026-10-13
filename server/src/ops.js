@@ -24,13 +24,19 @@ export async function telemetry(env, events, now = Date.now()) {
   return { ok: true, accepted: n };
 }
 
-/** 속도 제한(고정 창). limit 넘으면 429. 키는 계정 또는 IP. */
+/** 속도 제한(고정 창). limit 넘으면 429. 키는 계정 또는 IP.
+ *  돈·광고·로그인 길은 D1 에 세어(isolate 가 바뀌어도 정확), 나머지(전투·조회·통계)는 isolate 메모리에서 세어 D1 쓰기를 줄인다(B19: 요청마다 1쓰기+1읽기가 하루 쓰기의 40%였다). 메모리 제한은 isolate 단위 근사치라 한도의 여유를 둔다. */
 export async function rateLimit(env, key, limit, windowSec, now = Date.now()) {
   const win = Math.floor(now / (windowSec * 1000));
-  await run(env.DB, 'INSERT INTO rate_limit(k,win,n) VALUES(?,?,1) ON CONFLICT(k) DO UPDATE SET n=CASE WHEN win=excluded.win THEN n+1 ELSE 1 END, win=excluded.win', key, win).run();
-  const r = await first(env.DB, 'SELECT n FROM rate_limit WHERE k=?', key); if (r.n > limit) throw new HttpError(429, 'rate_limited', '너무 빨라요. 잠시 뒤에 다시 해 주세요');
+  const r = await first(env.DB, 'INSERT INTO rate_limit(k,win,n) VALUES(?,?,1) ON CONFLICT(k) DO UPDATE SET n=CASE WHEN win=excluded.win THEN n+1 ELSE 1 END, win=excluded.win RETURNING n', key, win); if (r.n > limit) throw new HttpError(429, 'rate_limited', '너무 빨라요. 잠시 뒤에 다시 해 주세요');
 }
-export const LIMITS = { 'POST /gacha/pull': [20, 60], 'POST /stage/clear': [30, 60], 'POST /stage/start': [60, 60], 'POST /iap/verify': [10, 60], 'POST /ads/reward': [10, 60], 'POST /telemetry': [20, 60], '*': [120, 60] };
+const MEM = new Map();
+export function memLimit(key, limit, windowSec, now = Date.now()) {
+  const win = Math.floor(now / (windowSec * 1000)), e = MEM.get(key);
+  if (!e || e.win !== win) { if (MEM.size > 5000) MEM.clear(); MEM.set(key, { win, n: 1 }); return; }
+  if (++e.n > limit) throw new HttpError(429, 'rate_limited', '너무 빨라요. 잠시 뒤에 다시 해 주세요');
+}
+export const LIMITS = { 'POST /gacha/pull': [20, 60, 'db'], 'POST /stage/clear': [30, 60], 'POST /stage/start': [60, 60], 'POST /iap/verify': [10, 60, 'db'], 'POST /ads/reward': [10, 60, 'db'], 'POST /telemetry': [20, 60], '*': [120, 60] };
 export const IP_LIMITS = { 'POST /auth/anon': [10, 60], 'POST /auth/refresh': [30, 60] };
 
 /** 정리 크론(하루 한 번): 만료·폐기 토큰, 오래된 멱등 기록·속도 제한·미청구 광고 확인 삭제. */

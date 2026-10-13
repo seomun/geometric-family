@@ -78,10 +78,15 @@ ${rows.map((r) => `| ${r.dau.toLocaleString('en')} | ${M(r.reqD)}M | ${M(r.readD
 - D1 무료: 읽은 행 하루 ${M(L.dFreeRead)}M · 쓴 행 하루 ${M(L.dFreeWrite)}M. 유료: 읽은 행 월 ${L.dPaidReadB}B · 쓴 행 월 ${L.dPaidWriteM}M 포함, 초과 읽기 $${L.dReadPerM}/M · 쓰기 $${L.dWritePerM}/M.
 - 저장소: 장부(ledger)가 가장 빨리 커짐 — 계정당 하루 약 ${f1(per.write)} 행 중 장부·요청 기록이 대부분. 오래된 요청 기록(requests)은 정리 작업(보관 기간 정하기)이 필요.
 
+## 3.5 적용한 쓰기 줄이기(B19)
+- **속도 제한을 isolate 메모리로**: 전투·조회·통계 길은 D1 대신 메모리에서 세고(요청마다 1쓰기+1읽기 제거), 돈·광고·로그인 길(모집·결제 확인·광고 보상·가입)만 D1 에 세어 정확하게 유지. D1 쪽도 INSERT…RETURNING 으로 읽기를 1번 줄임.
+- **전투 결과의 요청 기록 행 제거**: 같은 토큰 재전송 응답을 장부(ledger) 한 줄(reason 뒤에 응답 JSON)에 같이 적어 두고 그대로 돌려줌 → 전투 한 판당 쓰기 5→4.
+- 효과: 사용자 1명·하루 D1 쓴 행 **80.8 → 약 41**(−49%), 문장 357 → 285, DAU 10만 월 비용 약 $225 → 약 $106. (같은 시나리오·같은 방법으로 재계측)
+
 ## 4. 읽는 법·결론
 - **무료로 버티는 한계**는 쓴 행 기준 하루 약 ${Math.floor(L.dFreeWrite / Math.max(1, per.write)).toLocaleString('en')}명(DAU), 요청 기준 약 ${Math.floor(L.wFree / Math.max(1, per.req)).toLocaleString('en')}명. 둘 중 **${L.dFreeWrite / Math.max(1, per.write) < L.wFree / Math.max(1, per.req) ? 'D1 쓰기' : 'Workers 요청'}** 이 먼저 닿습니다.
 - 월 비용은 DAU 1만에서 약 $${f1(rows[1].cost)}, 10만에서 약 $${f1(rows[2].cost)} — 대부분 **D1 쓰기**(전투 한 판마다 요청 기록·장부·지갑 갱신)입니다. 출시 초기(DAU 수천)는 무료~$5 수준이라 비용보다 **전투 재현(CPU 시간)·동시 접속 피크**를 먼저 보면 됩니다. 전투 재현 한 판은 CPU 수 ms~수십 ms(\`server/scripts/cpu_bench\` 참고)입니다.
-- 줄이는 방법(쓰기 줄이기): ① 전투 결과의 요청 기록(requests)과 장부(ledger)를 한 문장으로 묶기 ② 요청 기록 보관 기간 정하고 주기 정리 ③ 방치 정찰·텔레메트리 묶어 보내기 ④ 프로필·초보자 미션 조회는 읽기라 비용이 작음.
+- 더 줄이는 방법: ① 텔레메트리를 클라이언트가 묶어 한 번에 보내기 ② 모집 결과 기록(gacha_log)과 장부 통합 ③ 요청 기록(requests) 보관 기간 정하고 주기 정리 ④ 초보자 미션·프로필 조회는 읽기라 비용이 작음.
 - 한계: shim 은 읽은 행을 「돌려준 행 수(최소 1)」로 세므로 실제 D1(스캔 행)과 다를 수 있습니다. 동시성·재시도(충돌 409)는 포함하지 않았습니다.
 `;
 writeFileSync('docs/31_SERVER_COST.md', md, 'utf8');

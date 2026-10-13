@@ -46,7 +46,7 @@ export async function handle(req, env, now = Date.now()) {
       return json(await issue(env, row.account, b.device_hash, acc.age_band, now));
     }
   }
-  const account = await auth(req, env, now); { const [lim, win] = Ops.LIMITS[key] || Ops.LIMITS['*']; await Ops.rateLimit(env, 'a:' + key + ':' + account, lim, win, now); }
+  const account = await auth(req, env, now); { const [lim, win, mode] = Ops.LIMITS[key] || Ops.LIMITS['*']; if (mode === 'db') await Ops.rateLimit(env, 'a:' + key + ':' + account, lim, win, now); else Ops.memLimit('a:' + key + ':' + account, lim, win, now); }
   switch (key) {
     case 'GET /profile': return json(await G.profile(env, account, now));
     case 'POST /party': return json(await G.setParty(env, account, (await readJson(req)).party));

@@ -159,3 +159,16 @@ test('전투: 입력 기록이 결과를 바꾼다(수동 스킬) — 서버가 
   const auto = SC.replay(G.D, { ...s, auto: true, inputs: [] }), man = SC.replay(G.D, { ...s, auto: false, inputs: [[0, 'c', 0], [3, 'c', 1], [6, 'c', 2]] });
   assert.notEqual(auto.hash, man.hash); assert.equal(man.hash, SC.replay(G.D, { ...s, auto: false, inputs: [[0, 'c', 0], [3, 'c', 1], [6, 'c', 2]] }).hash, '같은 기록 → 같은 결과');
 });
+
+test('3나라: 9단계 하나 합류 · 12단계 늑대 포섭 · 24단계 호랑이 포섭(속성별 말 걸기) · 레벨 상한은 진행과 함께 오른다', async () => {
+  const env = mkenv(), a = await signup(env); await env.DB.prepare('UPDATE units SET lv=20 WHERE account=?').bind(a.account).run();
+  const go = async (stage, cleared, party) => { await env.DB.prepare('UPDATE progress SET cleared=? WHERE account=?').bind(cleared, a.account).run(); if (party) await call(env, 'POST', '/party', { token: a.access, body: { party } }); const s = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage } })).body; return s; };
+  let s = await go(9, 8), c = await clear(env, a, s); assert.equal(c.body.win, true, JSON.stringify(c.body)); assert.deepEqual(c.body.joined, ['u_kid1']);
+  // 12단계: 늑대(받치기) → 번쩍(세모 아내)이 말을 건다
+  s = await go(12, 11); let n = null; for (let k = 0; k < 600 && n == null; k++) { if (!SC.replay(G.D, { stage: 12, seed: s.seed, party: s.party, auto: true, inputs: [[k, 'p']] }).error) n = k; } assert.ok(n != null, '늑대에게 말 걸 순간'); c = await clear(env, a, s, { inputs: [[n, 'p']] });
+  assert.equal(c.body.recruited, true, JSON.stringify(c.body)); assert.ok(c.body.profile.units.u_wolf, '늑대 아저씨 합류');
+  // 24단계: 호랑이(돌보기) → 받치기(네모 아빠·엄마·막둥이)가 말을 건다. 번쩍·돌보기만으론 불가
+  s = await go(24, 23); let m = null; for (let k = 0; k < 600 && m == null; k++) { if (!SC.replay(G.D, { stage: 24, seed: s.seed, party: s.party, auto: true, inputs: [[k, 'p']] }).error) m = k; } assert.ok(m != null); c = await clear(env, a, s, { inputs: [[m, 'p']] }); assert.equal(c.body.recruited, true, JSON.stringify(c.body)); assert.ok(c.body.profile.units.u_tiger);
+  assert.equal(G.SC.lvCap(G.D, 0), 10); assert.equal(G.SC.lvCap(G.D, 6), 10); assert.equal(G.SC.lvCap(G.D, 12), 12); assert.equal(G.SC.lvCap(G.D, 36), 20);
+  assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 36 } })).body.error, 'stage_locked');
+});

@@ -147,15 +147,16 @@
   GF.screen('xmap', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '아기돼지 마을', '1나라 · 앞부분');
-      const list = el('div', 'ex-path', r);
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); const curN = Math.floor(Math.min(S.cleared, D.stages.length - 1) / 12), NA = (D.nations || [])[curN]; head(r, NA ? NA.name : '원정 길', NA ? NA.sub : '');
+      const list = el('div', 'ex-path', r); let curRow = null;
       D.stages.forEach((st, i) => {
-        const open = i <= S.cleared, done = i < S.cleared, row = el('button', 'ex-node' + (open ? '' : ' locked') + (done ? ' done' : '') + (st.boss ? ' boss' : ''), list);
-        el('b', 'ex-no', row, String(st.id)); const tx = el('span', 'ex-ntx', row); el('b', '', tx, st.name + (st.boss ? ' · 포섭' : '')); el('small', '', tx, done ? '★'.repeat(S.stars[st.id] || 1) : (open ? '도전!' : '잠김'));
+        if (D.nations && i % 12 === 0 && D.nations[i / 12]) { const nn = D.nations[i / 12]; el('div', 'ex-nation' + (i > S.cleared ? ' dim' : ''), list, `<b>${nn.name}</b><small>${nn.sub}</small>`); }
+        const open = i <= S.cleared, done = i < S.cleared, row = el('button', 'ex-node' + (open ? '' : ' locked') + (done ? ' done' : '') + (st.boss || st.mid ? ' boss' : ''), list); if (i === Math.min(S.cleared, D.stages.length - 1)) curRow = row;
+        el('b', 'ex-no', row, String(st.id)); const tx = el('span', 'ex-ntx', row); el('b', '', tx, st.name + (st.boss ? ' · 포섭' : st.mid ? ' · 대장' : '')); el('small', '', tx, done ? '★'.repeat(S.stars[st.id] || 1) : (open ? '도전!' : '잠김'));
         const en = el('span', 'ex-nen', row); Array.from(new Set(st.enemies.map((e) => e.el))).forEach((e) => { en.insertAdjacentHTML('beforeend', elIcon(e)); });
         row.onclick = () => { if (!open) { UK.toast('앞 단계를 먼저 깨요', r); return; } GF.sfx('pick'); ready(r, st); };
       });
-      back(r, 'xhome');
+      back(r, 'xhome'); if (curRow) setTimeout(() => { list.scrollTop = Math.max(0, curRow.offsetTop - 140); }, 30);
     },
   });
   function ready(r, st) {      // 출전 확인: 적 구성과 상성, 편성 바로가기
@@ -175,7 +176,7 @@
       const draw = () => {
         slots.innerHTML = ''; S.party.forEach((id, i) => { const u = $(id), c = el('button', 'ex-slot' + (sel && sel === id ? ' sel' : ''), slots); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el) + '<em>' + ROLEICON(u.role) + '</em>'); c.onclick = () => { if (sel && sel !== id) { const j = S.party.indexOf(sel); if (j >= 0) { S.party[j] = id; } S.party[i] = sel; save(); partySync(); sel = null; GF.sfx('drop'); draw(); } else { sel = id; draw(); } }; });
         info.innerHTML = ''; const u = sel && $(sel);
-        if (u) { const lv = S.units[sel].lv, c = cost(lv), can = S.gold >= c && lv < D.bal.lvCap; el('b', '', info, `${u.name} ${'★'.repeat(u.grade)} Lv ${lv} · ${D.role[u.role].skill}`); el('small', '', info, `${D.el[u.el].family} ${D.el[u.el].name} · 전투력 ${Math.round(kOf(sel) * 100)}`); UK.btn({ text: lv >= D.bal.lvCap ? '최고 레벨' : '레벨업 🪙' + c, cls: (can ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (!can) { UK.toast(lv >= D.bal.lvCap ? '이 슬라이스의 최고 레벨이에요' : '금화가 모자라요. 전투로 모아요', r); return; } if (await levelUp(sel, c)) { GF.sfx('star'); draw(); drawGrid(); } } }, info); } else el('small', '', info, '카드를 눌러 보세요');
+        if (u) { const lv = S.units[sel].lv, c = cost(lv), can = S.gold >= c && lv < SC.lvCap(D, S.cleared); el('b', '', info, `${u.name} ${'★'.repeat(u.grade)} Lv ${lv} · ${D.role[u.role].skill}`); el('small', '', info, `${D.el[u.el].family} ${D.el[u.el].name} · 전투력 ${Math.round(kOf(sel) * 100)}`); UK.btn({ text: lv >= SC.lvCap(D, S.cleared) ? '레벨 상한 ' + lv : '레벨업 🪙' + c, cls: (can ? 'gold' : 'ghost') + ' sm', onclick: async () => { if (!can) { UK.toast(lv >= SC.lvCap(D, S.cleared) ? '지금은 여기까지예요. 다음 단계를 깨면 상한이 올라요' : '금화가 모자라요. 전투로 모아요', r); return; } if (await levelUp(sel, c)) { GF.sfx('star'); draw(); drawGrid(); } } }, info); } else el('small', '', info, '카드를 눌러 보세요');
         el('div', 'ex-pw', info, '원정대 전투력 ' + power(S.party));
       };
       const drawGrid = () => { grid.innerHTML = ''; D.units.forEach((u) => { const own = !!S.units[u.id], c = el('button', 'ex-card' + (own ? '' : ' dim') + (sel === u.id ? ' sel' : '') + (S.party.includes(u.id) ? ' inparty' : ''), grid); c.appendChild(art(u, 'xs')); c.insertAdjacentHTML('beforeend', elIcon(u.el)); el('b', '', c, u.name.replace(/\(.*\)/, '')); el('small', '', c, own ? '★'.repeat(u.grade) + ' Lv' + S.units[u.id].lv : (u.route === 'gacha' ? '모집' : u.route === 'story' ? '이야기' : '포섭')); c.onclick = () => { if (!own) { UK.toast('아직 만나지 못한 친구예요 · ' + ({ gacha: '동료 모집에서', story: '이야기를 따라가면', recruit: '마음을 열어 주면' })[u.route], r); return; } sel = u.id; draw(); drawGrid(); }; }); };
@@ -206,24 +207,24 @@
       const drawReady = () => { core.A.forEach((u, i) => { const rd = core.ready(u) && !S.autoSkill; cardsP[i].classList.toggle('rd', rd); if (!rd) cardsP[i].classList.remove('queued'); }); };
       const pop = (c, text, cls) => { const f = el('i', 'ex-pop ' + (cls || ''), c, text); setTimeout(() => f.remove(), 900); };
       let stopped = false, persuaded = false, askedOnce = false, finished = false; const KIND = { attack: '공격', skill: '스킬', aoe: '전체 공격', heal: '치유', buff: '응원' };
-      const boss = st.boss ? core.B[1] : null;
-      const canPersuade = () => core.A.some((u) => u.hp > 0 && beats(u.el, 'flash'));
+      const bi = st.enemies.findIndex((e) => e.lock > 0), boss = bi >= 0 ? core.B[bi] : null, needEl = boss ? Object.keys(D.el).find((e) => beats(e, boss.el)) : null;
+      const canPersuade = () => !!boss && !!st.recruit && core.A.some((u) => u.hp > 0 && beats(u.el, boss.el));
       const persuadeUI = () => {
         pbtn.innerHTML = ''; if (!boss || persuaded || boss.hp <= 0 || boss.hp / boss.max > D.bal.persuadeAt) return; const ok = canPersuade();
-        UK.btn({ text: '말 걸기', icon: 'heart', cls: (ok ? 'pink' : 'ghost') + ' block', onclick: () => { if (!ok) { UK.toast('돌보기(◯) 친구가 파티에 필요해요', r); return; } doPersuade(); } }, pbtn);
-        if (!askedOnce) { askedOnce = true; logEl.textContent = '바람 친구가 주춤해요. ' + (ok ? '말을 걸어 볼까?' : '돌보기(◯) 친구가 있어야 해요.'); }
+        UK.btn({ text: '말 걸기', icon: 'heart', cls: (ok ? 'pink' : 'ghost') + ' block', onclick: () => { if (!ok) { UK.toast(D.el[needEl].name + '(' + D.el[needEl].icon + ') 친구가 파티에 필요해요', r); return; } doPersuade(); } }, pbtn);
+        if (!askedOnce) { askedOnce = true; logEl.textContent = boss.name + '(이)가 주춤해요. ' + (ok ? '말을 걸어 볼까?' : D.el[needEl].name + '(' + D.el[needEl].icon + ') 친구가 있어야 해요.'); }
       };
-      const doPersuade = () => { stopped = true; persuaded = true; inputs.push([steps, 'p']); pbtn.innerHTML = ''; GF.tale.play(D.story.recruit.u_wind, r, () => { if (!REMOTE) { S.units.u_wind = S.units.u_wind || { lv: 1 }; S.flags.recruited = 1; } boss.hp = 0; boss.down = true; hp(); win(true); }, { bg: 'hill' }); };
+      const doPersuade = () => { stopped = true; persuaded = true; inputs.push([steps, 'p']); pbtn.innerHTML = ''; GF.tale.play(D.story.recruit[st.recruit], r, () => { if (!REMOTE) { S.units[st.recruit] = S.units[st.recruit] || { lv: 1 }; S.flags.recruited = 1; } boss.hp = 0; boss.down = true; hp(); win(true); }, { bg: 'hill' }); };
       const finish = (won) => { if (finished) return; finished = true; stopped = true; if (won) win(false); else lose(); };
       const win = (recruited) => {
         finished = true; stopped = true;
         if (REMOTE) {      // 서버가 같은 기록으로 전투를 다시 돌려 판정·보상을 정한다(WP4)
-          stageClearRemote(srv, inputs, auto0).then((res) => { if (!res.win) { UK.toast('전투 기록이 서버와 달라요. 다시 도전해 주세요', r); lose(); return; } applyProfile(res.profile); bar(); GF.sfx('celebrate'); done(res.stars, res.reward.gold, res.reward.gems, res.recruited, res.joined[0] && res.joined[0] !== 'u_wind' ? res.joined[0] : null); }).catch(() => { UK.toast('서버에 연결하지 못했어요. 잠시 뒤 다시 해 주세요', r); GF.replace('xmap'); }); return;
+          stageClearRemote(srv, inputs, auto0).then((res) => { if (!res.win) { UK.toast('전투 기록이 서버와 달라요. 다시 도전해 주세요', r); lose(); return; } applyProfile(res.profile); bar(); GF.sfx('celebrate'); done(res.stars, res.reward.gold, res.reward.gems, res.recruited, res.joined.find((id) => id !== st.recruit) || null); }).catch(() => { UK.toast('서버에 연결하지 못했어요. 잠시 뒤 다시 해 주세요', r); GF.replace('xmap'); }); return;
         }
         const downs = core.A.filter((u) => u.hp <= 0).length, stars = recruited ? 3 : downs === 0 ? 3 : downs <= 2 ? 2 : 1, first = S.cleared < st.id, rw = SC.reward(D, st, first); S.gold += rw.gold; S.gems += rw.gems; if (first) S.cleared = st.id; S.stars[st.id] = Math.max(S.stars[st.id] || 0, stars); let joinId = null; if (st.join && first && !S.units[st.join]) { S.units[st.join] = { lv: 1 }; joinId = st.join; } save(); bar(); GF.sfx('celebrate'); done(stars, rw.gold, rw.gems, recruited, joinId);
       };
       const done = (stars, gold, gems, recruited, joinId) => {
-        const after = () => { const sc = UK.modal({ parent: r, title: recruited ? '포섭 성공!' : '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('div', 'ex-stars', sh, '★'.repeat(stars) + '☆'.repeat(3 - stars)); el('p', 'ex-rw', sh, `🪙 +${gold}${gems ? ` · 💎 +${gems}` : ''}${recruited ? ' · 새 친구: 바람 친구' : ''}`); if (st.boss && !recruited) el('p', 'ex-tip', sh, '바람 친구가 쓰러졌어요… 다음엔 체력이 줄었을 때 말을 걸어 봐요.');
+        const after = () => { const sc = UK.modal({ parent: r, title: recruited ? '포섭 성공!' : '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('div', 'ex-stars', sh, '★'.repeat(stars) + '☆'.repeat(3 - stars)); el('p', 'ex-rw', sh, `🪙 +${gold}${gems ? ` · 💎 +${gems}` : ''}${recruited ? ' · 새 친구: ' + $(st.recruit).name : ''}`); if (st.boss && st.recruit && !recruited) el('p', 'ex-tip', sh, (boss ? boss.name : '친구') + '(이)가 쓰러졌어요… 다음엔 체력이 줄었을 때 말을 걸어 봐요.');
           const a = el('div', 'acts', sh); const nxt = D.stages[st.id]; if (nxt) UK.btn({ text: '다음 단계', icon: 'next', cls: 'green', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); UK.btn({ text: '편성·육성', cls: 'sky sm', onclick: () => { sc.remove(); GF.replace('xparty', { from: 'xmap' }); } }, a); UK.btn({ text: '원정 길', cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xmap'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
         if (joinId) setTimeout(() => GF.tale.play(D.story.join[joinId], r, () => { UK.toast('새 친구: ' + $(joinId).name, r); after(); }, { bg: 'hill' }), 500); else setTimeout(after, 500);
       };
@@ -237,11 +238,11 @@
       };
       const loop = () => {
         if (!r.isConnected || stopped || finished) return;
-        if (boss && !persuaded && !askedOnce && boss.hp > 0 && boss.hp / boss.max <= D.bal.persuadeAt) { persuadeUI(); stopped = true; const cont = UK.btn({ text: '계속 싸우기', cls: 'ghost sm', onclick: () => { cont.remove(); core.release('B', 1); inputs.push([steps, 'r']); stopped = false; setTimeout(loop, 200); } }, pbtn); return; }
+        if (boss && !persuaded && !askedOnce && boss.hp > 0 && boss.hp / boss.max <= D.bal.persuadeAt) { persuadeUI(); stopped = true; const cont = UK.btn({ text: '계속 싸우기', cls: 'ghost sm', onclick: () => { cont.remove(); core.release('B', bi); inputs.push([steps, 'r']); stopped = false; setTimeout(loop, 200); } }, pbtn); return; }
         if (steps >= SC.MAX_STEPS) { finish(false); return; } const ev = core.step(); if (!ev) { finish(core.win); return; } steps++; play(ev); if (ev.over) { setTimeout(() => finish(ev.win), 700 / S.speed); return; } setTimeout(loop, 520 / S.speed);
       };
       hp(); drawReady();
-      const begin = () => { if (st.boss && !S.flags.stage6pre && !(navigator.webdriver && !/[?&]story=1/.test(location.search))) { S.flags.stage6pre = 1; save(); GF.tale.play(D.story.stage6_pre, r, () => setTimeout(loop, 500), { bg: 'hill' }); } else setTimeout(loop, 700); };
+      const begin = () => { const pre = D.story.pre && D.story.pre[st.id], fk = st.id === 6 ? 'stage6pre' : 'pre' + st.id; if (pre && !S.flags[fk] && !(navigator.webdriver && !/[?&]story=1/.test(location.search))) { S.flags[fk] = 1; save(); GF.tale.play(pre, r, () => setTimeout(loop, 500), { bg: 'hill' }); } else setTimeout(loop, 700); };
       begin();
       EXP.debug.core = core; EXP.debug.persuade = () => { if (boss && !persuaded) { stopped = true; doPersuade(); } };
       GF.backHook = () => { stopped = true; GF.replace('xmap'); return true; };

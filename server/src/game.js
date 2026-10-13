@@ -50,7 +50,7 @@ export const levelCost = (lv) => Math.round(D.bal.costBase * Math.pow(D.bal.cost
 export async function levelUp(env, account, unitId, requestId, now = Date.now()) {
   const db = env.DB; if (!UNIT[unitId]) throw new HttpError(400, 'bad_unit');
   const done = await first(db, "SELECT 1 AS x FROM ledger WHERE account=? AND kind='levelup' AND ref=?", account, requestId); if (done) return { ok: true, replay: true, ...(await walletUnit(db, account, unitId)) };
-  const u = await first(db, 'SELECT lv FROM units WHERE account=? AND unit_id=?', account, unitId); if (!u) throw new HttpError(409, 'not_owned'); if (u.lv >= D.bal.lvCap) throw new HttpError(409, 'max_level');
+  const u = await first(db, 'SELECT lv FROM units WHERE account=? AND unit_id=?', account, unitId); if (!u) throw new HttpError(409, 'not_owned'); const cl = await first(db, 'SELECT cleared FROM progress WHERE account=?', account); if (u.lv >= SC.lvCap(D, cl.cleared)) throw new HttpError(409, 'max_level');
   const w = await first(db, 'SELECT gold,ver FROM wallet WHERE account=?', account), c = levelCost(u.lv); if (w.gold < c) throw new HttpError(402, 'insufficient_gold');
   const guard = '(SELECT last_req FROM wallet WHERE account=?)=?';   // 내 요청의 지갑 갱신이 적용됐을 때만 나머지를 반영
   const res = await db.batch([

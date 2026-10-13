@@ -44,3 +44,5 @@
 .ex-plist { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
 .ex-prod { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 2px solid #ecd9a8; border-radius: 14px; padding: 8px 10px; }
 .ex-prod small { display: block; opacity: .75; font-weight: 700; } .ex-ads .uk-btn { margin: 6px 6px 0 0; }
+
+.ex-nation { flex: none; margin: 8px 2px 0; padding: 6px 12px; border-radius: 14px; background: #ffe9a8; font: 900 14px/1.2 var(--uk-font); color: #8A5A00; display: flex; justify-content: space-between; align-items: baseline; } .ex-nation small { font-weight: 700; opacity: .8; } .ex-nation.dim { opacity: .55; }

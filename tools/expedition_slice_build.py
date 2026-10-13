@@ -59,3 +59,6 @@ if os.path.exists('data/expedition_odds.json'): GACHA['effective'] = json.load(o
 D = dict(version=1, note='[제안] ⑪ 슬라이스 데이터. tools/expedition_slice_build.py 로 생성', el=EL, role=ROLE, units=UNITS, stages=STAGES, nations=NATIONS, dungeon=DUNGEON, loot=LOOT_CODES, story=STORY, gacha=GACHA, bal=BAL, reserve=RESERVE)
 json.dump(D, open('data/expedition_slice.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('units', len(UNITS), 'stages', len(STAGES), 'chars used', sorted({u['art'] for u in UNITS if u['art']}))
+
+import subprocess, sys as _s
+r = subprocess.run([_s.executable, 'tools/gem_budget.py'], capture_output=True, text=True, encoding='utf-8'); print(r.stdout.strip() or r.stderr.strip()); assert r.returncode == 0, '반짝석 연간 합계 점검 실패(tools/gem_budget.py)'   # 무료 반짝석 연간 합계 표·상한 단언

@@ -275,3 +275,11 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-scenechip { left: auto !important; right: 10px; bottom: 54px !important; background: #FFF3C4 !important; color: #8A5A00 !important; }
 .h2-scenebn { position: absolute; left: 12px; right: 12px; top: 8px; z-index: 45; background: rgba(255,255,255,.95); border-radius: 14px; padding: 6px 10px; text-align: center; font: 800 12px/1.3 var(--uk-font); color: #6b4a00; transition: opacity .5s; box-shadow: 0 2px 8px rgba(0,0,0,.2); pointer-events: none; }
 .h2-fam { z-index: 44; }
+
+/* 세트 장면 무대(A11): 뒤 가구는 흐리게, 가족은 크게 반원으로 */
+.h2-room.scene .h2-it, .h2-room.scene .h2-anchor, .h2-room.scene .h2-char:not(.h2-fam), .h2-room.scene .h2-guest { opacity: .18 !important; filter: blur(1.5px) !important; transition: opacity .4s; }
+.h2-stage-bg { position: absolute; inset: 0; z-index: 43; background: radial-gradient(ellipse at 50% 70%, rgba(255,246,214,.92) 0 38%, rgba(255,246,214,.55) 70%, rgba(255,246,214,.2)); border-radius: inherit; transition: opacity .5s; pointer-events: none; }
+.h2-fam { z-index: 46; filter: drop-shadow(0 4px 3px rgba(0,0,0,.25)); }
+.h2-scenebn { z-index: 47; }
+.h2-toast-top { top: 6px !important; bottom: auto !important; z-index: 400 !important; }
+.h2-alb.th { padding-top: 6px; } .h2-albth { width: 100%; height: 96px; object-fit: cover; object-position: center 40%; border-radius: 9px; display: block; margin-bottom: 4px; background: #eee; } .h2-albbadge { position: absolute; left: 8px; top: 8px; font-size: 16px; background: rgba(255,255,255,.9); border-radius: 50%; width: 24px; height: 24px; line-height: 24px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.25); }

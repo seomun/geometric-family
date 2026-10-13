@@ -1,4 +1,4 @@
-# RC10 노트 (1.0.0-rc10, versionCode 13) — 우리 집 2.0 (D24)
+# RC11 노트 (1.0.0-rc11, versionCode 14) — 우리 집 2.0 (D24)
 
 > APK 10종(테스트 키), 웹판 갱신. 기획 `26_HOUSING2.md`(§14 개정), 시트 `notes/snapshots/housing_sheet.png`·`housing_unity.png`.
 
@@ -16,3 +16,6 @@ housing_sim(성인 Lv30 = 153일 ≥ 120, 소진 전 도달 · 유아 Lv20 = 29�
 
 ## 다음
 허브 QA → ⑪ 재개(D23·D25: 서버·광고+아이템 수익 반영).
+
+## RC11 추가 (1.0.0-rc11, versionCode 14)
+- 방마다 허용 주제(theme)로 가구 배치 제한(유아 욕실 = 씻기만), 방이 열리면 보관 가구를 놓음(Room.sweep), 집 레벨 T 계수 7.8, housing_sim 「방 주제 밖 가구 0」 단언.

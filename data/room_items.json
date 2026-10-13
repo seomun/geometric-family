@@ -11840,6 +11840,382 @@
    "cls": "mid",
    "theme": "deco",
    "line": "담요를 덮고 순해진 구렁이 인형."
+  },
+  {
+   "no": 351,
+   "id": "x_driedpersimmon",
+   "name": "곶감 꾸러미",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 147,
+    "hint": "기하학 원정대 · 147단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 352,
+   "id": "x_tigerdoll",
+   "name": "호랑이 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 56,
+   "h": 48,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐅",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 150,
+    "hint": "기하학 원정대 · 150단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 353,
+   "id": "x_cowbell",
+   "name": "외양간 방울",
+   "set": "exp",
+   "room": "yard",
+   "w": 42,
+   "h": 48,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🔔",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 153,
+    "hint": "기하학 원정대 · 153단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco"
+  },
+  {
+   "no": 354,
+   "id": "x_tigerrug",
+   "name": "호랑이 무늬 방석",
+   "set": "exp",
+   "room": "yard",
+   "w": 60,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🟧",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [
+    "sit"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 156,
+    "hint": "기하학 원정대 · 156단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 355,
+   "id": "x_redhat",
+   "name": "빨간 모자",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 159,
+    "hint": "기하학 원정대 · 159단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 356,
+   "id": "x_basket",
+   "name": "심부름 바구니",
+   "set": "exp",
+   "room": "yard",
+   "w": 54,
+   "h": 50,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 162,
+    "hint": "기하학 원정대 · 162단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 357,
+   "id": "x_woodsign",
+   "name": "숲길 표지판",
+   "set": "exp",
+   "room": "yard",
+   "w": 46,
+   "h": 64,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪧",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 165,
+    "hint": "기하학 원정대 · 165단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 358,
+   "id": "x_wolfdoll",
+   "name": "늑대 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 54,
+   "h": 52,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 168,
+    "hint": "기하학 원정대 · 168단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 359,
+   "id": "x_puppet",
+   "name": "나무 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 48,
+   "h": 62,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪆",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 171,
+    "hint": "기하학 원정대 · 171단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 360,
+   "id": "x_bluestar",
+   "name": "파란 요정 별",
+   "set": "exp",
+   "room": "yard",
+   "w": 46,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "⭐",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 174,
+    "hint": "기하학 원정대 · 174단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco"
+  },
+  {
+   "no": 361,
+   "id": "x_workbench",
+   "name": "제페토 작업대",
+   "set": "exp",
+   "room": "yard",
+   "w": 60,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🔨",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [
+    "sit"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 177,
+    "hint": "기하학 원정대 · 177단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 362,
+   "id": "x_foxdoll",
+   "name": "여우 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 52,
+   "h": 54,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🦊",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 180,
+    "hint": "기하학 원정대 · 180단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
   }
  ],
  "meTypes": {

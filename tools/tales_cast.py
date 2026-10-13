@@ -21,7 +21,7 @@ CAST = {
     'axe': [('나무꾼', 'nemo_dad', 'lead'), ('산신령', 'dong_dad', 'helper'), ('욕심쟁이 이웃', 'nemo_mom', 'funny')],
     'sun': [('누나(해님)', 'kid1', 'lead'), ('동생(달님)', 'kid3', 'lead'), ('떡 팔러 간 엄마', 'nemo_mom', 'helper'), ('호랑이 → 바람 호랑이', O('바람 호랑이(가족 밖, 소리·그림자)'), 'villain')],
     'ant': [('개미', 'nemo_mom', 'lead'), ('베짱이', 'semo_h', 'funny'), ('지켜보는 이웃', 'dong_dad', 'helper'), ('열매를 함께 모으는 막내 개미(유아 앱)', 'baby', 'helper', 'kid')],
-    'pino': [('제페토(목수)', 'nemo_dad', 'lead'), ('피노키오(나무 인형)', 'baby', 'funny'), ('파란 요정', O('요정(art.fairy)'), 'helper')],
+    'pino': [('제페토(목수)', 'nemo_dad', 'lead'), ('피노키오(나무 인형)', 'baby', 'funny'), ('파란 요정', O('요정(art.fairy)'), 'helper'), ('여우(사기꾼 흉내, 순한 판)', O('여우(가족 밖, 사기꾼 흉내만 내던 순한 판)'), 'villain')],      # B23 포섭 자리(가족 밖 악역, 허브 방침)
     'jack': [('잭', 'kid3', 'lead'), ('잭의 엄마', 'nemo_mom', 'helper'), ('구름 위 거인', O('구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)'), 'villain'), ('잔치 손님', 'semo_h', 'helper')],
     'gyeonwoo': [('견우', 'semo_h', 'lead'), ('직녀', 'semo_w', 'lead'), ('오작교를 놓는 까치와 까마귀', O('까치 떼(가족 밖)'), 'helper'), ('둘을 갈라놓는 하늘 어른', O('하늘 어른(가족 밖, 목소리·순한 판)'), 'villain')],
     'ureng': [('혼자 농사짓는 총각', 'semo_h', 'lead'), ('우렁 각시', 'semo_w', 'helper'), ('각시를 탐내는 원님', O('욕심쟁이 원님(가족 밖, 목소리·순한 판)'), 'villain')],

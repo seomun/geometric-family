@@ -10,6 +10,7 @@ _A = [  # (id, 이름, 문구, k, n, 칭호)
     ('a07', '6나라 완주', '72단계를 깨요', 'clear', 72, '원정 길의 걸음꾼'),
     ('a19', '끝까지 걷기', '108단계를 모두 깨요', 'clear', 108, '은하수 너머의 주인'),
     ('a20', '까치 숲까지', '144단계를 모두 깨요', 'clear', 144, '은혜 갚는 원정대'),
+    ('a21', '인형 마을까지', '180단계를 모두 깨요', 'clear', 180, '별빛 원정대'),
     ('a08', '친구 늘리기', '동료 10명을 모아요', 'units', 10, '친구 많은 도형'),
     ('a09', '도감 박사', '동료 20명을 모아요', 'units', 20, '도감 박사'),
     ('a10', '마음 여는 말', '포섭한 친구 3명', 'recruit', 3, None),
@@ -23,5 +24,5 @@ _A = [  # (id, 이름, 문구, k, n, 칭호)
     ('a18', '꾸준한 발걸음', '출석 7일', 'att', 7, '꾸준한 친구'),
 ]
 BAL['ach'] = [dict(id=i, name=n, t=t, k=k, n=c, title=ti) for i, n, t, k, c, ti in _A]
-assert len(BAL['ach']) == 20 and len({a['id'] for a in BAL['ach']}) == 20
+assert len(BAL['ach']) == 21 and len({a['id'] for a in BAL['ach']}) == 21
 print('업적', len(BAL['ach']), '칭호', sum(1 for a in BAL['ach'] if a['title']))

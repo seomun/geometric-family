@@ -373,6 +373,14 @@
     "kind": "helper",
     "family": "outside",
     "only": null
+   },
+   {
+    "role": "여우(사기꾼 흉내, 순한 판)",
+    "adult": "여우(가족 밖, 사기꾼 흉내만 내던 순한 판)",
+    "kid": "여우(가족 밖, 사기꾼 흉내만 내던 순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
    }
   ],
   "jack": [
@@ -1236,6 +1244,12 @@
      "role": "파란 요정",
      "who": "요정(art.fairy)",
      "kind": "helper",
+     "family": "outside"
+    },
+    {
+     "role": "여우(사기꾼 흉내, 순한 판)",
+     "who": "여우(가족 밖, 사기꾼 흉내만 내던 순한 판)",
+     "kind": "villain",
      "family": "outside"
     }
    ],

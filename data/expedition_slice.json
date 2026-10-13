@@ -1759,6 +1759,78 @@
    "sub": "3나라 · 항아리와 잔치"
   }
  ],
+ "dungeon": {
+  "unlock": 3,
+  "perDay": 3,
+  "kMul": 0.9,
+  "tiers": [
+   0.5,
+   0.75,
+   1.0
+  ],
+  "tierNames": [
+   "쉬움",
+   "보통",
+   "어려움"
+  ],
+  "goldMul": [
+   0.6,
+   1.0,
+   1.5
+  ],
+  "frag": [
+   2,
+   4,
+   7
+  ],
+  "goldDay": 1.7,
+  "idleCapH": 8,
+  "idleRate": 0.35,
+  "idleMinMin": 10,
+  "days": [
+   {
+    "day": 0,
+    "name": "월요일 금화 광산",
+    "kind": "gold"
+   },
+   {
+    "day": 1,
+    "name": "화요일 번쩍 훈련장",
+    "kind": "frag",
+    "el": "flash"
+   },
+   {
+    "day": 2,
+    "name": "수요일 받치기 훈련장",
+    "kind": "frag",
+    "el": "support"
+   },
+   {
+    "day": 3,
+    "name": "목요일 돌보기 훈련장",
+    "kind": "frag",
+    "el": "care"
+   },
+   {
+    "day": 4,
+    "name": "금요일 금화 광산",
+    "kind": "gold"
+   },
+   {
+    "day": 5,
+    "name": "토요일 아무 친구 훈련장",
+    "kind": "frag",
+    "el": "any",
+    "mul": 1.5
+   },
+   {
+    "day": 6,
+    "name": "일요일 큰 잔치",
+    "kind": "both",
+    "mul": 1.0
+   }
+  ]
+ },
  "story": {
   "prologue": [
    {

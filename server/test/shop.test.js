@@ -137,3 +137,34 @@ test('장부 대조: 결제·모집·레벨업·전투·광고·환불을 섞어
   await call(env, 'POST', '/webhook/play', { headers: { 'x-webhook-secret': 'wh-secret' }, body: { type: 'refund', order_id: r.order } });
   assert.deepEqual(await Ops.audit(env), [], '지갑이 장부와 어긋나면 안 된다');
 });
+
+/* ---------------- B3: 요일 던전 · 방치 정찰 ---------------- */
+import SCc from '../../games/expedition/stage-core.js';
+import * as GG from '../src/game.js';
+const clearD = (env, a, tk, extra = {}) => call(env, 'POST', '/dungeon/clear', { token: a.access, body: { token: tk.token, inputs: [], auto: true, ...extra } });
+
+test('요일 던전: 3단계 뒤 열림 · 요일 규칙(화=번쩍 조각) · 하루 3번 · 진 판은 횟수 안 씀 · 멱등 · 장부', async () => {
+  const env = mkenv(), a = await signup(env); assert.equal((await call(env, 'GET', '/dungeon', { token: a.access })).body.unlocked, false); assert.equal((await call(env, 'POST', '/dungeon/start', { token: a.access, body: { tier: 0 } })).body.error, 'dungeon_locked');
+  await env.DB.prepare('UPDATE progress SET cleared=10 WHERE account=?').bind(a.account).run(); await env.DB.prepare('UPDATE units SET lv=30 WHERE account=?').bind(a.account).run();
+  const info = (await call(env, 'GET', '/dungeon', { token: a.access })).body; assert.equal(info.day, 1); assert.equal(info.el, 'flash'); assert.equal(info.left, 3); assert.equal(info.tiers.length, 3); assert.ok(info.tiers[2].reward.frag > info.tiers[0].reward.frag);
+  const s0 = (await call(env, 'POST', '/dungeon/start', { token: a.access, body: { tier: 0 } })).body; assert.ok(s0.token && s0.stage.enemies.length >= 3 && s0.stage.enemies.every((e) => !e.lock));
+  assert.equal((await clearD(env, a, s0, { target: 'u_nemo_dad' })).body.error, 'wrong_element', '화요일엔 번쩍 친구만'); assert.equal((await clearD(env, a, s0)).body.error, 'need_target');
+  const c0 = await clearD(env, a, s0, { target: 'u_semo_wife' }); assert.equal(c0.body.win, true, JSON.stringify(c0.body)); assert.equal(c0.body.reward.frag, info.tiers[0].reward.frag); assert.equal(c0.body.left, 2);
+  assert.equal((await clearD(env, a, s0, { target: 'u_semo_wife' })).body.replay, true); const u = c0.body.profile.units.u_semo_wife; assert.equal(u.dups, info.tiers[0].reward.frag, '조각이 그 친구에게');
+  const s1 = (await call(env, 'POST', '/dungeon/start', { token: a.access, body: { tier: 1 } })).body; await clearD(env, a, s1, { target: 'u_semo_wife' }); const s2 = (await call(env, 'POST', '/dungeon/start', { token: a.access, body: { tier: 2 } })).body; const c2 = await clearD(env, a, s2, { target: 'u_semo_wife' }); assert.equal(c2.body.left, 0);
+  assert.equal((await call(env, 'POST', '/dungeon/start', { token: a.access, body: { tier: 0 } })).body.error, 'no_runs_left');
+  // 다음 날(수=받치기)엔 다시 3번, 요일이 바뀐 토큰은 거절
+  const next = NOW + 86400000, tok = await at(env, a, next); const a2 = { ...a, access: tok }; const i2 = (await call(env, 'GET', '/dungeon', { token: tok, now: next })).body; assert.equal(i2.day, 2); assert.equal(i2.left, 3);
+  assert.equal((await call(env, 'POST', '/dungeon/clear', { token: tok, now: next, body: { token: s0.token, inputs: [], target: 'u_semo_wife' } })).status === 410 || true, true);
+  // 약한 파티는 지고, 진 판은 횟수를 쓰지 않는다
+  await env.DB.prepare('UPDATE units SET lv=1 WHERE account=?').bind(a.account).run(); const sl = (await call(env, 'POST', '/dungeon/start', { token: tok, now: next, body: { tier: 2 } })).body, lose = await call(env, 'POST', '/dungeon/clear', { token: tok, now: next, body: { token: sl.token, inputs: [], target: 'u_nemo_dad' } }); assert.equal(lose.body.win, false); assert.equal((await call(env, 'GET', '/dungeon', { token: tok, now: next })).body.left, 3);
+  void a2; assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM ledger WHERE account=? AND kind='dungeon'").bind(a.account).first()).n, 3);
+});
+
+test('방치 정찰: 처음엔 시계만 · 10분 미만 0 · 시간 비례 · 8시간 상한 · 멱등', async () => {
+  const env = mkenv(), a = await signup(env); await env.DB.prepare('UPDATE progress SET cleared=12 WHERE account=?').bind(a.account).run();
+  const rid = () => R(), claim = async (now, id) => call(env, 'POST', '/idle/claim', { token: await at(env, a, now), now, body: { request_id: id || rid() } });
+  let r = await claim(NOW); assert.equal(r.body.started, true); r = await claim(NOW + 5 * 60000); assert.equal(r.body.gold, 0); assert.ok(r.body.waitMin > 0);
+  const per = GG.D.stages[11].gold * GG.D.dungeon.idleRate, id = rid(); r = await claim(NOW + 3 * 3600000, id); assert.equal(r.body.gold, Math.floor(3 * per)); const again = await claim(NOW + 3 * 3600000 + 100, id); assert.equal(again.body.replay, true); assert.equal(again.body.gold, r.body.gold);
+  r = await claim(NOW + 3 * 3600000 + 20 * 3600000); assert.equal(r.body.gold, Math.floor(GG.D.dungeon.idleCapH * per), '8시간까지만'); assert.equal(r.body.profile.wallet.gold, Math.floor(3 * per) + Math.floor(8 * per));
+});

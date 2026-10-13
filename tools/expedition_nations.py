@@ -112,3 +112,8 @@ NATIONS = [dict(id=1, name='아기돼지 마을', sub='1나라 · 바람과 늑�
 
 # 육성 깊이(B2): 스킬 레벨 · 각성 · 등급 승급 · 장비 4칸. 규칙은 games/expedition/stage-core.js upgrade()
 BAL['grow'] = dict(skillMax=5, skillMul=0.10, skillCost=[150, 400, 900, 1800], awkMax=5, awkMul=0.06, awkCost=[10, 20, 35, 55, 80], promoLv=10, promoCost={'4': 30, '5': 80}, gearSlots=['모자', '옷', '신발', '보따리'], gearMax=10, gearMul=0.005, gearBase=30, gearGrow=1.22)
+
+# 요일 던전(B3) · 방치 정찰: 요일마다 얻는 것이 달라 「오늘은 뭘 할까」가 생긴다. 하루 3번(압박 없음), 졌을 땐 횟수를 쓰지 않는다.
+DUNGEON = dict(unlock=3, perDay=3, kMul=0.9, tiers=[0.5, 0.75, 1.0], tierNames=['쉬움', '보통', '어려움'], goldMul=[0.6, 1.0, 1.5], frag=[2, 4, 7], goldDay=1.7, idleCapH=8, idleRate=0.35, idleMinMin=10,
+               days=[dict(day=0, name='월요일 금화 광산', kind='gold'), dict(day=1, name='화요일 번쩍 훈련장', kind='frag', el='flash'), dict(day=2, name='수요일 받치기 훈련장', kind='frag', el='support'),
+                     dict(day=3, name='목요일 돌보기 훈련장', kind='frag', el='care'), dict(day=4, name='금요일 금화 광산', kind='gold'), dict(day=5, name='토요일 아무 친구 훈련장', kind='frag', el='any', mul=1.5), dict(day=6, name='일요일 큰 잔치', kind='both', mul=1.0)])

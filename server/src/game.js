@@ -3,7 +3,7 @@ import SLICE from '../../data/expedition_slice.json' with { type: 'json' };
 import gachaCore from '../../games/expedition/gacha-core.js';
 import { interstitialRule, flag } from './shop.js';
 import stageCore from '../../games/expedition/stage-core.js';
-import { HttpError, csprng, sha256hex, signJwt, verifyJwt, randomToken } from './lib.js';
+import { HttpError, csprng, sha256hex, signJwt, verifyJwt, randomToken, dayKst } from './lib.js';
 
 export const D = SLICE, GC = gachaCore, SC = stageCore, ODDS_VER = 's1-2026-10-a', BANNER = 'main';
 const UNIT = Object.fromEntries(D.units.map((u) => [u.id, u]));
@@ -141,3 +141,50 @@ export async function upgradeUnit(env, account, { unit, kind, slot, requestId },
   return { ok: true, ...(await unitView(db, account, unit)) };
 }
 async function unitView(db, account, unit) { const w = await first(db, 'SELECT free_gems,paid_gems,gold FROM wallet WHERE account=?', account), u = await first(db, 'SELECT lv,dups,skl,awk,promo,gear FROM units WHERE account=? AND unit_id=?', account, unit); return { wallet: w, unit: { id: unit, lv: u.lv, dups: u.dups, skl: u.skl, awk: u.awk, promo: u.promo, gear: JSON.parse(u.gear) } }; }
+
+/** ---- B3: 요일 던전 · 방치 정찰 ---- */
+const Dn = D.dungeon;
+export async function dungeonInfo(env, account, now = Date.now()) {
+  const pr = await first(env.DB, 'SELECT cleared FROM progress WHERE account=?', account), day = SC.dayKst(now), r = await first(env.DB, 'SELECT n FROM dungeon_runs WHERE account=? AND day=?', account, dayKst(now));
+  return { unlocked: pr.cleared >= Dn.unlock, unlock: Dn.unlock, day, name: Dn.days[day].name, kind: Dn.days[day].kind, el: Dn.days[day].el || null, left: Math.max(0, Dn.perDay - (r ? r.n : 0)), perDay: Dn.perDay, tiers: Dn.tiers.map((_, t) => ({ tier: t, name: Dn.tierNames[t], reward: SC.dungeonReward(D, day, t, pr.cleared) })) };
+}
+export async function dungeonStart(env, account, tier, now = Date.now()) {
+  const info = await dungeonInfo(env, account, now); if (!info.unlocked) throw new HttpError(409, 'dungeon_locked', '3단계를 깨면 열려요'); if (!(tier >= 0 && tier < Dn.tiers.length)) throw new HttpError(400, 'bad_tier'); if (info.left <= 0) throw new HttpError(409, 'no_runs_left', '오늘은 다 했어요');
+  const pr = await first(env.DB, 'SELECT cleared,party FROM progress WHERE account=?', account), party = JSON.parse(pr.party), lv = Object.fromEntries((await all(env.DB, 'SELECT unit_id,lv,skl,awk,promo,gear FROM units WHERE account=?', account)).map((r) => [r.unit_id, { lv: r.lv, skl: r.skl, awk: r.awk, promo: r.promo, gear: JSON.parse(r.gear) }]));
+  if (party.length !== 5 || !party.every((id) => lv[id])) throw new HttpError(409, 'bad_party'); const seed = Math.floor(csprng() * 4294967296), nonce = randomToken(12), snap = party.map((id) => ({ id, ...lv[id] }));
+  const token = await signJwt({ typ: 'dun', sub: account, day: info.day, tier, cleared: pr.cleared, seed, party: snap, nonce, exp: Math.floor(now / 1000) + 3600 }, env.JWT_SECRET);
+  return { token, day: info.day, tier, seed, party: snap, nonce, stage: SC.dungeonStage(D, info.day, tier, pr.cleared) };
+}
+export async function dungeonClear(env, account, { token, inputs, auto, target }, now = Date.now()) {
+  const db = env.DB, t = await verifyJwt(String(token || ''), env.JWT_SECRET, now); if (t.typ !== 'dun' || t.sub !== account) throw new HttpError(403, 'bad_dungeon_token');
+  const prev = await first(db, 'SELECT body FROM requests WHERE request_id=?', 'dun:' + t.nonce); if (prev) return { ...JSON.parse(prev.body), replay: true };
+  const info = await dungeonInfo(env, account, now); if (t.day !== info.day) throw new HttpError(410, 'day_changed', '요일이 바뀌었어요'); if (info.left <= 0) throw new HttpError(409, 'no_runs_left', '오늘은 다 했어요');
+  const stageDef = SC.dungeonStage(D, t.day, t.tier, t.cleared), out = SC.replay(D, { stage: stageDef.id, stageDef, seed: t.seed, party: t.party, auto: auto !== false, inputs }); if (out.error) { await flag(env, account, 'bad_replay', 'dungeon:' + out.error, now); throw new HttpError(422, out.error, '전투 기록이 맞지 않아요'); }
+  if (!out.win) return { win: false, steps: out.steps };
+  const rw = SC.dungeonReward(D, t.day, t.tier, t.cleared); let tu = null;
+  if (rw.frag) { if (!target) throw new HttpError(400, 'need_target', '조각을 받을 친구를 골라요'); tu = await first(db, 'SELECT unit_id FROM units WHERE account=? AND unit_id=?', account, target); if (!tu) throw new HttpError(409, 'not_owned'); const ue = UNIT[target].el; if (rw.el && rw.el !== 'any' && ue !== rw.el) throw new HttpError(409, 'wrong_element', '오늘은 ' + D.el[rw.el].name + ' 친구만 받아요'); }
+  const w = await first(db, 'SELECT ver FROM wallet WHERE account=?', account), tag = 'dun:' + t.nonce, guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, tag], body = { win: true, reward: { gold: rw.gold, frag: rw.frag, target: rw.frag ? target : null }, left: info.left - 1, steps: out.steps };
+  let res; try {
+    res = await db.batch([
+      run(db, 'UPDATE wallet SET gold=gold+?, ver=ver+1, last_req=? WHERE account=? AND ver=?', rw.gold, tag, account, w.ver),
+      run(db, `INSERT INTO requests(request_id,account,route,status,body,ts) SELECT ?,?,?,?,?,? WHERE ${guard}`, tag, account, '/dungeon/clear', 200, JSON.stringify(body), now, ...g),
+      run(db, `INSERT INTO dungeon_runs(account,day,n) SELECT ?,?,1 WHERE ${guard} ON CONFLICT(account,day) DO UPDATE SET n=n+1`, account, dayKst(now), ...g),
+      run(db, `INSERT INTO ledger(account,ts,kind,d_gold,reason,ref) SELECT ?,?,'dungeon',?,?,? WHERE ${guard}`, account, now, rw.gold, 'day' + t.day + ':t' + t.tier + (rw.frag ? ':f' + rw.frag : ''), tag, ...g),
+      ...(rw.frag ? [run(db, `UPDATE units SET dups=dups+? WHERE account=? AND unit_id=? AND ${guard}`, rw.frag, account, target, ...g)] : []),
+    ]);
+  } catch (e) { const dup = await first(db, 'SELECT body FROM requests WHERE request_id=?', tag); if (dup) return { ...JSON.parse(dup.body), replay: true }; throw e; }
+  if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요'); return body;
+}
+/** 방치 정찰: 마지막 수령 뒤 흐른 시간(최대 8시간)만큼 금화. 처음 부르면 시계만 시작한다. */
+export async function idleClaim(env, account, requestId, now = Date.now()) {
+  const db = env.DB; if (!requestId) throw new HttpError(400, 'no_request_id'); const done = await first(db, "SELECT d_gold FROM ledger WHERE account=? AND kind='idle' AND ref=?", account, requestId); if (done) return { ok: true, replay: true, gold: done.d_gold };
+  const pr = await first(db, 'SELECT cleared,idle_ts FROM progress WHERE account=?', account);
+  if (!pr.idle_ts) { await run(db, 'UPDATE progress SET idle_ts=? WHERE account=?', now, account).run(); return { ok: true, gold: 0, started: true, capH: Dn.idleCapH }; }
+  const gold = SC.idleGold(D, pr.cleared, now - pr.idle_ts); if (!gold) return { ok: true, gold: 0, waitMin: Math.ceil(Math.max(0, Dn.idleMinMin * 60000 - (now - pr.idle_ts)) / 60000), capH: Dn.idleCapH };
+  const w = await first(db, 'SELECT ver FROM wallet WHERE account=?', account), guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, requestId];
+  const res = await db.batch([
+    run(db, 'UPDATE wallet SET gold=gold+?, ver=ver+1, last_req=? WHERE account=? AND ver=?', gold, requestId, account, w.ver),
+    run(db, `UPDATE progress SET idle_ts=? WHERE account=? AND idle_ts=? AND ${guard}`, now, account, pr.idle_ts, ...g),
+    run(db, `INSERT INTO ledger(account,ts,kind,d_gold,reason,ref) SELECT ?,?,'idle',?,'scout',? WHERE ${guard}`, account, now, gold, requestId, ...g),
+  ]); if (res[0].meta.changes !== 1 || res[1].meta.changes !== 1) throw new HttpError(409, 'conflict'); return { ok: true, gold, capH: Dn.idleCapH };
+}

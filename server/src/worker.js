@@ -52,6 +52,10 @@ export async function handle(req, env, now = Date.now()) {
     case 'POST /party': return json(await G.setParty(env, account, (await readJson(req)).party));
     case 'POST /unit/levelup': { const b = await readJson(req); if (!b.request_id) throw new HttpError(400, 'no_request_id'); return json(await retry(() => G.levelUp(env, account, b.unit, b.request_id, now))); }
     case 'POST /unit/upgrade': { const b = await readJson(req); return json(await retry(() => G.upgradeUnit(env, account, { unit: b.unit, kind: b.kind, slot: b.slot, requestId: b.request_id }, now))); }
+    case 'GET /dungeon': return json(await G.dungeonInfo(env, account, now));
+    case 'POST /dungeon/start': return json(await G.dungeonStart(env, account, +(await readJson(req)).tier, now));
+    case 'POST /dungeon/clear': { const b = await readJson(req); const out = await retry(() => G.dungeonClear(env, account, { token: b.token, inputs: b.inputs, auto: b.auto, target: b.target }, now)); return json({ ...out, profile: await G.profile(env, account, now) }); }
+    case 'POST /idle/claim': { const b = await readJson(req); const out = await retry(() => G.idleClaim(env, account, b.request_id, now)); return json({ ...out, profile: await G.profile(env, account, now) }); }
     case 'POST /gacha/pull': { const b = await readJson(req); return json(await retry(() => G.gachaPull(env, account, { banner: b.banner, n: b.n, requestId: b.request_id }, now))); }
     case 'POST /stage/start': return json(await G.stageStart(env, account, +(await readJson(req)).stage, now));
     case 'POST /stage/clear': { const b = await readJson(req); const out = await retry(() => G.stageClear(env, account, { token: b.token, inputs: b.inputs, auto: b.auto, requestId: b.request_id }, now)); return json({ ...out, profile: await G.profile(env, account, now) }); }

@@ -26,7 +26,7 @@
 
   /** 재현: {win, recruited, downs, stars, steps, hash, error?} — 입력이 규칙에 어긋나면 error */
   function replay(D, spec) {
-    const st = D.stages.find((x) => x.id === spec.stage); if (!st) return { error: 'bad_stage' };
+    const st = spec.stageDef || D.stages.find((x) => x.id === spec.stage); if (!st) return { error: 'bad_stage' };
     const inputs = spec.inputs || []; if (!Array.isArray(inputs) || inputs.length > MAX_INPUTS) return { error: 'bad_inputs' };
     let last = 0; for (const x of inputs) { if (!Array.isArray(x) || !Number.isInteger(x[0]) || x[0] < last || x[0] > MAX_STEPS || !['c', 'r', 'p', 'a'].includes(x[1])) return { error: 'bad_inputs' }; if (x[1] === 'c' && !(Number.isInteger(x[2]) && x[2] >= 0 && x[2] < 5)) return { error: 'bad_inputs' }; last = x[0]; }
     const A = spec.party.map((p, i) => defOf(D, p.id, p.lv, i)), En = st.enemies.map((e, i) => enemyDef(e, i, st.boss)), core = B.create(A, En, { seed: spec.seed, autoSkill: spec.auto !== false });
@@ -52,5 +52,18 @@
   const reward = (D, st, firstClear) => ({ gold: firstClear ? st.gold : Math.round(st.gold * 0.5), gems: firstClear ? (st.gems != null ? st.gems : D.gacha.clearGems) : 0 });
   /** 레벨 상한: 단계를 깰수록 올라간다(압박 없이 천천히) */
   const lvCap = (D, cleared) => Math.min(D.bal.lvCapMax || D.bal.lvCap, D.bal.lvCap + Math.floor(Math.max(0, (cleared || 0) - (D.bal.lvCapFrom || 0)) / (D.bal.lvCapEvery || 999)));
-  return { kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
+  /** 요일 던전(B3): 그날의 던전 판 — 깬 단계에 맞춘 적(보스 없음, 배율 ×kMul). 클라이언트·서버가 같은 판을 만든다. */
+  const dungeonStage = (D, day, tier, cleared) => {
+    const Dn = D.dungeon, s = Math.min(D.stages.length, Math.max(1, Math.round(Math.max(1, cleared) * Dn.tiers[tier]))), base = D.stages[s - 1];
+    return { id: 1000 + day * 10 + tier, name: Dn.days[day].name, gold: base.gold, enemies: base.enemies.map((e) => Object.assign({}, e, { k: Math.round(e.k * Dn.kMul * 1000) / 1000, lock: 0 })), dungeon: true };
+  };
+  const dungeonReward = (D, day, tier, cleared) => {
+    const Dn = D.dungeon, d = Dn.days[day], st = dungeonStage(D, day, tier, cleared), mul = d.mul || 1; let gold = 0, frag = 0;
+    if (d.kind === 'gold') gold = Math.round(st.gold * Dn.goldMul[tier] * Dn.goldDay); else if (d.kind === 'both') { gold = Math.round(st.gold * Dn.goldMul[tier] * 1.2); frag = Math.round(Dn.frag[tier] * 0.7); } else frag = Math.round(Dn.frag[tier] * mul);
+    return { gold, frag, el: d.el || null };
+  };
+  /** 방치 정찰: 마지막으로 받은 뒤 흐른 시간(최대 idleCapH)만큼, 깬 단계 금화의 일부를 시간당으로. */
+  const idleGold = (D, cleared, elapsedMs) => { const Dn = D.dungeon, h = Math.min(Dn.idleCapH, Math.max(0, elapsedMs) / 3600000), st = D.stages[Math.max(1, Math.min(D.stages.length, cleared || 1)) - 1]; return elapsedMs < Dn.idleMinMin * 60000 ? 0 : Math.floor(h * st.gold * Dn.idleRate); };
+  const dayKst = (now) => new Date(now + 9 * 3600000).getUTCDay() === 0 ? 6 : new Date(now + 9 * 3600000).getUTCDay() - 1;   // 월=0 … 일=6 (KST)
+  return { dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
 });

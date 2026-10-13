@@ -39,7 +39,7 @@
   const chapters = () => ((H() && H().story) || []).filter((s) => s.group === grp()).sort((a, b) => a.ch - b.ch);
   const chDone = (c) => !!(ensure().story[c.room] && ensure().story[c.room].done);
   Room.cozy = function () { const S = ensure(); if (!S || !H()) return 0; let t = rooms().reduce((a, r) => a + Room.roomCozy(r.id).total, 0); chapters().forEach((c) => { if (chDone(c)) t += (c.reward && c.reward.cozy) || 0; }); return t; };
-  const table = () => { const L = ((H() && H().levels) || []).slice(); return kid() ? L.filter((l) => l.lv <= 20) : L; };
+  const table = () => (kid() ? ((H() && H().levelsKid) || []).slice() : ((H() && H().levels) || []).slice());
   Room.level = function (cozy) { const c = cozy == null ? Room.cozy() : cozy; let lv = 1; table().forEach((l) => { if (c >= l.cozy) lv = l.lv; }); return lv; };
   Room.levelInfo = function () { const c = Room.cozy(), T = table(), lv = Room.level(c), cur = T.find((l) => l.lv === lv), nx = T.find((l) => l.lv === lv + 1); return { lv, cozy: c, cur: cur ? cur.cozy : 0, next: nx ? nx.cozy : null, pct: nx ? Math.min(1, (c - cur.cozy) / (nx.cozy - cur.cozy)) : 1, max: !nx }; };
   const unlocked = (r) => Room.level() >= (r.unlock || 1) || ((ensure().placed[r.id] || []).length > 0);
@@ -158,6 +158,7 @@
   };
   R2.bgSVG = bgSVG;
   const anchorRect = (a) => { const it = Room.item(a.want); if (!it) return null; const g = geo(it); return { x: Math.max(4, Math.min(RW - g.w - 4, a.x - g.w / 2)), y: a.y - g.h, w: g.w, h: g.h }; };
+  const key = (q) => (q.it.flat ? q.p.y : (q.it.slot === 'table' ? 10000 : 0) + q.p.y + geo(q.it).h);   // 러그류는 맨 아래, 소품은 가구 위
   /** parent 안에 방 하나를 그린다. o: {mini, place, flash, dream, onChange, onSel} → {room, wrap, occ} */
   R2.draw = function (parent, rid, o) {
     o = o || {}; const R = rooms().find((r) => r.id === rid) || rooms()[0], S = ensure(); if (!R) return null;
@@ -166,10 +167,10 @@
     el('div', 'h2-bg', room, bgSVG(R, S.light));
     let list = (S.placed[R.id] || []);
     if (o.dream) list = (R.anchors || []).map((a) => { const r = anchorRect(a); return r ? { id: a.want, x: Math.round(r.x), y: Math.round(r.y), c: (Room.item(a.want) || { colors: ['#fff'] }).colors[0] } : null; }).filter(Boolean);
-    const order = list.map((p, i) => ({ p, i, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => (a.p.y + geo(a.it).h) - (b.p.y + geo(b.it).h)); const occ = room.__occ;
+    const order = list.map((p, i) => ({ p, i, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => key(a) - key(b)); const occ = room.__occ;
     order.forEach(({ p, i, it }) => {
       const g = geo(it); occ.push({ x: p.x, y: p.y, w: g.w, h: g.h, wall: it.slot === 'wall' });
-      if (it.slot === 'floor') { const sh = el('i', 'h2-sh', room); sh.style.cssText = `left:${p.x + g.w * 0.08}px;top:${p.y + g.h - 7}px;width:${g.w * 0.84}px`; }
+      if (it.slot === 'floor' && !it.flat) { const sh = el('i', 'h2-sh', room); sh.style.cssText = `left:${p.x + g.w * 0.08}px;top:${p.y + g.h - 7}px;width:${g.w * 0.84}px`; }
       const d = el('img', 'h2-it' + (o.flash === p.id ? ' flash' : ''), room); d.src = Room.src(it, p.c); d.alt = ''; d.draggable = false; d.style.cssText = `left:${p.x}px;top:${p.y}px;width:${g.w}px;height:${g.h}px${p.flip ? ';transform:scaleX(-1)' : ''}`; d.dataset.i = i;
       if (o.mini || o.dream) return;
       if (o.place) d.addEventListener('pointerdown', (e) => {

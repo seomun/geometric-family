@@ -83,46 +83,63 @@ for i in items:
     i['cozy'] = BASE[i['slot']] + (2 if i['w'] >= 80 else 0) + (3 if i['set'] in ('story_a', 'story_k') else 0) + (1 if s.get('n', 0) >= 40 or s.get('t', 0) >= 6 else 0) + (1 if i['set'] in ('season2', 'event', 'kseason') else 0) + (2 if i['set'] in ('gift', 'kgift') else 0)
     i['tags'] = [t for t, rx in TAG_RULES if re.search(rx, name, re.I)][:2]
     i['style'] = STYLE.get(i['set'], 'warm'); i['color'] = hue(i['colors'][0]); i['src'] = s
+    i['flat'] = i['id'] in ('b_rug', 'y_mat', 'm_mat', 's2_picnic', 's2_blanket')
     i['cls'] = 'wall' if i['slot'] == 'wall' else 'prop' if i['slot'] == 'table' else 'big' if (i['id'] in BIG or i['w'] >= 84) else 'mid' if i['w'] >= 56 else 'small'
 json.dump(R, open('data/room_items.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('items', len(items), '(새로', sum(1 for i in items if i['id'].startswith(('s2_', 'e_', 'g_', 'kc_', 'kg_'))), ') cozy 합', sum(i['cozy'] for i in items), 'cls', dict(collections.Counter(i['cls'] for i in items)))
 
 # ------------------------------ housing.json ------------------------------
-A_EXP = 1.7; T_A = 7.1
+A_EXP = 1.7; T_A = 7.4
 T = lambda n: round(T_A * (n - 1) ** A_EXP)
 levels = [dict(lv=n, cozy=T(n)) for n in range(1, 31)]
-# 방 기하(논리 340×440): 벽 0~150, 바닥 150~440. 앵커 x=중심 · y=가구 밑변. 고정 가구(fixtures)는 방 그림에 함께 그려지고 surf 는 위에 소품이 놓이는 면.
+levelsKid = [dict(lv=n, cozy=round(T(n) * 0.85)) for n in range(1, 21)]   # 유아 집은 가구가 적어 문턱을 85%로
+# 방 기하(논리 340×440): 벽 0~150, 바닥 150~440. 방마다 놓을 자리 10~15개 = 큰 가구 2~3 · 중간/작은 4~6 · 벽 3 · 면 위 소품 3~4. 앵커 x=중심 · y=가구 밑변.
+# 고정 가구(fixtures)는 방 그림에 함께 그려지고 surf 위에 소품이 놓인다. 배치는 줄(rowA 뒤·rowB 가운데·rowC 앞) 템플릿으로 자동 계산한다.
 FX = lambda k, x, y, w, h, **kw: dict(k=k, x=x, y=y, w=w, h=h, **kw)
-ROOMS = [  # id, 이름, 그룹, 해금, 벽색, 바닥색, 벽무늬, 바닥, fixtures, anchors[(slot,x,y,want)]
-    ('nemo', '네모네 거실', 'adult', 1, '#FFE3C2', '#E3B27F', 'square', 'wood', [],
-     [('wall', 84, 118, 'a_frame'), ('wall', 166, 124, 'u_shelf'), ('floor', 112, 392, 'b_table'), ('floor', 252, 340, 'b_sofa'), ('floor', 62, 318, 'b_drawer')]),
-    ('kitchen', '네모네 주방', 'adult', 3, '#FFF1C9', '#E8D8B8', 'dot', 'tile', [FX('counter', 70, 196, 200, 48, surf=dict(y=196, x0=80, x1=262))],
-     [('floor', 300, 330, 'u_fridge'), ('floor', 160, 392, 't_bowl'), ('table', 150, 196, 'p_rice'), ('wall', 180, 120, 'u_sidedish'), ('table', 220, 196, 'p_kimchi')]),
-    ('semo', '세모네 신혼집', 'adult', 5, '#D8F0FF', '#D8E2EE', 'triangle', 'wood', [FX('desk', 70, 236, 150, 44, surf=dict(y=236, x0=80, x1=210))],
-     [('wall', 100, 124, 'a_map'), ('floor', 270, 352, 'b_suitcase'), ('table', 140, 236, 'p_world'), ('floor', 60, 360, 'b_lamp'), ('floor', 190, 408, 'a_camera')]),
-    ('dong', '동그라미네 서재', 'adult', 8, '#E2E6FA', '#C7CBE0', 'circle', 'wood', [FX('desk', 150, 232, 150, 44, surf=dict(y=232, x0=160, x1=290))],
-     [('floor', 66, 330, 'b_shelf'), ('floor', 200, 404, 'p_chair'), ('wall', 130, 112, 'b_clock'), ('floor', 292, 348, 'b_globe'), ('table', 220, 232, 'p_book')]),
-    ('yard', '마당·골목', 'adult', 10, '#CFEFFF', '#B4DE98', 'none', 'grass', [],
-     [('floor', 70, 340, 'o_fence'), ('floor', 190, 400, 'm_bench'), ('floor', 288, 350, 'o_mailbox'), ('floor', 250, 300, 'm_garden')]),
-    ('entrance', '현관', 'adult', 12, '#F4E4D0', '#CBA980', 'square', 'tile', [], [('wall', 110, 118, 'n_plate'), ('floor', 80, 340, 'u_shoerack'), ('wall', 232, 122, 'q_plate_nemo'), ('floor', 250, 396, 'o_doghouse')]),
-    ('upstairs', '2층', 'adult', 15, '#FDE8F0', '#E5C7B0', 'dot', 'wood', [], [('floor', 100, 340, 'b_bed'), ('floor', 270, 340, 'u_closet'), ('floor', 190, 408, 'a_diary')]),
-    ('roof', '옥상', 'adult', 20, '#BFE6FF', '#CFC8BE', 'none', 'tile', [], [('floor', 90, 372, 's_tree'), ('floor', 240, 392, 't_pigs_a')]),
-    ('bath', '욕실', 'kid', 1, '#DDF3F8', '#CFE6F0', 'circle', 'tile', [FX('sink', 80, 232, 150, 56, surf=dict(y=224, x0=96, x1=206)), FX('shelf', 250, 104, 70, 10, surf=dict(y=104, x0=252, x1=316))],
-     [('table', 130, 224, 'y_cup'), ('table', 184, 224, 'y_paste'), ('wall', 270, 100, 'y_hanger'), ('floor', 90, 404, 'y_mat'), ('floor', 250, 392, 'y_duck'), ('table', 288, 104, 'y_soap'), ('wall', 130, 108, 'y_towel')]),
-    ('kid', '아이 방', 'kid', 3, '#FFF0B8', '#F2C98A', 'triangle', 'wood', [FX('bed', 24, 330, 150, 70, surf=dict(y=300, x0=40, x1=160))],
-     [('floor', 84, 322, 'y_pillow'), ('floor', 140, 330, 'y_quilt'), ('floor', 270, 352, 'y_toybox'), ('wall', 150, 116, 'w_frame'), ('wall', 62, 106, 'y_moon'), ('floor', 220, 410, 'k_party')]),
-    ('wardrobe', '옷방', 'kid', 6, '#FFE0E8', '#E8C7A8', 'dot', 'wood', [], [('wall', 90, 108, 'y_hat'), ('floor', 200, 400, 'y_boots'), ('floor', 90, 392, 'k_train')]),
-    ('dining', '밥 먹는 곳', 'kid', 9, '#E8F5C8', '#DDBF92', 'square', 'wood', [FX('table', 80, 280, 180, 56, surf=dict(y=280, x0=96, x1=250))], [('table', 130, 280, 'y_bowl'), ('table', 200, 280, 'y_spoon'), ('floor', 270, 400, 'k_ch3')]),
-    ('toyroom', '장난감 방', 'kid', 12, '#D8ECFF', '#C8D8B8', 'circle', 'grass', [], [('floor', 80, 360, 'y_toybox'), ('floor', 200, 404, 'y_ball'), ('floor', 270, 340, 'k_ch5')]),
+GEOF = lambda iid: (byid[iid]['w'] * SIZE_F[byid[iid]['cls']], byid[iid]['h'] * SIZE_F[byid[iid]['cls']])
+ROWY = {'A': 298, 'B': 368, 'C': 428}; WALLX = [52, 118, 184]; WALLY = 108
+def spread(n, W=340):
+    return {1: [W / 2], 2: [90, 250], 3: [58, 170, 282], 4: [48, 128, 214, 296], 5: [40, 100, 170, 240, 300]}[n]
+def layout(spec):
+    rid, name, grp, unlock, wallc, floorc, pat, fk, fxs, A, B, C, W, props = spec
+    anc = []; place = {}
+    for row, ids in (('A', A), ('B', B), ('C', C)):
+        for x, iid in zip(spread(len(ids)), ids): anc.append(('floor', round(x), ROWY[row], iid)); place[iid] = (x, ROWY[row])
+    for x, iid in zip(WALLX, W): anc.append(('wall', x, WALLY, iid))
+    for iid, host in props:
+        n = sum(1 for q in props if q[1] == host); k = sum(1 for q in props[:props.index((iid, host))] if q[1] == host)
+        if isinstance(host, int):
+            f = fxs[host]; sf = f['surf']; x0, x1 = sf['x0'], sf['x1']; y = sf['y']
+        else:
+            hx, hy = place[host]; hw, hh = GEOF(host); x0, x1 = hx - hw * 0.34, hx + hw * 0.34; y = hy - hh * 0.72
+        w = byid[iid]['w'] * SIZE_F[byid[iid]['cls']]; step = (x1 - x0) / max(n, 1); anc.append(('table', round(x0 + step * (k + 0.5)), round(y), iid))
+    return dict(id=rid, name=name, group=grp, unlock=unlock, wall=wallc, floor=floorc, pattern=pat, floorKind=fk, fixtures=fxs, anchors=[dict(id=f'{rid}_{i}', slot=a[0], x=a[1], y=a[2], want=a[3]) for i, a in enumerate(anc, 1)])
+ROOMSPEC = [  # id, 이름, 그룹, 해금, 벽색, 바닥색, 벽무늬, 바닥, fixtures, 뒷줄A, 가운뎃줄B, 앞줄C, 벽, 소품[(id, 올라설 곳: fixture 번호 | 가구 id)]
+    ('nemo', '네모네 거실', 'adult', 1, '#FFE3C2', '#E3B27F', 'square', 'wood', [], ['b_tv', 'b_sofa'], ['b_table', 'b_plant'], ['b_lamp', 'u_toybox', 'g_cushion'], ['a_frame', 'a_photo', 'a_calendar'], [('p_remote', 'b_tv'), ('p_photo', 'b_tv'), ('p_pack1', 'b_table'), ('p_points', 'b_table')]),
+    ('kitchen', '네모네 주방', 'adult', 3, '#FFF1C9', '#E8D8B8', 'dot', 'tile', [FX('counter', 70, 196, 200, 48, surf=dict(y=196, x0=84, x1=262))], ['u_fridge'], ['u_drawer', 'u_cart', 't_bowl'], ['u_crate', 'u_basket', 'u_umbrella'], ['u_sidedish', 'u_shelf', 'u_label'], [('p_rice', 0), ('p_kimchi', 0), ('p_mix', 0), ('p_lunch', 0)]),
+    ('semo', '세모네 신혼집', 'adult', 5, '#D8F0FF', '#D8E2EE', 'triangle', 'wood', [FX('desk', 60, 236, 160, 44, surf=dict(y=236, x0=74, x1=214))], ['b_semo_home', 'a_shelf'], ['b_lamp2' if False else 'b_suitcase', 'a_camera'], ['a_album', 'a_scrapbook', 'a_trophy'], ['a_map', 'a_polaroid', 'a_postcard'], [('p_world', 0), ('p_pass', 0), ('p_bagt', 0), ('p_globe', 0)]),
+    ('dong', '동그라미네 서재', 'adult', 8, '#E2E6FA', '#C7CBE0', 'circle', 'wood', [FX('desk', 160, 232, 160, 44, surf=dict(y=232, x0=174, x1=314))], ['b_shelf', 'b_dong_study'], ['b_globe', 'g_stool'], ['p_chair', 'a_magnifier', 'a_diary'], ['b_clock', 'a_ribbon', 'a_medal'], [('p_book', 0), ('p_vio', 0), ('p_flower', 0), ('p_env', 0)]),
+    ('yard', '마당·골목', 'adult', 10, '#CFEFFF', '#B4DE98', 'none', 'grass', [FX('table', 90, 228, 150, 40, surf=dict(y=228, x0=100, x1=226))], ['o_fence', 'm_garden'], ['m_bench', 'o_mailbox'], ['m_jar', 'm_cat', 'm_sunflower', 'm_flowerrow'], ['o_sign', 'o_lantern', 'm_laundry'], [('u_eggtray', 0), ('p_label', 0), ('p_tea', 0), ('g_teaset', 0)]),
+    ('entrance', '현관', 'adult', 12, '#F4E4D0', '#CBA980', 'square', 'tile', [FX('counter', 150, 220, 170, 44, surf=dict(y=220, x0=164, x1=306))], ['u_shoerack', 'u_closet'], ['o_doghouse', 'o_flowerpot'], ['u_bagrack_f' if False else 'q_game_1', 'q_game_2', 'q_game_3'], ['n_plate', 'q_plate_nemo', 'u_bagrack'], [('u_env', 0), ('u_pill', 0), ('u_socks', 0), ('u_coffee', 0)]),
+    ('upstairs', '2층', 'adult', 15, '#FDE8F0', '#E5C7B0', 'dot', 'wood', [FX('desk', 24, 236, 150, 44, surf=dict(y=236, x0=38, x1=164))], ['b_bed', 'u_closet2' if False else 'b_rug'], ['u_box', 'a_diary2' if False else 't_pino_a'], ['t_sun_a', 't_ant_a', 't_jack_a'], ['a_garland', 'a_cork', 'a_film'], [('p_phone', 0), ('p_film', 0), ('p_pair', 0), ('p_ramen', 0)]),
+    ('roof', '옥상', 'adult', 20, '#BFE6FF', '#CFC8BE', 'none', 'tile', [FX('table', 190, 232, 140, 40, surf=dict(y=232, x0=200, x1=318))], ['s_tree', 'o_bench'], ['t_pigs_a', 't_shoes_a'], ['t_kongjwi_a', 't_heungbu_a', 't_bremen_a'], ['q_type_nemo0', 'q_type_semo0', 'q_type_dong0'], [('p_pack3', 0), ('p_pack2', 0), ('p_glass', 0), ('p_tea2' if False else 'p_ra', 0)]),
+    ('bath', '욕실', 'kid', 1, '#DDF3F8', '#CFE6F0', 'circle', 'tile', [FX('sink', 40, 236, 160, 56, surf=dict(y=228, x0=64, x1=190))], ['y_mat'], ['y_duck', 't_shoes_k', 'kc_tube'], ['kg_ball2', 'k_ch14', 'k_ch10'], ['y_hanger', 'y_towel', 'y_clock'], [('y_cup', 0), ('y_paste', 0), ('y_soap', 0)]),
+    ('kid', '아이 방', 'kid', 3, '#FFF0B8', '#F2C98A', 'triangle', 'wood', [FX('bed', 24, 330, 150, 70, surf=dict(y=300, x0=40, x1=160)), FX('desk', 214, 236, 110, 40, surf=dict(y=236, x0=226, x1=312))], ['y_toybox', 'k_train'], ['k_party', 'kg_bear', 'kg_drum'], ['t_pigs_k', 'y_pillow', 'y_quilt'], ['w_frame', 'y_moon', 'kg_cloud'], [('y_book', 1)]),
+    ('wardrobe', '옷방', 'kid', 6, '#FFE0E8', '#E8C7A8', 'dot', 'wood', [], ['k_ch8', 'k_ch14b' if False else 'kc_snowman'], ['y_boots', 't_snowqueen_k', 'kg_train2'], ['t_bears_k', 't_hok_k', 't_pino_k'], ['y_hat', 'w_garland', 'w_stars'], []),
+    ('dining', '밥 먹는 곳', 'kid', 9, '#E8F5C8', '#DDBF92', 'square', 'wood', [FX('table', 70, 276, 190, 56, surf=dict(y=276, x0=92, x1=246))], ['k_ch3', 'k_ch12'], ['t_heungbu_k', 'k_ch15', 'kc_acorn'], ['t_kongjwi_k', 't_axe_k', 't_ant_k'], ['w_frame_pink', 'w_balloons', 'kc_leaf'], [('y_bowl', 0), ('y_spoon', 0), ('y_cup2', 0)]),
+    ('toyroom', '장난감 방', 'kid', 12, '#D8ECFF', '#C8D8B8', 'circle', 'grass', [], ['k_ch5', 'k_ch4'], ['y_ball', 'k_ch7', 'kc_icecream'], ['t_sun_k', 't_jack_k', 't_gyeonwoo_k'], ['w_rainbow', 'w_crown', 'kg_rainbow'], []),
 ]
+ROOMS = [layout(r) for r in ROOMSPEC]
+_used = collections.Counter(a['want'] for r in ROOMS for a in r['anchors'])
+assert not [k for k, v in _used.items() if v > 1], ('앵커 가구 중복', [k for k, v in _used.items() if v > 1])
 for r in ROOMS:
-    for a in r[9]:
-        assert a[3] in byid, ('칸 가구 없음', r[0], a[3])
-def mkrooms(g): return [dict(id=r[0], name=r[1], group=r[2], unlock=r[3], wall=r[4], floor=r[5], pattern=r[6], floorKind=r[7], fixtures=r[8], anchors=[dict(id=f'{r[0]}_{k}', slot=a[0], x=a[1], y=a[2], want=a[3]) for k, a in enumerate(r[9], 1)]) for r in ROOMS if r[2] == g]
+    for a in r['anchors']: assert a['want'] in byid, ('칸 가구 없음', r['id'], a['want'])
+    print('  방', r['id'], len(r['anchors']), '자리')
+def mkrooms(g): return [r for r in ROOMS if r['group'] == g]
 N, SEMO, DONG, KID1, KID2, KID3, BABY, MOM, DAD = 'nemo_dad.joy', 'wife.joy', 'dong_dad.warm', 'nemo_kids.kid1', 'nemo_kids.kid2', 'nemo_kids.kid3', 'baby.joy', 'nemo_mom.joy', 'nemo_dad.joy'
 def cut(text, *chars, bg='indoor2'): return dict(bg=bg, text=text, chars=list(chars))
 STORY = [
-    dict(ch=1, room='nemo', group='adult', title='일곱 식구가 앉을 자리', tasks=[('t1', ['b_table'], '큰 상'), ('t2', ['a_frame'], '벽 액자'), ('t3', ['u_shelf'], '벽 선반'), ('t4', ['b_sofa'], '소파'), ('t5', ['b_drawer'], '서랍장')],
+    dict(ch=1, room='nemo', group='adult', title='일곱 식구가 앉을 자리', tasks=[('t1', ['b_table'], '큰 상'), ('t2', ['a_frame'], '벽 액자'), ('t3', ['b_sofa'], '소파'), ('t4', ['b_tv'], 'TV장'), ('t5', ['a_calendar'], '달력')],
          cuts=[cut('빈 거실. 네모 아빠가 짐 상자 사이에 서서 말했다. 「일곱이 앉으려면 큰 상부터네.」', N, MOM), cut('상을 놓자 아이들이 우르르 모였다. 막내가 와락 안겼다.', BABY, KID3), cut('시끌시끌한 저녁. 이게 제일 좋은 하루인지도 모른다.', N, MOM, BABY, KID1)], reward=dict(cozy=20, unlock='kitchen')),
     dict(ch=2, room='kitchen', group='adult', title='엄마의 밥상', tasks=[('t1', ['t_bowl'], '밥그릇'), ('t2', ['u_fridge'], '냉장고'), ('t3', ['p_rice'], '밥솥'), ('t4', ['u_sidedish'], '반찬통 선반'), ('t5', ['p_kimchi'], '김장 김치')],
          cuts=[cut('엄마가 부엌을 둘러봤다. 「밥을 해 먹어야 집이지.」', MOM), cut('밥솥에서 김이 나자 식구들이 슬금슬금 모였다.', MOM, N, KID1), cut('같이 먹는 밥 한 끼. 말이 필요 없다.', N, MOM, BABY)], reward=dict(cozy=25, unlock='semo')),
@@ -130,20 +147,20 @@ STORY = [
          cuts=[cut('세모네 신혼집은 아직 휑했다. 세모 남편이 벽을 보며 웃었다. 「여기에 유럽, 저기엔 남미.」', 'husband.joy', SEMO, bg='indoor'), cut('가방을 놓고 지도를 붙이니, 둘은 벌써 비행기 안에 앉은 것 같았다.', 'husband.joy', SEMO, bg='indoor'), cut('「다음엔 어디 갈까요?」 둘만의 계획이 벽에 가득 찼다.', 'husband.joy', SEMO, bg='indoor')], reward=dict(cozy=30, unlock='dong')),
     dict(ch=4, room='dong', group='adult', title='빈 의자 하나', tasks=[('t1', ['b_shelf'], '책장'), ('t2', ['p_chair'], '네 번째 의자'), ('t3', ['b_clock'], '벽시계'), ('t4', ['b_globe'], '지구본'), ('t5', ['p_book'], '책')],
          cuts=[cut('동그라미 서재는 조용하고 정돈됐다. 의자 하나만 비어 있었다.', DONG, bg='indoor'), cut('아들이 의자를 끌어다 놓았다. 「아빠, 같이 먹어요.」', DONG, 'dong_dad.good', bg='indoor'), cut('조용한 서재에 처음으로 사람 소리가 났다.', DONG, 'dong_dad.good', bg='indoor')], reward=dict(cozy=35, unlock='yard')),
-    dict(ch=5, room='yard', group='adult', title='다음 모임은 우리 집 마당에서', tasks=[('t1', ['o_fence'], '담장'), ('t2', ['m_bench'], '평상'), ('t3', ['o_mailbox'], '우체통'), ('t4', ['m_garden'], '텃밭'), ('t5', ['o_gate'], '대문')],
+    dict(ch=5, room='yard', group='adult', title='다음 모임은 우리 집 마당에서', tasks=[('t1', ['o_fence'], '담장'), ('t2', ['m_bench'], '평상'), ('t3', ['o_mailbox'], '우체통'), ('t4', ['m_garden'], '텃밭'), ('t5', ['o_lantern'], '등불')],
          cuts=[cut('「다음 모임은 우리 집에서 하자.」 세 사람이 마당을 보았다.', N, SEMO, DONG, bg='field'), cut('평상을 놓고 담장을 세우니 골목이 정겨워졌다.', N, DONG, bg='field'), cut('이 나이엔 그냥 건강하면 된다. 마당에 웃음이 퍼졌다.', N, SEMO, DONG, bg='field')], reward=dict(cozy=40, unlock='entrance')),
     dict(ch=6, room='entrance', group='adult', title='우리 집 이름', tasks=[('t1', ['n_plate'], '도형 문패'), ('t2', ['u_shoerack'], '신발장'), ('t3', ['q_plate_nemo'], '네모 문패'), ('t4', ['o_doghouse'], '강아지 집')],
          cuts=[cut('문패를 달면 비로소 우리 집이다.', N, MOM, bg='home'), cut('신발이 가지런히 놓였다.', N, MOM, bg='home')], reward=dict(cozy=45, unlock='upstairs')),
-    dict(ch=7, room='upstairs', group='adult', title='아이들이 크면', tasks=[('t1', ['b_bed'], '네모 침대'), ('t2', ['u_closet'], '옷장'), ('t3', ['a_diary'], '일기장'), ('t4', ['b_rug'], '동그라미 러그')],
+    dict(ch=7, room='upstairs', group='adult', title='아이들이 크면', tasks=[('t1', ['b_bed'], '네모 침대'), ('t2', ['u_closet'], '옷장'), ('t3', ['t_pino_a'], '피노키오 인형'), ('t4', ['b_rug'], '동그라미 러그')],
          cuts=[cut('2층엔 아이들 자리가 필요하다. 축구화 신고 뛰어다닐 아이들 자리.', MOM, KID3), cut('이불을 깔자 아이들이 먼저 누웠다.', KID1, KID2, KID3)], reward=dict(cozy=50, unlock='roof')),
-    dict(ch=8, room='roof', group='adult', title='계절이 오는 집', tasks=[('t1', ['s_tree'], '연말 트리'), ('t2', ['t_pigs_a'], '벽돌집 미니어처'), ('t3', ['t_bears_a'], '곰 세 식구 의자')],
+    dict(ch=8, room='roof', group='adult', title='계절이 오는 집', tasks=[('t1', ['s_tree'], '연말 트리'), ('t2', ['t_pigs_a'], '벽돌집 미니어처'), ('t3', ['t_shoes_a'], '요정의 작은 구두')],
          cuts=[cut('옥상에서 내려다보니 우리 집이 가득 찼다.', N, MOM, SEMO, DONG, bg='night'), cut('계절이 바뀔 때마다 이 집에 새 이야기가 놓일 것이다.', N, SEMO, DONG, bg='night')], reward=dict(cozy=60, unlock=None)),
     # 유아: 욕실(⑩ 첫 보상이 양치) → 아이 방 → 옷방 → 밥 → 장난감 방
     dict(ch=1, room='bath', group='kid', title='깨끗이 씻자', tasks=[('t1', ['y_cup'], '칫솔 컵'), ('t2', ['y_paste'], '치약'), ('t3', ['y_hanger'], '옷걸이')], cuts=[cut('', BABY, MOM, bg='home'), cut('', BABY, KID1, bg='home')], reward=dict(cozy=15, unlock='kid')),
     dict(ch=2, room='kid', group='kid', title='막둥이의 첫 방', tasks=[('t1', ['k_party'], '잔칫집'), ('t2', ['w_frame'], '내 그림 액자'), ('t3', ['y_pillow'], '베개')], cuts=[cut('', BABY, KID1, bg='home')], reward=dict(cozy=20, unlock='wardrobe')),
-    dict(ch=3, room='wardrobe', group='kid', title='옷방', tasks=[('t1', ['y_hat'], '모자걸이'), ('t2', ['k_train'], '기차'), ('t3', ['y_boots'], '장화')], cuts=[cut('', BABY, MOM, bg='home')], reward=dict(cozy=25, unlock='dining')),
+    dict(ch=3, room='wardrobe', group='kid', title='옷방', tasks=[('t1', ['y_hat'], '모자걸이'), ('t2', ['k_ch8'], '밀짚모자 걸이'), ('t3', ['y_boots'], '장화')], cuts=[cut('', BABY, MOM, bg='home')], reward=dict(cozy=25, unlock='dining')),
     dict(ch=4, room='dining', group='kid', title='밥 먹는 곳', tasks=[('t1', ['y_bowl'], '밥그릇'), ('t2', ['y_spoon'], '수저 통'), ('t3', ['k_ch3'], '무 인형')], cuts=[cut('', BABY, DAD, bg='home')], reward=dict(cozy=30, unlock='toyroom')),
-    dict(ch=5, room='toyroom', group='kid', title='장난감 방', tasks=[('t1', ['y_toybox'], '장난감 상자'), ('t2', ['y_ball'], '공 바구니'), ('t3', ['k_ch5'], '도형 블록')], cuts=[cut('', BABY, KID3, bg='home')], reward=dict(cozy=35, unlock=None)),
+    dict(ch=5, room='toyroom', group='kid', title='장난감 방', tasks=[('t1', ['k_ch4'], '달 램프'), ('t2', ['y_ball'], '공 바구니'), ('t3', ['k_ch5'], '도형 블록')], cuts=[cut('', BABY, KID3, bg='home')], reward=dict(cozy=35, unlock=None)),
 ]
 for s in STORY:
     s['tasks'] = [dict(id=t[0], need=t[1], label=t[2]) for t in s['tasks']]
@@ -167,7 +184,7 @@ chars = J('data/chars.json')
 for g in GUESTS:
     assert g['char'] in chars, ('손님 그림 없음', g['char'])
     for n in g['likes'] + g['gifts']: assert n in byid, ('손님 가구 없음', g['id'], n)
-D = dict(version=2, note='[제안] 우리 집 2.0 데이터. tools/housing_build.py 로 생성.', levels=levels, formula=dict(set=[[3, 0.10], [5, 0.25], ['all', 0.60]], harmony=30, style=30, fill=40, life=20), sizeF=SIZE_F, geom=dict(RW=340, RH=440, WALLH=150),
+D = dict(version=2, note='[제안] 우리 집 2.0 데이터. tools/housing_build.py 로 생성.', levels=levels, levelsKid=levelsKid, formula=dict(set=[[3, 0.10], [5, 0.25], ['all', 0.60]], harmony=30, style=30, fill=40, life=20), sizeF=SIZE_F, geom=dict(RW=340, RH=440, WALLH=150),
          rooms=mkrooms('adult') + mkrooms('kid'), story=STORY, guests=GUESTS, unlockLv={'adult': {'kitchen': 3, 'semo': 5, 'dong': 8, 'yard': 10, 'entrance': 12, 'upstairs': 15, 'roof': 20}, 'kid': {'kid': 3, 'wardrobe': 6, 'dining': 9, 'toyroom': 12}})
 json.dump(D, open('data/housing.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('src 앱별', dict(collections.Counter(i['src']['game'] for i in items))); print('housing.json 방', len(D['rooms']), '장', len(STORY), '손님', len(GUESTS), 'T(30)', T(30), 'T(10)', T(10), 'T(20)', T(20))

@@ -199,7 +199,8 @@
     "t": 6,
     "hint": "합치기 · 네모 6단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 2,
@@ -232,7 +233,8 @@
     "t": 5,
     "hint": "합치기 · 세모 5단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 3,
@@ -264,7 +266,8 @@
     "t": 4,
     "hint": "합치기 · 동그라미 4단계 조각 만들기"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 4,
@@ -297,7 +300,8 @@
     "t": 5,
     "hint": "합치기 · 네모 5단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 5,
@@ -328,7 +332,8 @@
     "t": 4,
     "hint": "합치기 · 세모 4단계 조각 만들기"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 6,
@@ -362,7 +367,8 @@
     "t": 5,
     "hint": "합치기 · 동그라미 5단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": true
   },
   {
    "no": 7,
@@ -394,7 +400,8 @@
     "t": 4,
     "hint": "합치기 · 네모 4단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 8,
@@ -424,7 +431,8 @@
     "t": 3,
     "hint": "합치기 · 세모 3단계 조각 만들기"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 9,
@@ -455,7 +463,8 @@
     "t": 3,
     "hint": "합치기 · 동그라미 3단계 조각 만들기"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 10,
@@ -486,7 +495,8 @@
     "kind": "tier",
     "hint": "합치기 · 아이 방 가구(합치기 보상)"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 11,
@@ -518,7 +528,8 @@
     "n": 2,
     "hint": "놀이터 · 2장 끝"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 12,
@@ -548,7 +559,8 @@
     "n": 1,
     "hint": "놀이터 · 1장 끝"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 13,
@@ -580,7 +592,8 @@
     "n": 1,
     "hint": "색칠북 · 첫 그림 완성"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 14,
@@ -610,7 +623,8 @@
     "kind": "other",
     "hint": "세 가족 식탁 보상"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 15,
@@ -641,7 +655,8 @@
     "kind": "first",
     "hint": "어느 도형 · 처음 열면"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 16,
@@ -671,7 +686,8 @@
     ],
     "hint": "12월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 17,
@@ -702,7 +718,8 @@
     "t": 3,
     "hint": "합치기 · 네모 3단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 18,
@@ -733,7 +750,8 @@
     "t": 6,
     "hint": "합치기 · 세모 6단계 조각 만들기"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 19,
@@ -763,7 +781,8 @@
     "t": 6,
     "hint": "합치기 · 동그라미 6단계 조각 만들기"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 20,
@@ -792,7 +811,8 @@
     "t": 7,
     "hint": "합치기 · 네모 7단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 21,
@@ -821,7 +841,8 @@
     "t": 7,
     "hint": "합치기 · 세모 7단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 22,
@@ -852,7 +873,8 @@
     "t": 7,
     "hint": "합치기 · 동그라미 7단계 조각 만들기"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 23,
@@ -885,7 +907,8 @@
     "kind": "prop",
     "hint": "식탁 · 처음부터 있어요"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 24,
@@ -922,7 +945,8 @@
     "kind": "prop",
     "hint": "식탁 · 네모네 식탁 Lv3"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 25,
@@ -959,7 +983,8 @@
     "kind": "prop",
     "hint": "식탁 · 밥솥 늘리기 3번"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 26,
@@ -993,7 +1018,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「에어컨 리모컨」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 27,
@@ -1027,7 +1053,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「포인트 모으기」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 28,
@@ -1061,7 +1088,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「돋보기」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 29,
@@ -1097,7 +1125,8 @@
     "kind": "prop",
     "hint": "식탁 · 김장 주간 사건"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 30,
@@ -1131,7 +1160,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「혈압약 첫날」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 31,
@@ -1167,7 +1197,8 @@
     "kind": "prop",
     "hint": "식탁 · 막둥이를 모시면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 32,
@@ -1202,7 +1233,8 @@
     "kind": "prop",
     "hint": "식탁 · 꾸미기 팩(준비 중)"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 33,
@@ -1237,7 +1269,8 @@
     "kind": "prop",
     "hint": "식탁 · 처음부터 있어요"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 34,
@@ -1271,7 +1304,8 @@
     "kind": "prop",
     "hint": "식탁 · 여행 가방을 모시면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 35,
@@ -1306,7 +1340,8 @@
     "kind": "prop",
     "hint": "식탁 · 세모네 식탁 Lv3"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 36,
@@ -1340,7 +1375,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「버킷리스트」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 37,
@@ -1376,7 +1412,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「결혼기념일」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 38,
@@ -1410,7 +1447,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「읽씹」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 39,
@@ -1444,7 +1482,8 @@
     "kind": "prop",
     "hint": "식탁 · 연말 사건 ② 술자리 세모"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 40,
@@ -1479,7 +1518,8 @@
     "kind": "prop",
     "hint": "식탁 · 세모네 식탁 Lv8"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 41,
@@ -1513,7 +1553,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「새벽 4시」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 42,
@@ -1546,7 +1587,8 @@
     "kind": "prop",
     "hint": "식탁 · 꾸미기 팩(준비 중)"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 43,
@@ -1581,7 +1623,8 @@
     "kind": "prop",
     "hint": "식탁 · 처음부터 있어요"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 44,
@@ -1615,7 +1658,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「결혼기념일」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 45,
@@ -1649,7 +1693,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「냉장고 정리」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 46,
@@ -1683,7 +1728,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「상갓집」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 47,
@@ -1717,7 +1763,8 @@
     "kind": "prop",
     "hint": "식탁 · 사연 「청첩장」"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 48,
@@ -1751,7 +1798,8 @@
     "kind": "prop",
     "hint": "식탁 · 동그라미 딸을 모시면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 49,
@@ -1785,7 +1833,8 @@
     "kind": "prop",
     "hint": "식탁 · 동그라미 아들을 모시면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 50,
@@ -1821,7 +1870,8 @@
     "kind": "prop",
     "hint": "식탁 · 의자 네 개가 모두 차면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 51,
@@ -1855,7 +1905,8 @@
     "kind": "prop",
     "hint": "식탁 · 누적 온기 10조"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 52,
@@ -1888,7 +1939,8 @@
     "kind": "prop",
     "hint": "식탁 · 꾸미기 팩(준비 중)"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 53,
@@ -1919,7 +1971,8 @@
     "n": 3,
     "hint": "놀이터 · 3장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 54,
@@ -1950,7 +2003,8 @@
     "n": 4,
     "hint": "놀이터 · 4장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 55,
@@ -1981,7 +2035,8 @@
     "n": 5,
     "hint": "놀이터 · 5장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 56,
@@ -2012,7 +2067,8 @@
     "n": 6,
     "hint": "놀이터 · 6장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 57,
@@ -2043,7 +2099,8 @@
     "n": 7,
     "hint": "놀이터 · 7장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 58,
@@ -2074,7 +2131,8 @@
     "n": 8,
     "hint": "놀이터 · 8장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 59,
@@ -2105,7 +2163,8 @@
     "n": 9,
     "hint": "놀이터 · 9장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 60,
@@ -2136,7 +2195,8 @@
     "n": 10,
     "hint": "놀이터 · 10장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 61,
@@ -2168,7 +2228,8 @@
     ],
     "hint": "9~10월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 62,
@@ -2202,7 +2263,8 @@
     ],
     "hint": "1~2월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 63,
@@ -2233,7 +2295,8 @@
     ],
     "hint": "5월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 64,
@@ -2264,7 +2327,8 @@
     "n": 5,
     "hint": "색칠북 · 그림 5장 완성"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 65,
@@ -2295,7 +2359,8 @@
     "n": 10,
     "hint": "색칠북 · 그림 10장 완성"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 66,
@@ -2325,7 +2390,8 @@
     "n": 15,
     "hint": "색칠북 · 그림 15장 완성"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 67,
@@ -2357,7 +2423,8 @@
     "n": 20,
     "hint": "색칠북 · 그림 20장 완성"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 68,
@@ -2387,7 +2454,8 @@
     "n": 30,
     "hint": "색칠북 · 그림 30장 완성"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 69,
@@ -2417,7 +2485,8 @@
     "n": 45,
     "hint": "색칠북 · 그림 45장 완성"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 70,
@@ -2447,7 +2516,8 @@
     "n": 60,
     "hint": "색칠북 · 그림 60장 완성"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 71,
@@ -2476,7 +2546,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 72,
@@ -2505,7 +2576,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 73,
@@ -2534,7 +2606,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 74,
@@ -2562,7 +2635,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 75,
@@ -2590,7 +2664,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 76,
@@ -2618,7 +2693,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 77,
@@ -2646,7 +2722,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 78,
@@ -2674,7 +2751,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 79,
@@ -2702,7 +2780,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 80,
@@ -2730,7 +2809,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 81,
@@ -2758,7 +2838,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 82,
@@ -2786,7 +2867,8 @@
     "kind": "result",
     "hint": "어느 도형 · 테스트 결과"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 83,
@@ -2814,7 +2896,8 @@
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 84,
@@ -2842,7 +2925,8 @@
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 85,
@@ -2870,7 +2954,8 @@
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 86,
@@ -2898,7 +2983,8 @@
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 87,
@@ -2926,7 +3012,8 @@
     "kind": "mini",
     "hint": "어느 도형 · 미니게임 별 2개"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 88,
@@ -2957,7 +3044,8 @@
     "n": 11,
     "hint": "놀이터 · 11장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 89,
@@ -2989,7 +3077,8 @@
     "n": 12,
     "hint": "놀이터 · 12장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 90,
@@ -3021,7 +3110,8 @@
     "n": 13,
     "hint": "놀이터 · 13장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 91,
@@ -3052,7 +3142,8 @@
     "n": 14,
     "hint": "놀이터 · 14장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 92,
@@ -3084,7 +3175,8 @@
     "n": 15,
     "hint": "놀이터 · 15장 끝"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 93,
@@ -3113,7 +3205,8 @@
     "n": 2,
     "hint": "블록 2판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 94,
@@ -3142,7 +3235,8 @@
     "n": 4,
     "hint": "블록 4판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 95,
@@ -3171,7 +3265,8 @@
     "n": 6,
     "hint": "블록 6판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 96,
@@ -3200,7 +3295,8 @@
     "n": 8,
     "hint": "블록 8판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 97,
@@ -3229,7 +3325,8 @@
     "n": 10,
     "hint": "블록 10판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 98,
@@ -3258,7 +3355,8 @@
     "n": 12,
     "hint": "블록 12판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 99,
@@ -3287,7 +3385,8 @@
     "n": 15,
     "hint": "블록 15판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 100,
@@ -3316,7 +3415,8 @@
     "n": 18,
     "hint": "블록 18판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 101,
@@ -3345,7 +3445,8 @@
     "n": 22,
     "hint": "블록 22판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 102,
@@ -3376,7 +3477,8 @@
     "n": 28,
     "hint": "블록 28판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 103,
@@ -3405,7 +3507,8 @@
     "n": 34,
     "hint": "블록 34판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 104,
@@ -3434,7 +3537,8 @@
     "n": 40,
     "hint": "블록 40판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 105,
@@ -3465,7 +3569,8 @@
     "n": 48,
     "hint": "블록 48판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 106,
@@ -3494,7 +3599,8 @@
     "n": 56,
     "hint": "블록 56판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 107,
@@ -3523,7 +3629,8 @@
     "n": 64,
     "hint": "블록 64판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 108,
@@ -3552,7 +3659,8 @@
     "n": 72,
     "hint": "블록 72판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 109,
@@ -3581,7 +3689,8 @@
     "n": 84,
     "hint": "블록 84판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 110,
@@ -3610,7 +3719,8 @@
     "n": 96,
     "hint": "블록 96판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 111,
@@ -3639,7 +3749,8 @@
     "n": 108,
     "hint": "블록 108판"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 112,
@@ -3670,7 +3781,8 @@
     "n": 120,
     "hint": "블록 120판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 113,
@@ -3701,7 +3813,8 @@
     "n": 2,
     "hint": "틀린 그림 2판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 114,
@@ -3732,7 +3845,8 @@
     "n": 5,
     "hint": "틀린 그림 5판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 115,
@@ -3763,7 +3877,8 @@
     "n": 8,
     "hint": "틀린 그림 8판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 116,
@@ -3794,7 +3909,8 @@
     "n": 10,
     "hint": "틀린 그림 10판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 117,
@@ -3825,7 +3941,8 @@
     "n": 13,
     "hint": "틀린 그림 13판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 118,
@@ -3854,7 +3971,8 @@
     "n": 15,
     "hint": "틀린 그림 15판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 119,
@@ -3885,7 +4003,8 @@
     "n": 18,
     "hint": "틀린 그림 18판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 120,
@@ -3916,7 +4035,8 @@
     "n": 20,
     "hint": "틀린 그림 20판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 121,
@@ -3945,7 +4065,8 @@
     "n": 25,
     "hint": "틀린 그림 25판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 122,
@@ -3974,7 +4095,8 @@
     "n": 30,
     "hint": "틀린 그림 30판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 123,
@@ -4003,7 +4125,8 @@
     "n": 36,
     "hint": "틀린 그림 36판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 124,
@@ -4032,7 +4155,8 @@
     "n": 42,
     "hint": "틀린 그림 42판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 125,
@@ -4061,7 +4185,8 @@
     "n": 50,
     "hint": "틀린 그림 50판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 126,
@@ -4090,7 +4215,8 @@
     "n": 58,
     "hint": "틀린 그림 58판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 127,
@@ -4121,7 +4247,8 @@
     "n": 66,
     "hint": "틀린 그림 66판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 128,
@@ -4150,7 +4277,8 @@
     "n": 76,
     "hint": "틀린 그림 76판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 129,
@@ -4181,7 +4309,8 @@
     "n": 88,
     "hint": "틀린 그림 88판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 130,
@@ -4210,7 +4339,8 @@
     "n": 100,
     "hint": "틀린 그림 100판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 131,
@@ -4239,7 +4369,8 @@
     "n": 110,
     "hint": "틀린 그림 110판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 132,
@@ -4268,7 +4399,8 @@
     "n": 120,
     "hint": "틀린 그림 120판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 133,
@@ -4299,7 +4431,8 @@
     "n": 2,
     "hint": "짝 맞추기 2판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 134,
@@ -4328,7 +4461,8 @@
     "n": 5,
     "hint": "짝 맞추기 5판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 135,
@@ -4357,7 +4491,8 @@
     "n": 8,
     "hint": "짝 맞추기 8판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 136,
@@ -4386,7 +4521,8 @@
     "n": 10,
     "hint": "짝 맞추기 10판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 137,
@@ -4415,7 +4551,8 @@
     "n": 13,
     "hint": "짝 맞추기 13판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 138,
@@ -4444,7 +4581,8 @@
     "n": 15,
     "hint": "짝 맞추기 15판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 139,
@@ -4473,7 +4611,8 @@
     "n": 18,
     "hint": "짝 맞추기 18판"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 140,
@@ -4502,7 +4641,8 @@
     "n": 20,
     "hint": "짝 맞추기 20판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 141,
@@ -4531,7 +4671,8 @@
     "n": 25,
     "hint": "짝 맞추기 25판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 142,
@@ -4560,7 +4701,8 @@
     "n": 30,
     "hint": "짝 맞추기 30판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 143,
@@ -4591,7 +4733,8 @@
     "n": 36,
     "hint": "짝 맞추기 36판"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": true
   },
   {
    "no": 144,
@@ -4620,7 +4763,8 @@
     "n": 42,
     "hint": "짝 맞추기 42판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 145,
@@ -4649,7 +4793,8 @@
     "n": 50,
     "hint": "짝 맞추기 50판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 146,
@@ -4678,7 +4823,8 @@
     "n": 58,
     "hint": "짝 맞추기 58판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 147,
@@ -4707,7 +4853,8 @@
     "n": 66,
     "hint": "짝 맞추기 66판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 148,
@@ -4736,7 +4883,8 @@
     "n": 76,
     "hint": "짝 맞추기 76판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 149,
@@ -4765,7 +4913,8 @@
     "n": 88,
     "hint": "짝 맞추기 88판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 150,
@@ -4796,7 +4945,8 @@
     "n": 100,
     "hint": "짝 맞추기 100판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 151,
@@ -4825,7 +4975,8 @@
     "n": 110,
     "hint": "짝 맞추기 110판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 152,
@@ -4854,7 +5005,8 @@
     "n": 120,
     "hint": "짝 맞추기 120판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 153,
@@ -4883,7 +5035,8 @@
     "n": 18,
     "hint": "정리 18판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 154,
@@ -4912,7 +5065,8 @@
     "n": 20,
     "hint": "정리 20판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 155,
@@ -4941,7 +5095,8 @@
     "n": 90,
     "hint": "정리 90판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 156,
@@ -4970,7 +5125,8 @@
     "n": 30,
     "hint": "정리 30판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 157,
@@ -4999,7 +5155,8 @@
     "n": 8,
     "hint": "정리 8판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 158,
@@ -5028,7 +5185,8 @@
     "n": 2,
     "hint": "정리 2판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 159,
@@ -5059,7 +5217,8 @@
     "n": 12,
     "hint": "정리 12판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 160,
@@ -5088,7 +5247,8 @@
     "n": 14,
     "hint": "정리 14판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 161,
@@ -5117,7 +5277,8 @@
     "n": 25,
     "hint": "정리 25판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 162,
@@ -5146,7 +5307,8 @@
     "n": 4,
     "hint": "정리 4판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 163,
@@ -5175,7 +5337,8 @@
     "n": 36,
     "hint": "정리 36판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 164,
@@ -5204,7 +5367,8 @@
     "n": 6,
     "hint": "정리 6판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 165,
@@ -5233,7 +5397,8 @@
     "n": 10,
     "hint": "정리 10판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 166,
@@ -5262,7 +5427,8 @@
     "n": 58,
     "hint": "정리 58판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 167,
@@ -5291,7 +5457,8 @@
     "n": 42,
     "hint": "정리 42판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 168,
@@ -5320,7 +5487,8 @@
     "n": 16,
     "hint": "정리 16판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 169,
@@ -5351,7 +5519,8 @@
     "n": 66,
     "hint": "정리 66판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 170,
@@ -5380,7 +5549,8 @@
     "n": 50,
     "hint": "정리 50판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 171,
@@ -5409,7 +5579,8 @@
     "n": 100,
     "hint": "정리 100판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 172,
@@ -5438,7 +5609,8 @@
     "n": 78,
     "hint": "정리 78판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 173,
@@ -5467,7 +5639,8 @@
     "n": 3,
     "hint": "막둥이의 하루 3판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 174,
@@ -5496,7 +5669,8 @@
     "n": 6,
     "hint": "막둥이의 하루 6판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 175,
@@ -5525,7 +5699,8 @@
     "n": 9,
     "hint": "막둥이의 하루 9판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 176,
@@ -5554,7 +5729,8 @@
     "n": 12,
     "hint": "막둥이의 하루 12판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 177,
@@ -5585,7 +5761,8 @@
     "n": 15,
     "hint": "막둥이의 하루 15판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 178,
@@ -5616,7 +5793,8 @@
     "n": 18,
     "hint": "막둥이의 하루 18판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 179,
@@ -5647,7 +5825,8 @@
     "n": 21,
     "hint": "막둥이의 하루 21판"
    },
-   "cls": "big"
+   "cls": "big",
+   "flat": false
   },
   {
    "no": 180,
@@ -5678,7 +5857,8 @@
     "n": 24,
     "hint": "막둥이의 하루 24판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 181,
@@ -5709,7 +5889,8 @@
     "n": 27,
     "hint": "막둥이의 하루 27판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 182,
@@ -5740,7 +5921,8 @@
     "n": 30,
     "hint": "막둥이의 하루 30판"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 183,
@@ -5769,7 +5951,8 @@
     "n": 33,
     "hint": "막둥이의 하루 33판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 184,
@@ -5800,7 +5983,8 @@
     "n": 39,
     "hint": "막둥이의 하루 39판"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": true
   },
   {
    "no": 185,
@@ -5831,7 +6015,8 @@
     "n": 42,
     "hint": "막둥이의 하루 42판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 186,
@@ -5860,7 +6045,8 @@
     "n": 36,
     "hint": "막둥이의 하루 36판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 187,
@@ -5889,7 +6075,8 @@
     "n": 45,
     "hint": "막둥이의 하루 45판"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 188,
@@ -5920,7 +6107,8 @@
     "n": 48,
     "hint": "막둥이의 하루 48판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 189,
@@ -5951,7 +6139,8 @@
     "n": 51,
     "hint": "막둥이의 하루 51판"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 190,
@@ -5980,7 +6169,8 @@
     "n": 54,
     "hint": "막둥이의 하루 54판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 191,
@@ -6009,7 +6199,8 @@
     "n": 57,
     "hint": "막둥이의 하루 57판"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 192,
@@ -6038,7 +6229,8 @@
     "n": 60,
     "hint": "막둥이의 하루 60판"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 193,
@@ -6066,7 +6258,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 194,
@@ -6094,7 +6287,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 195,
@@ -6124,7 +6318,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 196,
@@ -6154,7 +6349,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 197,
@@ -6182,7 +6378,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 198,
@@ -6210,7 +6407,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 199,
@@ -6238,7 +6436,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 200,
@@ -6266,7 +6465,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 201,
@@ -6294,7 +6494,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 202,
@@ -6322,7 +6523,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 203,
@@ -6352,7 +6554,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 204,
@@ -6380,7 +6583,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 205,
@@ -6408,7 +6612,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 206,
@@ -6436,7 +6641,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 207,
@@ -6464,7 +6670,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 208,
@@ -6492,7 +6699,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 209,
@@ -6520,7 +6728,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 210,
@@ -6548,7 +6757,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 211,
@@ -6578,7 +6788,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 212,
@@ -6608,7 +6819,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 213,
@@ -6636,7 +6848,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 214,
@@ -6664,7 +6877,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 215,
@@ -6692,7 +6906,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 216,
@@ -6720,7 +6935,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 217,
@@ -6748,7 +6964,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 218,
@@ -6776,7 +6993,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 219,
@@ -6804,7 +7022,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 220,
@@ -6832,7 +7051,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 221,
@@ -6860,7 +7080,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 222,
@@ -6888,7 +7109,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 223,
@@ -6916,7 +7138,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 224,
@@ -6944,7 +7167,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 225,
@@ -6974,7 +7198,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 226,
@@ -7002,7 +7227,8 @@
     "kind": "card",
     "hint": "이야기 카드 4장 모으기(그 옛이야기)"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 227,
@@ -7039,7 +7265,8 @@
     ],
     "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 228,
@@ -7076,7 +7303,8 @@
     ],
     "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": true
   },
   {
    "no": 229,
@@ -7113,7 +7341,8 @@
     ],
     "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 230,
@@ -7150,7 +7379,8 @@
     ],
     "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 231,
@@ -7187,7 +7417,8 @@
     ],
     "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 232,
@@ -7224,7 +7455,8 @@
     ],
     "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 233,
@@ -7261,7 +7493,8 @@
     ],
     "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 234,
@@ -7298,7 +7531,8 @@
     ],
     "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 235,
@@ -7335,7 +7569,8 @@
     ],
     "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 236,
@@ -7372,7 +7607,8 @@
     ],
     "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 237,
@@ -7409,7 +7645,8 @@
     ],
     "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 238,
@@ -7446,7 +7683,8 @@
     ],
     "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 239,
@@ -7483,7 +7721,8 @@
     ],
     "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 240,
@@ -7522,7 +7761,8 @@
     ],
     "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 241,
@@ -7561,7 +7801,8 @@
     ],
     "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 242,
@@ -7598,7 +7839,8 @@
     ],
     "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 243,
@@ -7635,7 +7877,8 @@
     ],
     "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 244,
@@ -7672,7 +7915,8 @@
     ],
     "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 245,
@@ -7709,7 +7953,8 @@
     ],
     "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 246,
@@ -7746,7 +7991,8 @@
     ],
     "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": true
   },
   {
    "no": 247,
@@ -7779,7 +8025,8 @@
     ],
     "hint": "1월 기념일에 집에 오면"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 248,
@@ -7812,7 +8059,8 @@
     ],
     "hint": "1월 기념일에 집에 오면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 249,
@@ -7847,7 +8095,8 @@
     ],
     "hint": "5월 기념일에 집에 오면"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 250,
@@ -7880,7 +8129,8 @@
     ],
     "hint": "5월 기념일에 집에 오면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 251,
@@ -7913,7 +8163,8 @@
     ],
     "hint": "5월 기념일에 집에 오면"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 252,
@@ -7946,7 +8197,8 @@
     ],
     "hint": "5월 기념일에 집에 오면"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 253,
@@ -7979,7 +8231,8 @@
     ],
     "hint": "10월 기념일에 집에 오면"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 254,
@@ -8012,7 +8265,8 @@
     ],
     "hint": "10월 기념일에 집에 오면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 255,
@@ -8045,7 +8299,8 @@
     ],
     "hint": "12월 기념일에 집에 오면"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 256,
@@ -8078,7 +8333,8 @@
     ],
     "hint": "12월 기념일에 집에 오면"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 257,
@@ -8111,7 +8367,8 @@
     ],
     "hint": "12월 기념일에 집에 오면"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 258,
@@ -8144,7 +8401,8 @@
     ],
     "hint": "12월 기념일에 집에 오면"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 259,
@@ -8172,7 +8430,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 260,
@@ -8200,7 +8459,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 261,
@@ -8228,7 +8488,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 262,
@@ -8256,7 +8517,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 263,
@@ -8286,7 +8548,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 264,
@@ -8314,7 +8577,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 265,
@@ -8342,7 +8606,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 266,
@@ -8370,7 +8635,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 267,
@@ -8400,7 +8666,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 268,
@@ -8428,7 +8695,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 269,
@@ -8456,7 +8724,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 270,
@@ -8484,7 +8753,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 271,
@@ -8514,7 +8784,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 272,
@@ -8542,7 +8813,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "prop"
+   "cls": "prop",
+   "flat": false
   },
   {
    "no": 273,
@@ -8579,7 +8851,8 @@
     ],
     "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 274,
@@ -8616,7 +8889,8 @@
     ],
     "hint": "3~5월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 275,
@@ -8653,7 +8927,8 @@
     ],
     "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 276,
@@ -8690,7 +8965,8 @@
     ],
     "hint": "6~8월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 277,
@@ -8727,7 +9003,8 @@
     ],
     "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 278,
@@ -8764,7 +9041,8 @@
     ],
     "hint": "9~11월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 279,
@@ -8801,7 +9079,8 @@
     ],
     "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   },
   {
    "no": 280,
@@ -8838,7 +9117,8 @@
     ],
     "hint": "12월·1월·2월에 집에 놀러 오면 · 계절 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 281,
@@ -8866,7 +9146,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 282,
@@ -8894,7 +9175,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 283,
@@ -8922,7 +9204,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 284,
@@ -8952,7 +9235,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 285,
@@ -8980,7 +9264,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 286,
@@ -9010,7 +9295,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "small"
+   "cls": "small",
+   "flat": false
   },
   {
    "no": 287,
@@ -9038,7 +9324,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "wall"
+   "cls": "wall",
+   "flat": false
   },
   {
    "no": 288,
@@ -9068,7 +9355,8 @@
     "kind": "guest",
     "hint": "집에 손님이 놀러 오면 선물"
    },
-   "cls": "mid"
+   "cls": "mid",
+   "flat": false
   }
  ],
  "meTypes": {

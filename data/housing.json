@@ -12,115 +12,197 @@
   },
   {
    "lv": 3,
-   "cozy": 23
+   "cozy": 24
   },
   {
    "lv": 4,
-   "cozy": 46
+   "cozy": 48
   },
   {
    "lv": 5,
-   "cozy": 75
+   "cozy": 78
   },
   {
    "lv": 6,
-   "cozy": 110
+   "cozy": 114
   },
   {
    "lv": 7,
-   "cozy": 149
+   "cozy": 156
   },
   {
    "lv": 8,
-   "cozy": 194
+   "cozy": 202
   },
   {
    "lv": 9,
-   "cozy": 244
+   "cozy": 254
   },
   {
    "lv": 10,
-   "cozy": 297
+   "cozy": 310
   },
   {
    "lv": 11,
-   "cozy": 356
+   "cozy": 371
   },
   {
    "lv": 12,
-   "cozy": 418
+   "cozy": 436
   },
   {
    "lv": 13,
-   "cozy": 485
+   "cozy": 506
   },
   {
    "lv": 14,
-   "cozy": 556
+   "cozy": 579
   },
   {
    "lv": 15,
-   "cozy": 630
+   "cozy": 657
   },
   {
    "lv": 16,
-   "cozy": 709
+   "cozy": 739
   },
   {
    "lv": 17,
-   "cozy": 791
+   "cozy": 825
   },
   {
    "lv": 18,
-   "cozy": 877
+   "cozy": 914
   },
   {
    "lv": 19,
-   "cozy": 967
+   "cozy": 1007
   },
   {
    "lv": 20,
-   "cozy": 1060
+   "cozy": 1104
   },
   {
    "lv": 21,
-   "cozy": 1156
+   "cozy": 1205
   },
   {
    "lv": 22,
-   "cozy": 1256
+   "cozy": 1309
   },
   {
    "lv": 23,
-   "cozy": 1359
+   "cozy": 1417
   },
   {
    "lv": 24,
-   "cozy": 1466
+   "cozy": 1528
   },
   {
    "lv": 25,
-   "cozy": 1576
+   "cozy": 1643
   },
   {
    "lv": 26,
-   "cozy": 1689
+   "cozy": 1761
   },
   {
    "lv": 27,
-   "cozy": 1806
+   "cozy": 1882
   },
   {
    "lv": 28,
-   "cozy": 1926
+   "cozy": 2007
   },
   {
    "lv": 29,
-   "cozy": 2048
+   "cozy": 2135
   },
   {
    "lv": 30,
-   "cozy": 2174
+   "cozy": 2266
+  }
+ ],
+ "levelsKid": [
+  {
+   "lv": 1,
+   "cozy": 0
+  },
+  {
+   "lv": 2,
+   "cozy": 6
+  },
+  {
+   "lv": 3,
+   "cozy": 20
+  },
+  {
+   "lv": 4,
+   "cozy": 41
+  },
+  {
+   "lv": 5,
+   "cozy": 66
+  },
+  {
+   "lv": 6,
+   "cozy": 97
+  },
+  {
+   "lv": 7,
+   "cozy": 133
+  },
+  {
+   "lv": 8,
+   "cozy": 172
+  },
+  {
+   "lv": 9,
+   "cozy": 216
+  },
+  {
+   "lv": 10,
+   "cozy": 264
+  },
+  {
+   "lv": 11,
+   "cozy": 315
+  },
+  {
+   "lv": 12,
+   "cozy": 371
+  },
+  {
+   "lv": 13,
+   "cozy": 430
+  },
+  {
+   "lv": 14,
+   "cozy": 492
+  },
+  {
+   "lv": 15,
+   "cozy": 558
+  },
+  {
+   "lv": 16,
+   "cozy": 628
+  },
+  {
+   "lv": 17,
+   "cozy": 701
+  },
+  {
+   "lv": 18,
+   "cozy": 777
+  },
+  {
+   "lv": 19,
+   "cozy": 856
+  },
+  {
+   "lv": 20,
+   "cozy": 938
   }
  ],
  "formula": {
@@ -169,38 +251,101 @@
    "anchors": [
     {
      "id": "nemo_1",
-     "slot": "wall",
-     "x": 84,
-     "y": 118,
-     "want": "a_frame"
+     "slot": "floor",
+     "x": 90,
+     "y": 298,
+     "want": "b_tv"
     },
     {
      "id": "nemo_2",
-     "slot": "wall",
-     "x": 166,
-     "y": 124,
-     "want": "u_shelf"
+     "slot": "floor",
+     "x": 250,
+     "y": 298,
+     "want": "b_sofa"
     },
     {
      "id": "nemo_3",
      "slot": "floor",
-     "x": 112,
-     "y": 392,
+     "x": 90,
+     "y": 368,
      "want": "b_table"
     },
     {
      "id": "nemo_4",
      "slot": "floor",
-     "x": 252,
-     "y": 340,
-     "want": "b_sofa"
+     "x": 250,
+     "y": 368,
+     "want": "b_plant"
     },
     {
      "id": "nemo_5",
      "slot": "floor",
-     "x": 62,
-     "y": 318,
-     "want": "b_drawer"
+     "x": 58,
+     "y": 428,
+     "want": "b_lamp"
+    },
+    {
+     "id": "nemo_6",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "u_toybox"
+    },
+    {
+     "id": "nemo_7",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "g_cushion"
+    },
+    {
+     "id": "nemo_8",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "a_frame"
+    },
+    {
+     "id": "nemo_9",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "a_photo"
+    },
+    {
+     "id": "nemo_10",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "a_calendar"
+    },
+    {
+     "id": "nemo_11",
+     "slot": "table",
+     "x": 67,
+     "y": 227,
+     "want": "p_remote"
+    },
+    {
+     "id": "nemo_12",
+     "slot": "table",
+     "x": 113,
+     "y": 227,
+     "want": "p_photo"
+    },
+    {
+     "id": "nemo_13",
+     "slot": "table",
+     "x": 65,
+     "y": 305,
+     "want": "p_pack1"
+    },
+    {
+     "id": "nemo_14",
+     "slot": "table",
+     "x": 115,
+     "y": 305,
+     "want": "p_points"
     }
    ]
   },
@@ -222,7 +367,7 @@
      "h": 48,
      "surf": {
       "y": 196,
-      "x0": 80,
+      "x0": 84,
       "x1": 262
      }
     }
@@ -231,37 +376,100 @@
     {
      "id": "kitchen_1",
      "slot": "floor",
-     "x": 300,
-     "y": 330,
+     "x": 170,
+     "y": 298,
      "want": "u_fridge"
     },
     {
      "id": "kitchen_2",
      "slot": "floor",
-     "x": 160,
-     "y": 392,
-     "want": "t_bowl"
+     "x": 58,
+     "y": 368,
+     "want": "u_drawer"
     },
     {
      "id": "kitchen_3",
+     "slot": "floor",
+     "x": 170,
+     "y": 368,
+     "want": "u_cart"
+    },
+    {
+     "id": "kitchen_4",
+     "slot": "floor",
+     "x": 282,
+     "y": 368,
+     "want": "t_bowl"
+    },
+    {
+     "id": "kitchen_5",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "u_crate"
+    },
+    {
+     "id": "kitchen_6",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "u_basket"
+    },
+    {
+     "id": "kitchen_7",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "u_umbrella"
+    },
+    {
+     "id": "kitchen_8",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "u_sidedish"
+    },
+    {
+     "id": "kitchen_9",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "u_shelf"
+    },
+    {
+     "id": "kitchen_10",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "u_label"
+    },
+    {
+     "id": "kitchen_11",
      "slot": "table",
-     "x": 150,
+     "x": 106,
      "y": 196,
      "want": "p_rice"
     },
     {
-     "id": "kitchen_4",
-     "slot": "wall",
-     "x": 180,
-     "y": 120,
-     "want": "u_sidedish"
-    },
-    {
-     "id": "kitchen_5",
+     "id": "kitchen_12",
      "slot": "table",
-     "x": 220,
+     "x": 151,
      "y": 196,
      "want": "p_kimchi"
+    },
+    {
+     "id": "kitchen_13",
+     "slot": "table",
+     "x": 195,
+     "y": 196,
+     "want": "p_mix"
+    },
+    {
+     "id": "kitchen_14",
+     "slot": "table",
+     "x": 240,
+     "y": 196,
+     "want": "p_lunch"
     }
    ]
   },
@@ -277,52 +485,115 @@
    "fixtures": [
     {
      "k": "desk",
-     "x": 70,
+     "x": 60,
      "y": 236,
-     "w": 150,
+     "w": 160,
      "h": 44,
      "surf": {
       "y": 236,
-      "x0": 80,
-      "x1": 210
+      "x0": 74,
+      "x1": 214
      }
     }
    ],
    "anchors": [
     {
      "id": "semo_1",
-     "slot": "wall",
-     "x": 100,
-     "y": 124,
-     "want": "a_map"
+     "slot": "floor",
+     "x": 90,
+     "y": 298,
+     "want": "b_semo_home"
     },
     {
      "id": "semo_2",
      "slot": "floor",
-     "x": 270,
-     "y": 352,
-     "want": "b_suitcase"
+     "x": 250,
+     "y": 298,
+     "want": "a_shelf"
     },
     {
      "id": "semo_3",
-     "slot": "table",
-     "x": 140,
-     "y": 236,
-     "want": "p_world"
+     "slot": "floor",
+     "x": 90,
+     "y": 368,
+     "want": "b_suitcase"
     },
     {
      "id": "semo_4",
      "slot": "floor",
-     "x": 60,
-     "y": 360,
-     "want": "b_lamp"
+     "x": 250,
+     "y": 368,
+     "want": "a_camera"
     },
     {
      "id": "semo_5",
      "slot": "floor",
-     "x": 190,
-     "y": 408,
-     "want": "a_camera"
+     "x": 58,
+     "y": 428,
+     "want": "a_album"
+    },
+    {
+     "id": "semo_6",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "a_scrapbook"
+    },
+    {
+     "id": "semo_7",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "a_trophy"
+    },
+    {
+     "id": "semo_8",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "a_map"
+    },
+    {
+     "id": "semo_9",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "a_polaroid"
+    },
+    {
+     "id": "semo_10",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "a_postcard"
+    },
+    {
+     "id": "semo_11",
+     "slot": "table",
+     "x": 92,
+     "y": 236,
+     "want": "p_world"
+    },
+    {
+     "id": "semo_12",
+     "slot": "table",
+     "x": 126,
+     "y": 236,
+     "want": "p_pass"
+    },
+    {
+     "id": "semo_13",
+     "slot": "table",
+     "x": 162,
+     "y": 236,
+     "want": "p_bagt"
+    },
+    {
+     "id": "semo_14",
+     "slot": "table",
+     "x": 196,
+     "y": 236,
+     "want": "p_globe"
     }
    ]
   },
@@ -338,14 +609,14 @@
    "fixtures": [
     {
      "k": "desk",
-     "x": 150,
+     "x": 160,
      "y": 232,
-     "w": 150,
+     "w": 160,
      "h": 44,
      "surf": {
       "y": 232,
-      "x0": 160,
-      "x1": 290
+      "x0": 174,
+      "x1": 314
      }
     }
    ],
@@ -353,37 +624,100 @@
     {
      "id": "dong_1",
      "slot": "floor",
-     "x": 66,
-     "y": 330,
+     "x": 90,
+     "y": 298,
      "want": "b_shelf"
     },
     {
      "id": "dong_2",
      "slot": "floor",
-     "x": 200,
-     "y": 404,
-     "want": "p_chair"
+     "x": 250,
+     "y": 298,
+     "want": "b_dong_study"
     },
     {
      "id": "dong_3",
-     "slot": "wall",
-     "x": 130,
-     "y": 112,
-     "want": "b_clock"
+     "slot": "floor",
+     "x": 90,
+     "y": 368,
+     "want": "b_globe"
     },
     {
      "id": "dong_4",
      "slot": "floor",
-     "x": 292,
-     "y": 348,
-     "want": "b_globe"
+     "x": 250,
+     "y": 368,
+     "want": "g_stool"
     },
     {
      "id": "dong_5",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "p_chair"
+    },
+    {
+     "id": "dong_6",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "a_magnifier"
+    },
+    {
+     "id": "dong_7",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "a_diary"
+    },
+    {
+     "id": "dong_8",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "b_clock"
+    },
+    {
+     "id": "dong_9",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "a_ribbon"
+    },
+    {
+     "id": "dong_10",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "a_medal"
+    },
+    {
+     "id": "dong_11",
      "slot": "table",
-     "x": 220,
+     "x": 192,
      "y": 232,
      "want": "p_book"
+    },
+    {
+     "id": "dong_12",
+     "slot": "table",
+     "x": 226,
+     "y": 232,
+     "want": "p_vio"
+    },
+    {
+     "id": "dong_13",
+     "slot": "table",
+     "x": 262,
+     "y": 232,
+     "want": "p_flower"
+    },
+    {
+     "id": "dong_14",
+     "slot": "table",
+     "x": 296,
+     "y": 232,
+     "want": "p_env"
     }
    ]
   },
@@ -396,35 +730,125 @@
    "floor": "#B4DE98",
    "pattern": "none",
    "floorKind": "grass",
-   "fixtures": [],
+   "fixtures": [
+    {
+     "k": "table",
+     "x": 90,
+     "y": 228,
+     "w": 150,
+     "h": 40,
+     "surf": {
+      "y": 228,
+      "x0": 100,
+      "x1": 226
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "yard_1",
      "slot": "floor",
-     "x": 70,
-     "y": 340,
+     "x": 90,
+     "y": 298,
      "want": "o_fence"
     },
     {
      "id": "yard_2",
      "slot": "floor",
-     "x": 190,
-     "y": 400,
-     "want": "m_bench"
+     "x": 250,
+     "y": 298,
+     "want": "m_garden"
     },
     {
      "id": "yard_3",
      "slot": "floor",
-     "x": 288,
-     "y": 350,
-     "want": "o_mailbox"
+     "x": 90,
+     "y": 368,
+     "want": "m_bench"
     },
     {
      "id": "yard_4",
      "slot": "floor",
      "x": 250,
-     "y": 300,
-     "want": "m_garden"
+     "y": 368,
+     "want": "o_mailbox"
+    },
+    {
+     "id": "yard_5",
+     "slot": "floor",
+     "x": 48,
+     "y": 428,
+     "want": "m_jar"
+    },
+    {
+     "id": "yard_6",
+     "slot": "floor",
+     "x": 128,
+     "y": 428,
+     "want": "m_cat"
+    },
+    {
+     "id": "yard_7",
+     "slot": "floor",
+     "x": 214,
+     "y": 428,
+     "want": "m_sunflower"
+    },
+    {
+     "id": "yard_8",
+     "slot": "floor",
+     "x": 296,
+     "y": 428,
+     "want": "m_flowerrow"
+    },
+    {
+     "id": "yard_9",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "o_sign"
+    },
+    {
+     "id": "yard_10",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "o_lantern"
+    },
+    {
+     "id": "yard_11",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "m_laundry"
+    },
+    {
+     "id": "yard_12",
+     "slot": "table",
+     "x": 116,
+     "y": 228,
+     "want": "u_eggtray"
+    },
+    {
+     "id": "yard_13",
+     "slot": "table",
+     "x": 147,
+     "y": 228,
+     "want": "p_label"
+    },
+    {
+     "id": "yard_14",
+     "slot": "table",
+     "x": 179,
+     "y": 228,
+     "want": "p_tea"
+    },
+    {
+     "id": "yard_15",
+     "slot": "table",
+     "x": 210,
+     "y": 228,
+     "want": "g_teaset"
     }
    ]
   },
@@ -437,35 +861,118 @@
    "floor": "#CBA980",
    "pattern": "square",
    "floorKind": "tile",
-   "fixtures": [],
+   "fixtures": [
+    {
+     "k": "counter",
+     "x": 150,
+     "y": 220,
+     "w": 170,
+     "h": 44,
+     "surf": {
+      "y": 220,
+      "x0": 164,
+      "x1": 306
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "entrance_1",
-     "slot": "wall",
-     "x": 110,
-     "y": 118,
-     "want": "n_plate"
+     "slot": "floor",
+     "x": 90,
+     "y": 298,
+     "want": "u_shoerack"
     },
     {
      "id": "entrance_2",
      "slot": "floor",
-     "x": 80,
-     "y": 340,
-     "want": "u_shoerack"
+     "x": 250,
+     "y": 298,
+     "want": "u_closet"
     },
     {
      "id": "entrance_3",
-     "slot": "wall",
-     "x": 232,
-     "y": 122,
-     "want": "q_plate_nemo"
+     "slot": "floor",
+     "x": 90,
+     "y": 368,
+     "want": "o_doghouse"
     },
     {
      "id": "entrance_4",
      "slot": "floor",
      "x": 250,
-     "y": 396,
-     "want": "o_doghouse"
+     "y": 368,
+     "want": "o_flowerpot"
+    },
+    {
+     "id": "entrance_5",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "q_game_1"
+    },
+    {
+     "id": "entrance_6",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "q_game_2"
+    },
+    {
+     "id": "entrance_7",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "q_game_3"
+    },
+    {
+     "id": "entrance_8",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "n_plate"
+    },
+    {
+     "id": "entrance_9",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "q_plate_nemo"
+    },
+    {
+     "id": "entrance_10",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "u_bagrack"
+    },
+    {
+     "id": "entrance_11",
+     "slot": "table",
+     "x": 182,
+     "y": 220,
+     "want": "u_env"
+    },
+    {
+     "id": "entrance_12",
+     "slot": "table",
+     "x": 217,
+     "y": 220,
+     "want": "u_pill"
+    },
+    {
+     "id": "entrance_13",
+     "slot": "table",
+     "x": 253,
+     "y": 220,
+     "want": "u_socks"
+    },
+    {
+     "id": "entrance_14",
+     "slot": "table",
+     "x": 288,
+     "y": 220,
+     "want": "u_coffee"
     }
    ]
   },
@@ -478,28 +985,118 @@
    "floor": "#E5C7B0",
    "pattern": "dot",
    "floorKind": "wood",
-   "fixtures": [],
+   "fixtures": [
+    {
+     "k": "desk",
+     "x": 24,
+     "y": 236,
+     "w": 150,
+     "h": 44,
+     "surf": {
+      "y": 236,
+      "x0": 38,
+      "x1": 164
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "upstairs_1",
      "slot": "floor",
-     "x": 100,
-     "y": 340,
+     "x": 90,
+     "y": 298,
      "want": "b_bed"
     },
     {
      "id": "upstairs_2",
      "slot": "floor",
-     "x": 270,
-     "y": 340,
-     "want": "u_closet"
+     "x": 250,
+     "y": 298,
+     "want": "b_rug"
     },
     {
      "id": "upstairs_3",
      "slot": "floor",
-     "x": 190,
-     "y": 408,
-     "want": "a_diary"
+     "x": 90,
+     "y": 368,
+     "want": "u_box"
+    },
+    {
+     "id": "upstairs_4",
+     "slot": "floor",
+     "x": 250,
+     "y": 368,
+     "want": "t_pino_a"
+    },
+    {
+     "id": "upstairs_5",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "t_sun_a"
+    },
+    {
+     "id": "upstairs_6",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "t_ant_a"
+    },
+    {
+     "id": "upstairs_7",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "t_jack_a"
+    },
+    {
+     "id": "upstairs_8",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "a_garland"
+    },
+    {
+     "id": "upstairs_9",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "a_cork"
+    },
+    {
+     "id": "upstairs_10",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "a_film"
+    },
+    {
+     "id": "upstairs_11",
+     "slot": "table",
+     "x": 54,
+     "y": 236,
+     "want": "p_phone"
+    },
+    {
+     "id": "upstairs_12",
+     "slot": "table",
+     "x": 85,
+     "y": 236,
+     "want": "p_film"
+    },
+    {
+     "id": "upstairs_13",
+     "slot": "table",
+     "x": 117,
+     "y": 236,
+     "want": "p_pair"
+    },
+    {
+     "id": "upstairs_14",
+     "slot": "table",
+     "x": 148,
+     "y": 236,
+     "want": "p_ramen"
     }
    ]
   },
@@ -512,21 +1109,118 @@
    "floor": "#CFC8BE",
    "pattern": "none",
    "floorKind": "tile",
-   "fixtures": [],
+   "fixtures": [
+    {
+     "k": "table",
+     "x": 190,
+     "y": 232,
+     "w": 140,
+     "h": 40,
+     "surf": {
+      "y": 232,
+      "x0": 200,
+      "x1": 318
+     }
+    }
+   ],
    "anchors": [
     {
      "id": "roof_1",
      "slot": "floor",
      "x": 90,
-     "y": 372,
+     "y": 298,
      "want": "s_tree"
     },
     {
      "id": "roof_2",
      "slot": "floor",
-     "x": 240,
-     "y": 392,
+     "x": 250,
+     "y": 298,
+     "want": "o_bench"
+    },
+    {
+     "id": "roof_3",
+     "slot": "floor",
+     "x": 90,
+     "y": 368,
      "want": "t_pigs_a"
+    },
+    {
+     "id": "roof_4",
+     "slot": "floor",
+     "x": 250,
+     "y": 368,
+     "want": "t_shoes_a"
+    },
+    {
+     "id": "roof_5",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "t_kongjwi_a"
+    },
+    {
+     "id": "roof_6",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "t_heungbu_a"
+    },
+    {
+     "id": "roof_7",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "t_bremen_a"
+    },
+    {
+     "id": "roof_8",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "q_type_nemo0"
+    },
+    {
+     "id": "roof_9",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "q_type_semo0"
+    },
+    {
+     "id": "roof_10",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "q_type_dong0"
+    },
+    {
+     "id": "roof_11",
+     "slot": "table",
+     "x": 215,
+     "y": 232,
+     "want": "p_pack3"
+    },
+    {
+     "id": "roof_12",
+     "slot": "table",
+     "x": 244,
+     "y": 232,
+     "want": "p_pack2"
+    },
+    {
+     "id": "roof_13",
+     "slot": "table",
+     "x": 274,
+     "y": 232,
+     "want": "p_glass"
+    },
+    {
+     "id": "roof_14",
+     "slot": "table",
+     "x": 303,
+     "y": 232,
+     "want": "p_ra"
     }
    ]
   },
@@ -542,78 +1236,108 @@
    "fixtures": [
     {
      "k": "sink",
-     "x": 80,
-     "y": 232,
-     "w": 150,
+     "x": 40,
+     "y": 236,
+     "w": 160,
      "h": 56,
      "surf": {
-      "y": 224,
-      "x0": 96,
-      "x1": 206
-     }
-    },
-    {
-     "k": "shelf",
-     "x": 250,
-     "y": 104,
-     "w": 70,
-     "h": 10,
-     "surf": {
-      "y": 104,
-      "x0": 252,
-      "x1": 316
+      "y": 228,
+      "x0": 64,
+      "x1": 190
      }
     }
    ],
    "anchors": [
     {
      "id": "bath_1",
-     "slot": "table",
-     "x": 130,
-     "y": 224,
-     "want": "y_cup"
+     "slot": "floor",
+     "x": 170,
+     "y": 298,
+     "want": "y_mat"
     },
     {
      "id": "bath_2",
-     "slot": "table",
-     "x": 184,
-     "y": 224,
-     "want": "y_paste"
+     "slot": "floor",
+     "x": 58,
+     "y": 368,
+     "want": "y_duck"
     },
     {
      "id": "bath_3",
-     "slot": "wall",
-     "x": 270,
-     "y": 100,
-     "want": "y_hanger"
+     "slot": "floor",
+     "x": 170,
+     "y": 368,
+     "want": "t_shoes_k"
     },
     {
      "id": "bath_4",
      "slot": "floor",
-     "x": 90,
-     "y": 404,
-     "want": "y_mat"
+     "x": 282,
+     "y": 368,
+     "want": "kc_tube"
     },
     {
      "id": "bath_5",
      "slot": "floor",
-     "x": 250,
-     "y": 392,
-     "want": "y_duck"
+     "x": 58,
+     "y": 428,
+     "want": "kg_ball2"
     },
     {
      "id": "bath_6",
-     "slot": "table",
-     "x": 288,
-     "y": 104,
-     "want": "y_soap"
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "k_ch14"
     },
     {
      "id": "bath_7",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "k_ch10"
+    },
+    {
+     "id": "bath_8",
      "slot": "wall",
-     "x": 130,
+     "x": 52,
+     "y": 108,
+     "want": "y_hanger"
+    },
+    {
+     "id": "bath_9",
+     "slot": "wall",
+     "x": 118,
      "y": 108,
      "want": "y_towel"
+    },
+    {
+     "id": "bath_10",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "y_clock"
+    },
+    {
+     "id": "bath_11",
+     "slot": "table",
+     "x": 85,
+     "y": 228,
+     "want": "y_cup"
+    },
+    {
+     "id": "bath_12",
+     "slot": "table",
+     "x": 127,
+     "y": 228,
+     "want": "y_paste"
+    },
+    {
+     "id": "bath_13",
+     "slot": "table",
+     "x": 169,
+     "y": 228,
+     "want": "y_soap"
     }
    ]
   },
@@ -638,50 +1362,104 @@
       "x0": 40,
       "x1": 160
      }
+    },
+    {
+     "k": "desk",
+     "x": 214,
+     "y": 236,
+     "w": 110,
+     "h": 40,
+     "surf": {
+      "y": 236,
+      "x0": 226,
+      "x1": 312
+     }
     }
    ],
    "anchors": [
     {
      "id": "kid_1",
      "slot": "floor",
-     "x": 84,
-     "y": 322,
-     "want": "y_pillow"
+     "x": 90,
+     "y": 298,
+     "want": "y_toybox"
     },
     {
      "id": "kid_2",
      "slot": "floor",
-     "x": 140,
-     "y": 330,
-     "want": "y_quilt"
+     "x": 250,
+     "y": 298,
+     "want": "k_train"
     },
     {
      "id": "kid_3",
      "slot": "floor",
-     "x": 270,
-     "y": 352,
-     "want": "y_toybox"
+     "x": 58,
+     "y": 368,
+     "want": "k_party"
     },
     {
      "id": "kid_4",
-     "slot": "wall",
-     "x": 150,
-     "y": 116,
-     "want": "w_frame"
+     "slot": "floor",
+     "x": 170,
+     "y": 368,
+     "want": "kg_bear"
     },
     {
      "id": "kid_5",
-     "slot": "wall",
-     "x": 62,
-     "y": 106,
-     "want": "y_moon"
+     "slot": "floor",
+     "x": 282,
+     "y": 368,
+     "want": "kg_drum"
     },
     {
      "id": "kid_6",
      "slot": "floor",
-     "x": 220,
-     "y": 410,
-     "want": "k_party"
+     "x": 58,
+     "y": 428,
+     "want": "t_pigs_k"
+    },
+    {
+     "id": "kid_7",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "y_pillow"
+    },
+    {
+     "id": "kid_8",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "y_quilt"
+    },
+    {
+     "id": "kid_9",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "w_frame"
+    },
+    {
+     "id": "kid_10",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "y_moon"
+    },
+    {
+     "id": "kid_11",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "kg_cloud"
+    },
+    {
+     "id": "kid_12",
+     "slot": "table",
+     "x": 269,
+     "y": 236,
+     "want": "y_book"
     }
    ]
   },
@@ -698,24 +1476,80 @@
    "anchors": [
     {
      "id": "wardrobe_1",
-     "slot": "wall",
+     "slot": "floor",
      "x": 90,
-     "y": 108,
-     "want": "y_hat"
+     "y": 298,
+     "want": "k_ch8"
     },
     {
      "id": "wardrobe_2",
      "slot": "floor",
-     "x": 200,
-     "y": 400,
-     "want": "y_boots"
+     "x": 250,
+     "y": 298,
+     "want": "kc_snowman"
     },
     {
      "id": "wardrobe_3",
      "slot": "floor",
-     "x": 90,
-     "y": 392,
-     "want": "k_train"
+     "x": 58,
+     "y": 368,
+     "want": "y_boots"
+    },
+    {
+     "id": "wardrobe_4",
+     "slot": "floor",
+     "x": 170,
+     "y": 368,
+     "want": "t_snowqueen_k"
+    },
+    {
+     "id": "wardrobe_5",
+     "slot": "floor",
+     "x": 282,
+     "y": 368,
+     "want": "kg_train2"
+    },
+    {
+     "id": "wardrobe_6",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "t_bears_k"
+    },
+    {
+     "id": "wardrobe_7",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "t_hok_k"
+    },
+    {
+     "id": "wardrobe_8",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "t_pino_k"
+    },
+    {
+     "id": "wardrobe_9",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "y_hat"
+    },
+    {
+     "id": "wardrobe_10",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "w_garland"
+    },
+    {
+     "id": "wardrobe_11",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "w_stars"
     }
    ]
   },
@@ -731,38 +1565,115 @@
    "fixtures": [
     {
      "k": "table",
-     "x": 80,
-     "y": 280,
-     "w": 180,
+     "x": 70,
+     "y": 276,
+     "w": 190,
      "h": 56,
      "surf": {
-      "y": 280,
-      "x0": 96,
-      "x1": 250
+      "y": 276,
+      "x0": 92,
+      "x1": 246
      }
     }
    ],
    "anchors": [
     {
      "id": "dining_1",
-     "slot": "table",
-     "x": 130,
-     "y": 280,
-     "want": "y_bowl"
+     "slot": "floor",
+     "x": 90,
+     "y": 298,
+     "want": "k_ch3"
     },
     {
      "id": "dining_2",
-     "slot": "table",
-     "x": 200,
-     "y": 280,
-     "want": "y_spoon"
+     "slot": "floor",
+     "x": 250,
+     "y": 298,
+     "want": "k_ch12"
     },
     {
      "id": "dining_3",
      "slot": "floor",
-     "x": 270,
-     "y": 400,
-     "want": "k_ch3"
+     "x": 58,
+     "y": 368,
+     "want": "t_heungbu_k"
+    },
+    {
+     "id": "dining_4",
+     "slot": "floor",
+     "x": 170,
+     "y": 368,
+     "want": "k_ch15"
+    },
+    {
+     "id": "dining_5",
+     "slot": "floor",
+     "x": 282,
+     "y": 368,
+     "want": "kc_acorn"
+    },
+    {
+     "id": "dining_6",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "t_kongjwi_k"
+    },
+    {
+     "id": "dining_7",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "t_axe_k"
+    },
+    {
+     "id": "dining_8",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "t_ant_k"
+    },
+    {
+     "id": "dining_9",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "w_frame_pink"
+    },
+    {
+     "id": "dining_10",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "w_balloons"
+    },
+    {
+     "id": "dining_11",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "kc_leaf"
+    },
+    {
+     "id": "dining_12",
+     "slot": "table",
+     "x": 118,
+     "y": 276,
+     "want": "y_bowl"
+    },
+    {
+     "id": "dining_13",
+     "slot": "table",
+     "x": 169,
+     "y": 276,
+     "want": "y_spoon"
+    },
+    {
+     "id": "dining_14",
+     "slot": "table",
+     "x": 220,
+     "y": 276,
+     "want": "y_cup2"
     }
    ]
   },
@@ -780,23 +1691,79 @@
     {
      "id": "toyroom_1",
      "slot": "floor",
-     "x": 80,
-     "y": 360,
-     "want": "y_toybox"
+     "x": 90,
+     "y": 298,
+     "want": "k_ch5"
     },
     {
      "id": "toyroom_2",
      "slot": "floor",
-     "x": 200,
-     "y": 404,
-     "want": "y_ball"
+     "x": 250,
+     "y": 298,
+     "want": "k_ch4"
     },
     {
      "id": "toyroom_3",
      "slot": "floor",
-     "x": 270,
-     "y": 340,
-     "want": "k_ch5"
+     "x": 58,
+     "y": 368,
+     "want": "y_ball"
+    },
+    {
+     "id": "toyroom_4",
+     "slot": "floor",
+     "x": 170,
+     "y": 368,
+     "want": "k_ch7"
+    },
+    {
+     "id": "toyroom_5",
+     "slot": "floor",
+     "x": 282,
+     "y": 368,
+     "want": "kc_icecream"
+    },
+    {
+     "id": "toyroom_6",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "t_sun_k"
+    },
+    {
+     "id": "toyroom_7",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "t_jack_k"
+    },
+    {
+     "id": "toyroom_8",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "t_gyeonwoo_k"
+    },
+    {
+     "id": "toyroom_9",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "w_rainbow"
+    },
+    {
+     "id": "toyroom_10",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "w_crown"
+    },
+    {
+     "id": "toyroom_11",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "kg_rainbow"
     }
    ]
   }
@@ -825,23 +1792,23 @@
     {
      "id": "t3",
      "need": [
-      "u_shelf"
-     ],
-     "label": "벽 선반"
-    },
-    {
-     "id": "t4",
-     "need": [
       "b_sofa"
      ],
      "label": "소파"
     },
     {
+     "id": "t4",
+     "need": [
+      "b_tv"
+     ],
+     "label": "TV장"
+    },
+    {
      "id": "t5",
      "need": [
-      "b_drawer"
+      "a_calendar"
      ],
-     "label": "서랍장"
+     "label": "달력"
     }
    ],
    "cuts": [
@@ -1133,9 +2100,9 @@
     {
      "id": "t5",
      "need": [
-      "o_gate"
+      "o_lantern"
      ],
-     "label": "대문"
+     "label": "등불"
     }
    ],
    "cuts": [
@@ -1252,9 +2219,9 @@
     {
      "id": "t3",
      "need": [
-      "a_diary"
+      "t_pino_a"
      ],
-     "label": "일기장"
+     "label": "피노키오 인형"
     },
     {
      "id": "t4",
@@ -1311,9 +2278,9 @@
     {
      "id": "t3",
      "need": [
-      "t_bears_a"
+      "t_shoes_a"
      ],
-     "label": "곰 세 식구 의자"
+     "label": "요정의 작은 구두"
     }
    ],
    "cuts": [
@@ -1452,9 +2419,9 @@
     {
      "id": "t2",
      "need": [
-      "k_train"
+      "k_ch8"
      ],
-     "label": "기차"
+     "label": "밀짚모자 걸이"
     },
     {
      "id": "t3",
@@ -1531,9 +2498,9 @@
     {
      "id": "t1",
      "need": [
-      "y_toybox"
+      "k_ch4"
      ],
-     "label": "장난감 상자"
+     "label": "달 램프"
     },
     {
      "id": "t2",

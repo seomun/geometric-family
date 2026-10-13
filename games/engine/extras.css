@@ -187,3 +187,5 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-pic { font-size: 34px; width: 46px; text-align: center; } .h2-ptx { flex: 1; min-width: 0; } .h2-ptx b { display: block; font-size: 16px; } .h2-ptx small { display: block; opacity: .8; font-weight: 700; line-height: 1.35; }
 .h2-pbar { height: 8px; border-radius: 6px; background: #eadfc4; margin: 6px 0 3px; overflow: hidden; } .h2-pbar i { display: block; height: 100%; background: #6CCB8A; }
 .h2-undo { position: absolute; left: 50%; transform: translateX(-50%); bottom: 54px; z-index: 30; }
+
+.h2-ppv { position: relative; width: 112px; flex: none; border-radius: 12px; overflow: hidden; border: 2px solid #ecd9a8; background: #fff; } .h2-ppv .h2-wrap { margin: 0; } .h2-ppv .h2-pic { position: absolute; left: 4px; top: 2px; font-size: 18px; width: auto; font-style: normal; filter: drop-shadow(0 1px 1px #fff); }

@@ -141,6 +141,15 @@
     for (const sf of sfs) { const sitting = L.filter((q) => Math.abs(q.p.y + geo(q.it).h - sf.y) < 8 && q.p.x >= sf.x0 - 20 && q.p.x <= sf.x1); let x = sf.x0 + 2; sitting.sort((a, b) => a.p.x - b.p.x).forEach((q) => { x = Math.max(x, q.p.x + geo(q.it).w + 6); }); if (x + g.w <= sf.x1 + 6) return { x: Math.round(x), y: Math.round(sf.y - g.h) }; }
     return null;
   };
+  /** 프리셋을 다 모았을 때의 모습(미리보기용 배치 목록) — 실제 배치는 건드리지 않는다 */
+  Room.presetLayout = function (pid) {
+    const P = Room.presets().find((p) => p.id === pid), S = ensure(); if (!P) return []; const keep = S.placed[P.room], list = []; S.placed[P.room] = list;
+    try {
+      P.parts.forEach((q) => { const it = Room.item(q.id); if (!it || q.x == null || it.slot === 'table') return; const g = geo(it); list.push({ id: q.id, x: Math.round(Math.max(4, Math.min(RW - g.w - 4, q.x - g.w / 2))), y: Math.round(q.y - g.h), flip: 0, c: it.colors[0] }); });
+      P.parts.forEach((q) => { const it = Room.item(q.id); if (!it || it.slot !== 'table') return; const pos = surfaceSpot(P.room, it, q.on); if (pos) list.push({ id: q.id, x: pos.x, y: pos.y, flip: 0, c: it.colors[0] }); });
+    } finally { if (keep === undefined) delete S.placed[P.room]; else S.placed[P.room] = keep; }
+    return list.slice();
+  };
   /** 프리셋을 방에 놓는다. 가진 것만 · 이미 다른 방에 있어도 옮긴다 · 겹치는 다른 가구는 비켜 준다. 되돌리기용 스냅샷을 Room._undo 에 둔다. */
   Room.applyPreset = function (pid) {
     const P = Room.presets().find((p) => p.id === pid), S = ensure(); if (!P) return { error: 'no_preset' }; if (!Room.unlockedRooms().some((r) => r.id === P.room)) return { error: 'locked' };
@@ -159,7 +168,7 @@
     el('h2', '', sh, '테마로 꾸미기'); el('p', 'h2-dsub', sh, '가지고 있는 가구만 한 번에 놓아요. 마음에 안 들면 되돌릴 수 있어요.');
     if (!list.length) el('p', 'h2-empty', sh, '이 방엔 아직 테마가 없어요');
     list.forEach((P) => {
-      const st = Room.presetStatus(P.id), c = el('div', 'h2-pcard', sh); el('div', 'h2-pic', c, P.icon); const tx = el('div', 'h2-ptx', c); el('b', '', tx, P.name); el('small', '', tx, P.note);
+      const st = Room.presetStatus(P.id), c = el('div', 'h2-pcard', sh), pvw = el('div', 'h2-ppv', c); R2.draw(pvw, P.room, { mini: true, list: Room.presetLayout(P.id) }); el('i', 'h2-pic', pvw, P.icon); const tx = el('div', 'h2-ptx', c); el('b', '', tx, P.name); el('small', '', tx, P.note);
       const pg = el('div', 'h2-pbar', tx, `<i style="width:${Math.round(st.have / st.total * 100)}%"></i>`); el('small', 'h2-pcnt', tx, `가구 ${st.have}/${st.total}` + (st.missing.length ? ' · 아직 없어요: ' + st.missing.slice(0, 3).join(', ') + (st.missing.length > 3 ? ' 외 ' + (st.missing.length - 3) : '') : ' · 다 모였어요!')); void pg;
       UK.btn({ text: st.have ? '놓기' : '아직 없어요', cls: (st.have ? 'green' : 'ghost') + ' sm', onclick: () => {
         if (!st.have) return; const r = Room.applyPreset(P.id); if (!r.ok) { UK.toast('놓지 못했어요', sc); return; } sc.remove(); try { GF.sfx && GF.sfx('star'); } catch (e) { /* 소리 */ } onDone && onDone(r, P);
@@ -222,7 +231,7 @@
     const wrap = el('div', 'h2-wrap' + (o.mini ? ' mini' : ''), parent), room = el('div', 'h2-room' + (S.light === 'eve' ? ' eve' : ''), wrap); wrap.__room = room; room.__occ = [];
     const fit = () => { const w = wrap.clientWidth || parent.clientWidth || RW, hh = o.maxH || 0, k = Math.min(1.3, w / RW, hh ? hh / RH : 9); room.style.transform = `scale(${k})`; room.__k = k; wrap.style.height = Math.round(RH * k) + 'px'; if (o.fitWidth) wrap.style.width = Math.round(RW * k) + 'px'; }; fit(); setTimeout(fit, 0); wrap.__fit = fit;
     el('div', 'h2-bg', room, bgSVG(R, S.light));
-    let list = (S.placed[R.id] || []);
+    let list = o.list || (S.placed[R.id] || []);
     if (o.dream) list = (R.anchors || []).map((a) => { const r = anchorRect(a); return r ? { id: a.want, x: Math.round(r.x), y: Math.round(r.y), c: (Room.item(a.want) || { colors: ['#fff'] }).colors[0] } : null; }).filter(Boolean);
     const order = list.map((p, i) => ({ p, i, it: Room.item(p.id) })).filter((q) => q.it).sort((a, b) => key(a) - key(b)); const occ = room.__occ;
     order.forEach(({ p, i, it }) => {

@@ -1,0 +1,36 @@
+// 기기 바꾸기 저장 코드(C17) 시험: node tools/backup_check.js — 어른 앱 코드엔 어른 기록만(아이 집·광고·인증 제외) · 지운 뒤 불러오면 복원 · 검사 값 · 다른 그룹 거절 · 불러오기 전 기록 보관 · 아이 앱도 같은 규칙 · 옛 GF1 코드 읽힘
+const { chromium } = require('playwright-core');
+let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
+const mkCode = (obj) => { const j = JSON.stringify(obj); let h = 0xFFFFFFFF; for (let i = 0; i < j.length; i++) { let c = (h ^ j.charCodeAt(i)) & 0xFF; for (let k = 0; k < 8; k++) c = c & 1 ? (c >>> 1) ^ 0xEDB88320 : c >>> 1; h = (h >>> 8) ^ c; } return 'GF2.' + Buffer.from(j, 'utf8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') + '.' + ((h ^ 0xFFFFFFFF) >>> 0).toString(16).padStart(8, '0'); };
+(async () => {
+  const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), ctx = await b.newContext({ viewport: { width: 390, height: 780 } }), p = await ctx.newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.addInitScript(() => { window.__noResume = true; });
+  await p.goto('http://localhost:8765/games/merge/index.html'); await p.waitForTimeout(1600);
+  await p.evaluate(() => { localStorage.setItem('gf:merge:v1', '{"lv":7,"coins":123}'); localStorage.setItem('gf:house:adult:v1', '{"own":["a","b","c"]}'); localStorage.setItem('gf:house:kid:v1', '{"own":["k1"]}'); localStorage.setItem('gf:ads:state', '{"plays":9}'); localStorage.setItem('gfx:slice:auth', '{"access":"SECRET"}'); localStorage.setItem('gfx:slice:v1', '{"cleared":12}'); localStorage.setItem('gf:v1', '{"kidstate":1}'); });
+  const code = await p.evaluate(() => GF.ops.makeAll());
+  ok(/^GF2z?\.[A-Za-z0-9_-]+\.[0-9a-f]{8}$/.test(code), '코드 모양 · ' + code.slice(0, 18) + '… (' + code.length + '자)');
+  const info = await p.evaluate(async (c) => { const r = await GF.ops.readAll(c); return { ok: r.ok, g: r.data && r.data.g, keys: r.data && Object.keys(r.data.k).sort(), sum: r.sum }; }, code);
+  ok(info.ok && info.g === 'adult', '어른 앱 → 어른 코드'); ok(info.keys.includes('gf:merge:v1') && info.keys.includes('gf:house:adult:v1') && info.keys.includes('gfx:slice:v1'), '어른 앱 진행·어른 집·⑪ 진행이 들어감 · ' + info.keys.join(','));
+  ok(!info.keys.includes('gf:house:kid:v1') && !info.keys.includes('gf:v1'), '아이 집·아이 앱 기록은 안 들어감(D12)'); ok(!info.keys.includes('gf:ads:state') && !info.keys.includes('gfx:slice:auth') && !code.includes('SECRET'), '광고 상태·인증 토큰은 안 들어감');
+  await p.evaluate(() => { ['gf:merge:v1', 'gf:house:adult:v1', 'gfx:slice:v1'].forEach((k) => localStorage.removeItem(k)); localStorage.setItem('gf:merge:v1', '{"lv":1}'); });
+  const ap = await p.evaluate(async (c) => { const r = await GF.ops.applyAll(c); return { ok: r.ok, lv: localStorage.getItem('gf:merge:v1'), house: localStorage.getItem('gf:house:adult:v1'), exp: localStorage.getItem('gfx:slice:v1'), kid: localStorage.getItem('gf:house:kid:v1'), undo: !!localStorage.getItem('gf:undo:adult') }; }, code);
+  ok(ap.ok && ap.lv === '{"lv":7,"coins":123}' && ap.house === '{"own":["a","b","c"]}' && ap.exp === '{"cleared":12}', '불러오면 복원'); ok(ap.kid === '{"own":["k1"]}', '아이 집은 건드리지 않음'); ok(ap.undo, '불러오기 전 기록을 보관(되돌리기용)');
+  ok(await p.evaluate(() => { localStorage.setItem('gf:merge:v1', '{"lv":99}'); return GF.ops.undoApply() && localStorage.getItem('gf:merge:v1') === '{"lv":1}'; }), '되돌리기: 불러오기 전 기록으로');
+  const bad = await p.evaluate(async (c) => { const parts = c.split('.'), tamper = parts[0] + '.' + parts[1].slice(0, -3) + (parts[1].slice(-3) === 'AAA' ? 'BBB' : 'AAA') + '.' + parts[2], wrongCrc = parts[0] + '.' + parts[1] + '.' + '00000000'; return [(await GF.ops.readAll(tamper)).err, (await GF.ops.readAll(wrongCrc)).err, (await GF.ops.readAll('hello')).err, (await GF.ops.readAll('')).err]; }, code);
+  ok(bad.every((e) => e === 'bad'), '손댄 코드·검사 값 틀림·엉뚱한 글자는 거절 · ' + bad.join(','));
+  const kidCode = mkCode({ v: 2, g: 'kid', t: 1, k: { 'gf:v1': '{"kid":1}', 'gf:house:kid:v1': '{"own":["k1"]}' } });
+  ok(await p.evaluate(async (c) => (await GF.ops.readAll(c)).err === 'group', kidCode), '아이 기록 코드는 어른 앱에서 거절(group)');
+  const mixed = mkCode({ v: 2, g: 'adult', t: 1, k: { 'gf:merge:v1': '{}', 'gf:house:kid:v1': '{}' } });
+  ok(await p.evaluate(async (c) => (await GF.ops.readAll(c)).err, mixed) === 'bad', '어른 코드에 아이 기록을 섞어 넣어도 거절');
+  ok(await p.evaluate(async () => { const c = GF.ops.makeCode(), r = await GF.ops.readAll(c); const d = r.data && r.data.k; return r.ok && !Object.keys(d).some((k) => k.indexOf('gf:house:kid:') === 0); }), '옛 GF1 코드도 읽히고 아이 집이 빠짐');
+  await p.evaluate(() => { GF.ops.openBackup(); }); await p.waitForTimeout(500);
+  await p.evaluate(() => [...document.querySelectorAll('.uk-btn')].find((x) => /코드 만들기/.test(x.textContent)).click()); await p.waitForTimeout(600);
+  const ui = await p.evaluate(() => { const t = [...document.querySelectorAll('textarea.ops-code')]; return { made: t[0].value.slice(0, 4), file: [...document.querySelectorAll('.xt-btn')].some((x) => /파일로 저장/.test(x.textContent)), pick: [...document.querySelectorAll('.xt-btn')].some((x) => /파일에서 가져오기/.test(x.textContent)) }; });
+  ok(/^GF2/.test(ui.made) && ui.file && ui.pick, '설정 화면: 코드 만들기 · 파일로 저장 · 파일에서 가져오기'); await p.waitForTimeout(700); await p.screenshot({ path: 'notes/snapshots/c17_backup_ui.png' }); await p.evaluate(() => { document.querySelector('.xt-sheet').scrollTop = 9999; }); await p.waitForTimeout(300); await p.screenshot({ path: 'notes/snapshots/c17_backup_ui2.png' });
+  await p.evaluate(() => { const t = document.querySelectorAll('textarea.ops-code'); t[1].value = t[0].value; [...document.querySelectorAll('.uk-btn')].find((x) => /^\s*불러오기/.test(x.textContent)).click(); }); await p.waitForTimeout(700);
+  ok(await p.evaluate(() => /앱 \d+개 · 기록 \d+개/.test(document.body.innerText) && /어른 기록/.test(document.body.innerText)), '불러오기 첫 누름: 무엇이 들어 있는지 보여 주고 한 번 더 확인'); await p.screenshot({ path: 'notes/snapshots/c17_backup_confirm.png' });
+  await p.goto('http://localhost:8765/games/index.html'); await p.waitForTimeout(1600);
+  const kid = await p.evaluate(async () => { if (!GF.ops || !GF.ops.makeAll) return null; const c = await GF.ops.makeAll(), r = await GF.ops.readAll(c); return { kidApp: GF.ops.kid, g: r.data && r.data.g }; });
+  ok(kid && ((kid.kidApp && kid.g === 'kid') || (!kid.kidApp && kid.g === 'adult')), '놀이터 앱: 앱 그룹에 맞는 코드 · ' + JSON.stringify(kid));
+  ok(errs.length === 0, '오류 없음 ' + (errs[0] || '')); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
+})().catch((e) => { console.error(e); process.exit(1); });

@@ -186,22 +186,61 @@
   /* ---------------- 백업 코드(H2): 기기 안에서 내보내기·가져오기, 체크섬. 서버 없음 ---------------- */
   const crc32 = (str) => { let c, crc = 0xFFFFFFFF; for (let i = 0; i < str.length; i++) { c = (crc ^ str.charCodeAt(i)) & 0xFF; for (let k = 0; k < 8; k++) c = c & 1 ? (c >>> 1) ^ 0xEDB88320 : c >>> 1; crc = (crc >>> 8) ^ c; } return ((crc ^ 0xFFFFFFFF) >>> 0).toString(16).padStart(8, '0'); };
   const b64e = (x) => btoa(unescape(encodeURIComponent(x))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''), b64d = (x) => decodeURIComponent(escape(atob(x.replace(/-/g, '+').replace(/_/g, '/'))));
-  const mine = (k) => k.indexOf('gf:' + O.app + ':') === 0 || k.indexOf('gf:house:') === 0 || (O.app === 'play' && k === 'gf:v1');
+  const mine = (k) => k.indexOf('gf:' + O.app + ':') === 0 || k.indexOf('gf:house:' + (O.kid ? 'kid' : 'adult') + ':') === 0 || (!O.kid && k === 'gf:house:v1') || (O.app === 'play' && k === 'gf:v1');      // 어른/아이 기록은 섞지 않는다(D12)
   O.makeCode = function () { const kv = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (mine(k)) kv[k] = localStorage.getItem(k); } const j = JSON.stringify({ a: O.app, t: O._now(), k: kv }); return 'GF1.' + b64e(j) + '.' + crc32(j); };
   /** 코드 검사: {ok, err, data}. err: 'bad'(형식·체크섬) | 'other'(다른 앱) */
   O.readCode = function (code) {
     try { const m = /^GF1\.([A-Za-z0-9_-]+)\.([0-9a-f]{8})$/.exec((code || '').trim()); if (!m) return { ok: false, err: 'bad' }; const j = b64d(m[1]); if (crc32(j) !== m[2]) return { ok: false, err: 'bad' }; const d = JSON.parse(j); if (!d || !d.k) return { ok: false, err: 'bad' }; if (d.a !== O.app) return { ok: false, err: 'other' }; return { ok: true, data: d }; } catch (e) { return { ok: false, err: 'bad' }; }
   };
   O.applyCode = function (code) { const r = O.readCode(code); if (!r.ok) return r; Object.keys(r.data.k).forEach((k) => { if (mine(k)) { try { localStorage.setItem(k, r.data.k[k]); } catch (e) {} } }); return r; };
+
+  /* ---------------- 기기 바꾸기 저장 코드(C17): 이 기기의 앱 진행·집을 한 코드/파일로. 어른 기록과 아이 기록은 따로(D12). 서버 없음 · 검사 값(crc32) · 불러오기 전 기록 보관 ---------------- */
+  const SKIP = /^gf:ads:|auth|:iap$|^gf:undo:|:ui:|^gfx:tip:/;
+  const keyGroup = (k) => { if (!/^gfx?:/.test(k) || SKIP.test(k)) return null; return (k === 'gf:v1' || /^gf:play:/.test(k) || /^gf:house:kid:/.test(k) || /^gf:ip:kid:/.test(k)) ? 'kid' : 'adult'; };
+  const myGroup = () => (O.kid ? 'kid' : 'adult');
+  const dump = (g) => { const kv = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (keyGroup(k) === g) kv[k] = localStorage.getItem(k); } return kv; };
+  const bytesB64 = (u8) => { let bin = ''; for (let i = 0; i < u8.length; i += 8192) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 8192)); return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+  const b64Bytes = (x) => { const bin = atob(x.replace(/-/g, '+').replace(/_/g, '/')), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return u8; };
+  const pipe = async (u8, stream) => new Uint8Array(await new Response(new Blob([u8]).stream().pipeThrough(stream)).arrayBuffer());
+  const canZ = () => typeof CompressionStream === 'function' && typeof DecompressionStream === 'function';
+  const appsOf = (kv) => Object.keys(kv).reduce((a, k) => { const m = /^gf:([a-z]+):/.exec(k); const n = /^gf:house:|^gf:ip:/.test(k) ? 'house' : m && m[1]; if (n && !a.includes(n)) a.push(n); if (/^gfx:/.test(k) && !a.includes('exp')) a.push('exp'); if (k === 'gf:v1' && !a.includes('play')) a.push('play'); return a; }, []);
+  /** 코드 만들기(비동기): 'GF2z.<압축>.<crc>'(압축 가능하면) 또는 'GF2.<본문>.<crc>' */
+  O.makeAll = async function () {
+    const g = myGroup(), kv = dump(g), j = JSON.stringify({ v: 2, g, t: O._now(), k: kv }), u8 = new TextEncoder().encode(j);
+    if (canZ()) { try { return 'GF2z.' + bytesB64(await pipe(u8, new CompressionStream('deflate-raw'))) + '.' + crc32(j); } catch (e) { /* 압축 실패 → 본문 그대로 */ } }
+    return 'GF2.' + b64e(j) + '.' + crc32(j);
+  };
+  /** 코드 검사(비동기): {ok, err, data, sum}. err: 'bad'(형식·체크섬) | 'group'(어른↔아이) | 'other'(GF1 다른 앱) */
+  O.readAll = async function (code) {
+    try {
+      const c = (code || '').replace(/\s+/g, ''); if (/^GF1\./.test(c)) return O.readCode(c);
+      const m = /^GF2(z?)\.([A-Za-z0-9_-]+)\.([0-9a-f]{8})$/.exec(c); if (!m) return { ok: false, err: 'bad' };
+      let j; if (m[1]) { if (!canZ()) return { ok: false, err: 'bad' }; j = new TextDecoder().decode(await pipe(b64Bytes(m[2]), new DecompressionStream('deflate-raw'))); } else j = b64d(m[2]);
+      if (crc32(j) !== m[3]) return { ok: false, err: 'bad' }; const d = JSON.parse(j); if (!d || d.v !== 2 || !d.k || (d.g !== 'adult' && d.g !== 'kid')) return { ok: false, err: 'bad' };
+      if (Object.keys(d.k).some((k) => keyGroup(k) !== d.g)) return { ok: false, err: 'bad' };      // 본문 안에 다른 쪽 기록이 섞이면 거절
+      if (d.g !== myGroup()) return { ok: false, err: 'group', data: d };
+      return { ok: true, data: d, sum: { g: d.g, n: appsOf(d.k).length, k: Object.keys(d.k).length } };
+    } catch (e) { return { ok: false, err: 'bad' }; }
+  };
+  O.applyAll = async function (code) {
+    const r = await O.readAll(code); if (!r.ok) return r; if (!r.data.g) return O.applyCode(code);
+    try { localStorage.setItem('gf:undo:' + r.data.g, JSON.stringify({ t: O._now(), k: dump(r.data.g) })); } catch (e) { /* 보관 실패해도 불러오기는 한다 */ }
+    Object.keys(r.data.k).forEach((k) => { if (keyGroup(k) === r.data.g) { try { localStorage.setItem(k, r.data.k[k]); } catch (e) { /* 용량 */ } } }); return r;
+  };
+  O.undoApply = function () { try { const u = JSON.parse(localStorage.getItem('gf:undo:' + myGroup()) || 'null'); if (!u) return false; Object.keys(u.k).forEach((k) => { if (keyGroup(k) === myGroup()) localStorage.setItem(k, u.k[k]); }); return true; } catch (e) { return false; } };
   const tbtnL = (text, fn) => { const b = el('button', 'xt-btn', null, text); b.onclick = fn; return b; };
   O.openBackup = function () {
     const { body } = sheet(GF.t('ops.backup.title'));
     el('p', 'xt-p', body, GF.t('ops.backup.note'));
-    const out = el('textarea', 'ops-code', body); out.readOnly = true; out.rows = 3; out.style.display = 'none';
+    const out = el('textarea', 'ops-code', body); out.readOnly = true; out.rows = 3; out.style.display = 'none'; let made = '';
     const cp = tbtnL(GF.t('ops.backup.copy'), () => { out.select(); try { navigator.clipboard.writeText(out.value); } catch (e) { try { document.execCommand('copy'); } catch (e2) {} } UK.toast(GF.t('ops.backup.copied'), safe()); }); cp.style.display = 'none';
-    UK.btn({ text: GF.t('ops.backup.make'), cls: 'sky block', onclick: () => { out.value = O.makeCode(); out.style.display = 'block'; out.select(); cp.style.display = 'inline-flex'; } }, body); body.appendChild(cp);
-    el('h4', 'xt-h', body, GF.t('ops.backup.paste')); const inp = el('textarea', 'ops-code', body); inp.rows = 3; const msg = el('p', 'xt-p', body, ''); let armed = false;
-    UK.btn({ text: GF.t('ops.backup.load'), cls: 'ghost block', onclick: () => { const r = O.readCode(inp.value); if (!r.ok) { msg.textContent = GF.t('ops.backup.' + r.err); armed = false; return; } if (!armed) { armed = true; msg.textContent = GF.t('ops.backup.confirm'); return; } O.applyCode(inp.value); msg.textContent = GF.t('ops.backup.ok'); setTimeout(() => location.reload(), 700); } }, body);
+    UK.btn({ text: GF.t('ops.backup.make'), cls: 'sky block', onclick: async () => { made = await O.makeAll(); out.value = made; out.style.display = 'block'; out.select(); cp.style.display = 'inline-flex'; fb.style.display = 'inline-flex'; } }, body); body.appendChild(cp);
+    const fb = tbtnL(GF.t('ops.backup.file'), () => { try { const blob = new Blob([made], { type: 'text/plain' }), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'gf_' + myGroup() + '_' + new Date(O._now()).toISOString().slice(0, 10) + '.gfsave'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); } catch (e) { /* 저장 실패 */ } }); fb.style.display = 'none'; body.appendChild(fb);
+    el('h4', 'xt-h', body, GF.t('ops.backup.paste')); const inp = el('textarea', 'ops-code', body); inp.rows = 3; const msg = el('p', 'xt-p', body, ''); let armed = '';
+    const pick = el('input', 'ops-file', body); pick.type = 'file'; pick.accept = '.gfsave,.txt,text/plain'; pick.style.display = 'none'; const pb = tbtnL(GF.t('ops.backup.pick'), () => pick.click()); body.appendChild(pb);
+    pick.onchange = () => { const f0 = pick.files && pick.files[0]; if (!f0) return; const rd = new FileReader(); rd.onload = () => { inp.value = String(rd.result || '').trim(); armed = ''; msg.textContent = ''; }; rd.readAsText(f0); };
+    UK.btn({ text: GF.t('ops.backup.load'), cls: 'ghost block', onclick: async () => { const r = await O.readAll(inp.value); if (!r.ok) { msg.textContent = GF.t('ops.backup.' + r.err); armed = ''; return; } if (armed !== inp.value) { armed = inp.value; msg.textContent = (r.sum ? GF.t('ops.backup.summary', { g: GF.t('ops.backup.g.' + r.sum.g), n: r.sum.n, k: r.sum.k }) + ' · ' : '') + GF.t('ops.backup.confirm'); return; } await O.applyAll(inp.value); msg.textContent = GF.t('ops.backup.ok'); setTimeout(() => location.reload(), 700); } }, body);
+    if (localStorage.getItem('gf:undo:' + myGroup())) UK.btn({ text: GF.t('ops.backup.undo'), cls: 'ghost block', onclick: () => { if (O.undoApply()) { msg.textContent = GF.t('ops.backup.ok'); setTimeout(() => location.reload(), 700); } } }, body);
   };
 
 

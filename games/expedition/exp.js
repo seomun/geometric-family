@@ -243,7 +243,7 @@
   const tipKey = (k) => 'gfx:tip:' + ((AUTH && AUTH.account) || 'local') + ':' + k;
   const tipSeen = (k) => { try { return !!localStorage.getItem(tipKey(k)); } catch (e) { return true; } };
   const tipOnce = (k, r, cb) => {
-    const cuts = D.story.tips && D.story.tips[k], skip = !cuts || tipSeen(k) || (navigator.webdriver && !/[?&]story=1/.test(location.search)); if (skip) { cb && cb(); return false; }
+    const cuts = D.story.tips && D.story.tips[k], skip = !cuts || tipSeen(k) || (navigator.webdriver && !/[?&]story=1/.test(location.search)); if (skip) return false;      // 건너뛸 땐 호출한 쪽이 그대로 이어간다(cb 는 컷을 본 뒤에만)
     try { localStorage.setItem(tipKey(k), '1'); } catch (e) { /* 저장 불가 */ } GF.tale.play(cuts, r, () => { cb && cb(); }, { bg: 'field' }); return true;
   };
   /* ---------------- 원정 전리품 코드 (B6): 성인 「우리 집」에서 입력하면 가구가 생겨요 — 앱은 따로, 연결은 코드로만(D12) ---------------- */

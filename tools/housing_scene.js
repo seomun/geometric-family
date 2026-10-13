@@ -1,0 +1,16 @@
+// A11 시험: 세트 완성 가족 장면 — 세트를 다 모으면 그 방에서 가족이 모여 특별한 동작, 처음 한 번 자동 + 「가족 모임」 칩으로 다시. node tools/housing_scene.js
+const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
+(async () => {
+  const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), p = await (await b.newContext({ viewport: { width: 390, height: 780 } })).newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.addInitScript(() => { window.__noResume = true; }); await p.goto('http://localhost:8765/games/merge/index.html'); await p.waitForTimeout(1600);
+  const r0 = await p.evaluate(() => { Room.cfg.mode = 'adult'; Room.grant('b_table'); Room.S.lv = 30; return { scenes: Room.setScenes().length, nemo: !!Room.sceneFor('nemo') }; }); ok(r0.scenes === 0 && !r0.nemo, '세트를 다 모으기 전엔 장면 없음');
+  const some = await p.evaluate(() => { const its = Room.data.items.filter((i) => i.set === 'build'); its.slice(0, its.length - 1).forEach((i) => Room.grant(i.id)); return !!Room.sceneFor('nemo'); }); ok(!some, '하나 모자라면 장면 없음');
+  await p.evaluate(() => { Room.data.items.filter((i) => i.set === 'build').forEach((i) => Room.grant(i.id)); Room.S.sceneSeen = {}; Room.S.album = []; GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(1200); await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast,.h2-reveal').forEach((e) => e.remove()));
+  ok(await p.evaluate(() => { const c = document.querySelector('.h2-scenechip'); return !!c && c.style.display !== 'none' && /가족 모임/.test(c.textContent); }), '세트를 다 모으면 「가족 모임」 칩이 보임');
+  let n = 0; for (let k = 0; k < 8 && n < 7; k++) { await p.waitForTimeout(700); n = await p.evaluate(() => document.querySelectorAll('.h2-fam').length); } ok(n === 7, '처음에는 자동으로 일곱 식구가 모임 · ' + n); await p.screenshot({ path: 'notes/snapshots/housing_scene.png' });
+  ok(await p.evaluate(() => /일곱 식구/.test(document.querySelector('.h2-scenebn').textContent)), '장면 띠 문구'); ok(await p.evaluate(() => Room.albumList().some((x) => x.kind === 'set')), '앨범에 「세트 완성」이 기록됨');
+  await p.waitForTimeout(6000); ok(await p.evaluate(() => document.querySelectorAll('.h2-fam').length === 0), '장면이 끝나면 가족이 돌아감');
+  await p.evaluate(() => { document.querySelector('.h2-scenechip').click(); }); await p.waitForTimeout(1500); ok(await p.evaluate(() => document.querySelectorAll('.h2-fam').length === 7), '칩을 누르면 다시 볼 수 있음');
+  await p.waitForTimeout(6000); await p.evaluate(() => { GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(2600); ok(await p.evaluate(() => document.querySelectorAll('.h2-fam').length === 0), '다시 들어가도 자동 재생은 한 번뿐');
+  ok(errs.length === 0, '오류 없음 ' + errs[0]); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
+})().catch((e) => { console.error(e); process.exit(1); });

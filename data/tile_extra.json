@@ -39,6 +39,60 @@
    "n": 16,
    "seed": 823,
    "type": "lock"
+  },
+  {
+   "id": "seol",
+   "title": "설 떡국 짝 맞추기",
+   "months": [
+    1,
+    2
+   ],
+   "n": 12,
+   "seed": 831,
+   "type": "classic"
+  },
+  {
+   "id": "eobeoi",
+   "title": "카네이션 목표 모으기",
+   "months": [
+    5
+   ],
+   "n": 14,
+   "seed": 832,
+   "type": "goal"
+  },
+  {
+   "id": "summer",
+   "title": "여름 장마 좁은 길",
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "n": 14,
+   "seed": 833,
+   "type": "narrow"
+  },
+  {
+   "id": "suneung",
+   "title": "수능 찹쌀떡 세 개씩",
+   "months": [
+    11
+   ],
+   "n": 16,
+   "seed": 834,
+   "type": "trio"
+  },
+  {
+   "id": "spring",
+   "title": "봄 벚꽃 잠금 풀기",
+   "months": [
+    3,
+    4
+   ],
+   "n": 14,
+   "seed": 835,
+   "type": "lock"
   }
  ],
  "stories": [

@@ -39,6 +39,60 @@
    "n": 18,
    "seed": 903,
    "type": "star"
+  },
+  {
+   "id": "seol",
+   "title": "설 윷판 쌓기",
+   "months": [
+    1,
+    2
+   ],
+   "n": 14,
+   "seed": 911,
+   "type": "family"
+  },
+  {
+   "id": "eobeoi",
+   "title": "카네이션 한 줄",
+   "months": [
+    5
+   ],
+   "n": 14,
+   "seed": 912,
+   "type": "lines"
+  },
+  {
+   "id": "summer",
+   "title": "여름 장마 콤보",
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "n": 16,
+   "seed": 913,
+   "type": "combo"
+  },
+  {
+   "id": "suneung",
+   "title": "수능 한 판 집중",
+   "months": [
+    11
+   ],
+   "n": 16,
+   "seed": 914,
+   "type": "limit"
+  },
+  {
+   "id": "spring",
+   "title": "봄 벚꽃 쌓기",
+   "months": [
+    3,
+    4
+   ],
+   "n": 14,
+   "seed": 915,
+   "type": "star"
   }
  ],
  "stories": [

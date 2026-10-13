@@ -39,6 +39,60 @@
    "n": 18,
    "seed": 833,
    "type": "locked"
+  },
+  {
+   "id": "seol",
+   "title": "설 선물 세트 정리",
+   "months": [
+    1,
+    2
+   ],
+   "n": 14,
+   "seed": 841,
+   "type": "sort"
+  },
+  {
+   "id": "eobeoi",
+   "title": "카네이션 꽃병 가르기",
+   "months": [
+    5
+   ],
+   "n": 14,
+   "seed": 842,
+   "type": "pair"
+  },
+  {
+   "id": "summer",
+   "title": "여름 짐 정리",
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "n": 16,
+   "seed": 843,
+   "type": "family"
+  },
+  {
+   "id": "suneung",
+   "title": "수능 도시락 정리",
+   "months": [
+    11
+   ],
+   "n": 16,
+   "seed": 844,
+   "type": "hidden"
+  },
+  {
+   "id": "spring",
+   "title": "봄 소풍 도시락 정리",
+   "months": [
+    3,
+    4
+   ],
+   "n": 14,
+   "seed": 845,
+   "type": "limit"
   }
  ],
  "stories": [

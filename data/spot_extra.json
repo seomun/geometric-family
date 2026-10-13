@@ -39,6 +39,60 @@
    "n": 16,
    "seed": 813,
    "type": "memory"
+  },
+  {
+   "id": "seol",
+   "title": "설날 달라진 곳 찾기",
+   "months": [
+    1,
+    2
+   ],
+   "n": 12,
+   "seed": 821,
+   "type": "diff"
+  },
+  {
+   "id": "eobeoi",
+   "title": "카네이션 숨은 물건",
+   "months": [
+    5
+   ],
+   "n": 14,
+   "seed": 822,
+   "type": "hidden"
+  },
+  {
+   "id": "summer",
+   "title": "여름 세 장 비교",
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "n": 14,
+   "seed": 823,
+   "type": "three"
+  },
+  {
+   "id": "suneung",
+   "title": "수능 기억 한 판",
+   "months": [
+    11
+   ],
+   "n": 16,
+   "seed": 824,
+   "type": "memory"
+  },
+  {
+   "id": "spring",
+   "title": "봄 나들이 달라진 곳",
+   "months": [
+    3,
+    4
+   ],
+   "n": 12,
+   "seed": 825,
+   "type": "odd"
   }
  ],
  "stories": [

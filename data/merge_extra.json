@@ -59,6 +59,42 @@
    "n": 30,
    "seed": 505,
    "reward": "s_carnation"
+  },
+  {
+   "id": "s_sum",
+   "title": "여름 장마 대비",
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "type": "tight",
+   "n": 36,
+   "seed": 606,
+   "reward": "s2_tube"
+  },
+  {
+   "id": "s_sat",
+   "title": "수능 응원 한 상",
+   "months": [
+    11
+   ],
+   "type": "solo",
+   "n": 30,
+   "seed": 1117,
+   "reward": "s2_persimmon"
+  },
+  {
+   "id": "s_spr",
+   "title": "봄 나들이 도시락",
+   "months": [
+    3,
+    4
+   ],
+   "type": "order",
+   "n": 40,
+   "seed": 303,
+   "reward": "s2_picnic"
   }
  ],
  "dailyItems": [

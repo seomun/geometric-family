@@ -16,3 +16,8 @@ migrations_dir = "migrations"
 # [[kv_namespaces]]
 # binding = "CONFIG"
 # id = "..."        # 원격 생성 뒤
+
+[triggers]
+crons = ["0 18 * * *"]   # 03:00 KST 정리 크론(토큰·멱등 기록·속도 제한·미청구 광고 확인)
+
+# 비밀값(wrangler secret put): JWT_SECRET · WEBHOOK_SECRET(스토어 통지 로컬 공유키) · ADS_SSV_SECRET(로컬). 실제 연동 때는 스토어 서비스 계정 키·AdMob SSV 공개키 사용.

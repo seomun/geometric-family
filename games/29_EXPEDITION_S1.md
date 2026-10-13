@@ -123,6 +123,10 @@ CREATE TABLE telemetry_daily (day TEXT, name TEXT, n INTEGER, PRIMARY KEY(day, n
 | 1 서버 골격 | ✔ 로컬 | `server/`(Worker·D1 스키마·JWT·멱등·충돌 재시도), node:sqlite D1 shim 으로 계정 없이 시험 |
 | 2 계정·저장 | ✔ 로컬 | 연령 화면(12 미만 차단·12~13 결제 차단 안내·19 미만 보호자 안내)·익명 계정·토큰 회전·클라우드 프로필·편성·레벨업, 클라이언트 원격 모드(`?api=`) |
 | 4 전투 판정 | ✔ 로컬 | `/stage/start`(서버 시드·파티·레벨 고정, 서명 토큰 1시간) → `/stage/clear`(같은 입력으로 `battle-core` 를 서버가 다시 돌려 승패·별·보상·합류·포섭 판정, 토큰 1회용·멱등). 공유 코어 `stage-core.js`. `/dev/grant` 는 클라이언트에서 제거(시험 전용) |
+| 5 결제 | ✔ 로컬(mock) | `/iap/products·precheck·verify·cap·withdraw` · `/webhook/play`(환불 통지). 월 상한(KST, 낮추기 즉시·올리기 다음 달, 14~18세 7만원 상한 위로 불가)·사후 초과 경고+다음 결제 차단·미성년(12~13) 지급 안 함(환불 대상 기록)·첫 구매 2배(환불돼도 재지급 없음)·환불 시 회수+**마이너스 잔고(모집 불가, 다음 결제로 상환)**·청약철회 7일 미사용 확인. 스토어는 어댑터(mock/google/samsung 자리) — 실제 검증은 계정·상품 등록 뒤 |
+| 6 광고 | ✔ 로컬(mock) | `/webhook/ads`(SSV, 로컬 HMAC) → `/ads/reward`(반짝석 20×3/일 · 소탕권 1×5/일, 멱등·남의 확인 거부·KST 하루). 전면 규칙은 프로필 `ads`(결제자·광고 제거·설치 30분 제외, 4전투 1회, 하루 8회, 비맞춤) |
+| 7 원격 설정 | ✔ 로컬 | `/config`(점검·최소 버전·공지·진행 이벤트·광고 규칙) · 점검 중 503(config·healthz만 열림) · `/telemetry`(허용 12항목 일 합계만) · 삭제 시 결제 기록 보존 |
+| 8 부정·운영 | ✔ 로컬 | 속도 제한(계정별 라우트별·IP별 가입) · 이상 징후 `flags`(전투 기록 불일치·미성년 결제·월 상한 초과·마이너스 잔고) · 정리 크론(`scheduled`, 03:00 KST) · `scripts/admin.js`(통계·계정·지급·정지·점검·이벤트·환불·**장부 대조 audit**) · `scripts/queries.sql` · `scripts/backup.sh`(원격 덤프, 계정 뒤) |
 | 3 서버 뽑기 | ✔ 로컬 | `/gacha/pull`(CSPRNG·천장·픽업 보장·로그·장부·멱등·동시성), 공유 코어 `gacha-core.js`, 20만 회 분포 시험 |
 - 시험: `server/test/api.test.js` 12개 통과 · `tools/exp_remote_smoke.js` 통과(가입→뽑기→새로고침 복원→레벨업→편성→12~13세 안내) · S0 `exp_smoke` 통과(로컬 모드 회귀 없음).
 - 발견: ★4 **실효 비율**이 표시 확률 13.5%보다 높다(10회 ★4+ 보장 포함 약 16~17%) — 확률 공개 화면에 「10회 보장 포함 실효」 문구를 넣는다(법무 확인 때 표기 방식 결정).
@@ -134,3 +138,9 @@ CREATE TABLE telemetry_daily (day TEXT, name TEXT, n INTEGER, PRIMARY KEY(day, n
 - 행동 상한 1,000(이기는 판 최대 314, 3배 여유). 넘으면 패배 처리 — 클라이언트도 같은 상한.
 - **CPU 실측**(`server/test/cpu_bench.js`, 432판·레벨 1/5/10·자동/수동): 평균 **0.34ms** · p95 0.8ms · p99 4.6ms · 최대 7ms(진 판 2,329행동 — 상한 1,000 으로 줄이면 약 3ms 이하). Workers 무료 10ms/요청 안에 들어오고, 유료는 여유가 크다. D1 왕복은 별도(요청당 쓰기 배치 1회).
 - 결정(제안): 재현은 요청 안에서 동기 실행, 별도 큐 없음. 상한 1,000 행동 유지.
+
+### 12-2. WP5~8 결과 (2026-10-13, 로컬 D1 shim — 메모리 2GB 미만이라 workerd 미사용)
+- 시험 `server/test/api.test.js` 17 + `shop.test.js` 11 = **28개 통과**, 클라이언트 `exp_smoke`·`exp_remote_smoke`(서버 전투 판정 포함) 통과.
+- 장부 대조: 결제·모집·레벨업·전투·광고·환불을 섞은 뒤 `audit` 가 비어 있음(지갑 = 장부 합).
+- **계정 준비 뒤에 할 것**(작가 몫 선행): Cloudflare 계정·D1 생성·`wrangler secret put JWT_SECRET WEBHOOK_SECRET`(실서버는 Pub/Sub 서명 검증으로 교체)·스토어 상품 등록(`data/expedition_shop.json` 7개 SKU)·`verifyStore` 의 google/samsung 구현·AdMob SSV 공개키 검증 교체·클라이언트 결제/광고 SDK 화면(S1 후반).
+- 결정 요청: ① 상품 구성·반짝석 수량은 제안값(1,100원=110개 … 55,000원=6,300개, 첫 구매 2배) — 확정 필요 ② 월정액·성장 패스·신규 패키지는 S2 로 미룸 ③ 마이너스 잔고 중 무상 반짝석도 막는 현재 방식(고지 문구 포함) 유지 여부.

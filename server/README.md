@@ -26,3 +26,9 @@ dev-local.js    로컬 HTTP 서버(D1 shim 파일 DB) — 클라이언트 연동
 
 ## 아직 없는 것 (다음 WP)
 `/stage/clear`(서버 전투 재현·보상, WP4) · 결제 검증·월 상한·환불(WP5, 어댑터 분리) · 광고 SSV(WP6) · 원격 설정·분석(WP7) · 속도 제한·백업·관리 CLI(WP8).
+
+
+## 엔드포인트 (WP1~8)
+공개: `GET /healthz /config /gacha/odds /iap/products` · `POST /auth/anon /auth/refresh` · `GET /webhook/ads`(SSV) · `POST /webhook/play`(환불 통지, 비밀 헤더)
+로그인: `GET /profile` · `POST /party /unit/levelup /gacha/pull /stage/start /stage/clear /iap/precheck /iap/verify /iap/cap /iap/withdraw /ads/reward /telemetry /account/delete` (+ ENV dev|test 에서만 `/dev/grant`)
+시험: `npm test`(28개) · CPU: `node test/cpu_bench.js` · 운영: `node scripts/admin.js <명령>` · 쿼리: `scripts/queries.sql` · 백업: `scripts/backup.sh`

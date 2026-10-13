@@ -1,0 +1,21 @@
+{
+ "version": 1,
+ "note": "[제안] 반짝석 팩(KRW). 금액·수량은 작가·퍼블리셔 확정 전 제안값. 서버(/iap/*)·화면·스토어 문서가 이 파일을 같이 쓴다.",
+ "gemsPer100Krw": 10,
+ "products": [
+  {"sku":"gems_1100","name":"반짝석 한 줌","krw":1100,"gems":110,"firstDouble":true},
+  {"sku":"gems_3300","name":"반짝석 주머니","krw":3300,"gems":340,"firstDouble":true},
+  {"sku":"gems_6600","name":"반짝석 상자","krw":6600,"gems":700,"firstDouble":true},
+  {"sku":"gems_12000","name":"반짝석 보물함","krw":12000,"gems":1300,"firstDouble":true},
+  {"sku":"gems_33000","name":"반짝석 한 수레","krw":33000,"gems":3700,"firstDouble":true},
+  {"sku":"gems_55000","name":"반짝석 곳간","krw":55000,"gems":6300,"firstDouble":true},
+  {"sku":"no_inter","name":"광고 제거","krw":4400,"gems":0,"noInter":true}
+ ],
+ "notice": {
+  "unused_refund_7d": "결제 후 7일 안에는 쓰지 않은 유료 반짝석에 한해 청약철회를 요청할 수 있어요.",
+  "gacha_no_refund": "모집(뽑기)에 쓴 반짝석과 이미 쓴 재화는 환불되지 않아요.",
+  "store_policy": "환불은 스토어(Google Play·삼성) 정책을 따라요.",
+  "negative_balance": "환불로 유료 반짝석이 모자라게 되면 다음 결제로 채워질 때까지 반짝석을 쓸 수 없어요."
+ },
+ "ads": {"rewardKinds": {"gems": {"grant": 20, "perDay": 3}, "sweep": {"grant": 1, "perDay": 5}}, "interEvery": 4, "interFirstMin": 30, "interPerDay": 8, "personalized": false}
+}

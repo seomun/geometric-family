@@ -1,6 +1,7 @@
 // ⑪ 서버 게임 로직(WP2~3): 계정 생성·프로필·편성·레벨업·**서버 뽑기**. 규칙·확률표는 클라이언트와 같은 파일(data/expedition_slice.json · gacha-core.js)을 쓴다.
 import SLICE from '../../data/expedition_slice.json' with { type: 'json' };
 import gachaCore from '../../games/expedition/gacha-core.js';
+import { interstitialRule, flag } from './shop.js';
 import stageCore from '../../games/expedition/stage-core.js';
 import { HttpError, csprng, sha256hex, signJwt, verifyJwt, randomToken } from './lib.js';
 
@@ -33,10 +34,10 @@ export async function createAccount(env, { id, deviceHash, birthYm, now = Date.n
   ]); return a;
 }
 
-export async function profile(env, account) {
-  const db = env.DB, [acc, w, units, pr, py] = await Promise.all([first(db, 'SELECT age_band,cap_krw,guardian_notice_at FROM accounts WHERE id=?', account), first(db, 'SELECT free_gems,paid_gems,gold,ver FROM wallet WHERE account=?', account), all(db, 'SELECT unit_id,lv,dups FROM units WHERE account=?', account), first(db, 'SELECT cleared,stars,party,flags FROM progress WHERE account=?', account), first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, BANNER)]);
+export async function profile(env, account, now = Date.now()) {
+  const db = env.DB, [acc, w, units, pr, py] = await Promise.all([first(db, 'SELECT age_band,cap_krw,guardian_notice_at,has_paid,no_inter,created_at FROM accounts WHERE id=?', account), first(db, 'SELECT free_gems,paid_gems,gold,tickets,ver FROM wallet WHERE account=?', account), all(db, 'SELECT unit_id,lv,dups FROM units WHERE account=?', account), first(db, 'SELECT cleared,stars,party,flags FROM progress WHERE account=?', account), first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, BANNER)]);
   if (!acc) throw new HttpError(404, 'no_account');
-  return { account, age_band: acc.age_band, cap_krw: acc.cap_krw, guardian_notice: !!acc.guardian_notice_at, wallet: { free_gems: w.free_gems, paid_gems: w.paid_gems, gold: w.gold }, units: Object.fromEntries(units.map((u) => [u.unit_id, { lv: u.lv, dups: u.dups }])), progress: { cleared: pr.cleared, stars: JSON.parse(pr.stars), party: JSON.parse(pr.party), flags: JSON.parse(pr.flags) }, pity: { since5: py.since5, since4: py.since4, guard: !!py.guard, pulls: py.pulls }, odds_ver: ODDS_VER };
+  return { account, age_band: acc.age_band, cap_krw: acc.cap_krw, guardian_notice: !!acc.guardian_notice_at, wallet: { free_gems: w.free_gems, paid_gems: w.paid_gems, gold: w.gold, tickets: w.tickets }, has_paid: !!acc.has_paid, no_inter: !!acc.no_inter, ads: interstitialRule(acc, now), units: Object.fromEntries(units.map((u) => [u.unit_id, { lv: u.lv, dups: u.dups }])), progress: { cleared: pr.cleared, stars: JSON.parse(pr.stars), party: JSON.parse(pr.party), flags: JSON.parse(pr.flags) }, pity: { since5: py.since5, since4: py.since4, guard: !!py.guard, pulls: py.pulls }, odds_ver: ODDS_VER };
 }
 
 export async function setParty(env, account, party) {
@@ -64,7 +65,7 @@ async function walletUnit(db, account, unitId) { const w = await first(db, 'SELE
 export async function gachaPull(env, account, { banner = BANNER, n, requestId }, now = Date.now(), rand = csprng) {
   const db = env.DB; if (n !== 1 && n !== 10) throw new HttpError(400, 'bad_n', 'n 은 1 또는 10'); if (banner !== BANNER) throw new HttpError(400, 'bad_banner'); if (!requestId) throw new HttpError(400, 'no_request_id');
   const prev = await first(db, 'SELECT response FROM gacha_log WHERE request_id=?', requestId); if (prev) return { ...JSON.parse(prev.response), replay: true };
-  const G = D.gacha, price = GC.price(G, n), w = await first(db, 'SELECT free_gems,paid_gems,gold,ver FROM wallet WHERE account=?', account); if (w.free_gems + w.paid_gems < price) throw new HttpError(402, 'insufficient_gems', '반짝석이 모자라요');
+  const G = D.gacha, price = GC.price(G, n), w = await first(db, 'SELECT free_gems,paid_gems,gold,ver FROM wallet WHERE account=?', account); if (w.paid_gems < 0) throw new HttpError(402, 'negative_balance', '환불로 모자란 유료 반짝석을 다음 결제로 채울 때까지 쓸 수 없어요'); if (w.free_gems + w.paid_gems < price) throw new HttpError(402, 'insufficient_gems', '반짝석이 모자라요');
   const py = await first(db, 'SELECT since5,since4,guard,pulls FROM pity WHERE account=? AND banner=?', account, banner), P = { since5: py.since5, since4: py.since4, guard: py.guard };
   const owned = new Set((await all(db, 'SELECT unit_id FROM units WHERE account=?', account)).map((r) => r.unit_id)), results = [], fragAdd = {}, newUnits = [];
   for (let i = 0; i < n; i++) { const r = GC.pullOnce(G, D.units, P, rand), isNew = !owned.has(r.id); if (isNew) { owned.add(r.id); newUnits.push(r.id); } const frag = isNew ? 0 : GC.dupFrag(r.grade); if (frag) fragAdd[r.id] = (fragAdd[r.id] || 0) + frag; results.push({ unit: r.id, grade: r.grade, isNew, dupFrag: frag }); }
@@ -87,7 +88,7 @@ export async function gachaPull(env, account, { banner = BANNER, n, requestId },
 export const oddsTable = () => ({ ...GC.odds(D.gacha, D.units), odds_ver: ODDS_VER, banner: D.gacha.banner, cost: D.gacha.cost, ten: D.gacha.ten });
 
 export async function deleteAccount(env, account) {
-  const db = env.DB; await db.batch(['units', 'progress', 'pity', 'wallet', 'ledger', 'gacha_log', 'tokens', 'requests', 'spend_month', 'ad_claims'].map((t) => run(db, `DELETE FROM ${t} WHERE account=?`, account)).concat([run(db, "UPDATE accounts SET status='deleted', birth_ym=NULL WHERE id=?", account)])); return { ok: true, note: '결제 기록은 법정 보존 기간 동안 남아요' };
+  const db = env.DB; await db.batch(['units', 'progress', 'pity', 'wallet', 'ledger', 'gacha_log', 'tokens', 'requests', 'spend_month', 'ad_claims', 'flags'].map((t) => run(db, `DELETE FROM ${t} WHERE account=?`, account)).concat([run(db, "UPDATE accounts SET status='deleted', birth_ym=NULL WHERE id=?", account)])); return { ok: true, note: '결제 기록은 법정 보존 기간 동안 남아요' };
 }
 
 /** ---- WP4: 전투 판정. 시드·파티는 서버가 정해 서명 토큰(stage-start)으로 주고, 클리어 때 같은 입력으로 battle-core 를 다시 돌려 승패·별·보상을 정한다. ---- */
@@ -104,7 +105,7 @@ export async function stageStart(env, account, stageId, now = Date.now(), secret
 export async function stageClear(env, account, { token, inputs, auto, requestId }, now = Date.now()) {
   const db = env.DB, t = await verifyJwt(String(token || ''), env.JWT_SECRET, now); if (t.typ !== 'stage' || t.sub !== account) throw new HttpError(403, 'bad_stage_token');
   const prev = await first(db, 'SELECT body FROM requests WHERE request_id=?', 'stage:' + t.nonce); if (prev) return { ...JSON.parse(prev.body), replay: true };
-  const out = SC.replay(D, { stage: t.stage, seed: t.seed, party: t.party, auto: auto !== false, inputs }); if (out.error) throw new HttpError(422, out.error, '전투 기록이 맞지 않아요');
+  const out = SC.replay(D, { stage: t.stage, seed: t.seed, party: t.party, auto: auto !== false, inputs }); if (out.error) { await flag(env, account, 'bad_replay', out.error + ':s' + t.stage, now); throw new HttpError(422, out.error, '전투 기록이 맞지 않아요'); }
   const st = D.stages.find((x) => x.id === t.stage);
   if (!out.win) { const body = { win: false, stars: 0, steps: out.steps, hash: out.hash }; return body; }   // 졌을 때는 기록하지 않는다(벌 없음). 같은 토큰으로 다시 시도할 수 있다
   const w = await first(db, 'SELECT free_gems,paid_gems,gold,ver FROM wallet WHERE account=?', account), pr = await first(db, 'SELECT cleared,stars,flags FROM progress WHERE account=?', account);

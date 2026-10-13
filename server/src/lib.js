@@ -17,3 +17,9 @@ export const randomToken = (n = 32) => b64u(crypto.getRandomValues(new Uint8Arra
 export const csprng = () => crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
 export const uuid = () => crypto.randomUUID();
 export async function readJson(req) { try { const t = await req.text(); return t ? JSON.parse(t) : {}; } catch (e) { throw new HttpError(400, 'bad_json'); } }
+export async function hmacHex(secret, msg) { const sig = new Uint8Array(await crypto.subtle.sign('HMAC', await hmacKey(secret), enc.encode(msg))); return Array.from(sig).map((b) => b.toString(16).padStart(2, '0')).join(''); }
+export function safeEq(a, b) { a = String(a); b = String(b); if (a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; }
+const KST = 9 * 3600 * 1000;
+export const ymKst = (now) => new Date(now + KST).toISOString().slice(0, 7);
+export const dayKst = (now) => new Date(now + KST).toISOString().slice(0, 10);
+export const nextYm = (now) => { const d = new Date(now + KST); return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1)).toISOString().slice(0, 7); };

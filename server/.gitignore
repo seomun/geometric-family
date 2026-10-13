@@ -1,3 +1,4 @@
 .local/
 .wrangler/
+backups/
 node_modules/

@@ -207,7 +207,7 @@
         }, 650);
       }
       function lose() { busy = true; if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); const left = (S.goals || []).reduce((a, g) => a + Math.max(0, g.n - (S.made[M.key(g.c, g.t)] || 0)), 0), retry = () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }); if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'merge', id: LV.id || LV.kind, near: left ? '목표 조각까지 ' + left + '개!' : '', hint: false, onRetry: retry }); else { say('한 번 더!'); GF.sfx('hmm'); setTimeout(retry, 650); } }   // 지면 벌 없이 즉시 다시
-      MG.debug.adOffer = () => offerUndo(); MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
+      MG.debug.lose = () => lose(); MG.debug.adOffer = () => offerUndo(); MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
       buildBoard(); draw(); showTip(); GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id })); GF.polish.goal(r, GF.t('polish.goal.merge', { n: LV.stars ? LV.stars[1] : 0 }));
       if (!LV.kind && LV.id <= 2 && !hist.length) { r.__demo = () => { if (GF.tale.cardOpen) return; const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }; setTimeout(r.__demo, 1200); }   // 처음 두 판: 첫 칸을 손가락이 알려 준다
     },

@@ -96,6 +96,7 @@
     const again = () => { try { o.onRetry && o.onRetry(); } catch (e) { /* 다시 하기 실패는 무시 */ } };
     if (P.kid || !parent || !window.UK) { setTimeout(again, o.ms || 900); return null; }
     document.querySelectorAll('.uk-finger').forEach((e) => e.remove());      // 튜토리얼 손가락이 카드 글자를 덮지 않게
+    document.querySelectorAll('.screen.on .uk-caption, .screen.on .uk-toast').forEach((e) => { e.style.display = 'none'; });      // 판을 덮는 안내 띠·토스트도 숨김
     const key = o.app + ':' + (o.id == null ? '' : o.id), n = (FAILS[key] = (FAILS[key] || 0) + 1), easyOffer = n >= 3 && !P.assist();
     const lines = []; if (o.near) lines.push('<b>' + o.near + '</b>'); lines.push(n === 1 ? '조금만 더 하면 돼요!' : n === 2 ? (o.hint ? '막히면 💡 힌트를 눌러 보세요.' : '천천히 해도 괜찮아요.') : '여러 번 해 봤네요! 쉬운 모드는 되돌리기·섞기가 무제한이에요.');
     let done = false; const go = () => { if (done) return; done = true; sc.close ? sc.close() : sc.remove(); again(); };

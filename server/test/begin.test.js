@@ -55,3 +55,20 @@ test('픽업 2탄(B15): 배너마다 천장 따로 · 한정 동료는 그 배�
   const G = (await import('../src/game.js')); let x = 12345; const rnd = () => { x = (x * 1103515245 + 12345) % 2147483648; return x / 2147483648; }, P = { since5: 0, since4: 0, guard: 0 }; let leak = 0, pk = 0; for (let i = 0; i < 20000; i++) { const r = G.GC.pullOnce(G.D.gacha, G.D.units, P, rnd, 'main'); if (r.id === 'u_puss_wife') leak++; } const Q = { since5: 0, since4: 0, guard: 0 }; for (let i = 0; i < 20000; i++) { const r = G.GC.pullOnce(G.D.gacha, G.D.units, Q, rnd, 'puss'); if (r.id === 'u_puss_wife') pk++; }
   assert.equal(leak, 0, '한정 동료는 기본 배너에서 절대 안 나온다'); assert.ok(pk > 20000 * 0.015, '2탄 배너에서는 픽업이 나온다 · ' + pk);
 });
+
+test('계절 이벤트(B14): 철·순서 판정 · 서버가 전투를 다시 돌려 확인 · 첫 클리어만 반짝석 · 멱등 · 장부', async () => {
+  const env = mkenv(), a = await signup(env); await env.DB.prepare('UPDATE progress SET cleared=10 WHERE account=?').bind(a.account).run(); await env.DB.prepare('UPDATE units SET lv=40 WHERE account=?').bind(a.account).run();
+  const info = (await call(env, 'GET', '/event', { token: a.access })).body; assert.equal(info.month, 10); assert.equal(info.event.id, 'ev_autumn'); assert.deepEqual(info.event.cleared, []);
+  const st = (ev, k) => call(env, 'POST', '/event/start', { token: a.access, body: { ev, k } }), cl = (tk, extra = {}) => call(env, 'POST', '/event/clear', { token: a.access, body: { token: tk.token, inputs: [], auto: true, ...extra } });
+  assert.equal((await st('ev_spring', 0)).body.error, 'event_closed', '10월엔 봄 이벤트가 닫혀 있다'); assert.equal((await st('nope', 0)).body.error, 'bad_event'); assert.equal((await st('ev_autumn', 1)).body.error, 'locked', '둘째 칸은 첫 칸 뒤'); assert.equal((await st('ev_autumn', 9)).body.error, 'bad_stage');
+  const w0 = await wallet(env, a), s0 = (await st('ev_autumn', 0)).body; assert.ok(s0.token && s0.stage.enemies.length >= 3 && s0.stage.name === '송편 가게');
+  const c0 = await cl(s0); assert.equal(c0.status, 200, JSON.stringify(c0.body)); assert.equal(c0.body.win, true); assert.equal(c0.body.first, true); assert.equal(c0.body.reward.gems, 20); assert.deepEqual(c0.body.cleared, [0]);
+  const w1 = await wallet(env, a); assert.equal(w1.free_gems - w0.free_gems, 20); assert.ok(w1.gold > w0.gold);
+  assert.equal((await cl(s0)).body.replay, true, '같은 토큰을 다시 보내도 한 번만'); assert.deepEqual(await wallet(env, a), w1);
+  const s0b = (await st('ev_autumn', 0)).body, c0b = await cl(s0b); assert.equal(c0b.body.first, false); assert.equal(c0b.body.reward.gems, 0, '다시 깨면 반짝석 없음'); assert.ok(c0b.body.reward.gold > 0 && c0b.body.reward.gold <= c0.body.reward.gold / 2 + 1, '금화는 절반');
+  const s1 = (await st('ev_autumn', 1)).body; assert.ok(s1.token, '첫 칸을 깨면 둘째 칸이 열림'); assert.equal((await cl(s1)).body.reward.gems, 30);
+  const ledger = (await env.DB.prepare("SELECT COUNT(*) AS c, SUM(d_free) AS g FROM ledger WHERE account=? AND kind='event'").bind(a.account).first()); assert.equal(ledger.c, 3); assert.equal(ledger.g, 50);
+  const bad = await call(env, 'POST', '/event/clear', { token: a.access, body: { token: s0.token + 'x', inputs: [], auto: true } }); assert.notEqual(bad.status, 200);
+  // 다음 달(12월)엔 겨울 이벤트로 바뀌고 가을 토큰은 만료 취급
+  const G2 = await import('../src/game.js'); const winter = await G2.eventInfo(env, a.account, Date.UTC(2026, 11, 5, 3)); assert.equal(winter.event.id, 'ev_winter'); assert.equal((await G2.eventInfo(env, a.account, Date.UTC(2027, 0, 31, 20))).event.id, 'ev_winter', 'KST 2월 1일 05시 = 겨울(1~2월)의 연속');
+});

@@ -336,3 +336,4 @@ html[data-bigbtn="1"] .round-btn::before, html[data-bigbtn="1"] .tok::before, ht
 /* 색 구분 돕기: 초록·분홍·하늘·금색 버튼을 Okabe-Ito 계열(파랑·주황·보라·노랑)로 — 붉은 계열과 초록 계열이 서로 같아 보이지 않게. 글자는 진한 색 그대로(대비 4.5:1 이상) */
 html[data-cb="1"] { --uk-green: #56B4E9; --uk-pink: #F0A93A; --uk-sky: #D9A9CB; --uk-gold: #F5E653; --uk-danger: #A8420F; }
 html[data-cb="1"] .uk-btn.pink { background: #F0A93A; } html[data-cb="1"] .uk-btn.danger, html[data-cb="1"] .uk-btn.dong { color: #fff; }
+html[data-bigbtn="1"] .h2-btx b { white-space: normal !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; } html[data-bigbtn="1"] .h2-band { min-height: 66px; }

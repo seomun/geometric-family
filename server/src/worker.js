@@ -52,6 +52,9 @@ export async function handle(req, env, now = Date.now()) {
     case 'POST /party': return json(await G.setParty(env, account, (await readJson(req)).party));
     case 'POST /unit/levelup': { const b = await readJson(req); if (!b.request_id) throw new HttpError(400, 'no_request_id'); return json(await retry(() => G.levelUp(env, account, b.unit, b.request_id, now))); }
     case 'POST /unit/upgrade': { const b = await readJson(req); return json(await retry(() => G.upgradeUnit(env, account, { unit: b.unit, kind: b.kind, slot: b.slot, requestId: b.request_id }, now))); }
+    case 'GET /event': return json(await G.eventInfo(env, account, now));
+    case 'POST /event/start': { const b = await readJson(req); return json(await G.eventStart(env, account, String(b.ev || ''), +b.k, now)); }
+    case 'POST /event/clear': { const b = await readJson(req); const out = await retry(() => G.eventClear(env, account, { token: b.token, inputs: b.inputs, auto: b.auto }, now)); return json({ ...out, profile: await G.profile(env, account, now) }); }
     case 'GET /beginner': return json(await G.beginnerView(env, account));
     case 'POST /beginner/claim': { const b = await readJson(req); const out = await retry(() => G.beginnerClaim(env, account, String(b.id || ''), now)); return json({ ...out, ...(await G.beginnerView(env, account)), profile: await G.profile(env, account, now) }); }
     case 'POST /attend/claim': { const out = await retry(() => G.attendClaim(env, account, now)); return json({ ...out, ...(await G.beginnerView(env, account)), profile: await G.profile(env, account, now) }); }

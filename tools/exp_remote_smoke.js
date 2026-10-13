@@ -47,6 +47,15 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   const dup2 = await p.evaluate(() => EXP.debug.http('POST', '/beginner/claim', { id: 'b01' })); ok(dup2.replay === true && (await p.evaluate(() => EXP.debug.http('GET', '/profile'))).wallet.free_gems === bg2.wallet.free_gems, '같은 미션 다시 받기: 지급 없음(멱등)');
   const early = await p.evaluate(() => EXP.debug.http('POST', '/beginner/claim', { id: 'b30' }).catch((e) => ({ error: e.code }))); ok(early.error === 'not_yet', '못 채운 미션을 억지로 받으려 하면 서버가 거절');
   await p.screenshot({ path: 'notes/snapshots/exp_r_begin.png' });
+  // 계절 이벤트(B14): 서버가 철·순서를 판정하고 전투를 다시 돌려 확인한 뒤 지급
+  const evInfo = await p.evaluate(() => EXP.debug.http('GET', '/event')); ok(!!evInfo.event, '서버 이벤트: 이번 달 ' + evInfo.month + '월 → ' + (evInfo.event && evInfo.event.name));
+  await p.evaluate((m) => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); EXP.debug.month = m; GF.stack = []; GF.go('xhome'); GF.go('xevent'); }, evInfo.month); await p.waitForTimeout(1200);
+  ok(await p.evaluate(() => { const box = document.querySelector('.screen.on .ex-shop') || [...document.querySelectorAll('.ex-shop')].pop(); window.__evbox = box && box.querySelectorAll('.ex-bg').length + '/' + box.querySelectorAll('.ex-bg.can').length + ' ' + GF.cur.name; return box.querySelectorAll('.ex-bg').length === 3 && box.querySelectorAll('.ex-bg.can').length === 1; }), '출시판(서버) 이벤트 화면 '+ await p.evaluate(() => window.__evbox) + ' : 3칸 · 첫 칸만 열림');
+  const e0 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); await p.evaluate(() => { EXP.debug.S().speed = 3; EXP.debug.S().autoSkill = true; document.querySelector('.screen.on .ex-shop').querySelectorAll('.ex-bg .uk-btn')[0].click(); }); await p.waitForTimeout(1500);
+  let evWon = false; for (let i = 0; i < 90 && !evWon; i++) { await p.waitForTimeout(1000); evWon = await p.evaluate(() => /승리/.test((document.querySelector('.uk-sheet') || {}).textContent || '')); } ok(evWon, '서버 판정 이벤트 승리');
+  const e1 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(e1.wallet.free_gems === e0.wallet.free_gems + 20 && e1.progress.flags.ev[evInfo.event.id].join() === '0', '서버가 이벤트 첫 클리어 반영: 반짝석 +20 · 기록 [0]');
+  const evAgain = await p.evaluate(() => EXP.debug.http('POST', '/event/start', { ev: 'ev_nope', k: 0 }).catch((e) => ({ error: e.code }))); ok(evAgain.error === 'bad_event', '없는 이벤트는 서버가 거절');
+  await p.evaluate(() => document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()));
   // 상점: 결제 전 고지 · 모의 결제 · 월 한도 · 광고 보상
   await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.stack = []; GF.go('xhome'); GF.go('xshop'); }); await p.waitForTimeout(1500);
   const shopTxt = await p.textContent('.ex-shop'); ok(/7일 안에는 쓰지 않은 유료/.test(shopTxt) && /환불되지 않아요/.test(shopTxt) && /랜덤 아이템/.test(shopTxt), '상점: 결제 전 고지(청약철회·환불 불가·랜덤 아이템)'); ok(/한도 200,000원/.test(shopTxt), '상점: 월 한도 표시'); await p.screenshot({ path: 'notes/snapshots/exp_r5_shop.png' });

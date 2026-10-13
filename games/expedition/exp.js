@@ -223,7 +223,7 @@
   });
   /* ---------------- 계절 이벤트 (B9): 지금 달의 이벤트 3칸. 서버판은 서버 보상 연동 뒤에 연다 ---------------- */
   const evById = (id) => (D.bal.events || []).find((e) => e.id === id), monthNow = () => EXP.debug.month || (new Date().getMonth() + 1);
-  const evOpen = () => (REMOTE ? null : SC.eventNow(D, monthNow())), evTodo = () => { const ev = evOpen(); return ev ? ((S.flags.ev || {})[ev.id] || []).length < 3 : false; };
+  const evOpen = () => SC.eventNow(D, monthNow()), evTodo = () => { const ev = evOpen(); return ev ? ((S.flags.ev || {})[ev.id] || []).length < 3 : false; };
   GF.screen('xevent', {
     bare: false,
     enter(r) {
@@ -390,7 +390,8 @@
   GF.screen('xbattle', {
     bare: false,
     enter(r, p) {
-      r.classList.add('uk', 'ex', 'exb'); GF.bg('field', r); bar(); const st = p.evt ? SC.eventStage(D, evById(p.evt.id), p.evt.k, S.cleared) : p.dun ? (p.srv ? p.srv.stage : SC.dungeonStage(D, p.dun.day, p.dun.tier, S.cleared)) : D.stages.find((x) => x.id === p.stage);
+      r.classList.add('uk', 'ex', 'exb'); GF.bg('field', r); bar(); const st = p.evt ? (p.srv ? p.srv.stage : SC.eventStage(D, evById(p.evt.id), p.evt.k, S.cleared)) : p.dun ? (p.srv ? p.srv.stage : SC.dungeonStage(D, p.dun.day, p.dun.tier, S.cleared)) : D.stages.find((x) => x.id === p.stage);
+      if (REMOTE && !p.srv && p.evt) { GF.bg('field', r); el('p', 'ex-wait', r, '전투 준비 중…'); http('POST', '/event/start', { ev: p.evt.id, k: p.evt.k }).then((srv) => { if (r.isConnected) GF.replace('xbattle', { evt: p.evt, srv }); }).catch((e) => { UK.toast(e.code === 'event_closed' ? '지금은 열려 있지 않은 이벤트예요' : e.code === 'locked' ? '앞 칸을 먼저 깨요' : '서버에 연결하지 못했어요', document.getElementById('safe')); GF.replace('xevent'); }); return; }
       if (REMOTE && !p.srv && p.dun) { GF.bg('field', r); el('p', 'ex-wait', r, '전투 준비 중…'); http('POST', '/dungeon/start', { tier: p.dun.tier }).then((srv) => { if (r.isConnected) GF.replace('xbattle', { dun: p.dun, target: p.target, srv }); }).catch((e) => { UK.toast(e.code === 'no_runs_left' ? '오늘은 다 했어요' : '서버에 연결하지 못했어요', document.getElementById('safe')); GF.replace('xdun'); }); return; }
       if (REMOTE && !p.srv) {      // 서버가 시드·파티를 정해 준다(WP4). 받으면 같은 화면으로 다시 들어온다
         GF.bg('field', r); el('p', 'ex-wait', r, '전투 준비 중…'); stageStartRemote(st.id).then((srv) => { if (r.isConnected) GF.replace('xbattle', { stage: st.id, srv }); }).catch((e) => { UK.toast(e.code === 'stage_locked' ? '앞 단계를 먼저 깨야 해요' : '서버에 연결하지 못했어요', document.getElementById('safe')); GF.replace('xmap'); }); return;
@@ -424,7 +425,9 @@
         if (REMOTE) { http('POST', '/dungeon/clear', { token: srv.token, inputs, auto: auto0, target: p.target }).then((res) => { if (!res.win) { UK.toast('전투 기록이 서버와 달라요', r); lose(); return; } applyProfile(res.profile); bar(); done2(res.reward); }).catch((e) => { UK.toast(e.code === 'no_runs_left' ? '오늘은 다 했어요' : '서버에 연결하지 못했어요', r); GF.replace('xdun'); }); return; }
         const rw = SC.dungeonReward(D, p.dun.day, p.dun.tier, S.cleared); S.gold += rw.gold; if (rw.frag && p.target) S.dups[p.target] = (S.dups[p.target] || 0) + rw.frag; dunLocal().n++; S.flags.dunN = (S.flags.dunN || 0) + 1; save(); bar(); done2({ gold: rw.gold, frag: rw.frag, target: p.target });
       };
+      const evDone = (rw, first) => { GF.sfx('celebrate'); const sc = UK.modal({ parent: r, title: '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('p', 'ex-rw', sh, `🪙 +${rw.gold}${rw.gems ? ' · 💎 +' + rw.gems : ''}${first ? '' : ' (다시 깨기)'}`); const a = el('div', 'acts', sh); UK.btn({ text: '이벤트로', cls: 'green', onclick: () => { sc.remove(); GF.replace('xevent'); } }, a); UK.btn({ text: '홈', cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xhome'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
       const evWin = () => {
+        if (REMOTE) { http('POST', '/event/clear', { token: srv.token, inputs, auto: auto0 }).then((res) => { if (!res.win) { UK.toast('전투 기록이 서버와 달라요', r); lose(); return; } applyProfile(res.profile); bar(); evDone(res.reward, res.first); }).catch((e) => { UK.toast(e.code === 'event_closed' ? '이벤트가 끝났어요' : '서버에 연결하지 못했어요', r); GF.replace('xevent'); }); return; }
         const ev = evById(p.evt.id), k = p.evt.k, done = (S.flags.ev = S.flags.ev || {}), got = (done[ev.id] = done[ev.id] || []), first = !got.includes(k), rw = SC.eventReward(D, ev, k, S.cleared, first);
         if (first) got.push(k); S.gold += rw.gold; S.gems += rw.gems; save(); bar(); GF.sfx('celebrate'); const sc = UK.modal({ parent: r, title: '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('p', 'ex-rw', sh, `🪙 +${rw.gold}${rw.gems ? ' · 💎 +' + rw.gems : ''}${first ? '' : ' (다시 깨기)'}`); const a = el('div', 'acts', sh);
         UK.btn({ text: '이벤트로', cls: 'green', onclick: () => { sc.remove(); GF.replace('xevent'); } }, a); UK.btn({ text: '홈', cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xhome'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ }

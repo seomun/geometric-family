@@ -202,6 +202,38 @@ export async function dexClaim(env, account, n, now = Date.now()) {
     run(db, `INSERT INTO ledger(account,ts,kind,d_free,reason,ref) SELECT ?,?,'dex',?,?,? WHERE ${guard}`, account, now, m.gems, 'dex' + n, tag, ...g),
   ]); if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict'); return { ok: true, gems: m.gems, ...(await walletView(db, account)) };
 }
+/** 계절 이벤트(B14): 서버가 철(KST 달)·순서·첫 클리어를 판정. 시작에 토큰(시드·파티 스냅샷), 끝에 같은 코어로 전투를 다시 돌려 이기면 보상(첫 클리어 반짝석+금화, 다시는 금화 절반, 멱등). */
+const kstMonth = (now) => new Date(now + 9 * 3600000).getUTCMonth() + 1;
+export async function eventInfo(env, account, now = Date.now()) {
+  const pr = await first(env.DB, 'SELECT flags FROM progress WHERE account=?', account), got = (JSON.parse(pr.flags).ev || {}), ev = SC.eventNow(D, kstMonth(now));
+  return { month: kstMonth(now), event: ev ? { id: ev.id, name: ev.name, icon: ev.icon, names: ev.names, gems: ev.gems, cleared: got[ev.id] || [] } : null };
+}
+export async function eventStart(env, account, evId, k, now = Date.now()) {
+  const db = env.DB, ev = (D.bal.events || []).find((e) => e.id === evId); if (!ev) throw new HttpError(400, 'bad_event'); if (!ev.months.includes(kstMonth(now))) throw new HttpError(409, 'event_closed', '지금 철의 이벤트가 아니에요'); if (!(Number.isInteger(k) && k >= 0 && k < ev.names.length)) throw new HttpError(400, 'bad_stage');
+  const pr = await first(db, 'SELECT cleared,party,flags FROM progress WHERE account=?', account), got = (JSON.parse(pr.flags).ev || {})[ev.id] || []; if (k > 0 && !got.includes(k - 1)) throw new HttpError(409, 'locked', '앞 칸을 먼저 깨요');
+  const party = JSON.parse(pr.party), lv = Object.fromEntries((await all(db, 'SELECT unit_id,lv,skl,awk,promo,gear FROM units WHERE account=?', account)).map((r) => [r.unit_id, { lv: r.lv, skl: r.skl, awk: r.awk, promo: r.promo, gear: JSON.parse(r.gear) }]));
+  if (party.length !== 5 || !party.every((id) => lv[id])) throw new HttpError(409, 'bad_party'); const seed = Math.floor(csprng() * 4294967296), nonce = randomToken(12), snap = party.map((id) => ({ id, ...lv[id] }));
+  const token = await signJwt({ typ: 'evt', sub: account, ev: ev.id, k, cleared: pr.cleared, seed, party: snap, nonce, exp: Math.floor(now / 1000) + 3600 }, env.JWT_SECRET);
+  return { token, ev: ev.id, k, seed, party: snap, nonce, stage: SC.eventStage(D, ev, k, pr.cleared) };
+}
+export async function eventClear(env, account, { token, inputs, auto }, now = Date.now()) {
+  const db = env.DB, t = await verifyJwt(String(token || ''), env.JWT_SECRET, now); if (t.typ !== 'evt' || t.sub !== account) throw new HttpError(403, 'bad_event_token');
+  const prev = await first(db, 'SELECT body FROM requests WHERE request_id=?', 'evt:' + t.nonce); if (prev) return { ...JSON.parse(prev.body), replay: true };
+  const ev = (D.bal.events || []).find((e) => e.id === t.ev); if (!ev || !ev.months.includes(kstMonth(now))) throw new HttpError(410, 'event_closed', '이벤트가 끝났어요');
+  const stageDef = SC.eventStage(D, ev, t.k, t.cleared), out = SC.replay(D, { stage: stageDef.id, stageDef, seed: t.seed, party: t.party, auto: auto !== false, inputs }); if (out.error) { await flag(env, account, 'bad_replay', 'event:' + out.error, now); throw new HttpError(422, out.error, '전투 기록이 맞지 않아요'); }
+  if (!out.win) return { win: false, steps: out.steps };
+  const pr = await first(db, 'SELECT flags FROM progress WHERE account=?', account), flags = JSON.parse(pr.flags); flags.ev = flags.ev || {}; const got = (flags.ev[ev.id] = flags.ev[ev.id] || []), first1 = !got.includes(t.k), rw = SC.eventReward(D, ev, t.k, t.cleared, first1); if (first1) got.push(t.k);
+  const w = await first(db, 'SELECT ver FROM wallet WHERE account=?', account), tag = 'evt:' + t.nonce, guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, tag], body = { win: true, first: first1, reward: { gold: rw.gold, gems: rw.gems }, cleared: got.slice(), steps: out.steps };
+  let res; try {
+    res = await db.batch([
+      run(db, 'UPDATE wallet SET gold=gold+?, free_gems=free_gems+?, ver=ver+1, last_req=? WHERE account=? AND ver=?', rw.gold, rw.gems, tag, account, w.ver),
+      run(db, `INSERT INTO requests(request_id,account,route,status,body,ts) SELECT ?,?,?,?,?,? WHERE ${guard}`, tag, account, '/event/clear', 200, JSON.stringify(body), now, ...g),
+      run(db, `UPDATE progress SET flags=? WHERE account=? AND ${guard}`, JSON.stringify(flags), account, ...g),
+      run(db, `INSERT INTO ledger(account,ts,kind,d_free,d_gold,reason,ref) SELECT ?,?,'event',?,?,?,? WHERE ${guard}`, account, now, rw.gems, rw.gold, ev.id + ':' + t.k + (first1 ? ':first' : ''), tag, ...g),
+    ]);
+  } catch (e) { const dup = await first(db, 'SELECT body FROM requests WHERE request_id=?', tag); if (dup) return { ...JSON.parse(dup.body), replay: true }; throw e; }
+  if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요'); return body;
+}
 /** 초보자 미션·출석(B11). 상태는 장부·진행도에서 서버가 직접 읽고, 받은 기록은 progress.flags.beg / flags.att (멱등). */
 async function begState(db, account) {
   const [pr, us, py, dn, id] = await Promise.all([first(db, 'SELECT cleared,flags FROM progress WHERE account=?', account), all(db, 'SELECT unit_id,lv,skl,awk,promo,gear FROM units WHERE account=?', account), first(db, 'SELECT pulls FROM pity WHERE account=? AND banner=?', account, BANNER), first(db, "SELECT COUNT(*) AS c FROM ledger WHERE account=? AND kind='dungeon'", account), first(db, "SELECT COUNT(*) AS c FROM ledger WHERE account=? AND kind='idle'", account)]);

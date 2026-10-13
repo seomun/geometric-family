@@ -509,12 +509,14 @@
       const st = freeRect(room, CW, CH, { x: 40, y: 340 }, { x0: 4, y0: WALLH + 20, x1: RW - 4, y1: RH - 4 }); place0(st.x, st.y); room.__occ.push(me); walker = setTimeout(step, 1500);
     }
     function guestCheck(room, R) {       // 손님: 아늑함 문턱을 넘으면 놀러 와 좋아하는 가구 앞에서 한마디, 선물은 확정(기본 손님 2번 · 카메오 손님은 말만 3번)
-      const cz = Room.cozy(), list = S.placed[cur] || []; const G = Room.guestList().filter((g) => (!g.cam || g.got) && ((S.guests[g.id] || {}).n || 0) < g.max && cz >= g.need + g.step * ((S.guests[g.id] || {}).n || 0)); if (!G.length) return;
-      const g = G.find((q) => list.some((p) => likedBy(q, p))); if (!g) return; const lk = list.find((p) => likedBy(g, p)), it = Room.item(lk.id), gi = geo(it), n = (S.guests[g.id] || {}).n || 0; let gift = g.gifts[n]; if (typeof gift === 'string' && gift.indexOf('__app:') === 0) { const ga = gift.slice(6), cand = Room.data.items.filter((q) => inGroup(q) && q.src && q.src.game === ga && !Room.has(q.id) && !q.season); gift = cand.length ? cand[0].id : null; }
-      S.guests[g.id] = { n: n + 1, seen: Date.now() }; Room.save(); if (n === 0) Room.albumAdd('guest:' + g.id, 'guest', (g.who || whoName(g.char)) + ' 첫 방문', g.app ? g.app + ' 손님' : '', cur);
-      setTimeout(() => { if (!room.isConnected) return; const GW = 56, GH = 76, fr = freeRect(room, GW, GH, { x: lk.x + gi.w + 20, y: lk.y + gi.h - GH * 0.6 }, { x0: 4, y0: WALLH + 20, x1: RW - 4, y1: RH - 4 });
+      const cz = Room.cozy(), list = S.placed[cur] || [], sk = Room.seasonKey(); let G = Room.guestList().filter((g) => (!g.cam || g.got) && ((S.guests[g.id] || {}).n || 0) < g.max && cz >= g.need + g.step * ((S.guests[g.id] || {}).n || 0)), seasonal = false;
+      if (!G.length) { G = Room.guestList().filter((g) => !g.cam && g.seasonLines && ((S.guests[g.id] || {}).n || 0) >= g.max && ((S.guests[g.id] || {}).seasons || {})[sk.key] == null); seasonal = true; }      // 다 만난 손님은 철마다 한 번 놀러 와 그 철 대사를 한다(놓쳐도 벌 없음)
+      if (!G.length) return;
+      const g = G.find((q) => list.some((p) => likedBy(q, p))); if (!g) return; const lk = list.find((p) => likedBy(g, p)), it = Room.item(lk.id), gi = geo(it), n = (S.guests[g.id] || {}).n || 0; let gift = seasonal ? ((Room.item(g.seasonGift) || {}).src && (Room.item(g.seasonGift).src.months || []).includes(Room.now().getMonth() + 1) && !Room.has(g.seasonGift) ? g.seasonGift : null) : g.gifts[n]; if (typeof gift === 'string' && gift.indexOf('__app:') === 0) { const ga = gift.slice(6), cand = Room.data.items.filter((q) => inGroup(q) && q.src && q.src.game === ga && !Room.has(q.id) && !q.season); gift = cand.length ? cand[0].id : null; }
+      let recorded = false; const record = () => { if (recorded) return; recorded = true; if (seasonal) { const rec = S.guests[g.id]; rec.seasons = rec.seasons || {}; rec.seasons[sk.key] = Date.now(); rec.seen = Date.now(); } else S.guests[g.id] = Object.assign({}, S.guests[g.id], { n: n + 1, seen: Date.now() }); Room.save(); if (n === 0) Room.albumAdd('guest:' + g.id, 'guest', (g.who || whoName(g.char)) + ' 첫 방문', g.app ? g.app + ' 손님' : '', cur); };      // 기록은 실제로 보여 줄 때만(화면이 바로 다시 그려져 취소된 방문이 사라지지 않게)
+      setTimeout(() => { if (!room.isConnected) return; record(); const GW = 56, GH = 76, fr = freeRect(room, GW, GH, { x: lk.x + gi.w + 20, y: lk.y + gi.h - GH * 0.6 }, { x0: 4, y0: WALLH + 20, x1: RW - 4, y1: RH - 4 });
         const im = el('img', 'h2-guest', room); im.src = Room.cfg.charSrc ? Room.cfg.charSrc(g.char) : ''; im.alt = ''; im.style.cssText = `left:${fr.x}px;top:${fr.y}px`; room.__occ.push({ x: fr.x, y: fr.y, w: GW, h: GH, guest: true });
-        const line = g.lines.length ? g.lines[(n + Math.floor(Math.random() * 2)) % g.lines.length] : '', BW = kid() ? 40 : 150, BH = kid() ? 34 : 40, bp = freeRect(room, BW, BH, { x: fr.x + GW / 2, y: fr.y - BH }, { x0: 4, y0: 6, x1: RW - 4, y1: RH - BH });
+        const line = seasonal ? g.seasonLines[sk.idx] : (g.lines.length ? g.lines[(n + Math.floor(Math.random() * 2)) % g.lines.length] : ''), BW = kid() ? 40 : 150, BH = kid() ? 34 : 40, bp = freeRect(room, BW, BH, { x: fr.x + GW / 2, y: fr.y - BH }, { x0: 4, y0: 6, x1: RW - 4, y1: RH - BH });
         const bb = el('div', 'h2-bubble', room, kid() ? '💖' : line); bb.style.cssText = `left:${bp.x}px;top:${bp.y}px;--tx:${Math.round(Math.max(14, Math.min(BW - 14, fr.x + GW / 2 - bp.x)))}px`; bb.classList.add(bp.y + BH <= fr.y + 12 ? 'tail-d' : 'tail-u');
         setTimeout(() => { Room._quiet = 1; const gg = gift ? Room.grant(gift) : null; Room._quiet = 0; if (gg) { toastH(kid() ? '🎁' : '손님 선물 · ' + (Room.item(gift) || {}).name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} } afterChange(); }, 2600); setTimeout(() => { im.remove(); bb.remove(); }, 4400); }, 900);
     }
@@ -524,6 +526,9 @@
     setTimeout(() => { Room.sweep(); drawAll(); const L0 = Room.levelInfo(); if (L0.lv > (S.lv || 1)) { S.lv = L0.lv; Room.save(); lvUp(L0); } S.lv = Math.max(S.lv || 1, L0.lv); seasonCheck(); setTimeout(() => Room.checkStory(parent, () => drawAll()), 400); setTimeout(checkRooms, 1200); }, 0);
     return { redraw: drawAll };
   };
+  /** 철(봄·여름·가을·겨울) — 손님 계절 방문 키와 대사 번호. 기기 날짜 기준 */
+  Room.now = () => now0();
+  Room.seasonKey = () => { const d = now0(), m = d.getMonth() + 1, idx = m >= 3 && m <= 5 ? 0 : m >= 6 && m <= 8 ? 1 : m >= 9 && m <= 11 ? 2 : 3, y = m <= 2 ? d.getFullYear() - 1 : d.getFullYear(); return { idx, key: y + ':' + idx }; };
   /** 계절·이벤트 선물: 그 달에 집에 오면 하루에 하나씩(확정, 놓친 철은 다음 해에 다시) */
   Room.seasonCheck = function () {
     const S = ensure(), d = now0(), key = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(), m = d.getMonth() + 1; if (!S || S.seasonDay === key) return null;

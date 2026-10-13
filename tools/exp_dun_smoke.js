@@ -11,7 +11,7 @@ const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m
   const t = await p.evaluate(() => document.querySelector('.ex-shop').textContent); ok(/3\/3번 남음/.test(t), '오늘 3/3번 남음'); ok((await p.evaluate(() => document.querySelectorAll('.ex-prod').length)) === 3, '난이도 3개');
   const gold0 = await p.evaluate(() => EXP.debug.S().gold), dup0 = await p.evaluate(() => JSON.stringify(EXP.debug.S().dups));
   await p.evaluate(() => { document.querySelectorAll('.ex-prod .uk-btn')[0].click(); }); await p.waitForTimeout(600);
-  if (await p.evaluate(() => !!document.querySelector('.ex-roster .ex-card'))) await p.evaluate(() => { document.querySelector('.uk-sheet .ex-roster .ex-card').click(); });
+  if (await p.evaluate(() => !!document.querySelector('.ex-dexgrid .ex-card'))) await p.evaluate(() => { document.querySelector('.uk-sheet .ex-dexgrid .ex-card').click(); });
   let won = false; for (let i = 0; i < 80 && !won; i++) { await p.waitForTimeout(1000); won = await p.evaluate(() => /승리/.test((document.querySelector('.uk-sheet') || {}).textContent || '')); }
   ok(won, '던전 전투 승리 화면'); await p.screenshot({ path: 'notes/snapshots/exp_dun_win.png' });
   const after = await p.evaluate(() => ({ gold: EXP.debug.S().gold, dups: JSON.stringify(EXP.debug.S().dups), n: EXP.debug.S().dun && EXP.debug.S().dun.n })); ok(after.gold > gold0 || after.dups !== dup0, `보상 지급(금화 ${gold0}→${after.gold} · 조각 ${after.dups})`); ok(after.n === 1, '오늘 횟수 1 사용');

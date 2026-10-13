@@ -149,6 +149,12 @@ th('wash', 'y_cup', 'y_cup2', 'y_paste', 'y_soap', 'y_towel', 'y_mat', 'y_duck',
 th('play', 'y_toybox', 'k_train', 'y_ball', 'kg_bear', 'kg_drum', 'kg_ball2', 'kg_train2', 'kg_kite', 'k_ch5', 'k_ch6', 'k_ch7', 'k_ch9', 'k_ch14', 'kc_tube', 'kc_acorn', 'kc_snowman'); th('wear', 'y_hat', 'y_boots', 'k_ch8', 'kc_mitten', 'w_crown'); th('eat', 'y_bowl', 'y_spoon', 'k_ch3', 'k_ch10', 'k_ch12', 'k_ch15', 'kc_icecream')
 DEFAULT_THEME = {'kitchen': 'eat', 'storage': 'store', 'photo': 'deco', 'outer': 'outdoor', 'yardlife': 'outdoor', 'badge': 'deco', 'story_a': 'story', 'story_k': 'story', 'season': 'deco', 'season2': 'deco', 'event': 'deco', 'gift': 'living', 'kseason': 'deco', 'kgift': 'play', 'wall': 'deco', 'build': 'living', 'kid': 'play', 'daybath': 'wash'}
 for i in items: i['theme'] = THEME.get(i['id']) or DEFAULT_THEME.get(i['set'], 'deco')
+import os as _os
+if _os.path.exists('data/furniture_lines.json'):      # 가구 한 줄 이야기(A20, tools/furniture_lines_build.py)
+    _FL = json.load(open('data/furniture_lines.json', encoding='utf-8'))
+    for i in items:
+        if i['id'] in _FL: i['line'] = _FL[i['id']]
+        else: i.pop('line', None)
 json.dump(R, open('data/room_items.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 # 방마다 허용 주제 — 주제 밖 소품은 맞는 방(아이 방·마당 등)에 놓는다
 ROOM_THEMES = {'nemo': ['living', 'eat', 'store', 'deco', 'story'], 'kitchen': ['eat', 'store'], 'semo': ['travel', 'deco', 'living', 'store'], 'dong': ['study', 'deco', 'living'], 'yard': ['outdoor', 'eat', 'story'], 'entrance': ['entry', 'store', 'deco', 'outdoor'], 'upstairs': ['sleep', 'store', 'living', 'deco', 'story'], 'garden': ['outdoor', 'eat', 'story'], 'attic': ['story', 'living', 'deco', 'store', 'sleep'], 'roof': ['story', 'outdoor', 'deco'],

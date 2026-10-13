@@ -593,6 +593,7 @@
       det.innerHTML = ''; const it = selId && Room.item(selId); if (!it) { if (!kid()) el('p', 'h2-hint', det, '가구를 눌러 보세요'); return; } const own = Room.has(it.id), sr = it.src || {};
       const row = el('div', 'h2-detrow', det); const im = el('img', '', row); im.src = Room.src(it); im.alt = ''; const tx = el('div', 'h2-dtx', row);
       if (!kid()) { el('b', '', tx, it.name); el('small', '', tx, (own ? '가지고 있어요' : sr.hint ? '어디서 얻나 · ' + sr.hint : '') + ' · 아늑함 +' + (it.cozy || 0)); } else el('span', 'h2-tic', tx, APPICON[sr.game] || '🎁');
+      if (!kid() && it.line) el('p', 'h2-dline' + (own ? '' : ' lock'), det, own ? '“' + it.line + '”' : '🔒 가지면 이 가구의 이야기가 열려요');
       const hb = el('button', 'h2-hbtn' + (Room.wishOn(it.id) ? ' on' : ''), row, '♥'); hb.onclick = () => { Room.wish(it.id); drawAll(); };
       { const vs = Room.variants(it), sw = el('div', 'h2-swrow', det); vs.forEach((v) => { const open = Room.variantOpen(v.i), d = el('i', 'h2-sw' + (open ? '' : ' lock'), sw); d.style.background = v.sw; if (!open) d.textContent = '🔒'; d.title = open ? '' : '가구 ' + Room.variantNeed(v.i) + '개 더'; });
         if (!kid()) { const op = vs.filter((v) => Room.variantOpen(v.i)).length, nx = vs.find((v) => !Room.variantOpen(v.i)); el('small', '', sw, `색 ${op}/${vs.length}` + (nx ? ` · 가구 ${Room.variantNeed(nx.i)}개 더 모으면 다음 색` : ' · 모두 열렸어요')); } }

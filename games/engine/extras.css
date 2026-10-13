@@ -341,3 +341,4 @@ html[data-bigbtn="1"] .h2-btx b { white-space: normal !important; display: -webk
 [data-uk="kid"] #safe:not(.wide) .screen.on .h2-bandwrap[style*="372px"], [data-uk="kid"] #safe:not(.wide) .h2-bandwrap[style*="372px"] { top: 352px !important; }
 [data-uk="kid"] #safe:not(.wide) .homeplay { top: 446px; }
 #safe.wide .h2-bandwrap[style*="372px"] { top: auto !important; bottom: 8px; left: auto; right: 12px; width: min(420px, calc(100% - 380px)); }
+.h2-dline { margin: 6px 4px 2px; padding: 6px 10px; border-radius: 12px; background: #FFF6DC; font: 700 calc(14px * var(--uk-fs-k, 1))/1.4 var(--uk-font); color: #6B4A1E; } .h2-dline.lock { background: #F1EEF3; color: #8B8092; font-weight: 600; }

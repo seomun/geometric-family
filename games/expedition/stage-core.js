@@ -65,5 +65,12 @@
   /** 방치 정찰: 마지막으로 받은 뒤 흐른 시간(최대 idleCapH)만큼, 깬 단계 금화의 일부를 시간당으로. */
   const idleGold = (D, cleared, elapsedMs) => { const Dn = D.dungeon, h = Math.min(Dn.idleCapH, Math.max(0, elapsedMs) / 3600000), st = D.stages[Math.max(1, Math.min(D.stages.length, cleared || 1)) - 1]; return elapsedMs < Dn.idleMinMin * 60000 ? 0 : Math.floor(h * st.gold * Dn.idleRate); };
   const dayKst = (now) => new Date(now + 9 * 3600000).getUTCDay() === 0 ? 6 : new Date(now + 9 * 3600000).getUTCDay() - 1;   // 월=0 … 일=6 (KST)
-  return { dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
+  /** 초보자 미션(B11): 상태 {cleared, units:{id:{lv,skl,awk,promo,gear}}, pulls, dun, idle, dex} → 미션별 진행. 클라이언트·서버가 같은 식으로 판정한다. */
+  const begMetric = (D, s, k) => { const ids = Object.keys(s.units || {}), vals = (f) => ids.map((id) => f(stOf(s.units[id]))); const mx = (f) => (ids.length ? Math.max(...vals(f)) : 0); switch (k) {
+    case 'clear': return s.cleared || 0; case 'units': return ids.length; case 'recruit': return ids.filter((id) => (unitOf(D, id) || {}).route === 'recruit').length;
+    case 'lv': return mx((x) => x.lv); case 'skl': return mx((x) => x.skl); case 'awk': return mx((x) => x.awk); case 'promo': return mx((x) => x.promo);
+    case 'gear': return Math.max(0, ...vals((x) => (x.gear || []).reduce((a, b) => a + b, 0))); case 'pull': return s.pulls || 0; case 'dun': return s.dun || 0; case 'idle': return s.idle || 0; case 'dex': return s.dex || 0; default: return 0; } };
+  const beginner = (D, s) => (D.bal.beginner || []).map((m) => { const v = begMetric(D, s, m.k); return { id: m.id, t: m.t, need: m.n, got: Math.min(m.n, v), done: v >= m.n, gems: m.gems, gold: m.gold }; });
+  const attendDay = (D, n) => (D.bal.attend || [])[Math.min(n, (D.bal.attend || []).length) - 1] || null;
+  return { beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
 });

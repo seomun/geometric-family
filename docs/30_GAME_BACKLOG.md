@@ -34,7 +34,7 @@
 - [ ] B9 이벤트 스테이지 틀(계절 달력과 같은 주) — 로컬 데이터
 - [ ] B10 업적·칭호·프로필 카드
 
-- [ ] B11 초보자 미션 30·출석 7일(로컬 데이터 + 서버 장부 멱등) — 첫 주 이탈 방지
+- [x] B11 초보자 미션 30·출석 7일 ✅ — 데이터 tools/expedition_begin.py(반짝석 360+100, 금화 17,100) · 판정 stage-core beginner() 를 서버·클라이언트가 같이 씀 · 서버 /beginner·/beginner/claim·/attend/claim(멱등, flags 기록) · 홈 버튼+배지 · 시험 exp_begin_smoke·server begin.test
 - [ ] B12 파티 편성 프리셋 3칸·자동 편성(상성 추천)·적 속성 미리보기
 
 ## C. 10종 품질

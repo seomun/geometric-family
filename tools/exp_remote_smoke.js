@@ -36,6 +36,17 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   ok(won, '서버 판정 승리 화면'); await p.screenshot({ path: 'notes/snapshots/exp_r4_win.png' });
   const p5 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(p5.progress.cleared === 1 && p5.wallet.gold === before.wallet.gold + 50 && p5.wallet.free_gems === before.wallet.free_gems + 150, '서버가 진행도·보상 반영: 1단계 클리어 · 금화 +50 · 반짝석 +150'); ok(await p.evaluate(() => EXP.debug.S().cleared === 1 && EXP.debug.S().gold === (JSON.parse(JSON.stringify(EXP.debug.S())).gold)), '화면이 서버 값으로 갱신');
   await p.evaluate(() => document.querySelectorAll('.uk-scrim').forEach((e) => e.remove())); await p.reload(); await p.waitForTimeout(1800); ok(await p.evaluate(() => EXP.debug.S().cleared === 1), '새로고침 뒤에도 진행도(서버) 유지');
+  // 초보자 미션·출석(B11): 서버가 판정하고 지급(하루 한 번 · 한 번만)
+  await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.stack = []; GF.go('xhome'); GF.go('xbegin'); }); await p.waitForTimeout(1500);
+  const bg0 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(await p.evaluate(() => document.querySelectorAll('.ex-bg').length === 30 && document.querySelectorAll('.ex-ad').length === 7 && document.querySelectorAll('.ex-bg.can').length >= 1), '서버판 초보자 미션: 30개 · 출석 7칸 · 1단계를 깼으니 받을 미션 있음');
+  await p.evaluate(() => [...document.querySelectorAll('.ex-beg .uk-btn')].find((x) => /오늘 출석 받기/.test(x.textContent)).click()); await p.waitForTimeout(1200);
+  const bg1 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(bg1.wallet.gold === bg0.wallet.gold + 300 && bg1.progress.flags.att.n === 1, '서버 출석 1일째: 금화 +300 · 서버 기록 n=1');
+  const dup = await p.evaluate(() => EXP.debug.http('POST', '/attend/claim', {})); ok(dup.already === true && (await p.evaluate(() => EXP.debug.http('GET', '/profile'))).wallet.gold === bg1.wallet.gold, '같은 날 다시 눌러도 지급 없음(멱등)');
+  await p.evaluate(() => document.querySelector('.ex-bg.can .uk-btn').click()); await p.waitForTimeout(1200);
+  const bg2 = await p.evaluate(() => EXP.debug.http('GET', '/profile')); ok(bg2.wallet.free_gems === bg1.wallet.free_gems + 10 && bg2.progress.flags.beg.join() === 'b01', '서버 미션 b01: 반짝석 +10 · 서버 기록');
+  const dup2 = await p.evaluate(() => EXP.debug.http('POST', '/beginner/claim', { id: 'b01' })); ok(dup2.replay === true && (await p.evaluate(() => EXP.debug.http('GET', '/profile'))).wallet.free_gems === bg2.wallet.free_gems, '같은 미션 다시 받기: 지급 없음(멱등)');
+  const early = await p.evaluate(() => EXP.debug.http('POST', '/beginner/claim', { id: 'b30' }).catch((e) => ({ error: e.code }))); ok(early.error === 'not_yet', '못 채운 미션을 억지로 받으려 하면 서버가 거절');
+  await p.screenshot({ path: 'notes/snapshots/exp_r_begin.png' });
   // 상점: 결제 전 고지 · 모의 결제 · 월 한도 · 광고 보상
   await p.evaluate(() => { document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); GF.stack = []; GF.go('xhome'); GF.go('xshop'); }); await p.waitForTimeout(1500);
   const shopTxt = await p.textContent('.ex-shop'); ok(/7일 안에는 쓰지 않은 유료/.test(shopTxt) && /환불되지 않아요/.test(shopTxt) && /랜덤 아이템/.test(shopTxt), '상점: 결제 전 고지(청약철회·환불 불가·랜덤 아이템)'); ok(/한도 200,000원/.test(shopTxt), '상점: 월 한도 표시'); await p.screenshot({ path: 'notes/snapshots/exp_r5_shop.png' });

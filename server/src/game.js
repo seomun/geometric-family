@@ -201,4 +201,30 @@ export async function dexClaim(env, account, n, now = Date.now()) {
     run(db, `INSERT INTO ledger(account,ts,kind,d_free,reason,ref) SELECT ?,?,'dex',?,?,? WHERE ${guard}`, account, now, m.gems, 'dex' + n, tag, ...g),
   ]); if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict'); return { ok: true, gems: m.gems, ...(await walletView(db, account)) };
 }
+/** 초보자 미션·출석(B11). 상태는 장부·진행도에서 서버가 직접 읽고, 받은 기록은 progress.flags.beg / flags.att (멱등). */
+async function begState(db, account) {
+  const [pr, us, py, dn, id] = await Promise.all([first(db, 'SELECT cleared,flags FROM progress WHERE account=?', account), all(db, 'SELECT unit_id,lv,skl,awk,promo,gear FROM units WHERE account=?', account), first(db, 'SELECT pulls FROM pity WHERE account=? AND banner=?', account, BANNER), first(db, "SELECT COUNT(*) AS c FROM ledger WHERE account=? AND kind='dungeon'", account), first(db, "SELECT COUNT(*) AS c FROM ledger WHERE account=? AND kind='idle'", account)]);
+  const flags = JSON.parse(pr.flags); return { flags, st: { cleared: pr.cleared, units: Object.fromEntries(us.map((u) => [u.unit_id, { lv: u.lv, skl: u.skl, awk: u.awk, promo: u.promo, gear: JSON.parse(u.gear) }])), pulls: py ? py.pulls : 0, dun: dn.c, idle: id.c, dex: (flags.dex || []).length } };
+}
+export async function beginnerView(env, account) { const { flags, st } = await begState(env.DB, account); const got = flags.beg || []; return { missions: SC.beginner(D, st).map((m) => ({ ...m, claimed: got.includes(m.id) })), att: flags.att || { n: 0, last: '' } }; }
+async function grantFlag(db, account, flags, tag, kind, reason, gems, gold, now) {
+  const w = await first(db, 'SELECT ver FROM wallet WHERE account=?', account), guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, tag];
+  const res = await db.batch([
+    run(db, 'UPDATE wallet SET free_gems=free_gems+?, gold=gold+?, ver=ver+1, last_req=? WHERE account=? AND ver=?', gems, gold, tag, account, w.ver),
+    run(db, `UPDATE progress SET flags=? WHERE account=? AND ${guard}`, JSON.stringify(flags), account, ...g),
+    run(db, `INSERT INTO ledger(account,ts,kind,d_free,d_gold,reason,ref) SELECT ?,?,?,?,?,?,? WHERE ${guard}`, account, now, kind, gems, gold, reason, tag, ...g),
+  ]); if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요');
+}
+export async function beginnerClaim(env, account, id, now = Date.now()) {
+  const db = env.DB, def = (D.bal.beginner || []).find((m) => m.id === id); if (!def) throw new HttpError(400, 'bad_mission');
+  const { flags, st } = await begState(db, account), got = flags.beg || []; if (got.includes(id)) return { ok: true, replay: true, ...(await walletView(db, account)) };
+  const m = SC.beginner(D, st).find((x) => x.id === id); if (!m.done) throw new HttpError(409, 'not_yet', '아직이에요 (' + m.got + '/' + m.need + ')');
+  flags.beg = got.concat(id); await grantFlag(db, account, flags, 'beg:' + id, 'beginner', id, def.gems, def.gold, now); return { ok: true, gems: def.gems, gold: def.gold, ...(await walletView(db, account)) };
+}
+const kstDate = (now) => new Date(now + 9 * 3600000).toISOString().slice(0, 10);
+export async function attendClaim(env, account, now = Date.now()) {
+  const db = env.DB, pr = await first(db, 'SELECT flags FROM progress WHERE account=?', account), flags = JSON.parse(pr.flags), a = flags.att || { n: 0, last: '' }, today = kstDate(now), len = (D.bal.attend || []).length;
+  if (a.last === today) return { ok: true, replay: true, already: true, day: a.n, ...(await walletView(db, account)) }; if (a.n >= len) return { ok: true, done: true, day: a.n, ...(await walletView(db, account)) };
+  const n = a.n + 1, rw = SC.attendDay(D, n); flags.att = { n, last: today }; await grantFlag(db, account, flags, 'att:' + n, 'attend', 'day' + n, rw.gems, rw.gold, now); return { ok: true, day: n, gems: rw.gems, gold: rw.gold, ...(await walletView(db, account)) };
+}
 async function walletView(db, account) { return { wallet: await first(db, 'SELECT free_gems,paid_gems,gold FROM wallet WHERE account=?', account) }; }

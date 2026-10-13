@@ -1,0 +1,41 @@
+// 집 지도·방 확장 시험(A13): node tools/housing_map.js — 성인 방 10개(뒷마당 Lv22·다락방 Lv25 포함) · 방 이름을 누르면 집 지도 · 열린 방은 이동, 잠긴 방은 몇 레벨인지 · 다음 방 강조 · 레벨이 오르면 새 방 열림 · 유아는 글자 없이
+const { chromium } = require('playwright-core');
+let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
+(async () => {
+  const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), ctx = await b.newContext({ viewport: { width: 390, height: 780 } }), p = await ctx.newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
+  await p.addInitScript(() => { window.__noResume = true; }); await p.goto('http://localhost:8765/games/merge/index.html'); await p.waitForTimeout(1600);
+  const rm = await p.evaluate(() => Room.H.rooms.filter((r) => r.group === 'adult').map((r) => ({ id: r.id, u: r.unlock, n: r.anchors.length, th: r.themes })));
+  ok(rm.length === 10 && rm.some((r) => r.id === 'garden' && r.u === 22) && rm.some((r) => r.id === 'attic' && r.u === 25), '성인 방 10개 · 뒷마당 Lv22 · 다락방 Lv25 · ' + rm.map((r) => r.id).join(','));
+  ok(rm.filter((r) => r.id === 'garden' || r.id === 'attic').every((r) => r.n >= 14), '새 방 자리 14개 이상(마당·다락 전용 칸)');
+  // 새 방 가구는 방 주제와 맞음(주제 밖 가구 없음 — 빌더 단언과 같은 규칙을 화면 쪽에서도)
+  ok(await p.evaluate(() => Room.H.rooms.filter((r) => r.id === 'garden' || r.id === 'attic').every((r) => r.anchors.every((a) => r.themes.includes(Room.item(a.want).theme)))), '새 방 앵커는 방 허용 주제 안');
+  await p.evaluate(() => { Room.S.placed = Room.S.placed || {}; GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(1200);
+  await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast,.h2-reveal').forEach((e) => e.remove()));
+  ok(await p.evaluate(() => /▾/.test((document.querySelector('.h2-navname') || {}).textContent || '')), '방 이름 옆에 ▾ (누르면 집 지도)');
+  await p.click('.h2-navname'); await p.waitForTimeout(500);
+  const m = await p.evaluate(() => ({ cells: document.querySelectorAll('.h2-mapc').length, lock: document.querySelectorAll('.h2-mapc.lock').length, next: [...document.querySelectorAll('.h2-mapc.next')].map((e) => e.textContent), cur: [...document.querySelectorAll('.h2-mapc.cur')].map((e) => e.textContent), floors: [...document.querySelectorAll('.h2-mapfl > small')].map((e) => e.textContent), txt: document.querySelector('.h2-map').innerText, w: document.querySelector('.h2-map').getBoundingClientRect().width, h: document.querySelector('.h2-map').getBoundingClientRect().height }));
+  ok(m.cells === 10, '지도에 방 10칸 · ' + m.cells); ok(m.floors.join(',') === '옥상,2층,1층,마당', '층 구분: ' + m.floors.join(',')); ok(m.lock >= 8, '처음엔 잠긴 방이 많음 · ' + m.lock);
+  ok(m.next.length === 1 && /Lv 3/.test(m.next[0]), '다음에 열릴 방 한 칸 강조(Lv 3) · ' + m.next.join('|')); ok(m.cur.length === 1 && /거실/.test(m.cur[0]), '지금 있는 방 표시 · ' + m.cur.join('|'));
+  ok(/뒷마당[\s\S]*Lv 22/.test(m.txt) && /다락방[\s\S]*Lv 25/.test(m.txt), '잠긴 뒷마당·다락방에 열리는 레벨 표시'); ok(m.h <= 780 * 0.92, '시트가 화면 안 · 높이 ' + Math.round(m.h));
+  await p.screenshot({ path: 'notes/snapshots/a13_map_start.png' });
+  await p.evaluate(() => [...document.querySelectorAll('.h2-mapc.lock')][0].click()); await p.waitForTimeout(300); ok(await p.evaluate(() => /집 레벨 \d+에 열려요/.test(document.body.innerText)), '잠긴 방을 누르면 열리는 레벨 안내');
+  // 레벨을 올려(가구 전부) 새 방이 열림
+  await p.evaluate(() => { document.querySelectorAll('.uk-scrim,.uk-toast').forEach((e) => e.remove()); Room.data.items.filter((i) => !['kid', 'daybath', 'wall', 'story_k', 'kseason', 'kgift'].includes(i.set)).forEach((i) => Room.grant(i.id)); Room.data.items.forEach((i) => { if (Room.has(i.id)) try { Room.placeAt(i.id); } catch (e) { /* */ } }); GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(1500);
+  await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast,.h2-reveal').forEach((e) => e.remove()));
+  ok(await p.evaluate(() => Room.unlockedRooms().length === 10 && Room.level() >= 25), 'Lv25 이상이면 방 10개 모두 열림 · Lv ' + await p.evaluate(() => Room.level()));
+  await p.click('.h2-navname'); await p.waitForTimeout(400);
+  const m2 = await p.evaluate(() => ({ lock: document.querySelectorAll('.h2-mapc.lock').length, next: document.querySelectorAll('.h2-mapc.next').length })); ok(m2.lock === 0 && m2.next === 0, '다 열리면 잠금·「다음」 표시 없음');
+  await p.screenshot({ path: 'notes/snapshots/a13_map_open.png' });
+  await p.evaluate(() => [...document.querySelectorAll('.h2-mapc')].find((e) => /뒷마당/.test(e.textContent)).click()); await p.waitForTimeout(700);
+  ok(await p.evaluate(() => /뒷마당/.test(document.querySelector('.h2-navname').textContent) && !document.querySelector('.h2-map')), '뒷마당을 누르면 그 방으로 이동(지도 닫힘)');
+  await p.evaluate(() => { document.querySelectorAll('.h2-reveal,.uk-scrim').forEach((e) => e.remove()); }); await p.waitForTimeout(300);
+  await p.screenshot({ path: 'notes/snapshots/a13_garden.png' });
+  const fit = await p.evaluate(() => { const rr = document.querySelector('.h2-room').getBoundingClientRect(); return [...document.querySelectorAll('.h2-room .h2-it')].filter((e) => { const r = e.getBoundingClientRect(); return r.left < rr.left - 2 || r.right > rr.right + 2 || r.bottom > rr.bottom + 2; }).length; }); ok(fit === 0, '뒷마당 가구가 방 밖으로 안 나감 · ' + fit);
+  await p.click('.h2-navname'); await p.waitForTimeout(300); await p.evaluate(() => [...document.querySelectorAll('.h2-mapc')].find((e) => /다락방/.test(e.textContent)).click()); await p.waitForTimeout(700); await p.evaluate(() => document.querySelectorAll('.h2-reveal').forEach((e) => e.remove())); await p.waitForTimeout(200);
+  await p.screenshot({ path: 'notes/snapshots/a13_attic.png' });
+  const fit2 = await p.evaluate(() => { const rr = document.querySelector('.h2-room').getBoundingClientRect(); return [...document.querySelectorAll('.h2-room .h2-it')].filter((e) => { const r = e.getBoundingClientRect(); return r.left < rr.left - 2 || r.right > rr.right + 2 || r.bottom > rr.bottom + 2; }).length; }); ok(fit2 === 0, '다락방 가구가 방 밖으로 안 나감 · ' + fit2);
+  // 유아 앱(playground): 글자 없이 이모지·별만
+  await p.goto('http://localhost:8765/games/index.html'); await p.waitForTimeout(1600); await p.evaluate(() => { GF.stack = []; GF.go('khouse'); }); await p.waitForTimeout(1300); await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.h2-reveal').forEach((e) => e.remove()));
+  const kn = await p.$('.h2-navname'); if (kn) { await kn.click(); await p.waitForTimeout(400); const k = await p.evaluate(() => ({ cells: document.querySelectorAll('.h2-mapc').length, txt: (document.querySelector('.h2-map') || { innerText: '' }).innerText })); ok(k.cells === 5, '유아 지도: 방 5칸 · ' + k.cells); ok(!/[가-힣]/.test(k.txt.replace(/\s/g, '')), '유아 지도는 글자 없음 · [' + k.txt.replace(/\s+/g, ' ') + ']'); await p.screenshot({ path: 'notes/snapshots/a13_map_kid.png' }); } else ok(false, '유아 집에서 방 이름 버튼 없음');
+  ok(errs.length === 0, '오류 없음 ' + (errs[0] || '')); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
+})().catch((e) => { console.error(e); process.exit(1); });

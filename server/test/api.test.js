@@ -169,7 +169,7 @@ test('3나라: 9단계 하나 합류 · 12단계 대장 · 24단계 바람 호�
   // 24단계: 호랑이(돌보기) → 받치기(네모 아빠·엄마·막둥이)가 말을 건다. 번쩍·돌보기만으론 불가
   s = await go(24, 23); let m = null; for (let k = 0; k < 600 && m == null; k++) { if (SC.replay(G.D, { stage: 24, seed: s.seed, party: s.party, auto: true, inputs: [[k, 'p']] }).recruited) m = k; } assert.ok(m != null); c = await clear(env, a, s, { inputs: [[m, 'p']] }); assert.equal(c.body.recruited, true, JSON.stringify(c.body)); assert.ok(c.body.profile.units.u_tiger); assert.equal(G.D.units.find((u) => u.id === 'u_tiger').name, '바람 호랑이', '배역표 이름');
   s = await go(36, 35); let q = null; for (let k = 0; k < 600 && q == null; k++) { if (SC.replay(G.D, { stage: 36, seed: s.seed, party: s.party, auto: true, inputs: [[k, 'p']] }).recruited) q = k; } assert.ok(q != null); c = await clear(env, a, s, { inputs: [[q, 'p']] }); assert.equal(c.body.recruited, true, JSON.stringify(c.body)); assert.ok(c.body.profile.units.u_ajumma); assert.equal(G.D.units.find((u) => u.id === 'u_ajumma').name, '깐깐한 아주머니');
-  assert.equal(G.SC.lvCap(G.D, 0), 10); assert.equal(G.SC.lvCap(G.D, 6), 10); assert.equal(G.SC.lvCap(G.D, 12), 12); assert.equal(G.SC.lvCap(G.D, 36), 20);
+  assert.equal(G.SC.lvCap(G.D, 0), 10); assert.equal(G.SC.lvCap(G.D, 6), 10); assert.equal(G.SC.lvCap(G.D, 12), 12); assert.equal(G.SC.lvCap(G.D, 36), 20); assert.equal(G.SC.lvCap(G.D, 72), 32);
   await env.DB.prepare('UPDATE progress SET cleared=10 WHERE account=?').bind(a.account).run(); assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 36 } })).body.error, 'stage_locked');
 });
 

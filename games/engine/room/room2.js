@@ -443,7 +443,7 @@
     }
     function drawNav() {
       nav.innerHTML = ''; const idx = RL.findIndex((r) => r.id === cur), R = RL[idx]; const go = (d) => { const j = idx + d; if (j < 0 || j >= RL.length) return; cur = RL[j].id; sel = null; drawAll(); };
-      const l = el('button', 'h2-ar', nav, '◀'); l.onclick = () => go(-1); l.disabled = idx === 0; el('b', '', nav, kid() ? '' : R.name + (unlocked(R) ? '' : ' 🔒'));
+      const l = el('button', 'h2-ar', nav, '◀'); l.onclick = () => go(-1); l.disabled = idx === 0; const nm = el('b', 'h2-navname', nav, kid() ? '🏠' : R.name + (unlocked(R) ? '' : ' 🔒') + ' ▾'); nm.onclick = () => Room.mapSheet(parent, cur, (rid) => { cur = rid; sel = null; drawAll(); });
       const r = el('button', 'h2-ar', nav, '▶'); r.onclick = () => go(1); r.disabled = idx === RL.length - 1; const dots = el('div', 'h2-dots', nav); RL.forEach((q) => el('i', (q.id === cur ? 'on ' : '') + (unlocked(q) ? '' : 'lock'), dots));
     }
     function drawStage() { Room._curRoom = cur;
@@ -607,6 +607,25 @@
     });
     try { GF.sfx && GF.sfx('celebrate'); } catch (e) { /* 소리 */ } if (!kid() && c.line) setTimeout(() => { if (!room.isConnected) return; const t = el('i', 'h2-say', room, c.line); t.style.cssText = `left:170px;top:${slots[0].y - 46}px`; setTimeout(() => t.remove(), 2400); }, 1500);
     setTimeout(() => { out.forEach((im) => { im.style.opacity = 0; }); bn.style.opacity = 0; stg.style.opacity = 0; setTimeout(() => { out.forEach((im) => im.remove()); bn.remove(); stg.remove(); room.classList.remove('scene'); room.querySelectorAll('.h2-focus').forEach((e) => e.classList.remove('h2-focus')); onEnd && onEnd(); }, 520); }, 5600); return out;
+  };
+  /* ---------------- 집 지도(A13): 집이 층·마당으로 커진 모습. 열린 방은 눌러서 가고, 잠긴 방은 몇 레벨에 열리는지 보여 준다 ---------------- */
+  const MAPF = { adult: [['옥상', ['roof']], ['2층', ['attic', 'upstairs']], ['1층', ['entrance', 'nemo', 'kitchen', 'semo', 'dong']], ['마당', ['yard', 'garden']]], kid: [['우리 방', ['bath', 'kid', 'wardrobe', 'dining', 'toyroom']]] };
+  const MAPI = { roof: '🌇', attic: '🕯️', upstairs: '🛏️', entrance: '🚪', nemo: '🛋️', kitchen: '🍚', semo: '💌', dong: '📚', yard: '🌻', garden: '🐔', bath: '🛁', kid: '🧸', wardrobe: '👕', dining: '🥣', toyroom: '🚂' };
+  Room.mapSheet = function (parent, cur, onGo) {
+    const S = ensure(), RL = rooms(), L = Room.level(), sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh h2-map', sc);
+    el('h2', '', sh, kid() ? '🏠' : '우리 집 지도'); const open = RL.filter(unlocked).length; if (!kid()) el('p', 'h2-dsub', sh, '방 ' + open + '/' + RL.length + ' 열림 · 집 레벨 ' + L + '. 레벨이 오르면 층과 마당이 늘어나요.');
+    const locked = RL.filter((r) => !unlocked(r)).sort((a, b) => a.unlock - b.unlock), nextId = locked.length ? locked[0].id : null, seen = new Set(), body = el('div', 'h2-mapbody', sh);
+    const floors = (MAPF[grp()] || []).map((fl) => [fl[0], fl[1].map((id) => RL.find((r) => r.id === id)).filter(Boolean)]); const rest = RL.filter((r) => !floors.some((fl) => fl[1].includes(r))); if (rest.length) floors.push([kid() ? '' : '그 밖', rest]);
+    floors.forEach(([label, list]) => {
+      if (!list.length) return; const row = el('div', 'h2-mapfl', body); if (!kid()) el('small', '', row, label); const cells = el('div', 'h2-mapcells', row);
+      list.forEach((r) => {
+        const ok = unlocked(r), have = (S.placed[r.id] || []).length, tot = (r.anchors || []).length, c = el('button', 'h2-mapc' + (ok ? '' : ' lock') + (r.id === cur ? ' cur' : '') + (r.id === nextId ? ' next' : ''), cells);
+        c.style.background = 'linear-gradient(180deg,' + r.wall + ' 0 55%,' + r.floor + ' 55%)'; el('span', 'ic', c, ok ? (MAPI[r.id] || '🏠') : '🔒');
+        if (kid()) { if (!ok) el('i', 'lv', c, '⭐' + Math.ceil(r.unlock / 2)); } else { el('b', '', c, r.name); el('i', 'lv', c, ok ? have + (tot ? '/' + tot : '') + '개' : (r.id === nextId ? '다음 · ' : '') + 'Lv ' + r.unlock); }
+        c.onclick = () => { if (ok) { sc.remove(); onGo && onGo(r.id); } else { try { GF.sfx && GF.sfx('hmm'); } catch (e) { /* 소리 */ } UK.toast(kid() ? '⭐ ' + Math.ceil(r.unlock / 2) : r.name + ': 집 레벨 ' + r.unlock + '에 열려요 (지금 ' + L + ')', sc); } };
+      });
+    });
+    UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
   /* ---------------- 우리 집 앨범(A10): 장 완료·집 레벨·새 방·첫 손님·사진 저장의 순간이 날짜 도장과 함께 자동으로 쌓인다 ---------------- */
   const AL_ICON = { set: '🎬', chapter: '📖', level: '⭐', room: '🚪', guest: '👋', photo: '📷', loot: '🎁' };

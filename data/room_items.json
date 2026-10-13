@@ -10028,6 +10028,385 @@
    "flat": false,
    "cls": "wall",
    "theme": "deco"
+  },
+  {
+   "no": 301,
+   "id": "x_donkey",
+   "name": "당나귀 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 56,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🫏",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 39,
+    "hint": "기하학 원정대 · 39단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 302,
+   "id": "x_musicbox",
+   "name": "음악 상자",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🎼",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 42,
+    "hint": "기하학 원정대 · 42단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 303,
+   "id": "x_catcushion",
+   "name": "고양이 방석",
+   "set": "exp",
+   "room": "yard",
+   "w": 56,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐈",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [
+    "sit"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 45,
+    "hint": "기하학 원정대 · 45단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 304,
+   "id": "x_rooster",
+   "name": "수탉 장식",
+   "set": "exp",
+   "room": "yard",
+   "w": 50,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐓",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 48,
+    "hint": "기하학 원정대 · 48단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 305,
+   "id": "x_beanstalk",
+   "name": "콩나물 화분",
+   "set": "exp",
+   "room": "yard",
+   "w": 50,
+   "h": 64,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌱",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 51,
+    "hint": "기하학 원정대 · 51단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 306,
+   "id": "x_goldegg",
+   "name": "황금 알",
+   "set": "exp",
+   "room": "yard",
+   "w": 40,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🥚",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 54,
+    "hint": "기하학 원정대 · 54단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 307,
+   "id": "x_harp",
+   "name": "구름 하프",
+   "set": "exp",
+   "room": "yard",
+   "w": 52,
+   "h": 62,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 57,
+    "hint": "기하학 원정대 · 57단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 308,
+   "id": "x_cloudbed",
+   "name": "구름 방석",
+   "set": "exp",
+   "room": "yard",
+   "w": 60,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "☁️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [
+    "sit",
+    "sleep"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 60,
+    "hint": "기하학 원정대 · 60단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 309,
+   "id": "x_snail",
+   "name": "우렁 껍질 장식",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🐌",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 63,
+    "hint": "기하학 원정대 · 63단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 310,
+   "id": "x_riceplant",
+   "name": "볏단",
+   "set": "exp",
+   "room": "yard",
+   "w": 56,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🌾",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [
+    "eat"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 66,
+    "hint": "기하학 원정대 · 66단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 311,
+   "id": "x_sedan",
+   "name": "작은 가마",
+   "set": "exp",
+   "room": "yard",
+   "w": 56,
+   "h": 62,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🏮",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 69,
+    "hint": "기하학 원정대 · 69단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 312,
+   "id": "x_crown",
+   "name": "원님 관",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "👑",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 72,
+    "hint": "기하학 원정대 · 72단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
   }
  ],
  "meTypes": {

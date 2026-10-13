@@ -880,6 +880,149 @@
    ]
   },
   {
+   "id": "garden",
+   "name": "뒷마당",
+   "group": "adult",
+   "unlock": 22,
+   "wall": "#D6F1FF",
+   "floor": "#A9D98C",
+   "pattern": "none",
+   "floorKind": "grass",
+   "fixtures": [
+    {
+     "k": "table",
+     "x": 96,
+     "y": 226,
+     "w": 140,
+     "h": 40,
+     "surf": {
+      "y": 226,
+      "x0": 106,
+      "x1": 222
+     }
+    }
+   ],
+   "anchors": [
+    {
+     "id": "garden_1",
+     "slot": "floor",
+     "x": 58,
+     "y": 298,
+     "want": "o_well"
+    },
+    {
+     "id": "garden_2",
+     "slot": "floor",
+     "x": 170,
+     "y": 298,
+     "want": "m_persimmon"
+    },
+    {
+     "id": "garden_3",
+     "slot": "floor",
+     "x": 282,
+     "y": 298,
+     "want": "o_pond"
+    },
+    {
+     "id": "garden_4",
+     "slot": "floor",
+     "x": 58,
+     "y": 368,
+     "want": "m_coop"
+    },
+    {
+     "id": "garden_5",
+     "slot": "floor",
+     "x": 170,
+     "y": 368,
+     "want": "o_swing"
+    },
+    {
+     "id": "garden_6",
+     "slot": "floor",
+     "x": 282,
+     "y": 368,
+     "want": "o_gate"
+    },
+    {
+     "id": "garden_7",
+     "slot": "floor",
+     "x": 48,
+     "y": 428,
+     "want": "m_bike"
+    },
+    {
+     "id": "garden_8",
+     "slot": "floor",
+     "x": 128,
+     "y": 428,
+     "want": "m_pumpkin"
+    },
+    {
+     "id": "garden_9",
+     "slot": "floor",
+     "x": 214,
+     "y": 428,
+     "want": "m_radish"
+    },
+    {
+     "id": "garden_10",
+     "slot": "floor",
+     "x": 296,
+     "y": 428,
+     "want": "m_duck"
+    },
+    {
+     "id": "garden_11",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "m_chime"
+    },
+    {
+     "id": "garden_12",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "m_butterfly"
+    },
+    {
+     "id": "garden_13",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "o_window"
+    },
+    {
+     "id": "garden_14",
+     "slot": "table",
+     "x": 125,
+     "y": 226,
+     "want": "m_pepper"
+    },
+    {
+     "id": "garden_15",
+     "slot": "table",
+     "x": 164,
+     "y": 226,
+     "want": "m_bucket"
+    },
+    {
+     "id": "garden_16",
+     "slot": "table",
+     "x": 203,
+     "y": 226,
+     "want": "m_rooster"
+    }
+   ],
+   "themes": [
+    "outdoor",
+    "eat",
+    "story"
+   ]
+  },
+  {
    "id": "entrance",
    "name": "현관",
    "group": "adult",
@@ -1138,6 +1281,151 @@
     "living",
     "deco",
     "story"
+   ]
+  },
+  {
+   "id": "attic",
+   "name": "다락방",
+   "group": "adult",
+   "unlock": 25,
+   "wall": "#F3E6FF",
+   "floor": "#D9BE9C",
+   "pattern": "dot",
+   "floorKind": "wood",
+   "fixtures": [
+    {
+     "k": "desk",
+     "x": 40,
+     "y": 236,
+     "w": 150,
+     "h": 44,
+     "surf": {
+      "y": 236,
+      "x0": 54,
+      "x1": 176
+     }
+    }
+   ],
+   "anchors": [
+    {
+     "id": "attic_1",
+     "slot": "floor",
+     "x": 58,
+     "y": 298,
+     "want": "t_bears_a"
+    },
+    {
+     "id": "attic_2",
+     "slot": "floor",
+     "x": 170,
+     "y": 298,
+     "want": "t_hok_a"
+    },
+    {
+     "id": "attic_3",
+     "slot": "floor",
+     "x": 282,
+     "y": 298,
+     "want": "t_axe_a"
+    },
+    {
+     "id": "attic_4",
+     "slot": "floor",
+     "x": 48,
+     "y": 368,
+     "want": "t_gyeonwoo_a"
+    },
+    {
+     "id": "attic_5",
+     "slot": "floor",
+     "x": 128,
+     "y": 368,
+     "want": "t_ureng_a"
+    },
+    {
+     "id": "attic_6",
+     "slot": "floor",
+     "x": 214,
+     "y": 368,
+     "want": "t_hare_a"
+    },
+    {
+     "id": "attic_7",
+     "slot": "floor",
+     "x": 296,
+     "y": 368,
+     "want": "t_brothers_a"
+    },
+    {
+     "id": "attic_8",
+     "slot": "floor",
+     "x": 58,
+     "y": 428,
+     "want": "t_snowqueen_a"
+    },
+    {
+     "id": "attic_9",
+     "slot": "floor",
+     "x": 170,
+     "y": 428,
+     "want": "g_flowerpot"
+    },
+    {
+     "id": "attic_10",
+     "slot": "floor",
+     "x": 282,
+     "y": 428,
+     "want": "g_hanbok"
+    },
+    {
+     "id": "attic_11",
+     "slot": "wall",
+     "x": 52,
+     "y": 108,
+     "want": "g_mirror"
+    },
+    {
+     "id": "attic_12",
+     "slot": "wall",
+     "x": 118,
+     "y": 108,
+     "want": "g_apron"
+    },
+    {
+     "id": "attic_13",
+     "slot": "wall",
+     "x": 184,
+     "y": 108,
+     "want": "g_postcard"
+    },
+    {
+     "id": "attic_14",
+     "slot": "table",
+     "x": 74,
+     "y": 236,
+     "want": "g_pen"
+    },
+    {
+     "id": "attic_15",
+     "slot": "table",
+     "x": 115,
+     "y": 236,
+     "want": "g_chess"
+    },
+    {
+     "id": "attic_16",
+     "slot": "table",
+     "x": 156,
+     "y": 236,
+     "want": "g_compass"
+    }
+   ],
+   "themes": [
+    "story",
+    "living",
+    "deco",
+    "store",
+    "sleep"
    ]
   },
   {
@@ -3277,8 +3565,10 @@
    "semo": 5,
    "dong": 8,
    "yard": 10,
+   "garden": 22,
    "entrance": 12,
    "upstairs": 15,
+   "attic": 25,
    "roof": 20
   },
   "kid": {

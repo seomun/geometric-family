@@ -287,3 +287,12 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-todo { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; border-radius: 18px; background: rgba(255,255,255,.92); box-shadow: var(--uk-sh-md, 0 2px 8px rgba(0,0,0,.12)); padding: 2px 12px; min-height: 30px; text-align: left; font-family: var(--uk-font); color: var(--uk-ink); }
 .h2-todo .ic { font-size: 16px; } .h2-todo .tx { flex: 1; min-width: 0; font: 800 calc(13px * var(--uk-fs-k, 1))/1.2 var(--uk-font); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .h2-todo .n { font: 900 12px/1 var(--uk-font); color: #C98F5A; font-style: normal; } .h2-todo.ok { background: #FFF3C2; }
 .h2-todo.tab { position: absolute; right: 18px; top: -15px; width: auto; max-width: 80%; min-height: 28px; z-index: 2; }
+/* 집 지도(A13) */
+.h2-navname { cursor: pointer; } .h2-map { text-align: center; } .h2-mapbody { display: flex; flex-direction: column; gap: 10px; margin: 8px 0 10px; }
+.h2-mapfl { display: flex; align-items: stretch; gap: 8px; } .h2-mapfl > small { flex: none; width: 34px; display: flex; align-items: center; justify-content: center; font: 900 13px/1.1 var(--uk-font); color: #8A6A3A; background: #FFF3C2; border-radius: 10px; }
+.h2-mapcells { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.h2-mapc { flex: 1 1 74px; min-width: 74px; max-width: 120px; position: relative; border: 3px solid #fff; border-radius: 16px; min-height: 76px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; box-shadow: var(--uk-sh); font-family: var(--uk-font); color: var(--uk-ink); }
+.h2-mapc .ic { font-size: 26px; line-height: 1; } .h2-mapc b { font: 900 calc(13px * var(--uk-fs-k, 1))/1.1 var(--uk-font); } .h2-mapc .lv { font: 800 11px/1 var(--uk-font); font-style: normal; color: #6B5A3A; background: rgba(255,255,255,.75); border-radius: 8px; padding: 2px 6px; }
+.h2-mapc.lock { filter: grayscale(.7) brightness(.95); opacity: .85; } .h2-mapc.cur { border-color: #FF8FA8; } .h2-mapc.next { filter: none; opacity: 1; border: 3px dashed #F5B400; animation: h2mapglow 1.6s ease-in-out infinite alternate; }
+@keyframes h2mapglow { from { box-shadow: 0 0 0 0 rgba(245,180,0,.0); } to { box-shadow: 0 0 14px 2px rgba(245,180,0,.6); } }
+.h2-map { box-sizing: border-box; max-width: 100%; }

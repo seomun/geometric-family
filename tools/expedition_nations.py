@@ -49,10 +49,13 @@ ROLES5 = ['tank', 'attacker', 'mage', 'support', 'healer']
 
 
 def kbase(s):            # 단계별 적 배율 기준(보정은 tools/exp_progress_sim.js 로): 12단계까지 가파르게, 이후 완만하게
-    return 1.0 + 0.047 * (s - 4) if s <= 12 else 1.376 + KSLOPE * (s - 12)
+    if s <= 12: return 1.0 + 0.047 * (s - 4)
+    if s <= 36: return 1.376 + KSLOPE * (s - 12)
+    return 1.376 + KSLOPE * 24 + KSLOPE2 * (s - 36)      # 4~6나라(37~72)는 레벨 상한(3단계마다 +1)이 더디게 오르는 만큼 완만하게
 
 
 KSLOPE = 0.037
+KSLOPE2 = 0.012
 
 
 def make(s):
@@ -151,7 +154,7 @@ def _chk(a):
 def _code(no):
     a = _b36(no) + _b36((no * 7 + 11) % 1296); return a + _chk(a)
 LOOT_CODES = sorted([dict(stage=i['src']['n'], id=i['id'], name=i['name'], emoji=i['emoji'], code=_code(i['no'])) for i in json.load(open('data/room_items.json', encoding='utf-8'))['items'] if i.get('set') == 'exp'], key=lambda x: x['stage'])
-assert len(LOOT_CODES) == 12 and all(len(x['code']) == 6 for x in LOOT_CODES), LOOT_CODES
+assert len(LOOT_CODES) >= 12 and all(len(x['code']) == 6 for x in LOOT_CODES), LOOT_CODES
 
 # 스토리 = 튜토리얼(B7): 새 기능을 처음 열 때 가족이 이야기 컷으로 알려 준다(한 번만, 건너뛰기 가능). 설명서 화면 없음.
 STORY['tips'] = dict(

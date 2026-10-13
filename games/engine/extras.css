@@ -210,3 +210,5 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-it.h2-a-spin { animation: h2spinit 1s ease; } @keyframes h2spinit { 50% { transform: scaleX(-1) translateY(-4px); } 100% { transform: none; } }
 .h2-it.h2-a-glow { animation: h2glowit 1.8s ease; } @keyframes h2glowit { 30%, 70% { filter: brightness(1.25) drop-shadow(0 0 8px #FFE27A); } }
 .h2-it.h2-a-hearts, .h2-it.h2-a-zzz, .h2-it.h2-a-sparkle, .h2-it.h2-a-notes, .h2-it.h2-a-steam, .h2-it.h2-a-drops, .h2-it.h2-a-page, .h2-it.h2-a-flash { animation: h2use .6s ease; }
+
+.h2-guestchip { left: auto !important; right: 10px; background: #E6F4FF !important; color: #1F5A8A !important; } .h2-gface { width: 52px; height: 60px; flex: none; display: flex; align-items: center; justify-content: center; } .h2-gface img { max-width: 100%; max-height: 100%; } .h2-pcard.off { opacity: .55; filter: grayscale(.4); }

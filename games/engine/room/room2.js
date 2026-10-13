@@ -262,6 +262,26 @@
     for (let y = r0.y0; y + h <= r0.y1; y += 8) for (let x = r0.x0; x + w <= r0.x1; x += 8) { const r = { x, y, w, h }, pen = occ.reduce((s, q) => s + ov(r, q), 0), d = Math.abs(x + w / 2 - want.x) + Math.abs(y + h / 2 - want.y), c = pen * 400 + d; if (!best || c < best.c) best = { c, x, y, pen }; }
     return best || { x: want.x, y: want.y, pen: 9e9 };
   };
+  /* ---------------- 손님 확장(A3): 앱에서 만난 카메오(ops.cameos 36명)가 집에 놀러 온다 ---------------- */
+  /** 이 그룹의 모든 손님: 기본 7+4 · 만난 카메오(좋아하는 가구 = 그 카메오가 나온 앱에서 얻은 가구, 방문 3번, 선물 없음) */
+  Room.guestList = function () {
+    const base = ((H() && H().guests) || []).filter((g) => g.group === grp()).map((g) => Object.assign({}, g, { max: g.gifts.length, step: 250 }));
+    const ops = (window.GF && GF.data && GF.data.ops && GF.data.ops.cameos) || [], I = window.GF && GF.ip, out = base.slice();
+    ops.filter((c) => !!c.kid === kid()).forEach((c, idx) => {
+      const got = !!(I && I.ready && I.hasCameo && I.hasCameo(c.id)); out.push({ id: 'cam:' + c.id, cam: true, got, char: c.who, group: grp(), need: 200 + 60 * idx, step: 120, max: 3, frm: c.frm, prop: c.prop, host: c.host, likes: [], gifts: [], lines: [c.line, c.prop + ' 두고 간 게 여기 있었네!', '집이 점점 아늑해지네요.'] });
+    });
+    return out;
+  };
+  const WHO = { wife: '세모 아내', husband: '세모 남편', nemo_dad: '네모 아빠', nemo_mom: '네모 엄마', nemo_grandma: '네모 할머니', dong_dad: '동그라미 아빠', 'nemo_kids.kid1': '하나', 'nemo_kids.kid2': '두리', 'nemo_kids.kid3': '세찌', baby: '막둥이' };
+  const whoName = (ch) => WHO[ch] || WHO[String(ch).split('.')[0]] || '이웃';
+  const likedBy = (g, p) => { if (!g.cam) return g.likes.includes(p.id); const it = Room.item(p.id); return !!(it && it.src && it.src.game === g.frm); };
+  Room.guestBook = function (parent) {
+    const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), S = ensure(), L = Room.guestList().filter((g) => !g.cam || g.got).sort((x, y) => (((S.guests[y.id] || {}).n || 0) > 0) - (((S.guests[x.id] || {}).n || 0) > 0) || x.need - y.need), seen = L.filter((g) => ((S.guests[g.id] || {}).n || 0) > 0).length;
+    el('h2', '', sh, kid() ? '👋' : '손님 도감 ' + seen + '/' + L.length); if (!kid()) el('p', 'h2-dsub', sh, '아늑함이 쌓이면 손님이 놀러 와요. 앱에서 만난 카메오도 찾아와요.');
+    L.forEach((g) => { const n = (S.guests[g.id] || {}).n || 0, c = el('div', 'h2-pcard' + (n ? '' : ' off'), sh), pv = el('div', 'h2-gface', c); if (Room.cfg.charSrc) { const im = el('img', '', pv); im.src = Room.cfg.charSrc(g.char); im.alt = ''; } const tx = el('div', 'h2-ptx', c);
+      if (!kid()) { el('b', '', tx, whoName(g.char) + (g.cam ? ' · ' + g.prop + ' ' + (APPNAME[g.frm] || g.frm) + ' 카메오' : ' · 이웃')); el('small', '', tx, n ? (g.lines[Math.min(n - 1, g.lines.length - 1)] || '') : '아직 안 왔어요 · 아늑함 ' + g.need + ' 이상'); el('small', 'h2-pcnt', tx, `방문 ${n}/${g.max}`); } else el('small', '', tx, '⭐'.repeat(n)); });
+    UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
+  };
   /* ---------------- 가구 상호작용(A2): 가구마다 고유한 짧은 연출·소리 ---------------- */
   // fx: steam 김 · glow 불빛 · flicker 화면 깜빡 · notes 음표 · drops 물방울 · page 책장 넘김 · tick 시계 · door 문 여닫이 · hearts 하트 · zzz 졸음 · flash 번쩍 · spin 빙글 · sparkle 반짝
   const FXD = {
@@ -314,6 +334,7 @@
     let cur = (opts.room && RL.find((r) => r.id === opts.room) && opts.room) || (RL.find((r) => unlocked(r)) || RL[0]).id, place = false, sel = null, walker = null, expanded = false;
     const view = el('div', 'h2-view', parent), sheet = el('div', 'h2-sheet', parent), tools = el('div', 'h2-fab', view), top = el('div', 'h2-top', view), nav = el('div', 'h2-nav', view), stage = el('div', 'h2-stage', view), selbar = el('div', 'h2-selbar', view);
     const dreamChip = el('button', 'h2-dreamchip', view, kid() ? '✨' : '✨ 완성 모습'); dreamChip.onclick = () => Room.dreamRoom(cur, parent);
+    const guestChip = el('button', 'h2-dreamchip h2-guestchip', view, kid() ? '👋' : '👋 손님'); guestChip.onclick = () => Room.guestBook(parent);
     function drawTop() {
       top.innerHTML = ''; const L = Room.levelInfo(); el('div', 'h2-lv', top, kid() ? `<b>⭐ ${Math.max(1, Math.ceil(L.lv / 2))}</b>` : `<b>Lv ${L.lv}</b><span>${L.cozy}</span>`); const bw = el('div', 'h2-barw', top); el('div', 'h2-bar', bw, `<i style="width:${Math.round(L.pct * 100)}%"></i>`);
       if (!kid() && !L.max) el('small', 'h2-nx', bw, '다음 ▲' + (L.next - L.cozy));
@@ -369,15 +390,15 @@
         if (q) setTimeout(() => { if (!room.isConnected) return; const b = el('i', 'h2-emote', room, EMOTE[q.it.tags[0]] || '✨'); b.style.cssText = `left:${me.x + CW / 2}px;top:${Math.max(4, me.y - 18)}px`; setTimeout(() => b.remove(), 1500); }, 3300); walker = setTimeout(step, 5200); };
       const st = freeRect(room, CW, CH, { x: 40, y: 340 }, { x0: 4, y0: WALLH + 20, x1: RW - 4, y1: RH - 4 }); place0(st.x, st.y); room.__occ.push(me); walker = setTimeout(step, 1500);
     }
-    function guestCheck(room, R) {       // 손님: 아늑함 문턱을 넘으면 놀러 와 좋아하는 가구 앞에서 한마디, 선물은 확정(손님마다 2번)
-      const cz = Room.cozy(), list = S.placed[cur] || []; const G = ((H() && H().guests) || []).filter((g) => g.group === grp() && ((S.guests[g.id] || {}).n || 0) < g.gifts.length && cz >= g.need + 250 * ((S.guests[g.id] || {}).n || 0)); if (!G.length) return;
-      const g = G.find((q) => q.likes.some((id) => list.some((p) => p.id === id))); if (!g) return; const lk = list.find((p) => g.likes.includes(p.id)), it = Room.item(lk.id), gi = geo(it), n = (S.guests[g.id] || {}).n || 0, gift = g.gifts[n];
+    function guestCheck(room, R) {       // 손님: 아늑함 문턱을 넘으면 놀러 와 좋아하는 가구 앞에서 한마디, 선물은 확정(기본 손님 2번 · 카메오 손님은 말만 3번)
+      const cz = Room.cozy(), list = S.placed[cur] || []; const G = Room.guestList().filter((g) => (!g.cam || g.got) && ((S.guests[g.id] || {}).n || 0) < g.max && cz >= g.need + g.step * ((S.guests[g.id] || {}).n || 0)); if (!G.length) return;
+      const g = G.find((q) => list.some((p) => likedBy(q, p))); if (!g) return; const lk = list.find((p) => likedBy(g, p)), it = Room.item(lk.id), gi = geo(it), n = (S.guests[g.id] || {}).n || 0, gift = g.gifts[n];
       S.guests[g.id] = { n: n + 1, seen: Date.now() }; Room.save();
       setTimeout(() => { if (!room.isConnected) return; const GW = 56, GH = 76, fr = freeRect(room, GW, GH, { x: lk.x + gi.w + 20, y: lk.y + gi.h - GH * 0.6 }, { x0: 4, y0: WALLH + 20, x1: RW - 4, y1: RH - 4 });
         const im = el('img', 'h2-guest', room); im.src = Room.cfg.charSrc ? Room.cfg.charSrc(g.char) : ''; im.alt = ''; im.style.cssText = `left:${fr.x}px;top:${fr.y}px`; room.__occ.push({ x: fr.x, y: fr.y, w: GW, h: GH, guest: true });
         const line = g.lines.length ? g.lines[(n + Math.floor(Math.random() * 2)) % g.lines.length] : '', BW = kid() ? 40 : 150, BH = kid() ? 34 : 40, bp = freeRect(room, BW, BH, { x: fr.x + GW / 2, y: fr.y - BH }, { x0: 4, y0: 6, x1: RW - 4, y1: RH - BH });
         const bb = el('div', 'h2-bubble', room, kid() ? '💖' : line); bb.style.cssText = `left:${bp.x}px;top:${bp.y}px`;
-        setTimeout(() => { Room._quiet = 1; const gg = Room.grant(gift); Room._quiet = 0; if (gg) { UK.toast(kid() ? '🎁' : '손님 선물 · ' + (Room.item(gift) || {}).name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} } afterChange(); }, 2600); setTimeout(() => { im.remove(); bb.remove(); }, 4400); }, 900);
+        setTimeout(() => { Room._quiet = 1; const gg = gift ? Room.grant(gift) : null; Room._quiet = 0; if (gg) { UK.toast(kid() ? '🎁' : '손님 선물 · ' + (Room.item(gift) || {}).name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} } afterChange(); }, 2600); setTimeout(() => { im.remove(); bb.remove(); }, 4400); }, 900);
     }
     function drawAll() { drawTop(); drawNav(); drawStage(); drawTools(); drawSheet(); drawSel(); }
     Room._redraw = () => { sel = null; drawAll(); };

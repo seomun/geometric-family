@@ -125,7 +125,7 @@ test('전투: 시작 토큰(서버 시드) → 같은 입력으로 재현 → �
 
 test('전투: 잠긴 단계 · 남의/위조 토큰 · 접근 토큰 구분 · 잘못된 기록', async () => {
   const env = mkenv(), a = await signup(env), b = await signup(env, '1985-01');
-  assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 3 } })).body.error, 'stage_locked'); assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 99 } })).body.error, 'bad_stage');
+  assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 3 } })).body.error, 'stage_locked'); assert.equal((await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 999 } })).body.error, 'bad_stage');
   const s = (await call(env, 'POST', '/stage/start', { token: a.access, body: { stage: 1 } })).body;
   assert.equal((await clear(env, b, s)).body.error, 'bad_stage_token', '남의 토큰은 안 된다'); assert.equal((await clear(env, a, { token: s.token + 'x' })).body.error, 'bad_token');
   assert.equal((await call(env, 'GET', '/profile', { token: s.token })).status, 401, '전투 토큰은 로그인 토큰이 아니다');

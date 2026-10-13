@@ -262,9 +262,49 @@
     for (let y = r0.y0; y + h <= r0.y1; y += 8) for (let x = r0.x0; x + w <= r0.x1; x += 8) { const r = { x, y, w, h }, pen = occ.reduce((s, q) => s + ov(r, q), 0), d = Math.abs(x + w / 2 - want.x) + Math.abs(y + h / 2 - want.y), c = pen * 400 + d; if (!best || c < best.c) best = { c, x, y, pen }; }
     return best || { x: want.x, y: want.y, pen: 9e9 };
   };
+  /* ---------------- 가구 상호작용(A2): 가구마다 고유한 짧은 연출·소리 ---------------- */
+  // fx: steam 김 · glow 불빛 · flicker 화면 깜빡 · notes 음표 · drops 물방울 · page 책장 넘김 · tick 시계 · door 문 여닫이 · hearts 하트 · zzz 졸음 · flash 번쩍 · spin 빙글 · sparkle 반짝
+  const FXD = {
+    b_tv: ['flicker', '📺', 'tukdak', '퀴즈 프로그램 한다!'], p_film: ['flicker', '🎬', 'tukdak', '다음 편 바로 재생!'], p_remote: ['flicker', '📺', 'tap', '딸깍, 채널 돌려요'],
+    b_sofa: ['hearts', '💛', 'hmm', '푹신푹신…'], g_cushion: ['hearts', '💛', 'hmm', '꼭 안으면 포근해요'], b_rug: ['hearts', '💛', 'hmm', '발끝이 따뜻해요'], b_bed: ['zzz', '💤', 'hmm', '스르르 눈이 감겨요'],
+    b_lamp: ['glow', '💡', 'tap', '불을 켜면 아늑해요'], b_window: ['notes', '🌬️', 'wind', '바람이 솔솔'],
+    p_rice: ['steam', '🍚', 'tap', '밥이 다 됐어요'], p_ramen: ['steam', '🍜', 'tap', '후루룩!'], p_mix: ['steam', '☕', 'tap', '믹스커피 한 잔'], g_teaset: ['steam', '🍵', 'whistle', '차 한잔 해요'], p_tea: ['steam', '🍵', 'whistle', '따뜻한 온천 차'],
+    p_lunch: ['steam', '🍱', 'tap', '도시락 열어 볼까'], g_lunch: ['steam', '🍱', 'tap', '보자기를 풀어요'], t_bowl: ['steam', '🍚', 'tap', '밥그릇이 뜨끈해요'], b_table: ['sparkle', '🍽️', 'tap', '밥 먹자!'], p_kimchi: ['sparkle', '🥬', 'pick', '새콤하게 익었네'],
+    u_fridge: ['door', '❄️', 'door', '아직 안 먹은 반찬이…'], u_drawer: ['door', '✨', 'door', '서랍이 스르륵'], b_drawer: ['door', '✨', 'door', '서랍이 스르륵'], u_shoerack: ['door', '👟', 'door', '신발이 가지런해요'], u_cart: ['sparkle', '🍎', 'pick', '장 본 것 정리!'], u_crate: ['sparkle', '🍎', 'pick', '과일이 싱싱해요'],
+    b_shelf: ['page', '📖', 'page', '한 권 꺼내 볼까'], p_book: ['page', '📖', 'page', '한 장 넘겨 봐요'], a_album: ['page', '📸', 'page', '옛 사진을 넘겨요'], a_scrapbook: ['page', '📒', 'page', '스크랩을 넘겨요'], a_diary: ['page', '📔', 'page', '오늘 일기는…'],
+    b_globe: ['spin', '🌍', 'flip', '어디로 갈까?'], p_globe: ['spin', '🌍', 'flip', '빙글빙글'],
+    b_clock: ['tick', '🕒', 'snd_bell', '똑딱똑딱'], a_wallclock: ['tick', '🕒', 'snd_bell', '똑딱똑딱'], p_clock: ['tick', '🕒', 'snd_bell', '똑딱똑딱'],
+    b_plant: ['drops', '💧', 'snd_drop', '쑥쑥 자라요'], p_flower: ['sparkle', '🌸', 'pick', '꽃향기가 나요'], y_duck: ['drops', '🦆', 'snd_drop', '꽥!'],
+    a_camera: ['flash', '📸', 'shutter', '찰칵!'], a_polaroid: ['flash', '📸', 'shutter', '즉석 사진 한 장'], a_frame: ['sparkle', '🖼️', 'pick', '가족사진이 웃고 있어요'], a_photo: ['sparkle', '🖼️', 'pick', '다 같이 찍은 날'],
+    p_vio: ['notes', '🎻', 'note3', '♪ 켜 볼까'], g_chess: ['sparkle', '♟️', 'tap', '한 수 두자'], b_suitcase: ['sparkle', '🧳', 'pick', '어디 갈까?'], p_bagt: ['sparkle', '🧳', 'pick', '짐 싸자!'], p_pass: ['sparkle', '✈️', 'pick', '여권 챙겼지?'], p_world: ['spin', '🗺️', 'flip', '다음 여행지는?'],
+    g_hanbok: ['sparkle', '👘', 'pick', '설날엔 한복!'], k_train: ['notes', '🚂', 'snd_train', '칙칙폭폭!'],
+  };
+  Room.fxFor = (id) => FXD[id] || null;
+  const puff = (room, cls, txt, x, y, dx, delay, dur) => { const b = el('i', 'h2-fx ' + cls, room, txt); b.style.cssText = `left:${x}px;top:${y}px;--dx:${dx || 0}px;animation-delay:${delay || 0}ms;animation-duration:${dur || 1200}ms`; setTimeout(() => b.remove(), (delay || 0) + (dur || 1200) + 80); return b; };
+  const FXRUN = {
+    steam: (room, x, y, e) => { for (let i = 0; i < 4; i++) puff(room, 'steam', '☁️', x + (i - 1.5) * 7, y, (i % 2 ? 6 : -6), i * 170, 1400); },
+    notes: (room, x, y, e) => { ['♪', '♫', '♪'].forEach((n, i) => puff(room, 'note', n, x + (i - 1) * 12, y, (i - 1) * 8, i * 200, 1500)); },
+    drops: (room, x, y, e) => { for (let i = 0; i < 3; i++) puff(room, 'drop', '💧', x + (i - 1) * 10, y - 10, 0, i * 160, 900); },
+    hearts: (room, x, y, e) => { for (let i = 0; i < 3; i++) puff(room, 'rise', e, x + (i - 1) * 12, y, (i - 1) * 6, i * 180, 1400); },
+    zzz: (room, x, y, e) => { ['z', 'Z', 'Z'].forEach((n, i) => puff(room, 'zzz', n, x + i * 8, y - i * 6, 10, i * 260, 1600)); },
+    sparkle: (room, x, y, e) => { ['✨', '✨'].forEach((n, i) => puff(room, 'spark', n, x + (i ? 12 : -12), y - (i ? 6 : 0), 0, i * 140, 1000)); },
+    page: (room, x, y, e) => { puff(room, 'page', e, x, y - 4, 0, 0, 900); },
+    spin: (room, x, y, e) => { puff(room, 'spin', e, x, y - 6, 0, 0, 1000); },
+    door: (room, x, y, e) => { puff(room, 'rise', e, x, y + 8, 0, 120, 1100); },
+    flash: (room, x, y, e) => { const f = el('i', 'h2-flashfx', room); f.style.cssText = `left:${x - 36}px;top:${y - 36}px`; setTimeout(() => f.remove(), 450); },
+    flicker: (room, x, y, e) => { const f = el('i', 'h2-tvfx', room); f.style.cssText = `left:${x - 26}px;top:${y - 4}px`; setTimeout(() => f.remove(), 1500); },
+    glow: (room, x, y, e) => { const f = el('i', 'h2-glowfx', room); f.style.cssText = `left:${x - 50}px;top:${y - 30}px`; setTimeout(() => f.remove(), 1800); },
+    tick: (room, x, y, e) => { puff(room, 'rise', '🕒', x, y, 0, 0, 900); },
+  };
   function use(room, d, it, p) {
-    d.classList.remove('use'); void d.offsetWidth; d.classList.add('use'); const t = (it.tags || [])[0]; try { GF.sfx && GF.sfx('tap'); } catch (e) {} if (!t) return;
-    const g = geo(it), b = el('i', 'h2-emote', room, EMOTE[t] || '✨'); b.style.cssText = `left:${p.x + g.w / 2}px;top:${Math.max(4, p.y - 22)}px`; setTimeout(() => b.remove(), 1400);
+    d.classList.remove('use'); void d.offsetWidth; const g = geo(it), spec = FXD[it.id], cx = p.x + g.w / 2, top = Math.max(10, p.y - 4);
+    if (spec) {
+      const [kind, emo, snd, line] = spec; d.classList.remove('h2-a-' + kind); void d.offsetWidth; d.classList.add('h2-a-' + kind); setTimeout(() => d.classList.remove('h2-a-' + kind), 1600); try { GF.sfx && GF.sfx(snd); } catch (e) { /* 소리 */ }
+      (FXRUN[kind] || FXRUN.sparkle)(room, cx, top, emo); if (!kid()) { const t = el('i', 'h2-say', room, line); t.style.cssText = `left:${Math.max(70, Math.min(RW - 70, cx))}px;top:${Math.max(4, p.y - 40)}px`; setTimeout(() => t.remove(), 1700); }
+      Room._lastUse = it.id; return;
+    }
+    d.classList.add('use'); const t = (it.tags || [])[0]; try { GF.sfx && GF.sfx('tap'); } catch (e) { /* 소리 */ } if (!t) return;
+    const b = el('i', 'h2-emote', room, EMOTE[t] || '✨'); b.style.cssText = `left:${cx}px;top:${Math.max(4, p.y - 22)}px`; setTimeout(() => b.remove(), 1400);
   }
 
   /* ---------------- 집 메인 화면 — 방이 주인공 ---------------- */

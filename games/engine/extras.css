@@ -189,3 +189,24 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .h2-undo { position: absolute; left: 50%; transform: translateX(-50%); bottom: 54px; z-index: 30; }
 
 .h2-ppv { position: relative; width: 112px; flex: none; border-radius: 12px; overflow: hidden; border: 2px solid #ecd9a8; background: #fff; } .h2-ppv .h2-wrap { margin: 0; } .h2-ppv .h2-pic { position: absolute; left: 4px; top: 2px; font-size: 18px; width: auto; font-style: normal; filter: drop-shadow(0 1px 1px #fff); }
+
+/* 가구 상호작용(A2) */
+.h2-fx { position: absolute; z-index: 31; font-style: normal; font-size: 18px; pointer-events: none; transform: translateX(-50%); opacity: 0; animation: h2rise 1.2s ease-out both; }
+.h2-fx.steam { font-size: 16px; filter: grayscale(1) brightness(1.6); } .h2-fx.note { font-size: 20px; color: #3B6FD6; font-weight: 900; animation-name: h2rise; } .h2-fx.drop { animation-name: h2fall; } .h2-fx.zzz { font: 900 18px/1 var(--uk-font); color: #5a6fd6; animation-name: h2rise; }
+.h2-fx.spark { animation-name: h2spark; } .h2-fx.page { animation-name: h2page; font-size: 24px; } .h2-fx.spin { animation-name: h2spin; font-size: 24px; }
+@keyframes h2rise { 0% { opacity: 0; transform: translate(-50%, 6px) scale(.7); } 25% { opacity: .95; } 100% { opacity: 0; transform: translate(calc(-50% + var(--dx, 0px)), -42px) scale(1.15); } }
+@keyframes h2fall { 0% { opacity: 0; transform: translate(-50%, -6px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 28px); } }
+@keyframes h2spark { 0% { opacity: 0; transform: translate(-50%, 0) scale(.3) rotate(0); } 40% { opacity: 1; transform: translate(-50%, -10px) scale(1.2) rotate(40deg); } 100% { opacity: 0; transform: translate(-50%, -18px) scale(.6) rotate(90deg); } }
+@keyframes h2page { 0% { opacity: 0; transform: translate(-50%, 0) rotateY(0); } 30% { opacity: 1; } 60% { transform: translate(-50%, -10px) rotateY(180deg); } 100% { opacity: 0; transform: translate(-50%, -16px) rotateY(360deg); } }
+@keyframes h2spin { 0% { opacity: 0; transform: translate(-50%, 0) rotate(0); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -20px) rotate(360deg); } }
+.h2-say { position: absolute; z-index: 32; transform: translateX(-50%); background: #fff; border: 2px solid #ecd9a8; border-radius: 12px; padding: 4px 9px; font: 800 12px/1.2 var(--uk-font); color: #6b4a00; white-space: nowrap; pointer-events: none; animation: h2say 1.7s ease both; }
+@keyframes h2say { 0% { opacity: 0; transform: translate(-50%, 6px); } 15%, 80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; } }
+.h2-flashfx { position: absolute; z-index: 33; width: 72px; height: 72px; border-radius: 50%; background: radial-gradient(#fff, rgba(255,255,255,0) 70%); pointer-events: none; animation: h2flash .45s ease-out both; } @keyframes h2flash { 0% { opacity: 1; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.6); } }
+.h2-tvfx { position: absolute; z-index: 31; width: 52px; height: 30px; border-radius: 6px; background: linear-gradient(135deg, #8fd3f4, #b8e8ff); mix-blend-mode: screen; pointer-events: none; animation: h2tv 1.5s steps(2, end) both; } @keyframes h2tv { 0% { opacity: .9; } 20% { opacity: .2; } 40% { opacity: .85; } 60% { opacity: .3; } 80% { opacity: .8; } 100% { opacity: 0; } }
+.h2-glowfx { position: absolute; z-index: 5; width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(rgba(255,230,120,.9), rgba(255,230,120,0) 68%); pointer-events: none; animation: h2glow 1.8s ease-in-out both; } @keyframes h2glow { 0% { opacity: 0; transform: scale(.6); } 30%, 70% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0; transform: scale(1.3); } }
+.h2-it.h2-a-flicker { animation: h2flick 1.5s steps(2, end); } @keyframes h2flick { 0%, 40%, 80% { filter: brightness(1.35) saturate(1.3); } 20%, 60%, 100% { filter: none; } }
+.h2-it.h2-a-tick { animation: h2tick 1s ease-in-out; transform-origin: 50% 20%; } @keyframes h2tick { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-6deg); } 75% { transform: rotate(6deg); } }
+.h2-it.h2-a-door { animation: h2door .7s ease; } @keyframes h2door { 30% { transform: scaleX(.93) translateX(-2px); filter: brightness(1.12); } 60% { transform: scaleX(.97); } }
+.h2-it.h2-a-spin { animation: h2spinit 1s ease; } @keyframes h2spinit { 50% { transform: scaleX(-1) translateY(-4px); } 100% { transform: none; } }
+.h2-it.h2-a-glow { animation: h2glowit 1.8s ease; } @keyframes h2glowit { 30%, 70% { filter: brightness(1.25) drop-shadow(0 0 8px #FFE27A); } }
+.h2-it.h2-a-hearts, .h2-it.h2-a-zzz, .h2-it.h2-a-sparkle, .h2-it.h2-a-notes, .h2-it.h2-a-steam, .h2-it.h2-a-drops, .h2-it.h2-a-page, .h2-it.h2-a-flash { animation: h2use .6s ease; }

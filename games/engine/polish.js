@@ -86,6 +86,25 @@
     return GF.t('polish.next', { c: nx.chapter, title: (D.chapters && D.chapters[nx.chapter - 1]) || '' }) + (first && nm ? GF.t('polish.next.type', { type: nm }) : '');
   };
 
+  /* ---------------- 실패 직후 「한 번 더」 동기(C2): 아깝다 한마디 · 근접 표시 · 힌트 제안 · 쉬운 모드 안내 ---------------- */
+  // 같은 판에서 연속으로 지면 단계가 오른다: 1번 = 근접 표시 + 바로 다시(2.2초) · 2번 = 힌트 안내 · 3번 이상 = 쉬운 모드 제안(고르기 전엔 자동으로 넘어가지 않음). 벌·광고 없음.
+  const FAILS = {};
+  P.failReset = (app, id) => { delete FAILS[app + ':' + id]; };
+  P.failCount = (app, id) => FAILS[app + ':' + id] || 0;
+  /** o: {app, id, near:'목표까지 3줄', hint:true(힌트 버튼이 있음), onRetry} */
+  P.failCard = function (parent, o) {
+    const again = () => { try { o.onRetry && o.onRetry(); } catch (e) { /* 다시 하기 실패는 무시 */ } };
+    if (P.kid || !parent || !window.UK) { setTimeout(again, o.ms || 900); return null; }
+    const key = o.app + ':' + (o.id == null ? '' : o.id), n = (FAILS[key] = (FAILS[key] || 0) + 1), easyOffer = n >= 3 && !P.assist();
+    const lines = []; if (o.near) lines.push('<b>' + o.near + '</b>'); lines.push(n === 1 ? '조금만 더 하면 돼요!' : n === 2 ? (o.hint ? '막히면 💡 힌트를 눌러 보세요.' : '천천히 해도 괜찮아요.') : '여러 번 해 봤네요! 쉬운 모드는 되돌리기·섞기가 무제한이에요.');
+    let done = false; const go = () => { if (done) return; done = true; sc.close ? sc.close() : sc.remove(); again(); };
+    const acts = [{ text: '한 번 더', cls: 'green', icon: 'replay', onclick: go }];
+    if (easyOffer) acts.push({ text: '쉬운 모드로 한 번 더', cls: 'sky', onclick: () => { GF.state.settings.assist = 1; GF.save && GF.save(); GF.sfx && GF.sfx('ok'); go(); } });
+    const sc = UK.modal({ title: '아깝다!', body: lines.join('<br>'), actions: acts, parent, dismiss: false }); GF.sfx && GF.sfx('hmm');
+    if (!easyOffer && n < 3) { const bar = el('div', 'pol-failbar', sc.querySelector('.uk-sheet') || sc); bar.innerHTML = '<i></i>'; setTimeout(go, 2300); }
+    return sc;
+  };
+
   /* ---------------- 설정 줄(ops.rows 가 부른다) ---------------- */
   P.rows = function (body, sc) {
     if (!P.kid) { const ra = el('div', 'xt-row', body); el('span', '', ra, GF.t('polish.settings.assist')); ra.appendChild(UK.switch(P.assist(), (on) => { GF.state.settings.assist = on ? 1 : 0; GF.save && GF.save(); })); el('small', 'xt-note', body, GF.t('polish.assist.note')); }

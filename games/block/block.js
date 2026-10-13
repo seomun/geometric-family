@@ -192,6 +192,7 @@
       cells.forEach((c, i) => { c.onclick = () => { if (sel >= 0 && S.tray[sel]) doPlace(sel, (i / N) | 0, i % N); else GF.sfx('tap'); }; });
       function result(stars) {
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
+        GF.polish && GF.polish.failReset && GF.polish.failReset('block', LV.id || LV.kind);
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'gift', text: '조각 ' + S.used + '개' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
@@ -215,7 +216,7 @@
           busy = true; const sc = endScore(S), e = SV.endless || (SV.endless = { best: 0, plays: 0 }), isBest = sc > e.best; e.plays++; if (isBest) e.best = sc; save(); GF.extras && GF.extras.check(); const rr = GF.rank && GF.rank.ready ? GF.rank.record('endless', sc) : null; if (rr) setTimeout(() => GF.rank.announce(rr, r), slow(1500)); GF.sfx(isBest ? 'star' : 'hmm');
           setTimeout(() => { const m = UK.modal({ title: isBest ? '새 최고 기록!' : '끝!', big: String(sc), chips: [{ icon: 'star', text: '최고 ' + e.best }, { icon: 'gift', text: '조각 ' + S.used + '개' }, { icon: 'info', text: '지운 줄 ' + S.got.lines }], parent: r, actions: [{ text: '한 번 더', cls: 'green', icon: 'replay', onclick: () => GF.replace('bplay', { level: G.makeEndless(Date.now() % 100000) }) }, { text: '순위표', cls: 'sky', icon: 'star', keep: true, onclick: () => GF.rank.open('endless') }, { text: '처음으로', cls: 'ghost', icon: 'home', onclick: () => GF.home2() }] }); UK.confetti(m); }, slow(500)); return;
         }
-        busy = true; say(LV.lim != null && S.used >= LV.lim ? '조각을 다 썼어요! 한 번 더' : '놓을 자리가 없어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
+        busy = true; const retry = () => GF.replace('bplay', LV.kind ? { level: LV } : { n: LV.id }), why = LV.lim != null && S.used >= LV.lim ? '조각을 다 썼어요!' : '놓을 자리가 없어요!', rem = LV.goal && LV.goal.t === 'lines' ? Math.max(0, LV.goal.n - (S.got.lines || 0)) : 0; if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'block', id: LV.id || LV.kind, near: why + (rem ? ' 목표까지 ' + rem + '줄!' : ''), hint: true, onRetry: retry }); else { say(why + ' 한 번 더'); GF.sfx('hmm'); setTimeout(retry, slow(900)); } }
       BK.debug.adOffer = () => offerUndo(); BK.debug.cells = () => cells; BK.debug.endScore = () => endScore(S); BK.debug.place = (slot, r0, c0) => doPlace(slot, r0, c0); BK.debug.state = () => S; BK.debug.level = () => LV; BK.debug.undo = undo; BK.debug.hint = showHint; BK.debug.busy = () => busy; BK.debug.drag = dragStart;
       if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();

@@ -150,6 +150,7 @@
       function hint() { if (busy || S.won) return; const i = C.hintTile(S); if (i < 0) return; S.used.hint++; hintI = i; GF.sfx('pick'); draw(); setTimeout(() => { if (hintI === i) { hintI = -1; if (board.isConnected) draw(); } }, slow(2600)); }
       function result(stars) {
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
+        GF.polish && GF.polish.failReset && GF.polish.failReset('tile', LV.id || LV.kind);
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const tools = S.used.undo + S.used.shuffle + S.used.hint, chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: '도움 ' + tools + '번' }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
@@ -167,7 +168,7 @@
           GF.polish.finished(); GF.polish.setNext(GF.polish.nextText(LV, D)); GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, slow(650));
       }
-      function lose() { busy = true; GF.extras && GF.extras.resumeClear(); if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); say('가득 찼어요! 한 번 더'); GF.sfx('hmm'); setTimeout(() => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }), slow(900)); }
+      function lose() { busy = true; GF.extras && GF.extras.resumeClear(); if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); const retry = () => GF.replace('tplay', LV.kind ? { level: LV } : { n: LV.id }); if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'tile', id: LV.id || LV.kind, near: '바구니가 가득 찼어요!', hint: true, onRetry: retry }); else { say('가득 찼어요! 한 번 더'); GF.sfx('hmm'); setTimeout(retry, slow(900)); } }
       TL.debug.adOffer = () => offerUndo(); TL.debug.level = () => LV; TL.debug.state = () => S; TL.debug.press = (i) => tap(i); TL.debug.undo = undo; TL.debug.shuffle = doShuffle; TL.debug.hint = hint; TL.debug.busy = () => busy; TL.debug.tiles = () => tiles;
       if (!LV.kind && GF.extras) GF.extras.resumeLoad(S, LV.id);
       draw();

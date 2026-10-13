@@ -187,6 +187,7 @@
       });
       function result(stars) {
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
+        GF.polish && GF.polish.failReset && GF.polish.failReset('merge', LV.id || LV.kind);
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: '오늘의 조각 한 번 더', onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }]; if (M.left(S) > 0) chips.push({ icon: 'gift', text: '남은 조각 ' + M.left(S) }); gained.forEach((id) => chips.push({ icon: 'home', text: NAME[id] || (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
@@ -205,7 +206,7 @@
           GF.polish.finished(); GF.polish.setNext(GF.polish.nextText(LV, D)); GF.tale.done(r, LV, () => result(st));   // 클리어 한마디 · 승전결 컷(장 끝이면 결, 마지막 장이면 엔딩)
         }, 650);
       }
-      function lose() { busy = true; if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); say('한 번 더!'); GF.sfx('hmm'); setTimeout(() => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }), 650); }   // 지면 벌 없이 즉시 다시
+      function lose() { busy = true; if (LV.kind === 'daily' && GF.rank) GF.rank.noteTry('daily'); const left = (S.goals || []).reduce((a, g) => a + Math.max(0, g.n - (S.made[M.key(g.c, g.t)] || 0)), 0), retry = () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id }); if (GF.polish && GF.polish.failCard) GF.polish.failCard(r, { app: 'merge', id: LV.id || LV.kind, near: left ? '목표 조각까지 ' + left + '개!' : '', hint: false, onRetry: retry }); else { say('한 번 더!'); GF.sfx('hmm'); setTimeout(retry, 650); } }   // 지면 벌 없이 즉시 다시
       MG.debug.adOffer = () => offerUndo(); MG.debug.cells = () => cells; MG.debug.place = (i) => doPlace(i); MG.debug.state = () => S; MG.debug.level = () => LV; MG.debug.undo = undo; MG.debug.hint = hint; MG.debug.busy = () => busy;
       buildBoard(); draw(); showTip(); GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('mplay', LV.kind ? { level: LV } : { n: LV.id })); GF.polish.goal(r, GF.t('polish.goal.merge', { n: LV.stars ? LV.stars[1] : 0 }));
       if (!LV.kind && LV.id <= 2 && !hist.length) { r.__demo = () => { if (GF.tale.cardOpen) return; const c = cells[LV.solution[0]]; if (c && c.isConnected && !hist.length) UK.finger(r, c); }; setTimeout(r.__demo, 1200); }   // 처음 두 판: 첫 칸을 손가락이 알려 준다

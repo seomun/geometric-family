@@ -54,7 +54,7 @@ const solveLevel = async (pg) => {
     // 지는 흐름
     await pg.evaluate(() => { document.querySelectorAll('.uk-scrim,.tale-ov').forEach((e) => e.remove()); GF.stack = []; GF.go('bhome'); GF.go('bplay', { n: 1 }); BLOCK.fast = true; }); await pg.waitForSelector('.screen.on .bk-board'); await pg.waitForTimeout(400);
     await pg.evaluate(() => { const S = BLOCK.debug.state(); S.fam.fill(0); for (let r = 0; r < 8; r++) { S.fam[r * 8 + r] = -1; S.fam[r * 8 + ((r + 1) % 8)] = -1; } S.tray = [{ p: 'd', c: 0, sh: 0 }, { p: 's3', c: 1, sh: 0 }, { p: 'h5', c: 2, sh: 0 }]; BLOCK.debug.place(0, 0, 0); });
-    await pg.waitForTimeout(1500); ok(await pg.evaluate(() => BLOCK.debug.state().used === 0 && !document.querySelector('.screen.on .uk-sheet')), '자리가 없으면 벌 없이 즉시 새 판(한 번 더)');
+    await pg.waitForTimeout(1200); ok(await pg.evaluate(() => /아깝다/.test((document.querySelector('.uk-sheet') || {}).textContent || '')), '지면 「아깝다」 카드(근접 표시)'); await pg.waitForTimeout(2200); ok(await pg.evaluate(() => BLOCK.debug.state().used === 0 && !document.querySelector('.screen.on .uk-sheet')), '자리가 없으면 벌 없이 즉시 새 판(한 번 더)');
     const types = await pg.evaluate(() => { const o = {}; BLOCK.debug.D().levels.forEach((l) => { if (!o[l.type]) o[l.type] = l.id; }); return o; }); ok(Object.keys(types).length >= 6, '판 종류 ' + Object.keys(types).length + '종: ' + Object.keys(types).join(','));
     const common = [['오늘의 한 판', 'BLOCK.debug.dailyLevel()'], ['세 가족 판(네모)', 'BLOCK.debug.trioLevels(8)[0]'], ['세 가족 판(세모)', 'BLOCK.debug.trioLevels(8)[1]'], ['세 가족 판(동그라미)', 'BLOCK.debug.trioLevels(8)[2]'], ['시즌 판', '(BLOCK.season = "chuseok", BLOCK.debug.seasonLevel(BLOCK.debug.X().seasons[0]))']];
     for (const [nm, expr] of common) {

@@ -262,3 +262,5 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .ex-mini-ic { display: flex; align-items: center; justify-content: center; } .ex-mini-ic svg { width: 240px; height: 180px; } .ex-mini-ic .sp { transition: opacity .5s; }
 
 .h2-rvworker { display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 10px 0 4px; min-height: 120px; justify-content: center; } .h2-rvworker img { width: 76px; height: auto; animation: h2rvhit .4s ease-in-out infinite alternate; } .h2-rvworker b { font: 900 20px/1.3 var(--uk-font); } .h2-rvworker small { font: 700 12px/1.3 var(--uk-font); opacity: .7; } .h2-rvtitle em { display: block; font: 700 12px/1.3 var(--uk-font); font-style: normal; opacity: .75; margin-top: 2px; }
+
+.pol-failbar { height: 5px; border-radius: 4px; background: rgba(0,0,0,.1); overflow: hidden; margin: 8px 6px 0; } .pol-failbar i { display: block; height: 100%; width: 100%; background: #6CCB8A; animation: polfail 2.3s linear forwards; } @keyframes polfail { to { width: 0; } }

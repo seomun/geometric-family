@@ -181,10 +181,27 @@
     Room.save(); return { ok: true, room: P.room, have: st.have, total: st.total, missing: st.missing, noRoom };
   };
   Room.undoPreset = function () { const u = Room._undo, S = ensure(); if (!u) return false; S.placed = u.placed; Room._undo = null; Room.save(); return true; };
+  /** 추천 배치(A19): 가졌지만 아직 어디에도 안 놓인 가구 중 이 방 주제에 맞는 것을 아늑함 높은 순으로 빈 자리에 놓는다(겹침·정원 규칙은 자동 배치와 같음). 되돌리기용 스냅샷을 Room._undo 에 둔다. */
+  Room.recommendList = function (rid) {
+    const S = ensure(), R = roomDef(rid); if (!S || !R || !unlocked(R)) return []; const placedIds = new Set(); Object.values(S.placed).forEach((L) => L.forEach((p) => placedIds.add(p.id)));
+    return Room.owned().map((id) => Room.item(id)).filter((it) => it && inGroup(it) && !placedIds.has(it.id) && (!R.themes || !it.theme || R.themes.includes(it.theme))).sort((a, b) => (b.cozy || 0) - (a.cozy || 0));
+  };
+  Room.recommend = function (rid) {
+    const S = ensure(), list = Room.recommendList(rid); if (!list.length) return { ok: false, none: true, placed: [] }; Room._undo = { room: rid, placed: JSON.parse(JSON.stringify(S.placed)) }; const put = [];
+    list.forEach((it) => {
+      const R = roomDef(rid), aw = new Set((R.anchors || []).map((a) => a.want)), freeN = (S.placed[rid] || []).filter((q) => !aw.has(q.id) && (Room.item(q.id) || {}).slot !== 'table').length, a = (R.anchors || []).find((q) => q.want === it.id), g = geo(it); let pos = null;
+      if (a) pos = { x: Math.round(Math.max(4, Math.min(RW - g.w - 4, a.x - g.w / 2))), y: Math.round(a.y - g.h) };
+      else if (it.slot === 'table') pos = surfaceSpot(rid, it, null);
+      else if (freeN < 10) { const p = freeSpot(rid, it, null); if (!p.occ) pos = p; }
+      if (pos) { Room.placedIn(rid).push({ id: it.id, x: pos.x, y: pos.y, flip: 0, c: it.colors[0] }); put.push(it); }
+    });
+    if (!put.length) { S.placed = Room._undo.placed; Room._undo = null; return { ok: false, full: true, placed: [] }; } Room.save(); return { ok: true, placed: put };
+  };
   /** 테마 시트: 현재 방의 프리셋 목록 → 놓기(되돌리기 가능) */
   Room.presetSheet = function (rid, parent, onDone) {
     const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), list = Room.presets(rid);
     el('h2', '', sh, '테마로 꾸미기'); el('p', 'h2-dsub', sh, '가지고 있는 가구만 한 번에 놓아요. 마음에 안 들면 되돌릴 수 있어요.');
+    const rec = Room.recommendList(rid); if (rec.length) { const c0 = el('div', 'h2-pcard h2-reccard', sh), tx0 = el('div', 'h2-ptx', c0); el('b', '', tx0, '✨ 추천 배치'); el('small', '', tx0, '가졌지만 아직 안 놓은 가구 ' + rec.length + '개 중 이 방에 어울리는 것을 아늑한 순서로 빈 자리에 놓아요.'); UK.btn({ text: '놓기', cls: 'gold sm', onclick: () => { const r = Room.recommend(rid); if (!r.ok) { toastH(r.full ? '더 놓을 자리가 없어요' : '놓을 가구가 없어요', sc); return; } sc.remove(); try { GF.sfx && GF.sfx('star'); } catch (e) { /* 소리 */ } onDone && onDone({ have: r.placed.length, missing: [] }, { name: '추천 배치' }); } }, c0); }
     if (!list.length) el('p', 'h2-empty', sh, '이 방엔 아직 테마가 없어요');
     list.forEach((P) => {
       const st = Room.presetStatus(P.id), c = el('div', 'h2-pcard', sh), pvw = el('div', 'h2-ppv', c); R2.draw(pvw, P.room, { mini: true, list: Room.presetLayout(P.id) }); el('i', 'h2-pic', pvw, P.icon); const tx = el('div', 'h2-ptx', c); el('b', '', tx, P.name); el('small', '', tx, P.note);
@@ -492,7 +509,7 @@
     function drawTools() {
       tools.innerHTML = ''; const B = (ic, label, fn, on) => { const b = el('button', 'h2-fb' + (on ? ' on' : ''), tools, kid() ? UK.icon(ic) : UK.icon(ic) + '<span>' + label + '</span>'); b.setAttribute('aria-label', label); b.onclick = fn; };
       const LM = ['auto', 'day', 'eve', 'night'], LI = { auto: '🕒', day: '☀️', eve: '🌇', night: '🌙' }, LN = { auto: '자동', day: '낮', eve: '저녁', night: '밤' }, cm = LM.includes(S.light) ? S.light : 'auto'; const lt = el('button', 'h2-fb', tools, LI[cm] + (kid() ? '' : '<span>' + LN[cm] + '</span>')); lt.setAttribute('aria-label', 'light'); lt.onclick = () => { S.light = LM[(LM.indexOf(cm) + 1) % LM.length]; Room.save(); drawAll(); };
-      B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, '🔗<span>구경 코드</span>'); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid() && Room.presets(cur).length) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); toastH(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: '되돌리기', cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photoStudio(cur, parent));
+      B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, '🔗<span>구경 코드</span>'); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid()) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); toastH(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: '되돌리기', cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photoStudio(cur, parent));
     }
     function drawSel() {
       selbar.innerHTML = ''; if (!place) return; if (sel == null) { el('p', 'h2-hint', selbar, kid() ? '' : '가구를 끌어서 옮겨 보세요'); return; } const p = (S.placed[cur] || [])[sel], it = p && Room.item(p.id); if (!it) return;

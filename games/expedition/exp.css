@@ -29,3 +29,7 @@
 .ex-tri { display: flex; flex-direction: column; align-items: center; } .ex-trit { font: 900 16px/1.2 var(--uk-font); color: #4A3030; margin-top: 2px; }
 .ex-fam { top: 170px; height: 200px; } .ex-art.xl { width: 100px; height: 170px; }
 .ex-banner .ex-art { width: 84px; height: 118px; } .ex-pity { top: 300px; } .ex-prow { top: 334px; } .ex-odds { top: 408px; } .ex-gnote { top: 462px; }
+/* 전투 카드: 키트 간격(8px) 기준으로 넓힌다 — 5장이 360px 안에 숨 쉴 자리 */
+.ex-brow { left: 14px; right: 14px; gap: 8px; } .ex-brow.e { top: 118px; } .ex-brow.p { bottom: 16px; }
+.ex-bc { width: 64px; height: 112px; border-radius: 16px; } .ex-bc .ex-art { width: 56px; height: 58px; font-size: 34px; } .ex-hp { width: 52px; height: 9px; } .ex-bc small { font-size: 13px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; }
+.ex-bmid { top: 250px; bottom: 154px; }

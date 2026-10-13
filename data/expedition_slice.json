@@ -60,7 +60,7 @@
   },
   {
    "id": "u_semo_wife",
-   "name": "세모 이모",
+   "name": "세모 아내",
    "art": "wife.joy",
    "role": "attacker",
    "el": "flash",
@@ -69,7 +69,7 @@
   },
   {
    "id": "u_dong_dad",
-   "name": "동그라미 아저씨",
+   "name": "동그라미 아빠",
    "art": "dong_dad.calm",
    "role": "mage",
    "el": "care",
@@ -96,13 +96,53 @@
   },
   {
    "id": "u_kid3",
-   "name": "세찌(셋째 돼지)",
+   "name": "세찌",
    "art": "nemo_kids.kid3",
    "role": "tank",
    "el": "support",
    "grade": 4,
    "route": "story",
-   "note": "이야기 합류 · 벽돌집 공사장"
+   "note": "이야기 합류 · 벽돌집 공사장(셋째 돼지)"
+  },
+  {
+   "id": "u_kid1",
+   "name": "하나",
+   "art": "nemo_kids.kid1",
+   "role": "support",
+   "el": "support",
+   "grade": 4,
+   "route": "story",
+   "note": "이야기 합류(다음 나라)"
+  },
+  {
+   "id": "u_kid2",
+   "name": "두리",
+   "art": "nemo_kids.kid2",
+   "role": "mage",
+   "el": "support",
+   "grade": 4,
+   "route": "story",
+   "note": "이야기 합류(다음 나라)"
+  },
+  {
+   "id": "u_husband",
+   "name": "세모 남편",
+   "art": "husband.joy",
+   "role": "attacker",
+   "el": "flash",
+   "grade": 4,
+   "route": "story",
+   "note": "이야기 합류(다음 나라)"
+  },
+  {
+   "id": "u_grandma",
+   "name": "네모 할머니",
+   "art": "nemo_grandma.good",
+   "role": "healer",
+   "el": "support",
+   "grade": 4,
+   "route": "story",
+   "note": "이야기 합류(다음 나라)"
   },
   {
    "id": "u_wind",
@@ -116,77 +156,120 @@
    "note": "포섭 · 바람 친구(가족 밖, 장난을 그만두고 친구가 됨)"
   },
   {
-   "id": "u_husband",
-   "name": "세모 남편",
-   "art": "husband.joy",
+   "id": "u_nolbu_husband",
+   "name": "놀부 세모 남편",
+   "art": "husband.wink",
    "role": "attacker",
    "el": "flash",
    "grade": 5,
    "route": "gacha",
-   "pickup": true
+   "pickup": true,
+   "costume": "흥부와 놀부"
   },
   {
-   "id": "u_grandma",
-   "name": "네모 할머니",
-   "art": "nemo_grandma.good",
+   "id": "u_heungbu_dad",
+   "name": "흥부 네모 아빠",
+   "art": "nemo_dad.love",
    "role": "healer",
    "el": "support",
    "grade": 5,
-   "route": "gacha"
+   "route": "gacha",
+   "costume": "흥부와 놀부"
   },
   {
-   "id": "u_kid1",
-   "name": "하나",
+   "id": "u_sun_hana",
+   "name": "해님 하나",
    "art": "nemo_kids.kid1",
-   "role": "support",
+   "role": "mage",
+   "el": "support",
+   "grade": 5,
+   "route": "gacha",
+   "costume": "해님 달님"
+  },
+  {
+   "id": "u_woodcutter_dad",
+   "name": "나무꾼 네모 아빠",
+   "art": "nemo_dad.joy",
+   "role": "tank",
    "el": "support",
    "grade": 4,
-   "route": "gacha"
+   "route": "gacha",
+   "costume": "금도끼 은도끼"
   },
   {
-   "id": "u_dong_n",
-   "name": "동그라미 이웃",
+   "id": "u_bear_dong",
+   "name": "큰 곰 동그라미 아빠",
    "art": "dong_dad.warm",
    "role": "tank",
    "el": "care",
    "grade": 4,
-   "route": "gacha"
+   "route": "gacha",
+   "costume": "세 마리 곰"
   },
   {
-   "id": "u_semo_n",
-   "name": "세모 이웃",
-   "art": "husband.wink",
-   "role": "mage",
+   "id": "u_ant_mom",
+   "name": "개미 네모 엄마",
+   "art": "nemo_mom.joy",
+   "role": "healer",
+   "el": "support",
+   "grade": 4,
+   "route": "gacha",
+   "costume": "개미와 베짱이"
+  },
+  {
+   "id": "u_dokkaebi",
+   "name": "도깨비",
+   "art": null,
+   "role": "attacker",
    "el": "flash",
    "grade": 4,
-   "route": "gacha"
+   "route": "gacha",
+   "emoji": "👹",
+   "costume": "혹부리 영감"
   },
   {
-   "id": "u_nemo_n",
-   "name": "네모 이웃",
-   "art": "nemo_dad.wink",
-   "role": "support",
-   "el": "support",
-   "grade": 3,
-   "route": "gacha"
-  },
-  {
-   "id": "u_dong_n2",
-   "name": "동그라미 이웃(둘)",
-   "art": "dong_dad.good",
+   "id": "u_swallow",
+   "name": "제비",
+   "art": null,
    "role": "healer",
    "el": "care",
    "grade": 3,
-   "route": "gacha"
+   "route": "gacha",
+   "emoji": "🐦",
+   "costume": "흥부와 놀부"
   },
   {
-   "id": "u_semo_n2",
-   "name": "세모 이웃(둘)",
-   "art": "husband.good",
-   "role": "attacker",
+   "id": "u_toad",
+   "name": "두꺼비",
+   "art": null,
+   "role": "tank",
+   "el": "care",
+   "grade": 3,
+   "route": "gacha",
+   "emoji": "🐸",
+   "costume": "콩쥐팥쥐"
+  },
+  {
+   "id": "u_magpie",
+   "name": "까치",
+   "art": null,
+   "role": "support",
    "el": "flash",
    "grade": 3,
-   "route": "gacha"
+   "route": "gacha",
+   "emoji": "🐦‍⬛",
+   "costume": "견우와 직녀"
+  },
+  {
+   "id": "u_fairy",
+   "name": "요정",
+   "art": null,
+   "role": "mage",
+   "el": "care",
+   "grade": 3,
+   "route": "gacha",
+   "emoji": "🧚",
+   "costume": "구두장이와 요정"
   }
  ],
  "stages": [
@@ -444,7 +527,7 @@
    },
    {
     "bg": "field",
-    "text": "세모 이모가 앞으로 나섰다. 「내가 번쩍 막아 볼게!」 번쩍은 네모를, 네모는 동그라미를, 동그라미는 번쩍을 이겨요.",
+    "text": "세모 아내가 앞으로 나섰다. 「내가 번쩍 막아 볼게!」 번쩍은 네모를, 네모는 동그라미를, 동그라미는 번쩍을 이겨요.",
     "chars": [
      "wife.joy",
      "baby.joy"
@@ -456,7 +539,7 @@
    },
    {
     "bg": "field",
-    "text": "동그라미 아저씨가 고개를 끄덕였다. 「같이 가요, 우리 원정대.」 첫 걸음은 볏짚집 앞이에요.",
+    "text": "동그라미 아빠가 고개를 끄덕였다. 「같이 가요, 우리 원정대.」 첫 걸음은 볏짚집 앞이에요.",
     "chars": [
      "dong_dad.calm",
      "nemo_dad.good",
@@ -504,7 +587,7 @@
     },
     {
      "bg": "hill",
-     "text": "동그라미 아저씨가 조용히 말했다. 「그럼 같이 가요. 지붕은 이제 우리가 같이 고쳐요.」",
+     "text": "동그라미 아빠가 조용히 말했다. 「그럼 같이 가요. 지붕은 이제 우리가 같이 고쳐요.」",
      "chars": [
       "dong_dad.calm",
       "baby.joy"

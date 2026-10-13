@@ -8,7 +8,7 @@
   const mulberry = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const W = 336, H = 210, BW = 336, BH = 430;
   const IDS = ['pigs', 'bremen', 'gyeonwoo', 'bears', 'jack', 'kongjwi', 'heungbu', 'ureng', 'axe', 'ant', 'sun', 'hare', 'brothers', 'snowqueen'];   // ⑦과 같은 이야기 순서(13·14장은 ⑥ 확장분)
-  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이', '의좋은 형제', '눈의 여왕'];
+  const CHAPTERS = ['아기돼지 삼형제', '브레멘 음악대', '견우와 직녀', '세 마리 곰', '잭과 콩나무', '콩쥐팥쥐', '흥부 박', '우렁 각시', '금도끼 은도끼', '개미와 베짱이', '해님 달님', '토끼와 거북이', '의좋은 형제', '눈의 여왕', '선녀와 나무꾼', '토끼전', '은혜 갚은 까치', '호랑이와 곶감', '빨간 모자', '헨젤과 그레텔', '장화 신은 고양이'];
   const TYPE_NAME = { diff: '틀린 그림', odd: '다른 하나', hidden: '숨은 물건', three: '세 가족', memory: '기억', zoom: '확대' };
   const A = ['diff', 'diff', 'diff', 'odd', 'diff', 'hidden', 'three', 'memory', 'zoom', 'diff'], B = ['diff', 'odd', 'hidden', 'three', 'diff', 'memory', 'zoom', 'odd', 'hidden', 'diff'], Cc = ['diff', 'hidden', 'diff', 'memory', 'diff', 'zoom', 'odd', 'three', 'diff', 'diff'];
   const SEQS = [A, B, Cc];

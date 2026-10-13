@@ -29,7 +29,7 @@ CAST = {
     'brothers': [('형', 'kid3', 'lead'), ('아우', 'baby', 'lead')],
     'snowqueen': [('카이', 'baby', 'lead'), ('게르다', 'kid1', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper')],
     'fairywood': [('나무꾼', 'nemo_dad', 'lead'), ('선녀', 'semo_w', 'lead'), ('도와주는 사슴', O('사슴(가족 밖)'), 'helper'), ('선녀의 아이들', 'kid2', 'helper')],      # D1 새 이야기(허브 2026-10-14)
-    'rabbitliver': [('토끼', 'kid1', 'lead'), ('거북(심부름꾼)', 'nemo_dad', 'helper'), ('아픈 용왕님(순한 판)', 'dong_dad', 'helper')],
+    'rabbitliver': [('토끼', 'kid1', 'lead'), ('거북(심부름꾼)', 'nemo_dad', 'helper'), ('아픈 용왕님(순한 판)', 'dong_dad', 'helper'), ('용궁 문지기', O('용궁 문지기(가족 밖, 목소리만·순한 판)'), 'villain')],      # 가족 밖 악역 자리(B20, 허브 방침: 악역은 가족 밖)
     'magpie': [('선비', 'nemo_dad', 'lead'), ('은혜 갚는 까치', O('까치(art.magpie)'), 'helper'), ('구렁이(순한 판)', O('구렁이(가족 밖, 소리·그림자·순한 판)'), 'villain')],
     'tigerpersimmon': [('엄마', 'nemo_mom', 'lead'), ('우는 아기', 'baby', 'lead'), ('곶감 아저씨', 'dong_dad', 'helper'), ('호랑이(순한 판)', O('호랑이(가족 밖, 소리·그림자·순한 판)'), 'villain')],
     'redhood': [('빨간 모자', 'kid1', 'lead'), ('할머니', 'nemo_gma', 'helper'), ('엄마', 'nemo_mom', 'helper'), ('늑대(순한 판)', O('늑대(가족 밖, 소리·그림자·순한 판)'), 'villain')],

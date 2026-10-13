@@ -597,6 +597,14 @@
     "kind": "helper",
     "family": "dong",
     "only": null
+   },
+   {
+    "role": "용궁 문지기",
+    "adult": "용궁 문지기(가족 밖, 목소리만·순한 판)",
+    "kid": "용궁 문지기(가족 밖, 목소리만·순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
    }
   ],
   "magpie": [

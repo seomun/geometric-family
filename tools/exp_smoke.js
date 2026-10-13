@@ -7,7 +7,7 @@ const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m
   const shot = async (n) => { await p.waitForTimeout(700); await p.screenshot({ path: `notes/snapshots/exp_${n}.png` }); };
   await shot('1_home');
   const d = await p.evaluate(() => { const E = EXP.debug, a = E.fastBattle(1), b = E.fastBattle(1); return { a, b, same: a.hash === b.hash, n: E.D().units.length, st: E.D().stages.length }; });
-  ok(d.same && d.a.win, '결정론: 같은 시드·같은 팀 → 같은 로그 해시(' + d.a.hash + ') · 1단계 승리'); ok(d.n === 31 && d.st === 108, '데이터: 동료 31(시작 5·합류 5·포섭 9·모집 12) · 단계 108(9나라)');
+  ok(d.same && d.a.win, '결정론: 같은 시드·같은 팀 → 같은 로그 해시(' + d.a.hash + ') · 1단계 승리'); ok(d.n === 34 && d.st === 144, '데이터: 동료 34(시작 5·합류 5·포섭 12·모집 12) · 단계 144(12나라)');
   // 레벨 정책: 단계 1~5 를 시작 파티(레벨 1)로도 깰 수 있는지, 6단계는 레벨 올리면 가능한지
   const w = await p.evaluate(() => { const E = EXP.debug, out = []; for (let s = 1; s <= 6; s++) out.push(E.fastBattle(s).win); return out; }); console.log('  시작 파티 단계별 승패', JSON.stringify(w)); ok(w[0] && w[1], '1·2단계는 처음 파티로 승리');
   // 화면 흐름: 1단계 전투를 UI 로

@@ -40,7 +40,11 @@ LOOT = [  # id, 이름, 이모지, 슬롯, (w,h), 단계
     # 7~9나라(B13)
     ('x_magpiebridge', '까치 다리 모형', '🌉', 'table', (46, 40), 75), ('x_loom', '직녀 베틀', '🧵', 'floor', (56, 60), 78), ('x_starbottle', '은하수 병', '🍶', 'table', (40, 46), 81), ('x_milkyway', '은하수 조명', '🌌', 'wall', (56, 46), 84),
     ('x_turtle', '거북 인형', '🐢', 'floor', (52, 46), 87), ('x_coral', '산호 화분', '🪸', 'floor', (50, 60), 90), ('x_shell', '조개 장식', '🐚', 'table', (44, 40), 93), ('x_rabbitdoll', '토끼 인형', '🐇', 'floor', (50, 56), 96),
-    ('x_snowflake', '눈꽃 장식', '❄️', 'wall', (50, 50), 99), ('x_icelamp', '얼음 조명', '🧊', 'table', (44, 44), 102), ('x_sled', '작은 썰매', '🛷', 'floor', (60, 44), 105), ('x_snowglobe', '스노볼', '🔮', 'table', (44, 44), 108)]
+    ('x_snowflake', '눈꽃 장식', '❄️', 'wall', (50, 50), 99), ('x_icelamp', '얼음 조명', '🧊', 'table', (44, 44), 102), ('x_sled', '작은 썰매', '🛷', 'floor', (60, 44), 105), ('x_snowglobe', '스노볼', '🔮', 'table', (44, 44), 108),
+    # 10~12나라(B20)
+    ('x_deerfig', '사슴 인형', '🦌', 'floor', (52, 60), 111), ('x_wing', '선녀 날개옷', '👘', 'wall', (54, 56), 114), ('x_moonpond', '보름달 연못 모형', '🌕', 'table', (46, 40), 117), ('x_firewood', '장작 지게', '🪵', 'floor', (56, 62), 120),
+    ('x_shellbell', '용궁 조개 종', '🔔', 'table', (44, 44), 123), ('x_seaweed', '해초 화분', '🌿', 'floor', (50, 62), 126), ('x_crabgate', '게 문지기 인형', '🦀', 'floor', (50, 48), 129), ('x_lantern2', '용궁 등불', '🏮', 'wall', (44, 54), 132),
+    ('x_magpienest', '까치 둥지 상자', '🪺', 'table', (46, 42), 135), ('x_nestbell', '둥지 종', '🔔', 'wall', (42, 50), 138), ('x_persimmon2', '감나무 화분', '🌳', 'floor', (52, 66), 141), ('x_snakefig', '구렁이 인형', '🐍', 'floor', (56, 46), 144)]
 LOOT_STAGE = {i: st for i, n, e, sl, wh, st in LOOT}
 for i, n, e, sl, (w, h), st in LOOT: new(i, n, e, sl, 'yard', w, h, 'exp', 'expedition')
 if not any(x['id'] == 'exp' for x in R['sets']): R['sets'].append(dict(id='exp', name='원정 전리품 세트(성인)', game='expedition', room='yard', story='원정을 다녀온 가족의 짐에서 나온 것들. 기하학 원정대에서 받은 코드로 놓아요.'))

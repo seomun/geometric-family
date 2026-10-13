@@ -47,6 +47,7 @@ BAL = dict(lvMul=0.065, gradeMul={'3': 1.0, '4': 1.2, '5': 1.45}, costBase=25, c
 exec(open('tools/expedition_nations.py', encoding='utf-8').read())   # 3나라 확장(36칸)
 exec(open('tools/expedition_nations2.py', encoding='utf-8').read())   # 4~6나라 확장(72칸, B8)
 exec(open('tools/expedition_nations3.py', encoding='utf-8').read())   # 7~9나라 확장(108칸, B13)
+exec(open('tools/expedition_nations4.py', encoding='utf-8').read())   # 10~12나라 확장(144칸, B20)
 exec(open('tools/expedition_begin.py', encoding='utf-8').read())   # 초보자 미션 30·출석 7일(B11)
 exec(open('tools/expedition_events.py', encoding='utf-8').read())   # 계절 이벤트 스테이지 틀(B9)
 exec(open('tools/expedition_ach.py', encoding='utf-8').read())   # 업적·칭호(B10)

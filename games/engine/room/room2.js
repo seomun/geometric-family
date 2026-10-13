@@ -450,7 +450,7 @@
     function sceneCheck(auto) {      // 완성한 세트가 이 방의 것이면 칩을 보이고, 처음 보는 것은 한 번 자동으로 보여 준다(여러 개면 누를 때마다 다음 장면)
       const L = Room.scenesFor(cur); if (!L.length) { sceneChip.style.display = 'none'; return; } sceneIx = Math.min(sceneIx, L.length - 1); const c = L[sceneIx]; sceneChip.style.display = ''; sceneChip.textContent = kid() ? c.icon : c.icon + (c.name ? ' ' + c.name.replace(/ 세트$/, '') : ' 가족 모임');
       const playIt = (cc) => { const rm = stage.querySelector('.h2-room'); sceneChip.style.visibility = 'hidden'; if (!Room.playScene(rm, cc, () => { sceneChip.style.visibility = ''; sceneIx = (L.indexOf(cc) + 1) % L.length; sceneCheck(false); })) sceneChip.style.visibility = ''; }; sceneChip.onclick = () => playIt(L[sceneIx]);
-      if (auto) { S.sceneSeen = S.sceneSeen || {}; const nws = L.filter((q) => !S.sceneSeen[q.set]), nw = nws[0]; nws.forEach((q) => { S.sceneSeen[q.set] = 1; Room.albumAdd('set:' + q.set, 'set', (Room.set(q.set) || {}).name || q.name || '세트 완성', q.text, q.room); }); if (nw) { Room.save(); sceneIx = L.indexOf(nw); setTimeout(() => { const rm = stage.querySelector('.h2-room'); if (rm && rm.isConnected) playIt(nw); }, 1500); } }
+      if (auto) { S.sceneSeen = S.sceneSeen || {}; const nws = L.filter((q) => !S.sceneSeen[q.set]), nw = nws[0]; nws.forEach((q) => { S.sceneSeen[q.set] = 1; Room.albumAdd('set:' + q.set, 'set', (Room.set(q.set) || {}).name || q.name || '세트 완성', q.text, q.room); }); if (nw) { Room.save(); sceneIx = L.indexOf(nw); setTimeout(() => { const rm = stage.querySelector('.h2-room'); if (rm && rm.isConnected && cur === nw.room) playIt(nw); }, 1500); } }
     }
     function drawTop() {
       top.innerHTML = ''; const L = Room.levelInfo(); el('div', 'h2-lv', top, kid() ? `<b>⭐ ${Math.max(1, Math.ceil(L.lv / 2))}</b>` : `<b>Lv ${L.lv}</b><span>${L.cozy}</span>`); const bw = el('div', 'h2-barw', top); el('div', 'h2-bar', bw, `<i style="width:${Math.round(L.pct * 100)}%"></i>`);
@@ -600,18 +600,21 @@
     { set: 'photo', room: 'nemo', focus: ['a_album', 'a_shelf', 'a_camera'], chars: ['nemo_dad.joy', 'nemo_mom.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'baby.joy'], emo: '📸', text: '앨범을 펼치다 가족사진을 찍었어요', line: '하나, 둘, 김치~!', icon: '📸' },
     { set: 'kid', room: 'kid', focus: ['y_toybox', 'k_train'], chars: ['baby.joy', 'nemo_kids.kid3', 'nemo_kids.kid1'], emo: '🎵', text: '장난감 방에서 신나게 놀아요', line: '', icon: '🧸' },
     { set: 'storage', room: 'upstairs', focus: ['u_box', 'u_closet'], chars: ['nemo_mom.joy', 'nemo_kids.kid2', 'nemo_kids.kid3'], emo: '✨', text: '정리를 끝내고 모두 뿌듯해해요', line: '깔끔해졌다!', icon: '🧺' },
-    { set: 'season_spring', name: '봄 소풍 세트', items: ['s2_picnic', 's2_cherry', 's2_kite', 's2_tulip'], room: 'yard', focus: ['s2_picnic', 's2_cherry'], chars: ['nemo_mom.joy', 'nemo_dad.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'baby.joy'], emo: '🧺', text: '벚꽃 아래 돗자리를 펴고 봄 소풍을 즐겨요', line: '도시락 맛있다!', icon: '🌸' },
-    { set: 'season_summer', name: '여름 평상 세트', items: ['s2_chime', 's2_melon', 's2_tube', 's2_fan', 's2_ice'], room: 'yard', focus: ['m_bench', 's2_melon'], chars: ['nemo_grandma.good', 'nemo_dad.joy', 'nemo_kids.kid1', 'nemo_kids.kid3', 'baby.joy'], emo: '🍉', text: '평상에 둘러앉아 수박을 나눠 먹어요', line: '아, 시원하다!', icon: '🍉' },
-    { set: 'season_autumn', name: '가을 추석상 세트', items: ['s2_persimmon', 's2_moonlamp', 's2_acorn', 's2_leaf', 's_songpyeon'], room: 'nemo', focus: ['b_table'], chars: FAM_A, emo: '🌕', text: '보름달 아래 온 가족이 추석상에 모였어요', line: '보름달이 환하네!', icon: '🌕' },
-    { set: 'season_winter', name: '겨울 김장 세트', items: ['s2_tangerine', 's2_heater', 's2_blanket', 's2_wreath', 'p_kimchi'], room: 'kitchen', focus: ['p_rice'], chars: ['nemo_mom.joy', 'nemo_dad.joy', 'nemo_kids.kid2', 'baby.joy', 'nemo_grandma.good', 'wife.joy'], emo: '🥬', text: '다 같이 김장을 하고 귤을 까먹어요', line: '올해 김치 대박이다!', icon: '🥬' },
+    { set: 'season_spring', name: '봄 소풍 세트', items: ['s2_picnic', 's2_cherry', 's2_kite', 's2_tulip'], room: 'yard', props: [['🧺', '돗자리', 22, 168, 48], ['🌸', '벚꽃', 276, 150, 54], ['🍱', '도시락', 84, 176, 38]], chars: ['nemo_mom.joy', 'nemo_dad.joy', 'nemo_kids.kid1', 'nemo_kids.kid2', 'baby.joy'], emo: '🧺', text: '벚꽃 아래 돗자리를 펴고 봄 소풍을 즐겨요', line: '도시락 맛있다!', icon: '🌸' },
+    { set: 'season_summer', name: '여름 평상 세트', items: ['s2_chime', 's2_melon', 's2_tube', 's2_fan', 's2_ice'], room: 'yard', props: [['🍉', '수박', 22, 168, 48], ['🛟', '튜브', 80, 170, 46], ['🌀', '선풍기', 272, 160, 46]], chars: ['nemo_grandma.good', 'nemo_dad.joy', 'nemo_kids.kid1', 'nemo_kids.kid3', 'baby.joy'], emo: '🍉', text: '평상에 둘러앉아 수박을 나눠 먹어요', line: '아, 시원하다!', icon: '🍉' },
+    { set: 'season_autumn', name: '가을 추석상 세트', items: ['s2_persimmon', 's2_moonlamp', 's2_acorn', 's2_leaf', 's_songpyeon'], room: 'nemo', props: [['🌕', '보름달', 262, 148, 56], ['🥮', '송편', 22, 172, 42], ['🍎', '과일', 80, 178, 38]], chars: FAM_A, emo: '🌕', text: '보름달 아래 온 가족이 추석상에 모였어요', line: '보름달이 환하네!', icon: '🌕' },
+    { set: 'season_winter', name: '겨울 김장 세트', items: ['s2_tangerine', 's2_heater', 's2_blanket', 's2_wreath', 'p_kimchi'], room: 'kitchen', props: [['🥬', '배추', 18, 166, 48], ['🪣', '대야', 74, 168, 48], ['🧤', '고무장갑', 232, 172, 42], ['🍊', '귤', 288, 176, 34]], chars: ['nemo_mom.joy', 'nemo_dad.joy', 'nemo_kids.kid2', 'baby.joy', 'nemo_grandma.good', 'wife.joy'], emo: '🥬', text: '배추에 양념을 버무려 다 같이 김장을 해요', line: '올해 김치 대박이다!', icon: '🥬' },
     { set: 'outer', room: 'yard', focus: ['m_bench', 'o_fence'], chars: ['nemo_dad.joy', 'wife.joy', 'dong_dad.warm', 'nemo_grandma.good'], emo: '😄', text: '이웃이 마당에 모여 담소를 나눠요', line: '다음 모임도 우리 집에서!', icon: '🏡' },
   ];
   Room.setScenes = () => SCENES.filter((c) => { const its = c.items ? c.items.map((id) => Room.item(id)).filter(Boolean) : Room.data.items.filter((i) => i.set === c.set && inGroup(i)); return its.length && (!c.items || its.length === c.items.length) && its.every((i) => Room.has(i.id)); });
   Room.scenesFor = (rid) => Room.setScenes().filter((c) => c.room === rid);      // 그 방에서 볼 수 있는 완성 장면들(칩을 누를 때마다 다음 것)
   Room.sceneFor = (rid) => Room.scenesFor(rid)[0] || null;
+  /** 장면 무대 소품(흐림막 위·가족 뒤): [이모지, 이름, x, y, 크기]. 장면 글에 나오는 물건은 가구가 없어도 장면 동안 임시로 그린다 */
+  const stageProps = (room, list) => (list || []).map((q) => { const e = el('i', 'h2-sprop', room, q[0]); e.dataset.label = q[1]; e.style.cssText = `left:${q[2]}px;top:${q[3]}px;font-size:${q[4]}px`; return e; });
+  const playing = (room, on) => { const v = room && room.closest && room.closest('.h2-view'); if (v) v.classList.toggle('h2-playing', !!on); };      // 재생 중엔 칩을 숨겨 앞줄 가족을 덮지 않게
   Room.playScene = function (room, c, onEnd) {
     if (!Room.cfg.charSrc || !room || room.querySelector('.h2-fam')) return null; const n = c.chars.length, out = [];
-    room.classList.add('scene'); const stg = el('div', 'h2-stage-bg', room), bn = el('div', 'h2-scenebn', room, kid() ? c.icon : c.icon + ' ' + c.text);
+    room.classList.add('scene'); playing(room, true); const stg = el('div', 'h2-stage-bg', room), bn = el('div', 'h2-scenebn', room, kid() ? c.icon : c.icon + ' ' + c.text), sp = stageProps(room, c.props);
     // 가구 배치와 무관한 무대: 뒷줄·앞줄 반원. 크기 74px, 서로 겹치지 않게 간격을 잡는다(RW 340 안에 가운데 정렬)
     const FIT = { 'nemo_grandma.good': 1 }, back = Math.ceil(n / 2), front = n - back, CWm = 74;      // 그림 여백이 큰 인물은 크게 보정(할머니가 절반 크기로 보이던 문제)
     const foc = []; Array.from(room.querySelectorAll('.h2-it')).forEach((im) => { if ((c.focus || []).includes(im.dataset.id)) { im.classList.add('h2-focus'); foc.push({ x: parseFloat(im.style.left), y: parseFloat(im.style.top), w: parseFloat(im.style.width), h: parseFloat(im.style.height) }); } });
@@ -626,7 +629,7 @@
       setTimeout(() => { if (!room.isConnected) return; const e = el('i', 'h2-emote', room, c.emo); e.style.cssText = `left:${sl.x + CWm / 2}px;top:${sl.y - 14}px;font-size:26px`; setTimeout(() => e.remove(), 1500); }, 800 + i * 150);
     });
     try { GF.sfx && GF.sfx('celebrate'); } catch (e) { /* 소리 */ } if (!kid() && c.line) setTimeout(() => { if (!room.isConnected) return; const t = el('i', 'h2-say', room, c.line); t.style.cssText = `left:170px;top:${slots[0].y - 46}px`; setTimeout(() => t.remove(), 2400); }, 1500);
-    setTimeout(() => { out.forEach((im) => { im.style.opacity = 0; }); bn.style.opacity = 0; stg.style.opacity = 0; setTimeout(() => { out.forEach((im) => im.remove()); bn.remove(); stg.remove(); room.classList.remove('scene'); room.querySelectorAll('.h2-focus').forEach((e) => e.classList.remove('h2-focus')); onEnd && onEnd(); }, 520); }, 5600); return out;
+    setTimeout(() => { out.forEach((im) => { im.style.opacity = 0; }); bn.style.opacity = 0; stg.style.opacity = 0; setTimeout(() => { out.forEach((im) => im.remove()); sp.forEach((e) => e.remove()); bn.remove(); stg.remove(); room.classList.remove('scene'); playing(room, false); room.querySelectorAll('.h2-focus').forEach((e) => e.classList.remove('h2-focus')); onEnd && onEnd(); }, 520); sp.forEach((e) => { e.style.opacity = 0; }); }, 5600); return out;
   };
   /* ---------------- 집 지도(A13): 집이 층·마당으로 커진 모습. 열린 방은 눌러서 가고, 잠긴 방은 몇 레벨에 열리는지 보여 준다 ---------------- */
   const MAPF = { adult: [['옥상', ['roof']], ['2층', ['attic', 'upstairs']], ['1층', ['entrance', 'nemo', 'kitchen', 'semo', 'dong']], ['마당', ['yard', 'garden']]], kid: [['우리 방', ['bath', 'kid', 'wardrobe', 'dining', 'toyroom']]] };
@@ -649,24 +652,25 @@
   };
   /* ---------------- 오늘의 집 한 장면(A14, 성인): 하루에 하나, 가족의 작은 생활 사건. 눌러서 보고, 놓친 날은 그냥 지나간다(벌·연속 없음). 새 문장은 모두 [제안] ---------------- */
   const D_EV = [
-    { id: 'ramen', room: 'kitchen', title: '라면 끓이기', chars: ['nemo_dad.joy', 'nemo_kids.kid1'], beats: [['🫕', '냄비에 물을 올렸어요.'], ['🌶️', '스프를 넣고 후후 저어요.'], ['🍜', '후루룩! 역시 밤 라면이 제일이야.']] },
-    { id: 'nap', room: 'nemo', title: '낮잠', chars: ['nemo_dad.joy', 'nemo_mom.joy'], beats: [['😴', '소파에 앉자마자 눈이 감겼어요.'], ['💤', '쿨쿨… 오늘은 조용한 일요일 같아요.'], ['🧸', '엄마가 살며시 담요를 덮어 줘요.']] },
-    { id: 'parcel', room: 'entrance', title: '택배 도착', chars: ['nemo_mom.joy', 'baby.joy'], beats: [['📦', '딩동! 택배가 왔어요.'], ['✂️', '막둥이가 먼저 뜯어 보겠대요.'], ['🎁', '앗, 외할머니가 보낸 선물이다!']] },
-    { id: 'laundry', room: 'yard', title: '빨래 널기', chars: ['nemo_mom.joy', 'nemo_kids.kid2'], beats: [['🧺', '빨래 바구니를 들고 마당으로 나가요.'], ['☀️', '햇볕이 쨍! 널기 딱 좋은 날.'], ['👕', '뽀송뽀송 마르면 같이 걷어요.']] },
-    { id: 'study', room: 'dong', title: '숙제 시간', chars: ['dong_dad.warm', 'nemo_kids.kid3'], beats: [['📚', '책상에 나란히 앉았어요.'], ['✏️', '모르는 건 아빠한테 물어봐요.'], ['⭐', '다 했다! 오늘도 잘했어요.']] },
-    { id: 'photo', room: 'semo', title: '여행 사진 보기', chars: ['wife.joy', 'nemo_dad.joy'], beats: [['📷', '서랍에서 옛날 사진을 꺼냈어요.'], ['🗺️', '여기가 어디였더라? 하고 웃어요.'], ['💛', '다음엔 같이 또 가요.']] },
-    { id: 'rain', room: 'nemo', title: '비 오는 날', chars: ['nemo_kids.kid1', 'baby.joy', 'nemo_grandma.good'], beats: [['☔', '창밖에 비가 주룩주룩 와요.'], ['🍵', '할머니가 따뜻한 차를 내려 줘요.'], ['🌈', '비가 그치니 무지개가 떴어요.']] },
+    { id: 'ramen', props: [['🫕', '냄비', 60, 326, 46], ['🍜', '라면', 232, 326, 46]], must: ['냄비'],  room: 'kitchen', title: '라면 끓이기', chars: ['nemo_dad.joy', 'nemo_kids.kid1'], beats: [['🫕', '냄비에 물을 올렸어요.'], ['🌶️', '스프를 넣고 후후 저어요.'], ['🍜', '후루룩! 역시 밤 라면이 제일이야.']] },
+    { id: 'nap', props: [['🛋️', '소파', 96, 214, 120], ['🧸', '담요', 232, 326, 40]], must: ['소파', '담요'],  room: 'nemo', title: '낮잠', chars: ['nemo_dad.joy', 'nemo_mom.joy'], beats: [['😴', '소파에 앉자마자 눈이 감겼어요.'], ['💤', '쿨쿨… 오늘은 조용한 일요일 같아요.'], ['🧸', '엄마가 살며시 담요를 덮어 줘요.']] },
+    { id: 'parcel', props: [['📦', '택배', 60, 326, 48], ['🎁', '선물', 232, 326, 44]], must: ['택배', '선물'],  room: 'entrance', title: '택배 도착', chars: ['nemo_mom.joy', 'baby.joy'], beats: [['📦', '딩동! 택배가 왔어요.'], ['✂️', '막둥이가 먼저 뜯어 보겠대요.'], ['🎁', '앗, 외할머니가 보낸 선물이다!']] },
+    { id: 'laundry', props: [['🧺', '빨래 바구니', 60, 326, 46], ['👕', '빨래', 232, 316, 52]], must: ['빨래 바구니'],  room: 'yard', title: '빨래 널기', chars: ['nemo_mom.joy', 'nemo_kids.kid2'], beats: [['🧺', '빨래 바구니를 들고 마당으로 나가요.'], ['☀️', '햇볕이 쨍! 널기 딱 좋은 날.'], ['👕', '뽀송뽀송 마르면 같이 걷어요.']] },
+    { id: 'study', props: [['📚', '책상', 60, 326, 46], ['✏️', '연필', 232, 326, 40]], must: ['책상'],  room: 'dong', title: '숙제 시간', chars: ['dong_dad.warm', 'nemo_kids.kid3'], beats: [['📚', '책상에 나란히 앉았어요.'], ['✏️', '모르는 건 아빠한테 물어봐요.'], ['⭐', '다 했다! 오늘도 잘했어요.']] },
+    { id: 'photo', props: [['📷', '사진', 60, 326, 46], ['🗺️', '지도', 232, 326, 44]], must: ['사진'],  room: 'semo', title: '여행 사진 보기', chars: ['wife.joy', 'nemo_dad.joy'], beats: [['📷', '서랍에서 옛날 사진을 꺼냈어요.'], ['🗺️', '여기가 어디였더라? 하고 웃어요.'], ['💛', '다음엔 같이 또 가요.']] },
+    { id: 'rain', props: [['☔', '창밖', 60, 326, 46], ['🍵', '차', 232, 326, 44]], must: ['창밖', '차'],  room: 'nemo', title: '비 오는 날', chars: ['nemo_kids.kid1', 'baby.joy', 'nemo_grandma.good'], beats: [['☔', '창밖에 비가 주룩주룩 와요.'], ['🍵', '할머니가 따뜻한 차를 내려 줘요.'], ['🌈', '비가 그치니 무지개가 떴어요.']] },
   ];
+  Room.dailyEvents = () => D_EV;
   Room.dailyToday = function () {
     const d = now0(), k = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(), open = new Set(Room.unlockedRooms().map((r) => r.id)), list = D_EV.filter((e) => open.has(e.room)), ev = (list.length ? list : D_EV.filter((e) => e.room === 'nemo'))[k % (list.length || 1)] || D_EV[1];
     return { ev, key: 'day:' + k, seen: !!(ensure().album || []).some((a) => a.k === 'day:' + k) };
   };
   Room.playDaily = function (room, T, onEnd) {
-    if (!Room.cfg.charSrc || !room || room.querySelector('.h2-fam')) return null; const ev = T.ev, n = ev.chars.length, out = []; room.classList.add('scene');
+    if (!Room.cfg.charSrc || !room || room.querySelector('.h2-fam')) return null; const ev = T.ev, n = ev.chars.length, out = []; room.classList.add('scene'); playing(room, true); const sp = stageProps(room, ev.props);
     const stg = el('div', 'h2-stage-bg', room), bn = el('div', 'h2-scenebn', room, '📅 ' + ev.title), cap = el('i', 'h2-daycap', room, ''); cap.style.opacity = 0;
     ev.chars.forEach((id, i) => { const im = el('img', 'h2-char h2-fam', room); im.src = Room.cfg.charSrc(id); im.alt = ''; const gap = 96, x0 = 170 - ((n - 1) * gap) / 2 - 40; im.style.cssText = `left:${x0 + i * gap}px;top:250px;width:80px;height:80px;opacity:0;transition:opacity .45s ${i * 150}ms`; setTimeout(() => { im.style.opacity = 1; }, 60); out.push(im); });
     ev.beats.forEach((bt, i) => setTimeout(() => { if (!room.isConnected) return; cap.textContent = bt[1]; cap.style.opacity = 1; const e = el('i', 'h2-emote', room, bt[0]); e.style.cssText = `left:${150 + (i % 2) * 40}px;top:206px;font-size:40px`; setTimeout(() => e.remove(), 1500); try { GF.sfx && GF.sfx(i === ev.beats.length - 1 ? 'celebrate' : 'tap'); } catch (x) { /* 소리 */ } }, 700 + i * 2100));
-    const total = 700 + ev.beats.length * 2100 + 600; setTimeout(() => { out.forEach((im) => { im.style.opacity = 0; }); bn.style.opacity = 0; stg.style.opacity = 0; cap.remove(); setTimeout(() => { out.forEach((im) => im.remove()); bn.remove(); stg.remove(); room.classList.remove('scene'); onEnd && onEnd(); }, 520); }, total); return out;
+    const total = 700 + ev.beats.length * 2100 + 600; setTimeout(() => { out.forEach((im) => { im.style.opacity = 0; }); bn.style.opacity = 0; stg.style.opacity = 0; cap.remove(); setTimeout(() => { out.forEach((im) => im.remove()); sp.forEach((e) => e.remove()); bn.remove(); stg.remove(); room.classList.remove('scene'); playing(room, false); onEnd && onEnd(); }, 520); sp.forEach((e) => { e.style.opacity = 0; }); }, total); return out;
   };
   /* ---------------- 유아 집 「오늘의 정리 놀이」(A12): 글자 없이, 흩어진 장난감을 같은 모양 그림자 자리에 끌어다 놓는다 ---------------- */
   const TIDY = ['🧸', '🚂', '⚽', '🥁', '🎨', '🪁', '🚗', '🦆'];

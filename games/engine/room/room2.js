@@ -247,7 +247,7 @@
       }); else d.addEventListener('pointerup', () => use(room, d, it, p));
     });
     // 점선 칸: 비어 있는 anchors 중 할 일에 걸린 것 우선 최대 3개, 놓인 가구·다른 점선 칸과 겹치면 건너뛴다
-    if (!o.dream) {
+    if (!o.dream && !o.list) {
       const wantNow = new Set(Room.tasks().show.map((t) => t.miss && t.miss.id)), shown = [];
       const cand = (R.anchors || []).filter((a) => !list.some((p) => p.id === a.want)).sort((a, b) => (wantNow.has(b.want) ? 1 : 0) - (wantNow.has(a.want) ? 1 : 0));
       for (const a of cand) { if (shown.length >= (o.mini ? 1 : 3)) break; const r = anchorRect(a); if (!r) continue; if (occ.some((q) => ov(r, q) > r.w * r.h * 0.05) || shown.some((q) => ov(r, q) > 0)) continue; shown.push(r);
@@ -265,10 +265,10 @@
   /* ---------------- 손님 확장(A3): 앱에서 만난 카메오(ops.cameos 36명)가 집에 놀러 온다 ---------------- */
   /** 이 그룹의 모든 손님: 기본 7+4 · 만난 카메오(좋아하는 가구 = 그 카메오가 나온 앱에서 얻은 가구, 방문 3번, 선물 없음) */
   Room.guestList = function () {
-    const base = ((H() && H().guests) || []).filter((g) => g.group === grp()).map((g) => Object.assign({}, g, { max: g.gifts.length, step: 250 }));
+    const base = ((H() && H().guests) || []).filter((g) => g.group === grp()).map((g) => Object.assign({ max: g.gifts.length }, g, { step: 250 }));
     const ops = (window.GF && GF.data && GF.data.ops && GF.data.ops.cameos) || [], I = window.GF && GF.ip, out = base.slice();
     ops.filter((c) => !!c.kid === kid()).forEach((c, idx) => {
-      const got = !!(I && I.ready && I.hasCameo && I.hasCameo(c.id)); out.push({ id: 'cam:' + c.id, cam: true, got, char: c.who, group: grp(), need: 200 + 60 * idx, step: 120, max: 3, frm: c.frm, prop: c.prop, host: c.host, likes: [], gifts: [], lines: [c.line, c.prop + ' 두고 간 게 여기 있었네!', '집이 점점 아늑해지네요.'] });
+      const got = !!(I && I.ready && I.hasCameo && I.hasCameo(c.id)); out.push({ id: 'cam:' + c.id, cam: true, got, char: c.who, group: grp(), who: whoName(c.who), app: APPNAME[c.host] || c.host, need: 200 + 60 * idx, step: 120, max: 3, frm: c.frm, prop: c.prop, host: c.host, likes: [], gifts: [null, null, '__app:' + c.frm], lines: [c.line, c.prop + ' 두고 간 게 여기 있었네!', '집이 점점 아늑해지네요.'] });
     });
     return out;
   };
@@ -279,8 +279,36 @@
     const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), S = ensure(), L = Room.guestList().filter((g) => !g.cam || g.got).sort((x, y) => (((S.guests[y.id] || {}).n || 0) > 0) - (((S.guests[x.id] || {}).n || 0) > 0) || x.need - y.need), seen = L.filter((g) => ((S.guests[g.id] || {}).n || 0) > 0).length;
     el('h2', '', sh, kid() ? '👋' : '손님 도감 ' + seen + '/' + L.length); if (!kid()) el('p', 'h2-dsub', sh, '아늑함이 쌓이면 손님이 놀러 와요. 앱에서 만난 카메오도 찾아와요.');
     L.forEach((g) => { const n = (S.guests[g.id] || {}).n || 0, c = el('div', 'h2-pcard' + (n ? '' : ' off'), sh), pv = el('div', 'h2-gface', c); if (Room.cfg.charSrc) { const im = el('img', '', pv); im.src = Room.cfg.charSrc(g.char); im.alt = ''; } const tx = el('div', 'h2-ptx', c);
-      if (!kid()) { el('b', '', tx, whoName(g.char) + (g.cam ? ' · ' + g.prop + ' ' + (APPNAME[g.frm] || g.frm) + ' 카메오' : ' · 이웃')); el('small', '', tx, n ? (g.lines[Math.min(n - 1, g.lines.length - 1)] || '') : '아직 안 왔어요 · 아늑함 ' + g.need + ' 이상'); el('small', 'h2-pcnt', tx, `방문 ${n}/${g.max}`); } else el('small', '', tx, '⭐'.repeat(n)); });
+      if (!kid()) { el('b', '', tx, (g.who || whoName(g.char)) + ' · ' + (g.app || '') + (g.cam ? ' ' + g.prop : '')); el('small', '', tx, n ? (g.lines[Math.min(n - 1, g.lines.length - 1)] || '') : '아직 안 왔어요 · 아늑함 ' + g.need + ' 이상'); el('small', 'h2-pcnt', tx, `방문 ${n}/${g.max}`); } else el('small', '', tx, '⭐'.repeat(n)); });
     UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
+  };
+  /* ---------------- 집 구경 코드(A4): 방 배치를 짧은 글자로 주고받아 읽기 전용으로 구경(서버 없음) ---------------- */
+  // 형식: GFH1-<방>-<가구>.<가구>…-<검사>  가구 = 번호~x~y~(뒤집힘 0/1)(색 번호) 모두 36진수. 검사 = Room._chk(앞부분).
+  Room.layoutCode = function (rid) {
+    const S = ensure(), L = (S.placed[rid] || []).map((p) => ({ p, it: Room.item(p.id) })).filter((q) => q.it && q.it.no).slice(0, 60);
+    const body = L.map(({ p, it }) => [it.no.toString(36), Math.max(0, p.x | 0).toString(36), Math.max(0, p.y | 0).toString(36), (p.flip ? 1 : 0) + '' + Math.max(0, it.colors.indexOf(p.c))].join('~')).join('.'), head = 'GFH1-' + rid + '-' + body;
+    return head + '-' + Room._chk(head);
+  };
+  /** 코드 → {ok, room, list} | {ok:false, why}. 모르는 가구·범위 밖 값은 버리거나 고쳐서 안전하게. */
+  Room.decodeLayout = function (code) {
+    code = String(code || '').trim().replace(/\s+/g, ''); const m = /^GFH1-([a-z0-9_]+)-([0-9a-z~.]*)-([0-9A-Z]{2})$/.exec(code); if (!m) return { ok: false, why: 'format' };
+    if (Room._chk(code.slice(0, code.lastIndexOf('-'))) !== m[3]) return { ok: false, why: 'check' }; const R = roomDef(m[1]); if (!R || R.group !== grp()) return { ok: false, why: 'room' };
+    const list = []; (m[2] ? m[2].split('.') : []).slice(0, 60).forEach((ch) => { const f = ch.split('~'); if (f.length !== 4) return; const no = parseInt(f[0], 36), it = Room.data.items.find((i) => i.no === no); if (!it || !inGroup(it)) return; const g = geo(it), x = Math.max(0, Math.min(RW - g.w, parseInt(f[1], 36) || 0)), y = Math.max(0, Math.min(RH - g.h, parseInt(f[2], 36) || 0)), c = it.colors[Math.max(0, Math.min(it.colors.length - 1, parseInt(f[3].slice(1), 10) || 0))]; list.push({ id: it.id, x, y, flip: f[3][0] === '1' ? 1 : 0, c }); });
+    return { ok: true, room: m[1], list, name: R.name };
+  };
+  Room.visitSheet = function (parent) {
+    const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc); el('h2', '', sh, '집 구경 코드'); el('p', 'h2-dsub', sh, '내 방의 코드를 알려 주거나, 받은 코드로 친구 집을 구경해요. 구경만 하고 바뀌는 건 없어요.');
+    const mine = el('div', 'h2-codebox', sh), R0 = (rooms().find((r) => r.id === Room._curRoom) || rooms()[0]); el('b', '', mine, '내 방 코드 · ' + (R0 ? R0.name : '')); const out = el('textarea', 'h2-code', mine); out.readOnly = true; out.value = R0 ? Room.layoutCode(R0.id) : '';
+    UK.btn({ text: '복사', cls: 'sky sm', onclick: () => { out.select(); let okc = false; try { navigator.clipboard.writeText(out.value); okc = true; } catch (e) { try { okc = document.execCommand('copy'); } catch (x) { /* 복사 불가 */ } } UK.toast(okc ? '코드를 복사했어요' : '코드를 길게 눌러 복사해요', sc); } }, mine);
+    const rec = el('div', 'h2-codebox', sh); el('b', '', rec, '받은 코드로 구경'); const inp = el('textarea', 'h2-code', rec); inp.placeholder = 'GFH1-…'; const msg = el('p', 'h2-dsub', rec, '');
+    UK.btn({ text: '구경하기', cls: 'green sm', onclick: () => { const r = Room.decodeLayout(inp.value); if (!r.ok) { msg.textContent = { format: '코드 모양이 달라요', check: '코드가 틀렸어요(한 글자씩 확인해 봐요)', room: '이 앱에서는 볼 수 없는 방이에요' }[r.why] || '코드를 읽지 못했어요'; return; } sc.remove(); Room.visitView(r, parent); } }, rec);
+    UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
+  };
+  Room.visitView = function (r, parent) {
+    const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), ids = [...new Set(r.list.map((q) => q.id))], miss = ids.filter((id) => !Room.has(id));
+    el('h2', '', sh, '친구의 ' + r.name); el('p', 'h2-dsub', sh, `가구 ${ids.length}개 · 내가 가진 것 ${ids.length - miss.length}개 (구경만 해요)`); const pv = el('div', 'h2-drop-pv big', sh); R2.draw(pv, r.room, { mini: true, list: r.list });
+    if (miss.length) UK.btn({ text: '없는 가구 ' + miss.length + '개 위시에 담기', cls: 'gold sm block', onclick: () => { miss.forEach((id) => { if (!Room.wishOn(id)) Room.wish(id); }); UK.toast('♥ 위시에 담았어요', sc); } }, sh);
+    UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
   /* ---------------- 가구 상호작용(A2): 가구마다 고유한 짧은 연출·소리 ---------------- */
   // fx: steam 김 · glow 불빛 · flicker 화면 깜빡 · notes 음표 · drops 물방울 · page 책장 넘김 · tick 시계 · door 문 여닫이 · hearts 하트 · zzz 졸음 · flash 번쩍 · spin 빙글 · sparkle 반짝
@@ -344,7 +372,7 @@
       const l = el('button', 'h2-ar', nav, '◀'); l.onclick = () => go(-1); l.disabled = idx === 0; el('b', '', nav, kid() ? '' : R.name + (unlocked(R) ? '' : ' 🔒'));
       const r = el('button', 'h2-ar', nav, '▶'); r.onclick = () => go(1); r.disabled = idx === RL.length - 1; const dots = el('div', 'h2-dots', nav); RL.forEach((q) => el('i', (q.id === cur ? 'on ' : '') + (unlocked(q) ? '' : 'lock'), dots));
     }
-    function drawStage() {
+    function drawStage() { Room._curRoom = cur;
       stage.innerHTML = ''; clearTimeout(walker); const R = RL.find((r) => r.id === cur);
       if (!unlocked(R)) { const lk = el('div', 'h2-locked', stage); el('div', 'h2-lkic', lk, '🔒'); el('p', '', lk, kid() ? '⭐ ' + Math.ceil(R.unlock / 2) : '집 레벨 ' + R.unlock + '에 열려요'); dreamChip.style.display = 'none'; return; }
       dreamChip.style.display = '';
@@ -373,8 +401,8 @@
     }
     function drawTools() {
       tools.innerHTML = ''; const B = (ic, label, fn, on) => { const b = el('button', 'h2-fb' + (on ? ' on' : ''), tools, kid() ? UK.icon(ic) : UK.icon(ic) + '<span>' + label + '</span>'); b.setAttribute('aria-label', label); b.onclick = fn; };
-      const lt = el('button', 'h2-fb', tools, S.light === 'eve' ? '🌙' : '☀️'); lt.setAttribute('aria-label', 'light'); lt.onclick = () => { S.light = S.light === 'eve' ? 'day' : 'eve'; Room.save(); drawAll(); };
-      B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid() && Room.presets(cur).length) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); UK.toast(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: '되돌리기', cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photo(cur, parent));
+      const lt = el('button', 'h2-fb', tools, (S.light === 'eve' ? '🌙' : '☀️') + (kid() ? '' : '<span>' + (S.light === 'eve' ? '밤' : '낮') + '</span>')); lt.setAttribute('aria-label', 'light'); lt.onclick = () => { S.light = S.light === 'eve' ? 'day' : 'eve'; Room.save(); drawAll(); };
+      B('gift', '카탈로그', () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, '🔗<span>구경 코드</span>'); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid() && Room.presets(cur).length) B('heart', '테마', () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); UK.toast(P.name + ' · ' + r.have + '개 놓았어요' + (r.missing.length ? ' (없는 ' + r.missing.length + '개는 빼고)' : ''), parent); const u = UK.btn({ text: '되돌리기', cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? '다 놓았어요' : '놓기', () => { place = !place; sel = null; drawAll(); }, place); B('share', '사진', () => Room.photo(cur, parent));
     }
     function drawSel() {
       selbar.innerHTML = ''; if (!place) return; if (sel == null) { el('p', 'h2-hint', selbar, kid() ? '' : '가구를 끌어서 옮겨 보세요'); return; } const p = (S.placed[cur] || [])[sel], it = p && Room.item(p.id); if (!it) return;
@@ -392,12 +420,12 @@
     }
     function guestCheck(room, R) {       // 손님: 아늑함 문턱을 넘으면 놀러 와 좋아하는 가구 앞에서 한마디, 선물은 확정(기본 손님 2번 · 카메오 손님은 말만 3번)
       const cz = Room.cozy(), list = S.placed[cur] || []; const G = Room.guestList().filter((g) => (!g.cam || g.got) && ((S.guests[g.id] || {}).n || 0) < g.max && cz >= g.need + g.step * ((S.guests[g.id] || {}).n || 0)); if (!G.length) return;
-      const g = G.find((q) => list.some((p) => likedBy(q, p))); if (!g) return; const lk = list.find((p) => likedBy(g, p)), it = Room.item(lk.id), gi = geo(it), n = (S.guests[g.id] || {}).n || 0, gift = g.gifts[n];
+      const g = G.find((q) => list.some((p) => likedBy(q, p))); if (!g) return; const lk = list.find((p) => likedBy(g, p)), it = Room.item(lk.id), gi = geo(it), n = (S.guests[g.id] || {}).n || 0; let gift = g.gifts[n]; if (typeof gift === 'string' && gift.indexOf('__app:') === 0) { const ga = gift.slice(6), cand = Room.data.items.filter((q) => inGroup(q) && q.src && q.src.game === ga && !Room.has(q.id) && !q.season); gift = cand.length ? cand[0].id : null; }
       S.guests[g.id] = { n: n + 1, seen: Date.now() }; Room.save();
       setTimeout(() => { if (!room.isConnected) return; const GW = 56, GH = 76, fr = freeRect(room, GW, GH, { x: lk.x + gi.w + 20, y: lk.y + gi.h - GH * 0.6 }, { x0: 4, y0: WALLH + 20, x1: RW - 4, y1: RH - 4 });
         const im = el('img', 'h2-guest', room); im.src = Room.cfg.charSrc ? Room.cfg.charSrc(g.char) : ''; im.alt = ''; im.style.cssText = `left:${fr.x}px;top:${fr.y}px`; room.__occ.push({ x: fr.x, y: fr.y, w: GW, h: GH, guest: true });
         const line = g.lines.length ? g.lines[(n + Math.floor(Math.random() * 2)) % g.lines.length] : '', BW = kid() ? 40 : 150, BH = kid() ? 34 : 40, bp = freeRect(room, BW, BH, { x: fr.x + GW / 2, y: fr.y - BH }, { x0: 4, y0: 6, x1: RW - 4, y1: RH - BH });
-        const bb = el('div', 'h2-bubble', room, kid() ? '💖' : line); bb.style.cssText = `left:${bp.x}px;top:${bp.y}px`;
+        const bb = el('div', 'h2-bubble', room, kid() ? '💖' : line); bb.style.cssText = `left:${bp.x}px;top:${bp.y}px;--tx:${Math.round(Math.max(14, Math.min(BW - 14, fr.x + GW / 2 - bp.x)))}px`; bb.classList.add(bp.y + BH <= fr.y + 12 ? 'tail-d' : 'tail-u');
         setTimeout(() => { Room._quiet = 1; const gg = gift ? Room.grant(gift) : null; Room._quiet = 0; if (gg) { UK.toast(kid() ? '🎁' : '손님 선물 · ' + (Room.item(gift) || {}).name, parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} } afterChange(); }, 2600); setTimeout(() => { im.remove(); bb.remove(); }, 4400); }, 900);
     }
     function drawAll() { drawTop(); drawNav(); drawStage(); drawTools(); drawSheet(); drawSel(); }

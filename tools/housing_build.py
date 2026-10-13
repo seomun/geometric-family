@@ -188,18 +188,18 @@ for s in STORY:
     for t in s['tasks']:
         for n in t['need']: assert n in byid, ('없는 가구', n)
 # 손님: 문턱 150(1장 완료 무렵)부터 · 선물 2개 — 대사 [제안], 유아는 글 없이 아이콘
-GUESTS = [
-    dict(id='wife', char='wife.smug', group='adult', need=150, likes=['b_sofa', 'u_fridge'], lines=['이 소파 앉아도 돼요?', '냉장고가 이렇게 크니 좋겠다!'], gifts=['g_cushion', 'g_mirror']),
-    dict(id='dong_dad', char='dong_dad.calm', group='adult', need=320, likes=['b_shelf', 'b_clock'], lines=['책장이 정갈하군요.', '시계 소리가 좋네요.'], gifts=['g_pen', 'g_chess']),
-    dict(id='nemo_mom', char='nemo_mom.good', group='adult', need=520, likes=['t_bowl', 'p_rice'], lines=['밥솥이 딱 우리 집 거네!', '밥그릇이 예쁘네요.'], gifts=['g_lunch', 'g_apron']),
-    dict(id='husband', char='husband.joy', group='adult', need=760, likes=['b_suitcase', 'p_world'], lines=['이 가방이면 어디든 가겠는데?', '지도에 우리 집도 표시해 줘요.'], gifts=['g_compass', 'g_postcard']),
-    dict(id='nemo_grandma', char='nemo_grandma.good', group='adult', need=1050, likes=['m_bench', 'm_garden'], lines=['평상에 앉으면 시간이 천천히 가지.', '텃밭 상추 좀 뜯어 가도 되냐.'], gifts=['g_teaset', 'g_flowerpot']),
-    dict(id='nemo_dad_g', char='nemo_dad.good', group='adult', need=1400, likes=['o_fence', 'o_mailbox'], lines=['담장이 튼튼하네요.', '우체통에 편지 왔나?'], gifts=['g_pepper', 'g_hanbok']),
-    dict(id='dong_dad_w', char='dong_dad.warm', group='adult', need=1750, likes=['p_chair', 'b_globe'], lines=['의자가 하나 더 있으니 든든하네요.', '지구본 돌려 보고 싶어요.'], gifts=['g_stool', 'g_lantern2']),
-    dict(id='hana', char='nemo_kids.kid1', group='kid', need=60, likes=['k_train', 'y_ball'], lines=[], gifts=['kg_star', 'kg_cloud']),
-    dict(id='dong_dad_k', char='dong_dad.joy', group='kid', need=150, likes=['k_party', 'y_toybox'], lines=[], gifts=['kg_bear', 'kg_ball2']),
-    dict(id='wife_k', char='wife.joy', group='kid', need=260, likes=['w_frame', 'y_pillow'], lines=[], gifts=['kg_kite', 'kg_drum']),
-    dict(id='nemo_dad_k', char='nemo_dad.joy', group='kid', need=380, likes=['y_bowl', 'y_cup'], lines=[], gifts=['kg_rainbow', 'kg_train2']),
+GUESTS = [   # 성인 7명 = docs/24 「손님 = 일하는 앱」 표와 같은 사람(한 사람 한 줄). who 이름 · app 일하는 앱 · gifts 3번째가 표의 소품(3번째 방문 때)
+    dict(id='wife', char='wife.smug', group='adult', who='세모 아내', app='당신은 어느 도형?', need=150, likes=['b_sofa', 'u_fridge'], lines=['이 소파 앉아도 돼요?', '냉장고가 이렇게 크니 좋겠다!', '오늘의 나를 점쳐 봤는데, 우리 집이 정답이에요.'], gifts=['g_cushion', 'g_mirror', 'q_plate_semo']),
+    dict(id='dong_dad', char='dong_dad.calm', group='adult', who='동그라미 아빠', app='다른 그림 찾기', need=320, likes=['b_shelf', 'b_clock'], lines=['책장이 정갈하군요.', '시계 소리가 좋네요.', '액자가 한 칸 비어 있었습니다. 채워 두었어요.'], gifts=['g_pen', 'g_chess', 'a_frame']),
+    dict(id='nemo_mom', char='nemo_mom.good', group='adult', who='네모 엄마', app='정리의 달인', need=520, likes=['t_bowl', 'p_rice'], lines=['밥솥이 딱 우리 집 거네!', '밥그릇이 예쁘네요.', '선반이 모자라 보여서 하나 가져왔어요.'], gifts=['g_lunch', 'g_apron', 'u_shelf']),
+    dict(id='husband', char='husband.joy', group='adult', who='세모 남편', app='도형 합치기', need=760, likes=['b_suitcase', 'p_world'], lines=['이 가방이면 어디든 가겠는데?', '지도에 우리 집도 표시해 줘요.', '이삿짐 싸다 하나 남았어. 여기 두고 갈게!'], gifts=['g_compass', 'g_postcard', 'p_bagt']),
+    dict(id='nemo_grandma', char='nemo_grandma.good', group='adult', who='네모 할머니', app='세 가족 식탁', need=1050, likes=['m_bench', 'm_garden'], lines=['평상에 앉으면 시간이 천천히 가지.', '텃밭 상추 좀 뜯어 가도 되냐.', '뜨끈한 국 한 그릇 먹고 가거라.'], gifts=['g_teaset', 'g_flowerpot', 's_tteokguk']),
+    dict(id='nemo_dad_g', char='nemo_dad.good', group='adult', who='네모 아빠', app='도형 블록', need=1400, likes=['o_fence', 'o_mailbox'], lines=['담장이 튼튼하네요.', '우체통에 편지 왔나?', '벽돌이 남아서 한 줄 더 쌓아 봤어요!'], gifts=['g_pepper', 'g_hanbok', 'o_bricks']),
+    dict(id='hana_a', char='nemo_kids.kid1', group='adult', who='하나(네모네 큰딸)', app='세 가족 짝 맞추기', need=1750, likes=['p_chair', 'b_globe'], lines=['의자가 하나 더 있으니 든든해요.', '지구본 돌려 보고 싶어요.', '짝이 맞았어요! 바구니는 선물이에요.'], gifts=['g_stool', 'g_lantern2', 'u_basket']),
+    dict(id='hana', char='nemo_kids.kid1', group='kid', who='하나 누나', app='놀이터', need=60, likes=['k_train', 'y_ball'], lines=[], gifts=['kg_star', 'kg_cloud']),
+    dict(id='dong_dad_k', char='dong_dad.joy', group='kid', who='동그라미 아저씨', app='놀이터', need=150, likes=['k_party', 'y_toybox'], lines=[], gifts=['kg_bear', 'kg_ball2']),
+    dict(id='wife_k', char='wife.joy', group='kid', who='세모 이모', app='놀이터', need=260, likes=['w_frame', 'y_pillow'], lines=[], gifts=['kg_kite', 'kg_drum']),
+    dict(id='nemo_dad_k', char='nemo_dad.joy', group='kid', who='네모 아빠', app='놀이터', need=380, likes=['y_bowl', 'y_cup'], lines=[], gifts=['kg_rainbow', 'kg_train2']),
 ]
 chars = J('data/chars.json')
 for g in GUESTS:

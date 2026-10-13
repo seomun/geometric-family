@@ -20,7 +20,7 @@ const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
       await p.evaluate(() => document.getElementById('b-set').click()); await p.waitForSelector('.xt-sheet', { timeout: 3000 }); await p.waitForTimeout(300);
       const rows = await p.$$eval('.xt-sheet .xt-row', (r) => r.map((x) => x.textContent.trim()));
       ok(rows.some((t) => t.startsWith('소리')) && rows.some((t) => t.startsWith('큰 글씨')) && rows.some((t) => t.startsWith('통계')), name + ' 설정 줄: ' + rows.map((t) => t.slice(0, 6)).join('|'));
-      await p.screenshot({ path: path.join(__dirname, '..', 'notes', 'snapshots', '2026-10-08_extras_' + name.slice(0, 1) + '_set.png') });
+      await p.screenshot({ path: path.join(__dirname, '..', 'notes', 'snapshots', '2026-10-08_extras_a' + (['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'].indexOf(name.slice(0, 1)) + 1) + '_set.png') });
       // 큰 글씨
       const swOf = async (label) => { const rows = await p.$$('.xt-sheet .xt-row'); for (const r of rows) { if ((await r.textContent()).trim().startsWith(label)) return r.$('.uk-switch'); } return null; };
       const big = await swOf('큰 글씨'); await big.click(); await p.waitForTimeout(150);
@@ -62,7 +62,7 @@ const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
         if (q) {
           const m = q.match(/(\d+)\s*×\s*(\d+)/), ans = String(+m[1] * +m[2]); await p.evaluate((a) => { [...document.querySelectorAll('h3')].find((x) => /×/.test(x.textContent)).parentElement.querySelectorAll('.nums button').forEach((b) => { if (b.textContent === a) b.click(); }); }, ans); await p.waitForTimeout(500);
           const t = await p.$$eval('.xt-sheet .xt-row', (r) => r.map((x) => x.textContent.trim().slice(0, 8))); ok(t.some((x) => x.startsWith('쉬어요')) && t.some((x) => x.startsWith('소리')), name + ' 보호자 메뉴: ' + t.join('|'));
-          await p.screenshot({ path: path.join(__dirname, '..', 'notes', 'snapshots', '2026-10-08_extras_' + name.slice(0, 1) + '_parent.png') });
+          await p.screenshot({ path: path.join(__dirname, '..', 'notes', 'snapshots', '2026-10-08_extras_a' + (['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'].indexOf(name.slice(0, 1)) + 1) + '_parent.png') });
           // 쉬어요 알림: 설정 1분 → 시간 경과 시뮬레이션 → 오버레이 → 잠금 뒤 닫힘
           await p.evaluate(() => { GF.state.settings.rest = 1; GF.extras.restReset(); }); await p.evaluate(() => { GF.extras._back(70000); GF.extras.tick(); }); await p.waitForTimeout(300);
           ok(await p.evaluate(() => !!document.getElementById('xt-rest')), name + ' 쉬어요 알림이 뜸(보호자가 정한 시간)');

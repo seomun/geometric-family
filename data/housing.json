@@ -1879,6 +1879,14 @@
     },
     {
      "bg": "indoor2",
+     "text": "TV장을 놓고 소파에 앉자 첫째가 리모컨을 잡았다. 「오늘은 내가 고를래!」 막내가 슬쩍 쿠션을 끼워 넣었다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "baby.joy"
+     ]
+    },
+    {
+     "bg": "indoor2",
      "text": "시끌시끌한 저녁. 이게 제일 좋은 하루인지도 모른다.",
      "chars": [
       "nemo_dad.joy",
@@ -1949,6 +1957,14 @@
      "chars": [
       "nemo_mom.joy",
       "nemo_dad.joy",
+      "nemo_kids.kid1"
+     ]
+    },
+    {
+     "bg": "indoor2",
+     "text": "반찬통마다 김치가 가득. 엄마가 숟가락 위에 한 점 얹어 주었다. 「많이 먹어. 엄마 밥이 제일 맛있지?」",
+     "chars": [
+      "nemo_mom.joy",
       "nemo_kids.kid1"
      ]
     },
@@ -2028,6 +2044,14 @@
     },
     {
      "bg": "indoor",
+     "text": "필름 카메라로 찰칵. 사진 속 세모 아내의 웃음이 번졌다. 「이 벽엔 우리가 다녀온 곳만 붙일 거야.」",
+     "chars": [
+      "wife.joy",
+      "husband.joy"
+     ]
+    },
+    {
+     "bg": "indoor",
      "text": "「다음엔 어디 갈까요?」 둘만의 계획이 벽에 가득 찼다.",
      "chars": [
       "husband.joy",
@@ -2096,6 +2120,13 @@
      "chars": [
       "dong_dad.warm",
       "dong_dad.good"
+     ]
+    },
+    {
+     "bg": "indoor",
+     "text": "책장에서 책을 꺼내 펼치자 서재 시계가 똑딱거렸다. 천천히, 정확하게, 그래도 따뜻하게.",
+     "chars": [
+      "dong_dad.warm"
      ]
     },
     {
@@ -2174,6 +2205,14 @@
     },
     {
      "bg": "field",
+     "text": "우체통에 쪽지가 한 장 와 있었다. 「텃밭 상추 가져가요!」 이웃의 글씨였다.",
+     "chars": [
+      "nemo_dad.joy",
+      "wife.joy"
+     ]
+    },
+    {
+     "bg": "field",
      "text": "이 나이엔 그냥 건강하면 된다. 마당에 웃음이 퍼졌다.",
      "chars": [
       "nemo_dad.joy",
@@ -2233,9 +2272,25 @@
     },
     {
      "bg": "home",
+     "text": "「문패에 도형 하나만 새기면 되지?」 아빠가 망치를 들자 아이들이 몰려와 구경했다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "home",
      "text": "신발이 가지런히 놓였다.",
      "chars": [
       "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "bg": "home",
+     "text": "강아지 집 앞에서 막둥이가 인사했다. 「안녕! 이제 여기가 우리 집이야.」",
+     "chars": [
+      "baby.joy",
       "nemo_mom.joy"
      ]
     }
@@ -2291,11 +2346,27 @@
     },
     {
      "bg": "indoor2",
+     "text": "침대는 하나인데 베개는 셋. 누가 창가를 차지할지 가위바위보가 시작됐다.",
+     "chars": [
+      "nemo_kids.kid1",
+      "nemo_kids.kid2",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "indoor2",
      "text": "이불을 깔자 아이들이 먼저 누웠다.",
      "chars": [
       "nemo_kids.kid1",
       "nemo_kids.kid2",
       "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "indoor2",
+     "text": "불을 끄자 셋의 숨소리가 포개졌다. 엄마가 문틈으로 오래 들여다보았다.",
+     "chars": [
+      "nemo_mom.joy"
      ]
     }
    ],
@@ -2345,9 +2416,27 @@
     },
     {
      "bg": "night",
+     "text": "트리 불빛이 켜지자 마당 건너 이웃도 창문을 열었다. 「올해도 잘 지냈지요?」",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "bg": "night",
      "text": "계절이 바뀔 때마다 이 집에 새 이야기가 놓일 것이다.",
      "chars": [
       "nemo_dad.joy",
+      "wife.joy",
+      "dong_dad.warm"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "별이 가득한 밤. 우리 집은 오늘도 한 칸 더 따뜻해졌다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_mom.joy",
       "wife.joy",
       "dong_dad.warm"
      ]

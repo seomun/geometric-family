@@ -192,6 +192,23 @@ STORY = [
     dict(ch=4, room='dining', group='kid', title='밥 먹는 곳', tasks=[('t1', ['y_bowl'], '밥그릇'), ('t2', ['y_spoon'], '수저 통'), ('t3', ['k_ch3'], '무 인형')], cuts=[cut('', BABY, DAD, bg='home')], reward=dict(cozy=30, unlock='toyroom')),
     dict(ch=5, room='toyroom', group='kid', title='장난감 방', tasks=[('t1', ['k_ch7'], '소리 나팔'), ('t2', ['y_ball'], '공 바구니'), ('t3', ['k_ch5'], '도형 블록')], cuts=[cut('', BABY, KID3, bg='home')], reward=dict(cozy=35, unlock=None)),
 ]
+
+# A9 집 이야기 보강(성인): 장마다 기승전결 4컷으로 — 가구를 놓는 손맛이 이야기로 이어지도록 중간 컷·마무리 컷을 더한다(행복 우선, 설명하지 않는 결말). [제안]
+_X = {
+    1: ([2, cut('TV장을 놓고 소파에 앉자 첫째가 리모컨을 잡았다. 「오늘은 내가 고를래!」 막내가 슬쩍 쿠션을 끼워 넣었다.', KID1, BABY)],),
+    2: ([2, cut('반찬통마다 김치가 가득. 엄마가 숟가락 위에 한 점 얹어 주었다. 「많이 먹어. 엄마 밥이 제일 맛있지?」', MOM, KID1)],),
+    3: ([2, cut('필름 카메라로 찰칵. 사진 속 세모 아내의 웃음이 번졌다. 「이 벽엔 우리가 다녀온 곳만 붙일 거야.」', 'wife.joy', 'husband.joy', bg='indoor')],),
+    4: ([2, cut('책장에서 책을 꺼내 펼치자 서재 시계가 똑딱거렸다. 천천히, 정확하게, 그래도 따뜻하게.', DONG, bg='indoor')],),
+    5: ([2, cut('우체통에 쪽지가 한 장 와 있었다. 「텃밭 상추 가져가요!」 이웃의 글씨였다.', N, SEMO, bg='field')],),
+    6: ([1, cut('「문패에 도형 하나만 새기면 되지?」 아빠가 망치를 들자 아이들이 몰려와 구경했다.', N, KID3, bg='home')], [3, cut('강아지 집 앞에서 막둥이가 인사했다. 「안녕! 이제 여기가 우리 집이야.」', BABY, MOM, bg='home')]),
+    7: ([1, cut('침대는 하나인데 베개는 셋. 누가 창가를 차지할지 가위바위보가 시작됐다.', KID1, KID2, KID3)], [3, cut('불을 끄자 셋의 숨소리가 포개졌다. 엄마가 문틈으로 오래 들여다보았다.', MOM)]),
+    8: ([1, cut('트리 불빛이 켜지자 마당 건너 이웃도 창문을 열었다. 「올해도 잘 지냈지요?」', N, MOM, bg='night')], [3, cut('별이 가득한 밤. 우리 집은 오늘도 한 칸 더 따뜻해졌다.', N, MOM, SEMO, DONG, bg='night')]),
+}
+for _c in STORY:
+    if _c['group'] == 'adult' and _c['ch'] in _X:
+        for idx, ct in sorted(_X[_c['ch']][0:1] + _X[_c['ch']][1:], key=lambda z: z[0]):
+            _c['cuts'].insert(min(idx, len(_c['cuts'])), ct)
+assert all(len(c['cuts']) == 4 for c in STORY if c['group'] == 'adult'), [(c['ch'], len(c['cuts'])) for c in STORY if c['group'] == 'adult']
 for s in STORY:
     s['tasks'] = [dict(id=t[0], need=t[1], label=t[2]) for t in s['tasks']]
     for t in s['tasks']:

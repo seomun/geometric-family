@@ -35,7 +35,7 @@
 - [x] B7 튜토리얼을 「스토리 = 튜토리얼」로 — 모집·키우기·던전·도감을 처음 열 때 가족 이야기 컷 한 번(건너뛰기 가능, 저장)
 - [x] B8 4~6나라 스테이지 설계 데이터 ✅ — 72칸(브레멘 숲·구름 거인 마을·우렁 각시 논) + 포섭 3(허깨비 도둑·구름 거인·욕심쟁이 원님) + 전리품 24종. 진행 sim: 72/72 클리어, 파밍 평균 0.22·최대 4(37 이후 기울기 0.012. 0.016 부터 59단계에서 막히는 절벽이라 낮게 둠)
 - [x] B9 이벤트 스테이지 틀(계절 달력과 같은 주) — 로컬 데이터 ✅ (계절 이벤트 4종·3칸, 로컬 보상 · 서버판 연동은 B14 로 보충 · tools/exp_event_smoke.js)
-- [ ] B10 업적·칭호·프로필 카드
+- [x] B10 업적·칭호·프로필 카드 ✅ (업적 18·칭호 15·내 원정 카드 · tools/exp_profile_smoke.js)
 
 - [x] B11 초보자 미션 30·출석 7일 ✅ — 데이터 tools/expedition_begin.py(반짝석 360+100, 금화 17,100) · 판정 stage-core beginner() 를 서버·클라이언트가 같이 씀 · 서버 /beginner·/beginner/claim·/attend/claim(멱등, flags 기록) · 홈 버튼+배지 · 시험 exp_begin_smoke·server begin.test
 - [x] B12 파티 편성 프리셋 3칸·자동 편성(상성 추천)·적 속성 미리보기 ✅ (SC.autoParty·enemyPreview · tools/exp_party_smoke.js)

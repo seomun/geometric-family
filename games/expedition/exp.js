@@ -139,6 +139,7 @@
       if (!REMOTE) { const g0 = idleNow(); if (g0 > 0) scout.insertAdjacentHTML('beforeend', ' <em class="adv">' + g0 + '</em>'); }
       const evB = evOpen(); if (evB) { const eb = UK.btn({ text: evB.icon + ' ' + evB.name, cls: 'gold sm', onclick: () => GF.go('xevent') }, r); eb.style.cssText += ';position:absolute;left:50%;top:206px;min-height:40px;height:40px;padding:0 16px;font-size:16px;transform:translateX(-50%);z-index:6;width:auto;white-space:nowrap'; if (evTodo()) el('i', 'ex-bdg', eb, '!'); }
       const row3 = el('div', 'ex-row', btns); UK.btn({ text: '동료 도감', icon: 'heart', cls: 'pink', onclick: () => GF.go('xdex') }, row3);
+      const pb = UK.btn({ icon: 'star', cls: 'ghost', onclick: () => GF.go('xprofile') }, r); pb.setAttribute('aria-label', 'profile'); pb.style.cssText += ';position:absolute;left:10px;top:10px;z-index:6;width:60px;height:60px;min-width:60px;padding:0;border-radius:50%'; pb.insertAdjacentHTML('beforeend', '<span style="font-size:26px">🏅</span>');
       const bg = UK.btn({ text: '초보자 미션', icon: 'star', cls: 'green', onclick: () => GF.go('xbegin') }, row3); bg.style.position = 'relative'; begLoad().then((b) => { const n = begBadge(b); if (n && bg.isConnected) el('i', 'ex-bdg', bg, n); });
       if (REMOTE) UK.btn({ text: '상점·설정', icon: 'star', cls: 'ghost', onclick: () => GF.go('xshop') }, row3);
       el('div', 'ex-foot', r, '전투력 ' + power(S.party) + ' · 동료 ' + Object.keys(S.units).length + '/' + D.units.length + ' · 랜덤 아이템 포함(동료 모집)');
@@ -229,6 +230,23 @@
       const box = el('div', 'ex-shop', r), got = (S.flags.ev || {})[ev.id] || [];
       ev.names.forEach((nm, k) => { const done = got.includes(k), open = k === 0 || got.includes(k - 1), st = SC.eventStage(D, ev, k, S.cleared), rw = SC.eventReward(D, ev, k, S.cleared, !done), c = el('div', 'ex-bg' + (open && !done ? ' can' : ''), box); c.innerHTML = `<div class="tx"><b>${k + 1}. ${nm} ${st.enemies.map((e) => e.emoji).slice(0, 4).join('')}</b><small>${done ? '✔ 깼어요 · 다시 깨면 ' : '처음 깨면 '}🪙 ${rw.gold}${rw.gems ? ' · 💎 ' + rw.gems : ''}</small></div>`; UK.btn({ text: open ? (done ? '다시' : '도전') : '🔒', cls: (open ? (done ? 'ghost' : 'green') : 'ghost') + ' sm', onclick: () => { if (!open) { UK.toast('앞 칸을 먼저 깨요', r); return; } GF.go('xbattle', { evt: { id: ev.id, k } }); } }, c); });
       el('p', 'ex-sub', box, '깬 원정 단계에 맞춰 적이 정해져요. 지면 벌 없이 다시 도전!');
+    },
+  });
+  /* ---------------- 업적·칭호·프로필 카드 (B10): 보상 없는 자랑. 칭호는 기기에만 저장 ---------------- */
+  const PFKEY = 'gfx:profile:v1', pfGet = () => { try { return JSON.parse(localStorage.getItem(PFKEY)) || {}; } catch (e) { return {}; } }, pfSet = (x) => { try { localStorage.setItem(PFKEY, JSON.stringify(x)); } catch (e) { /* 용량 */ } };
+  const achState = () => ({ cleared: S.cleared, units: S.units, pulls: S.pulls || 0, dun: S.flags.dunN || 0, idle: S.flags.idleN || 0, dex: (S.flags.dex || []).length, stars: Object.values(S.stars || {}).reduce((a, b) => a + (+b || 0), 0), event: Object.values(S.flags.ev || {}).reduce((a, l) => a + l.length, 0), att: ((S.flags.att || {}).n) || 0 });
+  GF.screen('xprofile', {
+    bare: false,
+    enter(r) {
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '내 원정 카드'); back(r, 'xhome'); r.classList.add('ex-prof');
+      const box = el('div', 'ex-shop ex-pfbox', r), draw = () => {
+        box.innerHTML = ''; const list = SC.achievements(D, achState()), pf = pfGet(), got = list.filter((a) => a.done), titles = got.filter((a) => a.title).map((a) => a.title), cur = titles.includes(pf.title) ? pf.title : (titles[titles.length - 1] || '');
+        const card = el('div', 'ex-pcard', box), lead = $(S.party[0]); const ar = el('div', 'ex-pfart', card); ar.appendChild(art(lead, 'xl')); const tx = el('div', 'ex-pftx', card);
+        el('small', '', tx, cur ? '「' + cur + '」' : '칭호는 업적을 달성하면 생겨요'); el('b', '', tx, lead.name.replace(/\(.*\)/, '') + ' 원정대'); el('div', 'ex-pfn', tx, `${D.stages.length}단계 중 ${S.cleared} · 동료 ${Object.keys(S.units).length}/${D.units.length} · 전투력 ${power(S.party)}`); el('div', 'ex-pfn', tx, `업적 ${got.length}/${list.length}`);
+        el('div', 'ex-nation', box, '<b>칭호 고르기</b><small>' + titles.length + '개</small>'); const tr = el('div', 'ex-titles', box); if (!titles.length) el('em', '', tr, '아직 없어요'); titles.forEach((t) => { const c = el('button', 'ex-title' + (t === cur ? ' on' : ''), tr, t); c.onclick = () => { pfSet({ title: t }); GF.sfx('pick'); draw(); }; });
+        el('div', 'ex-nation', box, '<b>업적</b><small>보상 없이 자랑만 해요</small>'); list.slice().sort((x, y) => (y.done ? 1 : 0) - (x.done ? 1 : 0)).forEach((a) => { const c = el('div', 'ex-bg' + (a.done ? ' can' : ''), box); c.innerHTML = `<div class="tx"><b>${a.done ? '🏅 ' : ''}${a.name}</b><div class="bar"><i style="width:${Math.round(a.got / a.need * 100)}%"></i></div><small>${a.t} · ${a.got}/${a.need}${a.title ? ' · 칭호 「' + a.title + '」' : ''}</small></div>`; });
+      };
+      draw();
     },
   });
   /* ---------------- 초보자 미션 30 · 출석 7일 (B11) ---------------- */

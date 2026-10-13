@@ -10407,6 +10407,378 @@
    "flat": false,
    "cls": "prop",
    "theme": "deco"
+  },
+  {
+   "no": 313,
+   "id": "x_magpiebridge",
+   "name": "까치 다리 모형",
+   "set": "exp",
+   "room": "yard",
+   "w": 46,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🌉",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 75,
+    "hint": "기하학 원정대 · 75단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 314,
+   "id": "x_loom",
+   "name": "직녀 베틀",
+   "set": "exp",
+   "room": "yard",
+   "w": 56,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧵",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 78,
+    "hint": "기하학 원정대 · 78단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 315,
+   "id": "x_starbottle",
+   "name": "은하수 병",
+   "set": "exp",
+   "room": "yard",
+   "w": 40,
+   "h": 46,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍶",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 81,
+    "hint": "기하학 원정대 · 81단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 316,
+   "id": "x_milkyway",
+   "name": "은하수 조명",
+   "set": "exp",
+   "room": "yard",
+   "w": 56,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🌌",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 84,
+    "hint": "기하학 원정대 · 84단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco"
+  },
+  {
+   "no": 317,
+   "id": "x_turtle",
+   "name": "거북 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 52,
+   "h": 46,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 87,
+    "hint": "기하학 원정대 · 87단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 318,
+   "id": "x_coral",
+   "name": "산호 화분",
+   "set": "exp",
+   "room": "yard",
+   "w": 50,
+   "h": 60,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 90,
+    "hint": "기하학 원정대 · 90단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 319,
+   "id": "x_shell",
+   "name": "조개 장식",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🐚",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 93,
+    "hint": "기하학 원정대 · 93단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 320,
+   "id": "x_rabbitdoll",
+   "name": "토끼 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 50,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐇",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 96,
+    "hint": "기하학 원정대 · 96단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco"
+  },
+  {
+   "no": 321,
+   "id": "x_snowflake",
+   "name": "눈꽃 장식",
+   "set": "exp",
+   "room": "yard",
+   "w": 50,
+   "h": 50,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "❄️",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 99,
+    "hint": "기하학 원정대 · 99단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco"
+  },
+  {
+   "no": 322,
+   "id": "x_icelamp",
+   "name": "얼음 조명",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🧊",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 102,
+    "hint": "기하학 원정대 · 102단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
+  },
+  {
+   "no": 323,
+   "id": "x_sled",
+   "name": "작은 썰매",
+   "set": "exp",
+   "room": "yard",
+   "w": 60,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛷",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 105,
+    "hint": "기하학 원정대 · 105단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "deco"
+  },
+  {
+   "no": 324,
+   "id": "x_snowglobe",
+   "name": "스노볼",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🔮",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 108,
+    "hint": "기하학 원정대 · 108단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco"
   }
  ],
  "meTypes": {

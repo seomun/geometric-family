@@ -40,7 +40,7 @@
 - [x] B11 초보자 미션 30·출석 7일 ✅ — 데이터 tools/expedition_begin.py(반짝석 360+100, 금화 17,100) · 판정 stage-core beginner() 를 서버·클라이언트가 같이 씀 · 서버 /beginner·/beginner/claim·/attend/claim(멱등, flags 기록) · 홈 버튼+배지 · 시험 exp_begin_smoke·server begin.test
 - [x] B12 파티 편성 프리셋 3칸·자동 편성(상성 추천)·적 속성 미리보기 ✅ (SC.autoParty·enemyPreview · tools/exp_party_smoke.js)
 
-- [ ] B13 7~9나라(36칸) 데이터·포섭·전리품 + 진행 sim(막힘 0)
+- [x] B13 7~9나라(36칸) 데이터·포섭·전리품 + 진행 sim(막힘 0) ✅ (108칸·포섭 3·전리품 36 · sim 108/108 파밍 평균 0.19 최대 4 · 새 이야기 hansel·puss 를 tales_cast 에 추가)
 
 ## C. 10종 품질
 - [x] C1 전용 튜토리얼 컷 — 6개 앱 판 종류 25개는 이미 컷+카드 완비(점검), 남은 ⑤ 미니게임·④ 따라 그리기·스티커·② 계절 손님에 컷+미니 그림+카드 추가(처음 열 때 한 번)

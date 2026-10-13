@@ -538,6 +538,74 @@
     "family": "dong",
     "only": null
    }
+  ],
+  "hansel": [
+   {
+    "role": "헨젤",
+    "adult": "네모네 세찌",
+    "kid": "세찌 형",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "그레텔",
+    "adult": "네모네 하나",
+    "kid": "하나 누나",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "길을 걱정하는 아버지",
+    "adult": "네모 아빠",
+    "kid": "아빠",
+    "kind": "helper",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "과자집 할머니",
+    "adult": "과자집 할머니(가족 밖, 사탕을 너무 좋아함·순한 판)",
+    "kid": "과자집 할머니(가족 밖, 사탕을 너무 좋아함·순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
+  ],
+  "puss": [
+   {
+    "role": "장화 신은 고양이",
+    "adult": "세모 아내",
+    "kid": "세모 이모",
+    "kind": "lead",
+    "family": "semo",
+    "only": null
+   },
+   {
+    "role": "막내 아들(주인)",
+    "adult": "네모네 세찌",
+    "kid": "세찌 형",
+    "kind": "lead",
+    "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "나라의 임금님",
+    "adult": "동그라미 아빠",
+    "kid": "동그라미 아저씨",
+    "kind": "helper",
+    "family": "dong",
+    "only": null
+   },
+   {
+    "role": "변신 마법사",
+    "adult": "변신 마법사(가족 밖, 뭐든 변신하다 생쥐가 됨·순한 판)",
+    "kid": "변신 마법사(가족 밖, 뭐든 변신하다 생쥐가 됨·순한 판)",
+    "kind": "villain",
+    "family": "outside",
+    "only": null
+   }
   ]
  },
  "casting_note": "이야기 id 기준 단일 배역표(원천 tools/tales_cast.py). 모든 앱이 같은 배역을 쓴다. adult=성인 앱(웹툰 호칭), kid=유아 앱(막둥이 시점 호칭).",

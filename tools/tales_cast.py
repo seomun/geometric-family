@@ -28,6 +28,8 @@ CAST = {
     'hare': [('거북이', 'nemo_dad', 'lead'), ('토끼', 'dong_dad', 'funny'), ('심판', 'semo_h', 'helper')],
     'brothers': [('형', 'kid3', 'lead'), ('아우', 'baby', 'lead')],
     'snowqueen': [('카이', 'baby', 'lead'), ('게르다', 'kid1', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper')],
+    'hansel': [('헨젤', 'kid3', 'lead'), ('그레텔', 'kid1', 'lead'), ('길을 걱정하는 아버지', 'nemo_dad', 'helper'), ('과자집 할머니', O('과자집 할머니(가족 밖, 사탕을 너무 좋아함·순한 판)'), 'villain')],      # D1·B13 새 이야기(허브 2026-10-14)
+    'puss': [('장화 신은 고양이', 'semo_w', 'lead'), ('막내 아들(주인)', 'kid3', 'lead'), ('나라의 임금님', 'dong_dad', 'helper'), ('변신 마법사', O('변신 마법사(가족 밖, 뭐든 변신하다 생쥐가 됨·순한 판)'), 'villain')],      # D1·B13 새 이야기(허브 2026-10-14)
 }
 
 
@@ -45,7 +47,7 @@ def cast_for(tale, aud):
 # 성별 일치(허브 2026-10-12): kid1·kid2(하나·두리, 딸)는 형/오빠/아우/남동생/아들 역 금지, kid3·baby(세찌·막둥이, 아들)는 누나/언니/누이/여동생/딸 역 금지
 FEMALE_KIDS, MALE_KIDS = ('kid1', 'kid2'), ('kid3', 'baby')
 MALE_WORDS, FEMALE_WORDS = ('형', '오빠', '아우', '남동생', '아들'), ('누나', '언니', '누이', '여동생', '딸')
-MALE_NAMES, FEMALE_NAMES = ('잭', '카이', '피노키오', '흥부', '놀부', '왕자', '도령'), ('게르다', '콩쥐', '팥쥐', '공주', '신데렐라', '누이')   # 원작 이름 역의 성별(2026-10-12)
+MALE_NAMES, FEMALE_NAMES = ('잭', '카이', '피노키오', '흥부', '놀부', '왕자', '도령', '헨젤'), ('게르다', '콩쥐', '팥쥐', '공주', '신데렐라', '누이', '그레텔')   # 원작 이름 역의 성별(2026-10-12)
 def GENDER_OK():
     bad = []
     for tale, rows in CAST.items():

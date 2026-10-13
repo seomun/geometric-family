@@ -24,11 +24,11 @@ CAST = {
     'pino': [('제페토(목수)', 'nemo_dad', 'lead'), ('피노키오(나무 인형)', 'baby', 'funny'), ('파란 요정', O('요정(art.fairy)'), 'helper')],
     'jack': [('잭', 'kid3', 'lead'), ('잭의 엄마', 'nemo_mom', 'helper'), ('구름 위 거인', O('구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)'), 'villain'), ('잔치 손님', 'semo_h', 'helper')],
     'gyeonwoo': [('견우', 'semo_h', 'lead'), ('직녀', 'semo_w', 'lead'), ('오작교를 놓는 까치와 까마귀', O('까치 떼(가족 밖)'), 'helper'), ('둘을 갈라놓는 하늘 어른', O('하늘 어른(가족 밖, 목소리·순한 판)'), 'villain')],
-    'ureng': [('혼자 농사짓는 총각', 'nemo_dad', 'lead'), ('우렁 각시', 'semo_w', 'helper'), ('각시를 탐내는 원님', O('욕심쟁이 원님(가족 밖, 목소리·순한 판)'), 'villain')],
+    'ureng': [('혼자 농사짓는 총각', 'semo_h', 'lead'), ('우렁 각시', 'semo_w', 'helper'), ('각시를 탐내는 원님', O('욕심쟁이 원님(가족 밖, 목소리·순한 판)'), 'villain')],
     'hare': [('거북이', 'nemo_dad', 'lead'), ('토끼', 'dong_dad', 'funny'), ('심판', 'semo_h', 'helper')],
     'brothers': [('형', 'kid3', 'lead'), ('아우', 'baby', 'lead')],
     'snowqueen': [('카이', 'baby', 'lead'), ('게르다', 'kid1', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper')],
-    'fairywood': [('나무꾼', 'nemo_dad', 'lead'), ('선녀', 'semo_w', 'lead'), ('도와주는 사슴', O('사슴(가족 밖)'), 'helper'), ('선녀의 아이들', 'kid2', 'helper')],      # D1 새 이야기(허브 2026-10-14)
+    'fairywood': [('나무꾼', 'semo_h', 'lead'), ('선녀', 'semo_w', 'lead'), ('도와주는 사슴', O('사슴(가족 밖)'), 'helper'), ('선녀의 아기 사슴들', O('아기 사슴들(가족 밖)'), 'helper')],      # D1 새 이야기(허브 2026-10-14)
     'rabbitliver': [('토끼', 'kid1', 'lead'), ('거북(심부름꾼)', 'nemo_dad', 'helper'), ('아픈 용왕님(순한 판)', 'dong_dad', 'helper'), ('용궁 문지기', O('용궁 문지기(가족 밖, 목소리만·순한 판)'), 'villain')],      # 가족 밖 악역 자리(B20, 허브 방침: 악역은 가족 밖)
     'magpie': [('선비', 'nemo_dad', 'lead'), ('은혜 갚는 까치', O('까치(art.magpie)'), 'helper'), ('구렁이(순한 판)', O('구렁이(가족 밖, 소리·그림자·순한 판)'), 'villain')],
     'tigerpersimmon': [('엄마', 'nemo_mom', 'lead'), ('우는 아기', 'baby', 'lead'), ('곶감 아저씨', 'dong_dad', 'helper'), ('호랑이(순한 판)', O('호랑이(가족 밖, 소리·그림자·순한 판)'), 'villain')],
@@ -64,6 +64,19 @@ def GENDER_OK():
     return True
 
 
+# 부부·연인 역 쌍(허브 2026-10-14): 같은 이야기에서 짝을 이루는 두 역은 실제 부부여야 한다(네모 아빠+엄마 · 세모 남편+아내 · 동그라미 아빠+엄마)
+COUPLES = {'heungbu': ('흥부', '흥부 아내'), 'gyeonwoo': ('견우', '직녀'), 'ureng': ('혼자 농사짓는 총각', '우렁 각시'), 'fairywood': ('나무꾼', '선녀'), 'bears': ('큰 곰', '중간 곰')}
+REAL_COUPLES = [{'nemo_dad', 'nemo_mom'}, {'semo_h', 'semo_w'}, {'dong_dad', 'dong_mom'}]
+def COUPLE_OK():
+    bad = []
+    for tale, (a, b) in COUPLES.items():
+        rows = {r[0]: r[1] for r in CAST[tale]}
+        pair = {rows.get(a), rows.get(b)}
+        if pair not in REAL_COUPLES: bad.append('%s: %s=%s · %s=%s' % (tale, a, rows.get(a), b, rows.get(b)))
+    assert not bad, '부부·연인 역이 실제 부부가 아님: ' + ' / '.join(bad)
+    return True
+
+
 def audit():
     """전체 이야기 기준 단언: 가족 악역 0 · 세모의 웃긴 실패역/악역 ≤3 · 세모네 아이 없음"""
     semo = 0
@@ -75,5 +88,5 @@ def audit():
             if fam == 'semo' and kind in ('funny', 'villain'): semo += 1
             assert not (fam == 'semo' and key in ('kid1', 'kid2', 'kid3', 'baby')), '세모네에는 아이가 없다'
     assert semo <= 3, '세모의 웃긴 실패역/악역 전체 %d회(>3)' % semo
-    GENDER_OK()
+    GENDER_OK(); COUPLE_OK()
     return semo

@@ -306,7 +306,7 @@
    "title": "우렁 각시",
    "tale": "ureng",
    "faces": [
-    "nemo_dad.surprise",
+    "husband.surprise",
     "wife.joy",
     "wife.good"
    ],
@@ -314,9 +314,9 @@
    "midAt2": 4,
    "start": [
     {
-     "text": "아빠가 집에 오니 방이 깨끗해요. 누가 정리했을까요?",
+     "text": "세모 삼촌이 집에 오니 방이 깨끗해요. 누가 정리했을까요?",
      "chars": [
-      "nemo_dad.surprise"
+      "husband.surprise"
      ],
      "bubble": "question"
     }
@@ -340,7 +340,7 @@
        "text": "이모가 말했어요. 「정리는 제자리에 놓으면 끝!」",
        "chars": [
         "wife.good",
-        "nemo_dad.joy"
+        "husband.joy"
        ]
       }
      ]
@@ -348,10 +348,10 @@
    ],
    "end": [
     {
-     "text": "아빠와 이모와 {baby}가 함께 장난감을 제자리에 놓았어요.",
+     "text": "삼촌과 이모와 {baby}가 함께 장난감을 제자리에 놓았어요.",
      "chars": [
       "baby.joy",
-      "nemo_dad.love",
+      "husband.love",
       "wife.love"
      ],
      "bubble": "heart"
@@ -360,7 +360,7 @@
    "say": {
     "start": [
      {
-      "who": "nemo_dad.surprise",
+      "who": "husband.surprise",
       "text": "오늘도 해 볼까?"
      },
      {
@@ -374,7 +374,7 @@
     ],
     "clear": [
      {
-      "who": "nemo_dad.surprise",
+      "who": "husband.surprise",
       "text": "잘했어!"
      },
      {
@@ -1772,7 +1772,7 @@
    "title": "빨래 헹구기",
    "tale": "fairywood",
    "faces": [
-    "nemo_dad.good",
+    "husband.good",
     "baby.joy",
     "nemo_kids.kid1"
    ],
@@ -1780,9 +1780,9 @@
    "midAt2": 4,
    "start": [
     {
-     "text": "아빠가 마당에서 빨래를 헹궈요. 막둥이도 작은 손으로 보글보글!",
+     "text": "세모 삼촌이 마당에서 빨래를 헹궈요. 막둥이도 작은 손으로 보글보글!",
      "chars": [
-      "nemo_dad.good",
+      "husband.good",
       "baby.joy"
      ]
     }
@@ -1792,7 +1792,7 @@
      "after": 2,
      "cuts": [
       {
-       "text": "「선녀의 날개옷처럼 하늘하늘하네!」 {sib_kid1}가 하얀 옷을 들어 올렸어요.",
+       "text": "「날개옷처럼 하늘하늘하네!」 {sib_kid1}가 하얀 옷을 들어 올렸어요.",
        "chars": [
         "nemo_kids.kid1",
         "baby.surprise"
@@ -1805,7 +1805,7 @@
      "after": 4,
      "cuts": [
       {
-       "text": "깨끗이 헹군 빨래가 햇빛에 반짝반짝. 사슴이 구경 와서 눈을 깜빡!",
+       "text": "깨끗이 헹군 빨래가 햇빛에 반짝반짝. 아기 사슴이 구경 와서 눈을 깜빡!",
        "chars": [
         "baby.joy",
         "wife.joy"
@@ -1827,7 +1827,7 @@
    "say": {
     "start": [
      {
-      "who": "nemo_dad.good",
+      "who": "husband.good",
       "text": "오늘도 해 볼까?"
      },
      {
@@ -1841,7 +1841,7 @@
     ],
     "clear": [
      {
-      "who": "nemo_dad.good",
+      "who": "husband.good",
       "text": "잘했어!"
      },
      {

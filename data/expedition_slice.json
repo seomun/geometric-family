@@ -6889,14 +6889,14 @@
      "bg": "field",
      "text": "욕심쟁이 원님이 헛기침을 했다. 「…잔칫상이 텅 비면 체면이 안 서서 그랬소. 나눠 먹을 줄은 몰랐지.」",
      "chars": [
-      "nemo_dad.good"
+      "husband.joy"
      ]
     },
     {
      "bg": "field",
-     "text": "네모 아빠가 웃었다. 「나누면 상이 더 푸짐해져요. 같이 가시지요.」",
+     "text": "세모 남편이 웃었다. 「나누면 상이 더 푸짐해져요. 같이 가시지요.」",
      "chars": [
-      "nemo_dad.good",
+      "husband.joy",
       "baby.joy"
      ]
     },
@@ -6905,8 +6905,8 @@
      "text": "욕심쟁이 원님이 원정대의 친구가 되었다!",
      "chars": [
       "baby.joy",
-      "nemo_mom.good",
-      "nemo_dad.good"
+      "wife.joy",
+      "husband.joy"
      ]
     }
    ],
@@ -7018,14 +7018,14 @@
      "bg": "hill",
      "text": "사슴이 고개를 숙였다. 「…사냥꾼이 무서워서 숨어 지냈어요. 여러분은 해치지 않을 줄 알았는데.」",
      "chars": [
-      "nemo_dad.good"
+      "husband.good"
      ]
     },
     {
      "bg": "hill",
-     "text": "네모 아빠가 장작을 내려놓고 웃었다. 「저는 장작만 해요. 사슴 친구는 언제나 환영이에요.」",
+     "text": "세모 남편이 장작을 내려놓고 웃었다. 「저는 장작만 해요. 사슴 친구는 언제나 환영이에요.」",
      "chars": [
-      "nemo_dad.good",
+      "husband.good",
       "baby.joy"
      ]
     },
@@ -7042,7 +7042,7 @@
      "text": "사슴이 원정대의 친구가 되었다!",
      "chars": [
       "baby.joy",
-      "nemo_dad.good",
+      "husband.joy",
       "wife.joy"
      ]
     }
@@ -7320,7 +7320,7 @@
      "bg": "field",
      "text": "목소리만 큰 걸지도 몰라. 돌보기(◯)를 이기는 받치기(◻) 친구가 조용히 말을 걸어 보자.",
      "chars": [
-      "nemo_dad.good",
+      "husband.joy",
       "dong_dad.calm"
      ]
     }
@@ -7484,9 +7484,9 @@
    "109": [
     {
      "bg": "hill",
-     "text": "단풍 든 숲 너머로 맑은 연못이 반짝였다. 네모 아빠가 장작을 지고 앞장섰다.",
+     "text": "단풍 든 숲 너머로 맑은 연못이 반짝였다. 세모 남편이 장작을 지고 앞장섰다.",
      "chars": [
-      "nemo_dad.good",
+      "husband.joy",
       "baby.joy"
      ]
     },
@@ -7521,7 +7521,7 @@
      "text": "숲 입구에 큰 사슴이 서 있었다. 뿔이 달빛에 은빛으로 빛났다.",
      "chars": [
       "baby.surprise",
-      "nemo_dad.good"
+      "husband.joy"
      ]
     },
     {

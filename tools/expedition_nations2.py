@@ -33,12 +33,12 @@ STORY['pre'].update({
     49: [cut('빈집 뒤 콩 한 알이 쑥쑥 자라 구름까지 닿았다. 막둥이가 줄기를 올려다보며 눈을 반짝였다.', 'baby.joy', 'nemo_kids.kid1', bg='hill'), cut('5나라 구름 위 거인 마을. 번개가 잦으니 상성이 맞는 친구를 앞에 세워요.', 'wife.joy', 'dong_dad.calm', bg='hill')],
     60: [cut('쿵쿵쿵! 구름 거인이 식탁을 두드리고 있었다. 소리만 컸지 표정은 어딘가 쓸쓸했다.', 'baby.surprise', 'nemo_dad.good', bg='hill'), cut('받치기(◻)를 이기는 번쩍(△) 친구가 말을 걸어 보자. 소리가 큰 만큼 외로웠을지도 몰라.', 'wife.joy', 'nemo_mom.good', bg='hill')],
     61: [cut('논둑길을 따라가니 개구리들이 합창을 했다. 우렁 껍질 하나가 반짝반짝 빛났다.', 'baby.joy', 'nemo_mom.good', bg='field'), cut('6나라 우렁 각시 논. 논과 연못의 적이에요. 번쩍(△) 적은 돌보기(◯)가 잘 막아요.', 'dong_dad.calm', 'wife.joy', bg='field')],
-    72: [cut('잔칫상 문턱에서 욕심쟁이 원님이 팔짱을 끼고 목청을 높였다. 「이 상은 다 내 것이다!」', 'baby.surprise', 'nemo_mom.good', bg='field'), cut('목소리만 큰 걸지도 몰라. 돌보기(◯)를 이기는 받치기(◻) 친구가 조용히 말을 걸어 보자.', 'nemo_dad.good', 'dong_dad.calm', bg='field')],
+    72: [cut('잔칫상 문턱에서 욕심쟁이 원님이 팔짱을 끼고 목청을 높였다. 「이 상은 다 내 것이다!」', 'baby.surprise', 'nemo_mom.good', bg='field'), cut('목소리만 큰 걸지도 몰라. 돌보기(◯)를 이기는 받치기(◻) 친구가 조용히 말을 걸어 보자.', 'husband.joy', 'dong_dad.calm', bg='field')],
 })
 STORY['recruit'].update(
     u_phantom=[cut('허깨비 도둑이 그림자를 거두었다. 「…사실 배가 고파서 문 앞을 서성였어. 놀라게 하려던 건 아니야.」', 'dong_dad.warm', bg='hill'), cut('동그라미 아빠가 도시락을 내밀었다. 「같이 나눠 먹어요. 소리는 그냥 노래로 내요.」', 'dong_dad.calm', 'baby.joy', bg='hill'), cut('허깨비 도둑이 원정대의 친구가 되었다!', 'baby.joy', 'nemo_mom.good', 'dong_dad.calm', bg='hill')],
     u_giant=[cut('구름 거인이 어깨를 움츠렸다. 「…쿵쿵거리면 다들 쳐다봐 주니까. 혼자 있으면 너무 조용해서.」', 'wife.joy', bg='hill'), cut('세모 아내가 손을 흔들었다. 「이제 쳐다보는 사람이 많아질 거예요. 같이 가요!」', 'wife.joy', 'baby.joy', bg='hill'), cut('구름 거인이 원정대의 친구가 되었다!', 'baby.joy', 'wife.joy', 'nemo_dad.good', bg='hill')],
-    u_wonnim=[cut('욕심쟁이 원님이 헛기침을 했다. 「…잔칫상이 텅 비면 체면이 안 서서 그랬소. 나눠 먹을 줄은 몰랐지.」', 'nemo_dad.good', bg='field'), cut('네모 아빠가 웃었다. 「나누면 상이 더 푸짐해져요. 같이 가시지요.」', 'nemo_dad.good', 'baby.joy', bg='field'), cut('욕심쟁이 원님이 원정대의 친구가 되었다!', 'baby.joy', 'nemo_mom.good', 'nemo_dad.good', bg='field')],
+    u_wonnim=[cut('욕심쟁이 원님이 헛기침을 했다. 「…잔칫상이 텅 비면 체면이 안 서서 그랬소. 나눠 먹을 줄은 몰랐지.」', 'husband.joy', bg='field'), cut('세모 남편이 웃었다. 「나누면 상이 더 푸짐해져요. 같이 가시지요.」', 'husband.joy', 'baby.joy', bg='field'), cut('욕심쟁이 원님이 원정대의 친구가 되었다!', 'baby.joy', 'wife.joy', 'husband.joy', bg='field')],
 )
 # 도감 한 줄 · 수집 보상 문턱 다시 계산
 TALE_LINES.update({'u_phantom': '브레멘 음악대 숲의 빈집을 지키던 허깨비 도둑. 소리·그림자만 무서웠지 배고픈 이웃이에요.', 'u_giant': '구름 위에서 쿵쿵거리던 구름 거인. 혼자라 심심해서 소리를 키웠어요.', 'u_wonnim': '목소리만 큰 욕심쟁이 원님. 잔칫상을 나누는 법을 배웠어요.'})

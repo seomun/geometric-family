@@ -640,8 +640,8 @@
     "#BFE3AE"
    ],
    "faces": [
-    "nemo_dad.joy",
-    "nemo_dad.surprise",
+    "husband.joy",
+    "husband.surprise",
     "wife.joy"
    ],
    "nodes": [
@@ -1255,9 +1255,9 @@
     "#C6E8B8"
    ],
    "faces": [
-    "nemo_dad.joy",
+    "husband.joy",
     "wife.joy",
-    "nemo_dad.good"
+    "husband.good"
    ],
    "nodes": [
     [

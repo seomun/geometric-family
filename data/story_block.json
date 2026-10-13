@@ -675,17 +675,17 @@
    "title": "우렁 각시",
    "tale": "ureng",
    "faces": [
-    "nemo_dad.joy",
-    "nemo_dad.surprise",
+    "husband.joy",
+    "husband.surprise",
     "wife.joy"
    ],
    "midAt1": 4,
    "midAt2": 7,
    "start": [
     {
-     "text": "혼자 농사짓는 네모 아빠가 논에서 큰 우렁이를 주워 항아리에 넣어 두었다.",
+     "text": "혼자 농사짓는 세모 남편이 논에서 큰 우렁이를 주워 항아리에 넣어 두었다.",
      "chars": [
-      "nemo_dad.joy"
+      "husband.joy"
      ]
     }
    ],
@@ -696,7 +696,7 @@
       {
        "text": "다음 날부터 집에 오면 밥상이 차려져 있었다. 몰래 지켜보니 항아리에서 우렁 각시(세모 아내)가 나왔다.",
        "chars": [
-        "nemo_dad.surprise",
+        "husband.surprise",
         "wife.joy"
        ],
        "bubble": "question"
@@ -707,9 +707,9 @@
      "after": 7,
      "cuts": [
       {
-       "text": "욕심쟁이 원님이 각시를 탐내 내기를 걸었다. 각시의 꾀로 네모 아빠가 내기에서 이겼다.",
+       "text": "욕심쟁이 원님이 각시를 탐내 내기를 걸었다. 각시의 꾀로 세모 남편이 내기에서 이겼다.",
        "chars": [
-        "nemo_dad.good",
+        "husband.good",
         "wife.wink"
        ],
        "bubble": "bang"
@@ -721,7 +721,7 @@
     {
      "text": "원님은 머쓱해져 물러났다. 두 사람은 오래오래 한집에서 밥상을 둘러앉아 살았다.",
      "chars": [
-      "nemo_dad.love",
+      "husband.love",
       "wife.love"
      ],
      "bubble": "heart"
@@ -730,11 +730,11 @@
    "say": {
     "start": [
      {
-      "who": "nemo_dad.joy",
+      "who": "husband.joy",
       "text": "어디에 놓을까요?"
      },
      {
-      "who": "nemo_dad.surprise",
+      "who": "husband.surprise",
       "text": "빈칸을 먼저 봐요."
      },
      {
@@ -744,11 +744,11 @@
     ],
     "clear": [
      {
-      "who": "nemo_dad.joy",
+      "who": "husband.joy",
       "text": "한 줄 사라졌어요!"
      },
      {
-      "who": "nemo_dad.surprise",
+      "who": "husband.surprise",
       "text": "깔끔해요."
      },
      {
@@ -1120,17 +1120,17 @@
    "title": "선녀와 나무꾼",
    "tale": "fairywood",
    "faces": [
-    "nemo_dad.joy",
+    "husband.joy",
     "wife.joy",
-    "nemo_dad.good"
+    "husband.good"
    ],
    "midAt1": 4,
    "midAt2": 7,
    "start": [
     {
-     "text": "연못가에서 나무꾼(네모 아빠)이 사슴을 구해 주었다. 사슴이 고맙다며 말했다. 「보름달 밤에 선녀들이 목욕하러 온답니다.」",
+     "text": "연못가에서 나무꾼(세모 남편)이 사슴을 구해 주었다. 사슴이 고맙다며 말했다. 「보름달 밤에 선녀들이 목욕하러 온답니다.」",
      "chars": [
-      "nemo_dad.joy"
+      "husband.joy"
      ]
     }
    ],
@@ -1153,7 +1153,7 @@
       {
        "text": "나무꾼은 슬며시 옷을 돌려주며 말했다. 「숨기려던 게 아니라, 어디 있는지 알려 주려던 거예요.」 선녀가 활짝 웃었다.",
        "chars": [
-        "nemo_dad.good",
+        "husband.good",
         "wife.joy"
        ]
       }
@@ -1162,11 +1162,10 @@
    ],
    "end": [
     {
-     "text": "선녀와 아이들(네모네 {kid2})이 나무꾼의 마당에 놀러 와 저녁을 함께 먹었다. 하늘과 땅이 한 상에 모인 밤이었다.",
+     "text": "선녀와 나무꾼, 그리고 아기 사슴들이 마당에서 저녁을 함께 먹었다. 하늘과 땅이 한 상에 모인 밤이었다.",
      "chars": [
       "wife.joy",
-      "nemo_dad.joy",
-      "nemo_kids.kid2"
+      "husband.joy"
      ],
      "bubble": "heart"
     }
@@ -1174,7 +1173,7 @@
    "say": {
     "start": [
      {
-      "who": "nemo_dad.joy",
+      "who": "husband.joy",
       "text": "어디에 놓을까요?"
      },
      {
@@ -1182,13 +1181,13 @@
       "text": "빈칸을 먼저 봐요."
      },
      {
-      "who": "nemo_dad.good",
+      "who": "husband.good",
       "text": "한 줄만 채우면 돼요."
      }
     ],
     "clear": [
      {
-      "who": "nemo_dad.joy",
+      "who": "husband.joy",
       "text": "한 줄 사라졌어요!"
      },
      {
@@ -1196,7 +1195,7 @@
       "text": "깔끔해요."
      },
      {
-      "who": "nemo_dad.good",
+      "who": "husband.good",
       "text": "여유가 생겼어요."
      }
     ]

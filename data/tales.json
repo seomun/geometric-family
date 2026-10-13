@@ -446,10 +446,10 @@
   "ureng": [
    {
     "role": "혼자 농사짓는 총각",
-    "adult": "네모 아빠",
-    "kid": "아빠",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
     "kind": "lead",
-    "family": "nemo",
+    "family": "semo",
     "only": null
    },
    {
@@ -542,10 +542,10 @@
   "fairywood": [
    {
     "role": "나무꾼",
-    "adult": "네모 아빠",
-    "kid": "아빠",
+    "adult": "세모 남편",
+    "kid": "세모 삼촌",
     "kind": "lead",
-    "family": "nemo",
+    "family": "semo",
     "only": null
    },
    {
@@ -565,11 +565,11 @@
     "only": null
    },
    {
-    "role": "선녀의 아이들",
-    "adult": "네모네 두리",
-    "kid": "두리 누나",
+    "role": "선녀의 아기 사슴들",
+    "adult": "아기 사슴들(가족 밖)",
+    "kid": "아기 사슴들(가족 밖)",
     "kind": "helper",
-    "family": "nemo",
+    "family": "outside",
     "only": null
    }
   ],
@@ -1628,9 +1628,9 @@
    "cast": [
     {
      "role": "혼자 농사짓는 총각",
-     "who": "네모 아빠",
+     "who": "세모 남편",
      "kind": "lead",
-     "family": "nemo"
+     "family": "semo"
     },
     {
      "role": "우렁 각시",
@@ -2144,9 +2144,9 @@
    "cast": [
     {
      "role": "혼자 농사짓는 총각",
-     "who": "네모 아빠",
+     "who": "세모 남편",
      "kind": "lead",
-     "family": "nemo"
+     "family": "semo"
     },
     {
      "role": "우렁 각시",
@@ -2660,9 +2660,9 @@
    "cast": [
     {
      "role": "혼자 농사짓는 총각",
-     "who": "네모 아빠",
+     "who": "세모 남편",
      "kind": "lead",
-     "family": "nemo"
+     "family": "semo"
     },
     {
      "role": "우렁 각시",

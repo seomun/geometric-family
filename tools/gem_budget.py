@@ -5,6 +5,7 @@ import json, io, sys
 try: sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 except Exception: pass
 YEARLY_CAP = 2000          # D28: 해마다 반복되는 몫(이벤트+주간) 상한/년 ≈ 모집 13번
+FIXED_ONCE_CAP = 2000     # D28: 콘텐츠와 무관한 고정 1회 보상(도감·초보·출석) 합계 상한
 PER_STAGE_CAP = 66         # D28: 단계 첫 클리어 보상 단계당 평균 상한(단계 수에 비례해 늘어나는 한 번뿐인 보상의 단가)
 D = json.load(open('data/expedition_slice.json', encoding='utf-8')); S = json.load(open('data/expedition_shop.json', encoding='utf-8'))
 B, G, W = D['bal'], D['gacha'], D['bal']['daily']['weekly']; PULL = G['cost']
@@ -34,10 +35,12 @@ new = sorted(set(walk(D)) - KNOWN); assert not new, '표에 없는 새 반짝석
 once = sum(r[2] for r in ROWS if r[1] == 'once'); year = sum(r[2] for r in ROWS if r[1] == 'year'); first = once + year; ad = sum(r[2] for r in ROWS if r[1] == 'ad')
 NS = len(D['stages']); stage_sum = [r[2] for r in ROWS if r[0] == '단계 첫 클리어'][0]; content = sum(r[2] for r in ROWS if r[0] in ('단계 첫 클리어', '도감 수집', '초보자 미션 30', '출석 7일'))
 assert stage_sum / NS <= PER_STAGE_CAP, f'단계 첫 클리어 보상 단계당 평균 {stage_sum / NS:.1f} > 상한 {PER_STAGE_CAP} (D28) — 새 단계의 보상 단가를 낮추세요'
+fixed = sum(r[2] for r in ROWS if r[0] in ('도감 수집', '초보자 미션 30', '출석 7일'))
+assert fixed <= FIXED_ONCE_CAP, f'콘텐츠와 무관한 고정 1회 보상(도감·초보·출석) {fixed} > 상한 {FIXED_ONCE_CAP} (D28)'
 assert year <= YEARLY_CAP, f'해마다 반복 몫 {year} > 상한 {YEARLY_CAP}'
 L = ['# ⑪ 무료 반짝석 연간 합계 표 (자동 생성)', '', '> `python tools/gem_budget.py` 가 데이터에서 계산해 이 파일을 다시 쓴다(기본 빌드 `expedition_slice_build.py` 끝에서 자동 실행). 손으로 고치지 않는다. 새 보상 출처를 만들면 `tools/gem_budget.py` 에 등록해야 빌드가 통과한다.', '', '모집 1번 = 반짝석 ' + str(PULL) + '. 아래 상한은 허브 결정(D28) — 유료 판매 전 작가 확인 대기.', '', '| 출처 | 구분 | 반짝석 | 모집 환산 | 설명 |', '|---|---|---:|---:|---|']
 KIND = dict(once='처음 한 번', year='해마다', ad='광고(선택)')
 for n, k, v, t in ROWS: L.append(f'| {n} | {KIND[k]} | {v:,} | {v / PULL:.1f}번 | {t} |')
-L += ['', f'- 처음 한 번 몫 합계: **{once:,}** ({once / PULL:.0f}번) · 해마다 반복 몫: **{year:,}** ({year / PULL:.0f}번)', f'- 첫해 무료 합계(광고 제외): {first:,} (참고)', f'- **① 해마다 반복 몫 {year:,} ≤ 상한 {YEARLY_CAP:,}/년** (D28)', f'- **② 단계 첫 클리어 단계당 평균 {stage_sum / NS:.1f} ≤ 상한 {PER_STAGE_CAP}** (D28, 단계 {NS}개) — 참고: 첫 클리어·도감·초보·출석을 모두 합친 한 번뿐인 콘텐츠 보상은 단계당 평균 {content / NS:.1f}', f'- 광고를 하루 상한까지 매일 보면 연 {ad:,} 더(선택, 결제 압박 없음 · 보지 않아도 전부 즐길 수 있다)', '', '## 확정 지급 원칙', '- 반짝석은 전부 「한 번에 확정 지급」이고 줄거나 사라지지 않는다. 뽑기 확률·천장은 `docs/expedition` 의 확률표를 따른다.', '- 임무·출석은 쉬어도 잃는 것이 없다(연속 일수·벌점 없음).', '']
+L += ['', f'- 처음 한 번 몫 합계: **{once:,}** ({once / PULL:.0f}번) · 해마다 반복 몫: **{year:,}** ({year / PULL:.0f}번)', f'- 첫해 무료 합계(광고 제외): {first:,} (참고)', f'- **① 해마다 반복 몫 {year:,} ≤ 상한 {YEARLY_CAP:,}/년** (D28)', f'- **③ 고정 1회 보상(도감·초보·출석) {fixed:,} ≤ 상한 {FIXED_ONCE_CAP:,}** (D28)', f'- **② 단계 첫 클리어 단계당 평균 {stage_sum / NS:.1f} ≤ 상한 {PER_STAGE_CAP}** (D28, 단계 {NS}개) — 참고: 첫 클리어·도감·초보·출석을 모두 합친 한 번뿐인 콘텐츠 보상은 단계당 평균 {content / NS:.1f}', f'- 광고를 하루 상한까지 매일 보면 연 {ad:,} 더(선택, 결제 압박 없음 · 보지 않아도 전부 즐길 수 있다)', '', '## 확정 지급 원칙', '- 반짝석은 전부 「한 번에 확정 지급」이고 줄거나 사라지지 않는다. 뽑기 확률·천장은 `docs/expedition` 의 확률표를 따른다.', '- 임무·출석은 쉬어도 잃는 것이 없다(연속 일수·벌점 없음).', '']
 open('docs/33_GEM_ECONOMY.md', 'w', encoding='utf-8', newline='\n').write('\n'.join(L))
 print('반짝석 표: 처음 한 번', once, '· 해마다', year, '· 첫 클리어 단계당', round(stage_sum / NS, 1), '/', PER_STAGE_CAP, '· 콘텐츠 전체 단계당', round(content / NS, 1), '· 광고 최대', ad)

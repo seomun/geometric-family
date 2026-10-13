@@ -8,7 +8,7 @@ const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m
   await p.evaluate(() => document.querySelector('.ex-gtabs .uk-btn[data-banner="puss"]').click()); await p.waitForTimeout(700);
   ok(await p.evaluate(() => /장화 신은 세모 아내/.test(document.querySelector('.ex-banner').innerText) && /장화 신은 고양이/.test([...document.querySelectorAll('.ex-head')].pop().innerText)), '2탄 배너 픽업: 장화 신은 세모 아내'); await p.screenshot({ path: 'notes/snapshots/exp_banner_puss.png' });
   await p.evaluate(() => EXP.debug.pity({ since5: 40 }, 'puss')); await p.evaluate(() => GF.replace('xgacha', { banner: 'puss' })); await p.waitForTimeout(500);
-  ok(await p.evaluate(() => /천장 40\/80/.test(document.querySelector('.ex-banner').innerText)), '2탄 천장 40/77(배너마다 따로)'); await p.evaluate(() => GF.replace('xgacha', { banner: 'main' })); await p.waitForTimeout(500); ok(await p.evaluate(() => /천장 0\/80/.test(document.querySelector('.ex-banner').innerText)), '기본 배너 천장은 0/77 그대로');
+  ok(await p.evaluate(() => /천장 40\/77/.test(document.querySelector('.ex-banner').innerText)), '2탄 천장 40/77(배너마다 따로)'); await p.evaluate(() => GF.replace('xgacha', { banner: 'main' })); await p.waitForTimeout(500); ok(await p.evaluate(() => /천장 0\/77/.test(document.querySelector('.ex-banner').innerText)), '기본 배너 천장은 0/77 그대로');
   // 확률 공개: 배너별
   await p.evaluate(() => [...document.querySelectorAll('.uk-btn')].find((x) => /확률 공개/.test(x.textContent)).click()); await p.waitForTimeout(500);
   const o1 = await p.evaluate(() => document.querySelector('.ex-odds-sh').innerText); ok(/놀부 세모 남편\(픽업\)/.test(o1) && !/장화 신은 세모 아내/.test(o1), '기본 배너 확률표에는 한정 동료가 없음'); await p.evaluate(() => document.querySelector('.ex-odds-sh .uk-btn').click()); await p.waitForTimeout(300);

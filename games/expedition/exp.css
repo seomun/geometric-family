@@ -98,3 +98,5 @@
 .ex-say::after { content: ''; position: absolute; left: 50%; bottom: -10px; width: 14px; height: 14px; background: #fffdf4; border-right: 3px solid #f2b100; border-bottom: 3px solid #f2b100; transform: translateX(-50%) rotate(45deg); }
 @keyframes ex-say-in { from { opacity: 0; transform: translate(-50%, -90%) scale(.9); } to { opacity: 1; transform: translate(-50%, -100%) scale(1); } }
 .ex-hint { opacity: .65; }
+/* 일일 임무·주간 상자(B22) */
+.ex-dq .ex-bg.got { opacity: .6; } .ex-wk { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin-top: 6px; border-radius: 16px; background: #fff3c4; border: 3px solid #f2b100; } .ex-wk > span { font-size: 34px; } .ex-wk .tx { flex: 1; text-align: left; } .ex-wk .tx b { display: block; font-size: 15px; } .ex-wk .tx small { display: block; opacity: .8; font-weight: 700; } .ex-wk .pips { display: flex; gap: 6px; margin-top: 4px; } .ex-wk .pips i { width: 18px; height: 18px; border-radius: 50%; background: #e9dcb0; } .ex-wk .pips i.on { background: #f2b100; } .ex-wk.can { box-shadow: 0 0 0 4px rgba(242,177,0,.35); }

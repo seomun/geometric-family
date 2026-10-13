@@ -254,6 +254,30 @@ export async function beginnerClaim(env, account, id, now = Date.now()) {
   const m = SC.beginner(D, st).find((x) => x.id === id); if (!m.done) throw new HttpError(409, 'not_yet', '아직이에요 (' + m.got + '/' + m.need + ')');
   flags.beg = got.concat(id); await grantFlag(db, account, flags, 'beg:' + id, 'beginner', id, def.gems, def.gold, now); return { ok: true, gems: def.gems, gold: def.gold, ...(await walletView(db, account)) };
 }
+/** 일일 임무·주간 상자(B22). 오늘 한 일은 장부(ledger)에서 서버가 직접 센다. 받은 기록: flags.dq {date, got[]} · flags.wk {key, days[], box}. 같은 날 같은 임무는 한 번만(멱등). */
+const DQ_KINDS = ['stage', 'event', 'levelup', 'upgrade', 'dungeon', 'idle'];
+async function dqState(db, account, now) {
+  const pr = await first(db, 'SELECT flags FROM progress WHERE account=?', account), flags = JSON.parse(pr.flags), today = kstDate(now), key = SC.weekKey(now);
+  const rows = await all(db, `SELECT kind, COUNT(*) AS c FROM ledger WHERE account=? AND ts>=? AND kind IN (${DQ_KINDS.map(() => '?').join(',')}) GROUP BY kind`, account, SC.dayStartMs(now), ...DQ_KINDS), counts = Object.fromEntries(rows.map((r) => [r.kind, r.c]));
+  const dq = flags.dq && flags.dq.date === today ? flags.dq : { date: today, got: [] }, wk = flags.wk && flags.wk.key === key ? flags.wk : { key, days: [], box: false };
+  return { flags, today, key, counts, dq, wk };
+}
+export async function dailyView(env, account, now = Date.now()) {
+  const { counts, dq, wk } = await dqState(env.DB, account, now), W = D.bal.daily.weekly;
+  return { date: dq.date, missions: SC.dailyList(D, counts).map((m) => ({ ...m, claimed: dq.got.includes(m.id) })), week: { key: wk.key, days: wk.days.length, need: W.need, gems: W.gems, gold: W.gold, box: !!wk.box, ready: wk.days.length >= W.need && !wk.box } };
+}
+export async function dailyClaim(env, account, id, now = Date.now()) {
+  const db = env.DB, def = (D.bal.daily.missions || []).find((m) => m.id === id); if (!def) throw new HttpError(400, 'bad_mission');
+  const s = await dqState(db, account, now); if (s.dq.got.includes(id)) return { ok: true, replay: true, ...(await walletView(db, account)) };
+  const m = SC.dailyList(D, s.counts).find((x) => x.id === id); if (!m.done) throw new HttpError(409, 'not_yet', '아직이에요 (' + m.got + '/' + m.need + ')');
+  s.dq.got = s.dq.got.concat(id); s.flags.dq = s.dq; if (s.dq.got.length === D.bal.daily.missions.length && !s.wk.days.includes(s.today)) s.wk.days = s.wk.days.concat(s.today); s.flags.wk = s.wk;
+  await grantFlag(db, account, s.flags, 'dq:' + s.today + ':' + id, 'daily', id, def.gems, def.gold, now); return { ok: true, gems: def.gems, gold: def.gold, ...(await walletView(db, account)) };
+}
+export async function weeklyClaim(env, account, now = Date.now()) {
+  const db = env.DB, W = D.bal.daily.weekly, s = await dqState(db, account, now); if (s.wk.box) return { ok: true, replay: true, ...(await walletView(db, account)) };
+  if (s.wk.days.length < W.need) throw new HttpError(409, 'not_yet', '아직이에요 (' + s.wk.days.length + '/' + W.need + '일)');
+  s.wk.box = true; s.flags.wk = s.wk; await grantFlag(db, account, s.flags, 'wk:' + s.key, 'daily', 'week', W.gems, W.gold, now); return { ok: true, gems: W.gems, gold: W.gold, ...(await walletView(db, account)) };
+}
 const kstDate = (now) => new Date(now + 9 * 3600000).toISOString().slice(0, 10);
 export async function attendClaim(env, account, now = Date.now()) {
   const db = env.DB, pr = await first(db, 'SELECT flags FROM progress WHERE account=?', account), flags = JSON.parse(pr.flags), a = flags.att || { n: 0, last: '' }, today = kstDate(now), len = (D.bal.attend || []).length;

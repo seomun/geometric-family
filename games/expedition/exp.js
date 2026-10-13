@@ -49,7 +49,7 @@
     },
   });
   const levelUp = async (id, c) => {      // 로컬: 금화 차감 · 서버: /unit/levelup
-    if (!REMOTE) { S.gold -= c; S.units[id].lv++; save(); bar(); return true; }
+    if (!REMOTE) { S.gold -= c; S.units[id].lv++; dqTick('levelup'); save(); bar(); return true; }
     try { const r = await http('POST', '/unit/levelup', { unit: id, request_id: uid() }); S.gold = r.wallet.gold; S.units[id].lv = r.unit.lv; bar(); return true; } catch (e) { UK.toast(e.code === 'insufficient_gold' ? '금화가 모자라요' : '서버 응답이 없어요', document.getElementById('safe')); return false; }
   };
   const partySync = () => { if (REMOTE) http('POST', '/party', { party: S.party }).catch(() => { UK.toast('편성을 저장하지 못했어요', document.getElementById('safe')); }); };
@@ -62,7 +62,7 @@
   async function growUp(id, kind, slot) {
     const st = S.units[id], res = SC.upgrade(D, id, st, kind, slot, { gold: S.gold, dups: S.dups[id] || 0 });
     if (res.error) { UK.toast(res.error === 'insufficient_gold' ? '금화가 모자라요' : res.error === 'insufficient_dups' ? '조각이 모자라요 (같은 친구가 또 나오면 모여요)' : res.error === 'need_level' ? '레벨 ' + res.need + ' 이상이어야 해요' : '더 올릴 수 없어요', document.getElementById('safe')); return false; }
-    if (!REMOTE) { Object.assign(st, res.st); S.gold -= res.gold; S.dups[id] = (S.dups[id] || 0) - res.dups; save(); bar(); return true; }
+    if (!REMOTE) { Object.assign(st, res.st); S.gold -= res.gold; S.dups[id] = (S.dups[id] || 0) - res.dups; dqTick('upgrade'); save(); bar(); return true; }
     try { const r = await http('POST', '/unit/upgrade', { unit: id, kind, slot, request_id: uid() }); Object.assign(st, { lv: r.unit.lv, skl: r.unit.skl, awk: r.unit.awk, promo: r.unit.promo, gear: r.unit.gear }); S.dups[id] = r.unit.dups; S.gold = r.wallet.gold; bar(); return true; }
     catch (e) { UK.toast(e.code === 'insufficient_gold' ? '금화가 모자라요' : e.code === 'insufficient_dups' ? '조각이 모자라요' : '서버에 연결하지 못했어요', document.getElementById('safe')); return false; }
   }
@@ -141,7 +141,7 @@
       const evB = evOpen(); if (evB) { const eb = UK.btn({ text: evB.icon + ' ' + evB.name, cls: 'gold sm', onclick: () => GF.go('xevent') }, r); eb.style.cssText += ';position:absolute;left:50%;top:206px;min-height:40px;height:40px;padding:0 16px;font-size:16px;transform:translateX(-50%);z-index:6;width:auto;white-space:nowrap'; if (evTodo()) el('i', 'ex-bdg', eb, '!'); }
       const row3 = el('div', 'ex-row', btns); UK.btn({ text: '동료 도감', icon: 'heart', cls: 'pink', onclick: () => GF.go('xdex') }, row3);
       const pb = UK.btn({ icon: 'star', cls: 'ghost', onclick: () => GF.go('xprofile') }, r); pb.setAttribute('aria-label', 'profile'); pb.style.cssText += ';position:absolute;left:10px;top:10px;z-index:6;width:60px;height:60px;min-width:60px;padding:0;border-radius:50%'; pb.insertAdjacentHTML('beforeend', '<span style="font-size:26px">🏅</span>');
-      const bg = UK.btn({ text: '초보자 미션', icon: 'star', cls: 'green', onclick: () => GF.go('xbegin') }, row3); bg.style.position = 'relative'; begLoad().then((b) => { const n = begBadge(b); if (n && bg.isConnected) el('i', 'ex-bdg', bg, n); });
+      const bg = UK.btn({ text: '미션·출석', icon: 'star', cls: 'green', onclick: () => GF.go('xbegin') }, row3); bg.style.position = 'relative'; Promise.all([begLoad(), dqLoad()]).then(([b, q]) => { const n = begBadge(b) + dqBadge(q); if (n && bg.isConnected) el('i', 'ex-bdg', bg, n); });
       if (REMOTE) UK.btn({ text: '상점·설정', icon: 'star', cls: 'ghost', onclick: () => GF.go('xshop') }, row3);
       el('div', 'ex-foot', r, '전투력 ' + power(S.party) + ' · 동료 ' + Object.keys(S.units).length + '/' + D.units.length + ' · 랜덤 아이템 포함(동료 모집)');
       if (!S.flags.prologue && !(navigator.webdriver && !/[?&]story=1/.test(location.search))) { S.flags.prologue = 1; save(); setTimeout(() => GF.tale.play(D.story.prologue, r, () => {}, { bg: 'field' }), 400); }
@@ -198,7 +198,7 @@
   }
   const idleNow = () => (REMOTE ? null : SC.idleGold(D, S.cleared, Date.now() - (S.idleTs || Date.now())));
   async function idleClaim() {
-    if (!REMOTE) { if (!S.idleTs) { S.idleTs = Date.now(); save(); return 0; } const g = SC.idleGold(D, S.cleared, Date.now() - S.idleTs); if (g) { S.gold += g; S.idleTs = Date.now(); S.flags.idleN = (S.flags.idleN || 0) + 1; save(); bar(); } return g; }
+    if (!REMOTE) { if (!S.idleTs) { S.idleTs = Date.now(); save(); return 0; } const g = SC.idleGold(D, S.cleared, Date.now() - S.idleTs); if (g) { S.gold += g; S.idleTs = Date.now(); S.flags.idleN = (S.flags.idleN || 0) + 1; dqTick('idle'); save(); bar(); } return g; }
     const r = await http('POST', '/idle/claim', { request_id: uid() }); if (r.profile) { applyProfile(r.profile); bar(); } return r.gold;
   }
   GF.screen('xdun', {
@@ -250,6 +250,24 @@
       draw();
     },
   });
+  /* ---------------- 일일 임무 3 + 주간 상자 (B22): 서버판은 장부에서 서버가 센다 · 로컬판은 오늘 한 일을 flags.dqc 에 센다 ---------------- */
+  const dqTick = (kind) => { if (REMOTE) return; const t = todayKey(), c = S.flags.dqc && S.flags.dqc.date === t ? S.flags.dqc : (S.flags.dqc = { date: t, c: {} }); c.c[kind] = (c.c[kind] || 0) + 1; };
+  const wkKey = () => SC.weekKey(Date.now());
+  let DQ = null;
+  async function dqLoad() {
+    if (REMOTE) { try { DQ = await http('GET', '/daily'); } catch (e) { /* 이전 값 유지 */ } return DQ; }
+    const t = todayKey(), counts = S.flags.dqc && S.flags.dqc.date === t ? S.flags.dqc.c : {}, dq = S.flags.dq && S.flags.dq.date === t ? S.flags.dq : { date: t, got: [] }, wk = S.flags.wk && S.flags.wk.key === wkKey() ? S.flags.wk : { key: wkKey(), days: [], box: false }, W = D.bal.daily.weekly;
+    DQ = { date: t, missions: SC.dailyList(D, counts).map((m) => Object.assign({}, m, { claimed: dq.got.includes(m.id) })), week: { key: wk.key, days: wk.days.length, need: W.need, gems: W.gems, gold: W.gold, box: !!wk.box, ready: wk.days.length >= W.need && !wk.box } }; return DQ;
+  }
+  const dqBadge = (q) => (q ? q.missions.filter((m) => m.done && !m.claimed).length + (q.week.ready ? 1 : 0) : 0);
+  async function dqClaim(id) {
+    if (!REMOTE) { const q = await dqLoad(), m = q.missions.find((x) => x.id === id); if (!m || !m.done || m.claimed) return false; const t = todayKey(), dq = S.flags.dq && S.flags.dq.date === t ? S.flags.dq : (S.flags.dq = { date: t, got: [] }), wk = S.flags.wk && S.flags.wk.key === wkKey() ? S.flags.wk : (S.flags.wk = { key: wkKey(), days: [], box: false }); dq.got.push(id); S.flags.dq = dq; S.flags.wk = wk; if (dq.got.length === q.missions.length && !wk.days.includes(t)) wk.days.push(t); S.gems += m.gems; S.gold += m.gold; save(); bar(); return { gems: m.gems, gold: m.gold }; }
+    try { const r = await http('POST', '/daily/claim', { id }); applyProfile(r.profile); DQ = r.daily; bar(); return { gems: r.gems || 0, gold: r.gold || 0 }; } catch (e) { UK.toast('받지 못했어요', document.getElementById('safe')); return false; }
+  }
+  async function wkClaim() {
+    if (!REMOTE) { const q = await dqLoad(); if (!q.week.ready) return false; const wk = S.flags.wk; wk.box = true; S.gems += q.week.gems; S.gold += q.week.gold; save(); bar(); return { gems: q.week.gems, gold: q.week.gold }; }
+    try { const r = await http('POST', '/daily/week', {}); applyProfile(r.profile); DQ = r.daily; bar(); return { gems: r.gems || 0, gold: r.gold || 0 }; } catch (e) { UK.toast('받지 못했어요', document.getElementById('safe')); return false; }
+  }
   /* ---------------- 초보자 미션 30 · 출석 7일 (B11) ---------------- */
   const begLocal = () => ({ cleared: S.cleared, units: S.units, pulls: S.pulls || 0, dun: S.flags.dunN || 0, idle: S.flags.idleN || 0, dex: (S.flags.dex || []).length });
   let BEG = null;      // 마지막으로 본 {missions, att} — 서버판은 서버가 판정한 것
@@ -271,9 +289,15 @@
   GF.screen('xbegin', {
     bare: false,
     enter(r) {
-      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '초보자 미션', '처음 일주일, 천천히 하나씩 해요'); back(r, 'xhome'); const box = el('div', 'ex-shop ex-beg', r);
+      r.classList.add('uk', 'ex'); GF.bg('field', r); bar(); head(r, '미션·출석', '오늘 할 일 셋, 천천히 하나씩 해요'); back(r, 'xhome'); const box = el('div', 'ex-shop ex-beg', r);
       const draw = async () => {
-        const b = await begLoad(); if (!r.isConnected) return; box.innerHTML = ''; if (!b) { el('p', 'ex-sub', box, '불러오지 못했어요. 잠시 뒤에 다시 와 봐요.'); return; }
+        const b = await begLoad(), q = await dqLoad(); if (!r.isConnected) return; box.innerHTML = ''; if (!b) { el('p', 'ex-sub', box, '불러오지 못했어요. 잠시 뒤에 다시 와 봐요.'); return; }
+        if (q) {
+          el('div', 'ex-nation', box, `<b>오늘의 임무</b><small>${q.missions.filter((m) => m.claimed).length}/${q.missions.length}</small>`); const dl = el('div', 'ex-dq', box);
+          q.missions.forEach((m) => { const c = el('div', 'ex-bg dq' + (m.done && !m.claimed ? ' can' : '') + (m.claimed ? ' got' : ''), dl); c.dataset.id = m.id; c.innerHTML = `<div class="tx"><b>${m.claimed ? '✔ ' : ''}${m.t}</b><small>${rwText(m.gems, m.gold)}</small></div>`; if (m.done && !m.claimed) UK.btn({ text: '받기', cls: 'gold sm', onclick: async () => { const g = await dqClaim(m.id); if (g) { GF.sfx('star'); el('i', 'ex-gain', c, rwText(g.gems, g.gold)); setTimeout(draw, 700); } } }, c); });
+          const wc = el('div', 'ex-wk' + (q.week.ready ? ' can' : ''), dl); wc.innerHTML = `<span>🎁</span><div class="tx"><b>주간 상자</b><small>${q.week.box ? '이번 주 상자를 열었어요' : '임무를 마친 날 ' + q.week.days + '/' + q.week.need + '일 · 💎 ' + q.week.gems + ' · 🪙 ' + q.week.gold}</small><div class="pips">${Array.from({ length: q.week.need }, (x, i) => '<i' + (i < q.week.days ? ' class="on"' : '') + '></i>').join('')}</div></div>`;
+          if (q.week.ready) UK.btn({ text: '열기', cls: 'gold sm', onclick: async () => { const g = await wkClaim(); if (g) { GF.sfx('celebrate'); UK.toast('상자 열림! ' + rwText(g.gems, g.gold), r); setTimeout(draw, 700); } } }, wc); el('p', 'ex-sub', box, '쉬는 날이 있어도 괜찮아요. 일주일에 4일만 마치면 돼요.');
+        }
         const att = b.att || { n: 0, last: '' }, A = D.bal.attend || [], ready = attReady(b), strip = el('div', 'ex-att', box);
         A.forEach((a) => { const done = att.n >= a.day, now = !done && att.n + 1 === a.day, c = el('div', 'ex-ad' + (done ? ' done' : now && ready ? ' can' : ''), strip); c.innerHTML = `<b>${a.day}일째</b><small>${rwText(a.gems, a.gold) || ''}</small>` + (done ? '<em>✔</em>' : ''); });
         el('p', 'ex-sub', box, att.n >= A.length ? '출석 7일을 다 모았어요. 고마워요!' : ready ? '오늘 출석 도장을 받아요. 쉬어도 괜찮아요, 이어서 찍어요.' : '오늘 출석은 받았어요. 내일 또 만나요.');
@@ -431,13 +455,13 @@
       const dunWin = () => {
         const done2 = (rw) => { GF.sfx('celebrate'); const sc = UK.modal({ parent: r, title: '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('p', 'ex-rw', sh, `🪙 +${rw.gold}${rw.frag ? ' · 조각 +' + rw.frag + ' (' + $(rw.target).name + ')' : ''}`); const a = el('div', 'acts', sh); UK.btn({ text: '던전으로', cls: 'green', onclick: () => { sc.remove(); GF.replace('xdun'); } }, a); UK.btn({ text: '홈', cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xhome'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
         if (REMOTE) { http('POST', '/dungeon/clear', { token: srv.token, inputs, auto: auto0, target: p.target }).then((res) => { if (!res.win) { UK.toast('전투 기록이 서버와 달라요', r); lose(); return; } applyProfile(res.profile); bar(); done2(res.reward); }).catch((e) => { UK.toast(e.code === 'no_runs_left' ? '오늘은 다 했어요' : '서버에 연결하지 못했어요', r); GF.replace('xdun'); }); return; }
-        const rw = SC.dungeonReward(D, p.dun.day, p.dun.tier, S.cleared); S.gold += rw.gold; if (rw.frag && p.target) S.dups[p.target] = (S.dups[p.target] || 0) + rw.frag; dunLocal().n++; S.flags.dunN = (S.flags.dunN || 0) + 1; save(); bar(); done2({ gold: rw.gold, frag: rw.frag, target: p.target });
+        const rw = SC.dungeonReward(D, p.dun.day, p.dun.tier, S.cleared); S.gold += rw.gold; if (rw.frag && p.target) S.dups[p.target] = (S.dups[p.target] || 0) + rw.frag; dunLocal().n++; dqTick('dungeon'); S.flags.dunN = (S.flags.dunN || 0) + 1; save(); bar(); done2({ gold: rw.gold, frag: rw.frag, target: p.target });
       };
       const evDone = (rw, first) => { GF.sfx('celebrate'); const sc = UK.modal({ parent: r, title: '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('p', 'ex-rw', sh, `🪙 +${rw.gold}${rw.gems ? ' · 💎 +' + rw.gems : ''}${first ? '' : ' (다시 깨기)'}`); const a = el('div', 'acts', sh); UK.btn({ text: '이벤트로', cls: 'green', onclick: () => { sc.remove(); GF.replace('xevent'); } }, a); UK.btn({ text: '홈', cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xhome'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ } };
       const evWin = () => {
         if (REMOTE) { http('POST', '/event/clear', { token: srv.token, inputs, auto: auto0 }).then((res) => { if (!res.win) { UK.toast('전투 기록이 서버와 달라요', r); lose(); return; } applyProfile(res.profile); bar(); evDone(res.reward, res.first); }).catch((e) => { UK.toast(e.code === 'event_closed' ? '이벤트가 끝났어요' : '서버에 연결하지 못했어요', r); GF.replace('xevent'); }); return; }
         const ev = evById(p.evt.id), k = p.evt.k, done = (S.flags.ev = S.flags.ev || {}), got = (done[ev.id] = done[ev.id] || []), first = !got.includes(k), rw = SC.eventReward(D, ev, k, S.cleared, first);
-        if (first) got.push(k); S.gold += rw.gold; S.gems += rw.gems; save(); bar(); GF.sfx('celebrate'); const sc = UK.modal({ parent: r, title: '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('p', 'ex-rw', sh, `🪙 +${rw.gold}${rw.gems ? ' · 💎 +' + rw.gems : ''}${first ? '' : ' (다시 깨기)'}`); const a = el('div', 'acts', sh);
+        if (first) got.push(k); S.gold += rw.gold; S.gems += rw.gems; dqTick('event'); save(); bar(); GF.sfx('celebrate'); const sc = UK.modal({ parent: r, title: '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('p', 'ex-rw', sh, `🪙 +${rw.gold}${rw.gems ? ' · 💎 +' + rw.gems : ''}${first ? '' : ' (다시 깨기)'}`); const a = el('div', 'acts', sh);
         UK.btn({ text: '이벤트로', cls: 'green', onclick: () => { sc.remove(); GF.replace('xevent'); } }, a); UK.btn({ text: '홈', cls: 'ghost sm', onclick: () => { sc.remove(); GF.replace('xhome'); } }, a); try { UK.confetti(sc); } catch (e) { /* 연출 */ }
       };
       const win = (recruited) => {
@@ -445,7 +469,7 @@
         if (REMOTE) {      // 서버가 같은 기록으로 전투를 다시 돌려 판정·보상을 정한다(WP4)
           stageClearRemote(srv, inputs, auto0).then((res) => { if (!res.win) { UK.toast('전투 기록이 서버와 달라요. 다시 도전해 주세요', r); lose(); return; } applyProfile(res.profile); bar(); GF.sfx('celebrate'); done(res.stars, res.reward.gold, res.reward.gems, res.recruited, res.joined.find((id) => id !== st.recruit) || null); }).catch(() => { UK.toast('서버에 연결하지 못했어요. 잠시 뒤 다시 해 주세요', r); GF.replace('xmap'); }); return;
         }
-        const downs = core.A.filter((u) => u.hp <= 0).length, stars = recruited ? 3 : downs === 0 ? 3 : downs <= 2 ? 2 : 1, first = S.cleared < st.id, rw = SC.reward(D, st, first); S.gold += rw.gold; S.gems += rw.gems; if (first) S.cleared = st.id; S.stars[st.id] = Math.max(S.stars[st.id] || 0, stars); let joinId = null; if (st.join && first && !S.units[st.join]) { S.units[st.join] = { lv: 1 }; joinId = st.join; } save(); bar(); GF.sfx('celebrate'); done(stars, rw.gold, rw.gems, recruited, joinId);
+        const downs = core.A.filter((u) => u.hp <= 0).length, stars = recruited ? 3 : downs === 0 ? 3 : downs <= 2 ? 2 : 1, first = S.cleared < st.id, rw = SC.reward(D, st, first); S.gold += rw.gold; S.gems += rw.gems; if (first) S.cleared = st.id; S.stars[st.id] = Math.max(S.stars[st.id] || 0, stars); dqTick('stage'); let joinId = null; if (st.join && first && !S.units[st.join]) { S.units[st.join] = { lv: 1 }; joinId = st.join; } save(); bar(); GF.sfx('celebrate'); done(stars, rw.gold, rw.gems, recruited, joinId);
       };
       const done = (stars, gold, gems, recruited, joinId) => {
         const after = () => { const sc = UK.modal({ parent: r, title: recruited ? '포섭 성공!' : '승리!', body: '', actions: [] }), sh = sc.querySelector('.uk-sheet'); el('div', 'ex-stars', sh, '★'.repeat(stars) + '☆'.repeat(3 - stars)); const pose = el('div', 'ex-rrow', sh); S.party.forEach((id, i) => { const c = el('div', 'ex-mini ex-pose', pose); c.style.animationDelay = i * 90 + 'ms'; c.appendChild(art($(id), 'xs')); }); el('p', 'ex-rw', sh, `🪙 +${gold}${gems ? ` · 💎 +${gems}` : ''}${recruited ? ' · 새 친구: ' + $(st.recruit).name : ''}`); if (lootAt(st.id)) { const lt = lootAt(st.id); el('p', 'ex-tip', sh, `🎁 전리품 코드: ${lt.name} — ${lt.code} (원정 전리품 화면에서 복사해요)`); } if (st.boss && st.recruit && !recruited) el('p', 'ex-tip', sh, (boss ? boss.name : '친구') + '(이)가 쓰러졌어요… 다음엔 체력이 줄었을 때 말을 걸어 봐요.');

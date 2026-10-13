@@ -72,6 +72,10 @@
     case 'gear': return Math.max(0, ...vals((x) => (x.gear || []).reduce((a, b) => a + b, 0))); case 'pull': return s.pulls || 0; case 'dun': return s.dun || 0; case 'idle': return s.idle || 0; case 'dex': return s.dex || 0; case 'stars': return s.stars || 0; case 'event': return s.event || 0; case 'att': return s.att || 0; default: return 0; } };
   const beginner = (D, s) => (D.bal.beginner || []).map((m) => { const v = begMetric(D, s, m.k); return { id: m.id, t: m.t, need: m.n, got: Math.min(m.n, v), done: v >= m.n, gems: m.gems, gold: m.gold }; });
   const achievements = (D, s) => (D.bal.ach || []).map((a) => { const v = begMetric(D, s, a.k); return { id: a.id, name: a.name, t: a.t, need: a.n, got: Math.min(a.n, v), done: v >= a.n, title: a.title }; });
+  /** 일일 임무·주간 상자(B22): counts = 오늘(KST) 장부 {kind: 횟수} → 임무별 진행. 주 키는 그 주 월요일(KST) 날짜. */
+  const dailyList = (D, counts) => ((D.bal.daily || {}).missions || []).map((m) => { const v = m.kinds.reduce((a, k) => a + ((counts || {})[k] || 0), 0); return { id: m.id, t: m.t, need: m.n, got: Math.min(m.n, v), done: v >= m.n, gems: m.gems, gold: m.gold }; });
+  const weekKey = (now) => { const d = new Date(now + 9 * 3600000), dow = (d.getUTCDay() + 6) % 7; return new Date(d.getTime() - dow * 86400000).toISOString().slice(0, 10); };
+  const dayStartMs = (now) => Math.floor((now + 9 * 3600000) / 86400000) * 86400000 - 9 * 3600000;
   const attendDay = (D, n) => (D.bal.attend || [])[Math.min(n, (D.bal.attend || []).length) - 1] || null;
   /** 자동 편성(B12): 가진 동료 중 그 단계에 가장 세게 싸울 5명. 전투력(kOf) × 상성(적 속성을 이기는 속성 가산). 포섭 보스면 말을 걸 수 있는 속성 한 명을 꼭 넣는다. 클라이언트 추천용(서버는 편성만 검증). */
   const enemyEls = (st) => st.enemies.map((e) => e.el);
@@ -90,5 +94,5 @@
     return { id: 3000 + ev.n * 10 + k, name: ev.names[k], gold: base.gold, enemies: base.enemies.map((e, i) => { const f = ev.foes[i % ev.foes.length]; return Object.assign({}, e, { k: Math.round(e.k * ev.kMul[k] * 1000) / 1000, lock: 0, name: f[0], emoji: f[1] }); }), event: true };
   };
   const eventReward = (D, ev, k, cleared, first) => { const st = eventStage(D, ev, k, cleared); return { gold: Math.round(st.gold * ev.goldMul[k] * (first ? 1 : 0.5)), gems: first ? ev.gems[k] : 0 }; };
-  return { achievements, eventNow, eventStage, eventReward, autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
+  return { dailyList, weekKey, dayStartMs, achievements, eventNow, eventStage, eventReward, autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
 });

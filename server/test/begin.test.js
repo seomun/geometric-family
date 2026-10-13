@@ -72,3 +72,29 @@ test('계절 이벤트(B14): 철·순서 판정 · 서버가 전투를 다시 �
   // 다음 달(12월)엔 겨울 이벤트로 바뀌고 가을 토큰은 만료 취급
   const G2 = await import('../src/game.js'); const winter = await G2.eventInfo(env, a.account, Date.UTC(2026, 11, 5, 3)); assert.equal(winter.event.id, 'ev_winter'); assert.equal((await G2.eventInfo(env, a.account, Date.UTC(2027, 0, 31, 20))).event.id, 'ev_winter', 'KST 2월 1일 05시 = 겨울(1~2월)의 연속');
 });
+
+test('일일 임무(B22): 3개 · 오늘 장부에서 서버가 셈 · 한 번만 지급 · 어제 한 일은 안 셈 · 주 상자는 4일 채워야 · 한 번만', async () => {
+  const env = mkenv(), a = await signup(env); let cur = a; const tok = a.access, tokAt = async (now) => { const r = await call(env, 'POST', '/auth/refresh', { body: { refresh: cur.refresh }, now }); assert.equal(r.status, 200, JSON.stringify(r.body)); cur = { ...cur, access: r.body.access, refresh: r.body.refresh }; return cur.access; }, wal = async (t, now) => (await call(env, 'GET', '/profile', { token: t, now })).body.wallet, D0 = (await call(env, 'GET', '/daily', { token: tok })).body;
+  assert.equal(D0.missions.length, 3); assert.ok(D0.missions.every((m) => !m.done && !m.claimed)); assert.equal(D0.week.days, 0);
+  assert.equal((await call(env, 'POST', '/daily/claim', { token: tok, body: { id: 'dq1' } })).body.error, 'not_yet'); assert.equal((await call(env, 'POST', '/daily/claim', { token: tok, body: { id: 'zz' } })).body.error, 'bad_mission');
+  const addLedger = (kind, ts) => env.DB.prepare('INSERT INTO ledger(account,ts,kind,d_gold,reason,ref) VALUES(?,?,?,?,?,?)').bind(a.account, ts, kind, 0, 'x', 'ref' + Math.random()).run();
+  // 일주일을 모의: 월요일(2026-10-19 KST)부터 4일 3개씩 채운다
+  const MON = Date.UTC(2026, 9, 19, 3, 0, 0), days = [];
+  await addLedger('stage', MON - DAY);      // 일요일에 한 일은 월요일에 안 셈
+  assert.equal((await call(env, 'GET', '/daily', { token: await tokAt(MON), now: MON })).body.missions[0].done, false, '어제 한 일은 오늘 임무로 안 셈');
+  for (let d = 0; d < 4; d++) {
+    const now = MON + d * DAY, t = await tokAt(now);
+    for (const [kind, id] of [['stage', 'dq1'], ['levelup', 'dq2'], ['idle', 'dq3']]) {
+      await addLedger(kind, now + 1000); const w0 = await wal(t, now); const r = await call(env, 'POST', '/daily/claim', { token: t, body: { id }, now }); assert.equal(r.status, 200, JSON.stringify(r.body)); assert.equal(r.body.gold, 150);
+      const w1 = await wal(t, now); assert.equal(w1.gold - w0.gold, 150); const r2 = await call(env, 'POST', '/daily/claim', { token: t, body: { id }, now }); assert.equal(r2.body.replay, true); assert.deepEqual(await wal(t, now), w1, '두 번 눌러도 한 번만');
+    }
+    const v = (await call(env, 'GET', '/daily', { token: t, now })).body; assert.equal(v.week.days, d + 1); assert.equal(v.week.ready, d === 3);
+    if (d === 2) assert.equal((await call(env, 'POST', '/daily/week', { token: t, now })).body.error, 'not_yet', '3일째엔 상자가 안 열림');
+    days.push(t);
+  }
+  const now = MON + 3 * DAY, t = days[3], w0 = await wal(t, now), wk = await call(env, 'POST', '/daily/week', { token: t, now }); assert.equal(wk.status, 200); assert.equal(wk.body.gems, 20); assert.equal(wk.body.gold, 1200);
+  const w1 = await wal(t, now); assert.equal(w1.free_gems - w0.free_gems, 20); assert.equal(w1.gold - w0.gold, 1200); assert.equal((await call(env, 'POST', '/daily/week', { token: t, now })).body.replay, true); assert.deepEqual(await wal(t, now), w1, '상자도 한 번만');
+  // 다음 주엔 새로 센다
+  const nt = await tokAt(MON + 7 * DAY), nv = (await call(env, 'GET', '/daily', { token: nt, now: MON + 7 * DAY })).body; assert.equal(nv.week.days, 0); assert.equal(nv.week.box, false);
+  const n = (await env.DB.prepare("SELECT COUNT(*) AS c FROM ledger WHERE account=? AND kind='daily'").bind(a.account).first()).c; assert.equal(n, 13, '임무 12 + 상자 1');
+});

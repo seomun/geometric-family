@@ -8338,6 +8338,49 @@
     "gold": 1200
    }
   ],
+  "daily": {
+   "missions": [
+    {
+     "id": "dq1",
+     "t": "원정에서 한 번 이겨요",
+     "kinds": [
+      "stage",
+      "event"
+     ],
+     "n": 1,
+     "gems": 0,
+     "gold": 150
+    },
+    {
+     "id": "dq2",
+     "t": "친구를 한 번 키워요",
+     "kinds": [
+      "levelup",
+      "upgrade"
+     ],
+     "n": 1,
+     "gems": 0,
+     "gold": 150
+    },
+    {
+     "id": "dq3",
+     "t": "요일 던전이나 정찰 보상을 한 번 받아요",
+     "kinds": [
+      "dungeon",
+      "idle"
+     ],
+     "n": 1,
+     "gems": 0,
+     "gold": 150
+    }
+   ],
+   "weekly": {
+    "need": 4,
+    "gems": 20,
+    "gold": 1200,
+    "t": "이번 주에 임무를 마친 날이 4일이면 상자가 열려요"
+   }
+  },
   "events": [
    {
     "id": "ev_spring",

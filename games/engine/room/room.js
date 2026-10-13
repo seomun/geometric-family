@@ -90,9 +90,11 @@
     /** 내 도형(⑤ 결과): {f:가족, s:세부 타입} 설명 하나만 — 성인 그룹 앱들이 문패·말투 힌트로 쓴다 */
     setMe(d) { Room.S.me = d; Room.save(); }, me: () => Room.S.me || null,
     /** 내 도형 문패(⑤ 결과): 성인 앱 홈에 작게 보여 준다. 결과가 없으면 null */
+    /** 내 도형 판의 얼굴: 결과형 이름의 인물(ops.shapeWho). 그림 없는 형은 도형 얼굴 그림, 둘이면 첫 인물 */
+    meFace(m, T) { try { const W = ((GF.data.ops.shapeWho || {})[m.f] || [])[m.s] || []; if (W.length) return Room.cfg.charSrc ? Room.cfg.charSrc(W[0]) : ''; if (window.GF && GF.share && GF.share.figure) return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">' + GF.share.figure(m.f, m.s, T, 0, 0, 100, 100) + '</svg>'); } catch (e) { /* 대체 그림 */ } return Room.cfg.charSrc ? Room.cfg.charSrc(T.char) : ''; },
     mePlate(parent) {
       const m = Room.me(), T = m && Room.data.meTypes && Room.data.meTypes[m.f]; if (!T) return null;
-      const d = el('div', 'rm-plate', parent, `<img src="${Room.cfg.charSrc ? Room.cfg.charSrc(T.char) : ''}" alt=""><span><small>내 도형</small><b>${T.sub[m.s]}</b></span>`); d.style.background = T.bg; d.style.borderColor = T.color; try { const pl = (window.GF && GF.ip && GF.ip.ready) ? GF.ip.plates() : []; if (pl.length) el('i', 'rm-deco', d, pl.map((x) => ({ ribbon: '🎀', sparkle: '✨', crown: '👑' }[x] || '')).join('')); } catch (e) {} return d;
+      const d = el('div', 'rm-plate', parent, `<img src="${Room.meFace(m, T)}" alt=""><span><small>내 도형</small><b>${T.sub[m.s]}</b></span>`); d.style.background = T.bg; d.style.borderColor = T.color; try { const pl = (window.GF && GF.ip && GF.ip.ready) ? GF.ip.plates() : []; if (pl.length) el('i', 'rm-deco', d, pl.map((x) => ({ ribbon: '🎀', sparkle: '✨', crown: '👑' }[x] || '')).join('')); } catch (e) {} return d;
     },
     setWall(room, d) { Room.S.wall = Room.S.wall || {}; Room.S.wall[room] = d; Room.save(); },
     placedIn: (r) => (Room.S.placed[r] = Room.S.placed[r] || []),

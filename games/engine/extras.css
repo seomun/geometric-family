@@ -86,3 +86,20 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .ops-card { flex: none; }
 /* 앨범 카드 줄: 이모지 아이콘이 잘리지 않게 줄 높이·여백 확보 */
 .ops-card .ic { line-height: 1.3; min-width: 28px; text-align: center; flex: none; } .ops-cards { padding: 3px 2px; }
+
+/* 이야기 컷 안 미니 판(튜토리얼) — GF.tale.mini. 컷에서는 캐릭터가 작아지고 그 위에 실제 판 조각으로 그린 작은 판이 놓인다 */
+.cut-mini { position: absolute; left: 14px; right: 14px; top: 262px; height: 190px; z-index: 3; border-radius: 22px; background: rgba(255,255,255,.8); box-shadow: var(--uk-sh-lg); display: flex; align-items: center; justify-content: center; gap: 6px; overflow: hidden; padding: 6px; box-sizing: border-box; }
+.cut-mini.in-card { position: relative; left: auto; right: auto; top: auto; height: 150px; margin: 0 0 8px; transform: scale(.82); transform-origin: 50% 0; margin-bottom: -22px; }
+.cut-mini .tm-op { font: 900 26px/1 var(--uk-font); color: #8A5A3B; flex: none; } .cut-mini .tm-cell { transition: transform .5s; }
+.cut-mini .tm-col { display: flex; flex-direction: column; gap: 8px; align-items: center; } .cut-mini .tm-tiles { display: flex; gap: 5px; } .cut-mini .tm-tiles .tl-slot { transition: opacity .35s; }
+.cut-mini .tm-tray { display: flex; gap: 6px; padding: 6px 10px; border-radius: 14px; background: rgba(120,90,60,.22); } .cut-mini .tm-tray .tl-art { font-size: 30px; }
+.cut-mini .sr-row { gap: 10px; } .cut-mini .sr-it { transition: transform .5s; }
+.cut-mini .sp-pic { box-shadow: var(--uk-sh); } .cut-mini .sp-ov { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.cut-mini .tm-ring { position: absolute; transform: translate(-50%, -50%); height: 0; border: 4px solid #FF4D6D; border-radius: 50%; box-sizing: content-box; transition: opacity .3s; pointer-events: none; background: rgba(255,77,109,.12); }
+.cut-mini .tm-table { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 8px 18px; border-radius: 40px; background: #D9A877; box-shadow: inset 0 -5px 0 rgba(0,0,0,.12); } .cut-mini .tm-food { font-size: 56px; line-height: 1; transition: transform .4s; font-weight: 400; } .cut-mini .tm-side { font-size: 30px; font-weight: 400; line-height: 1; }
+.cut-mini .tm-plus { position: absolute; left: 50%; top: 4px; font: 900 18px/1 var(--uk-font); color: #E8572F; transition: all .5s; transform: translateX(-50%); } .cut-mini .tm-bar { width: 220px; height: 14px; border-radius: 8px; background: #E8D6C4; overflow: hidden; } .cut-mini .tm-bar i { display: block; height: 100%; background: #FFB347; transition: width .7s; }
+.cut-mini .tm-paint { position: relative; width: 190px; height: 150px; } .cut-mini .tm-fill { position: absolute; left: 24px; top: 14px; width: 140px; height: 110px; background: radial-gradient(circle at 40% 50%, #FFC933 0 38%, #FF8FA8 70%); clip-path: polygon(12% 48%, 50% 6%, 88% 48%, 88% 94%, 12% 94%); opacity: 0; transition: opacity .8s; mix-blend-mode: multiply; } .cut-mini .tm-pen { position: absolute; left: 20px; top: 100px; font-size: 38px; font-weight: 400; line-height: 1; transition: all .8s; }
+.cut-mini .tm-q { font-size: 34px; text-align: center; } .cut-mini .tm-opts { display: flex; gap: 12px; } .cut-mini .tm-opts b { font-size: 40px; font-weight: 400; line-height: 1; padding: 8px 14px; border-radius: 16px; background: #FFF6E5; box-shadow: 0 3px 0 #C98F5A; transition: transform .3s; } .cut-mini .tm-opts b.pick { transform: scale(1.15); background: #FFE79A; }
+.cut-mini .tm-res { width: 96px; height: 120px; margin-left: 12px; transform: scale(.4); transition: all .5s; } .cut-mini .tm-res img { width: 100%; height: 100%; object-fit: contain; }
+.cut-mini .tm-dirt { position: absolute; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: #8B6B3E; opacity: .85; box-shadow: 8px 5px 0 -5px #8B6B3E; transition: opacity .5s; } .cut-mini .tm-day .dy-em { position: absolute; transition: all .8s; }
+.cut-mini .tm-pimg img { height: 100%; width: auto; display: block; } .cut-mini .tm-pe { font-weight: 400; line-height: 1; }

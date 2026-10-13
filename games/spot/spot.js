@@ -50,6 +50,14 @@
   const totalStars = () => Object.values(SV.stars).reduce((a, b) => a + b, 0);
   const unlocked = (n) => n === 1 || SV.stars[n - 1] > 0 || !!SP.unlockAll;
   let D, X;
+
+  /* 이야기 컷 안 미니 판(튜토리얼): 두 그림을 나란히 놓고 다른 곳에 동그라미 — 실제 1번 판의 그림(sceneSVG) 그대로 */
+  GF.tale.mini.reg('spot', (host, s, still) => {
+    const L = D.levels.find((l) => l.id === (s.level || 1)) || D.levels[0], R = L.rounds[0], d0 = R.diffs[s.diff || 0], W = 164, Hh = Math.round(W * R.h / R.w); let rings = [];
+    const build = () => { host.innerHTML = ''; host.style.gap = '8px'; rings = []; [R.A, R.B].forEach((els) => { const w = el('div', 'sp-pic', host); w.style.cssText = `width:${W}px;height:${Hh}px;border-radius:12px;flex:none`; w.innerHTML = sceneSVG(R, els); const sv = w.querySelector('svg'); sv.style.width = '100%'; sv.style.height = '100%';
+      const rg = el('i', 'tm-ring', w), z = Math.max(d0.w, d0.h) / R.w * 100 + 7; rg.style.cssText = `left:${(d0.x + d0.w / 2) / R.w * 100}%;top:${(d0.y + d0.h / 2) / R.h * 100}%;width:${z}%;padding-bottom:${z}%;opacity:0`; rings.push(rg); }); };
+    GF.tale.mini.loop(host, build, [[1000, () => rings.forEach((g) => { g.style.opacity = 1; })]], still);
+  });
   const now = () => new Date(), pad = (n) => String(n).padStart(2, '0'), today = () => { const d = now(); return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()); };
   const dayNum = () => { const d = now(); return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000); };
   GF.home = () => { GF.stack = []; GF.go('phome'); }; GF.home2 = GF.home;

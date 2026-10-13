@@ -12,16 +12,26 @@
    ]
   },
   {
-   "text": "엄마가 웃으며 말했다. 「이도 닦고, 옷도 입고, 같이 해 보자.」",
+   "text": "칫솔이 쓱쓱 지나가자, 이에 묻은 얼룩이 사라졌다.",
    "chars": [
-    "nemo_mom.love"
-   ]
+    "baby.joy"
+   ],
+   "mini": {
+    "theme": "teeth",
+    "level": 1,
+    "app": "day"
+   }
   },
   {
-   "text": "아빠는 장난감을 정리해 놓고 윙크했다.",
+   "text": "엄마가 웃었다. 「이제 우리 막둥이가 닦아 볼까?」",
    "chars": [
-    "nemo_dad.wink"
-   ]
+    "nemo_mom.love"
+   ],
+   "mini": {
+    "theme": "teeth",
+    "level": 1,
+    "app": "day"
+   }
   }
  ],
  "chapters": {
@@ -37,10 +47,15 @@
    "midAt2": 4,
    "start": [
     {
-     "text": "오늘 하루, 아이처럼 천천히. 하나씩 해 보면 돼요.",
+     "text": "막둥이가 칫솔을 들고 이 닦는 순서를 따라 했다. 쓱쓱!",
      "chars": [
       "baby.joy"
-     ]
+     ],
+     "mini": {
+      "theme": "teeth",
+      "level": 1,
+      "app": "day"
+     }
     },
     {
      "text": "아빠가 도끼를 연못에 퐁당! 아빠는 깜짝 놀랐어요.",
@@ -1758,27 +1773,104 @@
   "brush": {
    "icon": "🪥",
    "title": "씻기",
-   "text": "손가락으로 문질러서 깨끗하게 해 줘요."
+   "text": "손가락으로 문질러서 깨끗하게 해 줘요.",
+   "mini": {
+    "theme": "teeth",
+    "level": 1,
+    "app": "day"
+   }
   },
   "dress": {
    "icon": "👕",
    "title": "옷 입기",
-   "text": "알맞은 옷을 골라 입혀 줘요."
+   "text": "알맞은 옷을 골라 입혀 줘요.",
+   "cuts": [
+    {
+     "text": "옷을 쏙! 입으니 든든해.",
+     "chars": [
+      "baby.joy"
+     ],
+     "mini": {
+      "a": "👕",
+      "b": "🧒",
+      "app": "day"
+     }
+    }
+   ],
+   "mini": {
+    "a": "👕",
+    "b": "🧒",
+    "app": "day"
+   }
   },
   "chew": {
    "icon": "🍽️",
    "title": "먹기",
-   "text": "한 입씩 맛있게 먹어요."
+   "text": "한 입씩 맛있게 먹어요.",
+   "cuts": [
+    {
+     "text": "냠냠, 한 입씩 맛있게.",
+     "chars": [
+      "baby.joy"
+     ],
+     "mini": {
+      "a": "🍚",
+      "b": "👄",
+      "app": "day"
+     }
+    }
+   ],
+   "mini": {
+    "a": "🍚",
+    "b": "👄",
+    "app": "day"
+   }
   },
   "tidy": {
    "icon": "🧸",
    "title": "정리하기",
-   "text": "제자리에 하나씩 놓아요."
+   "text": "제자리에 하나씩 놓아요.",
+   "cuts": [
+    {
+     "text": "장난감은 제자리에. 쏙!",
+     "chars": [
+      "baby.joy"
+     ],
+     "mini": {
+      "a": "🧸",
+      "b": "📦",
+      "app": "day"
+     }
+    }
+   ],
+   "mini": {
+    "a": "🧸",
+    "b": "📦",
+    "app": "day"
+   }
   },
   "sleep": {
    "icon": "🌙",
    "title": "잠자기",
-   "text": "불을 끄고 포근하게 잠들어요."
+   "text": "불을 끄고 포근하게 잠들어요.",
+   "cuts": [
+    {
+     "text": "불을 끄고, 포근하게 쿨쿨.",
+     "chars": [
+      "baby.joy"
+     ],
+     "mini": {
+      "a": "🌙",
+      "b": "🛏️",
+      "app": "day"
+     }
+    }
+   ],
+   "mini": {
+    "a": "🌙",
+    "b": "🛏️",
+    "app": "day"
+   }
   }
  },
  "ending": [

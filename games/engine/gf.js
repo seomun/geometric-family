@@ -536,7 +536,7 @@
         const SW_ = GF.safe.w, SH_ = GF.safe.h, wide = GF.safeWide, dy = wide ? 170 : 0;
         const list = (c.chars || []).map((ch, k) => ({ ch, k, role: role(ch.id), x: wide ? SW_ / 2 + (ch.x - 180) * 1.7 : ch.x, y: Math.min(SH_ - 6, (ch.y || 580) - dy), asp: GF.aspect(ch.id) }));
         // 세계관 비율 고정: 어른 1 : 아이 .8 : 막둥이 .45 — 어른이 장면 높이의 절반 가까이 오게 키우고, 가로폭이 모자라면 같은 비율로 줄인다
-        const A = SH_ * 0.55, RATIO = { adult: 1, kid: 0.8, baby: 0.45 };
+        const hasMini = !!(c.mini && GF.tale && GF.tale.mini.has(c.mini)), A = SH_ * (hasMini ? 0.3 : 0.55), RATIO = { adult: 1, kid: 0.8, baby: 0.45 };
         const hasRef = list.some((q) => q.role !== 'art');
         list.forEach((q) => { q.h = q.role === 'art' ? (q.ch.h || 260) * (A / 270) : (hasRef ? A * RATIO[q.role] : q.ch.h || 230); q.w = q.h * q.asp; });
         const tot = list.reduce((s, q) => s + q.w * (wide ? 1.05 : 0.74), 0), fit_ = Math.min(1, (SW_ + 24) / (tot || 1));
@@ -552,6 +552,7 @@
           d.style.cssText = 'left:' + Math.round(q.cx) + 'px;top:' + Math.round(q.y) + 'px;height:' + Math.round(q.h) + 'px;width:' + Math.round(q.w) + 'px;animation-delay:' + (q.k * 0.12) + 's';
           d.appendChild(GF.img(q.ch.id)); d.firstChild.style.animationDelay = '-' + (q.k * 0.7) + 's';
         });
+        if (hasMini) GF.tale.mini.draw(stageEl, c.mini);
         if (c.bubble) {
           const q = list[c.bubble.at != null ? c.bubble.at : 0], bb = el('div', 'bubble', stageEl, BUBBLE[c.bubble.type]);
           bb.style.left = Math.round(q ? q.cx : c.bubble.x) + 'px'; bb.style.top = Math.round(q ? q.y - q.h * 0.92 : c.bubble.y) + 'px';

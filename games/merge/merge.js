@@ -35,6 +35,13 @@
     d.dataset.c = c; d.dataset.t = t; return d;
   }
 
+  /* 이야기 컷 안 미니 판(튜토리얼): 같은 조각 둘이 맞닿으면 한 단계 큰 조각 — 실제 판 조각 그림(pieceEl) 그대로 */
+  GF.tale.mini.reg('merge', (host, s, still) => {
+    const c = s.c || 0, t = s.t || 1, cell = (p) => { const d = el('div', 'mg-cell tm-cell', host); d.style.cssText = 'position:relative;width:84px;height:84px'; if (p) d.appendChild(p); return d; }; let a, b, o;
+    const build = () => { host.innerHTML = ''; a = cell(pieceEl(c, t, 0)); el('b', 'tm-op', host, '＋'); b = cell(pieceEl(c, t, 0)); el('b', 'tm-op', host, '▶'); o = cell(null); o.style.opacity = '.4'; };
+    GF.tale.mini.loop(host, build, [[900, () => { a.style.transform = 'translateX(20px)'; b.style.transform = 'translateX(-20px)'; }], [650, () => { a.innerHTML = b.innerHTML = ''; a.style.transform = b.style.transform = ''; const p = pieceEl(c, t + 1, 0); p.classList.add('pop'); o.style.opacity = 1; o.appendChild(p); }]], still);
+  });
+
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 2, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x, { v: 2 }); } catch (e) {} return blank(); })();

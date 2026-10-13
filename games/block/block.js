@@ -20,6 +20,16 @@
   const tileSVG = (f, shiny) => uri(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">` + (f === 9 ? JUNK : `<rect x="2" y="2" width="46" height="46" rx="10" fill="${CC[f]}" stroke="${CD[f]}" stroke-width="3"/>` + MARK[f] + `<circle cx="20" cy="${f === 1 ? 31 : 26}" r="2" fill="#4A3030"/><circle cx="30" cy="${f === 1 ? 31 : 26}" r="2" fill="#4A3030"/>`) + (shiny ? SHINY : '') + '</svg>');
   const tcache = {}; const tile = (f, s) => tcache[f + ':' + (s ? 1 : 0)] || (tcache[f + ':' + (s ? 1 : 0)] = tileSVG(f, s));
 
+  /* 이야기 컷 안 미니 판(튜토리얼): 빈칸에 조각을 놓아 한 줄이 차면 줄이 사라진다 — 실제 판 조각 그림(tile) 그대로 */
+  GF.tale.mini.reg('block', (host, s, still) => {
+    const Z = 40, W = 5, H = 3, col = s.c || 0, wrap = el('div', 'tm-grid', host); wrap.style.cssText = `position:relative;width:${W * Z}px;height:${H * Z + 56}px`;
+    let pc, cells = [];
+    const put = (r, c, f) => { const d = el('div', 'bk-cell full', wrap); d.style.cssText = `left:${c * Z}px;top:${56 + r * Z}px;width:${Z - 2}px;height:${Z - 2}px;transition:transform .45s,opacity .45s`; const i = el('img', '', d); i.src = tile(f, 0); return d; };
+    const build = () => { wrap.innerHTML = ''; cells = []; for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) { const d = el('div', 'bk-cell', wrap); d.style.cssText = `left:${c * Z}px;top:${56 + r * Z}px;width:${Z - 2}px;height:${Z - 2}px`; }
+      const fl = [1, 0, 2, 1]; for (let c = 0; c < 4; c++) cells.push(put(H - 1, c, fl[c])); put(H - 2, 0, 2); put(H - 2, 1, 1); pc = put(-1, W - 1, col); pc.style.top = '4px'; pc.style.transition = 'top .6s'; };
+    GF.tale.mini.loop(host, build, [[900, () => { pc.style.top = (56 + (H - 1) * Z) + 'px'; }], [800, () => { cells.push(pc); cells.forEach((d) => { d.style.transform = 'scale(1.18)'; d.style.outline = '3px solid #FFC933'; }); }], [450, () => { cells.forEach((d) => { d.style.opacity = 0; d.style.transform = 'scale(.3)'; }); }, 'x']], still);
+  });
+
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x); } catch (e) {} return blank(); })();

@@ -12,16 +12,24 @@
    ]
   },
   {
-   "text": "세모 이모가 방긋 웃었다. 「마음대로 칠해도 돼!」",
+   "text": "쓱쓱 칠하자 그림에 색이 번졌다.",
    "chars": [
-    "wife.joy"
-   ]
+    "baby.joy"
+   ],
+   "mini": {
+    "k": "paint",
+    "app": "color"
+   }
   },
   {
-   "text": "완성한 그림은 우리 집 벽에 걸어 줄게.",
+   "text": "세모 이모가 웃었다. 「마음대로 칠해도 돼!」",
    "chars": [
-    "nemo_mom.joy"
-   ]
+    "wife.joy"
+   ],
+   "mini": {
+    "k": "paint",
+    "app": "color"
+   }
   }
  ],
  "chapters": {},

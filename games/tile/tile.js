@@ -31,6 +31,16 @@
     if (df.e[0] === '@') { const i = GF.img(df.e.slice(1)); d.appendChild(i); i.style.cssText = 'width:100%;height:100%;object-fit:contain'; return d; }
     const [em, fx] = df.e.split('@'); d.textContent = em; if (fx) d.style.cssText += ';' + EMO_FX[fx]; return d;
   }
+
+  /* 이야기 컷 안 미니 판(튜토리얼): 같은 그림 셋을 눌러 바구니에 담으면 사라진다 — 실제 타일 그림(art) 그대로. spec = {kinds:[…], pick:'k0', n:3} */
+  GF.tale.mini.reg('tile', (host, s, still) => {
+    const n = s.n || 3, kinds = s.kinds, pick = s.pick, col = el('div', 'tm-col', host), grid = el('div', 'tm-tiles', col), tray = el('div', 'tl-tray tm-tray', col); let tl = [], sl = [];
+    const box = (p, cls) => { const d = el('div', cls, p); d.style.cssText = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center'; return d; };
+    const build = () => { grid.innerHTML = tray.innerHTML = ''; tl = []; sl = []; kinds.forEach((k) => { const d = box(grid, 'tl-slot on'); art(k, d); d.dataset.k = k; tl.push(d); }); for (let i = 0; i < n; i++) sl.push(box(tray, 'tl-slot')); };
+    const steps = []; for (let i = 0; i < n; i++) steps.push([i ? 520 : 900, () => { const d = tl.filter((x) => x.dataset.k === pick && x.style.opacity !== '0')[0]; if (!d) return; d.style.opacity = 0; art(pick, sl[i]); sl[i].classList.add('on'); }]);
+    steps.push([650, () => sl.forEach((d) => { d.style.transition = 'transform .4s,opacity .4s'; d.style.transform = 'scale(.2)'; d.style.opacity = 0; }), 'x']);
+    GF.tale.mini.loop(host, build, steps, still);
+  });
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x); } catch (e) {} return blank(); })();

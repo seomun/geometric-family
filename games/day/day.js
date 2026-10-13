@@ -36,6 +36,21 @@
   const em = (parent, ch, size, cls) => { const d = el('div', 'dy-em ' + (cls || ''), parent), sl = SLOT_OF[ch] && GF.slot('day', SLOT_OF[ch]); if (sl) { const i = el('img', '', d); i.src = sl; i.style.cssText = 'width:100%;height:100%;object-fit:contain;pointer-events:none'; d.style.width = d.style.height = size + 'px'; d.dataset.ch = ch; d.textContent = ''; d.appendChild(i); d.title = ''; } else d.textContent = ch; d.style.fontSize = size + 'px'; return d; };
   const at = (d, x, y) => { d.style.left = x + 'px'; d.style.top = y + 'px'; return d; };
 
+  /* 이야기 컷 안 미니 판(튜토리얼): 막둥이 하루 — 양치는 칫솔이 지나가며 얼룩이 사라지고(실제 1번 판의 얼굴·얼룩 그대로), 나머지는 물건이 제자리로 간다. spec = {theme,level} | {a:'👕', b:'🧒'} */
+  GF.tale.mini.reg('day', (host, s, still) => {
+    const w = el('div', 'tm-day', host); let pen, dirt = [];
+    if (s.theme) {
+      const L = D.levels.find((l) => l.id === (s.level || 1)) || D.levels[0], X0 = 30, Y0 = 170, CW = 300, CH = 340;
+      const build = () => { w.innerHTML = ''; w.style.cssText = 'position:relative;width:168px;height:190px'; w.innerHTML = (THEME_SVG[s.theme] || THEME_SVG.teeth).replace('viewBox="0 0 360 640"', `viewBox="${X0} ${Y0} ${CW} ${CH}"`).replace('<svg ', '<svg style="width:100%;height:100%" '); dirt = (L.spots || []).map((q) => { const d = el('i', 'tm-dirt', w); d.style.cssText = `left:${(q.x - X0) / CW * 100}%;top:${(q.y - Y0) / CH * 100}%`; return d; }); pen = em(w, '🪥', 44); pen.style.cssText += ';left:70%;top:6%;transition:all .6s'; };
+      const steps = []; (L.spots || []).forEach((q, i) => steps.push([i ? 700 : 900, () => { pen.style.left = ((q.x - X0) / CW * 100 - 10) + '%'; pen.style.top = ((q.y - Y0) / CH * 100 - 12) + '%'; setTimeout(() => { if (dirt[i]) dirt[i].style.opacity = 0; }, 450); }]));
+      GF.tale.mini.loop(host, build, steps, still);
+    } else {
+      let it, to;
+      const build = () => { w.innerHTML = ''; w.style.cssText = 'position:relative;width:230px;height:130px'; to = em(w, s.b, 72); to.style.cssText += ';right:8px;top:30px'; it = em(w, s.a, 56); it.style.cssText += ';left:10px;top:40px;transition:all .8s'; };
+      GF.tale.mini.loop(host, build, [[900, () => { it.style.left = '120px'; it.style.top = '36px'; }], [700, () => { it.insertAdjacentHTML('afterend', '<b class="tm-spk" style="position:absolute;right:70px;top:6px;font-size:30px">✨</b>'); }]], still);
+    }
+  });
+
   /* ---------------- 홈 ---------------- */
   GF.screen('dhome', {
     bare: false,

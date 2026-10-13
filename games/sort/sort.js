@@ -23,6 +23,14 @@
     if (t === 's') { const s = SYM[(+a % 12) * 3 + +b]; if (s[0][0] === '@') { const i = GF.img(s[0].slice(1)); d.appendChild(i); i.style.cssText = 'width:100%;height:100%;object-fit:contain'; return d; } const [em, fx] = s[0].split('@'); d.textContent = em; if (fx) d.style.cssText += ';' + EMO_FX[fx]; return d; }
     d.textContent = a; return d;
   }
+
+  /* 이야기 컷 안 미니 판(튜토리얼): 맨 위 물건 하나를 다른 칸으로 옮겨 같은 것끼리 모은다 — 실제 칸·물건 그림(art) 그대로. spec = {pal:[그림 키…], tubes:[[…]…], move:[from,to]} */
+  GF.tale.mini.reg('sort', (host, s, still) => {
+    const pal = s.pal, T0 = s.tubes, mv = s.move, row = el('div', 'sr-row tm-row', host), isz = 38; let tubes = [], T1;
+    const paint = () => { row.innerHTML = ''; tubes = T1.map((tb) => { const t = el('div', 'sr-tube', row); t.style.cssText = `width:54px;height:${3 * (isz + 3) + 14}px`; tb.forEach((k) => { const it = el('div', 'sr-it', t); art(pal[k], it, isz); }); return t; }); };
+    const build = () => { T1 = T0.map((x) => x.slice()); paint(); };
+    GF.tale.mini.loop(host, build, [[900, () => { const t = tubes[mv[0]], top = t.lastElementChild; if (top) { top.style.transform = 'translateY(-' + (isz + 20) + 'px)'; } t.classList.add('sel'); }], [700, () => { T1[mv[1]].push(T1[mv[0]].pop()); paint(); tubes[mv[1]].classList.add('done'); }]], still);
+  });
   /* ---------------- 저장 ---------------- */
   const blank = () => ({ v: 1, stars: {}, last: 1, daily: { date: '', done: 0 }, shards: 0, seasonDone: {}, trio: {}, tips: {} });
   let SV = (() => { try { const x = JSON.parse(localStorage.getItem(KEY)); if (x && x.v >= 1) return Object.assign(blank(), x); } catch (e) {} return blank(); })();

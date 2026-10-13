@@ -6,22 +6,32 @@
  "last": 14,
  "prologue": [
   {
-   "text": "네모 아빠가 두 장의 그림을 나란히 놓았다. 「자세히 보면 달라.」",
-   "chars": [
-    "nemo_dad.joy"
-   ]
-  },
-  {
-   "text": "세모 남편이 눈을 가늘게 떴다. 「이건 내가 먼저 찾을걸?」",
-   "chars": [
-    "husband.wink"
-   ]
-  },
-  {
-   "text": "동그라미 아빠는 조용히 웃었다. 「서두르지 않아도 돼요.」",
+   "text": "동그라미 아빠가 그림 두 장을 나란히 걸었다. 「똑같아 보여도 한 군데가 달라요.」",
    "chars": [
     "dong_dad.calm"
    ]
+  },
+  {
+   "text": "가만히 들여다보다가 — 여기! 하고 동그라미를 쳤다.",
+   "chars": [
+    "dong_dad.calm"
+   ],
+   "mini": {
+    "level": 1,
+    "diff": 0,
+    "app": "spot"
+   }
+  },
+  {
+   "text": "이제 같이 찾아봐요. 다른 곳을 콕 눌러요.",
+   "chars": [
+    "nemo_dad.joy"
+   ],
+   "mini": {
+    "level": 1,
+    "diff": 0,
+    "app": "spot"
+   }
   }
  ],
  "chapters": {
@@ -37,10 +47,15 @@
    "midAt2": 7,
    "start": [
     {
-     "text": "같은 그림 같지만 어딘가 달라요. 하나씩 찾아봐요.",
+     "text": "아기 돼지들 집 그림 두 장. 첫째가 소리쳤다. 「여기 달라요!」",
      "chars": [
-      "nemo_dad.joy"
-     ]
+      "nemo_kids.kid1"
+     ],
+     "mini": {
+      "level": 1,
+      "diff": 1,
+      "app": "spot"
+     }
     },
     {
      "text": "네모 엄마가 말했다. 「이제 각자 집을 지어 보렴.」 {kid1}는 볏짚으로, {kid2}는 나무로, {kid3}는 벽돌로.",
@@ -1282,32 +1297,127 @@
   "diff": {
    "icon": "🔍",
    "title": "틀린 그림",
-   "text": "두 그림에서 다른 곳을 눌러요. 목표 개수만큼 찾으면 끝이에요."
+   "text": "두 그림에서 다른 곳을 눌러요.",
+   "mini": {
+    "level": 1,
+    "diff": 0,
+    "app": "spot"
+   }
   },
   "odd": {
    "icon": "☝️",
    "title": "다른 하나",
-   "text": "여럿 중에서 모양이 다른 하나를 눌러요."
+   "text": "여럿 중에서 모양이 다른 하나를 눌러요.",
+   "cuts": [
+    {
+     "text": "여럿 중에 모양이 다른 하나가 숨어 있어요.",
+     "chars": [
+      "husband.wink"
+     ],
+     "mini": {
+      "level": 1,
+      "diff": 0,
+      "app": "spot"
+     }
+    }
+   ],
+   "mini": {
+    "level": 1,
+    "diff": 0,
+    "app": "spot"
+   }
   },
   "hidden": {
    "icon": "🫣",
    "title": "숨은 물건",
-   "text": "그림 속에 숨은 물건을 찾아 눌러요."
+   "text": "그림 속에 숨은 물건을 찾아 눌러요.",
+   "cuts": [
+    {
+     "text": "그림 속에 숨은 물건이 있네. 어디 있을까?",
+     "chars": [
+      "nemo_mom.joy"
+     ],
+     "mini": {
+      "level": 1,
+      "diff": 1,
+      "app": "spot"
+     }
+    }
+   ],
+   "mini": {
+    "level": 1,
+    "diff": 1,
+    "app": "spot"
+   }
   },
   "three": {
    "icon": "3️⃣",
    "title": "세 곳",
-   "text": "세 그림을 비교해서 다른 곳을 찾아요."
+   "text": "세 그림을 비교해서 다른 곳을 찾아요.",
+   "cuts": [
+    {
+     "text": "세 장을 나란히 두고 비교해 봐요.",
+     "chars": [
+      "dong_dad.calm"
+     ],
+     "mini": {
+      "level": 1,
+      "diff": 0,
+      "app": "spot"
+     }
+    }
+   ],
+   "mini": {
+    "level": 1,
+    "diff": 0,
+    "app": "spot"
+   }
   },
   "memory": {
    "icon": "🧠",
    "title": "기억",
-   "text": "잠깐 보여 주는 그림을 기억해 두었다가 달라진 곳을 찾아요."
+   "text": "잠깐 보여 주는 그림을 기억해 두었다가 달라진 곳을 찾아요.",
+   "cuts": [
+    {
+     "text": "잠깐 보여 주는 그림을 기억해 뒀다가 달라진 곳을 찾아요.",
+     "chars": [
+      "nemo_dad.joy"
+     ],
+     "mini": {
+      "level": 1,
+      "diff": 1,
+      "app": "spot"
+     }
+    }
+   ],
+   "mini": {
+    "level": 1,
+    "diff": 1,
+    "app": "spot"
+   }
   },
   "zoom": {
    "icon": "🔭",
    "title": "확대",
-   "text": "그림을 크게 확대해서 작은 차이를 찾아요."
+   "text": "그림을 크게 확대해서 작은 차이를 찾아요.",
+   "cuts": [
+    {
+     "text": "작은 차이는 크게 확대해서 보면 보여요.",
+     "chars": [
+      "husband.joy"
+     ],
+     "mini": {
+      "level": 1,
+      "diff": 0,
+      "app": "spot"
+     }
+    }
+   ],
+   "mini": {
+    "level": 1,
+    "diff": 0,
+    "app": "spot"
+   }
   }
  },
  "ending": [

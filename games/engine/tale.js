@@ -15,9 +15,41 @@
   const auto = () => !!navigator.webdriver && !T.force && !/[?&]story=1/.test(location.search);
   const safe = () => document.getElementById('safe');
   T.init = (app, data, opt) => { T.app = app; T.d = data || null; T.kid = !!(opt && opt.kid); T.ready = !!data; };
+  /* ---------------- 미니 판(튜토리얼 컷) ----------------
+     이야기 컷 안에 「실제 게임 판 조각」으로 그린 작은 판. 각 게임이 자기 그림 함수로 T.mini.reg(앱, (host, spec, still) => …) 를 등록한다.
+     spec = {app?, …게임별 값}. 같은 동작을 반복해 보여 주고(M.loop), 컷이 바뀌면(host 가 떨어지면) 멈춘다. still=true 면 끝 모양만 그린다(설명 카드 그림). */
+  const M = (T.mini = { fn: {}, reg(app, f) { M.fn[app] = f; }, has: (s) => !!(s && M.fn[s.app || T.app]) });
+  M.loop = (host, build, steps, still, hold) => {
+    if (still) { build(); steps.forEach((q) => { if (q[2] !== 'x') q[1](); }); return; }   // 끝 모양 그림(설명 카드): 'x' 표시한 마지막 지우기 단계는 건너뛴다
+    const tms = [], run = () => { if (!host.isConnected) { tms.forEach(clearTimeout); return; } build(); let t = 0; steps.forEach((q) => { t += q[0]; tms.push(setTimeout(() => { if (host.isConnected) q[1](); }, t)); }); tms.push(setTimeout(run, t + (hold || 1700))); };
+    run();
+  };
+  M.draw = (parent, spec, still) => { const f = M.fn[(spec && spec.app) || T.app]; if (!f) return null; const host = el('div', 'cut-mini', parent); try { f(host, spec, !!still); } catch (e) { host.remove(); return null; } return host; };
+  /* 공용 간이 미니(그림 함수가 따로 없는 앱): ② 식탁 온기 · ④ 색칠 · ⑤ 질문 고르기. 이모지·세 가족 얼굴 그림만 쓴다 */
+  M.reg('idle', (host, s, still) => {   // 식탁의 음식을 톡 → 온기 +1, 온기 막대가 차 오른다 (k:'story' 면 막대가 가득 차 사연 책이 열린다)
+    const col = el('div', 'tm-col', host), tb = el('div', 'tm-table', col), bar = el('div', 'tm-bar', col); let food, f1, up;
+    const build = () => { tb.innerHTML = bar.innerHTML = ''; food = el('b', 'tm-food', tb, s.k === 'story' ? '📖' : '🍲'); ['🍚', '🥬', '🍳'].forEach((e) => el('b', 'tm-side', tb, e)); up = el('i', '', bar); up.style.width = s.k === 'story' ? '78%' : '20%'; f1 = el('em', 'tm-plus', tb, s.k === 'story' ? '✨' : '♨ +1'); f1.style.opacity = 0; };
+    M.loop(host, build, [[900, () => { food.style.transform = 'scale(1.25)'; f1.style.opacity = 1; f1.style.transform = 'translateY(-14px)'; up.style.width = s.k === 'story' ? '100%' : '45%'; }]], still);
+  });
+  M.reg('color', (host, s, still) => {   // 크레파스가 지나가며 그림에 색이 번진다
+    const w = el('div', 'tm-paint', host); let pen, fill;
+    const build = () => { w.innerHTML = '<svg viewBox="0 0 160 130" width="190" height="150"><path d="M20 62L80 12l60 50v56H20z" fill="#fff" stroke="#8A5A3B" stroke-width="5" stroke-linejoin="round"/><rect x="66" y="82" width="28" height="36" rx="4" fill="#fff" stroke="#8A5A3B" stroke-width="4"/></svg>'; fill = el('i', 'tm-fill', w); pen = el('b', 'tm-pen', w, '🖍️'); };
+    M.loop(host, build, [[800, () => { pen.style.left = '120px'; pen.style.top = '60px'; fill.style.opacity = 1; }]], still);
+  });
+  M.reg('quiz', (host, s, still) => {   // 질문 → 하나를 톡 → 닮은 도형(세 가족 중 한 명)이 나온다
+    const ids = ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'], who = ids[(s.who || 0) % 3], col = el('div', 'tm-col', host); let a, b, res;
+    const build = () => { col.innerHTML = ''; const q = el('div', 'tm-q', col, '❓'); const row = el('div', 'tm-opts', col); a = el('b', '', row, '🛋️'); b = el('b', '', row, '🏃'); res = el('div', 'tm-res', host); res.style.opacity = 0; res.appendChild(GF.img(who)); el('span', '', host, ''); };
+    M.loop(host, build, [[900, () => { b.classList.add('pick'); }], [700, () => { res.style.opacity = 1; res.style.transform = 'scale(1)'; }]], still);
+  });
+  M.reg('play', (host, s, still) => {   // ① 놀이터: 장의 놀이 도구(a)가 제자리(b)로 간다. spec.img 가 있으면 그 캐릭터가 그림자 자리로 들어간다
+    const w = el('div', 'tm-day', host); let it, to;
+    const mk = (v, big, p) => { if (v && v.indexOf('.') > 0) { const d = el('div', 'tm-pimg', p); d.appendChild(GF.img(v)); d.style.height = (big ? 130 : 110) + 'px'; return d; } return el('b', 'tm-pe', p, v); };
+    const build = () => { w.innerHTML = ''; w.style.cssText = 'position:relative;width:250px;height:140px'; to = mk(s.b, 1, w); to.style.cssText += ';position:absolute;right:10px;top:12px;font-size:72px' + (s.shadow ? ';filter:brightness(0);opacity:.35' : ''); it = mk(s.a, 0, w); it.style.cssText += ';position:absolute;left:10px;top:24px;font-size:56px;transition:all .8s'; };
+    M.loop(host, build, [[900, () => { it.style.left = '122px'; it.style.top = '18px'; }], [700, () => { if (s.shadow) to.style.cssText += ';filter:none;opacity:1'; w.insertAdjacentHTML('beforeend', '<b class="tm-spk" style="position:absolute;right:20px;top:0;font-size:30px;font-weight:400">✨</b>'); }]], still);
+  });
   const BG = { pigs: 'field', bremen: 'village', gyeonwoo: 'night', bears: 'indoor2', jack: 'hill', kongjwi: 'village', heungbu: 'field', ureng: 'field', axe: 'forest', ant: 'hill', sun: 'night', hare: 'field', brothers: 'field', snowqueen: 'night' };
   /** 데이터 컷 → GF.story 컷. 캐릭터는 id 목록(또는 {id,x,y}), bubble 은 종류 문자열 */
-  T.cuts = (raw, bg) => raw.map((c) => ({ bg: c.bg || bg || 'indoor2', text: c.text, voice: c.voice, chars: (c.chars || []).map((q, k, a) => (typeof q === 'string' ? { id: q, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 } : q)), bubble: c.bubble ? { type: c.bubble, at: 0 } : null }));
+  T.cuts = (raw, bg) => raw.map((c) => ({ bg: c.bg || bg || 'indoor2', text: c.text, voice: c.voice, chars: (c.chars || []).map((q, k, a) => (typeof q === 'string' ? { id: q, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 } : q)), mini: c.mini || null, bubble: c.bubble ? { type: c.bubble, at: 0 } : null }));
   /** 컷 묶음을 화면 위에 띄운다. 끝나거나 건너뛰면 cb(). parent 는 화면 루트 */
   T.play = function (raw, parent, cb, o) {
     o = o || {}; try { GF.ads && GF.ads.noteStory && GF.ads.noteStory(); GF.ops && GF.ops.note && GF.ops.note('story'); } catch (e) {}   // 컷 직후에는 전면 광고 금지
@@ -65,8 +97,15 @@
   /** 처음 나오는 판 종류: 글 한 줄 + (유아는 그림) → 닫으면 cb(손가락 시연은 앱이 이어서) */
   T.explain = function (type, parent, cb) {
     const r = T.ready && T.d.rules && T.d.rules[type]; if (!r || T.seen('r:' + type) || auto()) { if (r && !T.seen('r:' + type)) T.mark('r:' + type); cb && cb(); return false; }
-    T.mark('r:' + type); parent = parent || safe(); const sc = UK.modal({ parent, title: T.kid ? '' : r.title, big: r.icon || '', body: T.kid ? '' : r.text, actions: [{ text: T.kid ? '' : GF.t('ui.tale.ok'), icon: T.kid ? 'play' : undefined, cls: 'green', onclick: () => { cb && cb(); } }] });
-    if (T.kid) { const a = sc.querySelector('.acts .uk-btn'); if (a) a.setAttribute('aria-label', 'ok'); } return true;
+    T.mark('r:' + type); parent = parent || safe();
+    if (r.cuts && r.cuts.length) { T.play(r.cuts, parent, () => T.card(r, parent, cb)); return true; }          // 새 판 종류: 배역이 그 규칙을 보여 주는 컷 → 설명 카드
+    return T.card(r, parent, cb);
+  };
+  T.card = function (r, parent, cb) {
+    const sc = UK.modal({ parent, title: T.kid ? '' : r.title, big: r.icon || '', body: T.kid ? '' : r.text, actions: [{ text: T.kid ? '' : GF.t('ui.tale.ok'), icon: T.kid ? 'play' : undefined, cls: 'green', onclick: () => { cb && cb(); } }] });
+    if (T.kid) { const a = sc.querySelector('.acts .uk-btn'); if (a) a.setAttribute('aria-label', 'ok'); }
+    if (r.mini && M.has(r.mini)) { const sh = sc.querySelector('.uk-sheet'), h = M.draw(sh, r.mini, true); if (h) { h.classList.add('in-card'); const b = sh.querySelector('.body'); sh.insertBefore(h, b || sh.querySelector('.acts')); } }
+    return true;
   };
   /** 설정 「도움말」: 판 종류별 설명을 다시 보기 */
   T.help = function () {

@@ -124,6 +124,24 @@ def build(app, cfg):
     print(app, 'chapters', len(chapters), 'rules', len(rules), 'last', last)
 
 
+def tutorial(app):
+    """D22-1: 스토리를 튜토리얼로 — 프롤로그·1장 시작·판 종류 컷에 미니 판(실제 조각 그림)을 넣는다. 데이터: tools/tutorial_data.py"""
+    from tutorial_data import TUT
+    if app not in TUT: return
+    t = TUT[app]; f = f'data/story_{app}.json'; d = R(f)
+    mk = lambda who, text, mini: dict(text=text, chars=[who], **({'mini': dict(mini, app=app)} if mini else {}))
+    d['prologue'] = [mk(*q) for q in t['pro']]
+    c1 = d['chapters'].get('1')
+    if c1 and t.get('hook'): c1['start'] = [mk(*t['hook'])] + c1['start'][-1:]                       # 배역이 그 동작을 하는 컷 → 이야기 첫 컷
+    first = t['pro'][1][2] or {}
+    for k, r in d['rules'].items():
+        r['text'] = r['text'].split('요. ')[0] + '요.' if '요. ' in r['text'] else r['text']        # 설명 카드는 그림 한 장 + 한 줄
+        if k in t['cuts']: w, tx, mi = t['cuts'][k]; r['cuts'] = [mk(w, tx, mi)]; r['mini'] = dict(mi, app=app)
+        else: r['mini'] = dict(first, app=app)
+    json.dump(d, open(f, 'w', encoding='utf-8'), ensure_ascii=False, indent=1); print(app, 'tutorial', len(d['prologue']), 'cuts', len(t['cuts']))
+
+
 if __name__ == '__main__':
-    for a, c in APPS.items(): build(a, c)
-    for a, c in LIGHT.items(): build_light(a, c)
+    sys.path.insert(0, 'tools')
+    for a, c in APPS.items(): build(a, c); tutorial(a)
+    for a, c in LIGHT.items(): build_light(a, c); tutorial(a)

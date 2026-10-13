@@ -736,12 +736,12 @@
       setTimeout(() => { sc.remove(); onEnd && onEnd(first); }, 1900);
     };
     toysDef.slice().sort(() => rnd() - 0.5).forEach((d, i) => {
-      const t = el('div', 'h2-tidytoy', floor, d.html), W = 340, x = 24 + ((i * 61 + Math.floor(rnd() * 30)) % (W - 100)), y = 14 + ((i * 47 + Math.floor(rnd() * 20)) % 110); t.style.cssText += `;left:${x}px;top:${y}px;font-size:${d.size}px;width:${Math.round(d.size * 1.4)}px;height:${Math.round(d.size * 1.4)}px`; t.dataset.e = d.key; t.dataset.key = d.key; t.dataset.hx = x; t.dataset.hy = y;
+      const t = el('div', 'h2-tidytoy', floor, d.html), W = 340, x = 24 + ((i * 61 + Math.floor(rnd() * 30)) % (W - 100)), hh = Math.round(d.size * 1.4), y = Math.min(14 + ((i * 47 + Math.floor(rnd() * 20)) % 110), 166 - hh); t.style.cssText += `;left:${x}px;top:${y}px;font-size:${d.size}px;width:${Math.round(d.size * 1.4)}px;height:${Math.round(d.size * 1.4)}px`; t.dataset.e = d.key; t.dataset.key = d.key; t.dataset.hx = x; t.dataset.hy = y;
       let ox = 0, oy = 0, drag = false;
-      t.addEventListener('pointerdown', (ev) => { if (t.classList.contains('ok')) return; drag = true; t.setPointerCapture(ev.pointerId); const b = t.getBoundingClientRect(); ox = ev.clientX - b.left; oy = ev.clientY - b.top; t.classList.add('drag'); try { GF.sfx && GF.sfx('tap'); } catch (x2) { /* 소리 */ } });
+      t.addEventListener('pointerdown', (ev) => { if (t.classList.contains('ok')) return; drag = true; sc._drag = (sc._drag || 0) + 1; t.setPointerCapture(ev.pointerId); const b = t.getBoundingClientRect(); ox = ev.clientX - b.left; oy = ev.clientY - b.top; t.classList.add('drag'); try { GF.sfx && GF.sfx('tap'); } catch (x2) { /* 소리 */ } });
       t.addEventListener('pointermove', (ev) => { if (!drag) return; const fb = floor.getBoundingClientRect(), k = fb.width / floor.offsetWidth || 1; t.style.left = (ev.clientX - ox - fb.left) / k + 'px'; t.style.top = (ev.clientY - oy - fb.top) / k + 'px'; });
       const end = () => {
-        if (!drag) return; drag = false; t.classList.remove('drag'); const tb = t.getBoundingClientRect(), cx = tb.left + tb.width / 2, cy = tb.top + tb.height / 2, s2 = slots.find((q) => q.dataset.key === d.key && +q.dataset.n < +q.dataset.cap), sb = s2 && s2.getBoundingClientRect();
+        if (!drag) return; drag = false; sc._drag = Math.max(0, (sc._drag || 1) - 1); sc._lastDrag = Date.now(); t.classList.remove('drag'); const tb = t.getBoundingClientRect(), cx = tb.left + tb.width / 2, cy = tb.top + tb.height / 2, s2 = slots.find((q) => q.dataset.key === d.key && +q.dataset.n < +q.dataset.cap), sb = s2 && s2.getBoundingClientRect();
         if (s2 && Math.hypot(cx - (sb.left + sb.width / 2), cy - (sb.top + sb.height / 2)) <= Math.max(sb.width, 72) * 0.8) {
           const idx = +s2.dataset.n; s2.dataset.n = idx + 1; t.classList.add('ok'); if (+s2.dataset.n >= +s2.dataset.cap) s2.classList.add('filled'); t.style.transition = 'left .2s, top .2s'; const fl = floor.getBoundingClientRect(), k = fl.width / floor.offsetWidth || 1, off = +s2.dataset.cap > 1 ? (idx ? 20 : -20) : 0;
           t.style.left = (sb.left + sb.width / 2 - tb.width / 2 - fl.left + off) / k + 'px'; t.style.top = (sb.top + sb.height / 2 - tb.height / 2 - fl.top) / k + 'px'; try { GF.sfx && GF.sfx('star'); } catch (x2) { /* 소리 */ } if (--left === 0) done();
@@ -749,7 +749,8 @@
       };
       t.addEventListener('pointerup', end); t.addEventListener('pointercancel', end);
     });
-    UK.btn({ icon: 'close', cls: 'ghost', onclick: () => { sc.remove(); onEnd && onEnd(false); } }, el('div', 'h2-tidyx', box)); return sc;
+    const xb = UK.btn({ icon: 'close', cls: 'ghost', onclick: () => {} }, el('div', 'h2-tidyx', box)); xb.setAttribute('aria-label', 'close'); let hold = null;      // 닫기는 꾹 눌러야(0.7초) 닫힌다 — 끌다가 실수로 눌러도 놀이가 꺼지지 않게
+    xb.addEventListener('pointerdown', () => { if (sc._drag || Date.now() - (sc._lastDrag || 0) < 600) return; xb.classList.add('holding'); hold = setTimeout(() => { sc.remove(); onEnd && onEnd(false); }, 700); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => xb.addEventListener(ev, () => { clearTimeout(hold); xb.classList.remove('holding'); })); return sc;
   };
   /* ---------------- 우리 집 앨범(A10): 장 완료·집 레벨·새 방·첫 손님·사진 저장의 순간이 날짜 도장과 함께 자동으로 쌓인다 ---------------- */
   const AL_ICON = { day: '📅', tidy: '🧺', set: '🎬', chapter: '📖', level: '⭐', room: '🚪', guest: '👋', photo: '📷', loot: '🎁' };

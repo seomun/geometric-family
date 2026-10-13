@@ -26,7 +26,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   }
   await p.waitForTimeout(500); ok(await p.evaluate(() => !!document.querySelector('.h2-tidystar')), '다 놓으면 큰 별'); await p.screenshot({ path: 'notes/snapshots/a12_tidy_done.png' });
   await p.waitForTimeout(2300); ok(await p.evaluate(() => !document.querySelector('.h2-tidy') && Room.S.tidyN === 1 && Room.S.album.some((a) => a.kind === 'tidy')), '끝나면 닫히고 앨범에 기록(하루 한 번)');
-  await p.click('.h2-tidychip'); await p.waitForTimeout(400); await p.evaluate(() => document.querySelector('.h2-tidyx .uk-btn').click()); await p.waitForTimeout(300);
+  await p.click('.h2-tidychip'); await p.waitForTimeout(400); { const xb = await p.locator('.h2-tidyx .uk-btn').boundingBox(); await p.mouse.move(xb.x + xb.width / 2, xb.y + xb.height / 2); await p.mouse.down(); await p.waitForTimeout(1000); await p.mouse.up(); } await p.waitForTimeout(300);
   await p.click('.h2-tidychip'); await p.waitForTimeout(400);
   for (let i = 0; i < 5; i++) { const tb = await p.locator('.h2-tidytoy:not(.ok)').first().boundingBox(), e = await p.locator('.h2-tidytoy:not(.ok)').first().getAttribute('data-e'), s = await slotOf(e); await p.mouse.move(tb.x + tb.width / 2, tb.y + tb.height / 2); await p.mouse.down(); await p.mouse.move(s.x, s.y, { steps: 6 }); await p.mouse.up(); await p.waitForTimeout(300); }
   await p.waitForTimeout(2600); ok(await p.evaluate(() => Room.S.tidyN === 1 && Room.S.album.filter((a) => a.kind === 'tidy').length === 1), '같은 날 또 해도 기록은 한 번(놀이는 계속 가능)');
@@ -52,5 +52,13 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
     }
     await p.waitForTimeout(500); ok(await p.evaluate(() => !!document.querySelector('.h2-tidystar')), mode + ': 다 놓으면 큰 별'); await p.screenshot({ path: 'notes/snapshots/a21_tidy_' + mode + '_done.png' }); await p.waitForTimeout(2200);
   }
+  // 닫기 안전(B22 전 수정): 장난감 놓는 칸(바닥) ∩ 닫기 버튼 = 0 · 살짝 눌러선 안 닫힘 · 끄는 중엔 무시
+  for (const mode of ['shadow', 'color', 'size']) {
+    await p.evaluate((m) => { document.querySelectorAll('.h2-tidy').forEach((e) => e.remove()); Room.tidyGame(document.querySelector('.screen.on') || document.body, null, m); }, mode); await p.waitForTimeout(400);
+    const g = await p.evaluate(() => { const f = document.querySelector('.h2-tidyfloor').getBoundingClientRect(), x = document.querySelector('.h2-tidyx .uk-btn').getBoundingClientRect(), ts = [...document.querySelectorAll('.h2-tidytoy')].map((t) => t.getBoundingClientRect()); const hit = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top; return { floorX: hit(f, x), toysX: ts.some((t) => hit(t, x)), inFloor: ts.every((t) => t.bottom <= f.bottom + 1 && t.top >= f.top - 1) }; });
+    ok(!g.floorX && !g.toysX && g.inFloor, mode + ': 놓는 칸 ∩ 닫기 버튼 = 0 · 장난감이 칸 안 ' + JSON.stringify(g));
+  }
+  await p.evaluate(() => { document.querySelectorAll('.h2-tidy').forEach((e) => e.remove()); Room.tidyGame(document.querySelector('.screen.on') || document.body, null, 'size'); }); await p.waitForTimeout(400);
+  { const xb = await p.locator('.h2-tidyx .uk-btn').boundingBox(); await p.mouse.move(xb.x + xb.width / 2, xb.y + xb.height / 2); await p.mouse.down(); await p.waitForTimeout(200); await p.mouse.up(); await p.waitForTimeout(900); ok(await p.evaluate(() => !!document.querySelector('.h2-tidy')), '닫기를 살짝 누르면 안 닫힘'); await p.mouse.down(); await p.waitForTimeout(1000); await p.mouse.up(); await p.waitForTimeout(200); ok(await p.evaluate(() => !document.querySelector('.h2-tidy')), '꾹(0.7초) 누르면 닫힘'); }
   ok(errs.length === 0, '오류 없음 ' + (errs[0] || '')); await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

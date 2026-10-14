@@ -5,9 +5,9 @@ const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m
   await p.goto('http://localhost:8765/games/expedition/index.html'); await p.waitForTimeout(1500);
   await p.evaluate(() => { const E = EXP.debug; E.reset(); E.S().flags.prologue = 1; E.save(); GF.stack = []; GF.go('xhome'); }); await p.waitForTimeout(900);
   const d = await p.evaluate(() => GF.data.expedition_slice.units.map((u) => ({ id: u.id, l: u.lines })));
-  ok(d.length === 40 && d.every((u) => u.l && u.l.length === 2 && u.l.every((t) => t.length >= 8 && t.length <= 34)), '동료 ' + d.length + '명 모두 2줄(8~34자)');
+  ok(d.length === 43 && d.every((u) => u.l && u.l.length === 2 && u.l.every((t) => t.length >= 8 && t.length <= 34)), '동료 ' + d.length + '명 모두 2줄(8~34자)');
   const bad = /왜 안|빨리|더 해야|안 오|늦|못했|실망/; ok(!d.some((u) => u.l.some((t) => bad.test(t))), '압박·재촉 말투 없음');
-  ok(new Set(d.flatMap((u) => u.l)).size === 80, '80줄 모두 서로 다름');
+  ok(new Set(d.flatMap((u) => u.l)).size === 86, '86줄 모두 서로 다름');
   const first = await p.evaluate(() => document.querySelector('.ex-fam .ex-art').dataset.uid);
   await p.click('.ex-fam .ex-art >> nth=0'); await p.waitForTimeout(350);
   const t1 = await p.evaluate(() => document.querySelector('.ex-say') && document.querySelector('.ex-say').textContent);

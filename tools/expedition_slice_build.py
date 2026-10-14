@@ -50,6 +50,7 @@ exec(open('tools/expedition_nations3.py', encoding='utf-8').read())   # 7~9나�
 exec(open('tools/expedition_nations4.py', encoding='utf-8').read())   # 10~12나라 확장(144칸, B20)
 exec(open('tools/expedition_nations5.py', encoding='utf-8').read())   # 13~15나라 확장(180칸, B23)
 exec(open('tools/expedition_nations6.py', encoding='utf-8').read())   # 16~18나라 확장(216칸, B25)
+exec(open('tools/expedition_nations7.py', encoding='utf-8').read())   # 19~21나라 확장(252칸, B28)
 exec(open('tools/expedition_book.py', encoding='utf-8').read())   # 나라별 그림책 8컷(D10)
 exec(open('tools/expedition_wkboss.py', encoding='utf-8').read())   # 주간 협동 보스(B26)
 exec(open('tools/expedition_curve.py', encoding='utf-8').read())   # 레벨 상한·성장 곡선(B27, 맨 마지막)

@@ -185,6 +185,14 @@
     "kind": "helper",
     "family": "outside",
     "only": null
+   },
+   {
+    "role": "제비 둥지 옆 참새",
+    "adult": "참새(가족 밖, 제비 둥지 옆에 살며 박씨 이야기를 지켜보던 순한 이웃)",
+    "kid": "참새(가족 밖, 제비 둥지 옆에 살며 박씨 이야기를 지켜보던 순한 이웃)",
+    "kind": "helper",
+    "family": "outside",
+    "only": null
    }
   ],
   "bremen": [
@@ -253,6 +261,14 @@
     "kind": "funny",
     "family": "dong",
     "only": null
+   },
+   {
+    "role": "노래를 엿듣던 산 부엉이",
+    "adult": "부엉이(가족 밖, 밤마다 노래를 엿듣던 순한 이웃)",
+    "kid": "부엉이(가족 밖, 밤마다 노래를 엿듣던 순한 이웃)",
+    "kind": "helper",
+    "family": "outside",
+    "only": null
    }
   ],
   "axe": [
@@ -278,6 +294,14 @@
     "kid": "엄마",
     "kind": "funny",
     "family": "nemo",
+    "only": null
+   },
+   {
+    "role": "연못가의 개구리",
+    "adult": "개구리(가족 밖, 연못가에서 도끼 소동을 구경하던 순한 이웃)",
+    "kid": "개구리(가족 밖, 연못가에서 도끼 소동을 구경하던 순한 이웃)",
+    "kind": "helper",
+    "family": "outside",
     "only": null
    }
   ],
@@ -1023,6 +1047,12 @@
      "who": "제비(art.swallow)",
      "kind": "helper",
      "family": "outside"
+    },
+    {
+     "role": "제비 둥지 옆 참새",
+     "who": "참새(가족 밖, 제비 둥지 옆에 살며 박씨 이야기를 지켜보던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "식구 많은 흥부가 제비를 도와 박씨를 받는다, 놀부는 따라 하다 풍물패가 쏟아져 함께 잔치",
@@ -1111,6 +1141,12 @@
      "who": "동그라미 아빠",
      "kind": "funny",
      "family": "dong"
+    },
+    {
+     "role": "노래를 엿듣던 산 부엉이",
+     "who": "부엉이(가족 밖, 밤마다 노래를 엿듣던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "노래 주머니 혹과 도깨비 방망이 뚝딱, 따라 한 영감은 혹이 하나 더 붙고 함께 노래",
@@ -1149,6 +1185,12 @@
      "who": "네모 엄마",
      "kind": "funny",
      "family": "nemo"
+    },
+    {
+     "role": "연못가의 개구리",
+     "who": "개구리(가족 밖, 연못가에서 도끼 소동을 구경하던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "정직한 나무꾼은 금·은·쇠 도끼를 모두 받고, 따라 한 이웃은 웃음이 터져 쇠도끼만 받는다",
@@ -1650,6 +1692,12 @@
      "who": "제비(art.swallow)",
      "kind": "helper",
      "family": "outside"
+    },
+    {
+     "role": "제비 둥지 옆 참새",
+     "who": "참새(가족 밖, 제비 둥지 옆에 살며 박씨 이야기를 지켜보던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "식구 많은 흥부가 제비를 도와 박씨를 받는다, 놀부는 따라 하다 풍물패가 쏟아져 함께 잔치",
@@ -1725,6 +1773,12 @@
      "who": "네모 엄마",
      "kind": "funny",
      "family": "nemo"
+    },
+    {
+     "role": "연못가의 개구리",
+     "who": "개구리(가족 밖, 연못가에서 도끼 소동을 구경하던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "정직한 나무꾼은 금·은·쇠 도끼를 모두 받고, 따라 한 이웃은 웃음이 터져 쇠도끼만 받는다",
@@ -2178,6 +2232,12 @@
      "who": "제비(art.swallow)",
      "kind": "helper",
      "family": "outside"
+    },
+    {
+     "role": "제비 둥지 옆 참새",
+     "who": "참새(가족 밖, 제비 둥지 옆에 살며 박씨 이야기를 지켜보던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "식구 많은 흥부가 제비를 도와 박씨를 받는다, 놀부는 따라 하다 풍물패가 쏟아져 함께 잔치",
@@ -2253,6 +2313,12 @@
      "who": "네모 엄마",
      "kind": "funny",
      "family": "nemo"
+    },
+    {
+     "role": "연못가의 개구리",
+     "who": "개구리(가족 밖, 연못가에서 도끼 소동을 구경하던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "정직한 나무꾼은 금·은·쇠 도끼를 모두 받고, 따라 한 이웃은 웃음이 터져 쇠도끼만 받는다",
@@ -2706,6 +2772,12 @@
      "who": "제비(art.swallow)",
      "kind": "helper",
      "family": "outside"
+    },
+    {
+     "role": "제비 둥지 옆 참새",
+     "who": "참새(가족 밖, 제비 둥지 옆에 살며 박씨 이야기를 지켜보던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "식구 많은 흥부가 제비를 도와 박씨를 받는다, 놀부는 따라 하다 풍물패가 쏟아져 함께 잔치",
@@ -2781,6 +2853,12 @@
      "who": "네모 엄마",
      "kind": "funny",
      "family": "nemo"
+    },
+    {
+     "role": "연못가의 개구리",
+     "who": "개구리(가족 밖, 연못가에서 도끼 소동을 구경하던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "정직한 나무꾼은 금·은·쇠 도끼를 모두 받고, 따라 한 이웃은 웃음이 터져 쇠도끼만 받는다",
@@ -3030,6 +3108,12 @@
      "who": "엄마",
      "kind": "funny",
      "family": "nemo"
+    },
+    {
+     "role": "연못가의 개구리",
+     "who": "개구리(가족 밖, 연못가에서 도끼 소동을 구경하던 순한 이웃)",
+     "kind": "helper",
+     "family": "outside"
     }
    ],
    "line": "정직한 아빠는 금도끼 은도끼를 모두 받고, 따라 한 엄마는 웃음이 터져요.",

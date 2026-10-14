@@ -15,10 +15,10 @@ CAST = {
     'bears': [('큰 곰', 'dong_dad', 'lead'), ('중간 곰', 'dong_mom', 'lead'), ('아기 곰', 'dong_son', 'lead'), ('길 잃은 손님(소녀)', 'semo_w', 'funny')],
     'shoes': [('가난한 구두장이', 'nemo_dad', 'lead'), ('구두장이 아내', 'nemo_mom', 'helper'), ('밤의 작은 요정들', O('요정(art.fairy)'), 'helper')],
     'kongjwi': [('콩쥐', 'kid1', 'lead'), ('팥쥐', 'kid2', 'funny'), ('도와주는 두꺼비', 'dong_dad', 'helper'), ('꽃신 주인을 찾는 원님', 'semo_h', 'helper'), ('일을 시키는 새엄마', O('깐깐한 아주머니(가족 밖, 목소리만)'), 'villain'), ('벼를 까 주는 새(유아 앱)', 'baby', 'helper', 'kid')],
-    'heungbu': [('흥부', 'nemo_dad', 'lead'), ('흥부 아내', 'nemo_mom', 'helper'), ('놀부', 'semo_h', 'funny'), ('제비', O('제비(art.swallow)'), 'helper')],
+    'heungbu': [('흥부', 'nemo_dad', 'lead'), ('흥부 아내', 'nemo_mom', 'helper'), ('놀부', 'semo_h', 'funny'), ('제비', O('제비(art.swallow)'), 'helper'), ('제비 둥지 옆 참새', O('참새(가족 밖, 제비 둥지 옆에 살며 박씨 이야기를 지켜보던 순한 이웃)'), 'helper')],
     'bremen': [('당나귀', 'nemo_dad', 'lead'), ('개', 'semo_h', 'lead'), ('고양이', 'semo_w', 'lead'), ('수탉', 'dong_dad', 'lead'), ('도둑들', O('허깨비 도둑(가족 밖, 소리·그림자)'), 'villain')],
-    'hok': [('혹부리 영감', 'nemo_dad', 'lead'), ('도깨비', O('도깨비(art.dokkaebi, 순한 판)'), 'villain'), ('따라 하는 욕심쟁이 영감', 'dong_dad', 'funny')],
-    'axe': [('나무꾼', 'nemo_dad', 'lead'), ('산신령', 'dong_dad', 'helper'), ('욕심쟁이 이웃', 'nemo_mom', 'funny')],
+    'hok': [('혹부리 영감', 'nemo_dad', 'lead'), ('도깨비', O('도깨비(art.dokkaebi, 순한 판)'), 'villain'), ('따라 하는 욕심쟁이 영감', 'dong_dad', 'funny'), ('노래를 엿듣던 산 부엉이', O('부엉이(가족 밖, 밤마다 노래를 엿듣던 순한 이웃)'), 'helper')],
+    'axe': [('나무꾼', 'nemo_dad', 'lead'), ('산신령', 'dong_dad', 'helper'), ('욕심쟁이 이웃', 'nemo_mom', 'funny'), ('연못가의 개구리', O('개구리(가족 밖, 연못가에서 도끼 소동을 구경하던 순한 이웃)'), 'helper')],
     'sun': [('누나(해님)', 'kid1', 'lead'), ('동생(달님)', 'kid3', 'lead'), ('떡 팔러 간 엄마', 'nemo_mom', 'helper'), ('호랑이 → 바람 호랑이', O('바람 호랑이(가족 밖, 소리·그림자)'), 'villain')],
     'ant': [('개미', 'nemo_mom', 'lead'), ('베짱이', 'semo_h', 'funny'), ('지켜보는 이웃', 'dong_dad', 'helper'), ('열매를 함께 모으는 막내 개미(유아 앱)', 'baby', 'helper', 'kid'), ('여름 내내 노래하던 매미', O('매미(가족 밖, 여름 내내 노래하던 순한 이웃)'), 'helper')],      # B25 포섭 자리(가족 밖)
     'pino': [('제페토(목수)', 'nemo_dad', 'lead'), ('피노키오(나무 인형)', 'baby', 'funny'), ('파란 요정', O('요정(art.fairy)'), 'helper'), ('여우(사기꾼 흉내, 순한 판)', O('여우(가족 밖, 사기꾼 흉내만 내던 순한 판)'), 'villain')],      # B23 포섭 자리(가족 밖 악역, 허브 방침)

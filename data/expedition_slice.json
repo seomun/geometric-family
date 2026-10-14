@@ -668,6 +668,54 @@
     "끝까지 가는 모두에게 호루라기를 불어 줄게요.",
     "누가 이기든 괜찮아요. 완주가 제일이에요."
    ]
+  },
+  {
+   "id": "u_sparrow",
+   "name": "참새",
+   "art": null,
+   "role": "attacker",
+   "el": "flash",
+   "grade": 4,
+   "route": "recruit",
+   "emoji": "🐤",
+   "note": "포섭 · 19나라 마지막(제비 둥지 옆 참새, 박씨 이야기를 먼발치서 지켜보던 순한 이웃)",
+   "tale": "박 마을의 참새. 제비집 옆에서 이야기를 지켜보던 순한 이웃이 따뜻한 죽 한 숟갈에 마음을 열었어요.",
+   "lines": [
+    "박씨 이야기, 또 들려줘요! 저는 잘 들어요.",
+    "죽 한 숟갈이 이렇게 따뜻한 줄 몰랐어요."
+   ]
+  },
+  {
+   "id": "u_owl",
+   "name": "부엉이",
+   "art": null,
+   "role": "healer",
+   "el": "care",
+   "grade": 4,
+   "route": "recruit",
+   "emoji": "🦉",
+   "note": "포섭 · 20나라 마지막(밤마다 혹부리 영감의 노래를 엿듣던 산 부엉이)",
+   "tale": "노래 골짜기의 부엉이. 밤마다 노래를 엿듣던 이웃이 혹부리 영감과 함께 노래하게 되었어요.",
+   "lines": [
+    "부엉— 오늘 밤 노래도 기대돼요.",
+    "엿들어서 미안했어요. 이제는 같이 불러요."
+   ]
+  },
+  {
+   "id": "u_frog",
+   "name": "개구리",
+   "art": null,
+   "role": "tank",
+   "el": "support",
+   "grade": 4,
+   "route": "recruit",
+   "emoji": "🐸",
+   "note": "포섭 · 21나라 마지막(연못가에서 도끼 소동을 구경하던 개구리)",
+   "tale": "금도끼 연못의 개구리. 정직한 나무꾼을 지켜보던 이웃이 연잎 위에서 박수를 치게 되었어요.",
+   "lines": [
+    "개굴! 연못 소식은 제가 알려 줄게요.",
+    "정직한 사람이 제일 멋져요. 박수 짝짝!"
+   ]
   }
  ],
  "stages": [
@@ -9166,6 +9214,1416 @@
    ],
    "boss": true,
    "recruit": "u_crane"
+  },
+  {
+   "id": 217,
+   "name": "박 마을 입구",
+   "scale": 1.0,
+   "gold": 20952813,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "박씨 꼬마",
+     "emoji": "🌱",
+     "role": "healer",
+     "el": "care",
+     "k": 4.125
+    },
+    {
+     "name": "덩굴 꼬마",
+     "emoji": "🌿",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.303
+    },
+    {
+     "name": "톱질 꼬마",
+     "emoji": "🪚",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.48
+    }
+   ],
+   "tip": "19나라: 박 마을의 적이에요. 번쩍(△) 적은 돌보기(◯) 친구가 잘 막아요."
+  },
+  {
+   "id": 218,
+   "name": "초가지붕 길",
+   "scale": 1.0,
+   "gold": 22105217,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "보름달 꼬마",
+     "emoji": "🌕",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.137
+    },
+    {
+     "name": "박 속 꼬마",
+     "emoji": "🎃",
+     "role": "support",
+     "el": "care",
+     "k": 4.315
+    },
+    {
+     "name": "박씨 꼬마",
+     "emoji": "🌱",
+     "role": "healer",
+     "el": "care",
+     "k": 4.492
+    }
+   ]
+  },
+  {
+   "id": 219,
+   "name": "제비집 처마",
+   "scale": 1.0,
+   "gold": 23321004,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "제비집 그림자",
+     "emoji": "🪹",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.148
+    },
+    {
+     "name": "초가지붕 꼬마",
+     "emoji": "🏠",
+     "role": "tank",
+     "el": "support",
+     "k": 4.326
+    },
+    {
+     "name": "보름달 꼬마",
+     "emoji": "🌕",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.505
+    },
+    {
+     "name": "박 속 꼬마",
+     "emoji": "🎃",
+     "role": "support",
+     "el": "care",
+     "k": 4.683
+    }
+   ]
+  },
+  {
+   "id": 220,
+   "name": "고쳐 준 다리",
+   "scale": 1.0,
+   "gold": 24603660,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "덩굴 꼬마",
+     "emoji": "🌿",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.159
+    },
+    {
+     "name": "톱질 꼬마",
+     "emoji": "🪚",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.338
+    },
+    {
+     "name": "제비집 그림자",
+     "emoji": "🪹",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.517
+    },
+    {
+     "name": "초가지붕 꼬마",
+     "emoji": "🏠",
+     "role": "tank",
+     "el": "support",
+     "k": 4.696
+    }
+   ]
+  },
+  {
+   "id": 221,
+   "name": "박씨 심는 마당",
+   "scale": 1.0,
+   "gold": 25956861,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "박 속 꼬마",
+     "emoji": "🎃",
+     "role": "support",
+     "el": "care",
+     "k": 4.17
+    },
+    {
+     "name": "박씨 꼬마",
+     "emoji": "🌱",
+     "role": "healer",
+     "el": "care",
+     "k": 4.349
+    },
+    {
+     "name": "덩굴 꼬마",
+     "emoji": "🌿",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.529
+    },
+    {
+     "name": "톱질 꼬마",
+     "emoji": "🪚",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.708
+    }
+   ]
+  },
+  {
+   "id": 222,
+   "name": "덩굴 지킴이",
+   "scale": 1.0,
+   "gold": 27384488,
+   "gems": 100,
+   "enemies": [
+    {
+     "name": "초가지붕 꼬마",
+     "emoji": "🏠",
+     "role": "tank",
+     "el": "support",
+     "k": 4.181
+    },
+    {
+     "name": "덩굴 지킴이",
+     "emoji": "🌿",
+     "role": "tank",
+     "el": "care",
+     "k": 4.676
+    },
+    {
+     "name": "박 속 꼬마",
+     "emoji": "🎃",
+     "role": "attacker",
+     "el": "care",
+     "k": 4.541
+    },
+    {
+     "name": "박씨 꼬마",
+     "emoji": "🌱",
+     "role": "healer",
+     "el": "care",
+     "k": 4.721
+    }
+   ],
+   "mid": true
+  },
+  {
+   "id": 223,
+   "name": "보름달 지붕",
+   "scale": 1.0,
+   "gold": 28890635,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "톱질 꼬마",
+     "emoji": "🪚",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.192
+    },
+    {
+     "name": "제비집 그림자",
+     "emoji": "🪹",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.373
+    },
+    {
+     "name": "초가지붕 꼬마",
+     "emoji": "🏠",
+     "role": "tank",
+     "el": "support",
+     "k": 4.553
+    },
+    {
+     "name": "보름달 꼬마",
+     "emoji": "🌕",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.733
+    }
+   ]
+  },
+  {
+   "id": 224,
+   "name": "톱질 마당",
+   "scale": 1.0,
+   "gold": 30479620,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "박씨 꼬마",
+     "emoji": "🌱",
+     "role": "healer",
+     "el": "care",
+     "k": 4.204
+    },
+    {
+     "name": "덩굴 꼬마",
+     "emoji": "🌿",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.384
+    },
+    {
+     "name": "톱질 꼬마",
+     "emoji": "🪚",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.565
+    },
+    {
+     "name": "제비집 그림자",
+     "emoji": "🪹",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.746
+    },
+    {
+     "name": "초가지붕 꼬마",
+     "emoji": "🏠",
+     "role": "tank",
+     "el": "support",
+     "k": 4.927
+    }
+   ]
+  },
+  {
+   "id": 225,
+   "name": "박 속 곳간",
+   "scale": 1.0,
+   "gold": 32155999,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "보름달 꼬마",
+     "emoji": "🌕",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.215
+    },
+    {
+     "name": "박 속 꼬마",
+     "emoji": "🎃",
+     "role": "support",
+     "el": "care",
+     "k": 4.396
+    },
+    {
+     "name": "박씨 꼬마",
+     "emoji": "🌱",
+     "role": "healer",
+     "el": "care",
+     "k": 4.577
+    },
+    {
+     "name": "덩굴 꼬마",
+     "emoji": "🌿",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.759
+    },
+    {
+     "name": "톱질 꼬마",
+     "emoji": "🪚",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.94
+    }
+   ]
+  },
+  {
+   "id": 226,
+   "name": "놀부네 대문",
+   "scale": 1.0,
+   "gold": 33924579,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "제비집 그림자",
+     "emoji": "🪹",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.226
+    },
+    {
+     "name": "초가지붕 꼬마",
+     "emoji": "🏠",
+     "role": "tank",
+     "el": "support",
+     "k": 4.408
+    },
+    {
+     "name": "보름달 꼬마",
+     "emoji": "🌕",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.589
+    },
+    {
+     "name": "박 속 꼬마",
+     "emoji": "🎃",
+     "role": "support",
+     "el": "care",
+     "k": 4.771
+    },
+    {
+     "name": "박씨 꼬마",
+     "emoji": "🌱",
+     "role": "healer",
+     "el": "care",
+     "k": 4.953
+    }
+   ]
+  },
+  {
+   "id": 227,
+   "name": "화해의 마루",
+   "scale": 1.0,
+   "gold": 35790431,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "덩굴 꼬마",
+     "emoji": "🌿",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.237
+    },
+    {
+     "name": "톱질 꼬마",
+     "emoji": "🪚",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.419
+    },
+    {
+     "name": "제비집 그림자",
+     "emoji": "🪹",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.602
+    },
+    {
+     "name": "초가지붕 꼬마",
+     "emoji": "🏠",
+     "role": "tank",
+     "el": "support",
+     "k": 4.784
+    },
+    {
+     "name": "보름달 꼬마",
+     "emoji": "🌕",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.966
+    }
+   ]
+  },
+  {
+   "id": 228,
+   "name": "참새",
+   "scale": 1.0,
+   "gold": 43422741,
+   "gems": 150,
+   "enemies": [
+    {
+     "name": "박 속 꼬마",
+     "emoji": "🎃",
+     "role": "support",
+     "el": "care",
+     "k": 4.248
+    },
+    {
+     "name": "참새",
+     "emoji": "🐤",
+     "role": "attacker",
+     "el": "flash",
+     "k": 5.39,
+     "lock": 0.25
+    },
+    {
+     "name": "박씨 꼬마",
+     "emoji": "🌱",
+     "role": "healer",
+     "el": "care",
+     "k": 4.431
+    },
+    {
+     "name": "덩굴 꼬마",
+     "emoji": "🌿",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.614
+    },
+    {
+     "name": "톱질 꼬마",
+     "emoji": "🪚",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.796
+    }
+   ],
+   "boss": true,
+   "recruit": "u_sparrow"
+  },
+  {
+   "id": 229,
+   "name": "노래 골짜기 입구",
+   "scale": 1.0,
+   "gold": 39835644,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "골짜기 바람 꼬마",
+     "emoji": "🍃",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.259
+    },
+    {
+     "name": "달빛 꼬마",
+     "emoji": "🌙",
+     "role": "healer",
+     "el": "care",
+     "k": 4.443
+    },
+    {
+     "name": "한밤 숲 꼬마",
+     "emoji": "🌲",
+     "role": "tank",
+     "el": "support",
+     "k": 4.626
+    }
+   ],
+   "tip": "20나라: 노래 골짜기의 적이에요. 돌보기(◯) 적에겐 받치기(◻) 친구가 유리해요."
+  },
+  {
+   "id": 230,
+   "name": "나무 그늘 오솔길",
+   "scale": 1.0,
+   "gold": 42026605,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "방망이 그림자",
+     "emoji": "🪵",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.271
+    },
+    {
+     "name": "메아리 꼬마",
+     "emoji": "🔔",
+     "role": "mage",
+     "el": "care",
+     "k": 4.454
+    },
+    {
+     "name": "골짜기 바람 꼬마",
+     "emoji": "🍃",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.638
+    }
+   ]
+  },
+  {
+   "id": 231,
+   "name": "혹 구름 고개",
+   "scale": 1.0,
+   "gold": 44338068,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "노래 주머니 꼬마",
+     "emoji": "🎵",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.282
+    },
+    {
+     "name": "혹 구름",
+     "emoji": "☁️",
+     "role": "tank",
+     "el": "care",
+     "k": 4.466
+    },
+    {
+     "name": "방망이 그림자",
+     "emoji": "🪵",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.65
+    },
+    {
+     "name": "메아리 꼬마",
+     "emoji": "🔔",
+     "role": "mage",
+     "el": "care",
+     "k": 4.834
+    }
+   ]
+  },
+  {
+   "id": 232,
+   "name": "달빛 개울",
+   "scale": 1.0,
+   "gold": 46776662,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "달빛 꼬마",
+     "emoji": "🌙",
+     "role": "healer",
+     "el": "care",
+     "k": 4.293
+    },
+    {
+     "name": "한밤 숲 꼬마",
+     "emoji": "🌲",
+     "role": "tank",
+     "el": "support",
+     "k": 4.478
+    },
+    {
+     "name": "노래 주머니 꼬마",
+     "emoji": "🎵",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.662
+    },
+    {
+     "name": "혹 구름",
+     "emoji": "☁️",
+     "role": "tank",
+     "el": "care",
+     "k": 4.847
+    }
+   ]
+  },
+  {
+   "id": 233,
+   "name": "한밤 숲 어귀",
+   "scale": 1.0,
+   "gold": 49349378,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "메아리 꼬마",
+     "emoji": "🔔",
+     "role": "mage",
+     "el": "care",
+     "k": 4.304
+    },
+    {
+     "name": "골짜기 바람 꼬마",
+     "emoji": "🍃",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.489
+    },
+    {
+     "name": "달빛 꼬마",
+     "emoji": "🌙",
+     "role": "healer",
+     "el": "care",
+     "k": 4.674
+    },
+    {
+     "name": "한밤 숲 꼬마",
+     "emoji": "🌲",
+     "role": "tank",
+     "el": "support",
+     "k": 4.859
+    }
+   ]
+  },
+  {
+   "id": 234,
+   "name": "메아리 지킴이",
+   "scale": 1.0,
+   "gold": 52063594,
+   "gems": 100,
+   "enemies": [
+    {
+     "name": "혹 구름",
+     "emoji": "☁️",
+     "role": "tank",
+     "el": "care",
+     "k": 4.315
+    },
+    {
+     "name": "메아리 지킴이",
+     "emoji": "🔔",
+     "role": "tank",
+     "el": "support",
+     "k": 4.826
+    },
+    {
+     "name": "메아리 꼬마",
+     "emoji": "🔔",
+     "role": "attacker",
+     "el": "care",
+     "k": 4.686
+    },
+    {
+     "name": "골짜기 바람 꼬마",
+     "emoji": "🍃",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.872
+    }
+   ],
+   "mid": true
+  },
+  {
+   "id": 235,
+   "name": "노래 주머니 바위",
+   "scale": 1.0,
+   "gold": 54927092,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "한밤 숲 꼬마",
+     "emoji": "🌲",
+     "role": "tank",
+     "el": "support",
+     "k": 4.326
+    },
+    {
+     "name": "노래 주머니 꼬마",
+     "emoji": "🎵",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.512
+    },
+    {
+     "name": "혹 구름",
+     "emoji": "☁️",
+     "role": "tank",
+     "el": "care",
+     "k": 4.699
+    },
+    {
+     "name": "방망이 그림자",
+     "emoji": "🪵",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.885
+    }
+   ]
+  },
+  {
+   "id": 236,
+   "name": "도깨비 잔치 터",
+   "scale": 1.0,
+   "gold": 57948082,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "골짜기 바람 꼬마",
+     "emoji": "🍃",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.338
+    },
+    {
+     "name": "달빛 꼬마",
+     "emoji": "🌙",
+     "role": "healer",
+     "el": "care",
+     "k": 4.524
+    },
+    {
+     "name": "한밤 숲 꼬마",
+     "emoji": "🌲",
+     "role": "tank",
+     "el": "support",
+     "k": 4.711
+    },
+    {
+     "name": "노래 주머니 꼬마",
+     "emoji": "🎵",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.897
+    },
+    {
+     "name": "혹 구름",
+     "emoji": "☁️",
+     "role": "tank",
+     "el": "care",
+     "k": 5.084
+    }
+   ]
+  },
+  {
+   "id": 237,
+   "name": "방망이 나무",
+   "scale": 1.0,
+   "gold": 61135226,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "방망이 그림자",
+     "emoji": "🪵",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.349
+    },
+    {
+     "name": "메아리 꼬마",
+     "emoji": "🔔",
+     "role": "mage",
+     "el": "care",
+     "k": 4.536
+    },
+    {
+     "name": "골짜기 바람 꼬마",
+     "emoji": "🍃",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.723
+    },
+    {
+     "name": "달빛 꼬마",
+     "emoji": "🌙",
+     "role": "healer",
+     "el": "care",
+     "k": 4.91
+    },
+    {
+     "name": "한밤 숲 꼬마",
+     "emoji": "🌲",
+     "role": "tank",
+     "el": "support",
+     "k": 5.097
+    }
+   ]
+  },
+  {
+   "id": 238,
+   "name": "혹 떼는 샘",
+   "scale": 1.0,
+   "gold": 64497664,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "노래 주머니 꼬마",
+     "emoji": "🎵",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.36
+    },
+    {
+     "name": "혹 구름",
+     "emoji": "☁️",
+     "role": "tank",
+     "el": "care",
+     "k": 4.547
+    },
+    {
+     "name": "방망이 그림자",
+     "emoji": "🪵",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.735
+    },
+    {
+     "name": "메아리 꼬마",
+     "emoji": "🔔",
+     "role": "mage",
+     "el": "care",
+     "k": 4.922
+    },
+    {
+     "name": "골짜기 바람 꼬마",
+     "emoji": "🍃",
+     "role": "attacker",
+     "el": "support",
+     "k": 5.11
+    }
+   ]
+  },
+  {
+   "id": 239,
+   "name": "새벽 골짜기",
+   "scale": 1.0,
+   "gold": 68045035,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "달빛 꼬마",
+     "emoji": "🌙",
+     "role": "healer",
+     "el": "care",
+     "k": 4.371
+    },
+    {
+     "name": "한밤 숲 꼬마",
+     "emoji": "🌲",
+     "role": "tank",
+     "el": "support",
+     "k": 4.559
+    },
+    {
+     "name": "노래 주머니 꼬마",
+     "emoji": "🎵",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.747
+    },
+    {
+     "name": "혹 구름",
+     "emoji": "☁️",
+     "role": "tank",
+     "el": "care",
+     "k": 4.935
+    },
+    {
+     "name": "방망이 그림자",
+     "emoji": "🪵",
+     "role": "attacker",
+     "el": "flash",
+     "k": 5.123
+    }
+   ]
+  },
+  {
+   "id": 240,
+   "name": "부엉이",
+   "scale": 1.0,
+   "gold": 82555639,
+   "gems": 150,
+   "enemies": [
+    {
+     "name": "메아리 꼬마",
+     "emoji": "🔔",
+     "role": "mage",
+     "el": "care",
+     "k": 4.382
+    },
+    {
+     "name": "부엉이",
+     "emoji": "🦉",
+     "role": "mage",
+     "el": "care",
+     "k": 5.56,
+     "lock": 0.25
+    },
+    {
+     "name": "골짜기 바람 꼬마",
+     "emoji": "🍃",
+     "role": "attacker",
+     "el": "support",
+     "k": 4.571
+    },
+    {
+     "name": "달빛 꼬마",
+     "emoji": "🌙",
+     "role": "healer",
+     "el": "care",
+     "k": 4.759
+    },
+    {
+     "name": "한밤 숲 꼬마",
+     "emoji": "🌲",
+     "role": "tank",
+     "el": "support",
+     "k": 4.948
+    }
+   ],
+   "boss": true,
+   "recruit": "u_owl"
+  },
+  {
+   "id": 241,
+   "name": "연못 가는 길",
+   "scale": 1.0,
+   "gold": 75735825,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "은빛 잉어",
+     "emoji": "🐟",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.393
+    },
+    {
+     "name": "이끼 꼬마",
+     "emoji": "🍀",
+     "role": "tank",
+     "el": "care",
+     "k": 4.582
+    },
+    {
+     "name": "나뭇단 꼬마",
+     "emoji": "🪵",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.771
+    }
+   ],
+   "tip": "21나라: 금도끼 연못의 적이에요. 받치기(◻) 적에겐 번쩍(△) 친구가 유리해요."
+  },
+  {
+   "id": 242,
+   "name": "나무꾼 오두막",
+   "scale": 1.0,
+   "gold": 79901296,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "연꽃 꼬마",
+     "emoji": "🪷",
+     "role": "support",
+     "el": "support",
+     "k": 4.404
+    },
+    {
+     "name": "연못 물방울",
+     "emoji": "💧",
+     "role": "healer",
+     "el": "care",
+     "k": 4.594
+    },
+    {
+     "name": "은빛 잉어",
+     "emoji": "🐟",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.783
+    }
+   ]
+  },
+  {
+   "id": 243,
+   "name": "도끼 던진 자리",
+   "scale": 1.0,
+   "gold": 84295867,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "도끼 그림자",
+     "emoji": "🪓",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.416
+    },
+    {
+     "name": "금빛 물결",
+     "emoji": "🌊",
+     "role": "mage",
+     "el": "support",
+     "k": 4.606
+    },
+    {
+     "name": "연꽃 꼬마",
+     "emoji": "🪷",
+     "role": "support",
+     "el": "support",
+     "k": 4.795
+    },
+    {
+     "name": "연못 물방울",
+     "emoji": "💧",
+     "role": "healer",
+     "el": "care",
+     "k": 4.985
+    }
+   ]
+  },
+  {
+   "id": 244,
+   "name": "물방울 징검다리",
+   "scale": 1.0,
+   "gold": 88932140,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "이끼 꼬마",
+     "emoji": "🍀",
+     "role": "tank",
+     "el": "care",
+     "k": 4.427
+    },
+    {
+     "name": "나뭇단 꼬마",
+     "emoji": "🪵",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.617
+    },
+    {
+     "name": "도끼 그림자",
+     "emoji": "🪓",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.808
+    },
+    {
+     "name": "금빛 물결",
+     "emoji": "🌊",
+     "role": "mage",
+     "el": "support",
+     "k": 4.998
+    }
+   ]
+  },
+  {
+   "id": 245,
+   "name": "은빛 잉어 연못",
+   "scale": 1.0,
+   "gold": 93823407,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "연못 물방울",
+     "emoji": "💧",
+     "role": "healer",
+     "el": "care",
+     "k": 4.438
+    },
+    {
+     "name": "은빛 잉어",
+     "emoji": "🐟",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.629
+    },
+    {
+     "name": "이끼 꼬마",
+     "emoji": "🍀",
+     "role": "tank",
+     "el": "care",
+     "k": 4.82
+    },
+    {
+     "name": "나뭇단 꼬마",
+     "emoji": "🪵",
+     "role": "tank",
+     "el": "flash",
+     "k": 5.011
+    }
+   ]
+  },
+  {
+   "id": 246,
+   "name": "연못 지킴이",
+   "scale": 1.0,
+   "gold": 98983695,
+   "gems": 100,
+   "enemies": [
+    {
+     "name": "금빛 물결",
+     "emoji": "🌊",
+     "role": "mage",
+     "el": "support",
+     "k": 4.449
+    },
+    {
+     "name": "연못 지킴이",
+     "emoji": "🪷",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.975
+    },
+    {
+     "name": "연못 물방울",
+     "emoji": "💧",
+     "role": "healer",
+     "el": "care",
+     "k": 4.832
+    },
+    {
+     "name": "은빛 잉어",
+     "emoji": "🐟",
+     "role": "mage",
+     "el": "flash",
+     "k": 5.023
+    }
+   ],
+   "mid": true
+  },
+  {
+   "id": 247,
+   "name": "금빛 물결 둑",
+   "scale": 1.0,
+   "gold": 104427798,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "나뭇단 꼬마",
+     "emoji": "🪵",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.46
+    },
+    {
+     "name": "도끼 그림자",
+     "emoji": "🪓",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.652
+    },
+    {
+     "name": "금빛 물결",
+     "emoji": "🌊",
+     "role": "mage",
+     "el": "support",
+     "k": 4.844
+    },
+    {
+     "name": "연꽃 꼬마",
+     "emoji": "🪷",
+     "role": "support",
+     "el": "support",
+     "k": 5.036
+    }
+   ]
+  },
+  {
+   "id": 248,
+   "name": "이끼 낀 바위",
+   "scale": 1.0,
+   "gold": 110171327,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "은빛 잉어",
+     "emoji": "🐟",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.471
+    },
+    {
+     "name": "이끼 꼬마",
+     "emoji": "🍀",
+     "role": "tank",
+     "el": "care",
+     "k": 4.664
+    },
+    {
+     "name": "나뭇단 꼬마",
+     "emoji": "🪵",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.856
+    },
+    {
+     "name": "도끼 그림자",
+     "emoji": "🪓",
+     "role": "attacker",
+     "el": "flash",
+     "k": 5.048
+    },
+    {
+     "name": "금빛 물결",
+     "emoji": "🌊",
+     "role": "mage",
+     "el": "support",
+     "k": 5.241
+    }
+   ]
+  },
+  {
+   "id": 249,
+   "name": "연꽃 정자",
+   "scale": 1.0,
+   "gold": 116230750,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "연꽃 꼬마",
+     "emoji": "🪷",
+     "role": "support",
+     "el": "support",
+     "k": 4.483
+    },
+    {
+     "name": "연못 물방울",
+     "emoji": "💧",
+     "role": "healer",
+     "el": "care",
+     "k": 4.675
+    },
+    {
+     "name": "은빛 잉어",
+     "emoji": "🐟",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.868
+    },
+    {
+     "name": "이끼 꼬마",
+     "emoji": "🍀",
+     "role": "tank",
+     "el": "care",
+     "k": 5.061
+    },
+    {
+     "name": "나뭇단 꼬마",
+     "emoji": "🪵",
+     "role": "tank",
+     "el": "flash",
+     "k": 5.254
+    }
+   ]
+  },
+  {
+   "id": 250,
+   "name": "욕심 마당",
+   "scale": 1.0,
+   "gold": 122623441,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "도끼 그림자",
+     "emoji": "🪓",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.494
+    },
+    {
+     "name": "금빛 물결",
+     "emoji": "🌊",
+     "role": "mage",
+     "el": "support",
+     "k": 4.687
+    },
+    {
+     "name": "연꽃 꼬마",
+     "emoji": "🪷",
+     "role": "support",
+     "el": "support",
+     "k": 4.88
+    },
+    {
+     "name": "연못 물방울",
+     "emoji": "💧",
+     "role": "healer",
+     "el": "care",
+     "k": 5.074
+    },
+    {
+     "name": "은빛 잉어",
+     "emoji": "🐟",
+     "role": "mage",
+     "el": "flash",
+     "k": 5.267
+    }
+   ]
+  },
+  {
+   "id": 251,
+   "name": "정직한 나뭇단 길",
+   "scale": 1.0,
+   "gold": 129367730,
+   "gems": 50,
+   "enemies": [
+    {
+     "name": "이끼 꼬마",
+     "emoji": "🍀",
+     "role": "tank",
+     "el": "care",
+     "k": 4.505
+    },
+    {
+     "name": "나뭇단 꼬마",
+     "emoji": "🪵",
+     "role": "tank",
+     "el": "flash",
+     "k": 4.699
+    },
+    {
+     "name": "도끼 그림자",
+     "emoji": "🪓",
+     "role": "attacker",
+     "el": "flash",
+     "k": 4.892
+    },
+    {
+     "name": "금빛 물결",
+     "emoji": "🌊",
+     "role": "mage",
+     "el": "support",
+     "k": 5.086
+    },
+    {
+     "name": "연꽃 꼬마",
+     "emoji": "🪷",
+     "role": "support",
+     "el": "support",
+     "k": 5.28
+    }
+   ]
+  },
+  {
+   "id": 252,
+   "name": "개구리",
+   "scale": 1.0,
+   "gold": 156955398,
+   "gems": 150,
+   "enemies": [
+    {
+     "name": "연못 물방울",
+     "emoji": "💧",
+     "role": "healer",
+     "el": "care",
+     "k": 4.516
+    },
+    {
+     "name": "개구리",
+     "emoji": "🐸",
+     "role": "tank",
+     "el": "support",
+     "k": 5.73,
+     "lock": 0.25
+    },
+    {
+     "name": "은빛 잉어",
+     "emoji": "🐟",
+     "role": "mage",
+     "el": "flash",
+     "k": 4.71
+    },
+    {
+     "name": "이끼 꼬마",
+     "emoji": "🍀",
+     "role": "tank",
+     "el": "care",
+     "k": 4.905
+    },
+    {
+     "name": "나뭇단 꼬마",
+     "emoji": "🪵",
+     "role": "tank",
+     "el": "flash",
+     "k": 5.099
+    }
+   ],
+   "boss": true,
+   "recruit": "u_frog"
   }
  ],
  "nations": [
@@ -9258,6 +10716,21 @@
    "id": 18,
    "name": "토끼와 거북이 결승선 길",
    "sub": "18나라 · 느리지만 끝까지"
+  },
+  {
+   "id": 19,
+   "name": "흥부와 놀부 박 마을",
+   "sub": "19나라 · 박씨와 제비집"
+  },
+  {
+   "id": 20,
+   "name": "혹부리 영감 노래 골짜기",
+   "sub": "20나라 · 노래와 메아리"
+  },
+  {
+   "id": 21,
+   "name": "금도끼 은도끼 연못",
+   "sub": "21나라 · 정직한 나뭇단"
   }
  ],
  "dungeon": {
@@ -10568,6 +12041,108 @@
       "nemo_dad.joy"
      ]
     }
+   ],
+   "u_sparrow": [
+    {
+     "bg": "village",
+     "text": "참새가 날개를 오므렸다. 「…제비네 이야기가 너무 좋아서, 매일 처마 옆에서 들었어요.」",
+     "chars": [
+      "nemo_mom.good"
+     ]
+    },
+    {
+     "bg": "village",
+     "text": "흥부 아내(네모 엄마)가 박 속 죽을 한 숟갈 덜어 내밀었다. 「같이 먹어요. 이야기도 같이 해요.」",
+     "chars": [
+      "nemo_mom.joy",
+      "nemo_dad.joy"
+     ]
+    },
+    {
+     "bg": "village",
+     "text": "놀부(세모 남편)가 쭈뼛쭈뼛 대문을 열고 들어왔다. 모두가 한 마루에 둘러앉았다.",
+     "chars": [
+      "husband.joy",
+      "baby.joy"
+     ]
+    },
+    {
+     "bg": "village",
+     "text": "참새가 원정대의 친구가 되었다!",
+     "chars": [
+      "baby.joy",
+      "nemo_mom.joy",
+      "nemo_dad.joy"
+     ]
+    }
+   ],
+   "u_owl": [
+    {
+     "bg": "night",
+     "text": "부엉이가 부엉— 낮게 울었다. 「…노래가 너무 따뜻해서 매일 밤 따라왔어. 들켜서 미안해.」",
+     "chars": [
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "혹부리 영감(네모 아빠)이 껄껄 웃었다. 「미안할 게 뭐야. 같이 부르자꾸나.」",
+     "chars": [
+      "nemo_dad.joy",
+      "dong_dad.warm"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "골짜기에 노래 두 줄이 겹쳐 울렸다. 혹은 어느새 가볍게 떨어져 있었다.",
+     "chars": [
+      "nemo_dad.love",
+      "baby.joy"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "부엉이가 원정대의 친구가 되었다!",
+     "chars": [
+      "baby.joy",
+      "nemo_dad.joy",
+      "dong_dad.warm"
+     ]
+    }
+   ],
+   "u_frog": [
+    {
+     "bg": "stream",
+     "text": "개구리가 연잎 끝에서 폴짝 뛰었다. 「…도끼가 풍덩 빠지는 걸 봤어. 정직하게 말하는 모습이 멋졌어.」",
+     "chars": [
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "stream",
+     "text": "산신령(동그라미 아빠)이 금도끼, 은도끼, 쇠도끼를 나란히 놓고 웃었다. 「정직한 사람에게는 다 주마.」",
+     "chars": [
+      "dong_dad.warm",
+      "nemo_dad.joy"
+     ]
+    },
+    {
+     "bg": "stream",
+     "text": "나무꾼(네모 아빠)은 쇠도끼 하나만 받아 들고 고개를 숙였다. 이웃들이 박수를 쳤다.",
+     "chars": [
+      "nemo_dad.love",
+      "nemo_mom.joy"
+     ]
+    },
+    {
+     "bg": "stream",
+     "text": "개구리가 원정대의 친구가 되었다!",
+     "chars": [
+      "baby.joy",
+      "nemo_dad.joy",
+      "dong_dad.warm"
+     ]
+    }
    ]
   },
   "pre": {
@@ -11400,6 +12975,162 @@
      "chars": [
       "wife.joy",
       "husband.joy"
+     ]
+    }
+   ],
+   "217": [
+    {
+     "bg": "village",
+     "text": "초가지붕이 올망졸망한 박 마을. 처마 밑 제비집에서 지지배배 소리가 났다.",
+     "chars": [
+      "nemo_dad.joy",
+      "baby.joy"
+     ]
+    },
+    {
+     "bg": "village",
+     "text": "흥부(네모 아빠)는 다리를 다친 제비를 조심조심 감싸 주었다. 흥부 아내(네모 엄마)가 헝겊을 건넸다.",
+     "chars": [
+      "nemo_dad.good",
+      "nemo_mom.good"
+     ]
+    },
+    {
+     "bg": "village",
+     "text": "놀부(세모 남편)는 멀찍이서 팔짱을 끼고 보다가 슬그머니 눈길을 돌렸다.",
+     "chars": [
+      "husband.worry",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "village",
+     "text": "19나라 흥부와 놀부 박 마을. 번쩍(△) 적은 돌보기(◯) 친구가 잘 막아요.",
+     "chars": [
+      "nemo_mom.joy",
+      "wife.joy"
+     ]
+    }
+   ],
+   "228": [
+    {
+     "bg": "village",
+     "text": "박 덩굴 위에 참새 한 마리가 포르르 앉았다. 제비집 옆에서 줄곧 우리를 지켜보던 이웃이다.",
+     "chars": [
+      "baby.surprise",
+      "nemo_mom.good"
+     ]
+    },
+    {
+     "bg": "village",
+     "text": "번쩍(△)을 이기는 돌보기(◯) 친구가 말을 걸어 보자. 박씨 이야기가 궁금했던 걸지도 몰라.",
+     "chars": [
+      "wife.joy",
+      "nemo_dad.good"
+     ]
+    }
+   ],
+   "229": [
+    {
+     "bg": "night",
+     "text": "혹부리 영감(네모 아빠)은 볼에 혹을 달고 산에 올라 땔감을 모았다. 해가 저물었다.",
+     "chars": [
+      "nemo_dad.good",
+      "baby.joy"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "빈 집에 들어가 노래를 불렀더니 메아리가 되어 골짜기를 가득 채웠다.",
+     "chars": [
+      "nemo_dad.joy",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "따라 하는 영감(동그라미 아빠)은 먼발치에서 귀를 쫑긋 세웠다. 「나도 해 볼까?」",
+     "chars": [
+      "dong_dad.good",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "20나라 혹부리 영감 노래 골짜기. 돌보기(◯) 적에겐 받치기(◻) 친구가 유리해요.",
+     "chars": [
+      "dong_dad.calm",
+      "wife.joy"
+     ]
+    }
+   ],
+   "240": [
+    {
+     "bg": "night",
+     "text": "나무 위에서 부엉이가 눈을 동그랗게 떴다. 밤마다 노래를 엿듣던 이웃이다.",
+     "chars": [
+      "baby.surprise",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "night",
+     "text": "돌보기(◯)를 이기는 받치기(◻) 친구가 말을 걸어 보자. 노래가 좋아서 따라다닌 걸지도 몰라.",
+     "chars": [
+      "nemo_mom.good",
+      "dong_dad.calm"
+     ]
+    }
+   ],
+   "241": [
+    {
+     "bg": "stream",
+     "text": "연못가에 나무꾼(네모 아빠)이 도끼를 메고 걸어왔다. 물빛이 반짝반짝 푸르렀다.",
+     "chars": [
+      "nemo_dad.joy",
+      "baby.joy"
+     ]
+    },
+    {
+     "bg": "stream",
+     "text": "나무를 베다가 그만 도끼가 풍덩! 연못 속으로 빠졌다. 나무꾼은 연못가에 털썩 앉았다.",
+     "chars": [
+      "nemo_dad.worry",
+      "nemo_kids.kid3"
+     ]
+    },
+    {
+     "bg": "stream",
+     "text": "산신령(동그라미 아빠)이 물 위로 나타나 조용히 웃었다. 「네 도끼를 찾아 줄까?」",
+     "chars": [
+      "dong_dad.warm",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "stream",
+     "text": "21나라 금도끼 은도끼 연못. 받치기(◻) 적에겐 번쩍(△) 친구가 유리해요.",
+     "chars": [
+      "dong_dad.calm",
+      "wife.joy"
+     ]
+    }
+   ],
+   "252": [
+    {
+     "bg": "stream",
+     "text": "연잎 위에서 개구리가 개굴개굴 울었다. 연못가에서 소동을 줄곧 구경하던 이웃이다.",
+     "chars": [
+      "baby.surprise",
+      "nemo_dad.good"
+     ]
+    },
+    {
+     "bg": "stream",
+     "text": "받치기(◻)를 이기는 번쩍(△) 친구가 말을 걸어 보자. 같이 놀고 싶었던 걸지도 몰라.",
+     "chars": [
+      "wife.joy",
+      "dong_dad.calm"
      ]
     }
    ]
@@ -12730,6 +14461,205 @@
       ]
      }
     ]
+   },
+   "19": {
+    "title": "흥부와 놀부",
+    "emoji": "🎃",
+    "cuts": [
+     {
+      "bg": "village",
+      "text": "초가지붕 처마 밑에서 제비 한 마리가 떨어져 다리를 다쳤다. 흥부(네모 아빠)가 얼른 달려갔다.",
+      "chars": [
+       "nemo_dad.worry"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "흥부와 흥부 아내(네모 엄마)는 헝겊으로 다리를 감싸 주었다. 제비는 며칠 뒤 훌쩍 날아갔다.",
+      "chars": [
+       "nemo_dad.good",
+       "nemo_mom.good"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "이듬해 봄, 제비가 박씨 하나를 물고 돌아왔다. 제비집 옆 참새도 고개를 갸웃거렸다.",
+      "chars": [
+       "nemo_mom.joy"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "흥부네 지붕 위에 박이 주렁주렁 열렸다. 보름달 아래 온 가족이 톱질을 했다. 슬근슬근 톱질하세.",
+      "chars": [
+       "nemo_dad.joy",
+       "nemo_mom.joy",
+       "baby.joy"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "박 속에서는 쌀과 비단, 그리고 따뜻한 웃음이 쏟아졌다. 흥부네는 이웃과 나누어 먹었다.",
+      "chars": [
+       "nemo_dad.love",
+       "nemo_mom.joy"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "놀부(세모 남편)는 그 소식을 듣고 투덜투덜 제비 다리를 고치겠다며 소동을 피웠다.",
+      "chars": [
+       "husband.worry"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "놀부네 박에서는 먼지와 도깨비 방망이 소리만 났다. 놀부는 털썩 주저앉았다.",
+      "chars": [
+       "husband.worry",
+       "nemo_dad.good"
+      ]
+     },
+     {
+      "bg": "village",
+      "text": "흥부가 대문을 열고 말했다. 「형님, 우리 같이 먹어요.」 놀부가 처음으로 웃었고, 모두 한 마루에 둘러앉았다.",
+      "chars": [
+       "nemo_dad.joy",
+       "husband.joy",
+       "nemo_mom.joy"
+      ]
+     }
+    ]
+   },
+   "20": {
+    "title": "혹부리 영감",
+    "emoji": "🎵",
+    "cuts": [
+     {
+      "bg": "night",
+      "text": "혹부리 영감(네모 아빠)은 볼에 커다란 혹을 달고 산에 올라 땔감을 모았다.",
+      "chars": [
+       "nemo_dad.good"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "해가 저물어 빈 집에서 쉬며 노래를 불렀다. 메아리가 골짜기를 가득 채웠다.",
+      "chars": [
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "나무 위의 부엉이가 눈을 동그랗게 뜨고 그 노래를 엿들었다.",
+      "chars": [
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "한밤이 되자 도깨비들이 모여들었다. 「그 고운 소리는 어디서 나느냐?」 영감은 혹을 가리켰다.",
+      "chars": [
+       "nemo_dad.surprise"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "도깨비는 노래 주머니를 가져가는 대신 혹을 쏙 떼어 주었다. 영감은 가벼워진 볼에 손을 대고 웃었다.",
+      "chars": [
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "따라 하는 영감(동그라미 아빠)은 소문을 듣고 산으로 달려갔다. 「나도 혹 좀 떼 볼까?」",
+      "chars": [
+       "dong_dad.good"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "하지만 노래는 엉망이었고, 도깨비는 혹을 하나 더 얹어 주고 말았다. 영감은 머쓱해서 머리를 긁었다.",
+      "chars": [
+       "dong_dad.surprise"
+      ]
+     },
+     {
+      "bg": "night",
+      "text": "혹부리 영감이 찾아와 함께 노래하자고 했다. 두 사람과 도깨비와 부엉이가 달빛 아래서 한목소리로 불렀다.",
+      "chars": [
+       "nemo_dad.joy",
+       "dong_dad.warm"
+      ]
+     }
+    ]
+   },
+   "21": {
+    "title": "금도끼 은도끼",
+    "emoji": "🪓",
+    "cuts": [
+     {
+      "bg": "stream",
+      "text": "나무꾼(네모 아빠)이 연못가에서 나무를 베었다. 물이 반짝반짝 푸르렀다.",
+      "chars": [
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "도끼가 풍덩! 연못 속으로 빠졌다. 나무꾼은 연못가에 털썩 앉았다.",
+      "chars": [
+       "nemo_dad.worry"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "연못이 출렁이며 산신령(동그라미 아빠)이 나타났다. 「이 금도끼가 네 것이냐?」",
+      "chars": [
+       "dong_dad.warm",
+       "nemo_dad.surprise"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "「아닙니다.」 나무꾼이 고개를 저었다. 은도끼를 보여 줘도 「그것도 아닙니다.」",
+      "chars": [
+       "nemo_dad.good",
+       "dong_dad.calm"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "마지막으로 낡은 쇠도끼가 올라왔다. 「그건 제 도끼예요!」 연잎 위 개구리가 개굴 박수를 쳤다.",
+      "chars": [
+       "nemo_dad.joy"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "산신령이 웃으며 금도끼와 은도끼까지 모두 내주었다. 나무꾼은 이웃 모두에게 나누었다.",
+      "chars": [
+       "dong_dad.warm",
+       "nemo_dad.love"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "이웃(네모 엄마)은 소문을 듣고 연못으로 달려가 일부러 도끼를 빠뜨렸다. 「제 것은 금도끼예요!」",
+      "chars": [
+       "nemo_mom.surprise"
+      ]
+     },
+     {
+      "bg": "stream",
+      "text": "산신령은 조용히 쇠도끼를 돌려주었다. 이웃이 얼굴이 빨개지자 나무꾼이 어깨를 토닥였다. 「다음엔 같이 오세요.」",
+      "chars": [
+       "dong_dad.calm",
+       "nemo_mom.worry",
+       "nemo_dad.joy"
+      ]
+     }
+    ]
    }
   }
  },
@@ -12857,7 +14787,7 @@
   "costBase": 25,
   "costGrow": 1.15,
   "lvCap": 10,
-  "stages": 216,
+  "stages": 252,
   "startGold": 0,
   "persuadeAt": 0.3,
   "lvCapFrom": 6,
@@ -13634,9 +15564,9 @@
    {
     "id": "a22",
     "name": "결승선까지",
-    "t": "216단계를 모두 깨요",
+    "t": "252단계를 모두 깨요",
     "k": "clear",
-    "n": 216,
+    "n": 252,
     "title": "끝까지 걷는 원정대"
    },
    {

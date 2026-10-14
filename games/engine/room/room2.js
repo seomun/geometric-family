@@ -820,7 +820,47 @@
     if (!L.length) el('p', 'h2-empty', sh, kid() ? '' : '아직 비어 있어요. 가구를 놓고 이야기를 열면 한 장씩 쌓여요.');
     const grid = el('div', 'h2-albgrid', sh);
     L.forEach((x) => { const c = el('div', 'h2-alb' + (x.th ? ' th' : ''), grid); if (x.th) { const im = el('img', 'h2-albth', c); im.src = x.th; im.alt = ''; el('span', 'h2-albbadge', c, AL_ICON[x.kind] || '✨'); } else el('div', 'h2-albic', c, AL_ICON[x.kind] || '✨'); if (!kid()) { el('b', '', c, x.title); if (x.sub) el('small', '', c, x.sub); } el('i', 'h2-albstamp', c, x.d); });
-    UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
+    const ac = el('div', 'acts', sh);
+    if (Room.filmPlan(L)) { const fb = UK.btn({ text: kid() ? null : '🎞 사진첩 영상 만들기', icon: kid() ? 'play' : null, cls: 'gold', onclick: async () => { fb.disabled = true; toastH(kid() ? '🎞…' : '영상을 만드는 중이에요(약 10초)', sc); let r; try { r = await Room.albumFilm(sc); } catch (e) { r = { ok: false, why: 'err' }; } fb.disabled = false; toastH(r.ok ? (kid() ? '🎞✔' : (r.kind === 'webm' ? '영상을 저장했어요' : '사진첩 필름을 저장했어요')) : (kid() ? '🎞✕' : '영상을 만들지 못했어요'), sc); } }, ac); fb.setAttribute('aria-label', 'album film'); }
+    UK.btn({ text: kid() ? null : '닫기', icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, ac); return sc;
+  };
+  /* ---------------- 가족 사진첩 영상(A26): 앨범 순간 최대 6장 + 제목·마무리 → 약 10초 슬라이드. 기기 안에서만 만들어 기기에 저장(외부 링크·서버 없음) ---------------- */
+  const FILM = { W: 640, H: 360, per: 1500, head: 1200, tail: 1500, max: 6 };
+  /** 슬라이드 계획(순수 함수): 방 사진이 있는 순간을 오래된 순으로 최대 max 장, 시간표(ms)와 함께 */
+  Room.filmPlan = function (list) {
+    const L = (list || Room.albumList()).filter((x) => x.room).slice(0, FILM.max).reverse(); if (L.length < 2) return null;
+    let t = FILM.head; const slides = L.map((x) => { const s = { e: x, t0: t, t1: t + FILM.per }; t += FILM.per; return s; });
+    return { slides, total: t + FILM.tail, head: FILM.head };
+  };
+  Room.filmFrame = function (x, plan, imgs, ms) {
+    const W = FILM.W, H = FILM.H; x.fillStyle = '#FFF4DC'; x.fillRect(0, 0, W, H); x.textAlign = 'center'; x.textBaseline = 'middle';
+    const fade = (a, b, m) => Math.max(0, Math.min(1, Math.min((m - a) / 250, (b - m) / 250)));
+    if (ms < plan.head) { x.globalAlpha = fade(-250, plan.head, ms); x.fillStyle = '#6b4a00'; x.font = '900 46px sans-serif'; x.fillText('우리 집 사진첩', W / 2, H / 2 - 16); x.font = '800 24px sans-serif'; x.fillText('△ ◻ ◯  기하학 가족', W / 2, H / 2 + 36); x.globalAlpha = 1; return; }
+    const cur = plan.slides.find((s) => ms >= s.t0 && ms < s.t1);
+    if (!cur) { x.globalAlpha = fade(plan.slides[plan.slides.length - 1].t1 - 250, plan.total, ms); x.fillStyle = '#6b4a00'; x.font = '900 34px sans-serif'; x.fillText(kid() ? '🏠 ⭐' : '오늘도 포근한 우리 집', W / 2, H / 2 - 10); if (!kid()) { x.font = '800 24px sans-serif'; x.fillText('당신은 어느 도형인가요?', W / 2, H / 2 + 38); } x.globalAlpha = 1; return; }
+    const im = imgs[cur.e.room], a = fade(cur.t0, cur.t1, ms), zoom = 1 + 0.04 * ((ms - cur.t0) / FILM.per); x.globalAlpha = a;
+    if (im) { const ph = H - 64, pw = Math.round(ph * im.width / im.height), px = (W - pw) / 2; x.save(); x.beginPath(); x.rect(px, 0, pw, ph); x.clip(); x.translate(W / 2, ph / 2); x.scale(zoom, zoom); x.drawImage(im, -pw / 2, -ph / 2, pw, ph); x.restore(); }
+    x.fillStyle = 'rgba(255,255,255,.94)'; x.fillRect(0, H - 64, W, 64); x.fillStyle = '#6b4a00'; x.textAlign = 'left'; x.font = '900 24px sans-serif'; x.fillText((AL_ICON[cur.e.kind] || '✨') + ' ' + (kid() ? '' : cur.e.title), 18, H - 38); if (!kid()) { x.font = '700 16px sans-serif'; x.fillText(cur.e.sub || '', 18, H - 14); }
+    x.textAlign = 'right'; x.font = '900 22px sans-serif'; x.fillStyle = '#B8741A'; x.fillText('📅 ' + cur.e.d, W - 18, H - 26); x.globalAlpha = 1;
+  };
+  /** 만들기: 영상(MediaRecorder)이 되면 webm 으로, 안 되면(APK 이미지 저장 등) 한 장 필름 PNG 로 저장 */
+  Room.albumFilm = async function (parent) {
+    const plan = Room.filmPlan(); if (!plan) return { ok: false, why: 'few' };
+    const imgs = {}; for (const s of plan.slides) if (!imgs[s.e.room]) { try { imgs[s.e.room] = await Room.photoCanvas(s.e.room); } catch (e) { imgs[s.e.room] = null; } }
+    const c = document.createElement('canvas'); c.width = FILM.W; c.height = FILM.H; const x = c.getContext('2d'), d = now0(), nm = 'gihaha-album-' + d.getFullYear() + (d.getMonth() + 1) + d.getDate();
+    const canVid = typeof MediaRecorder !== 'undefined' && c.captureStream && !(window.GFSave && GFSave.image && !window.__filmWeb);
+    if (!canVid) {      // 필름 한 장(슬라이드를 가로로) — 기기 저장
+      const n = plan.slides.length, sheet = document.createElement('canvas'); sheet.width = FILM.W * Math.min(n, 3); sheet.height = FILM.H * Math.ceil(n / 3); const sx = sheet.getContext('2d');
+      plan.slides.forEach((s, i) => { Room.filmFrame(x, plan, imgs, s.t0 + FILM.per / 2); sx.drawImage(c, (i % 3) * FILM.W, Math.floor(i / 3) * FILM.H); });
+      await saveCanvas(sheet, nm + '.png'); return { ok: true, kind: 'png', n };
+    }
+    const mt = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'].find((m) => MediaRecorder.isTypeSupported(m)); if (!mt) return { ok: false, why: 'nocodec' };
+    const rec = new MediaRecorder(c.captureStream(30), { mimeType: mt, videoBitsPerSecond: 1500000 }), parts = []; rec.ondataavailable = (e) => { if (e.data && e.data.size) parts.push(e.data); };
+    const done = new Promise((res) => { rec.onstop = res; }); rec.start(250); const t0 = performance.now();
+    await new Promise((res) => { const tick = () => { const ms = performance.now() - t0; Room.filmFrame(x, plan, imgs, Math.min(ms, plan.total - 1)); if (ms >= plan.total) res(); else setTimeout(tick, 33); }; tick(); });
+    rec.stop(); await done; const blob = new Blob(parts, { type: 'video/webm' }); if (!blob.size) return { ok: false, why: 'empty' };
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nm + '.webm'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+    return { ok: true, kind: 'webm', n: plan.slides.length, bytes: blob.size, secs: Math.round(plan.total / 100) / 10 };
   };
   /* ---------------- 가구 색 변형(A8): 모은 가구가 늘수록 같은 가구의 다른 색이 열린다 ---------------- */
   const HUE = ['none', 'hue-rotate(60deg) saturate(1.1)', 'hue-rotate(160deg) saturate(1.05)', 'hue-rotate(250deg) saturate(1.2)'], SWATCH = ['#E8D8B8', '#FF8FA8', '#8FD3F4', '#6CCB8A'];

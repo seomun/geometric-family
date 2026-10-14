@@ -2,7 +2,7 @@
 const { chromium } = require('playwright-core'); const fs = require('fs'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 (async () => {
   const D = JSON.parse(fs.readFileSync('data/expedition_slice.json', 'utf8')), B = D.story.book, chars = JSON.parse(fs.readFileSync('data/chars.json', 'utf8'));
-  ok(Object.keys(B).length === 15 && Object.values(B).every((b) => b.cuts.length === 8), '데이터: 15권 모두 8컷');
+  ok(Object.keys(B).length === 18 && Object.values(B).every((b) => b.cuts.length === 8), '데이터: 18권 모두 8컷');
   ok(Object.values(B).every((b) => b.cuts.every((c) => c.text.length >= 12 && c.chars.every((id) => id in chars))), '모든 컷에 글이 있고 그림은 있는 캐릭터만');
   ok(Object.values(B).every((b) => new Set(b.cuts.map((c) => c.text)).size === 8), '권마다 컷 글이 서로 다름');
   const bad = /죽였|죽이|피를|피가|무서|잡아먹|괴롭|때리|울부짖|해치/; ok(!Object.values(B).some((b) => b.cuts.some((c) => bad.test(c.text))), '무서운 표현 없음(순한 판)');
@@ -12,7 +12,7 @@ const { chromium } = require('playwright-core'); const fs = require('fs'); let f
   ok(await p.evaluate(() => !!document.querySelector('[aria-label="storybook"]')), '홈 왼쪽 위에 📖 버튼'); ok(await p.evaluate(() => !document.querySelector('[aria-label="storybook"] .ex-bdg')), '아직 열린 책이 없으면 표시 없음');
   await p.evaluate(() => document.querySelector('[aria-label="storybook"]').click()); await p.waitForTimeout(700);
   let o = await p.evaluate(() => ({ n: document.querySelectorAll('.ex-bookcard').length, lock: document.querySelectorAll('.ex-bookcard.locked').length, txt: document.querySelector('.ex-books').innerText.replace(/\s+/g, ' ') }));
-  ok(o.n === 15 && o.lock === 15, '그림책 서재: 15권 모두 잠김 · ' + o.txt.slice(0, 40)); await p.screenshot({ path: 'notes/snapshots/d10_books_locked.png' });
+  ok(o.n === 18 && o.lock === 18, '그림책 서재: 18권 모두 잠김 · ' + o.txt.slice(0, 40)); await p.screenshot({ path: 'notes/snapshots/d10_books_locked.png' });
   await p.evaluate(() => { document.querySelector('.ex-bookcard').click(); }); await p.waitForTimeout(300); ok(await p.evaluate(() => !document.querySelector('.tale-ov')), '잠긴 책은 눌러도 열리지 않음(안내만)');
   await p.evaluate(() => { const E = EXP.debug, S = E.S(); S.cleared = 24; E.save(); GF.replace('xhome'); }); await p.waitForTimeout(800);
   ok(await p.evaluate(() => !!document.querySelector('[aria-label="storybook"] .ex-bdg')), '2나라를 끝내면 홈 📖 에 새 책 표시');

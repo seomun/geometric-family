@@ -20,14 +20,14 @@ CAST = {
     'hok': [('혹부리 영감', 'nemo_dad', 'lead'), ('도깨비', O('도깨비(art.dokkaebi, 순한 판)'), 'villain'), ('따라 하는 욕심쟁이 영감', 'dong_dad', 'funny')],
     'axe': [('나무꾼', 'nemo_dad', 'lead'), ('산신령', 'dong_dad', 'helper'), ('욕심쟁이 이웃', 'nemo_mom', 'funny')],
     'sun': [('누나(해님)', 'kid1', 'lead'), ('동생(달님)', 'kid3', 'lead'), ('떡 팔러 간 엄마', 'nemo_mom', 'helper'), ('호랑이 → 바람 호랑이', O('바람 호랑이(가족 밖, 소리·그림자)'), 'villain')],
-    'ant': [('개미', 'nemo_mom', 'lead'), ('베짱이', 'semo_h', 'funny'), ('지켜보는 이웃', 'dong_dad', 'helper'), ('열매를 함께 모으는 막내 개미(유아 앱)', 'baby', 'helper', 'kid')],
+    'ant': [('개미', 'nemo_mom', 'lead'), ('베짱이', 'semo_h', 'funny'), ('지켜보는 이웃', 'dong_dad', 'helper'), ('열매를 함께 모으는 막내 개미(유아 앱)', 'baby', 'helper', 'kid'), ('여름 내내 노래하던 매미', O('매미(가족 밖, 여름 내내 노래하던 순한 이웃)'), 'helper')],      # B25 포섭 자리(가족 밖)
     'pino': [('제페토(목수)', 'nemo_dad', 'lead'), ('피노키오(나무 인형)', 'baby', 'funny'), ('파란 요정', O('요정(art.fairy)'), 'helper'), ('여우(사기꾼 흉내, 순한 판)', O('여우(가족 밖, 사기꾼 흉내만 내던 순한 판)'), 'villain')],      # B23 포섭 자리(가족 밖 악역, 허브 방침)
     'jack': [('잭', 'kid3', 'lead'), ('잭의 엄마', 'nemo_mom', 'helper'), ('구름 위 거인', O('구름 거인(가족 밖, 쿵쿵 소리·그림자, 순한 판)'), 'villain'), ('잔치 손님', 'semo_h', 'helper')],
     'gyeonwoo': [('견우', 'semo_h', 'lead'), ('직녀', 'semo_w', 'lead'), ('오작교를 놓는 까치와 까마귀', O('까치 떼(가족 밖)'), 'helper'), ('둘을 갈라놓는 하늘 어른', O('하늘 어른(가족 밖, 목소리·순한 판)'), 'villain')],
     'ureng': [('혼자 농사짓는 총각', 'semo_h', 'lead'), ('우렁 각시', 'semo_w', 'helper'), ('각시를 탐내는 원님', O('욕심쟁이 원님(가족 밖, 목소리·순한 판)'), 'villain')],
-    'hare': [('거북이', 'nemo_dad', 'lead'), ('토끼', 'dong_dad', 'funny'), ('심판', 'semo_h', 'helper')],
+    'hare': [('거북이', 'nemo_dad', 'lead'), ('토끼', 'dong_dad', 'funny'), ('심판', 'semo_h', 'helper'), ('결승선을 지키는 두루미', O('두루미(가족 밖, 모두의 완주를 바라는 순한 심판)'), 'helper')],      # B25 포섭 자리(가족 밖)
     'brothers': [('형', 'kid3', 'lead'), ('아우', 'baby', 'lead')],
-    'snowqueen': [('카이', 'baby', 'lead'), ('게르다', 'kid1', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper')],
+    'snowqueen': [('카이', 'baby', 'lead'), ('게르다', 'kid1', 'lead'), ('눈의 여왕(순한 판)', 'dong_mom', 'helper'), ('눈 나라 길을 아는 까마귀', O('눈 까마귀(가족 밖, 길 잃은 친구를 지켜보던 순한 안내자)'), 'helper')],      # B25 포섭 자리(가족 밖)
     'fairywood': [('나무꾼', 'semo_h', 'lead'), ('선녀', 'semo_w', 'lead'), ('도와주는 사슴', O('사슴(가족 밖)'), 'helper'), ('선녀의 아기 사슴들', O('아기 사슴들(가족 밖)'), 'helper')],      # D1 새 이야기(허브 2026-10-14)
     'rabbitliver': [('토끼', 'kid1', 'lead'), ('거북(심부름꾼)', 'nemo_dad', 'helper'), ('아픈 용왕님(순한 판)', 'dong_dad', 'helper'), ('용궁 문지기', O('용궁 문지기(가족 밖, 목소리만·순한 판)'), 'villain')],      # 가족 밖 악역 자리(B20, 허브 방침: 악역은 가족 밖)
     'magpie': [('선비', 'nemo_dad', 'lead'), ('은혜 갚는 까치', O('까치(art.magpie)'), 'helper'), ('구렁이(순한 판)', O('구렁이(가족 밖, 소리·그림자·순한 판)'), 'villain')],

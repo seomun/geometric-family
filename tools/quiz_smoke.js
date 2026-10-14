@@ -12,7 +12,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   const small = await pg.evaluate(() => { const o = []; document.querySelectorAll('.screen.on *').forEach((e) => { if (e.children.length === 0 && e.textContent.trim() && e.offsetParent) { const f = parseFloat(getComputedStyle(e).fontSize) * (e.closest('#safe').getBoundingClientRect().width / 360); if (f < 17.5) o.push(e.textContent.trim().slice(0, 8) + ':' + f.toFixed(1)); } }); return o; });
   ok(small.length === 0, '홈 글자 18px↑ ' + small.join(','));
   const tests = await pg.evaluate(() => QUIZ.debug.D().tests.map((t) => ({ id: t.id, n: t.qs.length })));
-  ok(tests.length === 23 && tests.every((t) => t.n === 6), '테스트 ' + tests.length + '종 × ' + tests[0].n + '문항');
+  ok(tests.length === 27 && tests.every((t) => t.n === 6), '테스트 ' + tests.length + '종 × ' + tests[0].n + '문항');
   await pg.evaluate(() => GF.go('qtests')); await pg.waitForSelector('.sg-node'); await shot('tests');
   const got = {};
   for (let k = 0; k < tests.length; k++) {

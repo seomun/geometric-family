@@ -1,93 +1,213 @@
-block_51-60 rc=1 ?
-block_61-70 rc=0 ALL PASS
-block_71-80 rc=0 ALL PASS
-block_81-90 rc=0 ALL PASS
-block_91-100 rc=0 ALL PASS
-block_101-110 rc=0 ALL PASS
 c1_ch1 rc=0 no errors
-block_111-120 rc=0 ALL PASS
-spot_1-20 rc=0 ALL PASS
-spot_21-40 rc=0 ALL PASS
-spot_41-60 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch2 rc=0 no errors
-spot_61-80 rc=0 ALL PASS
-spot_81-100 rc=0 ALL PASS
-spot_101-120 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch3 rc=0 no errors
-spot_121-140 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch4 rc=0 no errors
-tile_11-20 rc=0 ALL PASS
-tile_21-30 rc=0 ALL PASS
-tile_31-40 rc=0 ALL PASS
-tile_41-50 rc=0 ALL PASS
-tile_51-60 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch5 rc=0 no errors
-tile_61-70 rc=0 ALL PASS
-tile_71-80 rc=0 ALL PASS
-tile_81-90 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch6 rc=0 no errors
-tile_91-100 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch7 rc=0 no errors
-tile_101-110 rc=0 ALL PASS
-tile_111-120 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch8 rc=0 no errors
-sort_1-30 rc=0 ALL PASS
-sort_31-60 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch9 rc=0 no errors
-sort_61-90 rc=0 ALL PASS
-sort_91-120 rc=1 ?
-quiz_sim rc=0 ALL PASS
-quiz_smoke rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_ch10 rc=0 no errors
-color_smoke rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 c1_book3_ch11 rc=0 no errors
-idle_smoke rc=0 ALL PASS
-idle_sim rc=0 ?
+  (정리한 남은 프로세스 1)
 c1_book3_ch12 rc=0 no errors
-merge_sim rc=127 ?
-c1_book3_ch13 rc=127 ?
-block_51-60 rc=0 ALL PASS
-c1_book3_ch14 rc=127 ?
-sort_91-120 rc=0 ALL PASS
-c1_book3_ch15 rc=127 ?
+  (정리한 남은 프로세스 1)
 c1_book3_ch13 rc=0 no errors
+  (정리한 남은 프로세스 1)
 c1_book3_ch14 rc=0 no errors
+  (정리한 남은 프로세스 1)
 c1_book3_ch15 rc=0 no errors
+  (정리한 남은 프로세스 1)
 merge_1-5 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 merge_6-10 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 merge_11-15 rc=0 ALL PASS
-merge_16-20 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+  (정리한 남은 프로세스 3)
+merge_1-3 rc=127 ?
+  (정리한 남은 프로세스 1)
+merge_4-6 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+merge_7-9 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+merge_10-12 rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+merge_13-15 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+merge_16-18 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+merge_19-20 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 block_1-10 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 block_11-20 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 block_21-30 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 block_31-40 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 block_41-50 rc=0 ALL PASS
-merge_sim rc=0 ?
-block_sim rc=0 ALL PASS
-spot_sim rc=0 ALL PASS
-sort_sim rc=0 ALL PASS
-day_sim rc=0 ALL PASS
-day_1-15 rc=0 ALL PASS
-day_16-30 rc=0 ALL PASS
-day_31-45 rc=0 ALL PASS
-day_46-60 rc=0 ALL PASS
-first30 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+block_51-60 rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+block_61-70 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+block_71-80 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+block_81-90 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+block_91-100 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+block_101-110 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+block_111-120 rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+spot_1-20 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+spot_21-40 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+spot_41-60 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+spot_61-80 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+spot_81-100 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+spot_101-120 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+spot_121-140 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 tile_1-10 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_11-20 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_21-30 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_31-40 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_41-50 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_51-60 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_61-70 rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+tile_71-80 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_81-90 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_91-100 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_101-110 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+tile_111-120 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+sort_1-30 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+sort_31-60 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+sort_61-90 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+sort_91-120 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+quiz_sim rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+quiz_smoke rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+color_smoke rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+idle_smoke rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+idle_sim rc=0 ?
+  (정리한 남은 프로세스 1)
+merge_sim rc=0 ?
+  (정리한 남은 프로세스 1)
+block_sim rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+spot_sim rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 tile_sim rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+sort_sim rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+day_sim rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+day_1-15 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+day_16-30 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+day_31-45 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+day_46-60 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+first30 rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 greet rc=0 ALL PASS
-btn_wrap rc=0 ALL PASS
-btn_wrap_big rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
+btn_wrap rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+btn_wrap_big rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
 extras rc=0 ALL PASS
+  (정리한 남은 프로세스 1)
 resume rc=0 ALL PASS
-ads rc=0 ALL PASS
-rank_merge rc=0 ALL PASS
-rank_spot rc=0 ALL PASS
-rank_block rc=0 ALL PASS
   (정리한 남은 프로세스 1)
-rank_sort rc=0 ALL PASS
+ads rc=1 ?
   (정리한 남은 프로세스 1)
-rank_tile rc=0 ALL PASS
+rank_merge rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+rank_spot rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+rank_block rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+rank_sort rc=1 FAILED 1
+  (정리한 남은 프로세스 1)
+rank_tile rc=1 FAILED 1
   (정리한 남은 프로세스 1)
 room_codes rc=0 ?
   (정리한 남은 프로세스 1)
 DONE
+merge_1-3 rc=0 ALL PASS
+  (정리한 남은 프로세스 4)
+merge_10-12 rc=0 ALL PASS
+  (정리한 남은 프로세스 4)
+block_51-60 rc=0 ALL PASS
+  (정리한 남은 프로세스 4)
+block_111-120 rc=0 ALL PASS
+  (정리한 남은 프로세스 4)
+tile_61-70 rc=0 ALL PASS
+  (정리한 남은 프로세스 4)
+btn_wrap rc=1 FAILED 1
+  (정리한 남은 프로세스 4)
+btn_wrap_big rc=127 ?
+  (정리한 남은 프로세스 9)
+ads rc=0 ALL PASS
+  (정리한 남은 프로세스 4)
+rank_merge rc=127 ?
+  (정리한 남은 프로세스 9)
+rank_spot rc=0 ALL PASS
+  (정리한 남은 프로세스 13)
+rank_block rc=127 ?
+  (정리한 남은 프로세스 9)
+rank_sort rc=0 ALL PASS
+  (정리한 남은 프로세스 13)
+rank_tile rc=0 ALL PASS
+  (정리한 남은 프로세스 15)
+DONE
+btn_wrap rc=0 ALL PASS (개별 재실행, merge.css 도크 높이 수정 후)
+btn_wrap_big rc=0 ALL PASS (개별 재실행)
+ads rc=0 ALL PASS (개별 재실행)
+rank_merge rc=0 ALL PASS (개별 재실행, 시험 수정 후)
+rank_spot rc=0 ALL PASS (개별 재실행, 시험 수정 후)
+rank_block rc=0 ALL PASS (개별 재실행, 시험 수정 후)
+rank_sort rc=0 ALL PASS (개별 재실행, 시험 수정 후)
+rank_tile rc=0 ALL PASS (개별 재실행, 시험 수정 후)

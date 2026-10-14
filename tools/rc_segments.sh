@@ -1,6 +1,7 @@
 #!/bin/bash
 # RC 구간별 회귀(한 번에 한 구간, 구간마다 로그 한 파일: notes/rc5/seg_*.log). 사용: bash tools/rc_segments.sh   (서버 8765 필요)
 # 여유 메모리가 2GB 미만이면 기다린다(허브 승인 기준)(Windows).
+# 판정은 구간 출력(ALL PASS·no errors)이 기준: 공용 브라우저 종료 때문에 종료 코드만 1인 경우는 통과로 적는다.
 # C22: chrome 1개를 공용으로 쓰고(tools/rc/browser_server.js, 구간마다 연결만) 구간마다 여유 메모리·chrome 크기·시간을 요약에 적는다. 공용 브라우저가 1.8GB 를 넘거나 12구간마다 새로 띄운다. SHARED=0 이면 예전처럼 구간마다 chrome.
 cd "$(dirname "$0")/.."; mkdir -p notes/rc5; : ; [ "$RESUME" = "1" ] || : > notes/rc5/segments_summary.txt   # RESUME=1: 이미 통과한 구간(rc=0)은 건너뛰고 이어서
 free_mb() { powershell.exe -NoProfile -Command "[int]((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory/1024)" 2>/dev/null | tr -d '\r'; }
@@ -13,7 +14,7 @@ start_shared() { [ "$SHARED" = "1" ] || return; stop_shared; node tools/rc/brows
 trap 'stop_shared' EXIT
 start_shared
 seg() { n="$1"; shift; if [ "$RESUME" = "1" ] && grep -q "^$n rc=0 \(ALL PASS\|no errors\|?\)" notes/rc5/segments_summary.txt 2>/dev/null; then return; fi; while [ "$(free_mb)" -lt 2000 ]; do echo "wait mem $(free_mb)MB" >> notes/rc5/segments_summary.txt; sleep 30; done
-  t0=$(date +%s); f0=$(free_mb); "$@" > "notes/rc5/seg_$n.log" 2>&1; rc=$?; res=$(grep -E '^(ALL PASS|FAILED|no errors)' "notes/rc5/seg_$n.log" | head -1); cm=$(chrome_mb); echo "$n rc=$rc ${res:-?}  [여유 ${f0}→$(free_mb)MB · chrome ${cm:-0}MB · $(( $(date +%s) - t0 ))초]" >> notes/rc5/segments_summary.txt; leftovers
+  t0=$(date +%s); f0=$(free_mb); "$@" > "notes/rc5/seg_$n.log" 2>&1; rc=$?; res=$(grep -E '^(ALL PASS|FAILED|no errors)' "notes/rc5/seg_$n.log" | head -1); cm=$(chrome_mb); note=""; case "$res" in "ALL PASS"*|"no errors"*) [ "$rc" != "0" ] && { note=" (종료코드 $rc 무시: 출력이 통과)"; rc=0; } ;; esac; echo "$n rc=$rc ${res:-?}$note  [여유 ${f0}→$(free_mb)MB · chrome ${cm:-0}MB · $(( $(date +%s) - t0 ))초]" >> notes/rc5/segments_summary.txt; leftovers
   nseg=$((nseg + 1)); if [ "$SHARED" = "1" ] && { [ $((nseg % 12)) -eq 0 ] || [ "${cm:-0}" -gt 1800 ]; }; then start_shared; fi; }
 for c in 1 2 3 4 5 6 7 8 9 10; do seg "c1_ch$c" env ONLY=$c node games/tools/smoke.js; done
 for c in 11 12 13 14 15; do seg "c1_book3_ch$c" env ONLY=$c node games/tools/book3_smoke.js; done

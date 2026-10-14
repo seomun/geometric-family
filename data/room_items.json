@@ -12602,6 +12602,96 @@
    "flat": false,
    "cls": "prop",
    "theme": "deco"
+  },
+  {
+   "no": 376,
+   "id": "k_ch16",
+   "name": "곶감 꾸러미",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 377,
+   "id": "k_ch17",
+   "name": "빨간 모자 걸이",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 378,
+   "id": "k_ch18",
+   "name": "날개옷 인형",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "👘",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 379,
+   "id": "k_ch19",
+   "name": "거북 인형",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
+  },
+  {
+   "no": 380,
+   "id": "k_ch20",
+   "name": "빵 부스러기 병",
+   "set": "kid",
+   "room": "kid",
+   "w": 40,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🍞",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "playground",
+   "season": null,
+   "physical": null
   }
  ],
  "meTypes": {

@@ -373,5 +373,130 @@
   "id": "ch15_book",
   "ch": 15,
   "char": "baby.joy"
+ },
+ {
+  "id": "ch16_A",
+  "ch": 16,
+  "char": "baby.cry"
+ },
+ {
+  "id": "ch16_B",
+  "ch": 16,
+  "char": "dong_dad.warm"
+ },
+ {
+  "id": "ch16_C",
+  "ch": 16,
+  "char": "baby.joy"
+ },
+ {
+  "id": "ch16_star",
+  "ch": 16,
+  "char": "nemo_mom.love"
+ },
+ {
+  "id": "ch16_book",
+  "ch": 16,
+  "char": "baby.love"
+ },
+ {
+  "id": "ch17_A",
+  "ch": 17,
+  "char": "nemo_kids.kid1"
+ },
+ {
+  "id": "ch17_B",
+  "ch": 17,
+  "char": "nemo_grandma.good"
+ },
+ {
+  "id": "ch17_C",
+  "ch": 17,
+  "char": "nemo_mom.good"
+ },
+ {
+  "id": "ch17_star",
+  "ch": 17,
+  "char": "baby.joy"
+ },
+ {
+  "id": "ch17_book",
+  "ch": 17,
+  "char": "nemo_mom.joy"
+ },
+ {
+  "id": "ch18_A",
+  "ch": 18,
+  "char": "wife.joy"
+ },
+ {
+  "id": "ch18_B",
+  "ch": 18,
+  "char": "husband.joy"
+ },
+ {
+  "id": "ch18_C",
+  "ch": 18,
+  "char": "baby.surprise"
+ },
+ {
+  "id": "ch18_star",
+  "ch": 18,
+  "char": "wife.love"
+ },
+ {
+  "id": "ch18_book",
+  "ch": 18,
+  "char": "baby.joy"
+ },
+ {
+  "id": "ch19_A",
+  "ch": 19,
+  "char": "nemo_dad.joy"
+ },
+ {
+  "id": "ch19_B",
+  "ch": 19,
+  "char": "dong_dad.joy"
+ },
+ {
+  "id": "ch19_C",
+  "ch": 19,
+  "char": "nemo_kids.kid1"
+ },
+ {
+  "id": "ch19_star",
+  "ch": 19,
+  "char": "baby.joy"
+ },
+ {
+  "id": "ch19_book",
+  "ch": 19,
+  "char": "dong_dad.warm"
+ },
+ {
+  "id": "ch20_A",
+  "ch": 20,
+  "char": "nemo_kids.kid3"
+ },
+ {
+  "id": "ch20_B",
+  "ch": 20,
+  "char": "nemo_grandma.good"
+ },
+ {
+  "id": "ch20_C",
+  "ch": 20,
+  "char": "nemo_dad.love"
+ },
+ {
+  "id": "ch20_star",
+  "ch": 20,
+  "char": "nemo_kids.kid1"
+ },
+ {
+  "id": "ch20_book",
+  "ch": 20,
+  "char": "baby.joy"
  }
 ]

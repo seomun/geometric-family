@@ -34,6 +34,9 @@
     gshadow: '<svg viewBox="0 0 32 32"><path d="M16 4l12 22H4z" fill="#3A2E39" opacity=".5"/></svg>',
     gtrace: '<svg viewBox="0 0 32 32"><path d="M6 6q20 2 4 10t16 10" fill="none" stroke="#E8C77A" stroke-width="6" stroke-linecap="round"/><circle cx="6" cy="6" r="3" fill="#FF8FA8"/></svg>',
     gcups: '<svg viewBox="0 0 32 32"><path d="M7 8h18l-2.4 18H9.4z" fill="#8FD3F4" stroke="#3A2E39" stroke-width="1.5" stroke-linejoin="round"/><circle cx="13" cy="18" r="1.2" fill="#3A2E39"/><circle cx="19" cy="18" r="1.2" fill="#3A2E39"/></svg>',
+    gpair: '<svg viewBox="0 0 32 32"><ellipse cx="10" cy="16" rx="7" ry="6" fill="#6CCB8A" stroke="#3E9B5F" stroke-width="1.5"/><ellipse cx="22" cy="16" rx="7" ry="6" fill="#fff" stroke="#3A2E39" stroke-width="1.5"/><circle cx="22" cy="16" r="2.6" fill="#FF8FA8"/></svg>',
+    gorder: '<svg viewBox="0 0 32 32"><path d="M3 24c3-5 7-5 9 0c-3 4-6 4-9 0z" fill="#8FD3F4" stroke="#3A2E39" stroke-width="1.2"/><path d="M13 20c4-8 9-8 12 0c-4 8-9 8-12 0z" fill="#FFC933" stroke="#3A2E39" stroke-width="1.2"/><path d="M22 14c4-9 10-9 12 0c-4 9-10 9-12 0z" fill="#FF8FA8" stroke="#3A2E39" stroke-width="1.2" transform="translate(-8 -2) scale(.8)"/></svg>',
+    gpattern: '<svg viewBox="0 0 32 32"><rect x="2" y="11" width="8" height="8" rx="2" fill="#F6C28B" stroke="#3A2E39" stroke-width="1.2"/><path d="M16 10l4 9h-8z" fill="#8FD3F4" stroke="#3A2E39" stroke-width="1.2"/><rect x="22" y="11" width="8" height="8" rx="2" fill="none" stroke="#3A2E39" stroke-width="1.5" stroke-dasharray="2 2"/></svg>',
     gfaces: '<svg viewBox="0 0 32 32"><rect x="3" y="7" width="12" height="18" rx="3" fill="#8FD3F4"/><rect x="17" y="7" width="12" height="18" rx="3" fill="#fff" stroke="#3A2E39" stroke-width="1.5"/><circle cx="23" cy="16" r="3" fill="#FF8FA8"/></svg>',
     gpuzzle: '<svg viewBox="0 0 32 32"><path d="M4 4h12v6a3 3 0 1 1 0 6v12H4z" fill="#6CCB8A"/><path d="M16 4h12v24H16V16a3 3 0 1 0 0-6z" fill="#FFC933"/></svg>',
     gpaint: '<svg viewBox="0 0 32 32"><path d="M16 3C8 3 3 9 3 15s4 12 10 12c3 0 3-3 5-3 4 0 11-2 11-9C29 9 24 3 16 3z" fill="#FFC933"/><circle cx="10" cy="14" r="2.5" fill="#FF8FA8"/><circle cx="16" cy="9" r="2.5" fill="#8FD3F4"/><circle cx="22" cy="14" r="2.5" fill="#6CCB8A"/></svg>',
@@ -355,10 +358,10 @@
   // 안드로이드 껍데기가 호출: 앱이 백그라운드로 가면 소리를 멈추고, 돌아오면 이어 간다 / 노치 인셋이 바뀌면 다시 맞춘다
   GF.setHidden = (h) => { GF.appHidden = !!h; if (!h && GF.ip && GF.ip.refresh) { try { GF.ip.refresh(); } catch (e) {} } if (GF.bgm) GF.bgm.sync(); if (!h && window.Room && Room.refresh) { try { Room.refresh(); } catch (e) { /* 형제 앱 집 불러오기 실패는 무시 */ } } };
   GF.refit = () => { try { fit(); } catch (e) {} };   // 부팅 전(DOM 없음)에 네이티브가 불러도 오류 없이 넘어간다
-  const GAME_ICON = { shadow: 'gshadow', faces: 'gfaces', puzzle: 'gpuzzle', paint: 'gpaint', shapes: 'gshapes', trace: 'gtrace', cups: 'gcups' };
-  const GAME_HERO = { shadow: 'dong_dad.good', faces: 'wife.joy', puzzle: 'nemo_mom.good', paint: 'baby.joy', shapes: 'nemo_dad.good', trace: 'baby.joy', cups: 'nemo_kids.kid1' };
-  const GAME_TINT = { shadow: '#E4E0F7', faces: '#FFE1EA', puzzle: '#D9F3DD', paint: '#FFF1C4', shapes: '#DCEEFF', trace: '#F7E4C0', cups: '#CFF0FB' };
-  const GAME_ORDER = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'trace', 'cups'];
+  const GAME_ICON = { shadow: 'gshadow', faces: 'gfaces', puzzle: 'gpuzzle', paint: 'gpaint', shapes: 'gshapes', trace: 'gtrace', cups: 'gcups', pair: 'gpair', order: 'gorder', pattern: 'gpattern' };
+  const GAME_HERO = { shadow: 'dong_dad.good', faces: 'wife.joy', puzzle: 'nemo_mom.good', paint: 'baby.joy', shapes: 'nemo_dad.good', trace: 'baby.joy', cups: 'nemo_kids.kid1', pair: 'wife.joy', order: 'nemo_dad.good', pattern: 'nemo_kids.kid3' };
+  const GAME_TINT = { shadow: '#E4E0F7', faces: '#FFE1EA', puzzle: '#D9F3DD', paint: '#FFF1C4', shapes: '#DCEEFF', trace: '#F7E4C0', cups: '#CFF0FB', pair: '#E6F7B8', order: '#D4F5EC', pattern: '#FFE9D6' };
+  const GAME_ORDER = ['shadow', 'faces', 'puzzle', 'paint', 'shapes', 'trace', 'cups', 'pair', 'order', 'pattern'];
 
   /* ---------------- 홈 ---------------- */
   GF.screen('home', {
@@ -428,6 +431,10 @@
     3: { title: '막둥이의 사계절', lines: ['막둥이의', '사계절'], ty: 78, sky: ['#FFE9D6', '#E6F4FF'],
       svg: '<ellipse cx="70" cy="350" rx="190" ry="80" fill="#F6B25C"/><ellipse cx="250" cy="366" rx="170" ry="76" fill="#F4F8FF"/><circle cx="240" cy="64" r="28" fill="#FFE27A"/>'
         + '<g fill="#FF8FA8" stroke="#4A3030" stroke-width="3"><circle cx="46" cy="300" r="12"/><circle cx="78" cy="312" r="12"/></g><g fill="#E8870F" stroke="#4A3030" stroke-width="3"><path d="M150 290c20 10 30 30 0 56c-30-26-20-46 0-56z"/></g><g stroke="#8FD3F4" stroke-width="5" stroke-linecap="round"><path d="M230 150v28M216 158l28 12M216 170l28-12"/><path d="M262 210v22M251 216l22 10M251 226l22-10"/></g>', chars: [['baby.joy', 24, 99, 26], ['nemo_grandma.good', 78, 99, 30]] },
+    4: { title: '옛이야기 나들이', lines: ['옛이야기', '나들이'], ty: 78, sky: ['#E4DAFF', '#FFF1D6'],
+      svg: '<ellipse cx="80" cy="356" rx="190" ry="84" fill="#9ADB88"/><ellipse cx="248" cy="370" rx="170" ry="78" fill="#6CCB8A"/><circle cx="236" cy="64" r="30" fill="#FFF3A0"/><circle cx="246" cy="58" r="26" fill="#E4DAFF"/>'
+        + '<path d="M40 330q60-70 120-20t110-60" fill="none" stroke="#F3DDA6" stroke-width="22" stroke-linecap="round"/><path d="M40 330q60-70 120-20t110-60" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round"/>'
+        + '<g fill="#FF8FA8" stroke="#4A3030" stroke-width="3"><path d="M64 214c16 8 24 26 0 46c-24-20-16-38 0-46z"/></g><g fill="#FFC933" stroke="#4A3030" stroke-width="3"><circle cx="232" cy="214" r="18"/></g><g fill="#8FD3F4" stroke="#4A3030" stroke-width="3"><rect x="146" y="190" width="38" height="46" rx="8"/></g>', windows: [[96, 250, 40, 56, 'baby.joy'], [148, 250, 40, 56, 'nemo_kids.kid1'], [200, 250, 40, 56, 'wife.joy']], chars: [] },
   };
   GF.cover = function (book, parent) {
     const c = COVER[book], d = el('div', 'coverart', parent), id = 'cg' + (++gid), csl = GF.slot('cover', 'book' + book);
@@ -446,7 +453,7 @@
     wide: () => true,
     enter(r) {
       GF.bg('home', r);
-      const w = GF.safeWide, open = (bk) => bk <= 2 || !!GF.data.stages.ch11;
+      const w = GF.safeWide, open = (bk) => bk <= 2 || (bk === 3 && !!GF.data.stages.ch11) || (bk === 4 && !!GF.data.stages.ch16);
       const mk = (bk, host, cw, chh) => {
         const b = el('button', 'cover' + (open(bk) ? '' : ' locked'), host); b.dataset.book = bk; b.style.width = cw + 'px'; b.style.height = chh + 'px';
         GF.cover(bk, b); el('div', 'bknum', b, bk);
@@ -455,18 +462,18 @@
       };
       const go = (bk, b) => { if (!open(bk)) { GF.sfx('hmm'); b.classList.add('tilt'); setTimeout(() => b.classList.remove('tilt'), 700); return; } GF.sfx('pick'); GF.go('map', { book: bk }); };
       if (w) {                                                               // 태블릿 가로: 세 권을 나란히
-        const cw = 168, chh = cw * 4 / 3, gapx = 40, x0 = (GF.safe.w - (3 * cw + 2 * gapx)) / 2, y0 = 96;
+        const nb = GF.data.stages.ch16 ? 4 : 3, cw = nb === 4 ? 132 : 168, chh = cw * 4 / 3, gapx = nb === 4 ? 24 : 40, x0 = (GF.safe.w - (nb * cw + (nb - 1) * gapx)) / 2, y0 = 96;
         const plank = el('div', 'abs', r); plank.style.cssText = 'left:-2000px;right:-2000px;top:' + (y0 + chh - 6) + 'px;height:30px;background:linear-gradient(#C98F5A,#A8703F);box-shadow:0 6px 0 rgba(0,0,0,.14);z-index:1';
-        [1, 2, 3].forEach((bk, i) => { const b = mk(bk, r, cw, chh); b.style.position = 'absolute'; b.style.left = x0 + i * (cw + gapx) + 'px'; b.style.top = y0 + 'px'; b.onclick = () => go(bk, b); });
+        Array.from({ length: nb }, (_, i) => i + 1).forEach((bk, i) => { const b = mk(bk, r, cw, chh); b.style.position = 'absolute'; b.style.left = x0 + i * (cw + gapx) + 'px'; b.style.top = y0 + 'px'; b.onclick = () => go(bk, b); });
         return;
       }
       // 폰 세로: 표지 한 권이 화면 높이의 45% — 옆으로 밀어 넘긴다 (3편은 넘기면 나온다)
       const cw = 216, chh = 288, y0 = 130;
       const car = el('div', 'shelfcar', r); car.style.cssText += 'top:' + y0 + 'px;padding-left:' + (GF.safe.w - cw) / 2 + 'px;padding-right:' + (GF.safe.w - cw) / 2 + 'px';
       const plank = el('div', 'abs', r); plank.style.cssText = 'left:-2000px;right:-2000px;top:' + (y0 + 14 + chh - 6) + 'px;height:30px;background:linear-gradient(#C98F5A,#A8703F);box-shadow:0 6px 0 rgba(0,0,0,.14);z-index:1';
-      const covers = [1, 2, 3].map((bk) => { const b = mk(bk, car, cw, chh); return b; });
+      const NB = GF.data.stages.ch16 ? 4 : 3, covers = Array.from({ length: NB }, (_, i) => i + 1).map((bk) => { const b = mk(bk, car, cw, chh); return b; });
       const dots = el('div', 'shelfdots', r); dots.style.top = (y0 + chh + 70) + 'px'; const dd = covers.map(() => el('i', '', dots));
-      const idx = () => Math.max(0, Math.min(2, Math.round(car.scrollLeft / (cw + 22))));
+      const idx = () => Math.max(0, Math.min(NB - 1, Math.round(car.scrollLeft / (cw + 22))));
       const mark = () => dd.forEach((d, i) => d.classList.toggle('on', i === idx()));
       car.addEventListener('scroll', mark); mark();
       covers.forEach((b, i) => { b.onclick = () => { if (i === idx()) go(i + 1, b); else { GF.sfx('page'); car.scrollTo({ left: i * (cw + 22), behavior: 'smooth' }); } }; });
@@ -475,11 +482,11 @@
 
   /* ---------------- 이야기 지도 (책 한 권 = 장 5개) ---------------- */
   const NODES_P = [[80, 520], [250, 430], [100, 330], [250, 230], [110, 130]], NODES_W = [[90, 300], [230, 210], [370, 310], [510, 200], [640, 300]];
-  const chOpen = (n) => n === 1 || n === 6 || n === 11 || (GF.state.stages['c' + (n - 1) + 'C'] && GF.state.stages['c' + (n - 1) + 'C'].done);   // 2편(6장)은 처음부터 열려 있다
+  const chOpen = (n) => n === 1 || n === 6 || n === 11 || n === 16 || (GF.state.stages['c' + (n - 1) + 'C'] && GF.state.stages['c' + (n - 1) + 'C'].done);   // 2편(6장)은 처음부터 열려 있다
   const chReady = (n) => !!GF.data.stages['ch' + n];
   function bookArrows(r, book, name) {                                        // 책 넘기기 ◀ ▶ (지도·앨범 공통)
     [[-1, 14], [1, null]].forEach(([dir, left]) => {
-      const nb = book + dir; if (nb < 1 || nb > (GF.data.stages.ch11 ? 3 : 2)) return;
+      const nb = book + dir; if (nb < 1 || nb > (GF.data.stages.ch16 ? 4 : GF.data.stages.ch11 ? 3 : 2)) return;
       const b = el('button', 'round-btn', r, dir < 0 ? '<svg viewBox="0 0 32 32"><path d="M22 5L6 16l16 11z" fill="#3A2E39"/></svg>' : '<svg viewBox="0 0 32 32"><path d="M10 5l16 11-16 11z" fill="#3A2E39"/></svg>');
       b.style.cssText = 'position:absolute;bottom:18px;width:64px;height:64px;' + (left != null ? 'left:' + left + 'px' : 'right:14px');
       b.onclick = () => { GF.sfx('page'); GF.replace(name, { book: nb }); };
@@ -489,7 +496,7 @@
     wide: () => true,
     enter(r, p) {
       const book = p.book || 1, off = (book - 1) * 5;
-      GF.bg(book === 2 ? 'rails' : 'stream', r);
+      GF.bg(book === 2 ? 'rails' : book === 4 ? 'field' : 'stream', r);
       const NODES = GF.safeWide ? NODES_W : NODES_P;
       let d = 'M' + NODES.map((n) => n.join(' ')).join(' L');
       el('div', 'bg', r, '<svg viewBox="0 0 ' + GF.safe.w + ' ' + GF.safe.h + '">' + (book === 2
@@ -621,7 +628,7 @@
   /** 다음에 할 첫 판: 열려 있는 장에서 아직 안 깬 첫 단계(없으면 null) */
   GF.quickStage = () => {
     for (let n = 1; n <= 40; n++) {
-      const ch = 'ch' + n, def = GF.data.stages[ch]; if (!def) continue; if (!(n === 1 || n === 6 || n === 11 || stageDone('c' + (n - 1) + 'C'))) continue;
+      const ch = 'ch' + n, def = GF.data.stages[ch]; if (!def) continue; if (!(n === 1 || n === 6 || n === 11 || n === 16 || stageDone('c' + (n - 1) + 'C'))) continue;
       for (let k = 0; k < Math.min(3, def.stages.length); k++) { const id = 'c' + n + 'ABCD'[k]; if (!stageDone(id)) return { ch, k, id }; }
     }
     return null;
@@ -651,12 +658,11 @@
       GAME_ORDER.forEach((g, i) => {
         const open = !!GF.modes[g] && GF.modes[g].free;
         const b = el('button', 'card' + (open ? '' : ' locked'), r);
-        const col = i % 2, row = Math.floor(i / 2);
-        const step = Math.min(134, (GF.safe.w - 48 - 124) / (GAME_ORDER.length - 1));
-        b.style.cssText += GF.safeWide ? 'left:' + (24 + i * step) + 'px;top:150px;width:124px;height:170px' : 'left:' + (20 + col * 170) + 'px;top:' + (66 + row * 148) + 'px;width:150px;height:136px';
+        const wide = GF.safeWide, cols = wide ? 5 : 3, cwid = wide ? 124 : 108, chgt = wide ? 140 : 120, gx = wide ? 12 : 10, col = i % cols, row = Math.floor(i / cols), x0 = (GF.safe.w - (cols * cwid + (cols - 1) * gx)) / 2;      // 10장: 폰 3열×4줄 · 태블릿 5열×2줄
+        b.style.cssText += 'left:' + Math.round(x0 + col * (cwid + gx)) + 'px;top:' + ((wide ? 70 : 60) + row * (chgt + (wide ? 12 : 12))) + 'px;width:' + cwid + 'px;height:' + chgt + 'px';
         b.style.background = GAME_TINT[g] || '#fff';      // 카드마다 배경색이 달라 글을 몰라도 구분된다
-        const ic = el('div', '', b, IC[GAME_ICON[g]]); ic.style.cssText = 'position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-48px 0 0 -42px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.14))';      // 놀이 그림이 카드 한가운데
-        const hh = GF.img(GAME_HERO[g]); hh.style.cssText = 'position:absolute;right:4px;bottom:2px;left:auto;top:auto;width:52px;height:56px;object-fit:contain;transform:none'; b.appendChild(hh);      // 캐릭터는 모서리에 작게
+        const ic = el('div', '', b, IC[GAME_ICON[g]]); const isz = wide ? 84 : 70; ic.style.cssText = 'position:absolute;left:50%;top:50%;width:' + isz + 'px;height:' + isz + 'px;margin:' + (-isz / 2 - 6) + 'px 0 0 ' + (-isz / 2) + 'px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.14))';      // 놀이 그림이 카드 한가운데
+        const hh = GF.img(GAME_HERO[g]); hh.style.cssText = 'position:absolute;right:4px;bottom:2px;left:auto;top:auto;width:' + (wide ? 52 : 44) + 'px;height:' + (wide ? 56 : 48) + 'px;object-fit:contain;transform:none'; b.appendChild(hh);      // 캐릭터는 모서리에 작게
         if (!open) el('div', '', b, '<svg class="lock" viewBox="0 0 32 32">' + IC.lock.slice(IC.lock.indexOf('>') + 1));
         b.onclick = () => { if (!open) { GF.sfx('hmm'); b.classList.add('shake'); setTimeout(() => b.classList.remove('shake'), 400); return; } GF.sfx('pick'); pickLevel(r, g); };
       });

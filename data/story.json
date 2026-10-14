@@ -2018,5 +2018,679 @@
    }
   ],
   "tale": "kongjwi"
+ },
+ "ch16": {
+  "pro": [
+   {
+    "bg": "night",
+    "text": "밤이에요. 아기가 으앙 울어요.",
+    "chars": [
+     {
+      "id": "baby.cry",
+      "x": 120,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 250,
+      "y": 610,
+      "h": 270
+     }
+    ]
+   },
+   {
+    "bg": "night",
+    "text": "곶감 아저씨가 곶감을 보여 줘요.",
+    "chars": [
+     {
+      "id": "dong_dad.warm",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "baby.surprise",
+      "x": 260,
+      "y": 600,
+      "h": 200
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   },
+   {
+    "bg": "night",
+    "text": "곶감이 어느 컵 밑에 숨었을까요?",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 120,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "dong_dad.joy",
+      "x": 250,
+      "y": 610,
+      "h": 270
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "night",
+    "text": "찾았다! 곶감이 거기 있었어요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "dong_dad.warm",
+      "x": 210,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 310,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "night",
+    "text": "호랑이도 창밖에서 곶감 한 입!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 140,
+      "y": 600,
+      "h": 200
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 250,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "night",
+    "text": "아기가 방긋 웃어요.",
+    "chars": [
+     {
+      "id": "baby.love",
+      "x": 130,
+      "y": 600,
+      "h": 200
+     },
+     {
+      "id": "nemo_mom.love",
+      "x": 250,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   }
+  ]
+ },
+ "ch17": {
+  "pro": [
+   {
+    "bg": "hill",
+    "text": "엄마가 바구니를 건네요. 할머니 댁에 가요.",
+    "chars": [
+     {
+      "id": "nemo_kids.kid1",
+      "x": 120,
+      "y": 600,
+      "h": 230
+     },
+     {
+      "id": "nemo_mom.joy",
+      "x": 250,
+      "y": 610,
+      "h": 270
+     }
+    ]
+   },
+   {
+    "bg": "hill",
+    "text": "큰길로만 가야 해요.",
+    "chars": [
+     {
+      "id": "nemo_mom.good",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 260,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   },
+   {
+    "bg": "hill",
+    "text": "길을 따라가 볼까요?",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 120,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "hill",
+    "text": "할머니 댁에 도착했어요!",
+    "chars": [
+     {
+      "id": "nemo_kids.kid1",
+      "x": 110,
+      "y": 600,
+      "h": 230
+     },
+     {
+      "id": "nemo_grandma.good",
+      "x": 220,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "hill",
+    "text": "늑대 친구도 같이 따뜻한 수프!",
+    "chars": [
+     {
+      "id": "nemo_grandma.good",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 260,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "hill",
+    "text": "돌아오는 길도 큰길로.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 130,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   }
+  ]
+ },
+ "ch18": {
+  "pro": [
+   {
+    "bg": "stream",
+    "text": "보름달 연못에 연잎이 둥둥 떠 있어요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 120,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "wife.joy",
+      "x": 250,
+      "y": 610,
+      "h": 260
+     }
+    ]
+   },
+   {
+    "bg": "stream",
+    "text": "연잎 밑에 누가 숨었을까요?",
+    "chars": [
+     {
+      "id": "husband.joy",
+      "x": 140,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "baby.surprise",
+      "x": 260,
+      "y": 600,
+      "h": 200
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   },
+   {
+    "bg": "stream",
+    "text": "같은 친구를 둘씩 찾아요.",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 120,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "wife.joy",
+      "x": 250,
+      "y": 610,
+      "h": 260
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "stream",
+    "text": "짝을 다 찾았어요!",
+    "chars": [
+     {
+      "id": "baby.joy",
+      "x": 110,
+      "y": 600,
+      "h": 190
+     },
+     {
+      "id": "wife.joy",
+      "x": 210,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "husband.joy",
+      "x": 310,
+      "y": 610,
+      "h": 260
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "stream",
+    "text": "선녀 이모가 날개옷을 휘리릭!",
+    "chars": [
+     {
+      "id": "wife.love",
+      "x": 140,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "baby.joy",
+      "x": 260,
+      "y": 600,
+      "h": 200
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "stream",
+    "text": "삼촌이 장작불을 피워요.",
+    "chars": [
+     {
+      "id": "husband.joy",
+      "x": 130,
+      "y": 610,
+      "h": 260
+     },
+     {
+      "id": "baby.joy",
+      "x": 250,
+      "y": 600,
+      "h": 200
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   }
+  ]
+ },
+ "ch19": {
+  "pro": [
+   {
+    "bg": "seaside",
+    "text": "바닷속 용궁에 물고기가 가득해요.",
+    "chars": [
+     {
+      "id": "nemo_kids.kid1",
+      "x": 120,
+      "y": 600,
+      "h": 230
+     },
+     {
+      "id": "nemo_dad.joy",
+      "x": 250,
+      "y": 610,
+      "h": 270
+     }
+    ]
+   },
+   {
+    "bg": "seaside",
+    "text": "작은 물고기부터 줄을 서요.",
+    "chars": [
+     {
+      "id": "dong_dad.warm",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 260,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "sizes",
+     "at": 0
+    }
+   },
+   {
+    "bg": "seaside",
+    "text": "큰 물고기는 맨 끝에요.",
+    "chars": [
+     {
+      "id": "nemo_dad.joy",
+      "x": 120,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "baby.joy",
+      "x": 250,
+      "y": 600,
+      "h": 190
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "seaside",
+    "text": "작은 것부터 큰 것까지 쏙쏙!",
+    "chars": [
+     {
+      "id": "nemo_kids.kid1",
+      "x": 110,
+      "y": 600,
+      "h": 230
+     },
+     {
+      "id": "nemo_dad.joy",
+      "x": 210,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "dong_dad.warm",
+      "x": 310,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "seaside",
+    "text": "용왕님이 따뜻한 죽을 나눠 줘요.",
+    "chars": [
+     {
+      "id": "dong_dad.warm",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 260,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "seaside",
+    "text": "토끼도 거북이도 한 상에서 냠냠.",
+    "chars": [
+     {
+      "id": "nemo_dad.love",
+      "x": 130,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   }
+  ]
+ },
+ "ch20": {
+  "pro": [
+   {
+    "bg": "field",
+    "text": "숲길에 빵 부스러기가 늘어서 있어요.",
+    "chars": [
+     {
+      "id": "nemo_kids.kid3",
+      "x": 120,
+      "y": 600,
+      "h": 220
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
+    ]
+   },
+   {
+    "bg": "field",
+    "text": "네모, 세모, 네모, 세모… 다음은?",
+    "chars": [
+     {
+      "id": "nemo_dad.joy",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_kids.kid3",
+      "x": 260,
+      "y": 600,
+      "h": 220
+     }
+    ],
+    "bubble": {
+     "type": "question",
+     "at": 0
+    }
+   },
+   {
+    "bg": "field",
+    "text": "무늬가 끊긴 자리를 채워요.",
+    "chars": [
+     {
+      "id": "nemo_kids.kid1",
+      "x": 120,
+      "y": 600,
+      "h": 230
+     },
+     {
+      "id": "baby.joy",
+      "x": 250,
+      "y": 600,
+      "h": 190
+     }
+    ]
+   }
+  ],
+  "epi": [
+   {
+    "bg": "field",
+    "text": "빵 부스러기 길이 이어졌어요!",
+    "chars": [
+     {
+      "id": "nemo_kids.kid3",
+      "x": 110,
+      "y": 600,
+      "h": 220
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 210,
+      "y": 600,
+      "h": 230
+     },
+     {
+      "id": "nemo_dad.joy",
+      "x": 310,
+      "y": 610,
+      "h": 270
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   },
+   {
+    "bg": "field",
+    "text": "과자집 할머니가 문을 열어 줘요.",
+    "chars": [
+     {
+      "id": "nemo_grandma.good",
+      "x": 140,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_kids.kid3",
+      "x": 260,
+      "y": 600,
+      "h": 220
+     }
+    ],
+    "bubble": {
+     "type": "sparkle",
+     "at": 0
+    }
+   },
+   {
+    "bg": "field",
+    "text": "집에 가는 길도 환해요.",
+    "chars": [
+     {
+      "id": "nemo_dad.love",
+      "x": 130,
+      "y": 610,
+      "h": 270
+     },
+     {
+      "id": "nemo_kids.kid1",
+      "x": 250,
+      "y": 600,
+      "h": 230
+     }
+    ],
+    "bubble": {
+     "type": "heart",
+     "at": 1
+    }
+   }
+  ]
  }
 }

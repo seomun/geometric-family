@@ -17,6 +17,7 @@ let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); 
   const got = {};
   for (let k = 0; k < tests.length; k++) {
     await pg.evaluate((id) => { GF.stack = []; GF.go('qhome'); GF.go('qplay', { id }); }, tests[k].id); await pg.waitForSelector('.qz-opt');
+    await pg.evaluate(() => document.querySelectorAll('.uk-scrim').forEach((e) => e.remove()));   // 집 레벨이 오르면 나타나는 알림(세트 도착 등)을 닫는다 — 열려 있으면 눌림을 가린다
     if (k === 0) await shot('play');
     for (let q = 0; q < tests[k].n; q++) { await pg.click('.screen.on .qz-opt >> nth=' + ((k + q) % 3), { force: true }); await pg.waitForTimeout(90); }
     await pg.waitForSelector('.screen.on .qz-card img', { timeout: 5000 }).catch(() => {}); const res = await pg.evaluate((id) => QUIZ.debug.SV().res[id], tests[k].id);

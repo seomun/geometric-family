@@ -137,7 +137,7 @@ json.dump(R, open('data/room_items.json', 'w', encoding='utf-8'), ensure_ascii=F
 print('items', len(items), '(새로', sum(1 for i in items if i['id'].startswith(('s2_', 'e_', 'g_', 'kc_', 'kg_'))), ') cozy 합', sum(i['cozy'] for i in items), 'cls', dict(collections.Counter(i['cls'] for i in items)))
 
 # ------------------------------ housing.json ------------------------------
-A_EXP = 1.7; T_A = 7.8
+A_EXP = 1.7; T_A = 8.4      # D29(허브 2026-10-14): 가구 323개로 늘어 7.8 이면 Lv30 이 65일. 허브안 8.8 은 겹침 방지(자리 칸 우선)를 넣자 아늑함 최대가 2,742 로 내려 T(30)=2,695 가 95% 를 넘어 8.4(T(30)=2,573, 최대의 93.8%)로 조정
 T = lambda n: round(T_A * (n - 1) ** A_EXP)
 levels = [dict(lv=n, cozy=T(n)) for n in range(1, 31)]
 levelsKid = [dict(lv=n, cozy=round(T(n) * 0.85)) for n in range(1, 21)]   # 유아 집은 가구가 적어 문턱을 85%로

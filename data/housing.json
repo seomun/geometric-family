@@ -12,115 +12,115 @@
   },
   {
    "lv": 3,
-   "cozy": 25
+   "cozy": 27
   },
   {
    "lv": 4,
-   "cozy": 50
+   "cozy": 54
   },
   {
    "lv": 5,
-   "cozy": 82
+   "cozy": 89
   },
   {
    "lv": 6,
-   "cozy": 120
+   "cozy": 130
   },
   {
    "lv": 7,
-   "cozy": 164
+   "cozy": 177
   },
   {
    "lv": 8,
-   "cozy": 213
+   "cozy": 230
   },
   {
    "lv": 9,
-   "cozy": 268
+   "cozy": 288
   },
   {
    "lv": 10,
-   "cozy": 327
+   "cozy": 352
   },
   {
    "lv": 11,
-   "cozy": 391
+   "cozy": 421
   },
   {
    "lv": 12,
-   "cozy": 460
+   "cozy": 495
   },
   {
    "lv": 13,
-   "cozy": 533
+   "cozy": 574
   },
   {
    "lv": 14,
-   "cozy": 611
+   "cozy": 658
   },
   {
    "lv": 15,
-   "cozy": 693
+   "cozy": 746
   },
   {
    "lv": 16,
-   "cozy": 779
+   "cozy": 839
   },
   {
    "lv": 17,
-   "cozy": 869
+   "cozy": 936
   },
   {
    "lv": 18,
-   "cozy": 964
+   "cozy": 1038
   },
   {
    "lv": 19,
-   "cozy": 1062
+   "cozy": 1144
   },
   {
    "lv": 20,
-   "cozy": 1164
+   "cozy": 1254
   },
   {
    "lv": 21,
-   "cozy": 1270
+   "cozy": 1368
   },
   {
    "lv": 22,
-   "cozy": 1380
+   "cozy": 1486
   },
   {
    "lv": 23,
-   "cozy": 1494
+   "cozy": 1608
   },
   {
    "lv": 24,
-   "cozy": 1611
+   "cozy": 1735
   },
   {
    "lv": 25,
-   "cozy": 1732
+   "cozy": 1865
   },
   {
    "lv": 26,
-   "cozy": 1856
+   "cozy": 1999
   },
   {
    "lv": 27,
-   "cozy": 1984
+   "cozy": 2137
   },
   {
    "lv": 28,
-   "cozy": 2115
+   "cozy": 2278
   },
   {
    "lv": 29,
-   "cozy": 2250
+   "cozy": 2424
   },
   {
    "lv": 30,
-   "cozy": 2389
+   "cozy": 2573
   }
  ],
  "levelsKid": [
@@ -134,75 +134,75 @@
   },
   {
    "lv": 3,
-   "cozy": 21
+   "cozy": 23
   },
   {
    "lv": 4,
-   "cozy": 42
+   "cozy": 46
   },
   {
    "lv": 5,
-   "cozy": 70
+   "cozy": 76
   },
   {
    "lv": 6,
-   "cozy": 102
+   "cozy": 110
   },
   {
    "lv": 7,
-   "cozy": 139
+   "cozy": 150
   },
   {
    "lv": 8,
-   "cozy": 181
+   "cozy": 196
   },
   {
    "lv": 9,
-   "cozy": 228
+   "cozy": 245
   },
   {
    "lv": 10,
-   "cozy": 278
+   "cozy": 299
   },
   {
    "lv": 11,
-   "cozy": 332
+   "cozy": 358
   },
   {
    "lv": 12,
-   "cozy": 391
+   "cozy": 421
   },
   {
    "lv": 13,
-   "cozy": 453
+   "cozy": 488
   },
   {
    "lv": 14,
-   "cozy": 519
+   "cozy": 559
   },
   {
    "lv": 15,
-   "cozy": 589
+   "cozy": 634
   },
   {
    "lv": 16,
-   "cozy": 662
+   "cozy": 713
   },
   {
    "lv": 17,
-   "cozy": 739
+   "cozy": 796
   },
   {
    "lv": 18,
-   "cozy": 819
+   "cozy": 882
   },
   {
    "lv": 19,
-   "cozy": 903
+   "cozy": 972
   },
   {
    "lv": 20,
-   "cozy": 989
+   "cozy": 1066
   }
  ],
  "formula": {

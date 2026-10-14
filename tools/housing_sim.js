@@ -32,12 +32,13 @@ const { chromium } = require('playwright-core'); const PER = +(process.argv[2] |
     const out = await p.evaluate(() => {
       const { rows, group, lastGrant } = window.__sim;
       const themeBad = []; Object.keys(Room.S.placed).forEach((rid) => { const R = Room.H.rooms.find((r) => r.id === rid); (Room.S.placed[rid] || []).forEach((p) => { const it = Room.item(p.id); if (R && R.themes && it && !R.themes.includes(it.theme)) themeBad.push(rid + ':' + p.id + '(' + it.theme + ')'); }); });
-      return { themeBad, rows, own: Room.ownedCount(), cozy: Room.cozy(), lv: Room.level(), total: Room.data.items.filter(group).length, lastGrant };
+      return { themeBad, rows, own: Room.ownedCount(), cozy: Room.cozy(), lv: Room.level(), top: (window.__sim.kd ? Room.H.levelsKid : Room.H.levels).slice(-1)[0].cozy, total: Room.data.items.filter(group).length, lastGrant };
     });
     console.log(`\n== ${app} (${kid ? '유아' : '성인'}) · 하루 ${PER}판 · 총 ${out.total}개 → 끝에 ${out.own}개 아늑함 ${out.cozy} 레벨 ${out.lv}`);
     const first = (lv) => (out.rows.find((r) => r[3] >= lv) || [null])[0]; console.log('  레벨 도달일: ' + [2, 5, 10, 15, 20, 25, 30].map((lv) => `Lv${lv}=${first(lv) == null ? '-' : first(lv) + '일'}`).join(' '));
     console.log('  ' + out.rows.filter((r, i) => i % 4 === 0).map((r) => `${r[0]}일:${r[1]}개/${r[2]}/Lv${r[3]}`).join('  '));
-    ok(first(2) != null && first(2) <= 1, app + ' Lv2 ≤ 1일'); if (!kid) { const f30 = first(30); ok(f30 != null && f30 >= 120, app + ' Lv30 도달 ≥ 120일 (실제 ' + f30 + ')'); ok(f30 != null && f30 <= out.lastGrant, app + ' 가구가 소진되기 전에 Lv30 도달(마지막 획득 ' + out.lastGrant + '일)'); } if (!kid) { ok(first(5) != null && first(5) <= 5, app + ' Lv5 ≤ 5일'); ok(first(10) != null && first(10) <= 21, app + ' Lv10 ≤ 21일'); } else ok(first(5) != null && first(5) <= 10, app + ' 유아 Lv5 ≤ 10일');
+    ok(first(2) != null && first(2) <= 1, app + ' Lv2 ≤ 1일'); if (!kid) { const f30 = first(30); ok(f30 != null && f30 >= 80 && f30 <= 150, app + ' 성인 Lv30 도달 80~150일 (실제 ' + f30 + ', D29)'); ok(f30 != null && f30 <= out.lastGrant, app + ' 가구가 소진되기 전에 Lv30 도달(마지막 획득 ' + out.lastGrant + '일)'); } if (!kid) { ok(first(5) != null && first(5) <= 5, app + ' Lv5 ≤ 5일'); ok(first(10) != null && first(10) <= 21, app + ' Lv10 ≤ 21일'); } else ok(first(5) != null && first(5) <= 10, app + ' 유아 Lv5 ≤ 10일');
+    ok(out.top <= 0.95 * out.cozy, app + ' 마지막 레벨 문턱 ' + out.top + ' ≤ 아늑함 최대 ' + out.cozy + '의 95% (못 닿는 레벨 금지, D29)');
     ok(out.themeBad.length === 0, app + ' 방 주제 밖 가구 0 ' + out.themeBad.slice(0, 5).join(' '));
     ok(errs.length === 0, app + ' 오류 없음 ' + errs[0]); await ctx.close();
   }

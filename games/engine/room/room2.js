@@ -58,8 +58,12 @@
   const chDone = (c) => !!(ensure().story[c.room] && ensure().story[c.room].done);
   Room.cozy = function () { const S = ensure(); if (!S || !H()) return 0; let t = rooms().reduce((a, r) => a + Room.roomCozy(r.id).total, 0); chapters().forEach((c) => { if (chDone(c)) t += (c.reward && c.reward.cozy) || 0; }); return t; };
   const table = () => (kid() ? ((H() && H().levelsKid) || []).slice() : ((H() && H().levels) || []).slice());
-  Room.level = function (cozy) { const c = cozy == null ? Room.cozy() : cozy; let lv = 1; table().forEach((l) => { if (c >= l.cozy) lv = l.lv; }); return lv; };
-  Room.levelInfo = function () { const c = Room.cozy(), T = table(), lv = Room.level(c), cur = T.find((l) => l.lv === lv), nx = T.find((l) => l.lv === lv + 1); return { lv, cozy: c, cur: cur ? cur.cozy : 0, next: nx ? nx.cozy : null, pct: nx ? Math.min(1, (c - cur.cozy) / (nx.cozy - cur.cozy)) : 1, max: !nx }; };
+  /** 레벨 = 아늑함이 넘은 표의 칸. 이미 오른 레벨(S.lv)은 표가 바뀌어도 내려가지 않는다(D29: 다음 레벨부터 새 표) */
+  Room.levelRaw = function (cozy) { const c = cozy == null ? Room.cozy() : cozy; let lv = 1; table().forEach((l) => { if (c >= l.cozy) lv = l.lv; }); return lv; };
+  /** 이미 오른 레벨의 바닥: 집을 연 적 있는 최고 레벨(S.lv)과 앨범에 남은 「레벨 N」 기록 중 큰 값 */
+  Room.lvFloor = function () { const S = Room.S; if (!S) return 1; let f = S.lv || 1; (S.album || []).forEach((a) => { if (a.kind === 'level' && /^lv:\d+$/.test(a.k)) f = Math.max(f, +a.k.slice(3)); }); return f; };
+  Room.level = function (cozy) { return Math.max(Room.levelRaw(cozy), Room.lvFloor()); };
+  Room.levelInfo = function () { const c = Room.cozy(), T = table(), lv = Room.level(c), cur = T.find((l) => l.lv === lv), nx = T.find((l) => l.lv === lv + 1); return { lv, raw: Room.levelRaw(c), floor: Room.lvFloor(), cozy: c, cur: cur ? cur.cozy : 0, next: nx ? nx.cozy : null, pct: nx ? Math.max(0, Math.min(1, (c - cur.cozy) / (nx.cozy - cur.cozy))) : 1, max: !nx }; };
   const unlocked = (r) => Room.level() >= (r.unlock || 1) || ((ensure().placed[r.id] || []).length > 0);
   Room.unlockedRooms = () => rooms().filter(unlocked);
 
@@ -170,7 +174,10 @@
   };
   Room.placeAt = function (id) {
     const it = Room.item(id), S = ensure(); if (!it) return null; const open = Room.unlockedRooms(), g = geo(it);
-    for (const r of open) { const a = (r.anchors || []).find((q) => q.want === id); if (a && !(S.placed[r.id] || []).some((p) => p.id === id)) { Room.removeEverywhere(id); Room.placedIn(r.id).push({ id, x: Math.round(Math.max(4, Math.min(RW - g.w - 4, a.x - g.w / 2))), y: Math.round(a.y - g.h), flip: 0, c: it.colors[0] }); Room.save(); return { room: r.id, anchor: a }; } }
+    for (const r of open) { const a = (r.anchors || []).find((q) => q.want === id); if (a && !(S.placed[r.id] || []).some((p) => p.id === id)) { Room.removeEverywhere(id); const mine = { id, x: Math.round(Math.max(4, Math.min(RW - g.w - 4, a.x - g.w / 2))), y: Math.round(a.y - g.h), flip: 0, c: it.colors[0] }; Room.placedIn(r.id).push(mine);
+      // 자리 칸 가구가 늦게 도착하면 그 자리에 먼저 놓여 있던 「자리 없는 가구」는 다른 곳으로 옮긴다(겹침 방지: 자리 칸이 우선)
+      const aw0 = new Set((r.anchors || []).map((q) => q.want)), ovl = (q) => { const gi = geo(Room.item(q.id)), ix = Math.min(q.x + gi.w, mine.x + g.w) - Math.max(q.x, mine.x), iy = Math.min(q.y + gi.h, mine.y + g.h) - Math.max(q.y, mine.y); return ix > 0 && iy > 0 && ix * iy > 0.25 * Math.min(gi.w * gi.h, g.w * g.h); };
+      const moved = (S.placed[r.id] || []).filter((q) => q !== mine && !aw0.has(q.id) && Room.item(q.id) && Room.item(q.id).slot === it.slot && ovl(q)).map((q) => q.id); moved.forEach((mid) => Room.removeEverywhere(mid)); Room.save(); moved.forEach((mid) => Room.placeAt(mid)); return { room: r.id, anchor: a }; } }
     if (Object.values(S.placed).some((L) => L.some((p) => p.id === id))) { const rr = Object.keys(S.placed).find((k) => S.placed[k].some((p) => p.id === id)); return { room: rr, already: true }; }
     const okRooms = open.filter((r) => !r.themes || !it.theme || r.themes.includes(it.theme));          // 주제가 맞는 열린 방에만 놓는다(욕실에 배구공 금지)
     const home = okRooms.find((x) => x.id === it.room) || okRooms[0]; if (!home) return null; let target = home.id, pos = null;
@@ -527,7 +534,7 @@
       d.wrap.style.margin = '0 auto'; d.wrap.__fit && d.wrap.__fit();
       if (!place) { guestCheck(d.room, R); walk(d.room, R); }
     }
-    function afterChange() { drawTop(); drawSheet(); const L = Room.levelInfo(); if (L.lv > (S.lv || 1)) { S.lv = L.lv; Room.save(); lvUp(L); if (Room.sweep()) drawStage(); } }
+    function afterChange() { drawTop(); drawSheet(); const L = Room.levelInfo(); if (L.raw > L.floor) { S.lv = L.raw; Room.save(); lvUp(Object.assign({}, L, { lv: L.raw })); if (Room.sweep()) drawStage(); } }
     function checkRooms() { const nr = Room.newRooms(); if (!nr.length || !parent.isConnected || document.querySelector('.h2-reveal')) return; Room.roomReveal(nr[0].id, parent, (go) => { if (go) { cur = nr[0].id; sel = null; drawAll(); } setTimeout(checkRooms, 400); }); }
     function lvUp(L) { Room.albumAdd('lv:' + L.lv, 'level', GF.t('c16.room2.031', { lv: L.lv }), '아늑함 ' + Number(L.cozy).toLocaleString('ko-KR'), cur); setTimeout(checkRooms, 1400); try { UK.confetti(parent); GF.sfx && GF.sfx('celebrate'); } catch (e) {} const nr = rooms().find((r) => r.unlock === L.lv); if (!nr) toastH(kid() ? '⭐' : GF.t('c16.room2.032', { lv: L.lv }), parent); }      // 새 방이 열리면 연출이 이름을 알려 준다(토스트로 미리 말하지 않음)
     function drawSheet() {
@@ -581,7 +588,7 @@
     function drawAll() { drawTop(); drawNav(); drawStage(); drawTools(); drawSheet(); drawSel(); sceneCheck(!place); }
     Room._redraw = () => { sel = null; drawAll(); };
     function seasonCheck() { Room._quiet = 1; const g = Room.seasonCheck(); Room._quiet = 0; if (g) { toastH(kid() ? '🎁' : GF.t('c16.room2.044', { name: g.name }), parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} afterChange(); drawStage(); } }
-    setTimeout(() => { if (Room._recovered) { Room._recovered = null; toastH(kid() ? '🛟' : '저장이 깨져 있어서 집을 되살렸어요', parent); } Room.sweep(); drawAll(); const L0 = Room.levelInfo(); if (L0.lv > (S.lv || 1)) { S.lv = L0.lv; Room.save(); lvUp(L0); } S.lv = Math.max(S.lv || 1, L0.lv); seasonCheck(); setTimeout(() => Room.checkStory(parent, () => drawAll()), 400); setTimeout(checkRooms, 1200); }, 0);
+    setTimeout(() => { if (Room._recovered) { Room._recovered = null; toastH(kid() ? '🛟' : '저장이 깨져 있어서 집을 되살렸어요', parent); } Room.sweep(); drawAll(); const L0 = Room.levelInfo(); if (L0.raw > L0.floor) { S.lv = L0.raw; Room.save(); lvUp(Object.assign({}, L0, { lv: L0.raw })); } S.lv = Math.max(S.lv || 1, L0.floor, L0.raw); seasonCheck(); setTimeout(() => Room.checkStory(parent, () => drawAll()), 400); setTimeout(checkRooms, 1200); }, 0);
     return { redraw: drawAll };
   };
   /** 철(봄·여름·가을·겨울) — 손님 계절 방문 키와 대사 번호. 기기 날짜 기준 */

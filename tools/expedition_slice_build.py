@@ -51,6 +51,7 @@ exec(open('tools/expedition_nations4.py', encoding='utf-8').read())   # 10~12나
 exec(open('tools/expedition_nations5.py', encoding='utf-8').read())   # 13~15나라 확장(180칸, B23)
 exec(open('tools/expedition_nations6.py', encoding='utf-8').read())   # 16~18나라 확장(216칸, B25)
 exec(open('tools/expedition_book.py', encoding='utf-8').read())   # 나라별 그림책 8컷(D10)
+exec(open('tools/expedition_curve.py', encoding='utf-8').read())   # 레벨 상한·성장 곡선(B27, 맨 마지막)
 exec(open('tools/expedition_begin.py', encoding='utf-8').read())   # 초보자 미션 30·출석 7일(B11)
 exec(open('tools/expedition_daily.py', encoding='utf-8').read())   # 일일 임무 3 + 주간 상자(B22)
 exec(open('tools/expedition_events.py', encoding='utf-8').read())   # 계절 이벤트 스테이지 틀(B9)

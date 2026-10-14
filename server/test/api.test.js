@@ -178,7 +178,7 @@ test('육성 깊이(B2): 스킬 레벨·각성·승급·장비 — 비용·한�
   await env.DB.prepare('UPDATE wallet SET gold=20000 WHERE account=?').bind(a.account).run(); const U = 'u_nemo_dad';
   let r = await up(U, 'skill'); assert.equal(r.status, 200, JSON.stringify(r.body)); assert.equal(r.body.unit.skl, 2); assert.equal(r.body.wallet.gold, 20000 - G.D.bal.grow.skillCost[0]);
   const rid = R(); const x1 = await up(U, 'gear', 0, rid), x2 = await up(U, 'gear', 0, rid); assert.equal(x2.body.replay, true); assert.deepEqual(x1.body.unit.gear, [1, 0, 0, 0]); assert.equal(x2.body.wallet.gold, x1.body.wallet.gold, '같은 요청은 한 번만');
-  for (let i = 0; i < 12; i++) r = await up(U, 'gear', 1); assert.equal(r.body.error, 'max'); assert.equal((await up(U, 'gear', 9)).body.error, 'bad_slot');
+  for (let i = 0; i < G.D.bal.grow.gearMax + 2; i++) r = await up(U, 'gear', 1); assert.equal(r.body.error, 'max'); assert.equal((await up(U, 'gear', 9)).body.error, 'bad_slot');
   assert.equal((await up(U, 'awaken')).body.error, 'insufficient_dups', '조각이 모자라면 각성 불가');
   await env.DB.prepare('UPDATE units SET dups=200 WHERE account=? AND unit_id=?').bind(a.account, U).run(); r = await up(U, 'awaken'); assert.equal(r.body.unit.awk, 1); assert.equal(r.body.unit.dups, 200 - G.D.bal.grow.awkCost[0]);
   assert.equal((await up(U, 'promote')).body.error, 'need_level', '승급은 레벨 조건'); await env.DB.prepare('UPDATE units SET lv=10 WHERE account=? AND unit_id=?').bind(a.account, U).run(); r = await up(U, 'promote'); assert.equal(r.body.unit.promo, 1); assert.equal(r.body.unit.dups, 200 - 10 - 30);

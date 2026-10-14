@@ -1,6 +1,6 @@
 // ⑪ 진행 곡선 시뮬: node tools/exp_progress_sim.js [kmul] — 평균적인 플레이어(자동 전투·금화는 가장 낮은 레벨에 투자·막히면 마지막 클리어 단계 반복)가
 // 단계마다 몇 번 더 싸워야(파밍) 하는지, 파티 레벨은 어떤지 본다. 목표: 새 단계당 파밍 평균 ≤ 3판, 최대 ≤ 7판, 어떤 단계도 막히지 않음.
-const SC = require('../games/expedition/stage-core.js'); const D = require('../data/expedition_slice.json'); const B = require('../games/expedition/battle-core.js');
+const SC = require('../games/expedition/stage-core.js'); const D = require(process.env.DATA || '../data/expedition_slice.json'); const B = require('../games/expedition/battle-core.js');
 const U = Object.fromEntries(D.units.map((u) => [u.id, u])), capOf = (c) => Math.min(D.bal.lvCapMax, D.bal.lvCap + Math.floor(Math.max(0, c - D.bal.lvCapFrom) / D.bal.lvCapEvery)), cost = (L) => Math.round(D.bal.costBase * Math.pow(D.bal.costGrow, L - 1));
 const mul = +(process.argv[2] || 1), only = process.argv[3] === 'q';
 const stages = D.stages.map((st) => (mul === 1 ? st : Object.assign({}, st, { enemies: st.enemies.map((e) => Object.assign({}, e, { k: +(e.k * (st.id > 6 ? mul : 1)).toFixed(3) })) })));

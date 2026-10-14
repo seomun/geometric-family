@@ -12862,24 +12862,29 @@
   "persuadeAt": 0.3,
   "lvCapFrom": 6,
   "lvCapEvery": 3,
-  "lvCapMax": 80,
+  "lvCapMax": 200,
   "grow": {
-   "skillMax": 5,
+   "skillMax": 7,
    "skillMul": 0.1,
    "skillCost": [
     150,
     400,
     900,
-    1800
+    1800,
+    3600,
+    7000
    ],
-   "awkMax": 5,
+   "awkMax": 8,
    "awkMul": 0.06,
    "awkCost": [
     10,
     20,
     35,
     55,
-    80
+    80,
+    110,
+    145,
+    185
    ],
    "promoLv": 10,
    "promoCost": {
@@ -12892,7 +12897,7 @@
     "신발",
     "보따리"
    ],
-   "gearMax": 10,
+   "gearMax": 12,
    "gearMul": 0.005,
    "gearBase": 30,
    "gearGrow": 1.22

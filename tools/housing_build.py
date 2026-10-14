@@ -28,6 +28,20 @@ for i, n, e, sl, (w, h), ms in EVT: new(i, n, e, sl, 'yard', w, h, 'event', 'all
 GIFT = [('g_cushion', '꽃무늬 쿠션', '🌺', 'floor', (52, 44), 'nemo'), ('g_mirror', '손거울', '🪞', 'wall', (44, 56), 'semo'), ('g_pen', '만년필 꽂이', '🖋️', 'table', (40, 44), 'dong'), ('g_chess', '체스판', '♟️', 'table', (46, 40), 'dong'), ('g_lunch', '도시락 보자기', '🍱', 'table', (46, 40), 'nemo'), ('g_apron', '앞치마', '👚', 'wall', (44, 56), 'nemo'),
         ('g_compass', '나침반', '🧭', 'table', (40, 40), 'semo'), ('g_postcard', '엽서 꽂이', '💌', 'wall', (46, 46), 'semo'), ('g_teaset', '찻주전자', '🫖', 'table', (46, 44), 'nemo'), ('g_flowerpot', '철쭉 화분', '🪴', 'floor', (46, 60), 'yard'), ('g_pepper', '고추 엮음', '🌶️', 'wall', (40, 60), 'yard'), ('g_hanbok', '한복 인형', '👘', 'floor', (44, 70), 'nemo'), ('g_stool', '작은 의자', '🪑', 'floor', (50, 56), 'dong'), ('g_lantern2', '손전등', '🔦', 'table', (36, 44), 'dong')]
 for i, n, e, sl, (w, h), rm in GIFT: new(i, n, e, sl, rm, w, h, 'gift', 'all')
+# ---------------- 테마 세트 4종(A25, 성인): 우리 집 레벨이 오르면 한 세트(5개)가 자동 도착한다(확정 지급, 압박 없음). 문구 [제안] ----------------
+THEME_SETS = [
+    dict(id='theme_cafe', name='카페 거실 세트', icon='☕', lv=4, room='nemo', style='warm', items=[('th_cafe_sign', '카페 간판', '🪧', 'wall', (50, 40)), ('th_cafe_machine', '에스프레소 머신', '☕', 'table', (44, 44)), ('th_cafe_stool', '높은 의자', '🪑', 'floor', (44, 62)), ('th_cafe_cake', '케이크 진열장', '🍰', 'table', (46, 44)), ('th_cafe_plant', '카페 화분', '🪴', 'floor', (46, 62))],
+         scene=dict(props=[['☕', '커피', 22, 172, 44], ['🍰', '케이크', 84, 176, 40], ['🪴', '화분', 276, 150, 54]], chars=['nemo_mom.joy', 'nemo_dad.joy', 'nemo_kids.kid1', 'baby.joy'], emo='☕', text='거실이 작은 카페가 되어 식구들이 한 잔씩 해요', line='오늘은 내가 바리스타!')),
+    dict(id='theme_hanok', name='한옥 사랑방 세트', icon='🏮', lv=9, room='dong', style='wood', items=[('th_hanok_table', '교자상', '🪵', 'floor', (80, 44)), ('th_hanok_screen', '병풍', '🎴', 'wall', (70, 56)), ('th_hanok_lamp', '한지 등', '🏮', 'table', (40, 50)), ('th_hanok_cushion', '방석 한 쌍', '🧘', 'floor', (56, 40)), ('th_hanok_teaset', '다기 세트', '🍵', 'table', (44, 40))],
+         scene=dict(props=[['🍵', '차', 22, 172, 42], ['🏮', '한지 등', 270, 150, 52], ['🎴', '병풍', 84, 150, 54]], chars=['nemo_grandma.good', 'dong_dad.warm', 'nemo_dad.joy', 'nemo_kids.kid2'], emo='🍵', text='사랑방에 둘러앉아 따뜻한 차를 나눠 마셔요', line='차 향이 참 좋구나.')),
+    dict(id='theme_camp', name='캠핑 마당 세트', icon='⛺', lv=14, room='yard', style='wood', items=[('th_camp_tent', '텐트', '⛺', 'floor', (84, 70)), ('th_camp_fire', '모닥불', '🔥', 'floor', (52, 52)), ('th_camp_lantern', '캠핑 랜턴', '🔦', 'table', (40, 44)), ('th_camp_chair', '접이식 의자', '🪑', 'floor', (50, 54)), ('th_camp_stick', '마시멜로 꼬치', '🍢', 'table', (42, 40))],
+         scene=dict(props=[['🔥', '모닥불', 150, 172, 52], ['🍢', '꼬치', 22, 176, 40], ['⛺', '텐트', 262, 130, 62]], chars=['husband.joy', 'wife.joy', 'nemo_kids.kid3', 'baby.joy', 'nemo_dad.joy'], emo='🔥', text='마당에서 모닥불을 피우고 캠핑을 즐겨요', line='마시멜로가 딱 익었다!')),
+    dict(id='theme_lib', name='도서관 서재 세트', icon='📚', lv=19, room='semo', style='cool', items=[('th_lib_desk', '독서 책상', '📖', 'floor', (70, 48)), ('th_lib_lamp', '초록 갓 스탠드', '💡', 'table', (40, 50)), ('th_lib_ladder', '사다리 책장', '🪜', 'floor', (54, 74)), ('th_lib_stamp', '대출 도장', '🔖', 'table', (40, 36)), ('th_lib_cart', '책 수레', '🛒', 'floor', (58, 54))],
+         scene=dict(props=[['📖', '책', 22, 172, 42], ['💡', '스탠드', 276, 150, 50], ['🛒', '책 수레', 84, 170, 50]], chars=['dong_dad.warm', 'nemo_kids.kid1', 'nemo_kids.kid2', 'baby.joy'], emo='📚', text='서재가 작은 도서관이 되어 조용히 책을 읽어요', line='쉿, 이 책 정말 재밌어.')),
+]
+for _t in THEME_SETS:
+    for i, n, e, sl, (w, h) in _t['items']: new(i, n, e, sl, _t['room'], w, h, _t['id'], 'event')
+    if not any(x['id'] == _t['id'] for x in R['sets']): R['sets'].append(dict(id=_t['id'], name=_t['name'] + '(성인)', game='event', room=_t['room'], story='우리 집 레벨 ' + str(_t['lv']) + '에 오르면 한 세트가 자동으로 도착해요.'))
 # 원정 전리품(B6, D12): ⑪ 기하학 원정대는 별도 앱이라 저장소를 잇지 않는다 — 단계 클리어 보상으로 6자리 코드를 받아 성인 그룹 「우리 집」에서 입력(유아 집에는 없음).
 LOOT = [  # id, 이름, 이모지, 슬롯, (w,h), 단계
     ('x_straw', '짚단 의자', '🌾', 'floor', (56, 50), 3), ('x_pinwheel', '바람개비', '🎡', 'floor', (46, 62), 6), ('x_wood', '장작 더미', '🪵', 'floor', (60, 46), 9), ('x_brickhouse', '벽돌집 모형', '🏠', 'table', (44, 44), 12),
@@ -90,6 +104,7 @@ for i in items:
     elif iid.startswith(('s2_', 'kc_')) or iid.startswith('s_'): ms = i['season'] if isinstance(i['season'], list) else ([int(x) for x in re.findall(r'\d+', str(i['season']))] or [12]); SRC[iid] = dict(game='event', kind='season', months=ms, hint=f'{MON(ms)}에 집에 놀러 오면 · 계절 선물')
     elif iid.startswith('e_'): ms = i['season']; SRC[iid] = dict(game='event', kind='event', months=ms, hint=f'{MON(ms)} 기념일에 집에 오면')
     elif iid.startswith('x_'): SRC[iid] = dict(game='expedition', kind='code', n=LOOT_STAGE[iid], hint=f'기하학 원정대 · {LOOT_STAGE[iid]}단계 클리어 전리품 코드')
+    elif iid.startswith('th_'): _lv = [t['lv'] for t in THEME_SETS if t['id'] == i['set']][0]; SRC[iid] = dict(game='event', kind='houselevel', n=_lv, hint=f'우리 집 레벨 {_lv}에 오르면 도착(테마 세트)')
     elif iid.startswith(('g_', 'kg_')): SRC[iid] = dict(game='event', kind='guest', hint='집에 손님이 놀러 오면 선물')
     elif iid in ('b_bed', 'b_rug'): SRC[iid] = dict(game='merge', kind='tier', hint='합치기 · 아이 방 가구(합치기 보상)')
     else: SRC[iid] = dict(game=APPK.get(i['game'], i['game']), kind='other', hint=f"{APPN.get(APPK.get(i['game'], i['game']), '')} 보상")
@@ -97,7 +112,7 @@ assert all(i['id'] in SRC for i in items), [i['id'] for i in items if i['id'] no
 # ---------------- 필드: cozy · cls(크기 규칙) · tags · style · color ----------------
 TAG_RULES = [('sit', r'sofa|chair|bench|stool|mat|rug|평상|의자|소파|방석|벤치|러그'), ('eat', r'table|bowl|rice|lunch|kimchi|tea|ramen|plate|식탁|그릇|밥|도시락|김치|찻잔|라면|수저'), ('read', r'shelf|book|diary|album|책|서재|일기|앨범'),
              ('sleep', r'bed|pillow|quilt|moon|침대|베개|이불'), ('play', r'toy|ball|duck|train|swing|block|k_|장난감|공|오리|기차|그네'), ('watch', r'tv|photo|frame|camera|window|액자|사진|TV|창문')]
-STYLE = {'build': 'warm', 'kitchen': 'warm', 'photo': 'cool', 'outer': 'wood', 'yardlife': 'wood', 'storage': 'cool', 'kid': 'kids', 'daybath': 'kids', 'wall': 'kids', 'badge': 'festive', 'season': 'festive', 'season2': 'festive', 'event': 'festive', 'gift': 'warm', 'kseason': 'kids', 'kgift': 'kids', 'story_a': 'festive', 'story_k': 'festive'}
+STYLE = {'build': 'warm', 'kitchen': 'warm', 'photo': 'cool', 'outer': 'wood', 'yardlife': 'wood', 'storage': 'cool', 'kid': 'kids', 'daybath': 'kids', 'wall': 'kids', 'badge': 'festive', 'season': 'festive', 'season2': 'festive', 'event': 'festive', 'gift': 'warm', 'kseason': 'kids', 'kgift': 'kids', 'story_a': 'festive', 'story_k': 'festive', 'theme_cafe': 'warm', 'theme_hanok': 'wood', 'theme_camp': 'wood', 'theme_lib': 'cool'}
 BIG = {'b_sofa', 'b_table', 'b_bed', 'u_fridge', 'u_closet', 'b_shelf', 'b_drawer', 'b_tv', 'u_shoerack', 'm_bench', 'o_gate', 'o_fence', 'o_well', 'a_shelf', 'm_garden', 'm_coop', 'o_doghouse', 'u_drawer', 'y_toybox', 'u_box', 'o_bench', 'b_nemo_living', 'b_semo_home', 'b_dong_study', 's_tree', 'u_cart'}
 SIZE_F = {'big': 1.75, 'mid': 1.4, 'small': 1.2, 'wall': 1.25, 'prop': 1.0}
 def hue(c):
@@ -155,7 +170,7 @@ th('entry', 'u_shoerack', 'n_plate', 'q_plate_nemo', 'u_bagrack', 'u_umbrella');
 for tid in ('pigs', 'bears', 'shoes', 'kongjwi', 'heungbu', 'bremen', 'hok', 'axe', 'sun', 'ant', 'pino', 'jack', 'gyeonwoo', 'ureng', 'hare', 'brothers', 'snowqueen', 'fairywood', 'rabbitliver', 'magpie', 'tigerpersimmon', 'redhood', 'hansel', 'puss'): th('story', 't_%s_a' % tid, 't_%s_k' % tid)
 th('wash', 'y_cup', 'y_cup2', 'y_paste', 'y_soap', 'y_towel', 'y_mat', 'y_duck', 'y_hanger'); th('deco', 'y_clock', 'y_star', 'w_frame', 'w_frame_gold', 'w_frame_pink', 'w_garland', 'w_balloons', 'w_stars', 'w_rainbow', 'kg_cloud', 'kg_star', 'kg_rainbow', 'kc_leaf', 'kc_cherry', 'kc_tulip', 'k_ch11', 'k_ch13')
 th('play', 'y_toybox', 'k_train', 'y_ball', 'kg_bear', 'kg_drum', 'kg_ball2', 'kg_train2', 'kg_kite', 'k_ch5', 'k_ch6', 'k_ch7', 'k_ch9', 'k_ch14', 'kc_tube', 'kc_acorn', 'kc_snowman'); th('wear', 'y_hat', 'y_boots', 'k_ch8', 'kc_mitten', 'w_crown'); th('eat', 'y_bowl', 'y_spoon', 'k_ch3', 'k_ch10', 'k_ch12', 'k_ch15', 'kc_icecream')
-DEFAULT_THEME = {'kitchen': 'eat', 'storage': 'store', 'photo': 'deco', 'outer': 'outdoor', 'yardlife': 'outdoor', 'badge': 'deco', 'story_a': 'story', 'story_k': 'story', 'season': 'deco', 'season2': 'deco', 'event': 'deco', 'gift': 'living', 'kseason': 'deco', 'kgift': 'play', 'wall': 'deco', 'build': 'living', 'kid': 'play', 'daybath': 'wash'}
+DEFAULT_THEME = {'kitchen': 'eat', 'storage': 'store', 'photo': 'deco', 'outer': 'outdoor', 'yardlife': 'outdoor', 'badge': 'deco', 'story_a': 'story', 'story_k': 'story', 'season': 'deco', 'season2': 'deco', 'event': 'deco', 'gift': 'living', 'kseason': 'deco', 'kgift': 'play', 'wall': 'deco', 'build': 'living', 'kid': 'play', 'daybath': 'wash', 'theme_cafe': 'living', 'theme_hanok': 'living', 'theme_camp': 'outdoor', 'theme_lib': 'living'}
 for i in items: i['theme'] = THEME.get(i['id']) or DEFAULT_THEME.get(i['set'], 'deco')
 import os as _os
 if _os.path.exists('data/furniture_lines.json'):      # 가구 한 줄 이야기(A20, tools/furniture_lines_build.py)
@@ -287,7 +302,7 @@ for pr in PRESETS:
     assert pr['room'] in {r['id'] for r in mkrooms('adult')}, pr['room']
     for q in pr['parts']: assert q['id'] in byid_all, ('프리셋 가구 없음', pr['id'], q['id'])
 D = dict(version=2, note='[제안] 우리 집 2.0 데이터. tools/housing_build.py 로 생성.', levels=levels, levelsKid=levelsKid, formula=dict(set=[[3, 0.10], [5, 0.25], ['all', 0.60]], harmony=30, style=30, fill=40, life=20), sizeF=SIZE_F, geom=dict(RW=340, RH=440, WALLH=150),
-         rooms=mkrooms('adult') + mkrooms('kid'), story=STORY, guests=GUESTS, presets=PRESETS, unlockLv={'adult': {'kitchen': 3, 'semo': 5, 'dong': 8, 'yard': 10, 'garden': 22, 'entrance': 12, 'upstairs': 15, 'attic': 25, 'roof': 20}, 'kid': {'kid': 3, 'wardrobe': 6, 'dining': 9, 'toyroom': 12}})
+         rooms=mkrooms('adult') + mkrooms('kid'), themeSets=[dict(id=t['id'], name=t['name'], icon=t['icon'], lv=t['lv'], room=t['room'], items=[x[0] for x in t['items']], scene=t['scene']) for t in THEME_SETS], story=STORY, guests=GUESTS, presets=PRESETS, unlockLv={'adult': {'kitchen': 3, 'semo': 5, 'dong': 8, 'yard': 10, 'garden': 22, 'entrance': 12, 'upstairs': 15, 'attic': 25, 'roof': 20}, 'kid': {'kid': 3, 'wardrobe': 6, 'dining': 9, 'toyroom': 12}})
 # 주간 꾸미기 도전(A24, 성인 집): 주마다 주제 하나(주 번호 순환) — 방 안에 그 주제에 맞는 가구를 need 개 놓으면 도장 한 개. 순위·벌점 없음. rule: k=style|tag|theme · v=값. 문구 [제안]
 CHAL = [
     dict(id='cozy_living', name='포근한 거실', icon='🛋️', room='nemo', k='style', v='warm', need=5, tip='따뜻한 색 가구를 거실에 놓아 봐요'),

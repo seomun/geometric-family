@@ -2105,6 +2105,201 @@
    ]
   }
  ],
+ "themeSets": [
+  {
+   "id": "theme_cafe",
+   "name": "카페 거실 세트",
+   "icon": "☕",
+   "lv": 4,
+   "room": "nemo",
+   "items": [
+    "th_cafe_sign",
+    "th_cafe_machine",
+    "th_cafe_stool",
+    "th_cafe_cake",
+    "th_cafe_plant"
+   ],
+   "scene": {
+    "props": [
+     [
+      "☕",
+      "커피",
+      22,
+      172,
+      44
+     ],
+     [
+      "🍰",
+      "케이크",
+      84,
+      176,
+      40
+     ],
+     [
+      "🪴",
+      "화분",
+      276,
+      150,
+      54
+     ]
+    ],
+    "chars": [
+     "nemo_mom.joy",
+     "nemo_dad.joy",
+     "nemo_kids.kid1",
+     "baby.joy"
+    ],
+    "emo": "☕",
+    "text": "거실이 작은 카페가 되어 식구들이 한 잔씩 해요",
+    "line": "오늘은 내가 바리스타!"
+   }
+  },
+  {
+   "id": "theme_hanok",
+   "name": "한옥 사랑방 세트",
+   "icon": "🏮",
+   "lv": 9,
+   "room": "dong",
+   "items": [
+    "th_hanok_table",
+    "th_hanok_screen",
+    "th_hanok_lamp",
+    "th_hanok_cushion",
+    "th_hanok_teaset"
+   ],
+   "scene": {
+    "props": [
+     [
+      "🍵",
+      "차",
+      22,
+      172,
+      42
+     ],
+     [
+      "🏮",
+      "한지 등",
+      270,
+      150,
+      52
+     ],
+     [
+      "🎴",
+      "병풍",
+      84,
+      150,
+      54
+     ]
+    ],
+    "chars": [
+     "nemo_grandma.good",
+     "dong_dad.warm",
+     "nemo_dad.joy",
+     "nemo_kids.kid2"
+    ],
+    "emo": "🍵",
+    "text": "사랑방에 둘러앉아 따뜻한 차를 나눠 마셔요",
+    "line": "차 향이 참 좋구나."
+   }
+  },
+  {
+   "id": "theme_camp",
+   "name": "캠핑 마당 세트",
+   "icon": "⛺",
+   "lv": 14,
+   "room": "yard",
+   "items": [
+    "th_camp_tent",
+    "th_camp_fire",
+    "th_camp_lantern",
+    "th_camp_chair",
+    "th_camp_stick"
+   ],
+   "scene": {
+    "props": [
+     [
+      "🔥",
+      "모닥불",
+      150,
+      172,
+      52
+     ],
+     [
+      "🍢",
+      "꼬치",
+      22,
+      176,
+      40
+     ],
+     [
+      "⛺",
+      "텐트",
+      262,
+      130,
+      62
+     ]
+    ],
+    "chars": [
+     "husband.joy",
+     "wife.joy",
+     "nemo_kids.kid3",
+     "baby.joy",
+     "nemo_dad.joy"
+    ],
+    "emo": "🔥",
+    "text": "마당에서 모닥불을 피우고 캠핑을 즐겨요",
+    "line": "마시멜로가 딱 익었다!"
+   }
+  },
+  {
+   "id": "theme_lib",
+   "name": "도서관 서재 세트",
+   "icon": "📚",
+   "lv": 19,
+   "room": "semo",
+   "items": [
+    "th_lib_desk",
+    "th_lib_lamp",
+    "th_lib_ladder",
+    "th_lib_stamp",
+    "th_lib_cart"
+   ],
+   "scene": {
+    "props": [
+     [
+      "📖",
+      "책",
+      22,
+      172,
+      42
+     ],
+     [
+      "💡",
+      "스탠드",
+      276,
+      150,
+      50
+     ],
+     [
+      "🛒",
+      "책 수레",
+      84,
+      170,
+      50
+     ]
+    ],
+    "chars": [
+     "dong_dad.warm",
+     "nemo_kids.kid1",
+     "nemo_kids.kid2",
+     "baby.joy"
+    ],
+    "emo": "📚",
+    "text": "서재가 작은 도서관이 되어 조용히 책을 읽어요",
+    "line": "쉿, 이 책 정말 재밌어."
+   }
+  }
+ ],
  "story": [
   {
    "ch": 1,

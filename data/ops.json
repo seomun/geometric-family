@@ -534,7 +534,8 @@
   "c16.room2.chal6": "가진 가구 중에 어울리는 게 아직 없어요. 천천히 모아도 괜찮아요",
   "c16.room2.chal7": "지금까지 도장 {n}개",
   "c16.room2.chal8": "못 하고 지나가도 괜찮아요. 주제는 매주 새로 바뀌어요",
-  "c16.room2.chal9": "그 방으로 가기"
+  "c16.room2.chal9": "그 방으로 가기",
+  "c16.room2.theme1": "새 테마 세트가 도착했어요: {name}"
  },
  "strings_en": {
   "common.close": "Close",
@@ -1059,7 +1060,8 @@
   "c16.room2.chal6": "",
   "c16.room2.chal7": "",
   "c16.room2.chal8": "",
-  "c16.room2.chal9": ""
+  "c16.room2.chal9": "",
+  "c16.room2.theme1": ""
  },
  "shapeWho": {
   "nemo": [

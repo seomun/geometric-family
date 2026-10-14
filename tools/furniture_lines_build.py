@@ -3,9 +3,9 @@ housing_build.py 가 이 파일을 읽어 room_items.json 의 각 가구 `line` 
 import json, re, sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.path.insert(0, 'tools')
-from furniture_lines_a import LINES_A; from furniture_lines_b import LINES_B; from furniture_lines_c import LINES_C; from furniture_lines_d import LINES_D
+from furniture_lines_a import LINES_A; from furniture_lines_b import LINES_B; from furniture_lines_c import LINES_C; from furniture_lines_d import LINES_D; from furniture_lines_e import LINES_E
 L = {}
-for part in (LINES_A, LINES_B, LINES_C, LINES_D):
+for part in (LINES_A, LINES_B, LINES_C, LINES_D, LINES_E):
     for k, v in part.items(): assert k not in L, ('겹치는 id', k); L[k] = v
 items = json.load(open('data/room_items.json', encoding='utf-8'))['items']
 KG = ('kid', 'daybath', 'wall', 'story_k', 'kseason', 'kgift'); adult = [i['id'] for i in items if i['set'] not in KG]

@@ -138,7 +138,7 @@
     const ar = onBand.querySelector('.h2-arrow'); if (ar) onBand.insertBefore(c, ar); c.onclick = (e) => { e.stopPropagation(); try { GF.sfx('tap'); } catch (x) { /* 소리 */ } Room.chalSheet(parent); }; return c;
   };
   Room.band = function (parent, opts) {
-    opts = opts || {}; const old = parent.querySelector(':scope > .h2-band'); if (old) old.remove(); if (!H() || !Room.S) return null;
+    opts = opts || {}; try { Room.themeSync(opts.toastParent || parent); } catch (e) { /* 세트 도착 실패는 띠를 막지 않는다 */ } const old = parent.querySelector(':scope > .h2-band'); if (old) old.remove(); if (!H() || !Room.S) return null;
     const g = Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) { Room.todoLine(parent, false); return null; } const b = el('button', 'h2-band' + (kid() ? ' kid' : ''), parent);
     const im = el('img', '', b); im.src = Room.src(g.item); im.alt = ''; const ic = APPICON[g.game] || '🎁';
     if (kid()) { el('span', 'h2-bic', b, ic); el('span', 'h2-arrow', b, UK.icon('next')); } else { const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : '다음: ') + g.label + ' · ' + g.hint); el('span', 'h2-arrow', b, UK.icon('next')); }
@@ -665,7 +665,18 @@
     { set: 'season_winter', name: '겨울 김장 세트', items: ['s2_tangerine', 's2_heater', 's2_blanket', 's2_wreath', 'p_kimchi'], room: 'kitchen', props: [['🥬', '배추', 18, 166, 48], ['🪣', '대야', 74, 168, 48], ['🧤', '고무장갑', 232, 172, 42], ['🍊', '귤', 288, 176, 34]], chars: ['nemo_mom.joy', 'nemo_dad.joy', 'nemo_kids.kid2', 'baby.joy', 'nemo_grandma.good', 'wife.joy'], emo: '🥬', text: '배추에 양념을 버무려 다 같이 김장을 해요', line: '올해 김치 대박이다!', icon: '🥬' },
     { set: 'outer', room: 'yard', focus: ['m_bench', 'o_fence'], chars: ['nemo_dad.joy', 'wife.joy', 'dong_dad.warm', 'nemo_grandma.good'], emo: '😄', text: '이웃이 마당에 모여 담소를 나눠요', line: '다음 모임도 우리 집에서!', icon: '🏡' },
   ];
-  Room.setScenes = () => SCENES.filter((c) => { const its = c.items ? c.items.map((id) => Room.item(id)).filter(Boolean) : Room.data.items.filter((i) => i.set === c.set && inGroup(i)); return its.length && (!c.items || its.length === c.items.length) && its.every((i) => Room.has(i.id)); });
+
+  /* ---------------- 테마 세트 4종(A25, 성인): 우리 집 레벨이 오르면 한 세트(5개)가 자동 도착. 확정 지급·압박 없음. 완성하면 그 방에서 가족 장면(칩) ---------------- */
+  Room.themeSets = () => (kid() ? [] : ((H() && H().themeSets) || []));
+  /** 레벨이 된 세트의 가구를 받는다(한 번만). 방금 새로 받은 세트 목록을 돌려준다. */
+  Room.themeSync = function (parent) {
+    const S = ensure(); if (!S || kid() || !H()) return []; const lv = Room.level(), got = []; S.theme = S.theme || { sets: {} };
+    Room.themeSets().forEach((t) => { if (lv < t.lv || S.theme.sets[t.id]) return; Room._quiet = true; try { t.items.forEach((id) => { if (Room.item(id) && !Room.has(id)) Room.grant(id); }); } finally { Room._quiet = false; } S.theme.sets[t.id] = 1; got.push(t); });
+    if (got.length) { Room.save(); try { Room.albumAdd('theme:' + got[0].id, 'theme', got[0].icon + ' ' + got[0].name, '새 테마 세트가 도착했어요', null); } catch (e) { /* 앨범 실패는 무시 */ } if (parent) { try { toastH(GF.t('c16.room2.theme1', { name: got.map((t) => t.name).join(' · ') }), parent); } catch (e) { /* 토스트 실패 */ } } }
+    return got;
+  };
+  Room.themeScenes = () => Room.themeSets().map((t) => Object.assign({ set: t.id, name: t.name, items: t.items, room: t.room, icon: t.icon }, t.scene));
+  Room.setScenes = () => SCENES.concat(Room.themeScenes()).filter((c) => { const its = c.items ? c.items.map((id) => Room.item(id)).filter(Boolean) : Room.data.items.filter((i) => i.set === c.set && inGroup(i)); return its.length && (!c.items || its.length === c.items.length) && its.every((i) => Room.has(i.id)); });
   Room.scenesFor = (rid) => Room.setScenes().filter((c) => c.room === rid);      // 그 방에서 볼 수 있는 완성 장면들(칩을 누를 때마다 다음 것)
   Room.sceneFor = (rid) => Room.scenesFor(rid)[0] || null;
   /** 장면 무대 소품(흐림막 위·가족 뒤): [이모지, 이름, x, y, 크기]. 장면 글에 나오는 물건은 가구가 없어도 장면 동안 임시로 그린다 */

@@ -171,6 +171,34 @@
    "game": "expedition",
    "room": "yard",
    "story": "원정을 다녀온 가족의 짐에서 나온 것들. 기하학 원정대에서 받은 코드로 놓아요."
+  },
+  {
+   "id": "theme_cafe",
+   "name": "카페 거실 세트(성인)",
+   "game": "event",
+   "room": "nemo",
+   "story": "우리 집 레벨 4에 오르면 한 세트가 자동으로 도착해요."
+  },
+  {
+   "id": "theme_hanok",
+   "name": "한옥 사랑방 세트(성인)",
+   "game": "event",
+   "room": "dong",
+   "story": "우리 집 레벨 9에 오르면 한 세트가 자동으로 도착해요."
+  },
+  {
+   "id": "theme_camp",
+   "name": "캠핑 마당 세트(성인)",
+   "game": "event",
+   "room": "yard",
+   "story": "우리 집 레벨 14에 오르면 한 세트가 자동으로 도착해요."
+  },
+  {
+   "id": "theme_lib",
+   "name": "도서관 서재 세트(성인)",
+   "game": "event",
+   "room": "semo",
+   "story": "우리 집 레벨 19에 오르면 한 세트가 자동으로 도착해요."
   }
  ],
  "items": [
@@ -12258,7 +12286,8 @@
    },
    "flat": false,
    "cls": "wall",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "눈 나라 하늘에서 반짝반짝 떨어지던 얼음 거울 조각. 지금은 아무것도 비뚤게 비추지 않는다."
   },
   {
    "no": 365,
@@ -12289,7 +12318,8 @@
    },
    "flat": false,
    "cls": "prop",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "얼음 정원에서 하나만 꺾어 온 유리 장미. 손을 대도 시리지 않다."
   },
   {
    "no": 366,
@@ -12320,7 +12350,8 @@
    },
    "flat": false,
    "cls": "wall",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "네모 엄마가 까마귀 목에 둘러 주었던 털 목도리를 걸어 두는 자리."
   },
   {
    "no": 367,
@@ -12351,7 +12382,8 @@
    },
    "flat": false,
    "cls": "small",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "눈보라 속에서 길 잃은 친구들을 지켜보던 까마귀 인형."
   },
   {
    "no": 368,
@@ -12382,7 +12414,8 @@
    },
    "flat": false,
    "cls": "prop",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "여름 내내 노래한 매미가 남기고 간 허물. 겨울 곳간 앞에서 함께 노래한 기념."
   },
   {
    "no": 369,
@@ -12413,7 +12446,8 @@
    },
    "flat": false,
    "cls": "prop",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "개미가 한 알씩 옮겨 모은 곡식 낟알 바구니. 이웃과 나누려고 넉넉히 담았다."
   },
   {
    "no": 370,
@@ -12444,7 +12478,8 @@
    },
    "flat": false,
    "cls": "small",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "베짱이 세모 남편이 풀잎 위에서 켜던 여름 노래 바이올린."
   },
   {
    "no": 371,
@@ -12475,7 +12510,8 @@
    },
    "flat": false,
    "cls": "small",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "겨울 채비로 가득 채운 곳간 항아리. 한쪽은 매미 몫이다."
   },
   {
    "no": 372,
@@ -12506,7 +12542,8 @@
    },
    "flat": false,
    "cls": "wall",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "토끼도 거북이도 한 줄로 지나간 결승선의 깃발."
   },
   {
    "no": 373,
@@ -12537,7 +12574,8 @@
    },
    "flat": false,
    "cls": "small",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "모두의 완주를 바라던 두루미 심판 인형. 한 발로 서서 갸웃한다."
   },
   {
    "no": 374,
@@ -12570,7 +12608,8 @@
    },
    "flat": false,
    "cls": "mid",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "토끼가 잠깐 누웠다 간 낮잠 나무 아래 방석. 거북이는 그냥 지나갔다."
   },
   {
    "no": 375,
@@ -12601,7 +12640,8 @@
    },
    "flat": false,
    "cls": "prop",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "출발 신호용 호루라기. 이제는 끝까지 가는 모두에게 분다."
   },
   {
    "no": 376,
@@ -12619,7 +12659,22 @@
    ],
    "game": "playground",
    "season": null,
-   "physical": null
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "play"
+   ],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "playground",
+    "kind": "chapter",
+    "n": 16,
+    "hint": "놀이터 · 16장 끝"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "play"
   },
   {
    "no": 377,
@@ -12637,7 +12692,22 @@
    ],
    "game": "playground",
    "season": null,
-   "physical": null
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "play"
+   ],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "playground",
+    "kind": "chapter",
+    "n": 17,
+    "hint": "놀이터 · 17장 끝"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "play"
   },
   {
    "no": 378,
@@ -12655,7 +12725,22 @@
    ],
    "game": "playground",
    "season": null,
-   "physical": null
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "play"
+   ],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "playground",
+    "kind": "chapter",
+    "n": 18,
+    "hint": "놀이터 · 18장 끝"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "play"
   },
   {
    "no": 379,
@@ -12673,7 +12758,22 @@
    ],
    "game": "playground",
    "season": null,
-   "physical": null
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "play"
+   ],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "playground",
+    "kind": "chapter",
+    "n": 19,
+    "hint": "놀이터 · 19장 끝"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "play"
   },
   {
    "no": 380,
@@ -12691,7 +12791,685 @@
    ],
    "game": "playground",
    "season": null,
-   "physical": null
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "play"
+   ],
+   "style": "kids",
+   "color": "white",
+   "src": {
+    "game": "playground",
+    "kind": "chapter",
+    "n": 20,
+    "hint": "놀이터 · 20장 끝"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "play"
+  },
+  {
+   "no": 381,
+   "id": "th_cafe_sign",
+   "name": "카페 간판",
+   "set": "theme_cafe",
+   "room": "nemo",
+   "w": 50,
+   "h": 40,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪧",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 4,
+    "hint": "우리 집 레벨 4에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "living",
+   "line": "거실이 하루 동안 「네모네 카페」가 된 날 걸어 둔 간판."
+  },
+  {
+   "no": 382,
+   "id": "th_cafe_machine",
+   "name": "에스프레소 머신",
+   "set": "theme_cafe",
+   "room": "nemo",
+   "w": 44,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "☕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 3,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 4,
+    "hint": "우리 집 레벨 4에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "living",
+   "line": "네모 아빠가 커피를 내리는 척하며 막둥이에게 우유를 데워 주는 머신."
+  },
+  {
+   "no": 383,
+   "id": "th_cafe_stool",
+   "name": "높은 의자",
+   "set": "theme_cafe",
+   "room": "nemo",
+   "w": 44,
+   "h": 62,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪑",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "sit"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 4,
+    "hint": "우리 집 레벨 4에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "living",
+   "line": "아이들이 서로 올라앉겠다고 하는 카페 높은 의자."
+  },
+  {
+   "no": 384,
+   "id": "th_cafe_cake",
+   "name": "케이크 진열장",
+   "set": "theme_cafe",
+   "room": "nemo",
+   "w": 46,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍰",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 3,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 4,
+    "hint": "우리 집 레벨 4에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "living",
+   "line": "오늘의 케이크는 딸기. 한 조각을 일곱 식구가 나눈다."
+  },
+  {
+   "no": 385,
+   "id": "th_cafe_plant",
+   "name": "카페 화분",
+   "set": "theme_cafe",
+   "room": "nemo",
+   "w": 46,
+   "h": 62,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪴",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 4,
+    "hint": "우리 집 레벨 4에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "living",
+   "line": "카페 분위기를 내려고 놓았더니 어느새 집에서 제일 잘 크는 화분."
+  },
+  {
+   "no": 386,
+   "id": "th_hanok_table",
+   "name": "교자상",
+   "set": "theme_hanok",
+   "room": "dong",
+   "w": 80,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪵",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [
+    "eat",
+    "play"
+   ],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 9,
+    "hint": "우리 집 레벨 9에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "living",
+   "line": "할머니가 차를 올리면 일곱 식구가 둘러앉는 낮은 교자상."
+  },
+  {
+   "no": 387,
+   "id": "th_hanok_screen",
+   "name": "병풍",
+   "set": "theme_hanok",
+   "room": "dong",
+   "w": 70,
+   "h": 56,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🎴",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [
+    "play"
+   ],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 9,
+    "hint": "우리 집 레벨 9에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "living",
+   "line": "바람 소리를 막아 주는 병풍. 뒤에서 막둥이가 숨바꼭질을 한다."
+  },
+  {
+   "no": 388,
+   "id": "th_hanok_lamp",
+   "name": "한지 등",
+   "set": "theme_hanok",
+   "room": "dong",
+   "w": 40,
+   "h": 50,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🏮",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 3,
+   "tags": [
+    "play"
+   ],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 9,
+    "hint": "우리 집 레벨 9에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "living",
+   "line": "한지 너머로 은은하게 번지는 사랑방의 등."
+  },
+  {
+   "no": 389,
+   "id": "th_hanok_cushion",
+   "name": "방석 한 쌍",
+   "set": "theme_hanok",
+   "room": "dong",
+   "w": 56,
+   "h": 40,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🧘",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "sit",
+    "play"
+   ],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 9,
+    "hint": "우리 집 레벨 9에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "living",
+   "line": "할머니와 동그라미 아빠가 나란히 앉아 도란도란 이야기하는 방석 한 쌍."
+  },
+  {
+   "no": 390,
+   "id": "th_hanok_teaset",
+   "name": "다기 세트",
+   "set": "theme_hanok",
+   "room": "dong",
+   "w": 44,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍵",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 3,
+   "tags": [
+    "eat",
+    "play"
+   ],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 9,
+    "hint": "우리 집 레벨 9에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "living",
+   "line": "뜨거운 물을 천천히 붓는 동안 마음도 가라앉는 다기 세트."
+  },
+  {
+   "no": 391,
+   "id": "th_camp_tent",
+   "name": "텐트",
+   "set": "theme_camp",
+   "room": "yard",
+   "w": 84,
+   "h": 70,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "⛺",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 8,
+   "tags": [],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 14,
+    "hint": "우리 집 레벨 14에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "big",
+   "theme": "outdoor",
+   "line": "마당에 쳤다가 아이들이 한 번도 안 나오고 잠들어 버린 텐트."
+  },
+  {
+   "no": 392,
+   "id": "th_camp_fire",
+   "name": "모닥불",
+   "set": "theme_camp",
+   "room": "yard",
+   "w": 52,
+   "h": 52,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🔥",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 14,
+    "hint": "우리 집 레벨 14에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "outdoor",
+   "line": "타닥타닥 소리에 모두가 목소리를 낮추는 마당의 모닥불."
+  },
+  {
+   "no": 393,
+   "id": "th_camp_lantern",
+   "name": "캠핑 랜턴",
+   "set": "theme_camp",
+   "room": "yard",
+   "w": 40,
+   "h": 44,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🔦",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 3,
+   "tags": [],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 14,
+    "hint": "우리 집 레벨 14에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "outdoor",
+   "line": "별이 많은 밤, 세찌가 두 손으로 들고 다니는 캠핑 랜턴."
+  },
+  {
+   "no": 394,
+   "id": "th_camp_chair",
+   "name": "접이식 의자",
+   "set": "theme_camp",
+   "room": "yard",
+   "w": 50,
+   "h": 54,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪑",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "sit"
+   ],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 14,
+    "hint": "우리 집 레벨 14에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "outdoor",
+   "line": "세모 삼촌이 제일 먼저 눕듯이 앉아 버리는 접이식 의자."
+  },
+  {
+   "no": 395,
+   "id": "th_camp_stick",
+   "name": "마시멜로 꼬치",
+   "set": "theme_camp",
+   "room": "yard",
+   "w": 42,
+   "h": 40,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🍢",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 3,
+   "tags": [],
+   "style": "wood",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 14,
+    "hint": "우리 집 레벨 14에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "outdoor",
+   "line": "마시멜로를 구워 한 개씩 나눠 먹는 꼬치. 막둥이는 두 개째."
+  },
+  {
+   "no": 396,
+   "id": "th_lib_desk",
+   "name": "독서 책상",
+   "set": "theme_lib",
+   "room": "semo",
+   "w": 70,
+   "h": 48,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "📖",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "read"
+   ],
+   "style": "cool",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 19,
+    "hint": "우리 집 레벨 19에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "living",
+   "line": "하나와 두리가 나란히 앉아 책장을 넘기는 독서 책상."
+  },
+  {
+   "no": 397,
+   "id": "th_lib_lamp",
+   "name": "초록 갓 스탠드",
+   "set": "theme_lib",
+   "room": "semo",
+   "w": 40,
+   "h": 50,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "💡",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 3,
+   "tags": [],
+   "style": "cool",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 19,
+    "hint": "우리 집 레벨 19에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "living",
+   "line": "초록 불빛 아래서 조용히 읽다 보면 어느새 밤이 되는 스탠드."
+  },
+  {
+   "no": 398,
+   "id": "th_lib_ladder",
+   "name": "사다리 책장",
+   "set": "theme_lib",
+   "room": "semo",
+   "w": 54,
+   "h": 74,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪜",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "read"
+   ],
+   "style": "cool",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 19,
+    "hint": "우리 집 레벨 19에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "living",
+   "line": "맨 윗칸 책을 꺼내려고 올라가다 막둥이가 붙잡고 따라오는 사다리 책장."
+  },
+  {
+   "no": 399,
+   "id": "th_lib_stamp",
+   "name": "대출 도장",
+   "set": "theme_lib",
+   "room": "semo",
+   "w": 40,
+   "h": 36,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🔖",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 3,
+   "tags": [],
+   "style": "cool",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 19,
+    "hint": "우리 집 레벨 19에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "living",
+   "line": "다 읽은 책마다 쾅 하고 도장을 찍어 주는 우리 집 대출 도장."
+  },
+  {
+   "no": 400,
+   "id": "th_lib_cart",
+   "name": "책 수레",
+   "set": "theme_lib",
+   "room": "semo",
+   "w": 58,
+   "h": 54,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🛒",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "event",
+   "season": null,
+   "physical": null,
+   "cozy": 6,
+   "tags": [
+    "read"
+   ],
+   "style": "cool",
+   "color": "white",
+   "src": {
+    "game": "event",
+    "kind": "houselevel",
+    "n": 19,
+    "hint": "우리 집 레벨 19에 오르면 도착(테마 세트)"
+   },
+   "flat": false,
+   "cls": "mid",
+   "theme": "living",
+   "line": "읽은 책을 제자리로 돌려놓는 일을 즐겁게 만든 작은 책 수레."
   }
  ],
  "meTypes": {

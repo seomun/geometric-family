@@ -5,11 +5,11 @@ cd "$(dirname "$0")/.."; mkdir -p notes/rc5; : ; [ "$RESUME" = "1" ] || : > note
 free_mb() { powershell.exe -NoProfile -Command "[int]((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory/1024)" 2>/dev/null | tr -d '\r'; }
 # 구간마다 playwright chrome·시험 node 가 남아 있으면 정리하고 개수를 요약에 적는다(메모리 압박 방지)
 leftovers() { n_left=$(powershell.exe -NoProfile -File tools/kill_leftovers.ps1 2>/dev/null | tr -d ''); [ -n "$n_left" ] && [ "$n_left" != "0" ] && echo "  (정리한 남은 프로세스 $n_left)" >> notes/rc5/segments_summary.txt; return 0; }
-seg() { n="$1"; shift; if [ "$RESUME" = "1" ] && grep -q "^$n rc=0 \(ALL PASS\|no errors\|?\)" notes/rc5/segments_summary.txt 2>/dev/null; then return; fi; while [ "$(free_mb)" -lt 1300 ]; do echo "wait mem $(free_mb)MB" >> notes/rc5/segments_summary.txt; sleep 20; done
+seg() { n="$1"; shift; if [ "$RESUME" = "1" ] && grep -q "^$n rc=0 \(ALL PASS\|no errors\|?\)" notes/rc5/segments_summary.txt 2>/dev/null; then return; fi; while [ "$(free_mb)" -lt 2000 ]; do echo "wait mem $(free_mb)MB" >> notes/rc5/segments_summary.txt; sleep 30; done
   "$@" > "notes/rc5/seg_$n.log" 2>&1; rc=$?; res=$(grep -E '^(ALL PASS|FAILED|no errors)' "notes/rc5/seg_$n.log" | head -1); echo "$n rc=$rc ${res:-?}" >> notes/rc5/segments_summary.txt; leftovers; }
 for c in 1 2 3 4 5 6 7 8 9 10; do seg "c1_ch$c" env ONLY=$c node games/tools/smoke.js; done
 for c in 11 12 13 14 15; do seg "c1_book3_ch$c" env ONLY=$c node games/tools/book3_smoke.js; done
-for r in 1-5 6-10 11-15 16-20; do seg "merge_$r" env LV=$r node tools/merge_smoke.js; done
+for r in 1-3 4-6 7-9 10-12 13-15 16-18 19-20; do seg "merge_$r" env LV=$r node tools/merge_smoke.js; done      # 무거운 구간은 잘게(허브 지시)
 for r in 1-10 11-20 21-30 31-40 41-50 51-60 61-70 71-80 81-90 91-100 101-110 111-120; do seg "block_$r" env LV=$r node tools/block_smoke.js; done
 for r in 1-20 21-40 41-60 61-80 81-100 101-120 121-140; do seg "spot_$r" env LV=$r node tools/spot_smoke.js; done
 for r in 1-10 11-20 21-30 31-40 41-50 51-60 61-70 71-80 81-90 91-100 101-110 111-120; do seg "tile_$r" env LV=$r node tools/tile_smoke.js; done

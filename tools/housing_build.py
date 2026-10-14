@@ -334,3 +334,6 @@ json.dump(D, open('data/housing.json', 'w', encoding='utf-8'), ensure_ascii=Fals
 print('src 앱별', dict(collections.Counter(i['src']['game'] for i in items))); print('housing.json 방', len(D['rooms']), '장', len(STORY), '손님', len(GUESTS), 'T(30)', T(30), 'T(10)', T(10), 'T(20)', T(20))
 KG = ('kid', 'daybath', 'wall', 'story_k', 'kseason', 'kgift')
 print('성인 cozy 합', sum(i['cozy'] for i in items if i['set'] not in KG), '유아 cozy 합', sum(i['cozy'] for i in items if i['set'] in KG), '성인 개수', sum(1 for i in items if i['set'] not in KG), '유아 개수', sum(1 for i in items if i['set'] in KG))
+
+# A27: 포섭 이웃 손님(⑪ expedition_slice.json 을 읽어 housing.json 에 'neighbors' 를 덧붙인다 — 슬라이스 데이터가 바뀌면 이 빌드를 다시)
+import subprocess as _sp, sys as _sys; _sp.run([_sys.executable, 'tools/neighbors_build.py'], check=True)

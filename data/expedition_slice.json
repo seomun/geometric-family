@@ -12924,6 +12924,108 @@
     "gems": 500
    }
   ],
+  "wkboss": {
+   "tries": 3,
+   "bossK": 8,
+   "partGems": 3,
+   "partGold": 800,
+   "tiers": [
+    {
+     "need": 200000,
+     "gems": 1
+    },
+    {
+     "need": 600000,
+     "gems": 2
+    },
+    {
+     "need": 1500000,
+     "gems": 3
+    }
+   ],
+   "bosses": [
+    {
+     "name": "심술 구름 대장",
+     "emoji": "⛈️",
+     "role": "mage",
+     "el": "flash",
+     "minion": [
+      "빗방울 꼬마",
+      "💧"
+     ]
+    },
+    {
+     "name": "장난꾸러기 도깨비 왕",
+     "emoji": "👹",
+     "role": "attacker",
+     "el": "support",
+     "minion": [
+      "방망이 꼬마",
+      "🪄"
+     ]
+    },
+    {
+     "name": "눈보라 대장",
+     "emoji": "🌨️",
+     "role": "tank",
+     "el": "care",
+     "minion": [
+      "눈송이 꼬마",
+      "❄️"
+     ]
+    },
+    {
+     "name": "과자 성 문지기",
+     "emoji": "🏰",
+     "role": "tank",
+     "el": "support",
+     "minion": [
+      "사탕 꼬마",
+      "🍬"
+     ]
+    },
+    {
+     "name": "낮잠 대왕 곰",
+     "emoji": "🐻",
+     "role": "tank",
+     "el": "care",
+     "minion": [
+      "낮잠 꼬마",
+      "💤"
+     ]
+    },
+    {
+     "name": "소나기 여우",
+     "emoji": "🦊",
+     "role": "attacker",
+     "el": "flash",
+     "minion": [
+      "물웅덩이 꼬마",
+      "🌦️"
+     ]
+    },
+    {
+     "name": "밤바람 부엉이",
+     "emoji": "🦉",
+     "role": "mage",
+     "el": "care",
+     "minion": [
+      "별빛 꼬마",
+      "✨"
+     ]
+    },
+    {
+     "name": "들불 호랑이",
+     "emoji": "🐅",
+     "role": "attacker",
+     "el": "flash",
+     "minion": [
+      "불씨 꼬마",
+      "🔥"
+     ]
+    }
+   ]
+  },
   "beginner": [
    {
     "id": "b01",

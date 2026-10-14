@@ -98,3 +98,34 @@ test('일일 임무(B22): 3개 · 오늘 장부에서 서버가 셈 · 한 번�
   const nt = await tokAt(MON + 7 * DAY), nv = (await call(env, 'GET', '/daily', { token: nt, now: MON + 7 * DAY })).body; assert.equal(nv.week.days, 0); assert.equal(nv.week.box, false);
   const n = (await env.DB.prepare("SELECT COUNT(*) AS c FROM ledger WHERE account=? AND kind='daily'").bind(a.account).first()).c; assert.equal(n, 13, '임무 12 + 상자 1');
 });
+
+test('주간 협동 보스(B26): 서버가 피해를 다시 계산 · 하루 3번(원자적) · 같은 토큰은 한 번 · 모두의 합계 · 참여·단계 보상 한 번만 · 새 주엔 새로', async () => {
+  const env = mkenv(), a = await signup(env); let cur = a; const tokAt = async (now) => { const r = await call(env, 'POST', '/auth/refresh', { body: { refresh: cur.refresh }, now }); assert.equal(r.status, 200, JSON.stringify(r.body)); cur = { ...cur, access: r.body.access, refresh: r.body.refresh }; return cur.access; };
+  const wal = async (t, now) => (await call(env, 'GET', '/profile', { token: t, now })).body.wallet;
+  const MON = Date.UTC(2026, 9, 19, 3, 0, 0), t0 = await tokAt(MON);
+  const i0 = (await call(env, 'GET', '/wkboss', { token: t0, now: MON })).body; assert.equal(i0.tries, 3); assert.equal(i0.total, 0); assert.equal(i0.mine.left, 3); assert.equal(i0.claimable.gems, 0); assert.ok(i0.boss.name && i0.tiers.length === 3);
+  const fight = async (t, now) => { const s = await call(env, 'POST', '/wkboss/start', { token: t, now }); if (s.status !== 200) return { s }; const f = await call(env, 'POST', '/wkboss/finish', { token: t, now, body: { token: s.body.token, inputs: [], auto: true } }); return { s, f }; };
+  const r1 = await fight(t0, MON); assert.equal(r1.f.status, 200, JSON.stringify(r1.f.body)); assert.ok(r1.f.body.dealt > 0); assert.equal(r1.f.body.info.total, r1.f.body.dealt); assert.equal(r1.f.body.info.mine.tries, 1); assert.equal(r1.f.body.info.mine.left, 2);
+  const again = await call(env, 'POST', '/wkboss/finish', { token: t0, now: MON, body: { token: r1.s.body.token, inputs: [], auto: true } }); assert.equal(again.body.replay, true); assert.equal((await call(env, 'GET', '/wkboss', { token: t0, now: MON })).body.total, r1.f.body.dealt, '같은 토큰은 한 번만 더해짐');
+  // 원자적 한도: 시작 토큰을 먼저 여러 개 받아 두고 한꺼번에 끝내도 하루 3번만 인정
+  const toks = []; for (let i = 0; i < 4; i++) toks.push((await call(env, 'POST', '/wkboss/start', { token: t0, now: MON })).body.token); const fins = []; for (const tk of toks) fins.push(await call(env, 'POST', '/wkboss/finish', { token: t0, now: MON, body: { token: tk, inputs: [], auto: true } }));
+  assert.equal(fins.filter((x) => x.status === 200).length, 2, '이미 1번 했으니 남은 2번만 인정'); assert.equal(fins.filter((x) => x.status === 429).length, 2); const inf = (await call(env, 'GET', '/wkboss', { token: t0, now: MON })).body; assert.equal(inf.mine.tries, 3); assert.equal(inf.mine.left, 0);
+  assert.equal((await call(env, 'POST', '/wkboss/start', { token: t0, now: MON })).body.error, 'no_tries_left');
+  const sumDealt = inf.mine.dmg; assert.equal(inf.total, sumDealt, '한 사람이면 합계 = 내 피해');
+  // 이상한 입력은 거절
+  const s2 = await call(env, 'POST', '/auth/refresh', { body: { refresh: cur.refresh }, now: MON + DAY }); cur = { ...cur, access: s2.body.access, refresh: s2.body.refresh }; const t1 = cur.access; assert.equal((await call(env, 'GET', '/wkboss', { token: t1, now: MON + DAY })).body.mine.left, 3, '다음 날엔 다시 3번');
+  const bad = await call(env, 'POST', '/wkboss/start', { token: t1, now: MON + DAY }); const badF = await call(env, 'POST', '/wkboss/finish', { token: t1, now: MON + DAY, body: { token: bad.body.token, inputs: [[5, 'p']], auto: true } }); assert.equal(badF.status, 422, '말 걸기 같은 규칙 밖 입력은 거절');
+  // 참여 보상: 한 번만
+  const w0 = await wal(t1, MON + DAY), c1 = await call(env, 'POST', '/wkboss/claim', { token: t1, now: MON + DAY }); assert.equal(c1.status, 200, JSON.stringify(c1.body)); assert.equal(c1.body.gems, 3); assert.equal(c1.body.gold, 800); const w1 = await wal(t1, MON + DAY); assert.equal(w1.free_gems - w0.free_gems, 3); assert.equal(w1.gold - w0.gold, 800);
+  const c2 = await call(env, 'POST', '/wkboss/claim', { token: t1, now: MON + DAY }); assert.equal(c2.body.none, true); assert.deepEqual(await wal(t1, MON + DAY), w1, '두 번 받아도 한 번만');
+  // 모두의 합계가 단계에 닿으면 추가 보상(다른 사람이 올려도 같다) — 합계를 직접 올려 확인
+  await env.DB.prepare('UPDATE wkboss SET total=700000 WHERE week=?').bind(String((await call(env, 'GET', '/wkboss', { token: t1, now: MON + DAY })).body.week)).run();
+  const ti = (await call(env, 'GET', '/wkboss', { token: t1, now: MON + DAY })).body; assert.equal(ti.tiers.filter((x) => x.reached).length, 2); assert.equal(ti.claimable.gems, 3, '1+2');
+  const c3 = await call(env, 'POST', '/wkboss/claim', { token: t1, now: MON + DAY }); assert.equal(c3.body.gems, 3); assert.equal((await call(env, 'POST', '/wkboss/claim', { token: t1, now: MON + DAY })).body.none, true);
+  const n = (await env.DB.prepare("SELECT COUNT(*) AS c, SUM(d_free) AS g FROM ledger WHERE account=? AND kind='wkboss'").bind(a.account).first()); assert.equal(n.c, 2); assert.equal(n.g, 6, '이번 주 받은 반짝석 6');
+  // 다른 사람의 피해가 합계에 더해짐 · 순위 정보는 없음
+  const b2 = await call(env, 'POST', '/auth/anon', { body: { device_hash: 'dev2', birth_ym: '1988-03' } }); assert.equal(b2.status, 201); const before = (await call(env, 'GET', '/wkboss', { token: t1, now: MON + DAY })).body.total; const b2t = (await call(env, 'POST', '/auth/refresh', { body: { refresh: b2.body.refresh }, now: MON + DAY })).body.access, fb = await fight(b2t, MON + DAY); assert.equal(fb.f.status, 200, JSON.stringify(fb.f && fb.f.body)); assert.ok(fb.f.body.info.total > before, '다른 사람의 피해가 합계에 더해짐'); assert.ok(!/rank|top|순위/.test(JSON.stringify(fb.f.body)), '순위 정보 없음');
+  // 새 주: 합계·내 기록 초기화
+  const t2 = await tokAt(MON + 7 * DAY), ni = (await call(env, 'GET', '/wkboss', { token: t2, now: MON + 7 * DAY })).body; assert.equal(ni.total, 0); assert.equal(ni.mine.tries, 0); assert.notEqual(ni.week, ti.week);
+  const stale = await call(env, 'POST', '/wkboss/finish', { token: t2, now: MON + 7 * DAY, body: { token: toks[0], inputs: [], auto: true } }); assert.ok([403, 410, 401].includes(stale.status), '지난 주 토큰은 못 씀');
+});

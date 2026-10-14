@@ -46,7 +46,8 @@
       const ev = core.step(); if (!ev) break; steps++; log.push(ev); if (ev.over || steps >= MAX_STEPS) break;
     }
     const win = recruited || core.win, downs = core.A.filter((u) => u.hp <= 0).length;
-    return { win, recruited, downs, stars: win ? (recruited || downs === 0 ? 3 : downs <= 2 ? 2 : 1) : 0, steps, hash: core.hash(log) };
+    const dealt = Math.round(core.B.reduce((t, e) => t + Math.max(0, e.max - Math.max(0, e.hp)), 0));      // 적에게 준 피해 합(주간 협동 보스 점수)
+    return { win, recruited, downs, stars: win ? (recruited || downs === 0 ? 3 : downs <= 2 ? 2 : 1) : 0, steps, dealt, hash: core.hash(log) };
   }
   /** 보상: 처음 깨면 금화 전부 + 반짝석, 다시 깨면 금화 절반 */
   const reward = (D, st, firstClear) => ({ gold: firstClear ? st.gold : Math.round(st.gold * 0.5), gems: firstClear ? (st.gems != null ? st.gems : D.gacha.clearGems) : 0 });
@@ -76,6 +77,13 @@
   const dailyList = (D, counts) => ((D.bal.daily || {}).missions || []).map((m) => { const v = m.kinds.reduce((a, k) => a + ((counts || {})[k] || 0), 0); return { id: m.id, t: m.t, need: m.n, got: Math.min(m.n, v), done: v >= m.n, gems: m.gems, gold: m.gold }; });
   const weekKey = (now) => { const d = new Date(now + 9 * 3600000), dow = (d.getUTCDay() + 6) % 7; return new Date(d.getTime() - dow * 86400000).toISOString().slice(0, 10); };
   const dayStartMs = (now) => Math.floor((now + 9 * 3600000) / 86400000) * 86400000 - 9 * 3600000;
+  /** 주간 협동 보스(B26): 주 번호(월요일 기준, 0부터)로 이번 주 보스를 고르고, 그 사람의 진행(깬 단계)에 맞춘 합성 단계를 만든다. 보스는 한 사람이 쓰러뜨릴 수 없게 단단하다 — 점수는 파티가 쓰러지기 전까지 준 피해 */
+  const wkIdx = (now) => { const d = new Date(now + 9 * 3600000), dow = (d.getUTCDay() + 6) % 7; return Math.floor((Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - dow * 86400000) / 86400000 / 7); };
+  const kb = (s) => (s <= 12 ? 1.0 + 0.047 * (Math.max(4, s) - 4) : s <= 36 ? 1.376 + 0.037 * (s - 12) : 1.376 + 0.037 * 24 + 0.012 * (s - 36));
+  const weekBoss = (D, idx, cleared) => {
+    const W = (D.bal && D.bal.wkboss) || { bosses: [], bossK: 8 }, bs = W.bosses || [], b = bs[((idx % bs.length) + bs.length) % bs.length]; if (!b) return null; const k = Math.round(kb(Math.max(1, cleared || 1)) * 1000) / 1000;
+    return { idx, boss: b, stageDef: { id: 9000 + (((idx % bs.length) + bs.length) % bs.length), name: b.name, gold: 0, boss: false, enemies: [{ name: b.name, emoji: b.emoji, role: b.role, el: b.el, k: Math.round(k * (W.bossK || 8) * 100) / 100 }, { name: b.minion[0], emoji: b.minion[1], role: 'attacker', el: b.el, k }, { name: b.minion[0], emoji: b.minion[1], role: 'support', el: b.el, k }] } };
+  };
   const attendDay = (D, n) => (D.bal.attend || [])[Math.min(n, (D.bal.attend || []).length) - 1] || null;
   /** 자동 편성(B12): 가진 동료 중 그 단계에 가장 세게 싸울 5명. 전투력(kOf) × 상성(적 속성을 이기는 속성 가산). 포섭 보스면 말을 걸 수 있는 속성 한 명을 꼭 넣는다. 클라이언트 추천용(서버는 편성만 검증). */
   const enemyEls = (st) => st.enemies.map((e) => e.el);
@@ -94,5 +102,5 @@
     return { id: 3000 + ev.n * 10 + k, name: ev.names[k], gold: base.gold, enemies: base.enemies.map((e, i) => { const f = ev.foes[i % ev.foes.length]; return Object.assign({}, e, { k: Math.round(e.k * ev.kMul[k] * 1000) / 1000, lock: 0, name: f[0], emoji: f[1] }); }), event: true };
   };
   const eventReward = (D, ev, k, cleared, first) => { const st = eventStage(D, ev, k, cleared); return { gold: Math.round(st.gold * ev.goldMul[k] * (first ? 1 : 0.5)), gems: first ? ev.gems[k] : 0 }; };
-  return { dailyList, weekKey, dayStartMs, achievements, eventNow, eventStage, eventReward, autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
+  return { wkIdx, weekBoss, dailyList, weekKey, dayStartMs, achievements, eventNow, eventStage, eventReward, autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
 });

@@ -57,6 +57,10 @@ export async function handle(req, env, now = Date.now()) {
     case 'POST /event/clear': { const b = await readJson(req); const out = await retry(() => G.eventClear(env, account, { token: b.token, inputs: b.inputs, auto: b.auto }, now)); return json({ ...out, profile: await G.profile(env, account, now) }); }
     case 'GET /beginner': return json(await G.beginnerView(env, account));
     case 'POST /beginner/claim': { const b = await readJson(req); const out = await retry(() => G.beginnerClaim(env, account, String(b.id || ''), now)); return json({ ...out, ...(await G.beginnerView(env, account)), profile: await G.profile(env, account, now) }); }
+    case 'GET /wkboss': return json(await G.wkInfo(env, account, now));
+    case 'POST /wkboss/start': return json(await G.wkStart(env, account, now));
+    case 'POST /wkboss/finish': { const b = await readJson(req); const out = await retry(() => G.wkFinish(env, account, { token: b.token, inputs: b.inputs, auto: b.auto }, now)); return json({ ...out, profile: await G.profile(env, account, now) }); }
+    case 'POST /wkboss/claim': { const out = await retry(() => G.wkClaim(env, account, now)); return json({ ...out, profile: await G.profile(env, account, now) }); }
     case 'GET /daily': return json(await G.dailyView(env, account, now));
     case 'POST /daily/claim': { const b = await readJson(req); const out = await retry(() => G.dailyClaim(env, account, String(b.id || ''), now)); return json({ ...out, daily: await G.dailyView(env, account, now), profile: await G.profile(env, account, now) }); }
     case 'POST /daily/week': { const out = await retry(() => G.weeklyClaim(env, account, now)); return json({ ...out, daily: await G.dailyView(env, account, now), profile: await G.profile(env, account, now) }); }

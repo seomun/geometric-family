@@ -234,6 +234,53 @@ export async function eventClear(env, account, { token, inputs, auto }, now = Da
   } catch (e) { const dup = await first(db, 'SELECT body FROM requests WHERE request_id=?', tag); if (dup) return { ...JSON.parse(dup.body), replay: true }; throw e; }
   if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요'); return body;
 }
+/** 주간 협동 보스(B26): 모두의 피해를 서버가 합산(순위 없음). 시작에 토큰(시드·파티 스냅샷), 끝에 같은 코어로 전투를 다시 돌려 피해량을 정한다. 하루 tries 번(원자적), 같은 토큰은 한 번만. 참여만 해도 보상, 합계가 단계에 닿으면 모두에게 추가 보상(받기는 멱등). */
+const WKCAP = 100000;      // 한 번에 인정하는 최대 피해(이상 값 방어)
+async function wkState(db, account, now) {
+  const idx = SC.wkIdx(now), week = String(idx), W = D.bal.wkboss, [pt, tt, pr] = await Promise.all([first(db, 'SELECT dmg,tries,day,dtries,claim FROM wkboss_part WHERE week=? AND account=?', week, account), first(db, 'SELECT total FROM wkboss WHERE week=?', week), first(db, 'SELECT cleared FROM progress WHERE account=?', account)]);
+  const today = kstDate(now), mine = pt ? { dmg: pt.dmg, tries: pt.tries, left: Math.max(0, W.tries - (pt.day === today ? pt.dtries : 0)), claim: JSON.parse(pt.claim || '{}') } : { dmg: 0, tries: 0, left: W.tries, claim: {} };
+  return { idx, week, W, total: tt ? tt.total : 0, mine, cleared: pr ? pr.cleared : 1, today };
+}
+const wkClaimable = (W, st) => { const c = st.mine.claim || {}, t = c.t || [0, 0, 0], out = { gems: 0, gold: 0, part: false, tiers: [] }; if (st.mine.tries >= 1 && !c.p) { out.part = true; out.gems += W.partGems; out.gold += W.partGold; } W.tiers.forEach((x, i) => { if (st.total >= x.need && !t[i] && st.mine.tries >= 1) { out.tiers.push(i); out.gems += x.gems; } }); return out; };
+export async function wkInfo(env, account, now = Date.now()) {
+  const st = await wkState(env.DB, account, now), wb = SC.weekBoss(D, st.idx, st.cleared), cl = wkClaimable(st.W, st);
+  return { week: st.week, boss: { name: wb.boss.name, emoji: wb.boss.emoji, role: wb.boss.role, el: wb.boss.el }, total: st.total, tiers: st.W.tiers.map((x, i) => ({ need: x.need, gems: x.gems, reached: st.total >= x.need, claimed: !!((st.mine.claim.t || [])[i]) })), tries: st.W.tries, mine: { dmg: st.mine.dmg, tries: st.mine.tries, left: st.mine.left, partClaimed: !!st.mine.claim.p }, claimable: { gems: cl.gems, gold: cl.gold } };
+}
+export async function wkStart(env, account, now = Date.now()) {
+  const db = env.DB, st = await wkState(db, account, now); if (st.mine.left <= 0) throw new HttpError(429, 'no_tries_left', '오늘은 다 했어요');
+  const pr = await first(db, 'SELECT cleared,party FROM progress WHERE account=?', account), party = JSON.parse(pr.party), lv = Object.fromEntries((await all(db, 'SELECT unit_id,lv,skl,awk,promo,gear FROM units WHERE account=?', account)).map((r) => [r.unit_id, { lv: r.lv, skl: r.skl, awk: r.awk, promo: r.promo, gear: JSON.parse(r.gear) }]));
+  if (party.length !== 5 || !party.every((id) => lv[id])) throw new HttpError(409, 'bad_party'); const seed = Math.floor(csprng() * 4294967296), nonce = randomToken(12), snap = party.map((id) => ({ id, ...lv[id] })), wb = SC.weekBoss(D, st.idx, pr.cleared);
+  const token = await signJwt({ typ: 'wkb', sub: account, week: st.week, cleared: pr.cleared, seed, party: snap, nonce, exp: Math.floor(now / 1000) + 3600 }, env.JWT_SECRET);
+  return { token, week: st.week, seed, party: snap, nonce, stage: wb.stageDef };
+}
+export async function wkFinish(env, account, { token, inputs, auto }, now = Date.now()) {
+  const db = env.DB, t = await verifyJwt(String(token || ''), env.JWT_SECRET, now); if (t.typ !== 'wkb' || t.sub !== account) throw new HttpError(403, 'bad_boss_token');
+  const prev = await first(db, 'SELECT body FROM requests WHERE request_id=?', 'wkb:' + t.nonce); if (prev) return { ...JSON.parse(prev.body), replay: true };
+  const st = await wkState(db, account, now); if (t.week !== st.week) throw new HttpError(410, 'week_over', '이번 주 보스가 아니에요');
+  const wb = SC.weekBoss(D, st.idx, t.cleared), out = SC.replay(D, { stage: wb.stageDef.id, stageDef: wb.stageDef, seed: t.seed, party: t.party, auto: auto !== false, inputs }); if (out.error) { await flag(env, account, 'bad_replay', 'wkboss:' + out.error, now); throw new HttpError(422, out.error, '전투 기록이 맞지 않아요'); }
+  const dealt = Math.max(0, Math.min(WKCAP, out.dealt)), today = st.today, lim = st.W.tries, tag = 'wkb:' + t.nonce, body0 = { dealt, steps: out.steps };
+  const res = await db.batch([
+    run(db, 'INSERT OR IGNORE INTO wkboss(week,total) VALUES(?,0)', st.week),
+    run(db, "INSERT OR IGNORE INTO wkboss_part(week,account,dmg,tries,day,dtries,claim) VALUES(?,?,0,0,'',0,'{}')", st.week, account),
+    run(db, 'UPDATE wkboss_part SET dmg=dmg+?, tries=tries+1, dtries=CASE WHEN day=? THEN dtries+1 ELSE 1 END, day=? WHERE week=? AND account=? AND (day<>? OR dtries<?)', dealt, today, today, st.week, account, today, lim),
+    run(db, 'INSERT INTO requests(request_id,account,route,status,body,ts) SELECT ?,?,?,?,?,? WHERE changes()=1', tag, account, '/wkboss/finish', 200, JSON.stringify(body0), now),
+    run(db, 'UPDATE wkboss SET total=total+? WHERE week=? AND EXISTS(SELECT 1 FROM requests WHERE request_id=?)', dealt, st.week, tag),
+  ]);
+  if (res[3].meta.changes !== 1) throw new HttpError(429, 'no_tries_left', '오늘은 다 했어요');
+  return { ...body0, info: await wkInfo(env, account, now) };
+}
+export async function wkClaim(env, account, now = Date.now()) {
+  const db = env.DB, st = await wkState(db, account, now), cl = wkClaimable(st.W, st); if (st.mine.tries < 1) throw new HttpError(409, 'no_part', '한 번 도전해야 받을 수 있어요');
+  if (!cl.part && !cl.tiers.length) return { ok: true, none: true, ...(await walletView(db, account)), info: await wkInfo(env, account, now) };
+  const old = JSON.stringify(st.mine.claim), nc = { p: 1, t: (st.mine.claim.t || [0, 0, 0]).slice() }; cl.tiers.forEach((i) => { nc.t[i] = 1; }); const ncs = JSON.stringify(nc), tag = 'wkc:' + st.week + ':' + nc.p + nc.t.join('');
+  const w = await first(db, 'SELECT ver FROM wallet WHERE account=?', account), guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, tag];
+  const res = await db.batch([
+    run(db, 'UPDATE wallet SET free_gems=free_gems+?, gold=gold+?, ver=ver+1, last_req=? WHERE account=? AND ver=?', cl.gems, cl.gold, tag, account, w.ver),
+    run(db, `UPDATE wkboss_part SET claim=? WHERE week=? AND account=? AND claim=? AND ${guard}`, ncs, st.week, account, old, ...g),
+    run(db, `INSERT INTO ledger(account,ts,kind,d_free,d_gold,reason,ref) SELECT ?,?,'wkboss',?,?,?,? WHERE ${guard}`, account, now, cl.gems, cl.gold, 'w' + st.week + (cl.part ? ':part' : '') + cl.tiers.map((i) => ':t' + i).join(''), tag, ...g),
+  ]); if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요');
+  return { ok: true, gems: cl.gems, gold: cl.gold, ...(await walletView(db, account)), info: await wkInfo(env, account, now) };
+}
 /** 초보자 미션·출석(B11). 상태는 장부·진행도에서 서버가 직접 읽고, 받은 기록은 progress.flags.beg / flags.att (멱등). */
 async function begState(db, account) {
   const [pr, us, py, dn, id] = await Promise.all([first(db, 'SELECT cleared,flags FROM progress WHERE account=?', account), all(db, 'SELECT unit_id,lv,skl,awk,promo,gear FROM units WHERE account=?', account), first(db, 'SELECT pulls FROM pity WHERE account=? AND banner=?', account, BANNER), first(db, "SELECT COUNT(*) AS c FROM ledger WHERE account=? AND kind='dungeon'", account), first(db, "SELECT COUNT(*) AS c FROM ledger WHERE account=? AND kind='idle'", account)]);

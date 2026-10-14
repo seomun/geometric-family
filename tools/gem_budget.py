@@ -20,6 +20,7 @@ ROWS = [
     ('업적', 'once', sum(a.get('gems', 0) for a in B['ach']), '업적은 칭호만(반짝석 없음)'),
     ('계절 이벤트', 'year', sum(sum(e['gems']) for e in B['events']), '계절 ' + str(SEASONS) + '번 × 3단계 첫 클리어'),
     ('주간 상자', 'year', W['gems'] * 52, '매주 1번(임무를 마친 날 ' + str(W['need']) + '일) × 52주'),
+    ('주간 협동 보스', 'year', (B['wkboss']['partGems'] + sum(t['gems'] for t in B['wkboss']['tiers'])) * 52, '참여 💎' + str(B['wkboss']['partGems']) + ' + 모두의 합계 단계 💎' + '·'.join(str(t['gems']) for t in B['wkboss']['tiers']) + ' × 52주(최대)'),
     ('보상형 광고', 'ad', ADS['grant'] * ADS['perDay'] * 365, '하루 ' + str(ADS['perDay']) + '번 × ' + str(ADS['grant']) + '(보고 싶은 만큼만 · 최대치)'),
 ]
 # 새 보상 출처 점검: 데이터 안의 모든 'gems' 값이 위 표 어딘가에 잡혀 있어야 한다
@@ -30,7 +31,7 @@ def walk(o, p=''):
             yield from walk(v, p + '/' + k)
     elif isinstance(o, list):
         for v in o: yield from walk(v, p + '[]')
-KNOWN = {'/stages[]/gems', '/gacha/startGems', '/gacha/clearGems', '/bal/dex[]/gems', '/bal/beginner[]/gems', '/bal/attend[]/gems', '/bal/events[]/gems', '/bal/daily/missions[]/gems', '/bal/daily/weekly/gems', '/bal/ach[]/gems', '/gacha/pickup/gems'}
+KNOWN = {'/stages[]/gems', '/gacha/startGems', '/gacha/clearGems', '/bal/dex[]/gems', '/bal/beginner[]/gems', '/bal/attend[]/gems', '/bal/events[]/gems', '/bal/daily/missions[]/gems', '/bal/daily/weekly/gems', '/bal/wkboss/partGems', '/bal/wkboss/tiers[]/gems', '/bal/ach[]/gems', '/gacha/pickup/gems'}
 new = sorted(set(walk(D)) - KNOWN); assert not new, '표에 없는 새 반짝석 보상 출처: ' + ', '.join(new) + ' — tools/gem_budget.py 의 ROWS·KNOWN 에 등록하세요'
 once = sum(r[2] for r in ROWS if r[1] == 'once'); year = sum(r[2] for r in ROWS if r[1] == 'year'); first = once + year; ad = sum(r[2] for r in ROWS if r[1] == 'ad')
 NS = len(D['stages']); stage_sum = [r[2] for r in ROWS if r[0] == '단계 첫 클리어'][0]; content = sum(r[2] for r in ROWS if r[0] in ('단계 첫 클리어', '도감 수집', '초보자 미션 30', '출석 7일'))

@@ -12226,7 +12226,8 @@
    },
    "flat": false,
    "cls": "wall",
-   "theme": "deco"
+   "theme": "deco",
+   "line": "요정이 여우 모자에 묶어 준 파란 리본 하나."
   }
  ],
  "meTypes": {

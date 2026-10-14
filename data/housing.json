@@ -3994,5 +3994,127 @@
    "dining": 9,
    "toyroom": 12
   }
- }
+ },
+ "challenges": [
+  {
+   "id": "cozy_living",
+   "name": "포근한 거실",
+   "icon": "🛋️",
+   "room": "nemo",
+   "k": "style",
+   "v": "warm",
+   "need": 5,
+   "tip": "따뜻한 색 가구를 거실에 놓아 봐요"
+  },
+  {
+   "id": "wood_study",
+   "name": "나무 냄새 서재",
+   "icon": "🪵",
+   "room": "dong",
+   "k": "style",
+   "v": "wood",
+   "need": 4,
+   "tip": "나무 결이 보이는 가구가 어울려요"
+  },
+  {
+   "id": "cool_yard",
+   "name": "시원한 마당",
+   "icon": "🧊",
+   "room": "yard",
+   "k": "style",
+   "v": "cool",
+   "need": 4,
+   "tip": "파랗고 시원한 것들로 더위를 식혀요"
+  },
+  {
+   "id": "party_yard",
+   "name": "잔치 준비 마당",
+   "icon": "🎉",
+   "room": "yard",
+   "k": "style",
+   "v": "festive",
+   "need": 5,
+   "tip": "명절·기념일 장식으로 마당을 꾸며요"
+  },
+  {
+   "id": "read_room",
+   "name": "책 읽는 서재",
+   "icon": "📚",
+   "room": "dong",
+   "k": "tag",
+   "v": "read",
+   "need": 3,
+   "tip": "읽을 거리와 책상을 놓아 봐요"
+  },
+  {
+   "id": "movie_night",
+   "name": "영화 보는 밤",
+   "icon": "🎬",
+   "room": "semo",
+   "k": "tag",
+   "v": "watch",
+   "need": 3,
+   "tip": "볼 것과 앉을 것을 가까이 놓아요"
+  },
+  {
+   "id": "big_table",
+   "name": "한 상 차림 부엌",
+   "icon": "🍲",
+   "room": "kitchen",
+   "k": "tag",
+   "v": "eat",
+   "need": 4,
+   "tip": "먹는 것과 그릇을 상 위에 놓아요"
+  },
+  {
+   "id": "nap_room",
+   "name": "낮잠 자는 방",
+   "icon": "😴",
+   "room": "upstairs",
+   "k": "tag",
+   "v": "sleep",
+   "need": 2,
+   "tip": "포근히 잘 수 있는 것을 놓아 봐요"
+  },
+  {
+   "id": "tale_attic",
+   "name": "옛이야기 다락방",
+   "icon": "📖",
+   "room": "attic",
+   "k": "theme",
+   "v": "story",
+   "need": 4,
+   "tip": "옛이야기 소품을 다락에 모아 봐요"
+  },
+  {
+   "id": "yard_out",
+   "name": "바깥 마당 꾸미기",
+   "icon": "🌿",
+   "room": "yard",
+   "k": "theme",
+   "v": "outdoor",
+   "need": 5,
+   "tip": "바깥에 어울리는 가구를 놓아요"
+  },
+  {
+   "id": "travel_desk",
+   "name": "여행 책상",
+   "icon": "🧳",
+   "room": "semo",
+   "k": "theme",
+   "v": "travel",
+   "need": 3,
+   "tip": "여행 기념품을 한 자리에 모아요"
+  },
+  {
+   "id": "seat_full",
+   "name": "앉을 자리 가득",
+   "icon": "🪑",
+   "room": "nemo",
+   "k": "tag",
+   "v": "sit",
+   "need": 4,
+   "tip": "누구나 앉을 자리를 만들어 줘요"
+  }
+ ]
 }

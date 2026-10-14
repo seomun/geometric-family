@@ -525,7 +525,16 @@
   "c16.spot.007": "힌트 {hints}",
   "c16.spot.008": "틀린 탭 {wrong}",
   "c16.tile.008": "별 {totalStars} · 마당 소품 ",
-  "c16.tile.009": "도움 {tools}번"
+  "c16.tile.009": "도움 {tools}번",
+  "c16.room2.chal1": "이번 주 꾸미기: {name}",
+  "c16.room2.chal2": "{room} · {tip}",
+  "c16.room2.chal3": "도장을 받았어요! 멋져요",
+  "c16.room2.chal4": "{got}/{need}개 놓았어요",
+  "c16.room2.chal5": "이런 가구가 어울려요: {list}",
+  "c16.room2.chal6": "가진 가구 중에 어울리는 게 아직 없어요. 천천히 모아도 괜찮아요",
+  "c16.room2.chal7": "지금까지 도장 {n}개",
+  "c16.room2.chal8": "못 하고 지나가도 괜찮아요. 주제는 매주 새로 바뀌어요",
+  "c16.room2.chal9": "그 방으로 가기"
  },
  "strings_en": {
   "common.close": "Close",
@@ -1041,7 +1050,16 @@
   "c16.spot.007": "",
   "c16.spot.008": "",
   "c16.tile.008": "",
-  "c16.tile.009": ""
+  "c16.tile.009": "",
+  "c16.room2.chal1": "",
+  "c16.room2.chal2": "",
+  "c16.room2.chal3": "",
+  "c16.room2.chal4": "",
+  "c16.room2.chal5": "",
+  "c16.room2.chal6": "",
+  "c16.room2.chal7": "",
+  "c16.room2.chal8": "",
+  "c16.room2.chal9": ""
  },
  "shapeWho": {
   "nemo": [

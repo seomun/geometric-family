@@ -284,6 +284,29 @@ for pr in PRESETS:
     for q in pr['parts']: assert q['id'] in byid_all, ('프리셋 가구 없음', pr['id'], q['id'])
 D = dict(version=2, note='[제안] 우리 집 2.0 데이터. tools/housing_build.py 로 생성.', levels=levels, levelsKid=levelsKid, formula=dict(set=[[3, 0.10], [5, 0.25], ['all', 0.60]], harmony=30, style=30, fill=40, life=20), sizeF=SIZE_F, geom=dict(RW=340, RH=440, WALLH=150),
          rooms=mkrooms('adult') + mkrooms('kid'), story=STORY, guests=GUESTS, presets=PRESETS, unlockLv={'adult': {'kitchen': 3, 'semo': 5, 'dong': 8, 'yard': 10, 'garden': 22, 'entrance': 12, 'upstairs': 15, 'attic': 25, 'roof': 20}, 'kid': {'kid': 3, 'wardrobe': 6, 'dining': 9, 'toyroom': 12}})
+# 주간 꾸미기 도전(A24, 성인 집): 주마다 주제 하나(주 번호 순환) — 방 안에 그 주제에 맞는 가구를 need 개 놓으면 도장 한 개. 순위·벌점 없음. rule: k=style|tag|theme · v=값. 문구 [제안]
+CHAL = [
+    dict(id='cozy_living', name='포근한 거실', icon='🛋️', room='nemo', k='style', v='warm', need=5, tip='따뜻한 색 가구를 거실에 놓아 봐요'),
+    dict(id='wood_study', name='나무 냄새 서재', icon='🪵', room='dong', k='style', v='wood', need=4, tip='나무 결이 보이는 가구가 어울려요'),
+    dict(id='cool_yard', name='시원한 마당', icon='🧊', room='yard', k='style', v='cool', need=4, tip='파랗고 시원한 것들로 더위를 식혀요'),
+    dict(id='party_yard', name='잔치 준비 마당', icon='🎉', room='yard', k='style', v='festive', need=5, tip='명절·기념일 장식으로 마당을 꾸며요'),
+    dict(id='read_room', name='책 읽는 서재', icon='📚', room='dong', k='tag', v='read', need=3, tip='읽을 거리와 책상을 놓아 봐요'),
+    dict(id='movie_night', name='영화 보는 밤', icon='🎬', room='semo', k='tag', v='watch', need=3, tip='볼 것과 앉을 것을 가까이 놓아요'),
+    dict(id='big_table', name='한 상 차림 부엌', icon='🍲', room='kitchen', k='tag', v='eat', need=4, tip='먹는 것과 그릇을 상 위에 놓아요'),
+    dict(id='nap_room', name='낮잠 자는 방', icon='😴', room='upstairs', k='tag', v='sleep', need=2, tip='포근히 잘 수 있는 것을 놓아 봐요'),
+    dict(id='tale_attic', name='옛이야기 다락방', icon='📖', room='attic', k='theme', v='story', need=4, tip='옛이야기 소품을 다락에 모아 봐요'),
+    dict(id='yard_out', name='바깥 마당 꾸미기', icon='🌿', room='yard', k='theme', v='outdoor', need=5, tip='바깥에 어울리는 가구를 놓아요'),
+    dict(id='travel_desk', name='여행 책상', icon='🧳', room='semo', k='theme', v='travel', need=3, tip='여행 기념품을 한 자리에 모아요'),
+    dict(id='seat_full', name='앉을 자리 가득', icon='🪑', room='nemo', k='tag', v='sit', need=4, tip='누구나 앉을 자리를 만들어 줘요'),
+]
+_theme_cnt = {}
+for _i in items:
+    if _i.get('room') != 'kid' and _i.get('set') not in ('kid', 'kseason', 'kgift', 'daybath', 'wall', 'story_k'):
+        for _t in ('style', 'theme'): _theme_cnt[(_t, _i.get(_t))] = _theme_cnt.get((_t, _i.get(_t)), 0) + 1
+        for _t in _i.get('tags', []): _theme_cnt[('tag', _t)] = _theme_cnt.get(('tag', _t), 0) + 1
+for _c in CHAL: assert _theme_cnt.get((_c['k'], _c['v']), 0) >= _c['need'] + 1, ('도전을 채울 가구가 부족', _c['id'], _theme_cnt.get((_c['k'], _c['v'])))
+assert len({c['id'] for c in CHAL}) == len(CHAL) and all(c['room'] in {r['id'] for r in mkrooms('adult')} for c in CHAL)
+D['challenges'] = CHAL
 json.dump(D, open('data/housing.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('src 앱별', dict(collections.Counter(i['src']['game'] for i in items))); print('housing.json 방', len(D['rooms']), '장', len(STORY), '손님', len(GUESTS), 'T(30)', T(30), 'T(10)', T(10), 'T(20)', T(20))
 KG = ('kid', 'daybath', 'wall', 'story_k', 'kseason', 'kgift')

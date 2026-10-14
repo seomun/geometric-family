@@ -349,3 +349,7 @@ html[data-bigbtn="1"] .h2-btx b { white-space: normal !important; display: -webk
 /* 저장 코드 화면: 줄이 많아도 서로 찌그러지지 않게(스크롤) */
 .xt-body > * { flex-shrink: 0; } .xt-sheet .ops-code { min-height: 64px; }
 .xt-body > .xt-btn { display: flex; align-items: center; justify-content: center; line-height: 1.2; }
+/* 주간 꾸미기 도전(A24) */
+.h2-chalchip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; margin-right: 4px; border-radius: 14px; background: #FFF1C9; box-shadow: 0 2px 0 rgba(0,0,0,.12); font: 900 12px/1 var(--uk-font); color: #5a4630; min-height: 30px; cursor: pointer; } .h2-chalchip.ok { background: #DDF3D6; } .h2-chalchip b { font-size: 16px; }
+.h2-chalpips { display: flex; gap: 8px; justify-content: center; margin: 10px 0 4px; } .h2-chalpips i { width: 26px; height: 26px; border-radius: 50%; background: #efe3c4; border: 3px solid rgba(58,46,57,.2); } .h2-chalpips i.on { background: #F2B100; border-color: #B98300; } .h2-chalcnt { display: block; text-align: center; font-size: 15px; margin-bottom: 4px; }
+.h2-chalstamps { display: flex; gap: 6px; justify-content: center; margin: 4px 0; } .h2-stamp { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #f2ead6; font-size: 18px; opacity: .6; } .h2-stamp.on { background: #FFE69B; opacity: 1; box-shadow: 0 2px 0 rgba(0,0,0,.12); } .h2-stamp.cur { outline: 3px dashed #F2B100; outline-offset: 1px; }

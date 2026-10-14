@@ -101,12 +101,48 @@
     const b = el('button', 'h2-todo' + (left ? '' : ' ok'), parent); b.setAttribute('aria-label', 'today');
     if (left) { el('span', 'ic', b, left.icon); el('span', 'tx', b, GF.t('c16.room2.028', { text: text })); } else el('span', 'tx', b, text); el('i', 'n', b, '✔ ' + doneN + '/' + list.length); b.onclick = (e) => { e.stopPropagation(); try { GF.sfx('tap'); } catch (x) { /* 소리 */ } O.openMissions(); }; return b;
   };
+
+  /* ---------------- 주간 꾸미기 도전(A24, 성인 집): 주마다 주제 하나. 방에 그 주제에 맞는 가구를 need 개 놓으면 도장 한 개(앨범). 순위·벌점·연속 없음 — 놓친 주는 그냥 지나간다 ---------------- */
+  const wkMonday = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7)), ymd = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  Room.chalList = () => (H() && H().challenges) || [];
+  Room.chalOf = (d) => { const L = Room.chalList(); if (!L.length) return null; const m = wkMonday(d || now0()), idx = Math.floor(Date.UTC(m.getFullYear(), m.getMonth(), m.getDate()) / 86400000 / 7); return Object.assign({ week: ymd(m), idx }, L[((idx % L.length) + L.length) % L.length]); };
+  const chalMatch = (c, it) => !!it && (c.k === 'tag' ? (it.tags || []).includes(c.v) : it[c.k] === c.v);
+  /** 이번 주 도전의 진행: 대상 방(안 열렸으면 열린 방 전체)에 놓인 맞는 가구 수 */
+  Room.chalProgress = function (c) {
+    c = c || Room.chalOf(); if (!c) return null; const S = ensure(), R = rooms().find((r) => r.id === c.room), open = R && unlocked(R), ids = open ? [c.room] : rooms().filter(unlocked).map((r) => r.id);
+    const have = new Set(); ids.forEach((rid) => (S.placed[rid] || []).forEach((p) => { if (chalMatch(c, Room.item(p.id))) have.add(p.id); }));
+    const owned = Room.owned ? Room.owned().filter((it) => chalMatch(c, it) && !have.has(it.id)).slice(0, 3) : [];
+    return { c, got: have.size, need: c.need, done: have.size >= c.need, room: open ? R : null, roomName: open ? R.name : '우리 집', suggest: owned.map((it) => it.name) };
+  };
+  /** 도장 기록(한 주에 한 번, 멱등) → 앨범 */
+  Room.chalStamp = function () {
+    if (kid()) return null; const P = Room.chalProgress(); if (!P || !P.done) return P; const S = ensure(); S.chal = S.chal || { stamps: {} };
+    if (!S.chal.stamps[P.c.week]) { S.chal.stamps[P.c.week] = P.c.id; Room.albumAdd('chal:' + P.c.week, 'chal', P.c.icon + ' ' + P.c.name, '이번 주 꾸미기 도장', P.room ? P.room.id : null); Room.save(); P.first = true; }
+    return P;
+  };
+  Room.chalSheet = function (parent) {
+    const S = ensure(), P = Room.chalStamp(); if (!P) return null; const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh h2-chal', sc);
+    el('h2', '', sh, P.c.icon + ' ' + GF.t('c16.room2.chal1', { name: P.c.name })); el('p', 'h2-dsub', sh, GF.t('c16.room2.chal2', { room: P.roomName, tip: P.c.tip }));
+    const pips = el('div', 'h2-chalpips', sh); for (let i = 0; i < P.need; i++) el('i', i < P.got ? 'on' : '', pips); el('b', 'h2-chalcnt', sh, P.done ? GF.t('c16.room2.chal3') : GF.t('c16.room2.chal4', { got: P.got, need: P.need }));
+    if (!P.done && P.suggest.length) el('p', 'h2-dsub', sh, GF.t('c16.room2.chal5', { list: P.suggest.join(' · ') })); else if (!P.done) el('p', 'h2-dsub', sh, GF.t('c16.room2.chal6'));
+    const st = (S.chal && S.chal.stamps) || {}, n = Object.keys(st).length, row = el('div', 'h2-chalstamps', sh); el('small', '', sh, GF.t('c16.room2.chal7', { n: n }));
+    const L = Room.chalList(), cur = Room.chalOf(); for (let w = 7; w >= 0; w--) { const d = new Date(wkMonday(now0()).getTime() - w * 7 * 86400000), key = ymd(d), id = st[key], ch = id && L.find((q) => q.id === id), c = el('span', 'h2-stamp' + (ch ? ' on' : '') + (key === cur.week ? ' cur' : ''), row, ch ? ch.icon : '·'); c.title = key; }
+    el('p', 'h2-dsub', sh, GF.t('c16.room2.chal8')); const acts = el('div', 'acts', sh);
+    if (P.room && Room._go && !P.done) UK.btn({ text: GF.t('c16.room2.chal9'), cls: 'green', onclick: () => { sc.remove(); Room._go(P.room.id); } }, acts);
+    UK.btn({ text: '닫기', cls: 'ghost', onclick: () => sc.remove() }, acts); return sc;
+  };
+  /** 띠 안 작은 칩(🏆 n/need) — 누르면 이번 주 도전 */
+  Room.chalChip = function (parent, onBand) {
+    if (kid() || !onBand || !onBand.nodeType) return null; const old = onBand.querySelector('.h2-chalchip'); if (old) old.remove(); const P = Room.chalStamp(); if (!P) return null;
+    const c = el('span', 'h2-chalchip' + (P.done ? ' ok' : ''), onBand); c.setAttribute('role', 'button'); c.setAttribute('aria-label', 'weekly challenge'); c.title = P.c.name; el('b', '', c, P.done ? '🏅' : P.c.icon); el('i', '', c, Math.min(P.got, P.need) + '/' + P.need);
+    const ar = onBand.querySelector('.h2-arrow'); if (ar) onBand.insertBefore(c, ar); c.onclick = (e) => { e.stopPropagation(); try { GF.sfx('tap'); } catch (x) { /* 소리 */ } Room.chalSheet(parent); }; return c;
+  };
   Room.band = function (parent, opts) {
     opts = opts || {}; const old = parent.querySelector(':scope > .h2-band'); if (old) old.remove(); if (!H() || !Room.S) return null;
     const g = Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) { Room.todoLine(parent, false); return null; } const b = el('button', 'h2-band' + (kid() ? ' kid' : ''), parent);
     const im = el('img', '', b); im.src = Room.src(g.item); im.alt = ''; const ic = APPICON[g.game] || '🎁';
     if (kid()) { el('span', 'h2-bic', b, ic); el('span', 'h2-arrow', b, UK.icon('next')); } else { const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : '다음: ') + g.label + ' · ' + g.hint); el('span', 'h2-arrow', b, UK.icon('next')); }
-    b.setAttribute('aria-label', 'next goal'); b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent: opts.toastParent || parent, home: opts.go }); }; Room.todoLine(parent, b); return b;
+    b.setAttribute('aria-label', 'next goal'); b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent: opts.toastParent || parent, home: opts.go }); }; Room.chalChip(parent, b); Room.todoLine(parent, b); return b;
   };
 
   /* ---------------- 놓기: 칸 → 면(소품) → 빈 자리 (겹침 회피) ---------------- */

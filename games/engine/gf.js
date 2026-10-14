@@ -795,7 +795,7 @@
     open() { Gate.ask(() => Gate.menu()); },
     close() { Gate.p.classList.remove('on'); },
     menu() {
-      if (GF.extras && GF.extras.ready) { Gate.close(); GF.extras.open('parent'); return; }   // 공통 보호자 메뉴(games/engine/extras.js)
+      GF.gateAt = Date.now(); if (GF.extras && GF.extras.ready) { Gate.close(); GF.extras.open('parent'); return; }   // 공통 보호자 메뉴(games/engine/extras.js)
       const s = GF.state.settings, pn = Gate.p.firstChild;
       pn.innerHTML = '<h3>부모 메뉴</h3>';
       const l1 = el('div', 'line', pn, '<span>소리 크기</span>'), rg = el('input', '', l1); rg.type = 'range'; rg.min = 0; rg.max = 1; rg.step = 0.1; rg.value = s.vol;

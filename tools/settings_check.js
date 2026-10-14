@@ -32,6 +32,9 @@ const rowsOf = async (a) => {
     ok(JSON.stringify(got) === JSON.stringify(want), nm + ': 보호자 메뉴 순서·이름이 다른 유아 앱과 같음(앱별 기록 3줄만 다름)' + (JSON.stringify(got) === JSON.stringify(want) ? '' : ' · ' + got.join('>')));
     ok(!round.includes('settings'), nm + ': 유아 앱엔 설정 톱니가 없음(보호자 메뉴는 보호자 확인 뒤) · ' + round.join(','));
     ok(rows[0] === '소리' && rows[1] === '소리 크기' && rows[2] === '자막' && rows[rows.length - 1].startsWith('이 앱 기록 지우기'), nm + ': 처음 3줄 소리·소리 크기·자막 / 마지막 줄 기록 지우기(성인 앱과 같음)');
+    // 유아 앱: 보호자 확인 없이는 메일/외부 이동이 막힌다(방어선 GF.ops.outOk) — 확인 뒤엔 열린다
+    const g0 = await p.evaluate(() => { delete GF.gateAt; const q = () => document.querySelector('.parent'), x = { blocked: !GF.ops.outOk() }; x.gate = !!(q() && q().classList.contains('on')); if (q()) q().classList.remove('on'); GF.gateAt = Date.now(); x.after = GF.ops.outOk(); return x; });
+    ok(g0.blocked && g0.gate && g0.after, nm + ': 유아 앱 mailto/외부 이동은 보호자 확인 뒤에만 · ' + JSON.stringify(g0));
     ok(errs.length === 0, nm + ': 오류 없음 ' + (errs[0] || '')); await p.context().close();
   }
   await b.close(); console.log(fails ? 'FAILED ' + fails : 'ALL PASS'); process.exit(fails ? 1 : 0);

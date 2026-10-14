@@ -46,7 +46,7 @@
     const { body } = sheet(GF.t('ops.help.title')), faq = (O.d && O.d.faq) || [];
     faq.forEach((f) => { const d = el('details', 'ops-faq', body); el('summary', '', d, f.q); el('p', '', d, f.a); });
     const mail = O.d && O.d.supportEmail, w = el('div', 'ops-mail', body);
-    if (mail) { const b = UK.btn({ text: GF.t('ops.help.mail'), icon: 'next', cls: 'green block', onclick: () => { const n = O.native(); if (n && n.mail) { try { n.mail(mail, GF.t('ops.help.subject', { app: O.app, ver: (n.version && n.version()) || '' }), ''); } catch (e) {} } else { try { navigator.clipboard.writeText(mail); } catch (e) {} UK.toast(mail, safe()); } } }, w); void b; }
+    if (mail) { const b = UK.btn({ text: GF.t('ops.help.mail'), icon: 'next', cls: 'green block', onclick: () => { if (!O.outOk()) return; const n = O.native(); if (n && n.mail) { try { n.mail(mail, GF.t('ops.help.subject', { app: O.app, ver: (n.version && n.version()) || '' }), ''); } catch (e) {} } else { try { navigator.clipboard.writeText(mail); } catch (e) {} UK.toast(mail, safe()); } } }, w); void b; }
     else el('small', 'xt-note', w, GF.t('ops.help.nomail'));
   };
 
@@ -72,12 +72,14 @@
     window.addEventListener('error', (e) => { O.errlog.add(e.message, (e.filename ? e.filename : '') + (e.lineno ? ':' + e.lineno : '')); });
     window.addEventListener('unhandledrejection', (e) => { const r = e.reason; O.errlog.add((r && (r.message || r)) || '약속 오류', ''); });
   }
+  /* 앱 밖으로 나가는 동작(메일 앱 등)의 방어선: 유아 앱은 보호자 확인을 방금(10분 안) 지났을 때만 허용, 아니면 확인 창을 띄우고 이번 눌림은 무시 */
+  O.outOk = function () { if (!O.kid) return true; if (GF.gateAt && Date.now() - GF.gateAt < 600000) return true; if (GF.gate) GF.gate(() => { GF.gateAt = Date.now(); const g = document.querySelector('.parent'); if (g) g.classList.remove('on'); }); return false; };
   O.openReport = function () {
     const { body } = sheet(GF.t('ops.report.title')), list = O.errlog.get().slice(-8).reverse();
     el('p', 'xt-p', body, GF.t('ops.report.note')); el('p', 'xt-p', body, list.length ? GF.t('ops.report.count', { n: O.errlog.count() }) : GF.t('ops.report.none'));
     if (list.length) { const box = el('div', 'ops-errs', body); list.forEach((e) => el('small', 'xt-note', box, '· ' + e.m + (e.n > 1 ? ' ×' + e.n : ''))); }
     const mail = O.d && O.d.supportEmail, w = el('div', 'ops-mail', body);
-    if (mail) UK.btn({ text: GF.t('ops.report.mail'), icon: 'next', cls: 'green block', onclick: () => { const n = O.native(); if (n && n.mail) { try { n.mail(mail, GF.t('ops.report.subject', { app: O.app }), O.errlog.body()); } catch (e) { /* 메일 앱 없음 */ } } else { try { navigator.clipboard.writeText(mail + '\n' + O.errlog.body()); } catch (e) { /* 복사 실패 */ } UK.toast(GF.t('ops.report.copied'), safe()); } } }, w); else el('small', 'xt-note', w, GF.t('ops.help.nomail'));
+    if (mail) UK.btn({ text: GF.t('ops.report.mail'), icon: 'next', cls: 'green block', onclick: () => { if (!O.outOk()) return; const n = O.native(); if (n && n.mail) { try { n.mail(mail, GF.t('ops.report.subject', { app: O.app }), O.errlog.body()); } catch (e) { /* 메일 앱 없음 */ } } else { try { navigator.clipboard.writeText(mail + '\n' + O.errlog.body()); } catch (e) { /* 복사 실패 */ } UK.toast(GF.t('ops.report.copied'), safe()); } } }, w); else el('small', 'xt-note', w, GF.t('ops.help.nomail'));
     UK.btn({ text: GF.t('ops.report.copy'), cls: 'sky block', onclick: () => { try { navigator.clipboard.writeText(O.errlog.body()); } catch (e) { /* 복사 실패 */ } UK.toast(GF.t('ops.report.copied'), safe()); } }, w);
     if (list.length) UK.btn({ text: GF.t('ops.report.clear'), cls: 'ghost block', onclick: () => { O.errlog.clear(); UK.toast(GF.t('ops.report.cleared'), safe()); } }, w);
   };

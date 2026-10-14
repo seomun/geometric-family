@@ -28,12 +28,12 @@
 ## RC14 빌드 (자동 승인 후 재개)
 - 여유 메모리 약 3GB 에서 APK 11종 release(테스트 키 ~/gftestkey/test.jks)를 두 개씩, gradle `--no-daemon`·힙 1g 로 빌드. 최저 여유 약 2.5GB, 메모리 부족 없음. (처음 시도는 키 경로 오류 — `TESTKEY` 는 폴더가 아니라 `test.jks` 파일.)
 - build_apk 해시 단언(APK 안 HTML = src HTML) 첫 실사용 통과:
-  toddler fd109fda · tables d169304c · merge 316dc663 · color ad6d87fb · quiz a2434e00 · block 4ff903b2 · spot 4e86f0fe · tile f9fb64d3 · sort 916a9a51 · day a950562e · expedition a401a72c.
+  toddler fd109fda · tables d169304c · merge 3223b50c(도크 수정 뒤 재빌드, 처음 316dc663) · color ad6d87fb · quiz a2434e00 · block 4ff903b2 · spot 4e86f0fe · tile f9fb64d3 · sort 916a9a51 · day a950562e · expedition a401a72c.
 - `node tools/apk_check.js` ALL PASS(원정대 APK: 출시 플래그·서버 주소 자리·던전·도감·전리품·육성·상점·튜토리얼컷·전투연출·정찰·서버전투 재현, file:// 열기 오류 없음).
 - **웹 배포(tools/deploy_play.sh)는 하지 않았다**: 자동 권한 판정이 「운영 배포」로 거부. 작가가 직접 실행하거나 허용 규칙을 준 뒤에 한다. 민감 문자열(domgle·gftestkey)은 games/app/*.html 에 0건.
 
 ## RC14 구간 회귀 결과 (최종)
-- **89구간 전부 통과**(합치기·블록·다른 그림·짝 맞추기·정리·⑩ 하루·퀴즈·색칠·식탁·시뮬·⑥ 이야기 지도 c1 15구간·first30 등). 시스템 메모리 부족 판정으로 회귀 프로세스가 두 번 종료돼(시험 실패 아님) 남은 구간을 한 번에 하나씩 개별 실행으로 마무리함.
+- **88구간 전부 통과**(합치기·블록·다른 그림·짝 맞추기·정리·⑩ 하루·퀴즈·색칠·식탁·시뮬·⑥ 이야기 지도 c1 15구간·first30 등). 시스템 메모리 부족 판정으로 회귀 프로세스가 두 번 종료돼(시험 실패 아님) 남은 구간을 한 번에 하나씩 개별 실행으로 마무리함.
 - 개별 확인에서 나온 것: ① **btn_wrap·btn_wrap_big — 실제 레이아웃 버그**: 합치기 판 아래 도크 높이가 96px 인데 버튼 둘(60+8+60)이 128px 라 「힌트」가 화면 밖으로 6px 넘침(C11 의 sm 버튼 60px 규칙 이후) → `.mg-dock` 높이 128px 로 수정, 통과. ② **rank 5종 — 시험 결함**: 오늘의 한 판 결과보다 「새 가구 알림(보러 가기/나중에)」 팝업이 먼저 떠서 결과창을 못 봤음 → 시험이 팝업을 닫고 기다리게 수정. 합치기는 봇 동점 시뮬이 무거워 페이지가 「Target crashed」 → 3번에 나눠 돌리고 사이마다 페이지를 새로 열게 함. ③ ads(30초 시간 초과)는 메모리 압박 때 흔들림, 재실행 통과. ④ 합치기 10-12·블록 51-60·111-120·타일 61-70 은 레벨 목록 노드 수/네트워크 버퍼 흔들림 → 재시도 통과.
 - ⑥ 다른 그림 APK 속 HTML 3.09MB(apk_check 해시 통과), first30 ALL PASS.
 - 웹 배포(tools/deploy_play.sh)는 작가 직접 실행 대기.

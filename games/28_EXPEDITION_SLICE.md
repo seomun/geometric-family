@@ -118,3 +118,6 @@
 - tools/rc/browser_server.js: chrome 1개를 공용으로 띄워 두고, tools/rc/use_shared.js(NODE_OPTIONS --require)가 시험의 chromium.launch 를 「연결만」으로 바꾼다 → 구간마다 chrome 을 새로 띄우지 않음(시험 코드는 그대로). 12구간마다·1.8GB 넘으면 다시 띄움. SHARED=0 이면 예전 방식.
 - tools/rc_segments.sh: 구간마다 「[여유 전→후MB · chrome MB · 초]」를 segments_summary.txt 에 기록. 실측(4구간): chrome 500~540MB 로 평평(예전엔 구간마다 새 chrome), 여유 3GB 안팎 유지.
 - tools/kill_leftovers.ps1: 공용 브라우저는 살리고 시험이 남긴 것만 정리(-All 이면 공용도). 임시 파일 정리는 trap 으로.
+
+## D13·D14 (2026-10-14) [제안]
+- D13 어느 도형? 테스트 23→27: 택배 상자·첫눈·새해 계획·장바구니(식탁 사연 s41·s43·s44·s48 과 같은 소재, 소재 뱅크 v3 각색). tools/quiz_content3.py. 시험 quiz_smoke·card·sim ALL PASS(결과 분포 30~35

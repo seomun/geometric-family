@@ -11309,6 +11309,90 @@
    "name": "출발 호루라기",
    "emoji": "📣",
    "code": "AF18F7"
+  },
+  {
+   "stage": 219,
+   "id": "x_gourdbowl",
+   "name": "박 바가지",
+   "emoji": "🥣",
+   "code": "B56AXH"
+  },
+  {
+   "stage": 222,
+   "id": "x_swallownest",
+   "name": "제비집 모형",
+   "emoji": "🪹",
+   "code": "B66HOD"
+  },
+  {
+   "stage": 225,
+   "id": "x_moonlamp",
+   "name": "보름달 지붕 등",
+   "emoji": "🌕",
+   "code": "B76OF9"
+  },
+  {
+   "stage": 228,
+   "id": "x_sparrowdoll",
+   "name": "참새 인형",
+   "emoji": "🐤",
+   "code": "B86V65"
+  },
+  {
+   "stage": 231,
+   "id": "x_songbag",
+   "name": "노래 주머니",
+   "emoji": "👝",
+   "code": "B972WP"
+  },
+  {
+   "stage": 234,
+   "id": "x_echobell",
+   "name": "메아리 종",
+   "emoji": "🔔",
+   "code": "BA79UG"
+  },
+  {
+   "stage": 237,
+   "id": "x_brookstone",
+   "name": "달빛 개울 돌",
+   "emoji": "🪨",
+   "code": "BB7GLJ"
+  },
+  {
+   "stage": 240,
+   "id": "x_owldoll",
+   "name": "부엉이 인형",
+   "emoji": "🦉",
+   "code": "BC7NCF"
+  },
+  {
+   "stage": 243,
+   "id": "x_pondlamp",
+   "name": "연못 물방울 조명",
+   "emoji": "💧",
+   "code": "BD7U3B"
+  },
+  {
+   "stage": 246,
+   "id": "x_lotuspot",
+   "name": "연꽃 화분",
+   "emoji": "🪷",
+   "code": "BE81TV"
+  },
+  {
+   "stage": 249,
+   "id": "x_axerack",
+   "name": "쇠도끼 걸이",
+   "emoji": "🪓",
+   "code": "BF88KR"
+  },
+  {
+   "stage": 252,
+   "id": "x_frogdoll",
+   "name": "개구리 인형",
+   "emoji": "🐸",
+   "code": "BG8FBU"
   }
  ],
  "story": {

@@ -1,10 +1,10 @@
 // 원정 전리품 코드(B6, D12) 시험: node tools/housing_loot.js — ⑪ 코드식 = 우리 집 코드식 · 입력하면 가구 · 틀린 코드·중복 방어 · 유아 집엔 없음
 const { chromium } = require('playwright-core'); const fs = require('fs'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 (async () => {
-  const D = JSON.parse(fs.readFileSync('data/expedition_slice.json', 'utf8')); ok(D.loot.length === 72 && D.loot.every((x, i) => x.stage === 3 * (i + 1)), '전리품 72개 · 3단계마다(18나라)');
+  const D = JSON.parse(fs.readFileSync('data/expedition_slice.json', 'utf8')); ok(D.loot.length === 84 && D.loot.every((x, i) => x.stage === 3 * (i + 1)), '전리품 84개 · 3단계마다(21나라)');
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), p = await (await b.newContext({ viewport: { width: 390, height: 780 } })).newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));
   await p.addInitScript(() => { window.__noResume = true; }); await p.goto('http://localhost:8765/games/merge/index.html'); await p.waitForTimeout(1600);
-  const same = await p.evaluate((loot) => { Room.cfg.mode = 'adult'; return loot.every((x) => Room.codeFor(x.id) === x.code); }, D.loot); ok(same, '⑪ 데이터의 코드 = 우리 집 codeFor (72개 모두)');
+  const same = await p.evaluate((loot) => { Room.cfg.mode = 'adult'; return loot.every((x) => Room.codeFor(x.id) === x.code); }, D.loot); ok(same, '⑪ 데이터의 코드 = 우리 집 codeFor (84개 모두)');
   const kidHas = await p.evaluate((loot) => { Room.cfg.mode = 'kid'; const r = loot.some((x) => Room.data.items.some((i) => i.id === x.id) && Room.data.items.find((i) => i.id === x.id).set !== 'exp'); Room.cfg.mode = 'adult'; return r; }, D.loot); ok(!kidHas, '전리품 세트는 별도 세트(exp)');
   const r1 = await p.evaluate((c) => { const a = Room.redeem(c); const again = Room.redeem(c); return { ok: a.ok, isNew: a.isNew, again: again.isNew, has: Room.has(a.item.id), bad: Room.redeem('ZZZZZZ').ok, short: Room.redeem('AB').why }; }, D.loot[0].code); ok(r1.ok && r1.isNew && r1.has && r1.again === false && !r1.bad && r1.short === 'len', '코드 입력 → 가구 · 중복은 이미 있음 · 틀린 코드 거절');
   await p.evaluate(() => { Room.S.lv = 30; GF.stack = []; GF.go('mhouse'); }); await p.waitForTimeout(1100); await p.evaluate(() => document.querySelectorAll('.uk-scrim,.tale-ov,.uk-toast').forEach((e) => e.remove()));

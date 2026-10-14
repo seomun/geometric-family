@@ -13470,6 +13470,394 @@
    "cls": "mid",
    "theme": "living",
    "line": "읽은 책을 제자리로 돌려놓는 일을 즐겁게 만든 작은 책 수레."
+  },
+  {
+   "no": 401,
+   "id": "x_gourdbowl",
+   "name": "박 바가지",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 38,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "🥣",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [
+    "eat"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 219,
+    "hint": "기하학 원정대 · 219단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco",
+   "line": "박을 타서 만든 바가지. 쌀 대신 웃음이 먼저 담긴다."
+  },
+  {
+   "no": 402,
+   "id": "x_swallownest",
+   "name": "제비집 모형",
+   "set": "exp",
+   "room": "yard",
+   "w": 46,
+   "h": 42,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪹",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 222,
+    "hint": "기하학 원정대 · 222단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco",
+   "line": "처마 밑 제비집 모형. 다리 고친 은혜는 해마다 돌아온다."
+  },
+  {
+   "no": 403,
+   "id": "x_moonlamp",
+   "name": "보름달 지붕 등",
+   "set": "exp",
+   "room": "yard",
+   "w": 48,
+   "h": 48,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🌕",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [
+    "sleep"
+   ],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 225,
+    "hint": "기하학 원정대 · 225단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco",
+   "line": "보름달 아래 톱질하던 밤을 닮은 등. 슬근슬근 불이 켜진다."
+  },
+  {
+   "no": 404,
+   "id": "x_sparrowdoll",
+   "name": "참새 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 46,
+   "h": 52,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐤",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 228,
+    "hint": "기하학 원정대 · 228단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco",
+   "line": "제비집 옆에서 이야기를 듣던 참새. 죽 한 숟갈에 마음을 열었다."
+  },
+  {
+   "no": 405,
+   "id": "x_songbag",
+   "name": "노래 주머니",
+   "set": "exp",
+   "room": "yard",
+   "w": 42,
+   "h": 42,
+   "slot": "table",
+   "art": "emoji",
+   "emoji": "👝",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 4,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 231,
+    "hint": "기하학 원정대 · 231단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "prop",
+   "theme": "deco",
+   "line": "혹 대신 노래를 담아 두었다는 주머니. 열면 메아리가 먼저 나온다."
+  },
+  {
+   "no": 406,
+   "id": "x_echobell",
+   "name": "메아리 종",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 50,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🔔",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 234,
+    "hint": "기하학 원정대 · 234단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco",
+   "line": "골짜기에 울리던 메아리를 닮은 작은 종. 부르면 대답한다."
+  },
+  {
+   "no": 407,
+   "id": "x_brookstone",
+   "name": "달빛 개울 돌",
+   "set": "exp",
+   "room": "yard",
+   "w": 54,
+   "h": 44,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪨",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 237,
+    "hint": "기하학 원정대 · 237단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco",
+   "line": "달빛 개울가에서 주워 온 매끈한 돌. 노래가 스며 있다."
+  },
+  {
+   "no": 408,
+   "id": "x_owldoll",
+   "name": "부엉이 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 48,
+   "h": 58,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🦉",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 240,
+    "hint": "기하학 원정대 · 240단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco",
+   "line": "밤마다 노래를 엿듣던 부엉이. 이제는 같이 부른다."
+  },
+  {
+   "no": 409,
+   "id": "x_pondlamp",
+   "name": "연못 물방울 조명",
+   "set": "exp",
+   "room": "yard",
+   "w": 44,
+   "h": 52,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "💧",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 243,
+    "hint": "기하학 원정대 · 243단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco",
+   "line": "연못 물방울을 닮은 조명. 정직한 마음처럼 맑게 빛난다."
+  },
+  {
+   "no": 410,
+   "id": "x_lotuspot",
+   "name": "연꽃 화분",
+   "set": "exp",
+   "room": "yard",
+   "w": 52,
+   "h": 56,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🪷",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 246,
+    "hint": "기하학 원정대 · 246단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco",
+   "line": "연못가에서 옮겨 온 연꽃 화분. 소동이 지나간 자리에 피었다."
+  },
+  {
+   "no": 411,
+   "id": "x_axerack",
+   "name": "쇠도끼 걸이",
+   "set": "exp",
+   "room": "yard",
+   "w": 46,
+   "h": 46,
+   "slot": "wall",
+   "art": "emoji",
+   "emoji": "🪓",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 5,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 249,
+    "hint": "기하학 원정대 · 249단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "wall",
+   "theme": "deco",
+   "line": "낡은 쇠도끼를 걸어 두는 자리. 금도끼보다 내 것이 좋다."
+  },
+  {
+   "no": 412,
+   "id": "x_frogdoll",
+   "name": "개구리 인형",
+   "set": "exp",
+   "room": "yard",
+   "w": 50,
+   "h": 48,
+   "slot": "floor",
+   "art": "emoji",
+   "emoji": "🐸",
+   "colors": [
+    "#FFFFFF"
+   ],
+   "game": "expedition",
+   "season": null,
+   "physical": null,
+   "cozy": 7,
+   "tags": [],
+   "style": "warm",
+   "color": "white",
+   "src": {
+    "game": "expedition",
+    "kind": "code",
+    "n": 252,
+    "hint": "기하학 원정대 · 252단계 클리어 전리품 코드"
+   },
+   "flat": false,
+   "cls": "small",
+   "theme": "deco",
+   "line": "연잎 위에서 박수를 치던 개구리. 정직한 사람을 좋아한다."
   }
  ],
  "meTypes": {

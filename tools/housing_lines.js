@@ -1,4 +1,4 @@
-// 가구 한 줄 이야기(A20) 시험: node tools/housing_lines.js — 성인 가구 267개 모두 한 줄 · 중복·길이·광고성 말 없음 · 카탈로그 상세에 가진 가구는 한 줄, 없는 가구는 잠금 문구 · 유아 집엔 없음
+// 가구 한 줄 이야기(A20) 시험: node tools/housing_lines.js — 성인 가구 323개 모두 한 줄 · 중복·길이·광고성 말 없음 · 카탈로그 상세에 가진 가구는 한 줄, 없는 가구는 잠금 문구 · 유아 집엔 없음
 const { chromium } = require('playwright-core'); let fails = 0; const ok = (c, m) => { console.log((c ? 'OK   ' : 'FAIL ') + m); if (!c) fails++; };
 (async () => {
   const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' }), p = await (await b.newContext({ viewport: { width: 390, height: 780 } })).newPage(), errs = []; p.on('pageerror', (e) => errs.push(e.message));

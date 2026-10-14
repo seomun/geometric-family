@@ -1,8 +1,8 @@
-OK   120판 풀이(제거 순서) 재생 모두 클리어
+OK   180판 풀이(제거 순서) 재생 모두 클리어
 OK   판 종류 6종: pair,classic,goal,lock,narrow,trio
 OK   같은 종류 연속 최대 3판(≤3)
 --- 곡선(탐욕 사람 흉내 80회) ---
- 1:pair N12 1.00 | 7:lock N33 0.70 | 13:narrow N24 0.48 | 19:narrow N27 0.57 | 25:classic N33 1.00 | 31:pair N24 1.00 | 37:lock N54 0.52 | 43:narrow N36 0.45 | 49:narrow N39 0.25 | 55:classic N48 0.93 | 61:pair N24 1.00 | 67:lock N78 0.50 | 73:narrow N48 0.30 | 79:narrow N51 0.35 | 85:classic N60 0.88 | 91:pair N24 1.00 | 97:lock N99 0.28 | 103:narrow N60 0.25 | 109:narrow N63 0.32 | 115:classic N72 0.78
+ 1:pair N12 1.00 | 7:lock N33 0.70 | 13:narrow N24 0.48 | 19:narrow N27 0.57 | 25:classic N33 1.00 | 31:pair N24 1.00 | 37:lock N54 0.52 | 43:narrow N36 0.45 | 49:narrow N39 0.25 | 55:classic N48 0.93 | 61:pair N24 1.00 | 67:lock N78 0.50 | 73:narrow N48 0.30 | 79:narrow N51 0.35 | 85:classic N60 0.88 | 91:pair N24 1.00 | 97:lock N99 0.28 | 103:narrow N60 0.25 | 109:narrow N63 0.32 | 115:classic N72 0.78 | 121:pair N24 1.00 | 127:lock N114 0.30 | 133:narrow N69 0.25 | 139:narrow N69 0.17 | 145:classic N75 0.70 | 151:pair N24 1.00 | 157:lock N114 0.25 | 163:narrow N69 0.22 | 169:narrow N69 0.25 | 175:classic N75 0.90
 OK   오늘의 한 판 30일 30/30
 OK   세 가족 규칙 판 9/9
 OK   같은 그림 세 개가 모이면 사라지고 나머지는 바구니에 남음

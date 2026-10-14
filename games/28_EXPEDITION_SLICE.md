@@ -120,6 +120,6 @@
 - tools/kill_leftovers.ps1: 공용 브라우저는 살리고 시험이 남긴 것만 정리(-All 이면 공용도). 임시 파일 정리는 trap 으로.
 
 ## D13·D14 (2026-10-14) [제안]
-- D13 어느 도형? 테스트 23→27: 택배 상자·첫눈·새해 계획·장바구니(식탁 사연 s41·s43·s44·s48 과 같은 소재, 소재 뱅크 v3 각색). tools/quiz_content3.py. 시험 quiz_smoke·card·sim ALL PASS(결과 분포 30~35
+- D13 어느 도형? 테스트 23→27: 택배 상자·첫눈·새해 계획·장바구니(식탁 사연 s41·s43·s44·s48 과 같은 소재, 소재 뱅크 v3 각색). tools/quiz_content3.py. 시험 quiz_smoke·card·sim ALL PASS(결과 분포 30~35%)
 - D13 시험: quiz_smoke·card·sim ALL PASS(결과 분포 각 30~35%). 생성기 tools/quiz_content3.py.
 - D14 색칠북 놀이터 4권 연동 도안 +10(120→130장): 연못 3(연잎 징검다리·둘러앉기·인사) · 무늬 3(AB·AAB·ABC 줄) · 크기 4(그릇 세 개·큰/작은 물고기·나무 세 그루·신발). 이야기 장 번호는 어울리는 옛이야기(13·5·2)에 붙임. tools/color_gen.py SC3, color_smoke·cb_check ALL PASS.

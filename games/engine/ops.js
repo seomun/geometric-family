@@ -50,6 +50,38 @@
     else el('small', 'xt-note', w, GF.t('ops.help.nomail'));
   };
 
+
+  /* ---------------- 오류 기록 틀(C21): 기기 안에 최근 오류 50건만 보관 → 설정 「문제 알리기」에서 보호자가 메일로 보낼 수 있다. 개인정보·계정·주소·토큰은 지우고, 서버로 자동 전송하지 않는다 ---------------- */
+  const ERR_KEY = 'gf:errlog:v1', ERR_MAX = 50;
+  const clean = (s) => String(s == null ? '' : s).replace(/https?:\/\/[^\s)'"]+/g, (u) => { const m = /([^/?#]+)(?:[?#].*)?$/.exec(u); return m ? m[1] : '[주소]'; }).replace(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g, '[메일]').replace(/\b[0-9a-fA-F]{20,}\b/g, '[값]').replace(/\b\d{8,}\b/g, '[숫자]').replace(/file:\/\/\/?[^\s)]*\//g, '').replace(/\s+/g, ' ').trim().slice(0, 180);
+  const eload = () => { try { const a = JSON.parse(localStorage.getItem(ERR_KEY) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } };
+  const esave = (a) => { try { localStorage.setItem(ERR_KEY, JSON.stringify(a.slice(-ERR_MAX))); } catch (e) { /* 저장 불가 */ } };
+  O.errlog = {
+    get: eload, count: () => eload().length,
+    /** 한 건 기록: 같은 글이 5초 안에 또 오면 횟수만 올린다. 기록 중 오류는 삼킨다(되먹임 방지) */
+    add(msg, src) { try { const m = clean(msg), s = clean(src), now = O._now ? O._now() : Date.now(), a = eload(), last = a[a.length - 1]; if (!m) return; if (last && last.m === m && last.s === s && now - last.t < 5000) { last.n = (last.n || 1) + 1; last.t = now; } else a.push({ t: now, a: O.app || '', m, s, n: 1 }); esave(a); } catch (e) { /* 기록 실패는 무시 */ } },
+    clear() { try { localStorage.removeItem(ERR_KEY); } catch (e) { /* 없음 */ } },
+    /** 메일 본문(개인정보 없음): 앱·버전·기기 종류·화면·언어 + 최근 오류 */
+    body() {
+      const n = O.native && O.native(), ver = (n && n.version && (() => { try { return n.version(); } catch (e) { return ''; } })()) || '', a = eload().slice(-20), ua = (navigator.userAgent || '').replace(/\(([^)]*)\)/, (m, g) => '(' + g.split(';').slice(0, 2).join(';') + ')').slice(0, 120);
+      return ['앱: ' + (O.app || '') + ' ' + ver, '기기: ' + clean(ua), '화면: ' + (window.innerWidth || 0) + 'x' + (window.innerHeight || 0) + ' · 언어: ' + (GF.lang || 'ko'), '', '최근 오류 ' + a.length + '건(최대 20건):'].concat(a.map((e, i) => (i + 1) + '. [' + (e.a || '') + '] ' + e.m + (e.s ? ' @' + e.s : '') + (e.n > 1 ? ' ×' + e.n : ''))).join('\n');
+    },
+  };
+  if (!window.__gfErrHook) {
+    window.__gfErrHook = 1;
+    window.addEventListener('error', (e) => { O.errlog.add(e.message, (e.filename ? e.filename : '') + (e.lineno ? ':' + e.lineno : '')); });
+    window.addEventListener('unhandledrejection', (e) => { const r = e.reason; O.errlog.add((r && (r.message || r)) || '약속 오류', ''); });
+  }
+  O.openReport = function () {
+    const { body } = sheet(GF.t('ops.report.title')), list = O.errlog.get().slice(-8).reverse();
+    el('p', 'xt-p', body, GF.t('ops.report.note')); el('p', 'xt-p', body, list.length ? GF.t('ops.report.count', { n: O.errlog.count() }) : GF.t('ops.report.none'));
+    if (list.length) { const box = el('div', 'ops-errs', body); list.forEach((e) => el('small', 'xt-note', box, '· ' + e.m + (e.n > 1 ? ' ×' + e.n : ''))); }
+    const mail = O.d && O.d.supportEmail, w = el('div', 'ops-mail', body);
+    if (mail) UK.btn({ text: GF.t('ops.report.mail'), icon: 'next', cls: 'green block', onclick: () => { const n = O.native(); if (n && n.mail) { try { n.mail(mail, GF.t('ops.report.subject', { app: O.app }), O.errlog.body()); } catch (e) { /* 메일 앱 없음 */ } } else { try { navigator.clipboard.writeText(mail + '\n' + O.errlog.body()); } catch (e) { /* 복사 실패 */ } UK.toast(GF.t('ops.report.copied'), safe()); } } }, w); else el('small', 'xt-note', w, GF.t('ops.help.nomail'));
+    UK.btn({ text: GF.t('ops.report.copy'), cls: 'sky block', onclick: () => { try { navigator.clipboard.writeText(O.errlog.body()); } catch (e) { /* 복사 실패 */ } UK.toast(GF.t('ops.report.copied'), safe()); } }, w);
+    if (list.length) UK.btn({ text: GF.t('ops.report.clear'), cls: 'ghost block', onclick: () => { O.errlog.clear(); UK.toast(GF.t('ops.report.cleared'), safe()); } }, w);
+  };
+
   /* ---------------- 선물(집 소품 확정 지급) ---------------- */
   function nextGift() {
     if (!window.Room || !Room.data) return null; const c = O.cfg || {}, sets = [c.rewardSet, 'kid'].filter(Boolean);
@@ -303,6 +335,7 @@
     if (!kid && O.webtoonUrl()) row(GF.t('ops.settings.webtoon'), tb(GF.t('common.view'), () => { sc.close(); O.openWebtoon(); }));
     row(GF.t('ops.settings.backup'), tb(GF.t('common.view'), () => { sc.close(); O.openBackup(); }));
     row(GF.t('ops.settings.help'), tb(GF.t('common.view'), () => { sc.close(); O.openHelp(); }));
+    row(GF.t('ops.settings.report'), tb(GF.t('common.view'), () => { sc.close(); O.openReport(); }));
     if (GF.polish && GF.polish.ready) GF.polish.rows(body, sc);   // 앱 정보
   };
 

@@ -6,6 +6,7 @@ STR = {
     'common.close': '닫기', 'common.view': '보기', 'ops.thanks': '고마워요',
     'ops.settings.motion': '움직임 줄이기', 'ops.settings.news': '새 소식', 'ops.settings.help': '문의·FAQ',
     'ops.news.title': '새로 생긴 것',
+    'ops.settings.report': '문제 알리기', 'ops.report.title': '문제 알리기', 'ops.report.note': '앱이 이상하게 멈췄을 때 기기 안에 남은 기록을 보호자가 메일로 보낼 수 있어요. 이름·계정·주소 같은 개인정보는 담기지 않고, 저절로 전송되지 않아요.', 'ops.report.count': '최근 오류 {n}건이 기기에 남아 있어요.', 'ops.report.none': '남은 오류가 없어요. 잘 돌아가고 있어요.', 'ops.report.mail': '메일로 알리기', 'ops.report.copy': '내용 복사', 'ops.report.copied': '복사했어요', 'ops.report.clear': '기록 지우기', 'ops.report.cleared': '지웠어요', 'ops.report.subject': '[{app}] 문제 알리기',
     'ops.help.title': '문의·FAQ', 'ops.help.mail': '메일 보내기', 'ops.help.subject': '[{app} {ver}] 문의', 'ops.help.nomail': '문의 메일 주소는 곧 안내할게요.',
     'ops.settings.cal': '올해의 달력', 'ops.settings.mis': '오늘의 작은 일', 'ops.settings.album': '앨범', 'ops.settings.backup': '백업 코드',
     'ops.cal.title': '올해의 달력', 'ops.cal.m': '{m}월', 'ops.cal.now': '지금', 'ops.cal.done': '다 했어요', 'ops.cal.again': '다시 열기', 'ops.cal.later': '{m}월에 열려요',

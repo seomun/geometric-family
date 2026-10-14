@@ -10811,6 +10811,7 @@
    "id": "x_straw",
    "name": "짚단 의자",
    "emoji": "🌾",
+   "no": 289,
    "code": "81KILQ"
   },
   {
@@ -10818,6 +10819,7 @@
    "id": "x_pinwheel",
    "name": "바람개비",
    "emoji": "🎡",
+   "no": 290,
    "code": "82KPCM"
   },
   {
@@ -10825,6 +10827,7 @@
    "id": "x_wood",
    "name": "장작 더미",
    "emoji": "🪵",
+   "no": 291,
    "code": "83KW3I"
   },
   {
@@ -10832,6 +10835,7 @@
    "id": "x_brickhouse",
    "name": "벽돌집 모형",
    "emoji": "🏠",
+   "no": 292,
    "code": "84L3U2"
   },
   {
@@ -10839,6 +10843,7 @@
    "id": "x_ricecake",
    "name": "달 떡 접시",
    "emoji": "🥮",
+   "no": 293,
    "code": "85LAL5"
   },
   {
@@ -10846,6 +10851,7 @@
    "id": "x_cloudlamp",
    "name": "구름 조명",
    "emoji": "☁️",
+   "no": 294,
    "code": "86LHC1"
   },
   {
@@ -10853,6 +10859,7 @@
    "id": "x_bucket",
    "name": "달빛 두레박",
    "emoji": "🪣",
+   "no": 295,
    "code": "87LO2X"
   },
   {
@@ -10860,6 +10867,7 @@
    "id": "x_tiger",
    "name": "호랑이 인형",
    "emoji": "🐯",
+   "no": 296,
    "code": "88LVTT"
   },
   {
@@ -10867,6 +10875,7 @@
    "id": "x_jar",
    "name": "큰 항아리",
    "emoji": "🏺",
+   "no": 297,
    "code": "89M2KD"
   },
   {
@@ -10874,6 +10883,7 @@
    "id": "x_lantern",
    "name": "잔치 등롱",
    "emoji": "🏮",
+   "no": 298,
    "code": "8AM9I4"
   },
   {
@@ -10881,6 +10891,7 @@
    "id": "x_shoes",
    "name": "꽃 짚신",
    "emoji": "👞",
+   "no": 299,
    "code": "8BMG97"
   },
   {
@@ -10888,6 +10899,7 @@
    "id": "x_flag",
    "name": "잔치 깃발",
    "emoji": "🚩",
+   "no": 300,
    "code": "8CMN03"
   },
   {
@@ -10895,6 +10907,7 @@
    "id": "x_donkey",
    "name": "당나귀 인형",
    "emoji": "🫏",
+   "no": 301,
    "code": "8DMUQZ"
   },
   {
@@ -10902,6 +10915,7 @@
    "id": "x_musicbox",
    "name": "음악 상자",
    "emoji": "🎼",
+   "no": 302,
    "code": "8EN1HJ"
   },
   {
@@ -10909,6 +10923,7 @@
    "id": "x_catcushion",
    "name": "고양이 방석",
    "emoji": "🐈",
+   "no": 303,
    "code": "8FN88F"
   },
   {
@@ -10916,6 +10931,7 @@
    "id": "x_rooster",
    "name": "수탉 장식",
    "emoji": "🐓",
+   "no": 304,
    "code": "8GNFZI"
   },
   {
@@ -10923,6 +10939,7 @@
    "id": "x_beanstalk",
    "name": "콩나물 화분",
    "emoji": "🌱",
+   "no": 305,
    "code": "8HNMQE"
   },
   {
@@ -10930,6 +10947,7 @@
    "id": "x_goldegg",
    "name": "황금 알",
    "emoji": "🥚",
+   "no": 306,
    "code": "8INTHA"
   },
   {
@@ -10937,6 +10955,7 @@
    "id": "x_harp",
    "name": "구름 하프",
    "emoji": "🪕",
+   "no": 307,
    "code": "8JO07U"
   },
   {
@@ -10944,6 +10963,7 @@
    "id": "x_cloudbed",
    "name": "구름 방석",
    "emoji": "☁️",
+   "no": 308,
    "code": "8KO7YQ"
   },
   {
@@ -10951,6 +10971,7 @@
    "id": "x_snail",
    "name": "우렁 껍질 장식",
    "emoji": "🐌",
+   "no": 309,
    "code": "8LOEPT"
   },
   {
@@ -10958,6 +10979,7 @@
    "id": "x_riceplant",
    "name": "볏단",
    "emoji": "🌾",
+   "no": 310,
    "code": "8MOLGP"
   },
   {
@@ -10965,6 +10987,7 @@
    "id": "x_sedan",
    "name": "작은 가마",
    "emoji": "🏮",
+   "no": 311,
    "code": "8NOS7L"
   },
   {
@@ -10972,6 +10995,7 @@
    "id": "x_crown",
    "name": "원님 관",
    "emoji": "👑",
+   "no": 312,
    "code": "8OOZYH"
   },
   {
@@ -10979,6 +11003,7 @@
    "id": "x_magpiebridge",
    "name": "까치 다리 모형",
    "emoji": "🌉",
+   "no": 313,
    "code": "8PP6P1"
   },
   {
@@ -10986,6 +11011,7 @@
    "id": "x_loom",
    "name": "직녀 베틀",
    "emoji": "🧵",
+   "no": 314,
    "code": "8QPDG4"
   },
   {
@@ -10993,6 +11019,7 @@
    "id": "x_starbottle",
    "name": "은하수 병",
    "emoji": "🍶",
+   "no": 315,
    "code": "8RPK70"
   },
   {
@@ -11000,6 +11027,7 @@
    "id": "x_milkyway",
    "name": "은하수 조명",
    "emoji": "🌌",
+   "no": 316,
    "code": "8SPRXW"
   },
   {
@@ -11007,6 +11035,7 @@
    "id": "x_turtle",
    "name": "거북 인형",
    "emoji": "🐢",
+   "no": 317,
    "code": "8TPYOS"
   },
   {
@@ -11014,6 +11043,7 @@
    "id": "x_coral",
    "name": "산호 화분",
    "emoji": "🪸",
+   "no": 318,
    "code": "8UQ5FC"
   },
   {
@@ -11021,6 +11051,7 @@
    "id": "x_shell",
    "name": "조개 장식",
    "emoji": "🐚",
+   "no": 319,
    "code": "8VQC6F"
   },
   {
@@ -11028,6 +11059,7 @@
    "id": "x_rabbitdoll",
    "name": "토끼 인형",
    "emoji": "🐇",
+   "no": 320,
    "code": "8WQJXB"
   },
   {
@@ -11035,6 +11067,7 @@
    "id": "x_snowflake",
    "name": "눈꽃 장식",
    "emoji": "❄️",
+   "no": 321,
    "code": "8XQQO7"
   },
   {
@@ -11042,6 +11075,7 @@
    "id": "x_icelamp",
    "name": "얼음 조명",
    "emoji": "🧊",
+   "no": 322,
    "code": "8YQXF3"
   },
   {
@@ -11049,6 +11083,7 @@
    "id": "x_sled",
    "name": "작은 썰매",
    "emoji": "🛷",
+   "no": 323,
    "code": "8ZR45N"
   },
   {
@@ -11056,6 +11091,7 @@
    "id": "x_snowglobe",
    "name": "스노볼",
    "emoji": "🔮",
+   "no": 324,
    "code": "90RB0E"
   },
   {
@@ -11063,6 +11099,7 @@
    "id": "x_deerfig",
    "name": "사슴 인형",
    "emoji": "🦌",
+   "no": 339,
    "code": "9FU8DZ"
   },
   {
@@ -11070,6 +11107,7 @@
    "id": "x_wing",
    "name": "선녀 날개옷",
    "emoji": "👘",
+   "no": 340,
    "code": "9GUF52"
   },
   {
@@ -11077,6 +11115,7 @@
    "id": "x_moonpond",
    "name": "보름달 연못 모형",
    "emoji": "🌕",
+   "no": 341,
    "code": "9HUMVY"
   },
   {
@@ -11084,6 +11123,7 @@
    "id": "x_firewood",
    "name": "장작 지게",
    "emoji": "🪵",
+   "no": 342,
    "code": "9IUTMU"
   },
   {
@@ -11091,6 +11131,7 @@
    "id": "x_shellbell",
    "name": "용궁 조개 종",
    "emoji": "🔔",
+   "no": 343,
    "code": "9JV0DE"
   },
   {
@@ -11098,6 +11139,7 @@
    "id": "x_seaweed",
    "name": "해초 화분",
    "emoji": "🌿",
+   "no": 344,
    "code": "9KV74A"
   },
   {
@@ -11105,6 +11147,7 @@
    "id": "x_crabgate",
    "name": "게 문지기 인형",
    "emoji": "🦀",
+   "no": 345,
    "code": "9LVEVD"
   },
   {
@@ -11112,6 +11155,7 @@
    "id": "x_lantern2",
    "name": "용궁 등불",
    "emoji": "🏮",
+   "no": 346,
    "code": "9MVLM9"
   },
   {
@@ -11119,6 +11163,7 @@
    "id": "x_magpienest",
    "name": "까치 둥지 상자",
    "emoji": "🪺",
+   "no": 347,
    "code": "9NVSD5"
   },
   {
@@ -11126,6 +11171,7 @@
    "id": "x_nestbell",
    "name": "둥지 종",
    "emoji": "🔔",
+   "no": 348,
    "code": "9OVZ41"
   },
   {
@@ -11133,6 +11179,7 @@
    "id": "x_persimmon2",
    "name": "감나무 화분",
    "emoji": "🌳",
+   "no": 349,
    "code": "9PW6UL"
   },
   {
@@ -11140,6 +11187,7 @@
    "id": "x_snakefig",
    "name": "구렁이 인형",
    "emoji": "🐍",
+   "no": 350,
    "code": "9QWDLO"
   },
   {
@@ -11147,6 +11195,7 @@
    "id": "x_driedpersimmon",
    "name": "곶감 꾸러미",
    "emoji": "🍡",
+   "no": 351,
    "code": "9RWKCK"
   },
   {
@@ -11154,6 +11203,7 @@
    "id": "x_tigerdoll",
    "name": "호랑이 인형",
    "emoji": "🐅",
+   "no": 352,
    "code": "9SWR3G"
   },
   {
@@ -11161,6 +11211,7 @@
    "id": "x_cowbell",
    "name": "외양간 방울",
    "emoji": "🔔",
+   "no": 353,
    "code": "9TWYUC"
   },
   {
@@ -11168,6 +11219,7 @@
    "id": "x_tigerrug",
    "name": "호랑이 무늬 방석",
    "emoji": "🟧",
+   "no": 354,
    "code": "9UX5KW"
   },
   {
@@ -11175,6 +11227,7 @@
    "id": "x_redhat",
    "name": "빨간 모자",
    "emoji": "🧢",
+   "no": 355,
    "code": "9VXCBZ"
   },
   {
@@ -11182,6 +11235,7 @@
    "id": "x_basket",
    "name": "심부름 바구니",
    "emoji": "🧺",
+   "no": 356,
    "code": "9WXJ2V"
   },
   {
@@ -11189,6 +11243,7 @@
    "id": "x_woodsign",
    "name": "숲길 표지판",
    "emoji": "🪧",
+   "no": 357,
    "code": "9XXQTR"
   },
   {
@@ -11196,6 +11251,7 @@
    "id": "x_wolfdoll",
    "name": "늑대 인형",
    "emoji": "🐺",
+   "no": 358,
    "code": "9YXXKN"
   },
   {
@@ -11203,6 +11259,7 @@
    "id": "x_puppet",
    "name": "나무 인형",
    "emoji": "🪆",
+   "no": 359,
    "code": "9ZY4B7"
   },
   {
@@ -11210,6 +11267,7 @@
    "id": "x_fairyribbon",
    "name": "요정의 파란 리본",
    "emoji": "🎀",
+   "no": 363,
    "code": "A3YWBB"
   },
   {
@@ -11217,6 +11275,7 @@
    "id": "x_workbench",
    "name": "제페토 작업대",
    "emoji": "🔨",
+   "no": 361,
    "code": "A1YITJ"
   },
   {
@@ -11224,6 +11283,7 @@
    "id": "x_foxdoll",
    "name": "여우 인형",
    "emoji": "🦊",
+   "no": 362,
    "code": "A2YPKF"
   },
   {
@@ -11231,6 +11291,7 @@
    "id": "x_mirrorshard",
    "name": "얼음 거울 조각",
    "emoji": "🪞",
+   "no": 364,
    "code": "A4Z31V"
   },
   {
@@ -11238,6 +11299,7 @@
    "id": "x_glassrose",
    "name": "유리 장미",
    "emoji": "🌹",
+   "no": 365,
    "code": "A5ZASY"
   },
   {
@@ -11245,6 +11307,7 @@
    "id": "x_scarf",
    "name": "털 목도리 걸이",
    "emoji": "🧣",
+   "no": 366,
    "code": "A6ZHJU"
   },
   {
@@ -11252,6 +11315,7 @@
    "id": "x_crowdoll",
    "name": "눈 까마귀 인형",
    "emoji": "🐦‍⬛",
+   "no": 367,
    "code": "A7ZOAQ"
   },
   {
@@ -11259,6 +11323,7 @@
    "id": "x_cicadashell",
    "name": "매미 허물 장식",
    "emoji": "🪲",
+   "no": 368,
    "code": "A8ZV1M"
   },
   {
@@ -11266,6 +11331,7 @@
    "id": "x_grainbasket",
    "name": "곡식 낟알 바구니",
    "emoji": "🌾",
+   "no": 369,
    "code": "A902R5"
   },
   {
@@ -11273,6 +11339,7 @@
    "id": "x_violin",
    "name": "여름 노래 바이올린",
    "emoji": "🎻",
+   "no": 370,
    "code": "AA09OW"
   },
   {
@@ -11280,6 +11347,7 @@
    "id": "x_winterjar",
    "name": "겨울 곳간 항아리",
    "emoji": "🏺",
+   "no": 371,
    "code": "AB0GFZ"
   },
   {
@@ -11287,6 +11355,7 @@
    "id": "x_finishflag",
    "name": "결승선 깃발",
    "emoji": "🏁",
+   "no": 372,
    "code": "AC0N6V"
   },
   {
@@ -11294,6 +11363,7 @@
    "id": "x_cranedoll",
    "name": "두루미 인형",
    "emoji": "🦢",
+   "no": 373,
    "code": "AD0UXR"
   },
   {
@@ -11301,6 +11371,7 @@
    "id": "x_napcushion",
    "name": "낮잠 나무 방석",
    "emoji": "💤",
+   "no": 374,
    "code": "AE11OB"
   },
   {
@@ -11308,6 +11379,7 @@
    "id": "x_whistle",
    "name": "출발 호루라기",
    "emoji": "📣",
+   "no": 375,
    "code": "AF18F7"
   },
   {
@@ -11315,6 +11387,7 @@
    "id": "x_gourdbowl",
    "name": "박 바가지",
    "emoji": "🥣",
+   "no": 401,
    "code": "B56AXH"
   },
   {
@@ -11322,6 +11395,7 @@
    "id": "x_swallownest",
    "name": "제비집 모형",
    "emoji": "🪹",
+   "no": 402,
    "code": "B66HOD"
   },
   {
@@ -11329,6 +11403,7 @@
    "id": "x_moonlamp",
    "name": "보름달 지붕 등",
    "emoji": "🌕",
+   "no": 403,
    "code": "B76OF9"
   },
   {
@@ -11336,6 +11411,7 @@
    "id": "x_sparrowdoll",
    "name": "참새 인형",
    "emoji": "🐤",
+   "no": 404,
    "code": "B86V65"
   },
   {
@@ -11343,6 +11419,7 @@
    "id": "x_songbag",
    "name": "노래 주머니",
    "emoji": "👝",
+   "no": 405,
    "code": "B972WP"
   },
   {
@@ -11350,6 +11427,7 @@
    "id": "x_echobell",
    "name": "메아리 종",
    "emoji": "🔔",
+   "no": 406,
    "code": "BA79UG"
   },
   {
@@ -11357,6 +11435,7 @@
    "id": "x_brookstone",
    "name": "달빛 개울 돌",
    "emoji": "🪨",
+   "no": 407,
    "code": "BB7GLJ"
   },
   {
@@ -11364,6 +11443,7 @@
    "id": "x_owldoll",
    "name": "부엉이 인형",
    "emoji": "🦉",
+   "no": 408,
    "code": "BC7NCF"
   },
   {
@@ -11371,6 +11451,7 @@
    "id": "x_pondlamp",
    "name": "연못 물방울 조명",
    "emoji": "💧",
+   "no": 409,
    "code": "BD7U3B"
   },
   {
@@ -11378,6 +11459,7 @@
    "id": "x_lotuspot",
    "name": "연꽃 화분",
    "emoji": "🪷",
+   "no": 410,
    "code": "BE81TV"
   },
   {
@@ -11385,6 +11467,7 @@
    "id": "x_axerack",
    "name": "쇠도끼 걸이",
    "emoji": "🪓",
+   "no": 411,
    "code": "BF88KR"
   },
   {
@@ -11392,6 +11475,7 @@
    "id": "x_frogdoll",
    "name": "개구리 인형",
    "emoji": "🐸",
+   "no": 412,
    "code": "BG8FBU"
   }
  ],
@@ -15039,6 +15123,61 @@
      ]
     }
    ]
+  },
+  "walk": {
+   "rules": [
+    {
+     "id": "spring",
+     "name": "꽃바람 길",
+     "icon": "🌸",
+     "mode": "shift",
+     "by": 1,
+     "months": [
+      3,
+      4,
+      5
+     ]
+    },
+    {
+     "id": "summer",
+     "name": "소나기 길",
+     "icon": "🌦️",
+     "mode": "shift",
+     "by": 2,
+     "months": [
+      6,
+      7,
+      8
+     ]
+    },
+    {
+     "id": "autumn",
+     "name": "단풍 길",
+     "icon": "🍁",
+     "mode": "alt",
+     "months": [
+      9,
+      10,
+      11
+     ]
+    },
+    {
+     "id": "winter",
+     "name": "눈보라 길",
+     "icon": "❄️",
+     "mode": "one",
+     "el": "care",
+     "months": [
+      12,
+      1,
+      2
+     ]
+    }
+   ],
+   "kMul": 0.92,
+   "goldFirst": 3,
+   "goldRepeat": 0.5,
+   "variants": 3
   },
   "beginner": [
    {

@@ -102,5 +102,20 @@
     return { id: 3000 + ev.n * 10 + k, name: ev.names[k], gold: base.gold, enemies: base.enemies.map((e, i) => { const f = ev.foes[i % ev.foes.length]; return Object.assign({}, e, { k: Math.round(e.k * ev.kMul[k] * 1000) / 1000, lock: 0, name: f[0], emoji: f[1] }); }), event: true };
   };
   const eventReward = (D, ev, k, cleared, first) => { const st = eventStage(D, ev, k, cleared); return { gold: Math.round(st.gold * ev.goldMul[k] * (first ? 1 : 0.5)), gems: first ? ev.gems[k] : 0 }; };
-  return { wkIdx, weekBoss, dailyList, weekKey, dayStartMs, achievements, eventNow, eventStage, eventReward, autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
+  /** 다시 걷기(B29): 지금 철(KST) · 그 철의 규칙 · 다 깬 나라의 마지막 단계를 규칙대로 속성을 섞어 다시 걷는 무대 · 보상 · 전리품 색 변형 코드 */
+  const walkSeason = (D, ms) => { const k = new Date(ms + 9 * 3600000), m = k.getUTCMonth() + 1, y = k.getUTCFullYear(), rules = D.bal.walk.rules, idx = rules.findIndex((r) => r.months.includes(m)); return { idx, key: (m <= 2 ? y - 1 : y) + ':' + idx, rule: rules[idx] }; };
+  const walkNations = (cleared) => Math.floor(Math.max(0, cleared) / 12);
+  const mixEl = (D, rule, e, i) => { const E = Object.keys(D.el), at = Math.max(0, E.indexOf(e)); return rule.mode === 'one' ? rule.el : E[(at + (rule.mode === 'alt' ? (i % 2 === 0 ? 1 : 2) : rule.by)) % E.length]; };
+  const walkStage = (D, n, idx, cleared) => {
+    const W = D.bal.walk, rule = W.rules[idx], base = D.stages[n * 12 - 1], nat = D.nations[n - 1];
+    return { id: 4000 + n * 10 + idx, name: nat.name + ' ' + rule.name, gold: base.gold, walk: true, enemies: base.enemies.map((e, i) => Object.assign({}, e, { el: mixEl(D, rule, e.el, i), k: Math.round(e.k * W.kMul * 1000) / 1000, lock: 0 })) };
+  };
+  const walkReward = (D, n, cleared, first) => { const W = D.bal.walk, st = D.stages[n * 12 - 1]; return { gold: Math.round(st.gold * (first ? W.goldFirst : W.goldRepeat)) }; };
+  const walkVariant = (n, idx) => 1 + ((idx + n) % 3);
+  const b36 = (n) => n.toString(36).toUpperCase().padStart(2, '0'), chk6 = (a) => { let h = 7; for (const ch of a) h = (h * 31 + ch.charCodeAt(0)) % 1296; return b36(h); };
+  /** 색 변형 코드: 가구 번호 2 + (변형 번호 섞은 값) 2 + 검사 2 — 우리 집 Room.variantDecode 와 같은 식(시험이 단언) */
+  const walkCode = (no, v) => { const a = b36(no) + b36(1000 + 7 * v + (no % 7)); return a + chk6(a); };
+  const walkDecode = (code) => { code = String(code || '').toUpperCase().replace(/[^0-9A-Z]/g, ''); if (code.length !== 6 || chk6(code.slice(0, 4)) !== code.slice(4)) return null; const n = parseInt(code.slice(0, 2), 36), p = parseInt(code.slice(2, 4), 36), v = (p - 1000 - (n % 7)) / 7; return Number.isInteger(v) && v >= 1 && v <= 3 && walkCode(n, v) === code ? { no: n, v } : null; };
+  const walkLoot = (D, n) => (D.loot || []).find((x) => x.stage === n * 12) || null;
+  return { walkSeason, walkNations, walkStage, walkReward, walkVariant, walkCode, walkDecode, walkLoot, wkIdx, weekBoss, dailyList, weekKey, dayStartMs, achievements, eventNow, eventStage, eventReward, autoParty, enemyPreview, beginner, attendDay, dungeonStage, dungeonReward, idleGold, dayKst, kOf, defOf, enemyDef, replay, reward, lvCap, upgrade, stOf, gradeOf, MAX_STEPS };
 });

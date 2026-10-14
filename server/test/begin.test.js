@@ -129,3 +129,29 @@ test('주간 협동 보스(B26): 서버가 피해를 다시 계산 · 하루 3�
   const t2 = await tokAt(MON + 7 * DAY), ni = (await call(env, 'GET', '/wkboss', { token: t2, now: MON + 7 * DAY })).body; assert.equal(ni.total, 0); assert.equal(ni.mine.tries, 0); assert.notEqual(ni.week, ti.week);
   const stale = await call(env, 'POST', '/wkboss/finish', { token: t2, now: MON + 7 * DAY, body: { token: toks[0], inputs: [], auto: true } }); assert.ok([403, 410, 401].includes(stale.status), '지난 주 토큰은 못 씀');
 });
+
+test('다시 걷기(B29): 다 깬 나라만 · 철 규칙(적 속성 섞기) · 처음 ×3·다시 절반 금화 · 색 변형 코드 · 같은 토큰 한 번 · 철이 바뀌면 새로 · 반짝석 0', async () => {
+  const env = mkenv(), a = await signup(env), SC = (await import('../../games/expedition/stage-core.js')).default || (await import('../../games/expedition/stage-core.js')); const D = (await import('../src/game.js')).D || null;
+  let cur = a; const tokAt = async (now) => { const r = await call(env, 'POST', '/auth/refresh', { body: { refresh: cur.refresh }, now }); assert.equal(r.status, 200, JSON.stringify(r.body)); cur = { ...cur, access: r.body.access, refresh: r.body.refresh }; return cur.access; };
+  const OCT = Date.UTC(2026, 9, 14, 3, 0, 0), T = await tokAt(OCT);
+  const i0 = (await call(env, 'GET', '/walk', { token: T, now: OCT })).body; assert.equal(i0.nations.length, 0, '아직 한 나라도 못 깼으면 걸을 길 없음');
+  assert.equal((await call(env, 'POST', '/walk/start', { token: T, now: OCT, body: { n: 1 } })).status, 409);
+  await env.DB.prepare('UPDATE progress SET cleared=36 WHERE account=?').bind(a.account).run(); await env.DB.prepare('UPDATE units SET lv=60 WHERE account=?').bind(a.account).run();
+  const i1 = (await call(env, 'GET', '/walk', { token: T, now: OCT })).body; assert.equal(i1.season.id, 'autumn'); assert.equal(i1.nations.length, 3); assert.ok(i1.nations.every((x) => !x.done && x.variant === null && x.gold > 0));
+  assert.equal((await call(env, 'POST', '/walk/start', { token: T, now: OCT, body: { n: 4 } })).status, 409, '못 깬 나라는 못 걸음');
+  const w = async (now) => (await call(env, 'GET', '/profile', { token: T, now })).body.wallet, w0 = await w(OCT);
+  const s1 = await call(env, 'POST', '/walk/start', { token: T, now: OCT, body: { n: 1 } }); assert.equal(s1.status, 200); assert.ok(s1.body.stage.walk && s1.body.stage.enemies.length === 5);
+  const c1 = await call(env, 'POST', '/walk/clear', { token: T, now: OCT, body: { token: s1.body.token, inputs: [], auto: true } }); assert.equal(c1.status, 200, JSON.stringify(c1.body)); assert.equal(c1.body.win, true); assert.equal(c1.body.first, true);
+  assert.equal(c1.body.reward.gold, i1.nations[0].gold); assert.ok(c1.body.variant && /^[0-9A-Z]{6}$/.test(c1.body.variant.code)); assert.equal(c1.body.variant.v >= 1 && c1.body.variant.v <= 3, true);
+  const w1 = await w(OCT); assert.equal(w1.gold - w0.gold, c1.body.reward.gold); assert.equal(w1.free_gems - w0.free_gems, 0, '반짝석은 늘지 않는다');
+  const dec = SC.walkDecode(c1.body.variant.code); assert.ok(dec && dec.v === c1.body.variant.v, '코드를 풀면 같은 변형 번호');
+  const rp = await call(env, 'POST', '/walk/clear', { token: T, now: OCT, body: { token: s1.body.token, inputs: [], auto: true } }); assert.equal(rp.body.replay, true); assert.deepEqual(await w(OCT), w1, '같은 토큰은 한 번만');
+  const i2 = (await call(env, 'GET', '/walk', { token: T, now: OCT })).body; assert.equal(i2.nations[0].done, true); assert.equal(i2.nations[0].variant.code, c1.body.variant.code); assert.ok(i2.nations[0].gold < i1.nations[0].gold, '다시 걸으면 금화 절반');
+  const s2 = await call(env, 'POST', '/walk/start', { token: T, now: OCT, body: { n: 1 } }), c2 = await call(env, 'POST', '/walk/clear', { token: T, now: OCT, body: { token: s2.body.token, inputs: [], auto: true } }); assert.equal(c2.body.first, false); assert.equal(c2.body.reward.gold, i2.nations[0].gold); assert.equal(c2.body.variant.code, c1.body.variant.code, '코드는 철·나라로 정해져 같다');
+  const led = await env.DB.prepare("SELECT COUNT(*) AS c, SUM(d_free) AS g FROM ledger WHERE account=? AND kind='walk'").bind(a.account).first(); assert.equal(led.c, 2); assert.equal(led.g, 0);
+  // 규칙: 단풍은 번갈아 섞음(같은 나라의 기본 적과 속성이 달라진다)
+  const base = (await call(env, 'GET', '/walk', { token: T, now: OCT })).body.nations[0].enemies.map((e) => e.el), D1 = JSON.parse((await import('node:fs')).readFileSync(new URL('../../data/expedition_slice.json', import.meta.url), 'utf8')); assert.notDeepEqual(base, D1.stages[11].enemies.map((e) => e.el), '속성이 섞였다');
+  // 철이 바뀌면(겨울) 처음부터 · 규칙이 눈보라 길(모두 돌보기) · 지난 철 토큰은 못 씀
+  await tokAt(Date.UTC(2026, 10, 28, 3, 0, 0)); const WIN = Date.UTC(2026, 11, 3, 3, 0, 0), t2 = await tokAt(WIN), i3 = (await call(env, 'GET', '/walk', { token: t2, now: WIN })).body; assert.equal(i3.season.id, 'winter'); assert.ok(i3.nations.every((x) => !x.done)); assert.ok(i3.nations[0].enemies.every((e) => e.el === 'care'), '눈보라 길: 모두 돌보기');
+  const stale = await call(env, 'POST', '/walk/clear', { token: t2, now: WIN, body: { token: s2.body.token, inputs: [], auto: true } }); assert.ok([403, 410, 401].includes(stale.status), '지난 철 토큰은 못 씀');
+});

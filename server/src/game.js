@@ -234,6 +234,40 @@ export async function eventClear(env, account, { token, inputs, auto }, now = Da
   } catch (e) { const dup = await first(db, 'SELECT body FROM requests WHERE request_id=?', tag); if (dup) return { ...JSON.parse(dup.body), replay: true }; throw e; }
   if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요'); return body;
 }
+/** 다시 걷기(B29): 다 깬 나라의 마지막 단계를 철(KST 달)마다 다른 규칙(적 속성 섞기)으로 다시 걷는다. 서버가 철·처음 걷기를 판정하고 같은 코어로 전투를 다시 돌린다. 보상은 금화(처음 ×3 · 다시 절반)와 전리품 색 변형 코드(반짝석 없음). */
+async function walkState(db, account, now) {
+  const pr = await first(db, 'SELECT cleared,flags FROM progress WHERE account=?', account), flags = JSON.parse(pr.flags), se = SC.walkSeason(D, now), w = flags.walk && flags.walk.key === se.key ? flags.walk : { key: se.key, done: [] };
+  return { pr, flags, se, w };
+}
+const walkRows = (st) => { const out = []; for (let n = 1; n <= SC.walkNations(st.pr.cleared); n++) { const done = st.w.done.includes(n), lt = SC.walkLoot(D, n), s = SC.walkStage(D, n, st.se.idx, st.pr.cleared); out.push({ n, name: D.nations[n - 1].name, done, enemies: s.enemies.map((e) => ({ emoji: e.emoji, el: e.el })), gold: SC.walkReward(D, n, st.pr.cleared, !done).gold, variant: done && lt ? { item: lt.id, name: lt.name, v: SC.walkVariant(n, st.se.idx), code: SC.walkCode(lt.no, SC.walkVariant(n, st.se.idx)) } : null }); } return out; };
+export async function walkInfo(env, account, now = Date.now()) {
+  const st = await walkState(env.DB, account, now); return { season: { key: st.se.key, id: st.se.rule.id, name: st.se.rule.name, icon: st.se.rule.icon }, nations: walkRows(st) };
+}
+export async function walkStart(env, account, n, now = Date.now()) {
+  const db = env.DB, st = await walkState(db, account, now); if (!(Number.isInteger(n) && n >= 1 && n <= SC.walkNations(st.pr.cleared))) throw new HttpError(409, 'locked', '다 깬 나라만 다시 걸어요');
+  const pr = await first(db, 'SELECT cleared,party FROM progress WHERE account=?', account), party = JSON.parse(pr.party), lv = Object.fromEntries((await all(db, 'SELECT unit_id,lv,skl,awk,promo,gear FROM units WHERE account=?', account)).map((r) => [r.unit_id, { lv: r.lv, skl: r.skl, awk: r.awk, promo: r.promo, gear: JSON.parse(r.gear) }]));
+  if (party.length !== 5 || !party.every((id) => lv[id])) throw new HttpError(409, 'bad_party'); const seed = Math.floor(csprng() * 4294967296), nonce = randomToken(12), snap = party.map((id) => ({ id, ...lv[id] }));
+  const token = await signJwt({ typ: 'wlk', sub: account, n, key: st.se.key, cleared: pr.cleared, seed, party: snap, nonce, exp: Math.floor(now / 1000) + 3600 }, env.JWT_SECRET);
+  return { token, n, seed, party: snap, nonce, stage: SC.walkStage(D, n, st.se.idx, pr.cleared) };
+}
+export async function walkClear(env, account, { token, inputs, auto }, now = Date.now()) {
+  const db = env.DB, t = await verifyJwt(String(token || ''), env.JWT_SECRET, now); if (t.typ !== 'wlk' || t.sub !== account) throw new HttpError(403, 'bad_walk_token');
+  const prev = await first(db, 'SELECT body FROM requests WHERE request_id=?', 'wlk:' + t.nonce); if (prev) return { ...JSON.parse(prev.body), replay: true };
+  const se = SC.walkSeason(D, now); if (t.key !== se.key) throw new HttpError(410, 'season_over', '철이 바뀌었어요');
+  const stageDef = SC.walkStage(D, t.n, se.idx, t.cleared), out = SC.replay(D, { stage: stageDef.id, stageDef, seed: t.seed, party: t.party, auto: auto !== false, inputs }); if (out.error) { await flag(env, account, 'bad_replay', 'walk:' + out.error, now); throw new HttpError(422, out.error, '전투 기록이 맞지 않아요'); }
+  if (!out.win) return { win: false, steps: out.steps };
+  const st = await walkState(db, account, now), first1 = !st.w.done.includes(t.n), rw = SC.walkReward(D, t.n, t.cleared, first1), lt = SC.walkLoot(D, t.n), v = SC.walkVariant(t.n, se.idx); if (first1) st.w.done.push(t.n); st.flags.walk = st.w;
+  const w = await first(db, 'SELECT ver FROM wallet WHERE account=?', account), tag = 'wlk:' + t.nonce, guard = '(SELECT last_req FROM wallet WHERE account=?)=?', g = [account, tag], body = { win: true, first: first1, reward: { gold: rw.gold }, variant: lt ? { item: lt.id, name: lt.name, v, code: SC.walkCode(lt.no, v) } : null, done: st.w.done.slice(), steps: out.steps };
+  let res; try {
+    res = await db.batch([
+      run(db, 'UPDATE wallet SET gold=gold+?, ver=ver+1, last_req=? WHERE account=? AND ver=?', rw.gold, tag, account, w.ver),
+      run(db, `INSERT INTO requests(request_id,account,route,status,body,ts) SELECT ?,?,?,?,?,? WHERE ${guard}`, tag, account, '/walk/clear', 200, JSON.stringify(body), now, ...g),
+      run(db, `UPDATE progress SET flags=? WHERE account=? AND ${guard}`, JSON.stringify(st.flags), account, ...g),
+      run(db, `INSERT INTO ledger(account,ts,kind,d_free,d_gold,reason,ref) SELECT ?,?,'walk',0,?,?,? WHERE ${guard}`, account, now, rw.gold, 'walk:' + t.n + ':' + se.key + (first1 ? ':first' : ''), tag, ...g),
+    ]);
+  } catch (e) { const dup = await first(db, 'SELECT body FROM requests WHERE request_id=?', tag); if (dup) return { ...JSON.parse(dup.body), replay: true }; throw e; }
+  if (res[0].meta.changes !== 1) throw new HttpError(409, 'conflict', '동시에 바뀌었어요. 다시 해 주세요'); return body;
+}
 /** 주간 협동 보스(B26): 모두의 피해를 서버가 합산(순위 없음). 시작에 토큰(시드·파티 스냅샷), 끝에 같은 코어로 전투를 다시 돌려 피해량을 정한다. 하루 tries 번(원자적), 같은 토큰은 한 번만. 참여만 해도 보상, 합계가 단계에 닿으면 모두에게 추가 보상(받기는 멱등). */
 const WKCAP = 100000;      // 한 번에 인정하는 최대 피해(이상 값 방어)
 async function wkState(db, account, now) {

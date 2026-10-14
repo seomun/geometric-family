@@ -410,7 +410,7 @@
     if (!kid()) {      // 원정 전리품 코드(B6): 기하학 원정대에서 받은 6자리 코드를 입력하면 가구가 생긴다(앱 사이 연결은 코드로만 — D12)
       const lt = el('div', 'h2-codebox', sh); el('b', '', lt, GF.t('c16.room2.015')); el('small', '', lt, GF.t('c16.room2.016')); const row = el('div', 'h2-coderow', lt), ci = el('input', 'h2-code1', row); ci.maxLength = 8; ci.placeholder = 'A1B2C3'; ci.autocomplete = 'off'; ci.autocapitalize = 'characters'; ci.spellcheck = false; ci.oninput = () => { const v = ci.value.toUpperCase().replace(/[^0-9A-Z]/g, ''); if (v !== ci.value) ci.value = v; };
       UK.btn({ text: GF.t('c16.room2.005'), cls: 'sky sm', onclick: async () => { try { const t = await navigator.clipboard.readText(); ci.value = String(t || '').toUpperCase().replace(/[^0-9A-Z]/g, '').slice(0, 8); ci.dispatchEvent(new Event('input')); } catch (e) { toastH('칸을 길게 눌러 붙여넣어요', sc); } } }, row); const cm = el('p', 'h2-dsub', lt, '');
-      UK.btn({ text: GF.t('c16.room2.006'), cls: 'gold block', onclick: () => { const r = Room.redeem(ci.value); if (!r.ok) { cm.textContent = { len: '6자리로 적어 주세요', check: '코드가 틀렸어요', item: '없는 코드예요' }[r.why] || '받지 못했어요'; return; } if (!r.isNew) { cm.textContent = GF.t('c16.room2.027'); return; } sc.remove(); Room.dropCard(r.item.id, parent, () => { Room._redraw && Room._redraw(); }, { openHouse: () => { Room._redraw && Room._redraw(); } }); const nbr = Room.neighborOf(r.item.id); if (nbr) setTimeout(() => toastH(nbr.emoji + ' ' + nbr.name + ' 손님을 만났어요! 이 가구를 방에 놓으면 놀러 와요', parent), 1200); } }, lt);
+      UK.btn({ text: GF.t('c16.room2.006'), cls: 'gold block', onclick: () => { const r = Room.redeem(ci.value); if (!r.ok) { cm.textContent = { len: '6자리로 적어 주세요', check: '코드가 틀렸어요', item: '없는 코드예요' }[r.why] || '받지 못했어요'; return; } if (r.variant) { cm.textContent = r.isNew ? '🎨 ' + r.item.name + '의 새 색이 열렸어요!' + (Room.has(r.item.id) ? '' : ' (가구를 얻으면 고를 수 있어요)') : GF.t('c16.room2.027'); if (r.isNew) { Room._redraw && Room._redraw(); toastH('🎨 ' + r.item.name + ' 새 색', parent); } return; } if (!r.isNew) { cm.textContent = GF.t('c16.room2.027'); return; } sc.remove(); Room.dropCard(r.item.id, parent, () => { Room._redraw && Room._redraw(); }, { openHouse: () => { Room._redraw && Room._redraw(); } }); const nbr = Room.neighborOf(r.item.id); if (nbr) setTimeout(() => toastH(nbr.emoji + ' ' + nbr.name + ' 손님을 만났어요! 이 가구를 방에 놓으면 놀러 와요', parent), 1200); } }, lt);
     }
     UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
@@ -643,8 +643,8 @@
       if (!kid()) { el('b', '', tx, it.name); el('small', '', tx, (own ? '가지고 있어요' : sr.hint ? GF.t('c16.room2.046', { hint: sr.hint }) : '') + ' · 아늑함 +' + (it.cozy || 0)); } else el('span', 'h2-tic', tx, APPICON[sr.game] || '🎁');
       if (!kid() && it.line) el('p', 'h2-dline' + (own ? '' : ' lock'), det, own ? '“' + it.line + '”' : '🔒 가지면 이 가구의 이야기가 열려요');
       const hb = el('button', 'h2-hbtn' + (Room.wishOn(it.id) ? ' on' : ''), row, '♥'); hb.onclick = () => { Room.wish(it.id); drawAll(); };
-      { const vs = Room.variants(it), sw = el('div', 'h2-swrow', det); vs.forEach((v) => { const open = Room.variantOpen(v.i), d = el('i', 'h2-sw' + (open ? '' : ' lock'), sw); d.style.background = v.sw; if (!open) d.textContent = '🔒'; d.title = open ? '' : '가구 ' + Room.variantNeed(v.i) + '개 더'; });
-        if (!kid()) { const op = vs.filter((v) => Room.variantOpen(v.i)).length, nx = vs.find((v) => !Room.variantOpen(v.i)); el('small', '', sw, `색 ${op}/${vs.length}` + (nx ? ` · 가구 ${Room.variantNeed(nx.i)}개 더 모으면 다음 색` : ' · 모두 열렸어요')); } }
+      { const vs = Room.variants(it), sw = el('div', 'h2-swrow', det); vs.forEach((v) => { const open = Room.variantOpen(v.i, it), d = el('i', 'h2-sw' + (open ? '' : ' lock'), sw); d.style.background = v.sw; if (!open) d.textContent = '🔒'; d.title = open ? '' : '가구 ' + Room.variantNeed(v.i) + '개 더'; });
+        if (!kid()) { const op = vs.filter((v) => Room.variantOpen(v.i, it)).length, nx = vs.find((v) => !Room.variantOpen(v.i, it)); el('small', '', sw, `색 ${op}/${vs.length}` + (nx ? ` · 가구 ${Room.variantNeed(nx.i)}개 더 모으면 다음 색` : ' · 모두 열렸어요')); } }
       const a = el('div', 'h2-acts', det); if (own) UK.btn({ text: kid() ? null : '집에 놓기', icon: kid() ? 'home' : null, cls: 'green sm', onclick: () => { Room.placeAt(it.id); sc.remove(); opts.onClose && opts.onClose(); } }, a);
       else UK.btn({ text: kid() ? null : '어디서? ▶', icon: kid() ? 'next' : null, cls: 'gold sm', onclick: () => Room.goApp(sr.game, { parent: sc, home: opts.go && (() => { sc.remove(); opts.go(sr.game); }) }) }, a);
     }
@@ -879,11 +879,11 @@
   const VTHR = () => (kid() ? [0, 4, 12, 24] : [0, 10, 30, 60]);      // 모은 가구 수 문턱(첫 색은 처음부터)
   /** 가구의 색 변형 목록. 색이 여러 개인 가구는 그 색들, 한 가지뿐인 그림(이모지·임시)은 색조를 돌린 3가지가 더 */
   Room.variants = (it) => (it.colors.length > 1 ? it.colors.slice(0, 4).map((c, i) => ({ i, c, f: 'none', sw: c })) : [0, 1, 2, 3].map((i) => ({ i, c: it.colors[0], f: HUE[i], sw: SWATCH[i] })));
-  Room.variantOpen = (i) => Room.owned().length >= VTHR()[i];
+  Room.variantOpen = (i, it) => Room.owned().length >= VTHR()[i] || !!(it && ((Room.variantMask(it.id) >> i) & 1));      // 가구를 모은 수로 열리거나, 원정 색 변형 코드로 그 가구만 열린다(B29)
   Room.variantNeed = (i) => Math.max(0, VTHR()[i] - Room.owned().length);
   Room.variantFilter = (it, p) => (it.colors.length > 1 ? 'none' : HUE[(p && p.v) || 0] || 'none');
   Room.nextVariant = function (it, p) {      // 열린 다음 색으로 — 열린 색이 하나뿐이면 null
-    const vs = Room.variants(it), k = p.v || 0; for (let t = 1; t <= vs.length; t++) { const j = (k + t) % vs.length; if (Room.variantOpen(j)) return j === k ? null : j; } return null;
+    const vs = Room.variants(it), k = p.v || 0; for (let t = 1; t <= vs.length; t++) { const j = (k + t) % vs.length; if (Room.variantOpen(j, it)) return j === k ? null : j; } return null;
   };
   /** 방 그림(캔버스) — 사진 저장·꾸미기가 같이 쓴다 */
   Room.photoCanvas = async function (rid) {

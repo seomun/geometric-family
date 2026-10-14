@@ -77,10 +77,17 @@
     /** 코드(선물·굿즈): 6자리 = 아이템 번호 2 + 잡음 2 + 검사 2. 서버 없이 확인 — 보안이 아니라 오타·장난 방지용. */
     _chk(a) { let h = 7; for (const ch of a) h = (h * 31 + ch.charCodeAt(0)) % 1296; return h.toString(36).toUpperCase().padStart(2, '0'); },
     codeFor(id) { const it = Room.item(id); if (!it || !it.no) return null; const n = it.no, a = n.toString(36).toUpperCase().padStart(2, '0') + ((n * 7 + 11) % 1296).toString(36).toUpperCase().padStart(2, '0'); return a + Room._chk(a); },   // 불변 번호 no 기준(배열 순서와 무관)
+    /** 색 변형 코드 풀기: 가구 번호 2 + 변형 섞은 값 2 + 검사 2 (⑪ stage-core walkCode 와 같은 식 — 시험이 단언) */
+    variantDecode(code) { code = String(code || '').toUpperCase().replace(/[^0-9A-Z]/g, ''); if (code.length !== 6 || Room._chk(code.slice(0, 4)) !== code.slice(4)) return null; const n = parseInt(code.slice(0, 2), 36), p = parseInt(code.slice(2, 4), 36), v = (p - 1000 - (n % 7)) / 7; if (!Number.isInteger(v) || v < 1 || v > 3) return null; const b = (x) => x.toString(36).toUpperCase().padStart(2, '0'), a = b(n) + b(1000 + 7 * v + (n % 7)); return a + Room._chk(a) === code ? { no: n, v } : null; },
+    variantMask: (id) => (Room.S && Room.S.itemVar && Room.S.itemVar[id]) || 0,
     redeem(code) {
       code = String(code || '').trim().toUpperCase().replace(/[^0-9A-Z]/g, ''); if (code.length !== 6) return { ok: false, why: 'len' };
       const a = code.slice(0, 4); if (Room._chk(a) !== code.slice(4)) return { ok: false, why: 'check' };
-      const n = parseInt(a.slice(0, 2), 36), it = Room.data.items.find((x) => x.no === n); if (!it || Room.codeFor(it.id) !== code) return { ok: false, why: 'item' };
+      const n = parseInt(a.slice(0, 2), 36), it = Room.data.items.find((x) => x.no === n); if (!it) return { ok: false, why: 'item' };
+      if (Room.codeFor(it.id) !== code) {      // 원정 「다시 걷기」(B29) 색 변형 코드: 그 가구의 새 색이 열린다(가구가 없어도 열어 둔다)
+        const vd = Room.variantDecode(code); if (!vd || vd.no !== n) return { ok: false, why: 'item' };
+        const S = Room.S; S.itemVar = S.itemVar || {}; const bit = 1 << vd.v, isNew = !((S.itemVar[it.id] || 0) & bit); S.itemVar[it.id] = (S.itemVar[it.id] || 0) | bit; Room.save(); return { ok: true, item: it, variant: vd.v, isNew };
+      }
       return { ok: true, item: it, isNew: Room.grant(it.id) };
     },
     src(it, c, o) { const sl = Room.cfg.slot && Room.cfg.slot('room', it.id); if (sl) return sl; return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(RoomArt.make(it.art, c || it.colors[0], Object.assign({ emoji: it.emoji }, o))); },

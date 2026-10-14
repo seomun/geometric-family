@@ -53,6 +53,7 @@ exec(open('tools/expedition_nations6.py', encoding='utf-8').read())   # 16~18나
 exec(open('tools/expedition_nations7.py', encoding='utf-8').read())   # 19~21나라 확장(252칸, B28)
 exec(open('tools/expedition_book.py', encoding='utf-8').read())   # 나라별 그림책 8컷(D10)
 exec(open('tools/expedition_wkboss.py', encoding='utf-8').read())   # 주간 협동 보스(B26)
+exec(open('tools/expedition_walk.py', encoding='utf-8').read())   # 다시 걷기 시즌 길(B29)
 exec(open('tools/expedition_curve.py', encoding='utf-8').read())   # 레벨 상한·성장 곡선(B27, 맨 마지막)
 exec(open('tools/expedition_begin.py', encoding='utf-8').read())   # 초보자 미션 30·출석 7일(B11)
 exec(open('tools/expedition_daily.py', encoding='utf-8').read())   # 일일 임무 3 + 주간 상자(B22)

@@ -113,3 +113,8 @@
 ## A26 가족 사진첩 영상 (2026-10-14) [제안]
 - 집 앨범 시트 「🎞 사진첩 영상 만들기」: 방 사진이 있는 순간 최대 6장(오래된 순) + 제목·마무리 = 약 11.7초, 640×360 슬라이드(날짜 도장·천천히 확대·페이드). 기기 안에서 MediaRecorder 로 webm 을 만들어 내려받기. 이미지 저장만 되는 앱(APK GFSave)은 한 장 필름 PNG 로 대체. 외부 링크·서버 없음, 눌렀을 때만 만든다. 유아 집은 글자 없이 아이콘만.
 - 시험: tools/housing_film.js.
+
+## C22 RC 회귀 경량화 (2026-10-14)
+- tools/rc/browser_server.js: chrome 1개를 공용으로 띄워 두고, tools/rc/use_shared.js(NODE_OPTIONS --require)가 시험의 chromium.launch 를 「연결만」으로 바꾼다 → 구간마다 chrome 을 새로 띄우지 않음(시험 코드는 그대로). 12구간마다·1.8GB 넘으면 다시 띄움. SHARED=0 이면 예전 방식.
+- tools/rc_segments.sh: 구간마다 「[여유 전→후MB · chrome MB · 초]」를 segments_summary.txt 에 기록. 실측(4구간): chrome 500~540MB 로 평평(예전엔 구간마다 새 chrome), 여유 3GB 안팎 유지.
+- tools/kill_leftovers.ps1: 공용 브라우저는 살리고 시험이 남긴 것만 정리(-All 이면 공용도). 임시 파일 정리는 trap 으로.

@@ -947,6 +947,8 @@ html[data-bigbtn="1"] .h2-btx b { white-space: normal !important; display: -webk
 .hk .hk-ttl { position: absolute; left: 0; right: 0; top: 72px; text-align: center; z-index: 2; } .hk .hk-ttl .uk-title { font-size: calc(26px * var(--uk-fs-k, 1)); } .hk .hk-ttl .gf-brand { transform: scale(.9); }
 .hk-stage { position: absolute; left: 76px; right: 8px; top: 150px; height: 210px; display: flex; align-items: flex-end; justify-content: center; gap: 4px; pointer-events: none; }
 .hk-stage img { height: 120px; width: auto; max-width: 34%; object-fit: contain; object-position: bottom; animation: gfBob 2.4s ease-in-out infinite; } .hk-stage img:nth-of-type(2) { animation-delay: .4s; } .hk-stage img:nth-of-type(3) { animation-delay: .8s; }
+.hk-stage img.hk-prop { position: absolute; bottom: -4px; height: 54px; width: 54px; max-width: 22%; object-fit: contain; object-position: bottom;   /* SVG 가구는 고유 폭이 없어 auto 면 0 */ animation: none; z-index: 1; opacity: 1; filter: drop-shadow(0 3px 2px rgba(0,0,0,.15)); } .hk-stage img.hk-prop.l { left: 0; } .hk-stage img.hk-prop.r { right: 0; }   /* 앱 모티프 가구 */
+.hk-stage.hk-has-props { padding: 0 30px; gap: 0; } .hk-stage.hk-has-props img:not(.hk-prop) { max-width: 34%; height: 118px; }   /* 가구 자리만큼 가족을 안쪽으로 */
 .hk-floor { position: absolute; left: 6%; right: 6%; bottom: -6px; height: 26px; border-radius: 50%; background: rgba(120, 90, 60, .14); }
 html[data-rm="1"] .hk-stage img { animation: none; }
 .hk-icons { position: absolute; left: 8px; top: 140px; width: 68px; display: flex; flex-direction: column; gap: 6px; z-index: 3; }
@@ -5050,6 +5052,8 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     r.classList.add('hk'); if (o.kid) r.classList.add('hk-kid'); const open = !o.kid && (o.cleared || 0) >= 3;
     const tt = el('div', 'hk-ttl', r, '<div class="uk-title">' + o.title + '</div>'); try { GF.brand(r, o.key); } catch (e) { /* 브랜드 카드 없음 */ } r.querySelectorAll('.gf-motif').forEach((x) => x.remove()); r.classList.remove('has-motif'); void tt;
     const stage = el('div', 'hk-stage', r); el('i', 'hk-floor', stage); (o.fam || ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy']).forEach((id) => stage.appendChild(GF.img(id)));
+    /* 앱 모티프(G3): 그 앱에서 받는 가구 두 개를 무대 바닥 양끝에 — 7앱 홈이 같은 그림으로 보이지 않게(3차 리뷰: 스토어 스크린샷에서 앱 구분) */
+    try { (o.props || []).filter((id) => window.Room && Room.item && Room.item(id)).slice(0, 2).forEach((id, i) => { const im = el('img', 'hk-prop ' + (i ? 'r' : 'l'), stage); im.src = Room.src(Room.item(id)); im.alt = ''; stage.classList.add('hk-has-props'); }); } catch (e) { /* 소품 그림 없으면 가족만 */ }
     if (open && (o.icons || []).length) { const col = el('div', 'hk-icons', r); o.icons.filter(Boolean).slice(0, 4).forEach((x) => { const b = el('button', 'hk-ic' + (x.hot ? ' hot' : ''), col); el('span', 'hk-icb', b, IC(x.icon)); el('small', '', b, x.label); if (x.badge) el('i', 'hk-badge' + (x.badge === '✔' ? ' ok' : ''), b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
     if (open && window.Room && Room.H) { const bw = el('div', 'h2-bandwrap hk-band', r); try { if (!Room.band(bw, { go: o.levels, toastParent: r, here: true, house: o.house })) bw.classList.add('hk-noband'); } catch (e) { /* 목표 띠 실패 무시 */ } } else el('div', 'h2-bandwrap hk-noband', r);   // 한 줄 한 정보(리뷰 P5): 띠 안 작은 칩(0/3·0/4)은 홈에서 뺌(작은 일·꾸미기 도전은 📮 소식 상자 3칸) · 3판 전엔 목표 띠도 없음(공용 띠가 자동으로 붙지 않게 자리만)
     /* 유아(o.kid): 글자 없는 판 — 초록 ▶ 하나 + 그림 알약(o.pills: [{icon, label, fn, bg, badge}]) 늘 보임, 목표 띠·아이콘 줄 없음(2차 리뷰 N1) */
@@ -5280,7 +5284,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1)), n = Object.keys(SV.stars).length, dailyDone = SV.daily.date === today() && SV.daily.done;
       const ss = seasonNow(), s = ss.length ? (ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0]) : null, sDone = s && SV.seasonDone[seasonKey(s)];
       const seasonIc = s ? { id: 'season', icon: 'star', label: s.title, fn: () => { const L = seasonLevel(s); if (L) GF.go('splay', { level: L }); }, badge: sDone ? '✔' : '!', hot: !sDone } : null;
-      GF.homeKit(r, { key: 'sort', title: '정리의 달인', level: last, first: !n, cleared: n, play: () => GF.go('splay', { n: last }), levels: () => GF.go('slevels'), house: () => GF.go('shouse'),
+      GF.homeKit(r, { key: 'sort', fam: ['nemo_mom.wink', 'nemo_dad.good', 'nemo_kids.kid2'], props: (() => { try { return Object.values(REW).slice(0, 2); } catch (e) { return []; } })(),   /* 앱마다 다른 배역·무대 가구(G3) */ title: '정리의 달인', level: last, first: !n, cleared: n, play: () => GF.go('splay', { n: last }), levels: () => GF.go('slevels'), house: () => GF.go('shouse'),
         icons: [{ id: 'daily', icon: 'gift', label: GF.t('ui.hk.daily'), fn: () => { const L = dailyLevel(); if (L) GF.go('splay', { level: L }); }, badge: dailyDone ? '✔' : '1', hot: !dailyDone }, seasonIc, { id: 'trio', icon: 'heart', label: GF.t('ui.hk.trio'), fn: () => GF.go('strio') }].filter(Boolean) });
     },
   });

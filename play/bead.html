@@ -936,12 +936,18 @@ html[data-rm="1"] .hk-stage img { animation: none; }
 .hk-icb { width: 56px; height: 56px; border-radius: 18px; background: #fff; box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; } .hk-icb svg { width: 30px; height: 30px; } .hk-emo { font-size: 28px; line-height: 1; }
 .hk-ic.hot .hk-icb { background: #FFE9A8; } .hk-ic small { font: 800 13px/1.15 var(--uk-font); text-align: center; word-break: keep-all; max-width: 68px; }
 .hk-badge { position: absolute; right: 2px; top: -4px; min-width: 20px; height: 20px; padding: 0 5px; box-sizing: border-box; border-radius: 10px; background: #F0506E; color: #fff; font: 900 12px/20px var(--uk-font); font-style: normal; text-align: center; box-shadow: 0 0 0 2px #fff; } .hk-badge.ok { background: var(--uk-green); }
-.hk .hk-band { position: absolute; left: 12px; right: 12px; top: 382px; z-index: 2; }
-.hk .uk-btn.hk-main { position: absolute; left: 32px; right: 32px; width: auto; max-width: none; top: 448px; height: 76px; min-height: 76px; font-size: calc(28px * var(--uk-fs-k, 1)); border-radius: 26px; z-index: 2; }
-.hk-subs { position: absolute; left: 32px; right: 32px; top: 540px; display: flex; gap: 12px; z-index: 2; } .hk-subs .uk-btn.hk-pill { flex: 1; min-height: 52px; font-size: calc(18px * var(--uk-fs-k, 1)); }
+.hk .hk-band { position: absolute; left: 12px; right: 12px; top: 396px; z-index: 2; }
+.hk .uk-btn.hk-main { position: absolute; left: 32px; right: 32px; width: auto; max-width: none; top: 470px; height: 76px; min-height: 76px; font-size: calc(28px * var(--uk-fs-k, 1)); border-radius: 26px; z-index: 2; }
+.hk-subs { position: absolute; left: 32px; right: 32px; top: 562px; display: flex; gap: 12px; z-index: 2; } .hk-subs .uk-btn.hk-pill { flex: 1; min-height: 52px; font-size: calc(18px * var(--uk-fs-k, 1)); }
 .hk .hk-ttl .uk-title { color: var(--uk-ink, #3A2E39); -webkit-text-stroke: 0; text-shadow: 0 2px 0 rgba(255,255,255,.7); }   /* 흰 글자+외곽선은 대비 검사(axe) 1.5:1 — 작은 제목은 진한 글자로
 .hk-noband { display: none !important; }
 .hk-main .hk-fa { position: absolute; right: 30px; top: 50%; width: 2px; height: 2px; pointer-events: none; }
+/* 2차 리뷰 P5: 다음 목표 = 그 앱 가구 한 줄 + 진척 막대(말줄임·0/4 칩 없음) */
+.h2-band.here .h2-btx { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; } .h2-band.here .h2-btx b { white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: calc(16px * var(--uk-fs-k, 1)); }
+.h2-bprog { display: block; height: 8px; border-radius: 4px; background: rgba(0,0,0,.1); overflow: hidden; } .h2-bprog em { display: block; height: 100%; background: var(--uk-green); border-radius: 4px; }
+.h2-bpn { position: absolute; right: 52px; top: 8px; font: 800 12px/1 var(--uk-font); color: var(--uk-ink2); } .h2-band.here { position: relative; }
+.hk .uk-btn.hk-main.hk-pulse { animation: hkPulse 1.1s ease-in-out infinite alternate; } @keyframes hkPulse { from { box-shadow: 0 6px 0 rgba(0,0,0,.18), 0 0 0 0 rgba(255,216,77,0); } to { box-shadow: 0 6px 0 rgba(0,0,0,.18), 0 0 0 6px rgba(255,216,77,.95); } }
+html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 0 0 6px rgba(255,216,77,.95); }
 
 /* 이야기 지도(GF.saga) — 사가 맵. 그림은 슬롯(map:*), 없으면 이 CSS·이모지 임시 그림 */
 .sg-root { position: absolute; left: 0; right: 0; top: 66px; bottom: 0; }
@@ -1478,7 +1484,7 @@ html[data-rm="1"] .hk-stage img { animation: none; }
       }
       const row = el('div', 'homebtns', r);
       [['story', 'book', '#FFE0E8', () => GF.go('shelf'), '이야기책'], ['play', 'game', '#E1F4FF', () => GF.go('playroom'), '놀이방'], ['album', 'album', '#FFF3C2', () => GF.go('album', { book: 1 }), '스티커 앨범'], ['house', 'home', '#FFE3C2', () => GF.go('khouse'), '우리 집']].forEach((b) => {
-        const k = el('button', 'card', row, IC[b[1]]); k.setAttribute('aria-label', b[4]);   // 글 없는 그림 버튼의 이름(보호자·화면 읽기용, 10/19 axe button-name) k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
+        const k = el('button', 'card', row, IC[b[1]]); k.setAttribute('aria-label', b[4]);   /* 글 없는 그림 버튼의 이름(보호자·화면 읽기용, 10/19 axe button-name) */ k.style.background = b[2]; k.onclick = () => { GF.sfx('pick'); b[3](); };
       });
       if (window.Room && Room.H && Room.S) { const bw = el('div', 'h2-bandwrap', r); bw.style.top = '372px'; Room.band(bw, { go: () => GF.go('map'), toastParent: r }); }   // 우리 집 2.0: 다음 목표 띠
       // 부모 메뉴: 로고를 3초 길게
@@ -2069,6 +2075,7 @@ html[data-rm="1"] .hk-stage img { animation: none; }
     stars(n, max) { const d = el('div', 'uk-stars'); for (let i = 0; i < (max || 3); i++) { const w = el('div'); w.innerHTML = ICONS.star; const sv = w.firstChild; if (i < n) sv.classList.add('on'); d.appendChild(sv); } return d; },
     /** 결과 화면(스테이지·레벨 끝): UK.result({title, stars, chips, onNext, onRetry, onHome}) — 유아는 글자 대신 아이콘 버튼만 쓰게 kid:true */
     result(o) {
+      document.querySelectorAll('.uk-finger').forEach((x) => x.remove());   // 판에서 쓰던 손가락 안내가 결과 창 글자 위에 남지 않게(2차 리뷰 P3)
       const acts = [];
       if (o.kid) { const sc = UK.modal({ title: o.title, stars: o.stars, chips: o.chips, parent: o.parent }); const a = el('div', 'acts row', sc.firstChild);
         if (o.onRetry) UK.round({ icon: 'replay', cls: 'lg pink', onclick: () => { sc.close(); o.onRetry(); } }, a);
@@ -2335,7 +2342,7 @@ html[data-rm="1"] .hk-stage img { animation: none; }
   /* 결과 화면 공통: 판에서 새 가구를 받았으면 「집에 놓기」 카드가 먼저 · 다음 목표 띠를 시트에 붙인다. UK.result 를 가장 바깥에서 감싼다(앱 초기화 때 — 광고 래퍼가 이미 감싼 뒤). 앱마다 고치지 않는다 */
   function hookResult() {
     if (!window.UK || UK.__h2 || !Room.H) return; UK.__h2 = 1; const r0 = UK.result;
-    const addBand = (sc, o) => { try { if (sc && sc.querySelector && !sc.querySelector('.h2-band')) Room.band(sc.querySelector('.uk-sheet') || sc, { go: Room.cfg.home, toastParent: o && o.parent }); } catch (e) { /* 띠는 덤 */ } };
+    const addBand = (sc, o) => { try { if (sc && sc.querySelector && !sc.querySelector('.h2-band')) Room.band(sc.querySelector('.uk-sheet') || sc, { go: Room.cfg.home, toastParent: o && o.parent, here: !kid() }); } catch (e) { /* 띠는 덤 */ } };
     UK.result = function (o) {
       const rec = Room._recent || []; Room._recent = [];
       if (!o || !o.parent || !rec.length || !Room.H) { const sc = r0.apply(this, arguments); addBand(sc, o); return sc; }
@@ -2408,6 +2415,15 @@ html[data-rm="1"] .hk-stage img { animation: none; }
     const LATE = { event: 0.6, story: 0.6, other: 0.6, expedition: 0.35, playground: 0.2 }, me = (app === 'tables' ? 'idle' : app), cand = Object.values(B).filter((q) => q.first).map((q) => ({ q, v: q.own / q.total + (LATE[q.g] || 0) - (q.g === me ? 0.12 : 0) })).sort((x, y) => x.v - y.v || (x.q.g < y.q.g ? -1 : 1)), best = cand[0] && { id: cand[0].q.first };
     return best ? mk(best.id, null, 'set') : null;
   };
+  /** 그 앱에서 지금 할 수 있는 목표만(2차 리뷰 P5·원칙 12): 위시 → 이야기 장 과제 → 그 앱 세트 순, 그 앱 가구만. prog = [그 앱 가구 모은 수, 전체] */
+  Room.nextGoalHere = function (app) {
+    const S = ensure(); if (!S || !H()) return null; const me = app === 'tables' ? 'idle' : app === 'coloring' ? 'color' : app, gOf = (i) => { const g = (i && ((i.src && i.src.game) || i.game)) || 'other'; return g === 'tables' ? 'idle' : g === 'coloring' ? 'color' : g; };
+    const ids = new Set(sets().map((x) => x.id)), pool = Room.data.items.filter((i) => ids.has(i.set) && inGroup(i) && gOf(i) === me), own = pool.filter((i) => Room.has(i.id)).length;
+    const mk = (id, label, why) => { const it = Room.item(id); return it ? { id, item: it, label: label || it.name, why, game: me, hint: (it.src && it.src.hint) || '', prog: [own, pool.length] } : null; };
+    for (const id of S.wish) if (!Room.has(id) && gOf(Room.item(id)) === me) return mk(id, null, 'wish');
+    const T = Room.tasks(); const t = T.list.find((x) => !x.done && x.miss && gOf(x.miss.it) === me); if (t) return mk(t.miss.id, null, 'task');
+    const nx = pool.find((i) => !Room.has(i.id)); return nx ? mk(nx.id, null, 'set') : null;
+  };
   Room.goApp = function (game, opts) {
     opts = opts || {}; const app = Room.cfg.app || Room.cfg.game; const map = { tables: 'idle', coloring: 'color' }; const g = map[game] || game;
     if (g === app || g === 'story' || g === 'event' || g === 'other') { if (opts.home) opts.home(); else if (Room.cfg.home) Room.cfg.home(); return 'same'; }
@@ -2469,7 +2485,8 @@ html[data-rm="1"] .hk-stage img { animation: none; }
   };
   Room.band = function (parent, opts) {
     opts = opts || {}; try { Room.themeSync(opts.toastParent || parent); } catch (e) { /* 세트 도착 실패는 띠를 막지 않는다 */ } const old = parent.querySelector(':scope > .h2-band'); if (old) old.remove(); if (!H() || !Room.S) return null;
-    const g = Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) { Room.todoLine(parent, false); return null; } const b = el('button', 'h2-band' + (kid() ? ' kid' : ''), parent);
+    const here = !!opts.here && !kid(), g = here ? Room.nextGoalHere(Room.cfg.app || Room.cfg.game) : Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) { if (!here) Room.todoLine(parent, false); return null; } const b = el('button', 'h2-band' + (kid() ? ' kid' : '') + (here ? ' here' : ''), parent);
+    if (here) { const im0 = el('img', '', b); im0.src = Room.src(g.item); im0.alt = ''; const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : '다음 가구 · ') + g.label); const pr = el('i', 'h2-bprog', tx); el('em', '', pr).style.width = Math.round(100 * g.prog[0] / Math.max(1, g.prog[1])) + '%'; if (g.prog[0] > 0) el('small', 'h2-bpn', tx, g.prog[0] + '/' + g.prog[1]); el('span', 'h2-arrow', b, UK.icon('home')); b.onclick = (e) => { e.stopPropagation(); if (opts.house) opts.house(); else if (Room.cfg.openHouse) Room.cfg.openHouse(); }; return b; }   // 한 줄 한 정보 + 진척 막대, 누르면 우리 집
     const im = el('img', '', b); im.src = Room.src(g.item); im.alt = ''; const ic = APPICON[g.game] || '🎁';
     if (kid()) { el('span', 'h2-bic', b, ic); el('span', 'h2-arrow', b, UK.icon('next')); } else { const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : '다음: ') + g.label + ' · ' + g.hint); el('span', 'h2-arrow', b, UK.icon('next')); }
     b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent: opts.toastParent || parent, home: opts.go }); }; Room.chalChip(parent, b); Room.todoLine(parent, b); return b;
@@ -4242,7 +4259,7 @@ html[data-rm="1"] .hk-stage img { animation: none; }
     const back = document.getElementById('b-back'); if (!back || O.kid || !O.ready) return; let b = document.getElementById('b-mail');
     if (!b) { b = el('button', 'round-btn', null, '<span>📮</span>'); b.id = 'b-mail'; b.setAttribute('aria-label', GF.t('ops.mail.title')); b.onclick = () => { if (GF.sfx) GF.sfx('tap'); O.openMail(); }; back.parentNode.insertBefore(b, back); }
     /* 홈에선 「홈」·「소리」(설정 안에 있음) 버튼·「별 0」 숨김(리뷰 P4) */
-    const root = (GF.stack || []).length <= 1; b.style.display = root ? '' : 'none'; back.style.display = root ? 'none' : ''; { const hm = document.getElementById('b-home'); if (hm) hm.style.display = root ? 'none' : ''; const so = document.getElementById('b-sound'); if (so) so.style.display = root ? 'none' : ''; const sp = document.getElementById('b-stars'); if (sp) sp.style.display = root && /^\s*0\s*$/.test(sp.textContent) ? 'none' : ''; } if (root) { mailDot(); if (O._mileOk) setTimeout(() => { if ((GF.stack || []).length <= 1) O.mileShow(); }, 900); }
+    const root = (GF.stack || []).length <= 1; b.style.display = root ? '' : 'none'; back.style.display = root ? 'none' : ''; { const hm = document.getElementById('b-home'); if (hm) hm.style.display = root ? 'none' : ''; const so = document.getElementById('b-sound'); if (so) so.style.display = root ? 'none' : ''; const sp = document.getElementById('b-stars'); if (sp) sp.style.display = /^\s*0\s*$/.test(sp.textContent) ? 'none' : '';   /* 0 은 어느 화면에서도 숨김(원칙 8) */ } if (root) { mailDot(); if (O._mileOk) setTimeout(() => { if ((GF.stack || []).length <= 1) O.mileShow(); }, 900); }
   }
 
   /* ---------------- 문의 · FAQ ---------------- */
@@ -4567,7 +4584,8 @@ html[data-rm="1"] .hk-stage img { animation: none; }
     O.cfg = cfg; O.app = cfg.app; O.kid = !!cfg.kid; O.d = (GF.data && GF.data.ops) || null; O.ready = !!O.d; O.applyMotion();
     if (!O.ready) return;
     if (!O.kid && !O._mailW) { O._mailW = 1; const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); try { mailBtn(); } catch (e) { /* 소식 상자 실패는 무시 */ } }; setTimeout(() => { try { mailBtn(); } catch (e) { /* 무시 */ } }, 0); }   // BM-E6
-    if (O.kid && !O._kidTb) { O._kidTb = 1; const tb = () => { const root = (GF.stack || []).length <= 1, hm = document.getElementById('b-home'), sp = document.getElementById('b-stars'); if (hm) hm.style.visibility = root ? 'hidden' : 'visible'; if (sp) sp.style.visibility = root && /^\s*0\s*$/.test(sp.textContent) ? 'hidden' : 'visible'; }; const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); try { tb(); } catch (e) { /* 무시 */ } }; setTimeout(tb, 0); }   // 유아 홈도 같은 원칙: 홈에선 「홈」·「별 0」 숨김(자리는 유지 — 글 없는 배치가 흔들리지 않게)
+    if (!O._zeroW && GF.refreshBar) { O._zeroW = 1; const rb0 = GF.refreshBar; GF.refreshBar = function () { const x = rb0.apply(this, arguments); try { const sp = document.getElementById('b-stars'); if (sp) { const z = /^\s*0\s*$/.test(sp.textContent); if (O.kid) sp.style.visibility = z ? 'hidden' : 'visible'; else sp.style.display = z ? 'none' : ''; } } catch (e) { /* 무시 */ } return x; }; }   // 판 중에 0 → 1 이 되면 바로 보이게
+    if (O.kid && !O._kidTb) { O._kidTb = 1; const tb = () => { const root = (GF.stack || []).length <= 1, hm = document.getElementById('b-home'), sp = document.getElementById('b-stars'); if (hm) hm.style.visibility = root ? 'hidden' : 'visible'; if (sp) sp.style.visibility = /^\s*0\s*$/.test(sp.textContent) ? 'hidden' : 'visible'; }; const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); try { tb(); } catch (e) { /* 무시 */ } }; setTimeout(tb, 0); }   // 유아 홈도 같은 원칙: 홈에선 「홈」·「별 0」 숨김(자리는 유지 — 글 없는 배치가 흔들리지 않게)
     if (!O.kid && O.iap.owned('adfree') && GF.ads) GF.ads.config.adFree = true;   // 이미 산 「광고 제거」
     if (!O.kid) setTimeout(() => { try { if (O.iap.native()) O.iap.restore(); } catch (e) {} }, 2500);   // 재설치·기기 변경 복원(기기 안 조회)
     if (/[?&]ops=0/.test(location.search) || (navigator.webdriver && !/[?&]ops=1/.test(location.search))) { const s = st(); s.lastOpen = O._now(); put(s); return; }   // 자동 시험은 팝업을 띄우지 않는다(?ops=1 로 확인)
@@ -5137,11 +5155,10 @@ html[data-rm="1"] .hk-stage img { animation: none; }
     const tt = el('div', 'hk-ttl', r, '<div class="uk-title">' + o.title + '</div>'); try { GF.brand(r, o.key); } catch (e) { /* 브랜드 카드 없음 */ } r.querySelectorAll('.gf-motif').forEach((x) => x.remove()); r.classList.remove('has-motif'); void tt;
     const stage = el('div', 'hk-stage', r); el('i', 'hk-floor', stage); (o.fam || ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy']).forEach((id) => stage.appendChild(GF.img(id)));
     if (open && (o.icons || []).length) { const col = el('div', 'hk-icons', r); o.icons.filter(Boolean).slice(0, 4).forEach((x) => { const b = el('button', 'hk-ic' + (x.hot ? ' hot' : ''), col); el('span', 'hk-icb', b, IC(x.icon)); el('small', '', b, x.label); if (x.badge) el('i', 'hk-badge' + (x.badge === '✔' ? ' ok' : ''), b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
-    if (open && window.Room && Room.H) { const bw = el('div', 'h2-bandwrap hk-band', r); try { Room.band(bw, { go: o.levels, toastParent: r }); bw.querySelectorAll('.h2-todochip, .h2-chalchip').forEach((x) => x.remove()); } catch (e) { /* 목표 띠 실패 무시 */ } } else el('div', 'h2-bandwrap hk-noband', r);   // 한 줄 한 정보(리뷰 P5): 띠 안 작은 칩(0/3·0/4)은 홈에서 뺌(작은 일·꾸미기 도전은 📮 소식 상자 3칸) · 3판 전엔 목표 띠도 없음(공용 띠가 자동으로 붙지 않게 자리만)
+    if (open && window.Room && Room.H) { const bw = el('div', 'h2-bandwrap hk-band', r); try { if (!Room.band(bw, { go: o.levels, toastParent: r, here: true, house: o.house })) bw.classList.add('hk-noband'); } catch (e) { /* 목표 띠 실패 무시 */ } } else el('div', 'h2-bandwrap hk-noband', r);   // 한 줄 한 정보(리뷰 P5): 띠 안 작은 칩(0/3·0/4)은 홈에서 뺌(작은 일·꾸미기 도전은 📮 소식 상자 3칸) · 3판 전엔 목표 띠도 없음(공용 띠가 자동으로 붙지 않게 자리만)
     const main = UK.btn({ text: o.mainText || (o.first ? GF.t('ui.hk.start') : GF.t('ui.hk.level', { n: o.level })), icon: 'play', cls: 'green block hk-main', onclick: () => { GF.sfx('pick'); o.play(); } }, r);
-    if (open) { const sub = el('div', 'hk-subs', r); if (o.levels) UK.btn({ text: GF.t('ui.hk.map'), icon: 'shapes', cls: 'sky sm hk-pill', onclick: o.levels }, sub); if (o.house) UK.btn({ text: GF.t('ui.hk.house'), icon: 'home', cls: 'dong sm hk-pill', onclick: o.house }, sub); }
-    const fa = el('i', 'hk-fa', main);   // 손가락은 버튼 오른쪽 끝(글자를 가리지 않게, 리뷰 P3)
-    if (o.first) { let t = null; const arm = () => { clearTimeout(t); t = setTimeout(() => { if (main.isConnected) UK.finger(r, fa, { ms: 8000 }); }, 5000); }; arm(); r.addEventListener('pointerdown', arm, true); }
+    if (open) { const sub = el('div', 'hk-subs', r); if (o.levels) UK.btn({ text: GF.t('ui.hk.map'), icon: 'shapes', cls: 'ghost sm hk-pill', onclick: o.levels }, sub); if (o.house) UK.btn({ text: GF.t('ui.hk.house'), icon: 'home', cls: 'ghost sm hk-pill', onclick: o.house }, sub); }
+    if (o.first) { let t = null; const arm = () => { clearTimeout(t); main.classList.remove('hk-pulse'); t = setTimeout(() => { if (main.isConnected) main.classList.add('hk-pulse'); }, 5000); /* 원 대신 버튼 테두리 맥박(글자를 가리지 않음, 2차 리뷰 1순위) */ }; arm(); r.addEventListener('pointerdown', arm, true); }
     return main;
   };
   /** 바로 진입: 앱을 열면 홈을 거치지 않고 판으로(뒤로 가면 홈). 첫 실행은 제목 1초 → 첫 판(이야기 컷이 떠 있으면 끝난 뒤). 자동 시험은 ?direct=1 일 때만 */
@@ -5340,7 +5357,7 @@ html[data-rm="1"] .hk-stage img { animation: none; }
 (function (root) {
   'use strict';
   const PZ = root.ExpPuzzle, N = { rows: 5, cols: 6 };
-  const COL = ['#F08A3C', '#E5334A', '#3B6FD6', '#4FBF7F', '#F5C518'], DARK = ['#C9611C', '#B71C32', '#254FA8', '#2E8F58', '#C79A00'];
+  const COL = ['#F08A3C', '#E5334A', '#3B6FD6', '#FF6FAE', '#F5C518'], DARK = ['#C9611C', '#B71C32', '#254FA8', '#C23A7A', '#C79A00'];
   const NAME = ['받치기', '번쩍', '돌보기', '하트', '별'];
   const GLYPH = [   // 색맹 대응: 구슬마다 도형(네모·세모·동그라미·하트·별) — 흰색 문양
     '<rect x="-9" y="-9" width="18" height="18" rx="3" fill="#fff"/>',
@@ -5420,7 +5437,7 @@ html[data-rm="1"] .hk-stage img { animation: none; }
   'use strict';
   const PZ = root.ExpPuzzle, UI = root.ExpPuzzleUI, N = { rows: 5, cols: 6 };
   const synth = (id, alt) => (root.GF && GF.synth && GF.synth.has(id) ? id : alt);      // x_ 합성음이 있으면 그것, 없으면 기존 소리
-  const GCOL = ['#F08A3C', '#E5334A', '#3B6FD6', '#4FBF7F', '#F5C518'];
+  const GCOL = ['#F08A3C', '#E5334A', '#3B6FD6', '#FF6FAE', '#F5C518'];
   function mount(parent, o) {
     const b = o.board, box = document.createElement('div'); box.className = 'ex-pz pd'; parent.appendChild(box);
     box.innerHTML = '<div class="pd-timer"><i></i></div><div class="pz-grid"></div><div class="pz-say" aria-live="polite"></div>';
@@ -5535,8 +5552,8 @@ html[data-rm="1"] .hk-stage img { animation: none; }
       r.classList.add('uk', 'bd'); GF.bg('indoor2', r); bar();
       /* 공통 홈 틀(GF.homeKit, 10/19): 주 버튼 「N판」 하나 + 왼쪽 아이콘(오늘의 콤보·이야기) + 판 고르기·우리 집 알약 */
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1)), n = Object.keys(SV.stars).length, dd = SV.daily.date === today() && SV.daily.done;
-      GF.homeKit(r, { key: 'bead', title: '구슬 줄 맞추기', level: last, first: !n, cleared: n, mainText: n ? GF.t('c16.bead.012', { last: last }).replace(/^.*·\s*/, '') : null, play: () => GF.go('bplay', { n: last }), levels: () => GF.go('blevels'), house: () => GF.go('bhouse'),
-        icons: [{ id: 'daily', icon: 'gift', label: '오늘의 콤보', fn: () => GF.go('bplay', { daily: 1 }), badge: dd ? '✔' : '1', hot: !dd }, { id: 'story', icon: 'heart', label: '이야기', fn: () => cut(r, { title: GF.t('c16.bead.001'), faces: S0.prologue.faces, text: S0.prologue.lines, next: '닫기' }) }] });
+      GF.homeKit(r, { key: 'bead', title: '구슬 줄 맞추기', level: last, first: !n, cleared: n, play: () => GF.go('bplay', { n: last }), levels: () => GF.go('blevels'), house: () => GF.go('bhouse'),
+        icons: [{ id: 'daily', icon: 'gift', label: GF.t('ui.hk.daily'), fn: () => GF.go('bplay', { daily: 1 }), badge: dd ? '✔' : '1', hot: !dd }, { id: 'story', icon: 'heart', label: '이야기', fn: () => cut(r, { title: GF.t('c16.bead.001'), faces: S0.prologue.faces, text: S0.prologue.lines, next: '닫기' }) }] });
     },
   });
   GF.screen('blevels', {
@@ -5559,7 +5576,7 @@ html[data-rm="1"] .hk-stage img { animation: none; }
       const daily = !!p.daily, LV = daily ? { id: 'daily', kind: 'daily', chapter: 0, seed: (+today() % 100000) + 7, goal: { t: 'daily', n: DAILY_MOVES }, par: 0, limit: DAILY_MOVES } : (D.levels.find((l) => l.id === p.n) || D.levels[0]);
       if (!daily) { SV.last = LV.id; save(); }
       const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:150px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
-      el('div', 'bd-hd', r, daily ? '<b>오늘의 콤보</b><span>20수 안에 높은 점수</span>' : `<b>${LV.id}판</b><span>${D.chapters[LV.chapter - 1]}</span>`);
+      el('div', 'bd-hd', r, daily ? '<b>오늘의 콤보</b><span>20수 안에 높은 점수</span>' : `<b>${GF.t('ui.hk.level', { n: LV.id })}</b><span>${D.chapters[LV.chapter - 1]}</span>`);
       const DRAG = D.input === 'drag' && !!window.ExpPuzzleDrag, board = PZ.create({ seed: LV.seed, mode: DRAG ? 'drag' : 'slide' }), st = { n: 0 }; let used = 0, score = 0, busy = false, extra = 0, hinted = 0, done = false;
       const left = () => LV.limit + extra - used, g = LV.goal;
       const goalBox = el('div', 'bd-goal', r), chips = el('div', 'bd-chips', r), boardW = el('div', 'bd-boardw', r), btns = el('div', 'bd-btns2', r), tip = el('div', 'bd-tip', r);

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 — 쇼츠 영상</title>
+<meta name="description" content="네모·세모·동그라미, 당신은 어느 도형인가요? 기하학 가족 쇼츠 모음.">
+<meta property="og:title" content="기하학 가족 — 쇼츠 영상">
+<meta property="og:description" content="당신은 어느 도형인가요? 20초 공감 쇼츠 모음">
+<style>
+  :root { --ink: #2b2118; --paper: #fff5df; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f1e6cf; color: var(--ink); font-family: system-ui, sans-serif; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { text-align: center; font-size: 28px; margin: 4px 0 4px; }
+  .sub { text-align: center; opacity: .75; margin: 0 0 22px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .card { background: var(--paper); border: 3px solid var(--ink); border-radius: 18px; padding: 10px; box-shadow: 4px 5px 0 var(--ink); }
+  video { width: 100%; aspect-ratio: 9 / 16; border-radius: 12px; background: #000; display: block; }
+  .t { font-weight: 700; margin: 10px 2px 4px; }
+  .row { display: flex; gap: 8px; margin-top: 6px; }
+  .row a, .row button { flex: 1; font-size: 13px; text-align: center; padding: 8px 4px; border: 2px solid var(--ink); border-radius: 20px; background: #fff; color: var(--ink); text-decoration: none; cursor: pointer; }
+  .foot { text-align: center; margin-top: 28px; font-size: 14px; }
+  .foot a { color: inherit; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>기하학 가족 쇼츠</h1>
+  <p class="sub">당신은 어느 도형인가요? — 가족 단톡방에 보내 보세요</p>
+  <div class="grid" id="grid"></div>
+  <p class="foot"><a href="link.html">← 링크 모음</a> · <a href="index.html">웹툰 목차</a></p>
+</div>
+<script>
+const V = [
+  ['s05', '#05 축의금, 얼마 하세요?'],
+  ['s07', '#07 50대가 되면 동창회가 잘 된다?'],
+  ['s06', '#06 수능 날 아침, 세 집의 풍경'],
+  ['s04', '#04 코스피 거의 3배, 나만 그대로?'],
+  ['s03', '#03 아이랑 저녁'],
+  ['s02', '#02 부의금'],
+  ['s01', '#01 모르는 번호'],
+];
+const src = new URLSearchParams(location.search).get('src') || 'videos';
+document.getElementById('grid').innerHTML = V.map(([id, t]) => `
+  <div class="card" id="${id}">
+    <video src="shorts/${id}.mp4" controls playsinline preload="metadata"></video>
+    <div class="t">${t}</div>
+    <div class="row"><a href="shorts/${id}.mp4" download>저장</a><button data-id="${id}" data-t="${t}">보내기</button></div>
+  </div>`).join('');
+document.querySelectorAll('button[data-id]').forEach(b => b.onclick = async () => {
+  const url = location.origin + location.pathname + '?src=share#' + b.dataset.id;
+  const text = b.dataset.t + ' — 당신은 어느 도형인가요?';
+  try { if (navigator.share) { await navigator.share({ title: '기하학 가족', text, url }); return; } } catch (e) { return; }
+  try { await navigator.clipboard.writeText(text + ' ' + url); b.textContent = '복사됨!'; } catch (e) { prompt('링크를 복사하세요', url); }
+});
+</script>
+</body>
+</html>

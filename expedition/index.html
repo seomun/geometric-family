@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 원정대 — 세 가족의 퍼즐 RPG</title><meta name="description" content="끌어서 몬스터를 부수고, 모아서 동료로. 웹에서 바로 플레이하는 세 가족의 퍼즐 RPG 「기하학 원정대」.">
+<meta property="og:title" content="기하학 원정대 — 세 가족의 퍼즐 RPG"><meta property="og:description" content="끌어서 몬스터를 부수고, 모아서 동료로. 웹에서 바로 플레이!"><meta property="og:image" content="art/og.png"><meta property="og:type" content="website"><meta name="theme-color" content="#0B1030">
+<link rel="icon" type="image/png" sizes="32x32" href="art/favicon_32.png"><link rel="apple-touch-icon" href="art/favicon_192.png"><link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet"><style>/* 기하학 원정대 전용 UI 키트 (D38 시안) — 10앱 UK 키트(games/engine/ui-kit)와 따로 간다.
+   톤: 진한 남색·자주·금 광원 · 두꺼운 금테 패널 · 큰 제목 글꼴(Black Han Sans, 배포 시 woff2 부분집합으로 번들) · 모서리 각진 프레임 · 발광 버튼.
+   쓰는 곳(시안): lobby_mock.html · battle_hud_mock.html · landing/index.html · keyart.html. 본 구현 땐 exp.js 화면들이 이 클래스(.xi-*)로 옮겨 간다. */
+:root {
+  --xi-ink: #070A22; --xi-navy: #0B1030; --xi-night: #141A4A; --xi-violet: #3A1A6E; --xi-purple: #6A2BA8; --xi-magenta: #B0307F;
+  --xi-gold: #FFC94A; --xi-gold2: #FFE9A6; --xi-gold3: #B07A12; --xi-cyan: #5CE1FF; --xi-red: #FF4D5E; --xi-green: #5BE38B; --xi-text: #F4EEFF; --xi-dim: #A9A3D6;
+  --xi-title: 'Black Han Sans', 'Noto Sans KR', 'Malgun Gothic', sans-serif; --xi-body: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+.xi { font-family: var(--xi-body); color: var(--xi-text); }
+.xi-bg { background: radial-gradient(120% 70% at 50% 18%, #5B2A9A 0%, #2A1763 38%, #0B1030 78%, #050718 100%); }
+.xi-rays { position: absolute; inset: -20%; background: repeating-conic-gradient(from 0deg at 50% 38%, rgba(255,214,120,.0) 0deg 7deg, rgba(255,214,120,.16) 7deg 11deg); mask-image: radial-gradient(60% 60% at 50% 38%, #000 0%, transparent 78%); -webkit-mask-image: radial-gradient(60% 60% at 50% 38%, #000 0%, transparent 78%); pointer-events: none; }
+.xi-glow { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,214,120,.9) 0%, rgba(255,160,60,.35) 38%, transparent 70%); filter: blur(6px); pointer-events: none; }
+.xi-grain::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, transparent 55%, rgba(0,0,10,.55) 100%); pointer-events: none; }
+/* 제목 글꼴: 금빛 그라데이션 + 진한 외곽 + 아래 그림자 */
+.xi-logo { font-family: var(--xi-title); letter-spacing: 1px; line-height: 1; background: linear-gradient(180deg, #FFF6C9 0%, #FFD35A 46%, #E08A12 54%, #FFC94A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-stroke: 0; filter: drop-shadow(0 3px 0 #5a2a05) drop-shadow(0 0 2px #2a0f00) drop-shadow(0 6px 10px rgba(0,0,0,.55)); }
+.xi-logo .o { -webkit-text-stroke: 7px #2a0f3f; paint-order: stroke fill; }
+.xi-h { font-family: var(--xi-title); color: var(--xi-gold2); text-shadow: 0 2px 0 #3a1a6e, 0 0 12px rgba(255,200,90,.35); letter-spacing: .5px; }
+/* 패널: 어두운 유리 + 이중 금테 + 모서리 장식 */
+.xi-panel { position: relative; background: linear-gradient(180deg, rgba(36,28,96,.92), rgba(14,12,48,.94)); border: 2px solid var(--xi-gold3); border-radius: 12px; box-shadow: 0 0 0 2px #1b1240 inset, 0 0 0 4px rgba(255,201,74,.35) inset, 0 8px 18px rgba(0,0,10,.55); }
+.xi-panel::before, .xi-panel::after { content: ''; position: absolute; width: 14px; height: 14px; border: 3px solid var(--xi-gold); pointer-events: none; }
+.xi-panel::before { left: -3px; top: -3px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; } .xi-panel::after { right: -3px; bottom: -3px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
+/* 버튼: 큰 「출정」 금속 금색 / 보조 어두운 금테 */
+.xi-go { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: 0; cursor: pointer; font-family: var(--xi-title); color: #3a1a00; background: linear-gradient(180deg, #FFF1B0 0%, #FFCB48 38%, #F09A18 60%, #FFC94A 100%); border-radius: 18px; box-shadow: 0 0 0 3px #7a4a06, 0 0 0 6px #FFE9A6, 0 10px 0 #7a4a06, 0 16px 28px rgba(0,0,0,.55), 0 0 36px rgba(255,190,70,.55); text-shadow: 0 2px 0 rgba(255,255,255,.55); }
+.xi-go b { font-size: 40px; letter-spacing: 6px; font-weight: 400; } .xi-go small { font-family: var(--xi-body); font-weight: 900; font-size: 15px; letter-spacing: 0; opacity: .85; }
+.xi-btn { border: 2px solid var(--xi-gold3); background: linear-gradient(180deg, #2E2478, #181350); color: var(--xi-gold2); font: 900 15px/1 var(--xi-body); padding: 10px 14px; border-radius: 10px; box-shadow: 0 3px 0 #0a0630, 0 0 0 1px rgba(255,201,74,.3) inset; }
+.xi-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px 5px 6px; border-radius: 16px; background: linear-gradient(180deg, rgba(10,8,40,.9), rgba(30,22,80,.85)); border: 2px solid var(--xi-gold3); font: 900 15px/1 var(--xi-body); color: #fff; box-shadow: 0 0 0 1px rgba(255,201,74,.3) inset; }
+.xi-chip i { width: 22px; height: 22px; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 2px rgba(255,255,255,.55) inset; }
+.xi-bar { height: 12px; border-radius: 8px; background: #0a0630; border: 2px solid var(--xi-gold3); overflow: hidden; } .xi-bar > i { display: block; height: 100%; background: linear-gradient(180deg, #FF8E9A, #E5334A); }
+/* 하단 탭 바 5개 */
+.xi-tabs { display: flex; background: linear-gradient(180deg, #17114a, #080520); border-top: 3px solid var(--xi-gold3); box-shadow: 0 -6px 14px rgba(0,0,0,.5), 0 -1px 0 var(--xi-gold) inset; }
+.xi-tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 0 10px; font: 900 12px/1 var(--xi-body); color: var(--xi-dim); position: relative; } .xi-tab svg { width: 28px; height: 28px; }
+.xi-tab.on { color: var(--xi-gold2); } .xi-tab.on::before { content: ''; position: absolute; left: 12%; right: 12%; top: -3px; height: 4px; background: var(--xi-gold); border-radius: 3px; box-shadow: 0 0 12px var(--xi-gold); } .xi-tab.on svg { filter: drop-shadow(0 0 6px rgba(255,201,74,.8)); }
+.xi-badge { position: absolute; top: 4px; right: 22%; min-width: 16px; height: 16px; border-radius: 8px; background: var(--xi-red); color: #fff; font: 900 11px/16px var(--xi-body); text-align: center; border: 2px solid #17114a; }
+</style>
+<style>
+/* D38 시안: play/(10앱 웹 시험판 모음)과 분리된 대형 게임 랜딩. 배포 주소 예: /expedition/ . 본 구현 때 이미지는 webp·글꼴은 woff2 부분집합으로 번들 */
+* { box-sizing: border-box; } html { scroll-behavior: smooth; } body { margin: 0; background: #060720; color: var(--xi-text); font-family: var(--xi-body); }
+a { color: inherit; text-decoration: none; }
+.nav { position: fixed; left: 0; right: 0; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px; padding: 10px 18px; background: linear-gradient(180deg, rgba(6,7,32,.9), rgba(6,7,32,0)); } .nav .xi-logo { font-size: 24px; margin-right: auto; } .nav a.l { font: 700 14px var(--xi-body); color: var(--xi-dim); } .nav .xi-btn { padding: 8px 14px; }
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; background: #0B1030; }
+.hero .bg { position: absolute; inset: 0; background: url(art/keyart_bg.png) 70% 20% / cover no-repeat; filter: saturate(1.05); } .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,7,32,.88) 0%, rgba(6,7,32,.55) 45%, rgba(6,7,32,.1) 100%), linear-gradient(180deg, rgba(6,7,32,0) 60%, #060720 100%); }
+.hero .in { position: relative; z-index: 2; padding: 90px 7vw 60px; max-width: 760px; } .tag { font: 900 15px/1 var(--xi-body); letter-spacing: 4px; color: var(--xi-gold2); margin-bottom: 14px; }
+.hero h1 { margin: 0 0 16px; font-size: clamp(64px, 12vw, 150px); } .hero p { font: 500 clamp(16px, 2.2vw, 22px)/1.6 var(--xi-body); color: #DCD6FF; margin: 0 0 26px; max-width: 520px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; } .xi-go.big { width: min(86vw, 340px); height: 92px; text-decoration: none; } .xi-go.big b { font-size: 36px; } .soon { padding: 14px 18px; border: 2px dashed var(--xi-gold3); border-radius: 14px; color: var(--xi-dim); font: 700 14px var(--xi-body); }
+.meta { margin-top: 18px; font: 500 13px/1.5 var(--xi-body); color: var(--xi-dim); }
+section { padding: 70px 6vw; max-width: 1180px; margin: 0 auto; } section h2 { font: 400 clamp(30px, 5vw, 46px)/1.15 var(--xi-title); color: var(--xi-gold2); text-shadow: 0 3px 0 #3a1a6e; margin: 0 0 10px; } section .sub { color: var(--xi-dim); margin: 0 0 30px; font: 500 16px/1.6 var(--xi-body); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; } .card { padding: 22px 20px 20px; } .card .n { font: 400 40px/1 var(--xi-title); color: var(--xi-gold); } .card h3 { margin: 6px 0 8px; font: 900 20px/1.3 var(--xi-body); color: #fff; } .card p { margin: 0; color: #CFC9F5; font: 500 15px/1.6 var(--xi-body); }
+.shots { display: flex; gap: 18px; overflow-x: auto; padding: 6px 4px 20px; scroll-snap-type: x mandatory; } .shots img { height: 520px; border-radius: 18px; border: 3px solid var(--xi-gold3); box-shadow: 0 10px 30px rgba(0,0,0,.6); scroll-snap-align: center; flex: none; }
+.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; } .mc { padding: 8px 8px 12px; text-align: center; transition: transform .15s; } .mc:hover { transform: translateY(-4px); } .mc svg { width: 100%; height: auto; display: block; } .mc b { display: block; font: 900 15px/1.3 var(--xi-body); color: #fff; } .mc small { color: var(--xi-dim); font: 500 12px/1.4 var(--xi-body); display: block; }
+.band { text-align: center; padding: 60px 6vw 80px; background: radial-gradient(80% 90% at 50% 0, #3A1A6E, #060720); } .band h2 { margin-bottom: 18px; }
+footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 13px/1.8 var(--xi-body); border-top: 1px solid #1a1550; } footer a { color: var(--xi-dim); margin: 0 8px; }
+@media (max-width: 640px) { .hero::after { background: linear-gradient(180deg, rgba(6,7,32,.35) 0%, rgba(6,7,32,.9) 70%, #060720 100%); } .hero { align-items: flex-end; } .hero .in { padding-bottom: 36px; } .shots img { height: 440px; } .nav a.l { display: none; } }
+</style></head><body class="xi">
+<div class="nav"><div class="xi-logo">기하학 원정대</div><a class="l" href="#feat">특징</a><a class="l" href="#shots">화면</a><a class="l" href="#mon">몬스터</a><a class="xi-btn" href="play.html">플레이</a></div>
+<header class="hero"><div class="bg"></div><div class="in"><div class="tag">세 가족의 퍼즐 RPG</div><h1 class="xi-logo">기하학<br>원정대</h1>
+<p>흐트러진 도형의 세계. 구슬을 끌어 큰 콤보를 터뜨리면 몬스터가 산산조각 나고, 정돈된 모습으로 동료가 되어 돌아와요.</p>
+<div class="cta"><a class="xi-go big" href="play.html"><b>웹에서 바로 플레이</b><small>설치 없이 · 브라우저에서 1분 안에 첫 전투</small></a><span class="soon">Google Play · 준비 중</span></div>
+<div class="meta">만 15세 이상 · 랜덤 아이템 포함(확률·천장 공개) · 웹 체험판은 1~3나라(36단계)까지</div></div></header>
+<section id="feat"><h2>이런 게임이에요</h2><p class="sub">실력이 곧 힘 — 잘 끌수록 몬스터가 와장창 부서져요.</p><div class="cards">
+<div class="xi-panel card"><div class="n">01</div><h3>끌어서 부순다</h3><p>구슬을 꾹 눌러 끌어 이으면 터진 묶음마다 동료가 한 발씩 연타. 콤보가 이어질수록 피해가 ×(1+0.5×콤보)로 커져요.</p></div>
+<div class="xi-panel card"><div class="n">02</div><h3>모아서 동료로</h3><p>몬스터를 부수면 조각이 모이고, 다 모이면 정돈된 모습으로 확정 합류. 랜덤이 아니라 내 실력으로 모아요.</p></div>
+<div class="xi-panel card"><div class="n">03</div><h3>세 가족의 원정</h3><p>네모·세모·동그라미 가족이 옛이야기 나라 24곳을 지나요. 나라 대장은 정다면체·원기둥·뫼비우스 같은 입체 몬스터!</p></div></div></section>
+<section id="shots"><h2>플레이 화면</h2><p class="sub">진한 단색 구슬, 큼직한 피해 숫자, 한눈에 보이는 무대.</p><div class="shots"><img src="art/lobby.png" alt="로비 화면"><img src="art/hud.png" alt="전투 화면"><img src="art/feature.png" style="height:260px;align-self:center" alt="키 아트"></div></section>
+<section id="mon"><h2>기하학 몬스터</h2><p class="sub">모양이 흐트러진 도형들. 부수면 정돈되어 동료가 돼요. (마우스를 올려 보세요)</p><div class="gal" id="gal"></div></section>
+<div class="band"><h2 class="xi-logo" style="font-size:52px;-webkit-text-stroke:0">지금 출정!</h2><a class="xi-go big" style="margin:auto" href="play.html"><b>웹에서 바로 플레이</b><small>무료 · 설치 없음</small></a></div>
+<footer>© 기하학 가족 · 허구의 캐릭터와 이야기입니다. 이 게임은 만 15세 이상이 즐길 수 있으며 랜덤 아이템(동료 모집)을 포함합니다.<br><a href="../play/">다른 게임들</a><a href="#">확률 정보</a><a href="#">개인정보 처리방침</a><a href="#">문의</a></footer>
+<script>/* 기하학 몬스터 시안 (games/41 §2, D35·D36) — 「모양이 흐트러진 도형들」을 SVG 코드로 그린다.
+   그림체: 외곽선 #6b5443·플랫·귀여운 눈입(우리 캐릭터와 같은 문법). 표정 3단 = 0 화남 → 1 부서짐(어질어질) → 2 정돈(웃음).
+   속성 3각: 번쩍=삼각 계열(빨강) · 받치기=사각 계열(주황) · 돌보기=원 계열(파랑). 등급: 점 → 선 → 면 → 입체(보스) · 특별(프랙탈).
+   쓰는 법: GeoMon.svg('cube', 0, { size: 220 })  /  GeoMon.list(메타)  /  GeoMon.cubeFace(face) = 입체 보스 한 면만(떨어지는 조각).
+   시안 단계 코드라 서버·전투·밸런스와 연결되지 않는다(작가 OK 뒤 본 구현). */
+(function (root, factory) { const api = factory(); if (typeof module === 'object' && module.exports) module.exports = api; else root.GeoMon = api; })(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+  const OL = '#6b5443', COL = { flash: '#E5334A', support: '#F08A3C', care: '#3B6FD6', boss: '#3FA796', special: '#E7B73E' };
+  const shade = (hex, a) => { const n = parseInt(hex.slice(1), 16), f = (v) => Math.max(0, Math.min(255, Math.round(a >= 0 ? v + (255 - v) * a : v * (1 + a)))); return '#' + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => f(v).toString(16).padStart(2, '0')).join(''); };
+  const P = (pts) => pts.map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const poly = (pts, fill, sw, extra) => `<polygon points="${P(pts)}" fill="${fill}" stroke="${OL}" stroke-width="${sw || 4}" stroke-linejoin="round" ${extra || ''}/>`;
+  /* 난수(같은 모양이 항상 같게) */
+  const rng = (seed) => { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
+
+  /** 얼굴 3단: st 0 화남 · 1 부서짐 · 2 정돈(웃음). (cx,cy) 가운데, k 크기. */
+  function face(st, cx, cy, k, o) {
+    o = o || {}; const tf = o.tf ? o.tf : `translate(${cx} ${cy}) scale(${k})`;
+    let g = '';
+    if (st === 0) g = `<circle cx="-15" cy="-3" r="10" fill="#fff" stroke="${OL}" stroke-width="3"/><circle cx="15" cy="-3" r="10" fill="#fff" stroke="${OL}" stroke-width="3"/><circle cx="-12" cy="-1" r="5.2" fill="${OL}"/><circle cx="12" cy="-1" r="5.2" fill="${OL}"/><circle cx="-10.5" cy="-3" r="1.8" fill="#fff"/><circle cx="13.5" cy="-3" r="1.8" fill="#fff"/>
+      <path d="M-27 -17 L-6 -9" stroke="${OL}" stroke-width="5.5" stroke-linecap="round"/><path d="M27 -17 L6 -9" stroke="${OL}" stroke-width="5.5" stroke-linecap="round"/>
+      <path d="M-17 15 L-9 9 L-1 15 L7 9 L17 15 L13 26 L-13 26 Z" fill="#7a3b3b" stroke="${OL}" stroke-width="3.2" stroke-linejoin="round"/><path d="M-9 9 L-5 15 L-1 15 M7 9 L5 15 L1 15" stroke="#fff" stroke-width="2.4" fill="none"/>`;
+    else if (st === 1) g = `<path d="M-23 -11 L-9 3 M-9 -11 L-23 3" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/><path d="M9 -11 L23 3 M23 -11 L9 3" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="M-14 20 q4 -7 9 0 t9 0 t9 0" stroke="${OL}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M26 -20 q6 8 0 12 q-6 -4 0 -12 Z" fill="#9AD8F2" stroke="${OL}" stroke-width="2.4"/>`;
+    else g = `<path d="M-23 -1 q8 -13 16 0" stroke="${OL}" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M7 -1 q8 -13 16 0" stroke="${OL}" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M-13 11 q13 16 26 0 Z" fill="#E06A7A" stroke="${OL}" stroke-width="3.4" stroke-linejoin="round"/><ellipse cx="-27" cy="9" rx="7" ry="4.6" fill="#FF9DB0" opacity=".85"/><ellipse cx="27" cy="9" rx="7" ry="4.6" fill="#FF9DB0" opacity=".85"/>`;
+    return `<g transform="${tf}">${g}</g>`;
+  }
+  const wrap = (inner, o) => { o = o || {}; const s = o.size || 200; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="${s}" height="${s}" class="geomon ${o.cls || ''}"${o.tone ? ` style="filter:hue-rotate(${o.tone * 18}deg) saturate(1.05)"` : ''} role="img" aria-label="${o.label || '기하학 몬스터'}">${inner}</svg>`; };
+  const shadow = (cx, cy, rx) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${(rx * 0.16).toFixed(1)}" fill="rgba(80,60,40,.18)"/>`;
+
+  /* ───────── 1. 점 — 「동글점」(돌보기·원) ───────── */
+  function dot(st) {
+    const c = COL.care, R = 60, tidy = st === 2, rn = rng(11); let g = shadow(100, 176, 62);
+    const orb = [[-1, 1.15, 12], [0.9, -1.3, 10], [1.4, 0.55, 8]];          // 흐트러진 작은 점들(정돈되면 가지런히 한 줄)
+    orb.forEach(([a, b, r], i) => { const x = tidy ? 52 + i * 48 : 100 + a * 84 + (rn() - .5) * 6, y = tidy ? 182 : 100 + b * 60; g += `<circle cx="${x.toFixed(1)}" cy="${tidy ? 170 : y.toFixed(1)}" r="${r}" fill="${shade(c, .35)}" stroke="${OL}" stroke-width="3.5"/>`; });
+    const sq = st === 0 ? '' : '';
+    g += `<circle cx="100" cy="100" r="${R}" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="78" cy="68" rx="20" ry="11" fill="#fff" opacity=".28" transform="rotate(-28 78 68)"/>`;
+    if (st === 0) g += `<path d="M62 48 l-8 -14 M100 40 l0 -16 M138 48 l8 -14" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>${sq}`;
+    return g + face(st, 100, 103, 1.15);
+  }
+
+  /* ───────── 2. 선 — 「뾰족선」(번쩍·삼각 계열): 가운데 큰 삼각형에 큰 얼굴 ───────── */
+  function line(st) {
+    const c = COL.flash, rn = rng(23), tidy = st === 2; let g = shadow(100, 168, 82);
+    const spec = [[22, 44, 70, 0], [58, 44, 70, 1], [142, 44, 70, 1], [178, 44, 70, 0]], y0 = 150;      // [중심 x, 너비, 높이, 뒤집힘] — 가운데 큰 삼각형은 따로 그린다
+    spec.forEach(([cx0, w, hgt, flip], i) => {
+      const cx = cx0 + (tidy ? 0 : (rn() - .5) * 8), tilt = tidy ? 0 : (rn() - .5) * 14, pts = flip ? [[cx - w / 2, y0 - hgt], [cx + w / 2, y0 - hgt], [cx, y0]] : [[cx - w / 2, y0], [cx + w / 2, y0], [cx, y0 - hgt]];
+      g += `<g transform="rotate(${tilt.toFixed(1)} ${cx} ${y0 - hgt / 2})">${poly(pts, shade(c, i % 2 ? .3 : .1), 4)}</g>`;
+    });
+    g += poly([[100 - 40, y0], [100 + 40, y0], [100, y0 - 122]], c, 4.5) + `<path d="M100 44 l14 36" stroke="#fff" stroke-width="5" opacity=".35" stroke-linecap="round"/>`;
+    return g + face(st, 100, 116, 1.3);
+  }
+
+  /* ───────── 3. 면 — 「겹겹이」(받치기·사각 계열): 사각이 계단처럼 겹침 ───────── */
+  function plane(st) {
+    const c = COL.support, tidy = st === 2, rn = rng(37); let g = shadow(100, 174, 78);
+    const L = [[26, 118, 118, 40], [38, 96, 124, 40], [48, 72, 120, 44]];
+    L.forEach(([x, y, w, h], i) => { const dx = tidy ? 0 : (rn() - .5) * 18, rot = tidy ? 0 : (rn() - .5) * 9; g += `<g transform="translate(${dx.toFixed(1)} 0) rotate(${rot.toFixed(1)} ${x + w / 2} ${y + h / 2})"><rect x="${x + (tidy ? (i * 6) : 0)}" y="${tidy ? 126 - i * 24 : y}" width="${w}" height="${tidy ? 30 : h}" rx="10" fill="${shade(c, i === 2 ? 0 : .18 - i * .1)}" stroke="${OL}" stroke-width="4.5" stroke-linejoin="round"/></g>`; });
+    g += `<rect x="46" y="${tidy ? 56 : 52}" width="108" height="${tidy ? 74 : 80}" rx="12" fill="${c}" stroke="${OL}" stroke-width="4.5"/><rect x="56" y="${tidy ? 62 : 58}" width="40" height="9" rx="4.5" fill="#fff" opacity=".28"/>`;
+    if (st === 0) g += `<path d="M46 52 l-9 -9 M154 52 l9 -9" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>`;
+    return g + face(st, 100, tidy ? 94 : 92, 1.15);
+  }
+
+  /* ───────── 4. 입체 보스 — 「정육면체 대장」: 면이 한 장씩 떨어진다(top·left·right) ───────── */
+  const CUBE = { T: [[100, 28], [160, 63], [100, 98], [40, 63]], Lf: [[40, 63], [100, 98], [100, 168], [40, 133]], Rt: [[100, 98], [160, 63], [160, 133], [100, 168]] };
+  function cubeFaceSvg(fc, st, tidy) {
+    const c = COL.boss, col = { T: shade(c, .32), Lf: c, Rt: shade(c, -.2) }[fc];
+    let g = poly(CUBE[fc], col, 4.5);
+    if (fc === 'T') g += `<polygon points="${P([[100, 40], [140, 63], [100, 86], [60, 63]])}" fill="none" stroke="#fff" stroke-width="2.4" opacity=".4" stroke-linejoin="round"/>`;
+    if (fc === 'Lf') g += face(st, 0, 0, 0.98, { tf: 'matrix(1 0.5833 0 1 70 100)' });
+    if (fc === 'Rt' && st === 0) g += `<path d="M110 120 l16 -9 M128 150 l16 -9" stroke="${OL}" stroke-width="3.2" opacity=".45" stroke-linecap="round"/>`;
+    return g;
+  }
+  function cube(st, o) {
+    o = o || {}; const hide = o.hide || [], tidy = st === 2; let g = shadow(100, 178, 66);
+    ['Rt', 'Lf', 'T'].forEach((fc) => { if (!hide.includes(fc)) g += cubeFaceSvg(fc, st, tidy); });
+    if (!hide.includes('T') && st === 0) g += `<path d="M82 52 l-4 -17 M100 44 l0 -20 M118 52 l4 -17" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>`;
+    if (tidy && o.companion && !hide.includes('T')) g += `<g transform="translate(100 38)"><path d="M0 0 l-20 -12 l2 24 Z M0 0 l20 -12 l-2 24 Z" fill="#FF8FA8" stroke="${OL}" stroke-width="3.4" stroke-linejoin="round"/><circle cx="0" cy="0" r="5.5" fill="#FFC933" stroke="${OL}" stroke-width="3"/></g>`;
+    if (tidy && o.companion) g += `<ellipse cx="72" cy="176" rx="14" ry="7" fill="${COL.boss}" stroke="${OL}" stroke-width="3.5"/><ellipse cx="128" cy="176" rx="14" ry="7" fill="${COL.boss}" stroke="${OL}" stroke-width="3.5"/>`;
+    return g;
+  }
+
+  /* ───────── 5. 특별 — 「겹겹삼각」(프랙탈, 시에르핀스키): 맞을수록 작은 삼각으로 쪼개짐, 정돈되면 구멍이 메워진다 ───────── */
+  function fractal(st) {
+    const c = COL.special, A = [100, 22], B = [16, 166], C = [184, 166], tidy = st === 2; let g = shadow(100, 176, 80);
+    const tris = []; const rec = (a, b, cc, d) => { if (d === 0) { tris.push([a, b, cc]); return; } const ab = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], bc = [(b[0] + cc[0]) / 2, (b[1] + cc[1]) / 2], ca = [(cc[0] + a[0]) / 2, (cc[1] + a[1]) / 2]; rec(a, ab, ca, d - 1); rec(ab, b, bc, d - 1); rec(ca, bc, cc, d - 1); };
+    if (tidy) g += poly([A, B, C], c, 4.5) + `<polygon points="${P([[100, 44], [60, 120], [140, 120]])}" fill="#fff" opacity=".2"/>`;
+    else {
+      const hole = [[(A[0] + B[0]) / 2, (A[1] + B[1]) / 2], [(B[0] + C[0]) / 2, (B[1] + C[1]) / 2], [(C[0] + A[0]) / 2, (C[1] + A[1]) / 2]];
+      g += poly(hole, '#FFF3D6', 3.5, 'opacity=".95"'); rec(A, B, C, 2);
+      tris.forEach((t, i) => { const cy = (t[0][1] + t[1][1] + t[2][1]) / 3; g += poly(t, shade(c, -0.05 + (cy - 22) / 700 + ((i % 3) - 1) * .06), 3.2); });
+    }
+    return g + face(st, 100, tidy ? 118 : 118, tidy ? 1.0 : 0.86);
+  }
+
+
+  /* ───────── 변형(점·선·면 계열로 종류 늘리기): 같은 몸 문법에 늘리기·겹치기·쪼개기·반복을 더한다 ───────── */
+  function twin(st) {      // 점 계열: 쌍둥이점 — 점 둘이 겹침
+    const c = COL.care, tidy = st === 2; let g = shadow(100, 174, 70);
+    g += `<circle cx="${tidy ? 124 : 128}" cy="${tidy ? 112 : 96}" r="42" fill="${shade(c, .3)}" stroke="${OL}" stroke-width="4.5"/>`;
+    g += `<circle cx="${tidy ? 78 : 76}" cy="110" r="54" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="58" cy="82" rx="16" ry="9" fill="#fff" opacity=".28" transform="rotate(-28 58 82)"/>`;
+    return g + face(st, 76, 112, 1.05);
+  }
+  function ring(st) {      // 점 계열: 굴렁이 — 바퀴. 가운데 구멍에 얼굴
+    const c = COL.care, tidy = st === 2; let g = shadow(100, 176, 66);
+    g += `<circle cx="100" cy="102" r="64" fill="${c}" stroke="${OL}" stroke-width="4.5"/><circle cx="100" cy="102" r="36" fill="#FFF3D6" stroke="${OL}" stroke-width="4"/>`;
+    for (let i = 0; i < 8; i++) { const a = i / 8 * 6.283 + (tidy ? 0 : .3 * (i % 2)); g += `<line x1="${(100 + Math.cos(a) * 44).toFixed(1)}" y1="${(102 + Math.sin(a) * 44).toFixed(1)}" x2="${(100 + Math.cos(a) * 62).toFixed(1)}" y2="${(102 + Math.sin(a) * 62).toFixed(1)}" stroke="${OL}" stroke-width="3.2" opacity=".5"/>`; }
+    return g + face(st, 100, 104, 0.78);
+  }
+  function thorn(st) {     // 선 계열: 가시선 — 키 큰 가시 셋
+    const c = COL.flash, tidy = st === 2, rn = rng(5); let g = shadow(100, 170, 78);
+    [[44, 78, 100], [156, 78, 100], [100, 100, 138]].forEach(([cx, w, h], i) => { const tilt = tidy ? 0 : (i === 2 ? 0 : (i ? 7 : -7)) + (rn() - .5) * 4; g += `<g transform="rotate(${tilt} ${cx} 150)">${poly([[cx - w / 2, 150], [cx + w / 2, 150], [cx, 150 - h]], i === 2 ? c : shade(c, .25), 4.5)}</g>`; });
+    return g + face(st, 100, 126, 1.12);
+  }
+  function bar(st) {       // 선 계열: 막대선 — 길게 늘인 삼각 막대
+    const c = COL.flash, tidy = st === 2; let g = shadow(100, 170, 80);
+    g += `<g transform="rotate(${tidy ? 0 : -9} 100 120)">${poly([[14, 120], [186, 96], [186, 144], [14, 144]], c, 4.5)}${poly([[14, 96], [34, 120], [14, 144]], shade(c, .3), 4.5)}<rect x="40" y="102" width="70" height="8" rx="4" fill="#fff" opacity=".3"/></g>`;
+    return g + face(st, 108, tidy ? 120 : 114, 1.05);
+  }
+  function wide(st) {      // 면 계열: 넓적이 — 넓고 납작한 사각에 짧은 발
+    const c = COL.support, tidy = st === 2; let g = shadow(100, 174, 82);
+    g += `<rect x="38" y="140" width="26" height="26" rx="8" fill="${shade(c, -.15)}" stroke="${OL}" stroke-width="4"/><rect x="136" y="140" width="26" height="26" rx="8" fill="${shade(c, -.15)}" stroke="${OL}" stroke-width="4"/>`;
+    g += `<g transform="rotate(${tidy ? 0 : -3} 100 100)"><rect x="12" y="62" width="176" height="88" rx="16" fill="${c}" stroke="${OL}" stroke-width="4.5"/><rect x="24" y="70" width="64" height="9" rx="4.5" fill="#fff" opacity=".3"/></g>`;
+    return g + face(st, 100, 108, 1.2);
+  }
+  function stair(st) {     // 면 계열: 계단이 — 사각 셋이 계단처럼
+    const c = COL.support; let g = shadow(100, 174, 80);
+    [[20, 50], [62, 58], [104, 72]].forEach(([x, s2], i) => { g += `<rect x="${x}" y="${176 - s2}" width="${s2 + (i === 2 ? 14 : 0)}" height="${s2}" rx="${i === 2 ? 14 : 10}" fill="${i === 2 ? c : shade(c, .22 - i * .1)}" stroke="${OL}" stroke-width="4.5"/>`; });
+    return g + face(st, 146, 126, 1.0);
+  }
+  /* 입체 보스: 정사면체·정팔면체(정육면체는 위). 면이 한 장씩 떨어진다(hide 로 면 id 지정) */
+  const TET = { Bk: [[100, 28], [36, 140], [166, 132]], L: [[100, 28], [36, 140], [92, 172]], R: [[100, 28], [166, 132], [92, 172]] };
+  function tetraFace(fc) { const c = COL.boss; return poly(TET[fc], fc === 'Bk' ? shade(c, -.35) : fc === 'L' ? shade(c, .12) : shade(c, -.12), 4.5); }
+  function tetra(st, o) {
+    o = o || {}; const hide = o.hide || []; let g = shadow(100, 180, 64);
+    g += tetraFace('Bk'); if (!hide.includes('R')) g += tetraFace('R'); if (!hide.includes('L')) g += tetraFace('L');
+    if (!hide.includes('L')) g += face(st, 78, 118, 0.9, { tf: 'translate(78 124) scale(0.92) rotate(-4)' });
+    if (st === 0 && !hide.includes('L')) g += `<path d="M100 20 l0 -14 M90 24 l-8 -10 M110 24 l8 -10" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>`;
+    if (st === 2 && o.companion) g += `<ellipse cx="62" cy="176" rx="13" ry="7" fill="${COL.boss}" stroke="${OL}" stroke-width="3.5"/><ellipse cx="124" cy="174" rx="13" ry="7" fill="${COL.boss}" stroke="${OL}" stroke-width="3.5"/>`;
+    return g;
+  }
+  const OCT = { UL: [[100, 22], [34, 100], [100, 128]], UR: [[100, 22], [166, 100], [100, 128]], LL: [[100, 178], [34, 100], [100, 128]], LR: [[100, 178], [166, 100], [100, 128]] };
+  function octaFace(fc) { const c = COL.boss; return poly(OCT[fc], { UL: shade(c, .25), UR: shade(c, .05), LL: shade(c, -.1), LR: shade(c, -.28) }[fc], 4.5); }
+  function octa(st, o) {
+    o = o || {}; const hide = o.hide || []; let g = shadow(100, 184, 62);
+    ['LL', 'LR', 'UL', 'UR'].forEach((fc) => { if (!hide.includes(fc)) g += octaFace(fc); });
+    if (!hide.includes('UL') || !hide.includes('UR')) g += face(st, 100, 106, 0.86);
+    if (st === 0 && !hide.includes('UL')) g += `<path d="M100 14 l0 -12 M84 26 l-8 -9 M116 26 l8 -9" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>`;
+    return g;
+  }
+
+
+  /* ───────── 4~9나라용 변형 9종 + 입체 보스 6종 (D35 ④) ───────── */
+  function trio(st) {      // 점 계열: 삼형제점 — 큰 점 하나에 작은 점 둘이 붙음
+    const c = COL.care, tidy = st === 2; let g = shadow(100, 176, 72);
+    g += `<circle cx="${tidy ? 146 : 142}" cy="${tidy ? 132 : 92}" r="30" fill="${shade(c, .3)}" stroke="${OL}" stroke-width="4.5"/><circle cx="${tidy ? 150 : 150}" cy="${tidy ? 160 : 142}" r="22" fill="${shade(c, .45)}" stroke="${OL}" stroke-width="4"/>`;
+    g += `<circle cx="80" cy="112" r="52" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="60" cy="86" rx="15" ry="8" fill="#fff" opacity=".28" transform="rotate(-28 60 86)"/>`;
+    return g + face(st, 80, 114, 1.02);
+  }
+  function halo(st) {      // 점 계열: 달무리 — 점 둘레에 둥근 테
+    const c = COL.care, tidy = st === 2; let g = shadow(100, 178, 66);
+    g += `<circle cx="100" cy="104" r="76" fill="none" stroke="${shade(c, .35)}" stroke-width="9" ${tidy ? '' : 'stroke-dasharray="26 12"'} stroke-linecap="round"/><circle cx="100" cy="104" r="76" fill="none" stroke="${OL}" stroke-width="2.4" opacity=".4"/>`;
+    g += `<circle cx="100" cy="104" r="52" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="82" cy="80" rx="15" ry="8" fill="#fff" opacity=".3" transform="rotate(-28 82 80)"/>`;
+    return g + face(st, 100, 106, 1.0);
+  }
+  function drop(st) {      // 점 계열: 물방울이 — 뾰족하게 늘어난 점
+    const c = COL.care; let g = shadow(100, 178, 60);
+    g += `<path d="M100 18 C100 18 36 96 36 126 A64 64 0 0 0 164 126 C164 96 100 18 100 18 Z" fill="${c}" stroke="${OL}" stroke-width="4.5" stroke-linejoin="round"/><ellipse cx="74" cy="118" rx="10" ry="20" fill="#fff" opacity=".3" transform="rotate(18 74 118)"/>`;
+    return g + face(st, 100, 130, 1.02);
+  }
+  function zig(st) {       // 선 계열: 번개선 — 번개 모양으로 꺾인 선
+    const c = COL.flash, tidy = st === 2; let g = shadow(100, 182, 62);
+    const pts = tidy ? [[84, 20], [140, 20], [140, 100], [140, 184], [84, 184], [84, 100]] : [[112, 16], [48, 104], [92, 104], [70, 184], [162, 82], [116, 82], [142, 16]];
+    g += poly(pts, c, 4.5) + (tidy ? '' : `<path d="M112 28 l-30 44" stroke="#fff" stroke-width="5" opacity=".35" stroke-linecap="round"/>`);
+    return g + face(st, tidy ? 112 : 104, tidy ? 102 : 96, 0.92);
+  }
+  function arrow(st) {     // 선 계열: 화살선 — 화살 모양
+    const c = COL.flash, tidy = st === 2; let g = shadow(100, 170, 80);
+    g += `<g transform="rotate(${tidy ? 0 : -8} 100 110)">${poly([[22, 88], [128, 88], [128, 132], [22, 132]], shade(c, .15), 4.5)}${poly([[124, 56], [188, 110], [124, 164]], c, 4.5)}${poly([[22, 88], [10, 70], [38, 88]], shade(c, .35), 3.5)}${poly([[22, 132], [10, 150], [38, 132]], shade(c, .35), 3.5)}</g>`;
+    return g + face(st, 80, 110, 0.92);
+  }
+  function saw(st) {       // 선 계열: 톱니선 — 막대 위에 삼각 톱니가 줄지음
+    const c = COL.flash, tidy = st === 2; let g = shadow(100, 172, 84);
+    for (let i = 0; i < 5; i++) { const x = 28 + i * 36; g += poly([[x - 17, 112], [x + 17, 112], [x, tidy ? 66 : 62 - (i % 2) * 14]], shade(c, i % 2 ? .3 : .08), 4); }
+    g += `<rect x="12" y="108" width="176" height="52" rx="12" fill="${c}" stroke="${OL}" stroke-width="4.5"/>`;
+    return g + face(st, 100, 132, 0.8);
+  }
+  function tower(st) {     // 면 계열: 쌓기탑 — 사각을 높이 쌓음
+    const c = COL.support, tidy = st === 2, rn = rng(41); let g = shadow(100, 178, 64);
+    [[60, 128, 80, 48], [68, 82, 64, 48], [78, 36, 44, 48]].forEach(([x, y, w, h], i) => { const dx = tidy ? 0 : (rn() - .5) * 10; g += `<rect x="${x + dx}" y="${y}" width="${w}" height="${h}" rx="9" fill="${i === 1 ? c : shade(c, i ? .22 : -.05)}" stroke="${OL}" stroke-width="4.5"/>`; });
+    return g + face(st, 100, 106, 0.8);
+  }
+  function gate(st) {      // 면 계열: 문짝이 — 가운데가 뚫린 사각
+    const c = COL.support; let g = shadow(100, 178, 76);
+    g += `<rect x="30" y="34" width="140" height="140" rx="14" fill="${c}" stroke="${OL}" stroke-width="4.5"/><path d="M68 174 V122 A32 32 0 0 1 132 122 V174 Z" fill="#FFF3D6" stroke="${OL}" stroke-width="4"/><rect x="40" y="42" width="54" height="9" rx="4.5" fill="#fff" opacity=".3"/>`;
+    return g + face(st, 100, 80, 0.82);
+  }
+  function tile(st) {      // 면 계열: 타일이 — 사각 넷을 이어 붙임
+    const c = COL.support, tidy = st === 2, rn = rng(53); let g = shadow(100, 180, 78);
+    [[30, 32], [104, 32], [30, 106], [104, 106]].forEach(([x, y], i) => { const dx = tidy ? 0 : (rn() - .5) * 8, dy = tidy ? 0 : (rn() - .5) * 8; g += `<rect x="${x + dx}" y="${y + dy}" width="68" height="68" rx="10" fill="${shade(c, [.18, 0, -.1, .1][i])}" stroke="${OL}" stroke-width="4.5"/>`; });
+    return g + face(st, 100, 102, 0.95);
+  }
+  /* 입체 보스 6종 */
+  const P5 = (cx, cy, r, off) => Array.from({ length: 5 }, (_, i) => { const a = (-90 + 72 * i + (off || 0)) * Math.PI / 180; return [cx + Math.cos(a) * r, cy + Math.sin(a) * r]; });
+  function dodeca(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss, I = P5(100, 108, 36), Q = P5(100, 108, 84); let g = shadow(100, 186, 62);
+    for (let i = 0; i < 5; i++) { const j = (i + 1) % 5; if (!hide.includes('S' + i)) g += poly([I[i], I[j], Q[j], Q[i]], shade(c, [.25, .05, -.1, -.22, .12][i]), 4.5); }
+    if (!hide.includes('F')) g += poly(I, c, 4.5) + face(st, 100, 108, 0.7);
+    if (st === 0 && !hide.includes('F')) g += `<path d="M100 18 l0 -14 M70 30 l-10 -10 M130 30 l10 -10" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>`;
+    return g;
+  }
+  const IC = () => { const H = Array.from({ length: 6 }, (_, k) => { const a = (-90 + 60 * k) * Math.PI / 180; return [100 + Math.cos(a) * 82, 108 + Math.sin(a) * 82]; }), I = Array.from({ length: 3 }, (_, j) => { const a = (-90 + 120 * j) * Math.PI / 180; return [100 + Math.cos(a) * 36, 108 + Math.sin(a) * 36]; }); return { H, I }; };
+  function icosa(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss, { H, I } = IC(); let g = shadow(100, 192, 64); const t = (pts, id, k) => { if (!hide.includes(id)) g += poly(pts, shade(c, k), 4); };
+    for (let j = 0; j < 3; j++) { const j1 = (j + 1) % 3, h = (k) => H[((k % 6) + 6) % 6]; t([I[j], I[j1], h(2 * j + 1)], 'E' + j, [.22, .0, -.18][j]); t([I[j], h(2 * j - 1), h(2 * j)], 'L' + j, [.12, -.08, .3][j]); t([I[j], h(2 * j), h(2 * j + 1)], 'R' + j, [-.12, .18, -.24][j]); }
+    if (!hide.includes('C')) g += poly(I, c, 4.5) + face(st, 100, 112, 0.62);
+    if (st === 0) g += `<path d="M100 20 l0 -14" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>`;
+    return g;
+  }
+  function cylinder(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 184, 62);
+    if (!hide.includes('body')) g += `<path d="M48 74 V152 A52 20 0 0 0 152 152 V74 Z" fill="${c}" stroke="${OL}" stroke-width="4.5" stroke-linejoin="round"/><rect x="58" y="86" width="12" height="62" rx="6" fill="#fff" opacity=".22"/>`;
+    if (!hide.includes('top')) g += `<ellipse cx="100" cy="74" rx="52" ry="20" fill="${shade(c, .3)}" stroke="${OL}" stroke-width="4.5"/>`;
+    if (!hide.includes('body')) g += face(st, 100, 116, 0.98);
+    return g;
+  }
+  function cone(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 186, 66);
+    if (!hide.includes('base')) g += `<ellipse cx="100" cy="160" rx="64" ry="20" fill="${shade(c, -.3)}" stroke="${OL}" stroke-width="4.5"/>`;
+    if (!hide.includes('body')) g += `<path d="M100 22 L36 160 A64 20 0 0 0 164 160 Z" fill="${c}" stroke="${OL}" stroke-width="4.5" stroke-linejoin="round"/><path d="M100 36 L74 100" stroke="#fff" stroke-width="5" opacity=".3" stroke-linecap="round"/>` + face(st, 100, 122, 0.95);
+    return g;
+  }
+  function prism(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 64);
+    if (!hide.includes('front')) g += poly([[36, 70], [164, 70], [164, 160], [36, 160]], c, 4.5) + face(st, 100, 118, 1.02);
+    if (!hide.includes('top')) g += poly([[100, 14], [164, 70], [36, 70]], shade(c, .3), 4.5);
+    if (!hide.includes('side')) g += poly([[164, 70], [184, 90], [184, 150], [164, 160]], shade(c, -.25), 4.5);
+    return g;
+  }
+  function sphere(st) {
+    const c = COL.boss, tidy = st === 2; let g = shadow(100, 182, 66);
+    g += `<circle cx="100" cy="106" r="72" fill="${c}" stroke="${OL}" stroke-width="4.5"/><path d="M34 90 Q100 62 166 90 M30 124 Q100 152 170 124" stroke="${OL}" stroke-width="3" fill="none" opacity=".35"/><ellipse cx="72" cy="66" rx="20" ry="10" fill="#fff" opacity=".3" transform="rotate(-30 72 66)"/>`;
+    if (st === 0) g += `<path d="M62 40 l-8 -14 M100 34 l0 -16 M138 40 l8 -14" stroke="${OL}" stroke-width="4.5" stroke-linecap="round"/>`;
+    return g + face(st, 100, 108, 1.15) + (tidy ? '' : '');
+  }
+
+
+  /* ───────── 10~24나라용 특별종 5 + 이벤트 한정 3 + 입체 6 (D35 ⑤) ───────── */
+  function moebius(st) {   // 점 계열 특별종: 뫼비우스 띠 — 한 번 꼬인 고리, 안과 밖이 하나
+    const c = COL.care, tidy = st === 2; let g = shadow(100, 176, 76);
+    g += `<ellipse cx="100" cy="104" rx="66" ry="44" fill="none" stroke="${OL}" stroke-width="28" stroke-linecap="round"/><ellipse cx="100" cy="104" rx="66" ry="44" fill="none" stroke="${c}" stroke-width="20"/>`;
+    if (!tidy) g += poly([[150, 70], [182, 86], [172, 134], [140, 118]], shade(c, .4), 4) + `<path d="M150 70 L172 134 M182 86 L140 118" stroke="${OL}" stroke-width="3" opacity=".55"/>`;
+    g += `<circle cx="100" cy="104" r="31" fill="#FFF3D6" stroke="${OL}" stroke-width="3.5"/>`;
+    return g + face(st, 100, 106, 0.62);
+  }
+  function spiral(st) {    // 점 계열 특별종: 나선 — 돌돌 말린 소용돌이
+    const c = COL.care, tidy = st === 2; let g = shadow(100, 178, 66), d = ''; for (let i = 0; i <= 90; i++) { const a = i * 0.21 + (tidy ? 0 : Math.sin(i) * .04), r = 10 + i * 0.62; d += (i ? 'L' : 'M') + (100 + Math.cos(a) * r).toFixed(1) + ' ' + (106 + Math.sin(a) * r).toFixed(1); }
+    g += `<path d="${d}" fill="none" stroke="${OL}" stroke-width="23" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${c}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>`;
+    g += `<circle cx="100" cy="106" r="27" fill="${shade(c, .25)}" stroke="${OL}" stroke-width="4"/>`;
+    return g + face(st, 100, 108, 0.62);
+  }
+  function star(st) {      // 선 계열 특별종: 별다각형 — 오각 별
+    const c = COL.flash, tidy = st === 2; let g = shadow(100, 182, 70), pts = [];
+    for (let i = 0; i < 10; i++) { const a = (-90 + i * 36) * Math.PI / 180, r = i % 2 ? 36 : 82; pts.push([100 + Math.cos(a) * r, 106 + Math.sin(a) * r * (tidy ? 1 : 1)]); }
+    g += poly(pts, c, 4.5) + `<polygon points="${P(pts.filter((_, i) => i % 2 === 0).map(([x, y]) => [100 + (x - 100) * 0.5, 106 + (y - 106) * 0.5]))}" fill="${shade(c, .28)}" opacity=".5"/>`;
+    return g + face(st, 100, 108, 0.98);
+  }
+  function cross(st) {     // 면 계열 특별종: 십자 — 사각 다섯 개가 십자로
+    const c = COL.support, tidy = st === 2, rn = rng(61); let g = shadow(100, 182, 68);
+    const a = 52, o = 100 - a / 2, e = 22; const arms = [[o, 106 - a / 2 - 58, a, 58], [o, 106 + a / 2, a, 58], [100 - a / 2 - 58, 106 - a / 2, 58, a], [100 + a / 2, 106 - a / 2, 58, a]];
+    arms.forEach(([x, y, w, h], i) => { const t = tidy ? 0 : (rn() - .5) * 6; g += `<g transform="rotate(${t.toFixed(1)} ${x + w / 2} ${y + h / 2})"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${shade(c, .18 - i * .05)}" stroke="${OL}" stroke-width="4.5"/></g>`; }); void e;
+    g += `<rect x="${o}" y="${106 - a / 2}" width="${a}" height="${a}" rx="10" fill="${c}" stroke="${OL}" stroke-width="4.5"/>`;
+    return g + face(st, 100, 108, 0.82);
+  }
+  function frame(st) {     // 면 계열 특별종: 액자 — 사각 안에 사각이 비어 있음
+    const c = COL.support, tidy = st === 2; let g = shadow(100, 182, 78);
+    g += `<g transform="rotate(${tidy ? 0 : -4} 100 106)"><rect x="24" y="34" width="152" height="144" rx="12" fill="${c}" stroke="${OL}" stroke-width="4.5"/><rect x="50" y="58" width="100" height="96" rx="8" fill="#FFF3D6" stroke="${OL}" stroke-width="4"/><rect x="32" y="42" width="60" height="8" rx="4" fill="#fff" opacity=".3"/></g>`;
+    return g + face(st, 100, 108, 0.9);
+  }
+  function pencil(st, o) {  // 이벤트(수능): 연필 각기둥 — 육각기둥 몸통에 깎은 끝
+    o = o || {}; const hide = o.hide || [], c = '#F2C84B'; let g = shadow(100, 186, 50);
+    if (!hide.includes('tip')) g += poly([[62, 148], [138, 148], [100, 186]], '#F5D7A8', 4.5) + poly([[88, 170], [112, 170], [100, 186]], '#5b4636', 3);
+    if (!hide.includes('body')) g += `<rect x="62" y="40" width="76" height="110" fill="${c}" stroke="${OL}" stroke-width="4.5"/><rect x="62" y="40" width="26" height="110" fill="${shade(c, .25)}" stroke="${OL}" stroke-width="3"/><rect x="112" y="40" width="26" height="110" fill="${shade(c, -.18)}" stroke="${OL}" stroke-width="3"/>` + face(st, 100, 96, 0.78);
+    if (!hide.includes('cap')) g += `<rect x="62" y="16" width="76" height="22" rx="4" fill="#C9CED6" stroke="${OL}" stroke-width="4"/><rect x="62" y="2" width="76" height="16" rx="8" fill="#FF8FA8" stroke="${OL}" stroke-width="4"/>`;
+    return g;
+  }
+  function napa(st, o) {    // 이벤트(김장): 배추 원뿔 — 겹겹 잎이 원뿔을 이룸
+    o = o || {}; const hide = o.hide || [], c = '#7BC47F'; let g = shadow(100, 186, 62);
+    if (!hide.includes('base')) g += `<ellipse cx="100" cy="164" rx="62" ry="18" fill="#F4EAC8" stroke="${OL}" stroke-width="4.5"/>`;
+    if (!hide.includes('leaf')) g += `<path d="M100 20 C 70 56 40 110 38 164 A62 18 0 0 0 162 164 C160 110 130 56 100 20 Z" fill="${c}" stroke="${OL}" stroke-width="4.5" stroke-linejoin="round"/><path d="M100 30 C 92 70 84 120 82 176 M100 30 C 108 70 116 120 118 176 M70 70 C 60 100 56 130 56 168 M130 70 C 140 100 144 130 144 168" stroke="${shade(c, .4)}" stroke-width="4" fill="none" opacity=".8"/>` + face(st, 100, 120, 0.82);
+    return g;
+  }
+  function tree(st, o) {    // 이벤트(연말): 트리 원뿔 — 삼각 세 단과 별
+    o = o || {}; const hide = o.hide || [], c = '#3FA06A'; let g = shadow(100, 188, 60);
+    g += `<rect x="88" y="160" width="24" height="24" fill="#8a6a55" stroke="${OL}" stroke-width="4"/>`;
+    if (!hide.includes('low')) g += poly([[100, 100], [34, 168], [166, 168]], shade(c, -.12), 4.5);
+    if (!hide.includes('mid')) g += poly([[100, 60], [48, 128], [152, 128]], c, 4.5) + face(st, 100, 106, 0.72);
+    if (!hide.includes('top')) g += poly([[100, 26], [64, 82], [136, 82]], shade(c, .15), 4.5) + `<polygon points="${P(Array.from({ length: 10 }, (_, i) => { const a = (-90 + i * 36) * Math.PI / 180, r = i % 2 ? 7 : 16; return [100 + Math.cos(a) * r, 14 + Math.sin(a) * r]; }))}" fill="#FFD94A" stroke="${OL}" stroke-width="3"/>`;
+    return g;
+  }
+  /* 입체 보스 6종 더: 사각뿔·육각기둥·도넛·직육면체·반구·타원체 */
+  const PY = { L: [[100, 22], [30, 146], [94, 180]], R: [[100, 22], [94, 180], [172, 136]] };
+  function pyramid(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 186, 64);
+    g += poly([[100, 22], [172, 136], [100, 60]], shade(c, -.4), 3);
+    if (!hide.includes('R')) g += poly(PY.R, shade(c, -.14), 4.5); if (!hide.includes('L')) g += poly(PY.L, shade(c, .1), 4.5) + face(st, 72, 122, 0.84, { tf: 'translate(70 124) scale(0.86) rotate(-6)' });
+    return g;
+  }
+  function hexprism(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 186, 60);
+    if (!hide.includes('Rt')) g += poly([[134, 56], [164, 72], [164, 150], [134, 166]], shade(c, -.25), 4.5);
+    if (!hide.includes('Lf')) g += poly([[36, 72], [66, 56], [66, 166], [36, 150]], shade(c, .05), 4.5);
+    if (!hide.includes('Ct')) g += poly([[66, 56], [134, 56], [134, 166], [66, 166]], c, 4.5) + face(st, 100, 112, 0.9);
+    if (!hide.includes('top')) g += poly([[36, 72], [66, 56], [134, 56], [164, 72], [134, 84], [66, 84]], shade(c, .32), 4.5);
+    return g;
+  }
+  function torus(st) {
+    const c = COL.boss; let g = shadow(100, 184, 70);
+    g += `<circle cx="100" cy="106" r="74" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="100" cy="86" rx="26" ry="19" fill="#FFF3D6" stroke="${OL}" stroke-width="4"/><path d="M40 90 Q100 40 160 90" stroke="#fff" stroke-width="5" fill="none" opacity=".25" stroke-linecap="round"/>`;
+    return g + face(st, 100, 142, 0.7);
+  }
+  function cuboid(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
+    if (!hide.includes('side')) g += poly([[134, 82], [176, 54], [176, 128], [134, 158]], shade(c, -.25), 4.5);
+    if (!hide.includes('front')) g += poly([[24, 82], [134, 82], [134, 158], [24, 158]], c, 4.5) + face(st, 79, 122, 0.98);
+    if (!hide.includes('top')) g += poly([[24, 82], [134, 82], [176, 54], [66, 54]], shade(c, .3), 4.5);
+    return g;
+  }
+  function hemi(st, o) {
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 176, 70);
+    if (!hide.includes('base')) g += `<ellipse cx="100" cy="148" rx="78" ry="20" fill="${shade(c, -.3)}" stroke="${OL}" stroke-width="4.5"/>`;
+    if (!hide.includes('dome')) g += `<path d="M22 148 A78 98 0 0 1 178 148 A78 20 0 0 1 22 148 Z" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="66" cy="84" rx="18" ry="9" fill="#fff" opacity=".3" transform="rotate(-30 66 84)"/>` + face(st, 100, 118, 1.0);
+    return g;
+  }
+  function ellip(st) {
+    const c = COL.boss; let g = shadow(100, 176, 76);
+    g += `<g transform="rotate(-18 100 104)"><ellipse cx="100" cy="104" rx="82" ry="54" fill="${c}" stroke="${OL}" stroke-width="4.5"/><path d="M52 80 Q100 62 148 80 M52 128 Q100 146 148 128" stroke="${OL}" stroke-width="2.6" fill="none" opacity=".35"/><ellipse cx="62" cy="86" rx="16" ry="7" fill="#fff" opacity=".3"/></g>`;
+    return g + face(st, 100, 108, 1.0);
+  }
+
+  const MON = {
+    dot: { fn: dot, name: '동글점', tier: '점', el: 'care', shape: '원', line: '점 하나가 둥글게 뭉치면? 동그라미!', facts: '꼭짓점 0 · 면 1(곡면)' },
+    line: { fn: line, name: '뾰족선', tier: '선', el: 'flash', shape: '삼각', line: '삼각형이 일렬로 서면 지그재그 선', facts: '삼각형 5 · 꼭짓점 15' },
+    plane: { fn: plane, name: '겹겹이', tier: '면', el: 'support', shape: '사각', line: '사각이 계단처럼 겹치면 두툼한 면', facts: '사각형 4 · 꼭짓점 16' },
+    cube: { fn: cube, name: '정육면체 대장', tier: '입체(보스)', el: 'boss', shape: '정육면체', line: '맞을수록 면이 한 장씩 떨어져요', facts: '면 6 · 모서리 12 · 꼭짓점 8', faces: ['T', 'Rt', 'Lf'] },
+    twin: { fn: twin, name: '쌍둥이점', tier: '점', el: 'care', shape: '원', line: '점 둘이 겹치면 쌍둥이', facts: '원 2' },
+    ring: { fn: ring, name: '굴렁이', tier: '점', el: 'care', shape: '원', line: '구멍 뚫린 둥근 바퀴', facts: '원 2 · 구멍 1' },
+    thorn: { fn: thorn, name: '가시선', tier: '선', el: 'flash', shape: '삼각', line: '삼각을 세워 가시로', facts: '삼각형 3 · 꼭짓점 9' },
+    bar: { fn: bar, name: '막대선', tier: '선', el: 'flash', shape: '삼각', line: '삼각을 길게 늘인 막대', facts: '꼭짓점 6' },
+    wide: { fn: wide, name: '넓적이', tier: '면', el: 'support', shape: '사각', line: '사각을 넓게 눌러 펴면', facts: '사각형 3 · 꼭짓점 12' },
+    stair: { fn: stair, name: '계단이', tier: '면', el: 'support', shape: '사각', line: '사각 셋을 계단처럼', facts: '사각형 3 · 꼭짓점 12' },
+    tetra: { fn: tetra, name: '삼각뿔 대장', tier: '입체(보스)', el: 'boss', shape: '정사면체', line: '맞을수록 면이 떨어져요', facts: '면 4 · 모서리 6 · 꼭짓점 4', faces: ['R', 'L'] },
+    octa: { fn: octa, name: '팔면체 대장', tier: '입체(보스)', el: 'boss', shape: '정팔면체', line: '여덟 면이 한 장씩 떨어져요', facts: '면 8 · 모서리 12 · 꼭짓점 6', faces: ['UR', 'UL', 'LR', 'LL'] },
+    trio: { fn: trio, name: '삼형제점', tier: '점', el: 'care', shape: '원', line: '큰 점에 작은 점 둘이 졸졸', facts: '원 3' },
+    halo: { fn: halo, name: '달무리', tier: '점', el: 'care', shape: '원', line: '점 둘레에 둥근 테', facts: '원 2' },
+    drop: { fn: drop, name: '물방울이', tier: '점', el: 'care', shape: '원', line: '점이 길게 늘어나면 방울', facts: '곡선 1' },
+    zig: { fn: zig, name: '번개선', tier: '선', el: 'flash', shape: '삼각', line: '꺾이고 꺾인 번개 모양 선', facts: '꺾임 5' },
+    arrow: { fn: arrow, name: '화살선', tier: '선', el: 'flash', shape: '삼각', line: '삼각이 앞장선 화살', facts: '삼각형 3 · 사각형 1' },
+    saw: { fn: saw, name: '톱니선', tier: '선', el: 'flash', shape: '삼각', line: '삼각이 줄지은 톱니', facts: '삼각형 5' },
+    tower: { fn: tower, name: '쌓기탑', tier: '면', el: 'support', shape: '사각', line: '사각을 높이 쌓아 탑', facts: '사각형 3' },
+    gate: { fn: gate, name: '문짝이', tier: '면', el: 'support', shape: '사각', line: '가운데가 뚫린 사각 문', facts: '사각형 1 · 구멍 1' },
+    tile: { fn: tile, name: '타일이', tier: '면', el: 'support', shape: '사각', line: '사각 넷을 이어 붙인 타일', facts: '사각형 4' },
+    dodeca: { fn: dodeca, name: '십이면체 대장', tier: '입체(보스)', el: 'boss', shape: '정십이면체', line: '오각형 열두 면이 하나씩 떨어져요', facts: '면 12 · 모서리 30 · 꼭짓점 20', faces: ['S0', 'S1', 'S2', 'S3', 'S4', 'F'] },
+    cylinder: { fn: cylinder, name: '원기둥 대장', tier: '입체(보스)', el: 'boss', shape: '원기둥', line: '뚜껑과 몸통이 따로 떨어져요', facts: '면 3(곡면 1)', faces: ['top', 'body'] },
+    cone: { fn: cone, name: '원뿔 대장', tier: '입체(보스)', el: 'boss', shape: '원뿔', line: '뾰족한 몸이 떨어지면 바닥이 남아요', facts: '면 2(곡면 1) · 꼭짓점 1', faces: ['body', 'base'] },
+    icosa: { fn: icosa, name: '이십면체 대장', tier: '입체(보스)', el: 'boss', shape: '정이십면체', line: '삼각형 스무 면이 떨어져요', facts: '면 20 · 모서리 30 · 꼭짓점 12', faces: ['E0', 'E1', 'E2', 'L0', 'L1', 'L2', 'R0', 'R1', 'R2', 'C'] },
+    prism: { fn: prism, name: '삼각기둥 대장', tier: '입체(보스)', el: 'boss', shape: '삼각기둥', line: '세 면이 하나씩 떨어져요', facts: '면 5 · 모서리 9 · 꼭짓점 6', faces: ['side', 'top', 'front'] },
+    sphere: { fn: sphere, name: '구 대장', tier: '입체(보스)', el: 'boss', shape: '구', line: '꼭짓점도 모서리도 없는 둥근 대장', facts: '면 1(곡면)' },
+    moebius: { fn: moebius, name: '뫼비우스', tier: '점(특별종)', el: 'care', shape: '뫼비우스 띠', line: '한 번 꼬인 고리, 안팎이 하나예요', facts: '면 1 · 모서리 1' },
+    spiral: { fn: spiral, name: '나선이', tier: '점(특별종)', el: 'care', shape: '나선', line: '돌고 돌아 가운데로', facts: '곡선 1' },
+    star: { fn: star, name: '별다각형', tier: '선(특별종)', el: 'flash', shape: '오각별', line: '한 붓으로 그린 별', facts: '꼭짓점 5 · 선 5' },
+    cross: { fn: cross, name: '십자이', tier: '면(특별종)', el: 'support', shape: '십자', line: '사각 다섯이 십자로', facts: '사각형 5' },
+    frame: { fn: frame, name: '액자이', tier: '면(특별종)', el: 'support', shape: '액자', line: '속이 빈 사각 테두리', facts: '사각형 2(안과 밖)' },
+    pencil: { fn: pencil, name: '연필 각기둥', tier: '이벤트 한정', el: 'flash', shape: '육각기둥', line: '수능 응원 주간에만 나타나요', facts: '면 8 · 꼭짓점 12', faces: ['cap', 'body', 'tip'] },
+    napa: { fn: napa, name: '배추 원뿔', tier: '이벤트 한정', el: 'support', shape: '원뿔', line: '김장하는 날에만 나타나요', facts: '면 2(곡면 1)', faces: ['leaf', 'base'] },
+    tree: { fn: tree, name: '트리 원뿔', tier: '이벤트 한정', el: 'care', shape: '원뿔(삼각 세 단)', line: '연말에만 나타나요', facts: '삼각형 3 · 별 1', faces: ['top', 'mid', 'low'] },
+    pyramid: { fn: pyramid, name: '사각뿔 대장', tier: '입체(보스)', el: 'boss', shape: '사각뿔', line: '삼각 면이 떨어져요', facts: '면 5 · 모서리 8 · 꼭짓점 5', faces: ['R', 'L'] },
+    hexprism: { fn: hexprism, name: '육각기둥 대장', tier: '입체(보스)', el: 'boss', shape: '육각기둥', line: '옆면이 하나씩 떨어져요', facts: '면 8 · 모서리 18 · 꼭짓점 12', faces: ['Rt', 'Lf', 'top', 'Ct'] },
+    torus: { fn: torus, name: '도넛 대장', tier: '입체(보스)', el: 'boss', shape: '원환', line: '가운데가 뻥 뚫린 둥근 대장', facts: '구멍 1' },
+    cuboid: { fn: cuboid, name: '직육면체 대장', tier: '입체(보스)', el: 'boss', shape: '직육면체', line: '긴 상자 모양 대장', facts: '면 6 · 모서리 12 · 꼭짓점 8', faces: ['side', 'top', 'front'] },
+    hemi: { fn: hemi, name: '반구 대장', tier: '입체(보스)', el: 'boss', shape: '반구', line: '둥근 지붕이 먼저 떨어져요', facts: '면 2(곡면 1)', faces: ['dome', 'base'] },
+    ellip: { fn: ellip, name: '타원체 대장', tier: '입체(보스)', el: 'boss', shape: '타원체', line: '럭비공처럼 길쭉해요', facts: '곡면 1' },
+    fractal: { fn: fractal, name: '겹겹삼각', tier: '특별(프랙탈)', el: 'special', shape: '프랙탈', line: '삼각 안에 삼각 안에 삼각…', facts: '삼각형 27(3단) · 구멍 13' },
+  };
+  const api = {
+    COL, OL, shade, face, rng, MON,
+    list: () => Object.keys(MON).map((id) => Object.assign({ id }, MON[id], { fn: undefined })),
+    svg: (id, st, o) => wrap(MON[id].fn(st == null ? 0 : st, o), Object.assign({ label: MON[id].name }, o)),
+    inner: (id, st, o) => MON[id].fn(st == null ? 0 : st, o),
+    cubeFace: (fc, st, o) => wrap(cubeFaceSvg(fc, st == null ? 0 : st), Object.assign({ label: '정육면체 ' + fc }, o)),
+    /** 정돈된 동료 모습: 정육면체 대장이 정돈되어 리본과 발이 생김 */
+    companion: (o) => wrap(cube(2, { companion: true }), Object.assign({ label: '정돈된 큐브 동료' }, o)),
+    CUBE,
+    /** 체력 비율 r(1→0)에 맞는 숨길 면 목록: 입체 보스는 체력이 줄수록 한 장씩 떨어져 나간다 */
+    hiddenFaces: (id, r) => { const f = (MON[id] || {}).faces; if (!f) return []; const n = f.length, k = Math.min(n, Math.max(0, Math.floor((1 - r) * (n + 1)))); return f.slice(0, k); },
+    /** 몬스터 상태(0 화남·1 부서짐)를 체력 비율로 */
+    stateFor: (r) => (r < 0.5 ? 1 : 0),
+    /** 폴리곤 파편(산산조각): 몬스터 그림 상자를 삼각형으로 오려 사방으로 날린다. host = 파편을 붙일 위치 기준 부모 */
+    shatter: (box, o) => {
+      o = o || {}; const rn = rng(o.seed || 9), cols = 6, rows = 4, pts = [], html = box.innerHTML, host = o.host || box.parentNode;
+      for (let r = 0; r <= rows; r++) { pts[r] = []; for (let c = 0; c <= cols; c++) pts[r][c] = [c / cols * 100 + (c && c < cols ? (rn() - .5) * 9 : 0), r / rows * 100 + (r && r < rows ? (rn() - .5) * 11 : 0)]; }
+      const tris = []; for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) { const a = pts[r][c], b = pts[r][c + 1], d = pts[r + 1][c], e = pts[r + 1][c + 1]; tris.push([a, b, d], [b, e, d]); }
+      const bx = box.getBoundingClientRect(), hx = host.getBoundingClientRect(), sp = o.speed || 1; box.style.visibility = 'hidden';
+      tris.forEach((t) => {
+        const e = document.createElement('div'); e.style.cssText = `position:absolute;left:${bx.left - hx.left}px;top:${bx.top - hx.top}px;width:${bx.width}px;height:${bx.height}px;pointer-events:none;z-index:50;clip-path:polygon(${t.map((p) => p[0] + '% ' + p[1] + '%').join(',')})`; e.innerHTML = html; host.appendChild(e);
+        const gx = (t[0][0] + t[1][0] + t[2][0]) / 3 - 50, gy = (t[0][1] + t[1][1] + t[2][1]) / 3 - 50, ang = Math.atan2(gy, gx) + (rn() - .5) * .6, dist = (60 + rn() * 120) * (bx.width / 160), dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist * .6 - 40, rot = (rn() - .5) * 540;
+        const a = e.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: `translate(${dx * .6}px,${dy}px) rotate(${rot * .5}deg)`, opacity: 1, offset: .38 }, { transform: `translate(${dx}px,${dy + bx.height * 1.2}px) rotate(${rot}deg)`, opacity: 0 }], { duration: (850 + rn() * 300) / sp, easing: 'cubic-bezier(.3,.2,.6,1)', fill: 'forwards' }); a.onfinish = () => e.remove();
+      });
+    },
+  };
+  return api;
+});
+</script>
+<script>
+const g = document.getElementById('gal'), pick = ['dot', 'twin', 'ring', 'line', 'thorn', 'bar', 'plane', 'wide', 'stair', 'moebius', 'star', 'fractal', 'tetra', 'cube', 'octa', 'dodeca', 'cylinder', 'icosa'];
+pick.forEach((k) => { const m = GeoMon.MON[k]; if (!m) return; const d = document.createElement('div'); d.className = 'xi-panel mc'; d.innerHTML = GeoMon.svg(k, 0, { size: 150 }) + '<b>' + m.name + '</b><small>' + m.tier + ' · ' + m.facts + '</small>'; d.onmouseenter = () => { d.firstChild.outerHTML = GeoMon.svg(k, 2, { size: 150 }); }; d.onmouseleave = () => { d.firstChild.outerHTML = GeoMon.svg(k, 0, { size: 150 }); }; g.appendChild(d); });
+</script></body></html>

@@ -23,12 +23,17 @@
   .kid a.card { border:3px solid var(--kid); }
   .adult a.card { border:3px solid var(--adult); }
   .note { margin-top:28px; font-size:13px; color:var(--sub); line-height:1.6; text-align:center; }
+  /* D38: ⑪ 기하학 원정대는 별도 게임 — 그리드가 아니라 맨 아래 큰 배너(주소는 EXP_URL 한 곳) */
+  .exp { display:flex; align-items:center; gap:14px; margin:30px 0 0; padding:16px; border-radius:24px; text-decoration:none; color:#fff;
+         background:linear-gradient(135deg,#3B4A7A,#5B4A9A); box-shadow:0 6px 0 rgba(40,30,80,.35); }
+  .exp img { width:72px; height:72px; border-radius:18px; flex:none; background:#fff; } .exp b { display:block; font-family:'Jua',sans-serif; font-size:21px; line-height:1.25; }
+  .exp span { display:block; font-size:13px; opacity:.9; margin-top:2px; } .exp i { font-style:normal; margin-left:auto; font-size:26px; }
 </style>
 </head>
 <body>
 <main>
   <h1>기하학 가족 게임</h1>
-  <p class="lead">네모·세모·동그라미 세 가족과 함께 노는 게임 12가지<br>눌러서 바로 해 보세요</p>
+  <p class="lead">네모·세모·동그라미 세 가족과 함께 노는 게임 11가지<br>눌러서 바로 해 보세요</p>
 
   <h2>아이와 함께 (만 3~7세)</h2>
   <div class="grid kid">
@@ -47,9 +52,10 @@
     <a class="card" href="sort.html"><img src="icon_sort.png" alt=""><span class="name">정리의 달인</span><span class="tag">칸마다 한 종류</span></a>
     <a class="card" href="tile.html"><img src="icon_tile.png" alt=""><span class="name">세 가족 짝 맞추기</span><span class="tag">같은 그림 세 개</span></a>
     <a class="card" href="bead.html"><img src="icon_bead.png" alt=""><span class="name">구슬 줄 맞추기</span><span class="tag">줄을 밀어 같은 모양 세 개</span></a>
-    <a class="card" href="expedition.html"><img src="icon_expedition.png" alt=""><span class="name">기하학 원정대</span><span class="tag">구슬을 끌어 싸우는 모험 · 체험판</span></a>
   </div>
 
+  <a class="exp" id="exp" href="../expedition/"><img src="../expedition/art/favicon_192.png" alt=""><div><b>같은 가족의 본격 RPG — 기하학 원정대</b><span>구슬을 끌어 싸우는 옛이야기 모험 · 웹 체험판</span></div><i>▶</i></a>
+  <script>(function () { var EXP_URL = '../expedition/';   /* ⑪ 독립 랜딩이 생기면 이 한 줄만 바꾼다(D38) */ var a = document.getElementById('exp'); a.href = EXP_URL + (/[?&]src=/.test(location.search) ? location.search : '?src=play'); })();</script>
   <p class="note">개발 중인 시험판입니다. 그림과 소리는 바뀔 예정이에요.<br>기록은 이 기기의 브라우저에만 저장됩니다.</p>
 </main>
 </body>

@@ -95,7 +95,7 @@ button.uk-card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0
 .uk-chip svg { width: 24px; height: 24px; }
 
 /* ---- 토스트 ---- */
-.uk-toast { position: absolute; left: 20px; right: 20px; top: 84px; z-index: 1010; background: rgba(46,36,48,.94); color: #fff; border-radius: 18px; padding: 12px 14px; text-align: center;
+.uk-toast { position: absolute; left: 20px; right: 20px; top: 8px;   /* 상단바 아래 빈 띠(레벨 줄·HUD 위) — 고정 HUD 와 겹치지 않음(검사표 13) */ z-index: 1010; background: rgba(46,36,48,.94); color: #fff; border-radius: 18px; padding: 12px 14px; text-align: center;
   font: 800 var(--uk-fs-cap)/1.3 var(--uk-font); pointer-events: none; animation: uk-toast 2.2s ease forwards; }
 
 /* ---- 설정 위젯 ---- */
@@ -124,7 +124,11 @@ button.uk-card:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0
 @keyframes uk-fall { to { transform: translateY(700px) rotate(540deg); opacity: .9 } }
 
 /* 튜토리얼 손가락: 5앱 공통(분홍 동그라미 + 퍼지는 고리). 톡톡(.tap) / 끌기(.drag) */
-.uk-finger { position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; z-index: 1100; pointer-events: none; background: rgba(255,143,168,.55); box-shadow: 0 0 0 8px rgba(255,143,168,.25); }   /* ①의 .finger(gf.css)와 같은 모양 */
+.uk-finger { position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; z-index: 1100; pointer-events: none; background: rgba(255,143,168,.28); box-shadow: 0 0 0 6px rgba(255,143,168,.14); }
+.uk-finger .uk-hand { position: absolute; left: 16px; top: 26px; width: 40px; height: 50px; filter: drop-shadow(0 3px 2px rgba(0,0,0,.22)); } .uk-finger .uk-hand svg { width: 100%; height: 100%; display: block; }   /* 손끝(12,0)이 원 가운데 */
+.uk-trail { position: absolute; height: 0; border-top: 4px dashed rgba(255,143,168,.7); transform-origin: 0 50%; z-index: 1099; pointer-events: none; }
+body:has(.uk-scrim) .uk-trail { display: none; }
+.uk-toast.q { display: none !important; } .uk-toast.low, body:has(.uk-scrim) .uk-toast { top: auto !important; bottom: 28px !important; }   /* 떠 있는 동안 창이 열려도 아래로 */ .uk-toast.sm { font-size: 14px; padding: 8px 12px; line-height: 1.25; }   /* 토스트 차례 대기 · 창이 열려 있으면 아래쪽 */   /* ①의 .finger(gf.css)와 같은 모양 */
 .uk-finger i { position: absolute; inset: -4px; border-radius: 50%; border: 5px solid rgba(255,143,168,.75); opacity: 0; }
 .uk-finger.tap { animation: ukTap 1.1s ease-in-out infinite; } .uk-finger.tap i { animation: ukRing 1.1s ease-out infinite; }
 .uk-finger.drag { animation: ukDrag 1.8s ease-in-out infinite; } .uk-finger.drag i { animation: ukRing 1.8s ease-out infinite; }
@@ -636,7 +640,8 @@ body.gf-inplay #b-home, body.gf-inplay #b-stars, body.gf-inplay #b-set, body.gf-
 /* 이야기 컷 안 미니 판(튜토리얼) — GF.tale.mini. 컷에서는 캐릭터가 작아지고 그 위에 실제 판 조각으로 그린 작은 판이 놓인다 */
 .cut-mini { position: absolute; left: 14px; right: 14px; top: 262px; height: 190px; z-index: 3; border-radius: 22px; background: rgba(255,255,255,.8); box-shadow: var(--uk-sh-lg); display: flex; align-items: center; justify-content: center; gap: 6px; overflow: hidden; padding: 6px; box-sizing: border-box; }
 .tale-band { position: absolute; left: 10px; right: 10px; top: 0; z-index: 30; pointer-events: none; display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 18px; background: rgba(255,255,255,.95); box-shadow: var(--uk-sh-lg); animation: tbIn .35s ease-out; transition: opacity .35s, transform .35s; }
-#safe:has(.tale-band:not(.out)) .uk-toast { top: 96px; } .screen:has(> .tale-band:not(.out)) .uk-caption { visibility: hidden; }   /* 안내 띠가 있는 동안 토스트는 띠 아래로, 같은 규칙을 말하는 판 안 자막은 잠깐 숨김 */
+.screen:has(> .tale-band:not(.out)) .uk-caption { visibility: hidden; }   /* 안내 띠가 있는 동안 토스트는 띠 아래로, 같은 규칙을 말하는 판 안 자막은 잠깐 숨김 */
+.tb-hide { opacity: 0 !important; transition: opacity .2s; }
 .tale-band.out { opacity: 0; transform: translateY(-12px); }
 @keyframes tbIn { from { opacity: 0; transform: translateY(-14px); } }
 .tale-band .tb-txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; font-family: var(--uk-font); color: #5A463A; } .tale-band .tb-txt { gap: 2px; } .tale-band .tb-txt b { font-size: 17px; line-height: 1.2; } .tale-band .tb-txt span { font-size: 14px; line-height: 1.3; }
@@ -954,10 +959,12 @@ html[data-rm="1"] .hk-stage img { animation: none; }
 .hk-subs { position: absolute; left: 32px; right: 32px; top: 562px; display: flex; gap: 12px; z-index: 2; } .hk-subs .uk-btn.hk-pill { flex: 1; min-height: 52px; font-size: calc(18px * var(--uk-fs-k, 1)); }
 .hk .hk-ttl .uk-title { color: var(--uk-ink, #3A2E39); -webkit-text-stroke: 0; text-shadow: 0 2px 0 rgba(255,255,255,.7); }   /* 흰 글자+외곽선은 대비 검사(axe) 1.5:1 — 작은 제목은 진한 글자로 */
 .hk-noband { display: none !important; }
+#b-parent { position: relative; } #b-parent .kp-lock { position: absolute; right: -2px; bottom: -2px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2); display: flex; align-items: center; justify-content: center; } #b-parent .kp-lock svg { width: 16px; height: 16px; }   /* 유아 보호자 메뉴 입구 */
 .hk.hk-kid .uk-btn.hk-main { left: 50%; right: auto; width: 140px; margin-left: -70px; top: 452px; height: 92px; min-height: 92px; border-radius: 46px; } .hk.hk-kid .uk-btn.hk-main svg { width: 54px; height: 54px; margin-left: 6px; } .hk.hk-kid .uk-btn.hk-main svg path { fill: #fff; }   /* 유아: 글자 없는 큰 ▶ */
 .hk > .bg svg > circle { display: none; }   /* 공통 홈 틀: 배경의 해(장식 원)가 제목 카드에 걸치지 않게(2차 리뷰) */
 .hk.hk-kid .hk-kpills { left: 14px; right: 14px; top: 562px; justify-content: center; gap: 12px; }
 .hk-kp { position: relative; flex: 1; max-width: 84px; height: 72px; border: 0; border-radius: 22px; background: #fff; box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; cursor: pointer; } .hk-kp:active { transform: translateY(2px); } .hk-kp svg { width: 44px; height: 44px; } .hk-kp .hk-emo { font-size: 36px; }
+.hk-klbl { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); white-space: nowrap; padding: 4px 10px; border-radius: 10px; background: rgba(46,36,48,.92); color: #fff; font: 800 15px/1.2 var(--uk-font); pointer-events: none; }
 .hk-kck { position: absolute; right: 4px; bottom: 4px; width: 22px; height: 22px; } .hk-kck svg { width: 22px; height: 22px; }
 .hk-main .hk-fa { position: absolute; right: 30px; top: 50%; width: 2px; height: 2px; pointer-events: none; }
 /* 2차 리뷰 P5: 다음 목표 = 그 앱 가구 한 줄 + 진척 막대(말줄임·0/4 칩 없음) */
@@ -1084,6 +1091,8 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
 .sp-names b { white-space: nowrap; font-size: calc(17px * var(--uk-fs-k, 1)); padding: 4px 8px; } .sp-goal { white-space: nowrap; }
 .sp-names { position: absolute; left: 8px; top: 8px; right: 8px; z-index: 6; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; margin: 0; }
 .sp-names b { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.92); border-radius: 14px; padding: 3px 10px 3px 6px; box-shadow: var(--uk-sh); font: 800 calc(17px * var(--uk-fs-k, 1))/1.2 var(--uk-font); color: var(--uk-ink); white-space: nowrap; } .sp-names b.on { background: #DDF6E5; opacity: .75; } .sp-names b.on span { text-decoration: line-through; }
+
+.sp-tip { top: 6px !important; height: auto; min-height: 40px; }   /* 판 안내 자막 = 레벨 줄·HUD 위 빈 띠(3차 리뷰: HUD·판 윗줄을 덮던 것) */
 </style></head>
 <body><style>#gf-splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#FDE9CF;font-family:"Jua","Gowun Dodum",system-ui,sans-serif;color:#5A463A;transition:opacity .35s}#gf-splash.out{opacity:0;pointer-events:none}#gf-splash b{font-size:clamp(30px,9vw,44px);line-height:1.2;text-align:center;padding:0 16px}#gf-splash small{font-size:16px;opacity:.75}#gf-splash svg{width:min(78vw,340px);height:auto}</style><div id="gf-splash" role="status" aria-live="polite"><b>다른 그림 찾기</b><svg viewBox="0 0 300 120" aria-hidden="true"><rect x="14" y="24" width="80" height="80" rx="16" fill="#E8870F"/><path d="M150 18L196 104H104z" fill="#F6DE5C"/><circle cx="246" cy="64" r="42" fill="#7E8CC2"/><g fill="#4A3030"><circle cx="42" cy="60" r="5"/><circle cx="66" cy="60" r="5"/><circle cx="140" cy="76" r="5"/><circle cx="160" cy="76" r="5"/><circle cx="234" cy="60" r="5"/><circle cx="258" cy="60" r="5"/></g></svg><small>기하학 가족 · 불러오는 중</small></div>
 <div id="stage"><div id="inset"></div>
@@ -2101,13 +2110,25 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
       }
       const pr = parent.getBoundingClientRect(), k = pr.width / (parent.offsetWidth || pr.width) || 1;
       const pos = (t) => { const r = t.getBoundingClientRect(); return { x: (r.left + r.width / 2 - pr.left) / k, y: (r.top + r.height / 2 - pr.top) / k }; };
-      const a = pos(target), f = el('div', 'uk-finger' + (o.to ? ' drag' : ' tap'), parent, '<i></i>');
+      const a = pos(target), f = el('div', 'uk-finger' + (o.to ? ' drag' : ' tap'), parent, '<i></i><b class="uk-hand"><svg viewBox="0 0 40 50" aria-hidden="true"><path d="M8 4c0-2.2 1.8-4 4-4s4 1.8 4 4v16l2-.6c2-.6 4 .6 4.4 2.6l.1.6 1.3-.3c2-.5 4 .8 4.4 2.8l.1.5 1-.2c2-.4 4 1 4.3 3l.6 6c.6 6-2.6 11.6-8 14.2L24 50H10l-1.4-3.2C6 41 3.6 35.5 1.3 30l-.9-2.2c-.8-2 .2-4.3 2.2-5 1.7-.6 3.6.1 4.5 1.6L8 26V4z" fill="#fff" stroke="#5A463A" stroke-width="2.4" stroke-linejoin="round"/></svg></b>');   /* 원만 있으면 버그처럼 보임 → 손가락 그림(3차 리뷰 N3) */ let trail = null;
       f.style.left = a.x + 'px'; f.style.top = a.y + 'px';
-      if (o.to) { const b = pos(o.to); f.style.setProperty('--dx', (b.x - a.x) + 'px'); f.style.setProperty('--dy', (b.y - a.y) + 'px'); }
-      const off = () => { f.remove(); document.removeEventListener('pointerdown', off, true); }; setTimeout(() => document.addEventListener('pointerdown', off, true), 300); setTimeout(off, o.ms || 9000);
+      if (o.to) { const b = pos(o.to); f.style.setProperty('--dx', (b.x - a.x) + 'px'); f.style.setProperty('--dy', (b.y - a.y) + 'px'); trail = el('div', 'uk-trail', parent); const len = Math.hypot(b.x - a.x, b.y - a.y); trail.style.cssText = `left:${a.x}px;top:${a.y}px;width:${len}px;transform:rotate(${Math.atan2(b.y - a.y, b.x - a.x)}rad)`; }   /* 끌기: 시작→끝 점선 */
+      const off = () => { f.remove(); if (trail) trail.remove(); document.removeEventListener('pointerdown', off, true); }; setTimeout(() => document.addEventListener('pointerdown', off, true), 300); setTimeout(off, o.ms || 9000);
       return off;
     },
-    toast(msg, parent) { const t = el('div', 'uk-toast', parent || host(), msg); setTimeout(() => t.remove(), 2300); return t; },
+    /** 토스트 공통 규칙(3차 리뷰 N4): 한 번에 하나씩 차례로 · 이야기 컷·첫 안내 띠가 떠 있으면 기다림 · 창(팝업)이 열려 있으면 창 제목을 덮지 않게 화면 아래쪽에.
+        요소는 바로 돌려준다(앱이 위치를 고쳐 쓰는 경우) — 차례가 오기 전엔 .q(숨김) */
+    toast(msg, parent) {
+      const t = el('div', 'uk-toast q', parent || host(), msg), Q = (UK._tq = UK._tq || []); Q.push(t);
+      const busy = () => !!document.querySelector('.tale-ov, .tale-band:not(.out)');
+      const pump = () => {
+        if (UK._tcur && UK._tcur.isConnected) return; const n = Q[0]; if (!n) return; if (!n.isConnected) { Q.shift(); pump(); return; }
+        if (busy() && !n._w) { n._w = Date.now(); } if (busy() && Date.now() - n._w < 8000) { setTimeout(pump, 300); return; }
+        Q.shift(); UK._tcur = n; n.classList.remove('q'); const sf = (document.getElementById('safe') || document.body).getBoundingClientRect().top; if ([...document.querySelectorAll('.uk-scrim')].some((s) => !s.contains(n)) || [...document.querySelectorAll('.screen.on .uk-caption')].some((c) => c.offsetParent && getComputedStyle(c).visibility !== 'hidden' && c.getBoundingClientRect().top - sf < 70)) n.classList.add('low');   /* 창이 열렸거나 위 띠에 판 안내 자막이 있으면 아래쪽 */ if (n.offsetHeight > 58) n.classList.add('sm');   /* 두 줄이면 글자를 줄여 한 줄 띠 안에 */
+        setTimeout(() => { n.remove(); UK._tcur = null; setTimeout(pump, 200); }, 2300);
+      };
+      pump(); return t;
+    },
     /** 팝업: UK.modal({title, body, big, chips:[{icon,text}], actions:[{text,cls,onclick,keep}], row, dismiss}) */
     modal(o) {
       const sc = el('div', 'uk-scrim', o.parent || host()), sh = el('div', 'uk-sheet', sc);
@@ -3870,7 +3891,9 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     const b = el('div', 'tale-band', parent); b.setAttribute('role', 'status');
     if (r.mini && M.has(r.mini)) { const h = M.draw(b, r.mini, false); if (h) h.classList.add('in-band'); }
     el('div', 'tb-txt', b, '<b>' + (r.icon ? r.icon + ' ' : '') + r.title + '</b><span>' + r.text + '</span>');
-    let gone = false; const hide = () => { if (gone) return; gone = true; parent.removeEventListener('pointerup', up, true); b.classList.add('out'); setTimeout(() => b.remove(), 400); };
+    /* 겹침 금지(3차 리뷰 N2): 띠가 가리는 글자(레벨 줄·목표 HUD)는 띠가 있는 동안 잠깐 숨긴다 — 큰 글씨 모드·좁은 폭에서도 글자 위에 띠가 얹히지 않게 */
+    const hid = []; requestAnimationFrame(() => { if (!b.isConnected) return; const br = b.getBoundingClientRect(); parent.querySelectorAll('*').forEach((e) => { if (b.contains(e) || e.closest('.tale-band')) return; const own = [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()); if (!own || !e.offsetParent) return; const q = e.getBoundingClientRect(); if (q.bottom > br.top && q.top < br.bottom && q.right > br.left && q.left < br.right) { e.classList.add('tb-hide'); hid.push(e); } }); });
+    let gone = false; const hide = () => { if (gone) return; gone = true; hid.forEach((e) => e.classList.remove('tb-hide')); parent.removeEventListener('pointerup', up, true); b.classList.add('out'); setTimeout(() => b.remove(), 400); };
     const t0 = Date.now(), up = () => { if (Date.now() - t0 > 600) setTimeout(hide, 900); }; parent.addEventListener('pointerup', up, true); setTimeout(hide, 7000);
     setTimeout(() => { cb && cb(); }, 0);
     return true;
@@ -4953,6 +4976,13 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     }
   }
 
+  /** 유아 홈 상단바 왼쪽 「보호자 메뉴」(⚙+자물쇠) — 눈에 보이는 입구, 누르면 늘 구구단 관문(GF.gate)부터(3차 리뷰: 관문이 화면에서 안 보임). 홈(루트)에서만 보이고, 오른쪽 소리와 좌우 짝 */
+  function kidParentBtn() {
+    const grp = document.querySelector('#topbar .tgrp'); if (!grp || document.getElementById('b-parent')) return;
+    const b = el('button', 'round-btn kid-parent'); b.id = 'b-parent'; b.setAttribute('aria-label', '보호자 메뉴'); b.innerHTML = UK.icon('gear') + '<i class="kp-lock">' + UK.icon('lock') + '</i>';
+    b.onclick = () => { GF.sfx('tap'); GF.gate(() => { GF.gateAt = Date.now(); const g = document.querySelector('.parent.on'); if (g) g.classList.remove('on'); openSettings('parent'); }); }; grp.insertBefore(b, grp.firstChild);
+    const sync = () => { b.style.display = (GF.stack || []).length <= 1 ? '' : 'none'; }; const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); sync(); }; sync();
+  }
   /** 보호자 메뉴 열기(유아): 제목을 3초 길게 누르면 구구단 잠금 뒤에 열린다 */
   function kidHold() {
     let t = null; const stop = () => { clearTimeout(t); t = null; };
@@ -4981,7 +5011,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
       const bar = document.getElementById('topbar'), snd = document.getElementById('b-sound');
       if (bar && snd && !document.getElementById('b-set')) { const b = el('button', 'round-btn'); b.id = 'b-set'; b.setAttribute('aria-label', 'settings'); b.innerHTML = UK.icon('gear'); b.onclick = () => { GF.sfx('tap'); openSettings(); }; bar.insertBefore(b, snd); const g = snd.previousElementSibling; }
       X.attend(); setTimeout(() => X.check(true), 600);
-    } else { if (!cfg.noHold) kidHold(); X.restReset(); restT = restT || setInterval(restTick, 20000); }
+    } else { if (!cfg.noHold) kidHold(); X.restReset(); restT = restT || setInterval(restTick, 20000); kidParentBtn(); }
     if (GF.ip) GF.ip.init(cfg);   // IP 장부(카드·도장·카메오)
     if (GF.polish) GF.polish.init(cfg);   // 완성도 층(손상 복구·첫 실행 안내)
     if (GF.ops) GF.ops.init(cfg);   // 운영 공통 층(새 소식·복귀/금요일 선물·움직임 줄이기·문의)
@@ -5026,7 +5056,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     if (open && window.Room && Room.H) { const bw = el('div', 'h2-bandwrap hk-band', r); try { if (!Room.band(bw, { go: o.levels, toastParent: r, here: true, house: o.house })) bw.classList.add('hk-noband'); } catch (e) { /* 목표 띠 실패 무시 */ } } else el('div', 'h2-bandwrap hk-noband', r);   // 한 줄 한 정보(리뷰 P5): 띠 안 작은 칩(0/3·0/4)은 홈에서 뺌(작은 일·꾸미기 도전은 📮 소식 상자 3칸) · 3판 전엔 목표 띠도 없음(공용 띠가 자동으로 붙지 않게 자리만)
     /* 유아(o.kid): 글자 없는 판 — 초록 ▶ 하나 + 그림 알약(o.pills: [{icon, label, fn, bg, badge}]) 늘 보임, 목표 띠·아이콘 줄 없음(2차 리뷰 N1) */
     const main = UK.btn({ text: o.kid ? null : (o.mainText || (o.first ? GF.t('ui.hk.start') : GF.t('ui.hk.level', { n: o.level }))), icon: 'play', cls: 'green block hk-main', onclick: () => { GF.sfx('pick'); o.play(); } }, r);
-    if (o.kid) { main.setAttribute('aria-label', o.mainLabel || 'play'); const sub = el('div', 'hk-subs hk-kpills', r); (o.pills || []).forEach((x) => { const b = el('button', 'hk-kp', sub, x.svg || IC(x.icon)); b.setAttribute('aria-label', x.label); if (x.bg) b.style.background = x.bg; if (x.badge) el('i', 'hk-kck', b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
+    if (o.kid) { main.setAttribute('aria-label', o.mainLabel || 'play'); const sub = el('div', 'hk-subs hk-kpills', r); (o.pills || []).forEach((x) => { const b = el('button', 'hk-kp', sub, x.svg || IC(x.icon)); b.setAttribute('aria-label', x.label); if (x.bg) b.style.background = x.bg; if (x.badge) el('i', 'hk-kck', b, x.badge); let lt = null, long = false; b.addEventListener('pointerdown', () => { long = false; lt = setTimeout(() => { long = true; const t = el('span', 'hk-klbl', b, x.label); setTimeout(() => t.remove(), 1600); }, 550); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => clearTimeout(lt))); b.onclick = () => { if (long) return; GF.sfx('pick'); x.fn(); }; }); }   /* 보호자: 길게 누르면 이름표(아이는 짧게 눌러 바로 간다) */
     if (open) { const sub = el('div', 'hk-subs', r); if (o.levels) UK.btn({ text: GF.t('ui.hk.map'), icon: 'shapes', cls: 'ghost sm hk-pill', onclick: o.levels }, sub); if (o.house) UK.btn({ text: GF.t('ui.hk.house'), icon: 'home', cls: 'ghost sm hk-pill', onclick: o.house }, sub); }
     if (o.first && o.kid) setTimeout(() => { if (main.isConnected && window.UK && UK.finger) UK.finger(r, main, { tap: true }); }, 900);   /* 유아: 글을 못 읽으니 손가락(홈에 가릴 글자가 없음) */
     else if (o.first) { let t = null; const arm = () => { clearTimeout(t); main.classList.remove('hk-pulse'); t = setTimeout(() => { if (main.isConnected) main.classList.add('hk-pulse'); }, 5000); /* 원 대신 버튼 테두리 맥박(글자를 가리지 않음, 2차 리뷰 1순위) */ }; arm(); r.addEventListener('pointerdown', arm, true); }
@@ -5362,7 +5392,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     enter(r, p) {
       r.classList.add('uk', 'sp'); GF.bg('indoor2', r); bar();
       const LV = p.level || D.levels.find((l) => l.id === p.n) || D.levels[0]; if (!p.level) { SV.last = LV.id; save(); }
-      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:146px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));z-index:30;pointer-events:none'; return t; };
+      const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:8px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));z-index:30;pointer-events:none'; return t; };
       const title = LV.kind === 'daily' ? '오늘의 한 판' : LV.kind === 'season' ? LV.season.title : LV.kind === 'trio' ? ['네모', '세모', '동그라미'][LV.rule] + ' 규칙 판' : GF.t('c16.block.022', { id: LV.id });
       el('div', 'sp-hd', r, `<b>${title}</b><span>${LV.kind || GF.state.settings.big ? '' : D.chapters[LV.chapter - 1]}${LV.tag === 'rest' ? ' · 쉬어 가기' : ''}</span>` + (LV.type !== 'diff' ? `<em class="sp-type">${D.types[LV.type]}</em>` : ''));
       const goals = el('div', 'sp-goals', r), area = el('div', 'sp-area', r), btns = el('div', 'sp-btns2', r), tip = el('div', 'sp-tip', r);
@@ -5411,7 +5441,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
         if (rankRes && GF.rank) { GF.rank.resultBoard = 'daily'; const rr = rankRes; rankRes = null; setTimeout(() => GF.rank.announce(rr, r), slow(1300)); }
         if (!LV.kind && hints > 0 && stars < 3 && GF.ads) GF.ads.resultHook = { placement: 'hint2', ask: GF.t('c16.spot.005'), sub: GF.t('c16.spot.004'), onReward: () => { const st2 = C.stars(0, wrong); if (st2 > (SV.stars[LV.id] || 0)) { SV.stars[LV.id] = st2; save(); GF.refreshBar(); } } };
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: GF.t('c16.block.013'), onReward: bonusShard };
-        const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: GF.t('c16.spot.007', { hints: hints }) }, { icon: 'gift', text: GF.t('c16.spot.008', { wrong: wrong }) }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
+        const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: hints ? GF.t('c16.spot.007', { hints: hints }) : GF.t('c16.spot.013') }, { icon: 'gift', text: wrong ? GF.t('c16.spot.008', { wrong: wrong }) : GF.t('c16.spot.014') }];   /* 0 은 「없이」로(원칙 8) */ gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
         UK.result({ title: GF.t('c16.block.006'), stars, chips, parent: r, onNext: next ? () => GF.replace('pplay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('pplay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
       }
@@ -5433,7 +5463,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
       const t0 = TYPE_TIP[LV.type]; if (LV.id <= 2 && !LV.kind) { tip.style.display = 'block'; tip.textContent = LV.id === 1 ? '위아래 그림에서 다른 곳을 눌러요' : '못 찾겠으면 힌트를 눌러요'; } else if (t0 && !SV.tips[LV.type]) { tip.style.display = 'block'; tip.textContent = t0; SV.tips[LV.type] = 1; save(); } else tip.style.display = 'none';
       if (tip.style.display === 'block') setTimeout(() => { tip.style.display = 'none'; }, slow(3600));
       GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('pplay', LV.kind ? { level: LV } : { n: LV.id })); GF.polish.goal(r, GF.t('polish.goal.spot', {}));
-      if (LV.id <= 2 && !LV.kind) { r.__demo = () => { if (GF.tale.cardOpen) return; const pics = area.querySelectorAll('.sp-pic'), d = R0().diffs[0], w = pics[pics.length - 1]; if (w && w.isConnected && !foundN()) { const fake = el('i', 'sp-anchor', w); fake.style.cssText = `position:absolute;left:${(d.x + d.w / 2) / R0().w * 100}%;top:${(d.y + d.h / 2) / R0().h * 100}%;width:2px;height:2px`; UK.finger(r, fake, { tap: true, ms: 6000 }); setTimeout(() => fake.remove(), 6200); } }; setTimeout(r.__demo, slow(1400)); }   // 처음 두 판: 틀린 곳 하나를 손가락이 알려 준다
+      if (LV.id <= 2 && !LV.kind) { r.__demo = () => { if (GF.tale.cardOpen) return; const pics = area.querySelectorAll('.sp-pic'), R = R0(), w = pics[pics.length - 1]; if (w && w.isConnected && !foundN()) { let best = null; for (let gx = 1; gx < 8; gx++) for (let gy = 1; gy < 6; gy++) { const x = R.w * gx / 8, y = R.h * gy / 6, m = Math.min(...R.diffs.map((d) => Math.hypot(d.x + d.w / 2 - x, d.y + d.h / 2 - y))); if (!best || m > best.m) best = { x, y, m }; } const fake = el('i', 'sp-anchor', w); fake.style.cssText = `position:absolute;left:${best.x / R.w * 100}%;top:${best.y / R.h * 100}%;width:2px;height:2px`;   /* 「그림을 눌러요」만 보여 주고 정답 자리는 알려 주지 않음 — 모든 틀린 곳에서 가장 먼 점(3차 리뷰 N3) */ UK.finger(r, fake, { tap: true, ms: 6000 }); setTimeout(() => fake.remove(), 6200); } }; setTimeout(r.__demo, slow(1400)); }   // 처음 두 판: 아래 그림을 누르는 손짓(정답과 먼 곳)
     },
   });
   /* BM-D3 웹툰 컷 숨은 가족 찾기: 웹툰 3화 「상갓집」 컷 위에 가족 셋(네모·세모·동그라미) 얼굴이 작게 숨어 있다. 다 찾으면 컷이 환해지고 다음 컷으로. 별·보상 없음(D28), 기록만. 데이터 data/toon_cuts.json */

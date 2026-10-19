@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기하학 가족 — 당신은 어느 도형인가요?</title>
+<!-- gf-og -->
+<meta property="og:type" content="website"><meta property="og:site_name" content="기하학 가족"><meta property="og:title" content="기하학 가족 — 당신은 어느 도형인가요?"><meta property="og:description" content="같은 일을 겪는 세 도형 가족. 네모는 평범하고, 세모는 삼한사온이고, 동그라미는 완벽한데 외롭다."><meta property="og:image" content="https://seomun.github.io/geometric-family/og/index.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://seomun.github.io/geometric-family/"><meta name="twitter:card" content="summary_large_image">
+<!-- /gf-og -->
 <meta name="description" content="같은 일을 겪는 세 도형 가족. 네모는 평범하고, 세모는 삼한사온이고, 동그라미는 완벽한데 외롭다.">
-<meta property="og:title" content="기하학 가족">
-<meta property="og:description" content="같은 일을 겪는 세 도형 가족. 당신은 어느 도형인가요?">
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
 <style>
   :root { --ink: #6b5443; --paper: #f4ecdd; }
@@ -698,8 +699,10 @@ const EPS = [
     thumb: () => nemoDad({ x: 12, y: 6, w: 62, h: 55, emo: 'worry', item: 'phone' }) },
   { n: '2화', t: '부고', d: '같은 부고 문자를 받은 세 동창. 우린 상관이 좀 있단다, 친구야.', href: 'ep01.html',
     thumb: () => semoHusband({ x: 12, y: 4, size: 62, emo: 'sad', suit: true }) },
-  { n: '3화', t: '집 청소', d: '토요일 아침, "오늘 대청소하자" 한마디', href: null,
-    thumb: () => nemoMom({ x: 12, y: 8, w: 58, h: 52, emo: 'worry' }) },
+  { n: '3화', t: '상갓집', d: '죽은 사람은 어떻게 추억되는가? 아. 난 진짜 아프면 안 되는데.', href: 'ep03.html',
+    thumb: () => nemoDad({ x: 12, y: 6, w: 62, h: 55, emo: 'sad', suit: true }) },
+  { n: '4화', t: '다음 모임', d: '50대가 되면 10대처럼, 그냥 건강하면 된다.', href: 'ep04.html',
+    thumb: () => semoHusband({ x: 12, y: 4, size: 62, emo: 'joy' }) },
 ];
 $('eps').innerHTML = EPS.map(e => {
   const inner = `<svg viewBox="0 0 86 86">${e.thumb()}</svg><div><div class="no">${e.n}${e.href ? '' : ' · 준비 중'}</div><div class="ti">${e.t}</div><div class="de">${e.d}</div></div>`;
@@ -713,5 +716,26 @@ const FAM = [
 ];
 $('fam').innerHTML = FAM.map(([b, s, f]) => `<div class="row"><svg viewBox="0 0 74 74">${f()}</svg><div><b>${b}</b><span>${s}</span></div></div>`).join('');
 </script>
+<!-- gf-share -->
+<style>
+.gfs-box { text-align: center; padding: 22px 16px 34px; } .gfs-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 22px; border: 2px solid #6b5443; border-radius: 26px; background: #FEE500; color: #3c1e1e; font: 700 18px/1.2 'Gowun Dodum', sans-serif; cursor: pointer; box-shadow: 0 3px 0 rgba(0,0,0,.15); }
+.gfs-btn:active { transform: translateY(2px); box-shadow: none; } .gfs-sub { display: block; margin-top: 8px; font-size: 13px; opacity: .7; } .gfs-chip { display: inline-block; margin: -6px 0 14px 4px; padding: 6px 14px; min-height: 36px; border: 1.5px solid #6b5443; border-radius: 18px; background: #FEE500; color: #3c1e1e; font: 700 14px/1.6 'Gowun Dodum', sans-serif; cursor: pointer; }
+.gfs-toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); max-width: 88vw; background: rgba(40,30,30,.92); color: #fff; padding: 12px 18px; border-radius: 14px; font: 600 15px/1.4 sans-serif; z-index: 9999; text-align: center; }
+</style>
+<script>
+(function () {
+  var SITE = 'https://seomun.github.io/geometric-family/';
+  function toast(msg) { var t = document.createElement('div'); t.className = 'gfs-toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2600); }
+  function copy(text) { try { if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).then(function () { return true; }, fb); } catch (e) {} return Promise.resolve(fb()); function fb() { try { var a = document.createElement('textarea'); a.value = text; a.setAttribute('readonly', ''); a.style.cssText = 'position:fixed;left:-999px;top:0'; document.body.appendChild(a); a.select(); var r = document.execCommand('copy'); a.remove(); return r; } catch (e) { return false; } } }
+  window.gfShare = function (page, title) {
+    var url = SITE + page + '?src=share', text = '기하학 가족 ' + title + ' · 가족 단톡방에 보내 보세요 — 우리 집은 누굴까?';
+    if (navigator.share && !window.gfNoNativeShare) { navigator.share({ title: '기하학 가족 ' + title, text: text, url: url }).catch(function () {}); return 'share'; }
+    copy(text + ' ' + url).then(function (ok) { toast(ok ? '링크를 복사했어요. 가족 단톡방에 붙여 넣어 보내요' : url); });
+    return 'copy';
+  };
+})();
+</script>
+<script>(function(){var T={"ep02.html": "1화 「단톡방」", "ep01.html": "2화 「부고」", "ep03.html": "3화 「상갓집」", "ep04.html": "4화 「다음 모임」"};function add(){document.querySelectorAll('#eps a.ep').forEach(function(a){var p=a.getAttribute('href');if(!T[p]||a.nextElementSibling&&a.nextElementSibling.classList.contains('gfs-chip'))return;var b=document.createElement('button');b.type='button';b.className='gfs-chip';b.textContent='💬 '+T[p].split(' ')[0]+' 가족 단톡방에 보내기';b.onclick=function(){gfShare(p,T[p]);};a.insertAdjacentElement('afterend',b);});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',add);else add();setTimeout(add,300);})();</script>
+<!-- /gf-share -->
 </body>
 </html>

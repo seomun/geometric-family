@@ -1390,12 +1390,12 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (e && e.layers && !(opt && opt.noLayer)) e.layers.forEach((L) => { if (L.st && (st < L.st[0] || st > L.st[1])) return; setTimeout(() => { try { GF.sfx(L.id, { st: L.keepSt ? st : 0, gain: L.gain, noLayer: true }); } catch (x) { /* 층 실패 무시 */ } }, L.ms || 0); });
     if (e && e.duck !== false && b.duration > 0.15) GF.bgm.duckFor(Math.min(900, b.duration * 1000 + 150));   // 배경음 더킹: 효과음이 묻히지 않게
   };
-  /* 마스터: 모든 효과음 → 게인(성인 1.35·유아 0.75, 유아는 놀라지 않게 상한) → 리미터(DynamicsCompressor) → 스피커. 소리를 크게 올려도 겹칠 때 찢어지지 않는다 */
+  /* 마스터: 모든 효과음 → 게인(성인 1.6·유아 0.75, 유아는 놀라지 않게 상한) → 리미터(DynamicsCompressor) → 스피커. 소리를 크게 올려도 겹칠 때 찢어지지 않는다 */
   let mst = null;
   function master() {
     if (mst && mst.ctx === ac) return mst.in;
     const kid = (document.documentElement.getAttribute('data-uk') || 'kid') === 'kid', g = ac.createGain(), c = ac.createDynamicsCompressor();
-    g.gain.value = kid ? 0.75 : 1.35; c.threshold.value = kid ? -12 : -6; c.knee.value = 2; c.ratio.value = 20; c.attack.value = 0.002; c.release.value = 0.12;
+    g.gain.value = kid ? 0.75 : 1.6;   /* 10/21: 파일은 도서관 분류별 LUFS(UI −20…보상 −15), 성인 체감은 마스터 1.6 + 리미터(−6dB)로 — 유아는 0.75 상한 */ c.threshold.value = kid ? -12 : -6; c.knee.value = 2; c.ratio.value = 20; c.attack.value = 0.002; c.release.value = 0.12;
     g.connect(c); c.connect(ac.destination); mst = { ctx: ac, in: g, comp: c, kid }; return g;
   }
   GF.sfxMaster = () => (ac ? (master(), mst) : null);
@@ -1406,6 +1406,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     el: null, started: false, want: null, file: null, duck: false, duckS: false, vol: 0.22,
     duckFor(ms) { this.duckS = true; this.sync(); clearTimeout(this._dk); this._dk = setTimeout(() => { this.duckS = false; this.sync(); }, ms); },
     resolve(id) { if (snd().musicEnabled === false) return null;   // 합성 BGM 전면 교체 전까지 무음(효과음만)
+      { const am = snd().appMusic || {}, app = (GF.extras && GF.extras.cfg && GF.extras.cfg.app) || (GF.polish && GF.polish.app); if ((id === 'theme_main' || id === 'theme_kids' || id === 'night') && am[app]) id = am[app]; }   // 앱마다 배경음 루프 하나(10/21, sounds.json appMusic)
       const m = snd().music; let e = m[id], guard = 0; while (e && !e.file && e.fallback && guard++ < 5) e = m[e.fallback]; return e && e.file ? e : null; },
     /* 합성 곡(GFBgm, 싣은 앱만)이면 그쪽으로. 다른 앱은 GFBgm 이 없어 예전과 똑같다 */
     play(id) { this.want = id; if (window.GFBgm && GFBgm.has(id)) { this.synth = true; if (this.started) GFBgm.play(id); if (this.el) { this.el.pause(); } return; } if (this.synth) { this.synth = false; if (window.GFBgm) GFBgm.stop(); } if (this.started) this.apply(); },
@@ -1423,7 +1424,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       if (this.synth && window.GFBgm) { GFBgm.sync(); return; }
       const e = this.el; if (!e) return;
       e.volume = Math.min(1, this.vol * GF.state.settings.vol * (this.duck ? 0.4 : this.duckS ? 0.55 : 1));
-      if (GF.state.settings.mute || document.hidden || GF.appHidden) e.pause(); else e.play().catch(() => {});
+      if (GF.state.settings.mute || GF.state.settings.bgm === false || document.hidden || GF.appHidden) e.pause(); else e.play().catch(() => {});
     },
   };
   GF.sting = function () {                                     // 소리 로고(2초). 파일이 없으면 별 소리
@@ -5199,7 +5200,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     row(body, GF.t('ui.set.caption'), UK.switch(!s.capOff, (on) => { s.capOff = !on; persist(); }));
     /* 언어(C18b): 모든 앱 공통 저장(gf:lang) 후 다시 연다 — 판·이야기 데이터를 그 언어로 다시 읽어야 해서 */
     row(body, GF.t('ui.set.lang'), tbtn(GF.t(GF.lang === 'en' ? 'ui.set.lang.en' : 'ui.set.lang.ko'), () => { try { localStorage.setItem('gf:lang', GF.lang === 'en' ? 'ko' : 'en'); } catch (e) { /* 저장 못 함 */ } location.href = location.pathname; }));
-    if (!kid && window.GFBgm) row(body, GF.t('c17.extras.001'), UK.switch(s.bgm !== false, (on) => { s.bgm = on; persist(); GFBgm.sync(); }));      /* 합성 배경음을 싣은 앱(구슬 줄 맞추기)만 */
+    row(body, GF.t('c17.extras.001'), UK.switch(s.bgm !== false, (on) => { s.bgm = on; persist(); if (window.GFBgm) GFBgm.sync(); GF.bgm && GF.bgm.sync && GF.bgm.sync(); }));      /* 배경음 켜기/끄기 — 10/21 부터 모든 앱(앱마다 루프 한 곡, 유아는 보호자 메뉴 안) */
     if (!kid && navigator.vibrate) row(body, GF.t('ui.set.vibrate'), UK.switch(s.vib !== false, (on) => { s.vib = on; persist(); if (on) GF.haptic('ok'); }));
     if (!kid) row(body, GF.t('ui.set.big'), UK.switch(!!s.big, (on) => { s.big = on ? 1 : 0; persist(); applyBig(); }));
     if (!kid) row(body, GF.t('ui.set.bigbtn'), UK.switch(!!s.bigBtn, (on) => { s.bigBtn = on ? 1 : 0; persist(); applyBig(); }));
@@ -5356,6 +5357,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     /* 유아(o.kid): 글자 없는 판 — 초록 ▶ 하나 + 그림 알약(o.pills: [{icon, label, fn, bg, badge}]) 늘 보임, 목표 띠·아이콘 줄 없음(2차 리뷰 N1) */
     const main = UK.btn({ text: o.kid ? null : (o.mainText || (o.first ? GF.t('ui.hk.start') : GF.t('ui.hk.level', { n: o.level }))), icon: 'play', cls: 'green block hk-main', onclick: () => { GF.sfx('pick'); if (GF.polish && GF.polish.beforePlay) GF.polish.beforePlay(o.play); else o.play(); } }, r);
     if (o.kid) { main.setAttribute('aria-label', o.mainLabel || 'play'); const sub = el('div', 'hk-subs hk-kpills', r); (o.pills || []).forEach((x) => { const b = el('button', 'hk-kp', sub, x.svg || IC(x.icon)); b.setAttribute('aria-label', x.label); if (x.bg) b.style.background = x.bg; if (x.badge) el('i', 'hk-kck', b, x.badge); let lt = null, long = false; b.addEventListener('pointerdown', () => { long = false; lt = setTimeout(() => { long = true; const t = el('span', 'hk-klbl', b, x.label); setTimeout(() => t.remove(), 1600); }, 550); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => clearTimeout(lt))); b.onclick = () => { if (long) return; GF.sfx('pick'); x.fn(); }; }); }   /* 보호자: 길게 누르면 이름표(아이는 짧게 눌러 바로 간다) */
+    if (o.kid) pokeStage(stage);   // 유아 홈: 무대의 가족·소품을 만지면 반응(사고 미니 BM 13 #1)
     const prevCard = !o.kid && o.preview ? homePreview(r, o) : null;   // 성인 퍼즐 홈 미리보기(허브 10/21) — 있으면 지도·우리 집 알약 대신 카드 안에서
     if (open && !prevCard) { const sub = el('div', 'hk-subs', r); if (o.levels) UK.btn({ text: GF.t('ui.hk.map'), icon: 'shapes', cls: 'ghost sm hk-pill', onclick: o.levels }, sub); if (o.house) UK.btn({ text: GF.t('ui.hk.house'), icon: 'home', cls: 'ghost sm hk-pill', onclick: o.house }, sub); }
     if (o.first && o.kid) setTimeout(() => { if (main.isConnected && window.UK && UK.finger) UK.finger(r, main, { tap: true }); }, 900);   /* 유아: 글을 못 읽으니 손가락(홈에 가릴 글자가 없음) */
@@ -5386,6 +5388,20 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     /** 질문 카드(퀴즈) */
     quiz() { return '<svg viewBox="0 0 96 96"><rect x="10" y="6" width="76" height="30" rx="8" fill="#FFFDF8" stroke="' + LN + '" stroke-width="1.8"/><text x="48" y="28" text-anchor="middle" font-size="18" font-weight="900" fill="' + LN + '">?</text>' + [0, 1, 2].map((i) => `<rect x="14" y="${44 + i * 16}" width="68" height="12" rx="6" fill="${MC[i]}" stroke="${LN}" stroke-width="1.4"/>`).join('') + '</svg>'; },
   };
+  /** 숨은 반응(벤치마크 docs/bench/13_sago_mini.md §7 ★작은 개선 1): 유아 홈 무대의 가족·소품을 누르면 0.6~1초 반응 — 점수·보상 없음.
+      반응 2가지를 번갈아(통통 뛰기+톡 / 빙글+반짝 소리). 8초 동안 아무것도 안 만지면 하나가 살짝 들썩여 글 없이 「만져 봐」 */
+  function pokeStage(stage) {
+    const ims = [...stage.querySelectorAll('img')]; if (!ims.length) return; stage.style.pointerEvents = 'auto'; let idle = null;
+    const rm = () => document.documentElement.dataset.rm === '1';
+    const hint = () => { clearTimeout(idle); idle = setTimeout(() => { if (!stage.isConnected || rm() || document.querySelector('.uk-scrim')) return; const im = ims[(Math.random() * ims.length) | 0]; im.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-8px) rotate(-3deg)' }, { transform: 'translateY(0)' }, { transform: 'translateY(-5px) rotate(3deg)' }, { transform: 'translateY(0)' }], { duration: 900, composite: 'add' }); hint(); }, 8000); };
+    ims.forEach((im, i) => { im.style.pointerEvents = 'auto'; im.style.cursor = 'pointer'; im.dataset.pk = '0';
+      im.addEventListener('pointerdown', (e) => { e.stopPropagation(); hint(); const k = +im.dataset.pk; im.dataset.pk = String(1 - k); if (rm()) { GF.sfx(k ? 'pop1' : 'pick', { st: (i * 3) % 12 }); return; }
+        if (k === 0) { im.animate([{ transform: 'translateY(0) scale(1,1)' }, { transform: 'translateY(0) scale(1.12,.86)', offset: .2 }, { transform: 'translateY(-26px) scale(.94,1.08)', offset: .5 }, { transform: 'translateY(0) scale(1.06,.94)', offset: .8 }, { transform: 'translateY(0) scale(1,1)' }], { duration: 650, easing: 'ease-out', composite: 'add' }); GF.sfx('pick', { st: (i * 3) % 12 }); }
+        else { im.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-14deg)', offset: .25 }, { transform: 'rotate(12deg)', offset: .6 }, { transform: 'rotate(0)' }], { duration: 700, easing: 'ease-in-out', composite: 'add' }); GF.sfx('pop1', { st: 4 + (i * 2) % 8 }); }
+        try { const r = im.getBoundingClientRect(), sf = document.getElementById('safe'), sr = sf.getBoundingClientRect(), kk = sr.width / (sf.offsetWidth || sr.width) || 1; GF.fx && GF.fx.spark(sf, (r.left + r.width / 2 - sr.left) / kk, (r.top + r.height * 0.3 - sr.top) / kk, { n: 6, power: 40 }); } catch (x) { /* 연출 실패 무시 */ } });
+    });
+    hint();
+  }
   /** 홈 미리보기 카드: o.preview() = 판 SVG, o.goalText = 이 판 목표 한 줄. 왼쪽(판) = 시작, 가운데(레벨) = 지도, 오른쪽(다음 가구) = 우리 집 */
   function homePreview(r, o) {
     let svg = ''; try { svg = o.preview ? o.preview() : ''; } catch (e) { svg = ''; } if (!svg) return null;
@@ -5600,14 +5616,21 @@ const th = LV.theme || 'teeth', face = el('div', 'dy-face', stage); face.innerHT
         const sky = el('div', 'dy-sky ' + LV.weather, stage); em(sky, { sun: '☀️', cold: '❄️', rain: '🌧️' }[LV.weather], 72, 'dy-wx');
         const kid = el('div', 'dy-kid', stage); kid.appendChild(GF.img('baby.joy'));
         const POS = { head: [196, 64], body: [292, 88], feet: [394, 70] }; setGoal(LV.slots.length); const worn = {}, K = LV.slots.length;
+        /* 고른 옷마다 다른 반응(벤치마크 13_sago_mini §7 ★작은 개선 3): 맞게 입히면 날씨별 기쁜 동작 — 비 = 제자리 첨벙(물방울)·찰방, 추위 = 부르르·후후, 해 = 빙글. 안 맞는 옷은 「틀렸어요」 소리 없이 고개 갸웃 */
+        const kidAnim = (kf, ms) => { if (document.documentElement.dataset.rm === '1' || !kid.animate) return; kid.animate(kf, { duration: ms, easing: 'ease-in-out', composite: 'add' }); };
+        const react = () => { const w = LV.weather;
+          if (w === 'rain') { kidAnim([{ transform: 'translateY(0)' }, { transform: 'translateY(-22px)', offset: .3 }, { transform: 'translateY(0) scale(1.06,.94)', offset: .55 }, { transform: 'translateY(-10px)', offset: .75 }, { transform: 'translateY(0)' }], 900); GF.sfxSeq([['pop2', 260, { st: 5 }], ['pop1', 620, { st: 9 }]]); try { GF.fx.spark(stage, 180, 430, { n: 10, power: 60, colors: ['#8FD3F4', '#6EC6F0', '#fff'] }); } catch (x) { /* */ } }
+          else if (w === 'cold') { kidAnim([0, -6, 6, -6, 6, -4, 4, 0].map((x) => ({ transform: `translateX(${x}px)` })), 700); GF.sfxSeq([['pop1', 0, { st: -5 }], ['pop1', 120, { st: -3 }], ['pop1', 240, { st: -5 }]]); }
+          else { kidAnim([{ transform: 'rotate(0)' }, { transform: 'rotate(360deg)' }], 800); GF.sfx('sparkle', { st: 2 }); } };
+        const huh = () => { kidAnim([{ transform: 'rotate(0)' }, { transform: 'rotate(-10deg)', offset: .35 }, { transform: 'rotate(-10deg)', offset: .65 }, { transform: 'rotate(0)' }], 700); GF.sfx('pick', { st: -4 }); };
         const all = []; LV.slots.forEach((s, si) => s.opts.forEach((o, oi) => all.push({ s, o, si, oi })));   // 옷 칸마다 한 줄(선택지 3개), 막둥이 몸 위로 끌어 놓는다
         all.forEach((it) => {
           const d = em(stage, it.o, 56, 'dy-cloth'); const hx = 180 - (it.s.opts.length - 1) * 50 + it.oi * 100 - 28, hy = 598 - (K - 1 - it.si) * 68 - 28; at(d, hx, hy); let drag = false;
           const mv = (e) => { if (!drag) return; const q = toLocal(r, e); at(d, q.x - 28, q.y - 28); };
           const down = (e) => { if (finished || worn[it.s.slot]) return; drag = true; d.classList.add('lift'); try { d.setPointerCapture(e.pointerId); } catch (x) {} mv(e); e.preventDefault(); };
-          const wear = () => { worn[it.s.slot] = 1; d.classList.add('worn'); const [py, fs] = POS[it.s.slot]; d.style.fontSize = fs + 'px'; at(d, 180 - fs / 2, py); stage.querySelectorAll('.dy-cloth').forEach((x) => { if (x !== d && x.dataset.slot === it.s.slot) x.style.opacity = 0; }); pip(got + 1); sparkle(180, py + 30); GF.sfx('drop'); GF.sfx('ok', { st: [0, 4, 7][Math.min(got - 1, 2)] }); if (got >= goalN) finish(); };
+          const wear = () => { worn[it.s.slot] = 1; d.classList.add('worn'); const [py, fs] = POS[it.s.slot]; d.style.fontSize = fs + 'px'; at(d, 180 - fs / 2, py); stage.querySelectorAll('.dy-cloth').forEach((x) => { if (x !== d && x.dataset.slot === it.s.slot) x.style.opacity = 0; }); pip(got + 1); sparkle(180, py + 30); GF.sfx('drop'); GF.sfx('ok', { st: [0, 4, 7][Math.min(got - 1, 2)] }); setTimeout(react, 250); if (got >= goalN) finish(); };
           const up = (e) => { if (!drag) return; drag = false; d.classList.remove('lift'); const q = toLocal(r, e), onKid = q.x > 80 && q.x < 280 && q.y > 190 && q.y < 440;
-            if (onKid && it.o === it.s.ok) wear(); else { if (onKid) { GF.sfx('hmm'); d.classList.add('shake'); setTimeout(() => d.classList.remove('shake'), 400); } at(d, hx, hy); } kick(hintDress); };
+            if (onKid && it.o === it.s.ok) wear(); else { if (onKid) { huh(); d.classList.add('shake'); setTimeout(() => d.classList.remove('shake'), 400); }   /* 「틀렸어요」 소리 대신 고개 갸웃(BM 13 #3) */ at(d, hx, hy); } kick(hintDress); };
           d.dataset.slot = it.s.slot; d.addEventListener('pointerdown', down); d.addEventListener('pointermove', mv); d.addEventListener('pointerup', up); d.addEventListener('pointercancel', up); d._ok = it.o === it.s.ok; d._it = it; d._wear = wear;
         });
         function hintDress() { const d = [...stage.querySelectorAll('.dy-cloth')].find((x) => x._ok && !worn[x._it.s.slot]); if (d) { UK.finger(r, d, { to: kid, ms: 4000 }); kick(hintDress, 8000); } }

@@ -9,52 +9,78 @@
 <!-- /gf-og -->
 <meta name="description" content="웹툰·블로그·도형 테스트·게임 체험판을 한곳에서. 당신은 어느 도형인가요?">
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<!-- gf-site -->
 <style>
-  /* 링크 허브(IP 플레이북 P0, D33): 프로필 링크 하나 → 큰 버튼. 들어온 ?src=yt|ig|tt|blog 를 모든 링크에 이어 붙여 넘긴다(어디서 왔는지 각 사이트가 셈). 외부 추적기·쿠키 없음 */
-  :root { --ink: #6b5443; --paper: #f4ecdd; }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: #e9dfcc; color: var(--ink); font-family: 'Gowun Dodum', sans-serif; }
-  .wrap { max-width: 520px; margin: 0 auto; min-height: 100vh; background: var(--paper); padding: 0 16px 36px; }
-  header { text-align: center; padding: 18px 0 4px; }
-  header svg { width: 100%; height: auto; display: block; }
-  h1 { font-family: Gaegu, sans-serif; font-size: 40px; margin: 4px 0 0; letter-spacing: 2px; }
-  .tag { margin: 6px 0 16px; font-size: 15px; opacity: .85; }
-  .grp { margin: 18px 2px 8px; font: 700 14px/1 'Gowun Dodum', sans-serif; opacity: .7; }
-  a.big { display: flex; align-items: center; gap: 14px; min-height: 64px; margin: 0 0 12px; padding: 12px 18px; border: 2.5px solid var(--ink); border-radius: 20px; background: #fff; color: inherit; text-decoration: none; box-shadow: 4px 5px 0 var(--ink); }
-  a.big:active { transform: translate(2px, 3px); box-shadow: 1px 2px 0 var(--ink); }
-  a.big .ic { font-size: 30px; width: 40px; text-align: center; flex: none; }
-  a.big b { display: block; font-family: Gaegu, sans-serif; font-size: 23px; line-height: 1.15; letter-spacing: -0.5px; word-break: keep-all; }
-  a.big span { display: block; font-size: 13.5px; opacity: .78; margin-top: 2px; }
-  a.big.hot { background: #FFE9A8; } a.big.exp { background: #DCEFFF; } a.big.off { opacity: .5; pointer-events: none; border-style: dashed; box-shadow: none; }
-  /* D38: ⑪ 은 별도 게임 — 다른 버튼과 다른 「대형 게임 카드」(주소는 data-href 한 곳, ⑪ 독립 랜딩이 생기면 그것만 바꾼다) */
-  a.big.game { min-height: 112px; background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; border-color: #2c2450; box-shadow: 4px 6px 0 #2c2450; }
-  a.big.game img { width: 72px; height: 72px; border-radius: 18px; background: #fff; flex: none; } a.big.game small { display: block; font-size: 12.5px; opacity: .9; } a.big.game b { font-size: 28px; } a.big.game span { opacity: .92; } a.big.game i { font-style: normal; margin-left: auto; font-size: 26px; }
-  .foot { text-align: center; font-size: 12px; opacity: .6; padding-top: 22px; line-height: 1.8; }
+/* 기하학 가족 웹 공통 디자인(2026-10-20 작가 「웹페이지 정돈이 필요하다」): 웹툰 목차·쇼츠·게임 목록·링크 허브 4쪽이 같은 머리·카드·색·간격.
+   정본 = tools/site_style.css → python tools/site_style.py 가 각 쪽 <!-- gf-site --> 사이에 끼운다(쪽마다 단일 HTML 유지). ⑪ 랜딩(/expedition/)은 따로. */
+:root { --ink: #6b5443; --paper: #f4ecdd; --bg: #e9dfcc; --card: #fff; --hot: #FFE9A8; --kid: #FFE3EA; --adult: #E3F0FF; --r: 18px; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Gowun Dodum', sans-serif; }
+.gf-wrap { max-width: 720px; margin: 0 auto; min-height: 100vh; background: var(--paper); padding: 0 16px 40px; box-shadow: 0 0 40px rgba(0,0,0,.12); }
+.gf-nav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 6px; margin: 0 -16px; padding: 10px 16px; background: rgba(244,236,221,.95); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border-bottom: 2px solid var(--ink); overflow-x: auto; scrollbar-width: none; }
+.gf-nav::-webkit-scrollbar { display: none; }
+.gf-nav .brand { display: flex; align-items: center; gap: 6px; margin-right: auto; padding-right: 6px; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 22px; white-space: nowrap; color: inherit; text-decoration: none; }
+.gf-nav .brand svg { width: 34px; height: 20px; flex: none; }
+.gf-nav a.tab { flex: none; min-height: 34px; display: inline-flex; align-items: center; padding: 0 12px; border: 2px solid var(--ink); border-radius: 17px; font-size: 14px; font-weight: 700; text-decoration: none; color: inherit; background: #fff; }
+.gf-nav a.tab.on { background: var(--ink); color: #fff; }
+.gf-hero { text-align: center; padding: 22px 0 4px; }
+.gf-hero h1 { font-family: Gaegu, sans-serif; font-size: 40px; margin: 0; letter-spacing: 1px; line-height: 1.1; }
+.gf-hero p { margin: 8px 0 0; font-size: 15px; line-height: 1.6; opacity: .85; word-break: keep-all; }
+.gf-hero svg, .gf-hero .art { display: block; width: 100%; height: auto; margin: 8px 0 0; }
+.gf-h2 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 28px 2px 12px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+.gf-h2 small { font-family: 'Gowun Dodum', sans-serif; font-size: 13px; opacity: .7; margin-left: 6px; }
+.gf-card { display: flex; align-items: center; gap: 14px; min-height: 64px; background: var(--card); border: 2.5px solid var(--ink); border-radius: var(--r); padding: 12px 16px; margin: 0 0 12px; color: inherit; text-decoration: none; box-shadow: 4px 5px 0 var(--ink); }
+a.gf-card:active, button.gf-card:active { transform: translate(2px, 3px); box-shadow: 1px 2px 0 var(--ink); }
+.gf-card .ic { font-size: 30px; width: 40px; text-align: center; flex: none; }
+.gf-card img.ic, .gf-card svg.ic { width: 64px; height: 64px; border-radius: 16px; font-size: 0; }
+.gf-card .t { display: block; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 23px; line-height: 1.15; word-break: keep-all; }
+.gf-card .k { display: block; font-size: 13px; opacity: .7; }
+.gf-card .d { display: block; font-size: 13.5px; opacity: .8; margin-top: 2px; line-height: 1.45; word-break: keep-all; }
+.gf-card.hot { background: var(--hot); } .gf-card.off { opacity: .5; pointer-events: none; border-style: dashed; box-shadow: none; }
+.gf-card.game { min-height: 104px; background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; border-color: #2c2450; box-shadow: 4px 6px 0 #2c2450; }
+.gf-card.game img.ic { width: 72px; height: 72px; background: #fff; } .gf-card.game .t { font-size: 27px; } .gf-card .go { margin-left: auto; font-size: 24px; flex: none; }
+.gf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.gf-grid .gf-card { flex-direction: column; justify-content: flex-start; text-align: center; margin: 0; padding: 14px 10px 12px; gap: 8px; }
+.gf-grid .gf-card .t { font-size: 20px; }
+.gf-grid.kid .gf-card { background: var(--kid); } .gf-grid.adult .gf-card { background: var(--adult); }
+.gf-note { margin: 22px 0 0; font-size: 13px; opacity: .7; line-height: 1.6; text-align: center; word-break: keep-all; }
+.gf-foot { text-align: center; font-size: 12px; opacity: .6; padding: 28px 0 0; line-height: 1.8; }
+.gf-foot a { color: inherit; }
+@media (min-width: 600px) { .gf-hero h1 { font-size: 46px; } .gf-wrap { padding: 0 24px 48px; } .gf-nav { margin: 0 -24px; padding: 10px 24px; } }
+@media (max-width: 440px) { .gf-nav .brand span { display: none; } .gf-nav a.tab { padding: 0 11px; } }   /* 좁은 폰: 브랜드는 도형 표시만, 메뉴 넷이 한 줄에 */
+</style>
+<!-- /gf-site -->
+<style>
+  /* 이 쪽만의 것(링크 허브, IP 플레이북 P0·D33): 들어온 ?src= 를 모든 링크에 이어 붙인다. 외부 추적기·쿠키 없음 */
+  .gf-hero svg { max-width: 520px; margin: 0 auto 4px; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
+<div class="gf-wrap">
+  <!-- gf-nav --><nav class="gf-nav" aria-label="기하학 가족"><a class="brand" href="index.html"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>기하학 가족</span></a><a class="tab" href="index.html">웹툰</a><a class="tab" href="videos.html">쇼츠</a><a class="tab" href="play/index.html">게임</a><a class="tab on" href="link.html">링크</a></nav><!-- /gf-nav -->
+  <header class="gf-hero">
     <svg viewBox="0 0 520 190" id="hero" aria-label="네모·세모·동그라미 가족"></svg>
     <h1>기하학 가족</h1>
-    <p class="tag">같은 일을 겪는 세 도형 가족. 당신은 어느 도형인가요?</p>
+    <p>같은 일을 겪는 세 도형 가족. 당신은 어느 도형인가요?</p>
   </header>
 
-  <div class="grp">웹툰</div>
-  <a class="big hot" data-href="ep04.html"><span class="ic">📖</span><div><b>최신화 · 4화 「다음 모임」</b><span>50대가 되면 10대처럼, 그냥 건강하면 된다.</span></div></a>
-  <a class="big" data-href="index.html"><span class="ic">🗂️</span><div><b>전체 목차</b><span>1화부터 차례로 보기</span></div></a>
+  <h2 class="gf-h2">웹툰</h2>
+  <a class="gf-card big hot" data-href="ep04.html"><span class="ic">📖</span><div><span class="t">최신화 · 4화 「다음 모임」</span><span class="d">50대가 되면 10대처럼, 그냥 건강하면 된다.</span></div></a>
+  <a class="gf-card big" data-href="index.html"><span class="ic">🗂️</span><div><span class="t">전체 목차</span><span class="d">1화부터 차례로 보기</span></div></a>
+  <a class="gf-card big" data-href="videos.html"><span class="ic">🎬</span><div><span class="t">쇼츠 영상</span><span class="d">20초 공감 쇼츠 · 단톡방에 보내기</span></div></a>
 
-  <div class="grp">블로그</div>
-  <a class="big" data-href="https://blog.naver.com/gihahakf"><span class="ic">💬</span><div><b>네이버 블로그</b><span>본편 · 댓글 · 사연 나누기</span></div></a>
-  <a class="big" id="tistory" data-href=""><span class="ic">📝</span><div><b>티스토리</b><span>곧 열어요</span></div></a>
+  <h2 class="gf-h2">블로그</h2>
+  <a class="gf-card big" data-href="https://blog.naver.com/gihahakf"><span class="ic">💬</span><div><span class="t">네이버 블로그</span><span class="d">본편 · 댓글 · 사연 나누기</span></div></a>
+  <a class="gf-card big" id="tistory" data-href=""><span class="ic">📝</span><div><span class="t">티스토리</span><span class="d">본편 · 사연</span></div></a>
 
-  <div class="grp">놀이</div>
-  <a class="big hot" data-href="play/quiz.html"><span class="ic">🔺</span><div><b>나는 어느 도형일까? 테스트</b><span>결과 카드를 가족 단톡방에 보내 보세요</span></div></a>
-  <a class="big" data-href="play/index.html"><span class="ic">🎮</span><div><b>기하학 가족 게임 11종 · 웹 체험판</b><span>합치기·블록·짝 맞추기·구슬 줄 맞추기…</span></div></a>
+  <h2 class="gf-h2">놀이</h2>
+  <a class="gf-card big hot" data-href="play/quiz.html"><span class="ic">🔺</span><div><span class="t">나는 어느 도형일까? 테스트</span><span class="d">결과 카드를 가족 단톡방에 보내 보세요</span></div></a>
+  <a class="gf-card big" data-href="play/index.html"><span class="ic">🎮</span><div><span class="t">기하학 가족 게임 11종</span><span class="d">합치기 · 블록 · 짝 맞추기 · 색칠 … 웹 체험판</span></div></a>
 
-  <div class="grp">따로 만든 큰 게임</div>
-  <a class="big game" id="expcard" data-href="play/expedition.html"><img src="play/icon_expedition.png" alt=""><div><small>같은 가족의 본격 RPG</small><b>기하학 원정대</b><span>구슬을 끌어 싸우는 옛이야기 모험 · 웹 체험판</span></div><i>▶</i></a>
-  <div class="foot">© 기하학 가족 · 이야기는 모두 허구입니다.<br>이 페이지는 방문 기록을 따로 모으지 않아요.</div>
+  <h2 class="gf-h2">따로 만든 큰 게임</h2>
+  <a class="gf-card big game" id="expcard" data-href="play/expedition.html"><img class="ic" src="play/icon_expedition.png" alt=""><div><span class="k">같은 가족의 본격 RPG</span><span class="t">기하학 원정대</span><span class="d">구슬을 끌어 싸우는 옛이야기 모험 · 웹 체험판</span></div><span class="go">▶</span></a>
+  <div class="gf-foot">© 기하학 가족 · 이야기는 모두 허구입니다.<br>이 페이지는 방문 기록을 따로 모으지 않아요.</div>
 </div>
 
 <script>
@@ -655,19 +681,19 @@
 <script>
 document.body.insertAdjacentHTML('afterbegin', ROUGH_DEFS + CHAR_STYLE);
 GF.setMode('hand');
-document.getElementById('hero').innerHTML = `<rect width="520" height="190" fill="#f4ecdd"/>` +
+document.getElementById('hero').innerHTML = `` +
   nemoDad({ x: 30, y: 30, w: 125, h: 110, emo: 'good' }) +
   semoHusband({ x: 175, y: 25, size: 115, emo: 'good', gaze: 1 }) +
   semoWife({ x: 290, y: 25, size: 115, emo: 'wink', gaze: -1 }) +
   dongDad({ cx: 455, cy: 88, r: 52, emo: 'good' });
 /* 사이트 바닥 주소: gh-pages 루트(…/geometric-family/). 내부 링크는 그 아래, 외부(블로그)는 그대로. 들어온 src 만 이어 붙인다(없으면 link) */
 (function () {
-  const TISTORY = '';   // 티스토리 주소가 정해지면 여기에(비어 있으면 버튼이 「곧 열어요」로 흐리게)
+  const TISTORY = '';   // 티스토리 주소가 정해지면 여기에(비어 있으면 버튼을 숨김 — 옛 「곧 열어요」 흐린 버튼은 10/20 정돈 때 뺌)
   const m = /[?&]src=([a-z]{1,8})(?:&|$)/.exec(location.search), src = m ? m[1] : 'link';
   const base = location.href.replace(/[?#].*$/, '').replace(/[^/]*$/, '');
   if (TISTORY) document.getElementById('tistory').dataset.href = TISTORY;
   document.querySelectorAll('a.big').forEach((a) => {
-    const h = a.dataset.href; if (!h) { a.classList.add('off'); a.removeAttribute('href'); return; }
+    const h = a.dataset.href; if (!h) { a.style.display = 'none'; a.removeAttribute('href'); return; }
     const u = new URL(h, base); u.searchParams.set('src', src); a.href = u.toString();
     if (u.origin !== location.origin) { a.target = '_blank'; a.rel = 'noopener'; }
   });

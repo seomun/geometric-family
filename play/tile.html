@@ -1192,6 +1192,23 @@ html[data-rm="1"] .uk-fly { display: none; }
 /* 판 HUD 숫자 = Bagel(허브 10/21 남은 일): 숫자만 Bagel 서브셋에 있어 한글은 그대로 Jua 로 이어진다 */
 .mg-hd b, .bk-hd b, .tl-hd b, .sr-hd b, .sp-hd b, .bd-hd b, .mg-left b, .mg-goal span, .bk-goal span, .tl-goal span, .sp-goal span, .bd-goal em, .bd-mv, .sr-info, .sr-bd, .uk-badge, .hk-badge { font-family: var(--uk-num); font-weight: 400; letter-spacing: .3px; }
 
+/* ---- 성인 퍼즐 홈 미리보기 카드(허브 10/21 「누르고 싶은 홈」): 판 일부 · 레벨 · 다음 가구 — 나무 바닥 위 한 장 ---- */
+.hk-prev { position: absolute; left: 16px; right: 16px; top: 504px; height: 112px; display: flex; gap: 8px; align-items: stretch; padding: 7px; background: var(--uk-card); border: 3px solid var(--uk-line); border-radius: 22px; box-shadow: 0 5px 0 var(--uk-band-c); z-index: 2; }
+.hk-prev button { border: 0; padding: 0; cursor: pointer; font-family: var(--uk-title-font); color: var(--uk-ink); -webkit-tap-highlight-color: transparent; transition: transform var(--uk-release); }
+.hk-prev button:active { transform: translateY(2px) scale(.98); transition-duration: var(--uk-press); }
+.hk-pv-board { flex: none; width: 92px; height: 92px; border-radius: 14px; background: #FFF3DF; box-shadow: inset 0 0 0 2px #EADBC8; } .hk-pv-board svg { width: 100%; height: 100%; display: block; }
+.hk-pv-mid { flex: 1; min-width: 0; background: none; text-align: left; display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 0 2px !important; }
+.hk-pv-lv { font: 400 calc(26px * var(--uk-fs-k, 1))/1.05 var(--uk-num); color: var(--uk-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hk-pv-goal { font: 400 calc(16px * var(--uk-fs-k, 1))/1.2 var(--uk-title-font); color: var(--uk-ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hk-pv-map { font: 400 calc(14px * var(--uk-fs-k, 1))/1 var(--uk-title-font); color: var(--uk-green-d); }
+.hk-pv-item { flex: none; width: 86px; border-radius: 14px; background: #FFF4D6 !important; box-shadow: inset 0 0 0 2px #EED9AE; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 4px !important; }
+.hk-pv-item img { width: 48px; height: 48px; object-fit: contain; } .hk-pv-item small { font: 400 12px/1.1 var(--uk-title-font); max-width: 78px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hk-pv-bar { display: block; width: 66px; height: 8px; border-radius: 4px; background: #EFE3CF; border: 1.5px solid var(--uk-line); overflow: hidden; } .hk-pv-bar em { display: block; height: 100%; background: linear-gradient(var(--uk-gold), #FFAE00); }
+html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 14px; }
+.hk-pv-lv.sm { font-size: calc(20px * var(--uk-fs-k, 1)); }
+/* 성인 글자 18px 이상(quiz_smoke 규칙): 카드 글자 키우고 가구 이름은 그림·막대로만(이름은 aria-label) */
+.hk-pv-goal { font-size: calc(18px * var(--uk-fs-k, 1)); } .hk-pv-map { font-size: calc(18px * var(--uk-fs-k, 1)); } .hk-pv-item small { display: none; } .hk-pv-item img { width: 56px; height: 56px; }
+
 .tl { position: absolute; inset: 0; }
 .tl-ttl { position: absolute; top: 76px; left: 0; right: 0; text-align: center; }
 .tl-sub { display: inline-block; margin-top: 8px; background: #fff; border-radius: 16px; padding: 4px 16px; font: 700 var(--uk-fs-cap)/1.3 var(--uk-font); box-shadow: var(--uk-sh); }
@@ -1780,7 +1797,7 @@ html[data-rm="1"] .uk-fly { display: none; }
   GF.screen('shelf', {
     wide: () => true,
     enter(r) {
-      GF.bg('home', r);
+      GF.bg('home', r); { const sun = r.querySelector('.bg circle[fill="#FFD36B"]'); if (sun) sun.remove(); }   // 칸이 빽빽한 화면에선 해님이 카드 뒤에 반쯤 걸려 「잘려」 보였음(QA 10/20 P-1)
       const w = GF.safeWide, open = (bk) => bk <= 2 || (bk === 3 && !!GF.data.stages.ch11) || (bk === 4 && !!GF.data.stages.ch16);
       const mk = (bk, host, cw, chh) => {
         const b = el('button', 'cover' + (open(bk) ? '' : ' locked'), host); b.dataset.book = bk; b.style.width = cw + 'px'; b.style.height = chh + 'px';
@@ -2098,7 +2115,7 @@ html[data-rm="1"] .uk-fly { display: none; }
     wide: () => true,
     enter(r, p) {
       const book = p.book || 1, off = (book - 1) * 5;
-      GF.bg('home', r);
+      GF.bg('home', r); { const sun = r.querySelector('.bg circle[fill="#FFD36B"]'); if (sun) sun.remove(); }   // 칸이 빽빽한 화면에선 해님이 카드 뒤에 반쯤 걸려 「잘려」 보였음(QA 10/20 P-1)
       const a = el('div', 'album', r);
       const chapters = [...new Set(GF.data.stickers.map((s) => s.ch))].filter((c) => c > off && c <= off + 5);
       chapters.forEach((ch, i) => {
@@ -2291,6 +2308,7 @@ html[data-rm="1"] .uk-fly { display: none; }
     share: s(stroke('M11.5 14l9-4.5M11.5 18l9 4.5', L, 2.6) + fo(`<circle cx="8" cy="16" r="4.2" fill="${P}"/>`) + fo(`<circle cx="24" cy="8" r="4.2" fill="${G}"/>`) + fo(`<circle cx="24" cy="24" r="4.2" fill="${GR}"/>`)),
     info: s(fo(`<circle cx="16" cy="16" r="12" fill="${SKY}"/>`) + stroke('M16 14v8', L, 3.6) + `<circle cx="16" cy="9.5" r="2.1" fill="${L}"/>`),
     plus: s(ol('M16 7v18M7 16h18', 4.4)),
+    skip: s(ol('M7 8l8 8-8 8M17 8l8 8-8 8', 4)),   /* 건너뛰기 = 두 겹 화살표(다음 ▶·› 와 다른 모양, QA 10/20 C-2) */
     /* 새(식탁 이모지 대체 · 보상 날기): 온기 불꽃 · 밥그릇 · 소식 상자 */
     warm: s(`<path d="M16 3c2 5 9 8 9 15a9 9 0 0 1-18 0c0-4 2-6 4-8 0 3 1 5 3 5-1-5 0-9 2-12z" fill="${ORG}" stroke="${L}" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 17c2 2 4 3 4 6a4 4 0 0 1-8 0c0-2 1-3 2-4 0 1 1 2 2 2z" fill="${G}"/>`),
     rice: s(`<path d="M7 15c0-5 4-8 9-8s9 3 9 8z" fill="#FFFDF8" stroke="${L}" stroke-width="2.2" stroke-linejoin="round"/>` + fo(`<path d="M3 15h26c0 7-6 12-13 12S3 22 3 15z" fill="${P}"/>`) + stroke('M20 4l7 7', L, 2.4)),
@@ -4088,7 +4106,7 @@ html[data-rm="1"] .uk-fly { display: none; }
     parent = parent || safe(); const ov = el('div', 'abs tale-ov', parent); ov.style.cssText = 'inset:0;z-index:70;background:#FFF1D6'; let done = false;
     const end = () => { if (done) return; done = true; try { ov.remove(); } catch (e) {} cb && cb(); };
     const inner = el('div', 'abs', ov); inner.style.cssText = 'inset:0'; GF.story(inner, T.cuts(raw, o.bg), end);
-    const sk = el('button', 'tale-skip', ov, T.kid ? UK.icon('next') : GF.t('ui.tale.skip')); sk.setAttribute('aria-label', 'skip'); sk.onclick = (e) => { e.stopPropagation(); GF.sfx('tap'); end(); };
+    const sk = el('button', 'tale-skip', ov, T.kid ? UK.icon('skip') : GF.t('ui.tale.skip')); sk.setAttribute('aria-label', 'skip'); sk.onclick = (e) => { e.stopPropagation(); GF.sfx('tap'); end(); };
     return ov;
   };
   /** 장 n 의 기(s)·승/전(m)·결(e) 컷을 끝까지 보면 그 이야기 카드를 얻는다(GF.ip). 이미 본 컷도 한 번 더 확인해 예전 진행도 카드가 된다 */
@@ -5406,11 +5424,44 @@ html[data-rm="1"] .uk-fly { display: none; }
     /* 유아(o.kid): 글자 없는 판 — 초록 ▶ 하나 + 그림 알약(o.pills: [{icon, label, fn, bg, badge}]) 늘 보임, 목표 띠·아이콘 줄 없음(2차 리뷰 N1) */
     const main = UK.btn({ text: o.kid ? null : (o.mainText || (o.first ? GF.t('ui.hk.start') : GF.t('ui.hk.level', { n: o.level }))), icon: 'play', cls: 'green block hk-main', onclick: () => { GF.sfx('pick'); if (GF.polish && GF.polish.beforePlay) GF.polish.beforePlay(o.play); else o.play(); } }, r);
     if (o.kid) { main.setAttribute('aria-label', o.mainLabel || 'play'); const sub = el('div', 'hk-subs hk-kpills', r); (o.pills || []).forEach((x) => { const b = el('button', 'hk-kp', sub, x.svg || IC(x.icon)); b.setAttribute('aria-label', x.label); if (x.bg) b.style.background = x.bg; if (x.badge) el('i', 'hk-kck', b, x.badge); let lt = null, long = false; b.addEventListener('pointerdown', () => { long = false; lt = setTimeout(() => { long = true; const t = el('span', 'hk-klbl', b, x.label); setTimeout(() => t.remove(), 1600); }, 550); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => clearTimeout(lt))); b.onclick = () => { if (long) return; GF.sfx('pick'); x.fn(); }; }); }   /* 보호자: 길게 누르면 이름표(아이는 짧게 눌러 바로 간다) */
-    if (open) { const sub = el('div', 'hk-subs', r); if (o.levels) UK.btn({ text: GF.t('ui.hk.map'), icon: 'shapes', cls: 'ghost sm hk-pill', onclick: o.levels }, sub); if (o.house) UK.btn({ text: GF.t('ui.hk.house'), icon: 'home', cls: 'ghost sm hk-pill', onclick: o.house }, sub); }
+    const prevCard = !o.kid && o.preview ? homePreview(r, o) : null;   // 성인 퍼즐 홈 미리보기(허브 10/21) — 있으면 지도·우리 집 알약 대신 카드 안에서
+    if (open && !prevCard) { const sub = el('div', 'hk-subs', r); if (o.levels) UK.btn({ text: GF.t('ui.hk.map'), icon: 'shapes', cls: 'ghost sm hk-pill', onclick: o.levels }, sub); if (o.house) UK.btn({ text: GF.t('ui.hk.house'), icon: 'home', cls: 'ghost sm hk-pill', onclick: o.house }, sub); }
     if (o.first && o.kid) setTimeout(() => { if (main.isConnected && window.UK && UK.finger) UK.finger(r, main, { tap: true }); }, 900);   /* 유아: 글을 못 읽으니 손가락(홈에 가릴 글자가 없음) */
     else if (o.first) { let t = null; const arm = () => { clearTimeout(t); main.classList.remove('hk-pulse'); t = setTimeout(() => { if (main.isConnected) main.classList.add('hk-pulse'); }, 5000); /* 원 대신 버튼 테두리 맥박(글자를 가리지 않음, 2차 리뷰 1순위) */ }; arm(); r.addEventListener('pointerdown', arm, true); }
     return main;
   };
+  /* ---------------- 홈 미리보기(허브 10/21 「누르고 싶은 홈」): 판 일부 · 레벨 · 다음 가구 ----------------
+     GF.mini.* = 작은 SVG(96×96) — 세 가족 색·모양(네모 주황 □ · 세모 노랑 △ · 동그라미 파랑 ○) + 선색 외곽선(UI v2 §3-5) */
+  const MC = ['#F6A55B', '#FFD45C', '#7B8BE0', '#FF8FA8', '#6CCB8A', '#8FD3F4', '#C9A0E8', '#F2C9A0'], LN = '#6b5443';
+  const shp = (k, x, y, s, c) => { c = c || MC[k % MC.length]; const m = k % 3, st = ` stroke="${LN}" stroke-width="1.6" stroke-linejoin="round"`;
+    return m === 0 ? `<rect x="${x + s * .1}" y="${y + s * .1}" width="${s * .8}" height="${s * .8}" rx="${s * .18}" fill="${c}"${st}/>` : m === 1 ? `<path d="M${x + s / 2} ${y + s * .08}L${x + s * .94} ${y + s * .9}H${x + s * .06}z" fill="${c}"${st}/>` : `<circle cx="${x + s / 2}" cy="${y + s / 2}" r="${s * .42}" fill="${c}"${st}/>`; };
+  GF.mini = {
+    /** 칸 판: cols×rows, cells=[{x,y,k(0~)}] (k<0 = 짐 칸) */
+    grid(cols, rows, cells) { const W = 96, g = 2, s = Math.min((W - g * (cols + 1)) / cols, (W - g * (rows + 1)) / rows), ox = (W - (s * cols + g * (cols - 1))) / 2, oy = (W - (s * rows + g * (rows - 1))) / 2; let o = '';
+      for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) o += `<rect x="${ox + x * (s + g)}" y="${oy + y * (s + g)}" width="${s}" height="${s}" rx="${Math.max(1.5, s * .18)}" fill="#FFF6E5" stroke="#E2CDAE" stroke-width="1"/>`;
+      (cells || []).forEach((c) => { const X = ox + c.x * (s + g), Y = oy + c.y * (s + g); o += c.k < 0 ? `<rect x="${X}" y="${Y}" width="${s}" height="${s}" rx="${s * .18}" fill="#B9A58C" stroke="${LN}" stroke-width="1.2"/>` : shp(c.k, X, Y, s, c.c); });
+      return '<svg viewBox="0 0 96 96">' + o + '</svg>'; },
+    /** 병(정리): tubes=[[k,k…]], cap */
+    tubes(tubes, cap) { const n = tubes.length, w = Math.min(18, 88 / n - 3), gap = (96 - n * w) / (n + 1), h = 80, s = Math.min(w - 4, (h - 6) / (cap || 4)); let o = '';
+      tubes.forEach((t, i) => { const x = gap + i * (w + gap); o += `<rect x="${x}" y="8" width="${w}" height="${h}" rx="${w / 2}" fill="#FFFDF8" stroke="${LN}" stroke-width="1.8"/>`; t.forEach((k, j) => { o += shp(k, x + (w - s) / 2, 8 + h - 4 - (j + 1) * s, s); }); });
+      return '<svg viewBox="0 0 96 96">' + o + '</svg>'; },
+    /** 쌓인 타일: tiles=[{x,y,z,k}] (격자 단위) */
+    stack(tiles, gw, gh) { const k = 92 / Math.max(gw || 12, gh || 11), t = 2 * k; let o = ''; (tiles || []).slice().sort((a, b) => a.z - b.z).forEach((q) => { const X = 2 + q.x * k - q.z * 1.2, Y = 2 + q.y * k - q.z * 1.6;
+      o += `<rect x="${X}" y="${Y}" width="${t}" height="${t}" rx="${t * .2}" fill="#FFFDF8" stroke="${LN}" stroke-width="1.2"/>` + shp(q.k, X + t * .2, Y + t * .2, t * .6); }); return '<svg viewBox="0 0 96 96">' + o + '</svg>'; },
+    /** 두 그림(다른 그림 찾기) */
+    pair(bg) { const c = bg || '#BFE3FA'; const pic = (y) => `<rect x="10" y="${y}" width="76" height="38" rx="6" fill="${c}" stroke="${LN}" stroke-width="1.8"/><path d="M14 ${y + 34}q18-14 34 0t34 0" fill="#9ED89B"/><circle cx="72" cy="${y + 10}" r="5" fill="#FFD45C"/>` + shp(0, 22, y + 14, 14) + shp(1, 44, y + 12, 16);
+      return '<svg viewBox="0 0 96 96">' + pic(6) + pic(52) + `<circle cx="51" cy="66" r="10" fill="none" stroke="#FF5A7A" stroke-width="3"/>` + '</svg>'; },
+    /** 질문 카드(퀴즈) */
+    quiz() { return '<svg viewBox="0 0 96 96"><rect x="10" y="6" width="76" height="30" rx="8" fill="#FFFDF8" stroke="' + LN + '" stroke-width="1.8"/><text x="48" y="28" text-anchor="middle" font-size="18" font-weight="900" fill="' + LN + '">?</text>' + [0, 1, 2].map((i) => `<rect x="14" y="${44 + i * 16}" width="68" height="12" rx="6" fill="${MC[i]}" stroke="${LN}" stroke-width="1.4"/>`).join('') + '</svg>'; },
+  };
+  /** 홈 미리보기 카드: o.preview() = 판 SVG, o.goalText = 이 판 목표 한 줄. 왼쪽(판) = 시작, 가운데(레벨) = 지도, 오른쪽(다음 가구) = 우리 집 */
+  function homePreview(r, o) {
+    let svg = ''; try { svg = o.preview ? o.preview() : ''; } catch (e) { svg = ''; } if (!svg) return null;
+    const card = el('div', 'hk-prev', r), bd = el('button', 'hk-pv-board', card, svg); bd.setAttribute('aria-label', 'play'); bd.onclick = () => { GF.sfx('pick'); (GF.polish && GF.polish.beforePlay ? GF.polish.beforePlay(o.play) : o.play()); };
+    const mid = el('button', 'hk-pv-mid', card); mid.setAttribute('aria-label', GF.t('ui.hk.map')); const lvb = el('b', 'hk-pv-lv', mid, o.lvText || GF.t('ui.hk.level', { n: o.level || 1 })); if (lvb.textContent.length > 6) lvb.classList.add('sm'); if (o.goalText) el('span', 'hk-pv-goal', mid, o.goalText); el('small', 'hk-pv-map', mid, GF.t('ui.hk.map') + ' ›'); mid.onclick = () => { GF.sfx('pick'); (o.levels || o.play)(); };
+    try { const g = window.Room && Room.H && Room.nextGoalHere ? Room.nextGoalHere(o.key) : null; if (g && o.house) { const fx = el('button', 'hk-pv-item', card); fx.setAttribute('aria-label', GF.t('ui.hk.house') + ' · ' + g.label); const im = el('img', '', fx); im.src = Room.src(g.item); im.alt = ''; el('small', '', fx, g.label); const pr = el('i', 'hk-pv-bar', fx); el('em', '', pr).style.width = Math.round(100 * g.prog[0] / Math.max(1, g.prog[1])) + '%'; fx.onclick = () => { GF.sfx('pick'); o.house(); }; } } catch (e) { /* 다음 가구 없음 */ }
+    r.classList.add('hk-has-prev'); return card;
+  }
   /** 바로 진입: 앱을 열면 홈을 거치지 않고 판으로(뒤로 가면 홈). 첫 실행은 제목 1초 → 첫 판(이야기 컷이 떠 있으면 끝난 뒤). 자동 시험은 ?direct=1 일 때만 */
   GF.directEntry = function (play, first) {
     if (/[?&]direct=0/.test(location.search) || (navigator.webdriver && !/[?&]direct=1/.test(location.search))) return false;
@@ -5687,7 +5738,7 @@ html[data-rm="1"] .uk-fly { display: none; }
       const last = Math.min(D.levels.length, Math.max(1, SV.last || 1)), n = Object.keys(SV.stars).length, dailyDone = SV.daily.date === today() && SV.daily.done;
       const ss = seasonNow(), s = ss.length ? (ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0]) : null, sDone = s && SV.seasonDone[seasonKey(s)];
       const seasonIc = s ? { id: 'season', icon: 'star', label: s.title, fn: () => { const L = seasonLevel(s); if (L) GF.go('tplay', { level: L }); }, badge: sDone ? '✔' : '!', hot: !sDone } : null;
-      GF.homeKit(r, { key: 'tile', fam: ['nemo_mom.joy', 'wife.love', 'baby.joy'], props: (() => { try { return Object.values(REW).slice(0, 2); } catch (e) { return []; } })(),   /* 앱마다 다른 배역·무대 가구(G3) */ title: GF.t('c17.tile.010'), level: last, first: !n, cleared: n, play: () => GF.go('tplay', { n: last }), levels: () => GF.go('tlevels'), house: () => GF.go('thouse'),
+      GF.homeKit(r, { key: 'tile', fam: ['nemo_mom.joy', 'wife.love', 'baby.joy'], props: (() => { try { return Object.values(REW).slice(0, 2); } catch (e) { return []; } })(),   /* 앱마다 다른 배역·무대 가구(G3) */ title: GF.t('c17.tile.010'), level: last, preview: () => { const L = D.levels.find((l) => l.id === last) || D.levels[0]; return GF.mini.stack((L.tiles || []).slice(0, 40).map((t) => ({ x: t.x, y: t.y, z: t.z, k: parseInt(String(t.kind).replace(/\D/g, ''), 10) || 0 })), 12, 11); }, goalText: (() => { const L = D.levels.find((l) => l.id === last) || D.levels[0]; return (D.types || {})[L.type] || ''; })(),   /* 홈 미리보기(허브 10/21) */ first: !n, cleared: n, play: () => GF.go('tplay', { n: last }), levels: () => GF.go('tlevels'), house: () => GF.go('thouse'),
         icons: [{ id: 'daily', icon: 'gift', label: GF.t('ui.hk.daily'), fn: () => { const L = dailyLevel(); if (L) GF.go('tplay', { level: L }); }, badge: dailyDone ? '✔' : '1', hot: !dailyDone }, seasonIc, { id: 'trio', icon: 'heart', label: GF.t('ui.hk.trio'), fn: () => GF.go('ttrio') }].filter(Boolean) });
     },
   });

@@ -991,6 +991,136 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
 #b-parent.holding::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 4px solid transparent; border-top-color: #fff; border-right-color: #fff; animation: kpHold 2s linear forwards; }   /* 보호자 입구 길게 누르기(2초) 진행 테두리 */
 @keyframes kpHold { 0% { transform: rotate(0); opacity: .4; } 100% { transform: rotate(540deg); opacity: 1; } }
 .h2-gotline { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px auto 4px; padding: 6px 12px; border-radius: 14px; background: #FFF6E5; font: 800 calc(15px * var(--uk-fs-k, 1))/1.3 var(--uk-font); color: var(--uk-ink); max-width: 100%; } .h2-gotline img { width: 36px; height: 36px; object-fit: contain; flex: none; }   /* 첫 5판: 가구·업적은 결과 창 안 한 줄(QA 10/20 C-5) */
+
+/* ============================================================
+   기하학 가족 UI v2 (D43 작가 승인 · docs/44 §3 · 시안 assets/library/ui/mockups/kids_ui_v2.html)
+   10앱 + 구슬 줄 맞추기만 싣는다(⑪ 원정대는 games/expedition/ui 전용 키트 — 이 파일을 싣지 않음).
+   ui-kit.css 다음, 앱 css 앞에 둔다. 「누르고 싶은 단추, 한 화면에 할 일 하나」:
+   알약 단추 + 위 광택 + 아래 짙은 띠(눌림 깊이) · 패널 = 크림 + 4px 캐릭터 선색 테 + 8px 띠 · 숫자 = Bagel · 제목·단추 = Jua.
+   ============================================================ */
+          /* OFL 1.1 — games/engine/fonts/OFL_Jua-Regular.txt */
+@font-face { font-family: "BagelNum"; src: url(data:font/woff2;base64,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) format("woff2"); font-display: swap; }   /* OFL 1.1 — games/engine/fonts/OFL_BagelFatOne-Regular.txt (숫자만 서브셋) */
+:root {
+  /* 3-1 색 토큰: 이름은 그대로, 값·역할 고정 */
+  --uk-cream: #FFF3DF; --uk-cream2: #FFE7C4; --uk-card: #FFFDF8; --uk-ink: #3A2E39; --uk-ink2: #5B4F60;
+  --uk-line: #6b5443; --uk-band-c: #d9c3a3; --uk-panel-band: #c9ab84;
+  --uk-green: #5CC97B; --uk-green-d: #3B9E5B; --uk-sky: #6EC6F0; --uk-sky-d: #3F95C4;
+  --uk-no: #FF8E6E; --uk-no-d: #D8603F; --uk-gold: #FFC933; --uk-gold-d: #D49A00; --uk-pink: #FF8FA8; --uk-pink-d: #D96583;
+  --uk-scrim: rgba(40,30,50,.45);
+  --uk-band: 5px; --uk-press: 80ms; --uk-release: 120ms; --uk-pop-ease: cubic-bezier(.2,1.6,.4,1);
+  --uk-title-font: "Jua", "Noto Sans KR", "Malgun Gothic", sans-serif; --uk-num: "BagelNum", "Jua", "Noto Sans KR", sans-serif;
+}
+#stage { background: linear-gradient(var(--uk-cream), var(--uk-cream2)); }
+
+/* ---- 3-2 버튼 3종 ---- */
+.uk-btn { --c: var(--uk-green); --d: var(--uk-green-d); border-radius: 999px; background: var(--c); color: #fff;
+  font-family: var(--uk-title-font); font-weight: 400; letter-spacing: .3px; text-shadow: 0 2px 0 var(--d);
+  box-shadow: 0 var(--uk-band) 0 var(--d), 0 calc(var(--uk-band) + 3px) 8px rgba(0,0,0,.16); transition: transform var(--uk-release), box-shadow var(--uk-release); }
+.uk-btn::before { content: ""; position: absolute; left: 10px; right: 10px; top: 5px; height: 38%; border-radius: 999px; background: rgba(255,255,255,.32); pointer-events: none; }
+.uk-btn > * { position: relative; }
+.uk-btn:active { transform: translateY(var(--uk-band)); box-shadow: 0 0 0 var(--d); transition-duration: var(--uk-press); }
+.uk-btn svg { filter: drop-shadow(0 2px 0 var(--d)); }
+.uk-btn.sky, .uk-btn.sub { --c: var(--uk-sky); --d: var(--uk-sky-d); }
+.uk-btn.no, .uk-btn.danger { --c: var(--uk-no); --d: var(--uk-no-d); }
+.uk-btn.gold { --c: var(--uk-gold); --d: var(--uk-gold-d); color: var(--uk-ink); text-shadow: 0 1px 0 rgba(255,255,255,.4); } .uk-btn.gold svg { filter: none; }
+.uk-btn.pink { --c: var(--uk-pink); --d: var(--uk-pink-d); }
+.uk-btn.nemo { --c: #E8870F; --d: #A85F05; } .uk-btn.semo { --c: #2F8FD0; --d: #1F6FA8; } .uk-btn.dong { --c: #4B5A92; --d: #2E3A66; }
+.uk-btn.ghost { --c: var(--uk-card); --d: var(--uk-band-c); color: var(--uk-ink); text-shadow: none; border: 3px solid var(--uk-line); } .uk-btn.ghost::before { display: none; } .uk-btn.ghost svg { filter: none; }
+.uk-btn[disabled]:active { transform: none; box-shadow: 0 var(--uk-band) 0 var(--d); }
+.uk-btn.uk-adsub { --c: var(--uk-card); --d: var(--uk-band-c); color: var(--uk-ink); text-shadow: none; border: 3px solid #E2C98F; box-shadow: 0 4px 0 var(--uk-band-c); } .uk-btn.uk-adsub::before { display: none; }
+/* 아이콘 단추: 보이는 56px, 터치 64px, 3px 선색 테 + 4px 띠 */
+.uk-round { width: 56px; height: 56px; border: 3px solid var(--uk-line); background: var(--uk-card); box-shadow: 0 4px 0 var(--uk-band-c); transition: transform var(--uk-release), box-shadow var(--uk-release); }
+.uk-round:active { transform: translateY(4px); box-shadow: 0 0 0 var(--uk-band-c); transition-duration: var(--uk-press); }
+.uk-round.sm { width: 50px; height: 50px; box-shadow: 0 4px 0 var(--uk-band-c); }
+.uk-round.lg { width: 92px; height: 92px; background: var(--uk-green); border-color: var(--uk-line); box-shadow: 0 6px 0 var(--uk-green-d); } .uk-round.lg:active { transform: translateY(6px); box-shadow: 0 0 0 var(--uk-green-d); }
+.uk-round.lg::after { content: ""; position: absolute; left: 12px; right: 12px; top: 8px; height: 34%; border-radius: 999px; background: rgba(255,255,255,.3); pointer-events: none; }
+.uk-round.pink { background: var(--uk-pink); } .uk-round.lg.pink { box-shadow: 0 6px 0 var(--uk-pink-d); } .uk-round.gold { background: var(--uk-gold); } .uk-round.gray { background: #E8DECF; }
+/* 엔진 상단 바(gf.css) 원 단추·별 알약도 같은 모양 */
+.round-btn { width: 56px; height: 56px; border: 3px solid var(--uk-line); background: var(--uk-card); box-shadow: 0 4px 0 var(--uk-band-c); transition: transform var(--uk-release), box-shadow var(--uk-release); }
+.round-btn:active { transform: translateY(4px); box-shadow: 0 0 0 var(--uk-band-c); transition-duration: var(--uk-press); }
+
+/* ---- 3-6 상단 바 알약: 테 + 숫자 Bagel ---- */
+.uk-pill, .starpill { height: 44px; background: var(--uk-card); border: 3px solid var(--uk-line); box-shadow: 0 4px 0 var(--uk-band-c); border-radius: 22px; font-family: var(--uk-num); font-weight: 400; }
+.uk-pill span, .starpill span { font-family: var(--uk-num); font-weight: 400; letter-spacing: .5px; }
+.uk-pill svg, .starpill svg { margin-left: -14px; width: 38px; height: 38px; filter: drop-shadow(0 2px 0 rgba(107,84,67,.25)); }   /* 재화 아이콘이 알약 왼쪽 끝을 넘침(Cookie Run) */
+.uk-pill.bump, .starpill.bump { animation: ukBump .4s var(--uk-pop-ease); } @keyframes ukBump { 40% { transform: scale(1.15); } }
+.uk-badge { background: var(--uk-no); font-family: var(--uk-num); font-weight: 400; } .uk-dot { background: var(--uk-no); }
+
+/* ---- 3-3 패널·창 ---- */
+.uk-scrim { background: var(--uk-scrim); animation: uk-fade .15s ease; }
+.uk-sheet { background: var(--uk-card); border-radius: 28px; border: 4px solid var(--uk-line); box-shadow: 0 8px 0 var(--uk-panel-band), 0 14px 24px rgba(0,0,0,.18); animation: ukPop2 .35s var(--uk-pop-ease) both; }
+@keyframes ukPop2 { 0% { transform: scale(.6); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+.uk-sheet h2 { font-family: var(--uk-title-font); font-weight: 400; font-size: calc(30px * var(--uk-fs-k, 1)); color: var(--uk-green-d); letter-spacing: .5px; }
+[data-uk="adult"] .uk-sheet h2 { font-size: calc(26px * var(--uk-fs-k, 1)); }
+.uk-sheet .uk-big { font-family: var(--uk-num); font-weight: 400; }
+.uk-chip { background: #FFF4D6; border: 2px solid #E8D3AE; font-family: var(--uk-title-font); font-weight: 400; }
+.uk-card { border: 3px solid var(--uk-line); background: var(--uk-card); box-shadow: 0 5px 0 var(--uk-band-c); }
+button.uk-card:active { transform: translateY(5px); box-shadow: 0 0 0 var(--uk-band-c); }
+.uk-panel { background: var(--uk-card); border: 3px solid var(--uk-line); box-shadow: 0 4px 0 var(--uk-band-c); }
+.uk-panel h4 { font-family: var(--uk-title-font); font-weight: 400; }
+.uk-caption { background: rgba(255,253,248,.97); border: 3px solid var(--uk-line); box-shadow: 0 4px 0 var(--uk-band-c); }
+.uk-title { font-family: var(--uk-title-font); font-weight: 400; -webkit-text-stroke: 8px #fff; paint-order: stroke fill; }
+.uk-h { font-family: var(--uk-title-font); font-weight: 400; }
+.uk-progress { height: 22px; border-radius: 11px; background: #EFE3CF; border: 3px solid var(--uk-line); } .uk-progress i { border-radius: 8px; background: linear-gradient(var(--uk-green), var(--uk-green-d)); transition: width .75s ease-out; }
+.uk-progress.gold i { background: linear-gradient(var(--uk-gold), #FFAE00); }
+.uk-switch { border: 3px solid var(--uk-line); } .uk-switch.on { background: var(--uk-green); }
+.uk-seg { background: #F1E6D4; border: 3px solid var(--uk-line); } .uk-seg button { font-family: var(--uk-title-font); font-weight: 400; }
+.uk-seg button.on { background: var(--uk-card); box-shadow: 0 3px 0 var(--uk-band-c); }
+.panel { background: var(--uk-card); border: 4px solid var(--uk-line); border-radius: 28px; box-shadow: 0 8px 0 var(--uk-panel-band); }   /* 엔진 기본 창(gf.css) */
+
+/* ---- 3-7 결과 별: 하나당 300ms ---- */
+.uk-stars svg { width: 62px; height: 62px; } .uk-stars svg:nth-child(2) { margin-top: -14px; }
+.uk-stars svg.on { animation: ukPop2 .3s var(--uk-pop-ease) both; } .uk-stars svg.on:nth-child(2) { animation-delay: .3s; } .uk-stars svg.on:nth-child(3) { animation-delay: .6s; }
+.uk-sheet.uk-arming .acts, .uk-sheet.uk-arming .uk-res-sub { pointer-events: none; }   /* 「다음」은 800ms 부터 누를 수 있음(ui-kit.js result) */
+
+/* ---- 3-7 튜토리얼 손: 1.6초 주기(누름 0.9배), 대상 1.05배 숨쉬기 ---- */
+.uk-finger.tap { animation: ukTap2 1.6s ease-in-out infinite; } .uk-finger.tap i { animation: ukRing 1.6s ease-out infinite; }
+@keyframes ukTap2 { 0%, 12% { transform: scale(1); } 22% { transform: scale(.9); } 32%, 100% { transform: scale(1); } }
+.uk-finger.drag { animation-duration: 1.3s; }   /* 끌기 900 이동 + 400 멈춤 */
+.uk-breathe { animation: ukBreathe 1.2s ease-in-out infinite; } @keyframes ukBreathe { 50% { scale: 1.05; } }   /* transform 이 아니라 scale — 대상의 자리 잡기(translate)와 겹치지 않게 */
+html[data-rm="1"] .uk-breathe { animation: none; }
+
+/* ---- 3-6 유아 앱: 아래 96px 는 누르는 곳 없음(손목 오작동) · 터치 80px 이상 ---- */
+[data-uk="kid"] .hk.hk-kid .uk-btn.hk-main, [data-uk="kid"] #safe:not(.wide) .homeplay { top: 364px; }
+[data-uk="kid"] .hk.hk-kid .hk-kpills { top: 462px; }   /* 80px 단추 → 542 에서 끝, 아래 98px 빔 */
+[data-uk="kid"] .hk-kp { height: 80px; max-width: 84px; border: 3px solid var(--uk-line); box-shadow: 0 5px 0 var(--uk-band-c); }
+[data-uk="kid"] .hk-kp:active { transform: translateY(5px); box-shadow: 0 0 0 var(--uk-band-c); }
+[data-uk="kid"] .hk-kp:nth-child(4n+1) { background: #FFD9E2; } [data-uk="kid"] .hk-kp:nth-child(4n+2) { background: #D8F0FF; } [data-uk="kid"] .hk-kp:nth-child(4n+3) { background: #FFF1B8; } [data-uk="kid"] .hk-kp:nth-child(4n+4) { background: #E2F6E2; }   /* 그림마다 고유 파스텔(글자 없이 구분) */
+
+/* 성인 홈 아이콘 줄·알약도 같은 테 */
+.hk-icb { border: 3px solid var(--uk-line) !important; box-shadow: 0 4px 0 var(--uk-band-c) !important; background: var(--uk-card); }
+.hk .uk-btn.hk-main { border-radius: 999px; font-size: calc(30px * var(--uk-fs-k, 1)); }
+.hk .uk-btn.hk-main.hk-pulse { animation: hkPulse2 1.1s ease-in-out infinite alternate; } @keyframes hkPulse2 { from { box-shadow: 0 var(--uk-band) 0 var(--d), 0 0 0 0 rgba(255,216,77,0); } to { box-shadow: 0 var(--uk-band) 0 var(--d), 0 0 0 7px rgba(255,216,77,.95); } }
+html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 var(--uk-band) 0 var(--d), 0 0 0 7px rgba(255,216,77,.95); }
+
+/* ---- 독립 리뷰 10/21(notes/ui_v2_review_2026-10-21.md) 반영 ---- */
+:where(.uk-btn) { position: relative; }   /* ⑦ 특정도 0 — .h2-undo 처럼 absolute 로 자리 잡는 단추를 이기지 않게 */
+.uk-btn.sky, .uk-btn.pink, .uk-btn.no, .uk-btn.danger, .uk-btn.nemo, .uk-btn.semo, .uk-btn.dong, .uk-btn.green { background: var(--c); color: #fff; }   /* ① 변형 단추도 흰 글자 + 짙은 그림자(옛 짙은 글자가 이겨서 두 겹으로 번졌음) */
+.uk-btn.gray { --c: #B9B2C0; --d: #8E8697; background: var(--c); color: #fff; }
+.uk-btn[disabled] { background: var(--c); color: #fff; filter: saturate(.35) brightness(.98); opacity: .85; }   /* ② 비활성 = 제 색의 채도만 낮춤(띠 유지) */
+.uk-btn.danger { --c: var(--uk-no); --d: var(--uk-no-d); }
+.uk-btn:not(.gold):not(.ghost):not(.uk-adsub) { -webkit-text-stroke: 1.5px var(--d); paint-order: stroke fill; }   /* ⑩ 흰 글자 대비: 짙은 윤곽(밝은 초록·하늘 위 2:1 → 윤곽으로 읽힘) */
+.uk-sheet .acts > .uk-btn.green:first-child { min-height: 80px; font-size: calc(28px * var(--uk-fs-k, 1)); }   /* ⑨ 결과 「다음」 80px */
+.uk-chip, .uk-chip b, .uk-chip span { font-family: var(--uk-num); font-weight: 400; }   /* ⑨ 보상 숫자 Bagel */
+.uk-sheet > .sh-card { right: auto; left: 10px; }   /* ③ 오른쪽 위는 닫기 X 자리 — 공유는 왼쪽 위로 */
+.uk-x { position: absolute; right: -14px; top: -14px; width: 52px; height: 52px; border-radius: 50%; background: var(--uk-no); border: 4px solid #fff; color: #fff; display: grid; place-items: center; box-shadow: 0 4px 0 var(--uk-no-d); padding: 0; z-index: 3; cursor: pointer; }
+.uk-x::after { content: ""; position: absolute; inset: -6px; } .uk-x svg { width: 26px; height: 26px; } .uk-x:active { transform: translateY(4px); box-shadow: none; }
+.parent .gate-x { background: var(--uk-no); border-color: #fff; color: #fff; box-shadow: 0 4px 0 var(--uk-no-d); }   /* ③ 관문 X 도 주황빨강 */
+.parent { background: rgba(40,30,50,.45); }   /* 관문 어둡기 45% */
+.parent .panel { border: 4px solid var(--uk-line); box-shadow: 0 8px 0 var(--uk-panel-band); background: var(--uk-card); }
+.parent .nums button { border: 3px solid var(--uk-line); background: var(--uk-card); box-shadow: 0 4px 0 var(--uk-band-c); font-family: var(--uk-num); font-weight: 400; min-height: 64px; }
+body:has(.parent.on) .uk-finger, body:has(.parent.on) .uk-trail { display: none !important; }   /* ④ 관문 위에 손 금지(따라 누르면 잠금) */
+/* ⑥ 유아: 터치 80px, 알약 80px 고정 폭, ▶ 와 알약 사이 띄움 */
+[data-uk="kid"] { --uk-hit: 80px; }
+[data-uk="kid"] .hk.hk-kid .uk-btn.hk-main, [data-uk="kid"] #safe:not(.wide) .homeplay { top: 352px; }
+[data-uk="kid"] .hk.hk-kid .hk-kpills { gap: 10px; } [data-uk="kid"] .hk-kp { flex: 0 0 80px; max-width: 80px; }
+[data-uk="kid"] .uk-res-sub .uk-round.sm { width: 64px; height: 64px; }
+.uk-x svg path, .uk-x svg line { stroke: #fff !important; }
+.uk-fly { position: fixed; z-index: 3000; width: 30px; height: 30px; pointer-events: none; } .uk-fly svg { width: 100%; height: 100%; display: block; }   /* 보상 날기(UK.fly) */
+html[data-rm="1"] .uk-fly { display: none; }
+/* 유아 하위 화면도 아래 96px 비움(리뷰 ⑥ 확장): 우리 집 화면 뿌리 · 이야기 지도 ▶·곁 단추 */
+[data-uk="kid"] .abs.rm { bottom: 100px !important; }
+[data-uk="kid"] .sg-root.kid .sg-gowrap { bottom: 110px; } [data-uk="kid"] .sg-root.kid .sg-side { bottom: 110px; }
 </style>
 </head>
 <body><style>#gf-splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#FDE9CF;font-family:"Jua","Gowun Dodum",system-ui,sans-serif;color:#5A463A;transition:opacity .35s}#gf-splash.out{opacity:0;pointer-events:none}#gf-splash b{font-size:clamp(30px,9vw,44px);line-height:1.2;text-align:center;padding:0 16px}#gf-splash small{font-size:16px;opacity:.75}#gf-splash svg{width:min(78vw,340px);height:auto}</style><div id="gf-splash" role="status" aria-live="polite"><b>기하학 가족 놀이터</b><svg viewBox="0 0 300 120" aria-hidden="true"><rect x="14" y="24" width="80" height="80" rx="16" fill="#E8870F"/><path d="M150 18L196 104H104z" fill="#F6DE5C"/><circle cx="246" cy="64" r="42" fill="#7E8CC2"/><g fill="#4A3030"><circle cx="42" cy="60" r="5"/><circle cx="66" cy="60" r="5"/><circle cx="140" cy="76" r="5"/><circle cx="160" cy="76" r="5"/><circle cx="234" cy="60" r="5"/><circle cx="258" cy="60" r="5"/></g></svg><small>기하학 가족 · 불러오는 중</small></div>
@@ -1550,14 +1680,14 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
   });
 
   /* ---------------- 이야기 지도 (책 한 권 = 장 5개) ---------------- */
-  const NODES_P = [[80, 520], [250, 430], [100, 330], [250, 230], [110, 130]], NODES_W = [[90, 300], [230, 210], [370, 310], [510, 200], [640, 300]];
+  const NODES_P = [[80, 424], [250, 354], [100, 276], [250, 198], [110, 120]]   /* UI v2 유아 규칙: 아래 96px 비움(마지막 칸 472 에서 끝) */, NODES_W = [[90, 300], [230, 210], [370, 310], [510, 200], [640, 300]];
   const chOpen = (n) => n === 1 || n === 6 || n === 11 || n === 16 || (GF.state.stages['c' + (n - 1) + 'C'] && GF.state.stages['c' + (n - 1) + 'C'].done);   // 2편(6장)은 처음부터 열려 있다
   const chReady = (n) => !!GF.data.stages['ch' + n];
   function bookArrows(r, book, name) {                                        // 책 넘기기 ◀ ▶ (지도·앨범 공통)
     [[-1, 14], [1, null]].forEach(([dir, left]) => {
       const nb = book + dir; if (nb < 1 || nb > (GF.data.stages.ch16 ? 4 : GF.data.stages.ch11 ? 3 : 2)) return;
       const b = el('button', 'round-btn', r, dir < 0 ? '<svg viewBox="0 0 32 32"><path d="M22 5L6 16l16 11z" fill="#3A2E39"/></svg>' : '<svg viewBox="0 0 32 32"><path d="M10 5l16 11-16 11z" fill="#3A2E39"/></svg>');
-      b.style.cssText = 'position:absolute;bottom:18px;width:64px;height:64px;' + (left != null ? 'left:' + left + 'px' : 'right:14px');
+      b.style.cssText = 'position:absolute;bottom:108px;width:72px;height:72px;' + (left != null ? 'left:' + left + 'px' : 'right:14px');
       b.onclick = () => { GF.sfx('page'); GF.replace(name, { book: nb }); };
     });
   }
@@ -1727,7 +1857,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
       GAME_ORDER.forEach((g, i) => {
         const open = !!GF.modes[g] && GF.modes[g].free;
         const b = el('button', 'card' + (open ? '' : ' locked'), r); b.setAttribute('aria-label', (GF.modes[g] && GF.modes[g].name) || g);
-        const wide = GF.safeWide, cols = wide ? 5 : 3, cwid = wide ? 124 : 108, chgt = wide ? 140 : 120, gx = wide ? 12 : 10, col = i % cols, row = Math.floor(i / cols), x0 = (GF.safe.w - (cols * cwid + (cols - 1) * gx)) / 2;      // 10장: 폰 3열×4줄 · 태블릿 5열×2줄
+        const wide = GF.safeWide, cols = wide ? 5 : 3, cwid = wide ? 124 : 108, chgt = wide ? 140 : 100, gx = wide ? 12 : 10, col = i % cols, row = Math.floor(i / cols), x0 = (GF.safe.w - (cols * cwid + (cols - 1) * gx)) / 2;      // 10장: 폰 3열×4줄 · 태블릿 5열×2줄
         b.style.cssText += 'left:' + Math.round(x0 + col * (cwid + gx)) + 'px;top:' + ((wide ? 70 : 60) + row * (chgt + (wide ? 12 : 12))) + 'px;width:' + cwid + 'px;height:' + chgt + 'px';
         b.style.background = GAME_TINT[g] || '#fff';      // 카드마다 배경색이 달라 글을 몰라도 구분된다
         const ic = el('div', '', b, IC[GAME_ICON[g]]); const isz = wide ? 84 : 70; ic.style.cssText = 'position:absolute;left:50%;top:50%;width:' + isz + 'px;height:' + isz + 'px;margin:' + (-isz / 2 - 6) + 'px 0 0 ' + (-isz / 2) + 'px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.14))';      // 놀이 그림이 카드 한가운데
@@ -1861,7 +1991,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     lockLeft() { let u = 0; try { u = +localStorage.getItem(Gate.KEY) || 0; } catch (e) { /* 저장 불가 = 잠금 기록 없음 */ } return Math.max(0, Math.max(u, Gate._mem || 0) - Date.now()); },
     frame() {   /* 패널 비우고 ✕ 달기 */
       const p = Gate.p, pn = p.firstChild; clearInterval(Gate.tm); pn.innerHTML = '';
-      const x = el('button', 'gate-x', pn, window.UK && UK.icon ? UK.icon('close') : '✕'); x.setAttribute('aria-label', GF.t('ui.gate.close')); x.onclick = (e) => { e.stopPropagation(); GF.sfx('tap'); Gate.close(); };
+      const x = el('button', 'gate-x', pn, window.UK && UK.icon ? UK.icon('close') : '✕'); x.setAttribute('aria-label', GF.t('ui.gate.close')); x.onclick = (e) => { e.stopPropagation(); GF.sfx('cancel'); Gate.close(); };
       if (!p._outside) { p._outside = true; p.addEventListener('click', (e) => { if (e.target === p) Gate.close(); }); }   // 바깥 탭 = 닫기
       return pn;
     },
@@ -1871,9 +2001,11 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     },
     ask(cb, k) {
       k = k || 1; if (Gate.lockLeft() > 0) { Gate.locked(); return; }
-      const R = (n) => Math.floor(Math.random() * n), a = 6 + R(4), b = 6 + R(4), ans = a * b, opts = new Set([ans]);
-      while (opts.size < 4) { const d = [a, b, 10, 1, 2][R(5)] * (R(2) ? 1 : -1); if (ans + d > 0) opts.add(ans + d); }
-      const list = [...opts].sort(() => Math.random() - 0.5), pn = Gate.frame(); pn.insertAdjacentHTML('beforeend', GF.t('ui.gate.q', { k, n: Gate.NEED, a, b }));
+      /* UI v2(docs/44 §3-8): 글자로 쓴 덧셈(「일곱 더하기 다섯」) — 숫자 기호가 아니라 읽어야 풀리는 「어른 수준 과제」(Apple 키즈 1.3·Google Families) */
+      const R = (n) => Math.floor(Math.random() * n), a = 5 + R(5), b = 5 + R(5), ans = a + b, opts = new Set([ans]);
+      while (opts.size < 4) { const d = [1, 2, 3, 10][R(4)] * (R(2) ? 1 : -1); if (ans + d > 0) opts.add(ans + d); }
+      const W = GF.lang === 'en' ? ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'] : ['영', '하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉'];
+      const list = [...opts].sort(() => Math.random() - 0.5), pn = Gate.frame(); pn.insertAdjacentHTML('beforeend', GF.t('ui.gate.q', { k, n: Gate.NEED, a: W[a], b: W[b] }));
       const nums = el('div', 'nums', pn);
       list.forEach((n) => { const bt = el('button', '', nums, n); bt.onclick = () => {
         if (n !== ans) { try { localStorage.setItem(Gate.KEY, String(Date.now() + Gate.LOCK_MS)); } catch (e) { /* 저장 불가여도 이번 창은 잠금 */ Gate._mem = Date.now() + Gate.LOCK_MS; } GF.sfx('hmm'); Gate.locked(); return; }
@@ -2050,7 +2182,10 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     /** 튜토리얼 손가락(5앱 공통 모양): 대상 위에서 톡톡(tap) 하거나 to 로 끌어다 놓는 시늉(drag). 아무 데나 누르면 사라진다. 반환: 지우는 함수 */
     finger(parent, target, o) {
       o = o || {};
-      const cover = () => [...document.querySelectorAll('.tale-ov, .uk-scrim')].some((x) => !x.contains(target) && !x.contains(parent));
+      /* UI v2(docs/44 §3-7): 손은 3초 동안 아무 입력이 없을 때 나온다(그 전에 누르면 다시 3초) — 강제 없는 안내(Royal Match·Sago). o.now 면 바로 */
+      if (!o.now && !o._now && !o._idle) { let stop = false, offF = null, tm = null; const arm = () => { clearTimeout(tm); tm = setTimeout(() => { if (stop || !target.isConnected) return; document.removeEventListener('pointerdown', arm, true); offF = UK.finger(parent, target, Object.assign({}, o, { _idle: 1 })); }, 3000); };
+        document.addEventListener('pointerdown', arm, true); arm(); return () => { stop = true; clearTimeout(tm); document.removeEventListener('pointerdown', arm, true); if (offF) offF(); }; }
+      const cover = () => [...document.querySelectorAll('.tale-ov, .uk-scrim, .parent.on')].some((x) => !x.contains(target) && !x.contains(parent));   // 보호자 관문 위에도 손 금지(리뷰 ④)
       if (!o._now && cover()) {      // 이야기 컷·설명 창이 덮고 있으면 그걸 닫는 탭에 손가락이 지워지므로, 닫힌 뒤에 보여 준다(10/19 ftue10·ftue_kids)
         let stop = false, offF = null; const t0 = Date.now(), wait = () => { if (stop) return; if (!target.isConnected || Date.now() - t0 > 60000) return; if (cover()) { setTimeout(wait, 300); return; } setTimeout(() => { if (!stop && target.isConnected) offF = UK.finger(parent, target, Object.assign({}, o, { _now: 1 })); }, 500); };
         setTimeout(wait, 300); return () => { stop = true; if (offF) offF(); };
@@ -2060,7 +2195,8 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
       const a = pos(target), f = el('div', 'uk-finger' + (o.to ? ' drag' : ' tap'), parent, '<i></i><b class="uk-hand"><svg viewBox="0 0 40 50" aria-hidden="true"><path d="M8 4c0-2.2 1.8-4 4-4s4 1.8 4 4v16l2-.6c2-.6 4 .6 4.4 2.6l.1.6 1.3-.3c2-.5 4 .8 4.4 2.8l.1.5 1-.2c2-.4 4 1 4.3 3l.6 6c.6 6-2.6 11.6-8 14.2L24 50H10l-1.4-3.2C6 41 3.6 35.5 1.3 30l-.9-2.2c-.8-2 .2-4.3 2.2-5 1.7-.6 3.6.1 4.5 1.6L8 26V4z" fill="#fff" stroke="#5A463A" stroke-width="2.4" stroke-linejoin="round"/></svg></b>');   /* 원만 있으면 버그처럼 보임 → 손가락 그림(3차 리뷰 N3) */ let trail = null;
       f.style.left = a.x + 'px'; f.style.top = a.y + 'px';
       if (o.to) { const b = pos(o.to); f.style.setProperty('--dx', (b.x - a.x) + 'px'); f.style.setProperty('--dy', (b.y - a.y) + 'px'); trail = el('div', 'uk-trail', parent); const len = Math.hypot(b.x - a.x, b.y - a.y); trail.style.cssText = `left:${a.x}px;top:${a.y}px;width:${len}px;transform:rotate(${Math.atan2(b.y - a.y, b.x - a.x)}rad)`; }   /* 끌기: 시작→끝 점선 */
-      const off = () => { f.remove(); if (trail) trail.remove(); document.removeEventListener('pointerdown', off, true); }; setTimeout(() => document.addEventListener('pointerdown', off, true), 300); setTimeout(off, o.ms || 9000);
+      try { target.classList.add('uk-breathe'); } catch (e) { /* 대상 없음 */ }   // 대상 1.05배 숨쉬기
+      const off = () => { f.remove(); if (trail) trail.remove(); try { target.classList.remove('uk-breathe'); } catch (e) { /* */ } document.removeEventListener('pointerdown', off, true); }; setTimeout(() => document.addEventListener('pointerdown', off, true), 300); setTimeout(off, o.ms || 9000);
       return off;
     },
     /** 토스트 공통 규칙(3차 리뷰 N4): 한 번에 하나씩 차례로 · 이야기 컷·첫 안내 띠가 떠 있으면 기다림 · 창(팝업)이 열려 있으면 창 제목을 덮지 않게 화면 아래쪽에.
@@ -2086,19 +2222,31 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
       if (o.chips) { const c = el('div', 'uk-chips', sh); o.chips.forEach((x) => el('span', 'uk-chip', c, (ICONS[x.icon] || '') + '<span>' + x.text + '</span>')); }
       const close = () => sc.remove();
       if (o.actions) { const a = el('div', 'acts' + (o.row ? ' row' : ''), sh); o.actions.forEach((x) => UK.btn({ text: x.text, icon: x.icon, cls: x.cls, onclick: () => { if (!x.keep) close(); x.onclick && x.onclick(); } }, a)); }
-      if (o.dismiss) sc.addEventListener('pointerdown', (e) => { if (e.target === sc) close(); });
+      if (o.dismiss) { sc.addEventListener('pointerdown', (e) => { if (e.target === sc) close(); });
+        const x = el('button', 'uk-x', sh, ICONS.close || '✕'); x.setAttribute('aria-label', 'close'); x.onclick = () => { try { window.GF && GF.sfx && GF.sfx('cancel'); } catch (e) { /* 소리 실패 무시 */ } close(); }; }   // UI v2 §3-3: 닫을 수 있는 창은 오른쪽 위 주황빨강 X(리뷰 ③)
       sc.close = close; return sc;
     },
     /** 별 0~max 줄 */
+    /** UI v2(docs/44 §1-4·§3-7): 보상은 날아간다 — from(요소)에서 to(위 재화 알약)로 아이콘 n개(시작 간격 60ms, 각 500ms), 도착할 때 알약이 1.15배 튐 */
+    fly(from, to, n, icon) {
+      try { if (!from || !to || document.documentElement.dataset.rm === '1') return; const a = from.getBoundingClientRect(), b = to.getBoundingClientRect(); if (!a.width || !b.width) return;
+        for (let i = 0; i < (n || 4); i++) setTimeout(() => { const f = document.createElement('div'); f.className = 'uk-fly'; f.innerHTML = ICONS[icon || 'star'] || ''; document.body.appendChild(f);
+          const x0 = a.left + a.width / 2 + (Math.random() - 0.5) * a.width * 0.6, y0 = a.top + a.height / 2, x1 = b.left + 20, y1 = b.top + b.height / 2;
+          f.style.cssText = `left:${x0 - 15}px;top:${y0 - 15}px`; f.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: `translate(${(x1 - x0) * 0.4}px,${(y1 - y0) * 0.4 - 60}px) scale(1.2)`, opacity: 1, offset: 0.45 }, { transform: `translate(${x1 - x0}px,${y1 - y0}px) scale(.7)`, opacity: .9 }], { duration: 500, easing: 'cubic-bezier(.5,0,.6,1)' }).onfinish = () => { f.remove(); to.classList.remove('bump'); void to.offsetWidth; to.classList.add('bump'); try { window.GF && GF.sfx && GF.sfx('pick', { st: 7 + i, gain: 0.5, noLayer: true }); } catch (e) { /* */ } }; }, i * 60);
+      } catch (e) { /* 연출 실패 무시 */ }
+    },
+    /** UI v2(docs/44 §3-7): 결과 창 단추는 800ms 부터 누를 수 있음(별이 다 뜨기 전 실수 탭 방지) */
+    arm(sc) { const sh = sc && (sc.querySelector('.uk-sheet') || sc); if (!sh) return; sh.classList.add('uk-arming'); setTimeout(() => sh.classList.remove('uk-arming'), 800); },
     stars(n, max) { const d = el('div', 'uk-stars'); for (let i = 0; i < (max || 3); i++) { const w = el('div'); w.innerHTML = ICONS.star; const sv = w.firstChild; if (i < n) sv.classList.add('on'); d.appendChild(sv); } return d; },
     /** 결과 화면(스테이지·레벨 끝): UK.result({title, stars, chips, onNext, onRetry, onHome}) — 유아는 글자 대신 아이콘 버튼만 쓰게 kid:true */
     result(o) {
       document.querySelectorAll('.uk-finger').forEach((x) => x.remove());   // 판에서 쓰던 손가락 안내가 결과 창 글자 위에 남지 않게(2차 리뷰 P3)
       const acts = [];
       if (o.kid) { const sc = UK.modal({ title: o.title, stars: o.stars, chips: o.chips, parent: o.parent }); const a = el('div', 'acts row', sc.firstChild);
-        if (o.onRetry) UK.round({ icon: 'replay', cls: 'lg pink', onclick: () => { sc.close(); o.onRetry(); } }, a);
         if (o.onNext) UK.round({ icon: 'next', cls: 'lg', onclick: () => { sc.close(); o.onNext(); } }, a);
-        a.style.justifyContent = 'center'; UK.confetti(sc); sfx('celebrate'); return sc; }
+        if (o.onRetry) { const sub = el('div', 'uk-res-sub', sc.firstChild); UK.round({ icon: 'replay', cls: 'sm', onclick: () => { sc.close(); o.onRetry(); } }, sub); }   /* UI v2: 결과 = 별·「다음」 하나 크게, 「다시」는 아래 작은 아이콘(유아도) */
+        if (!o.onNext && o.onRetry) a.remove();
+        a.style.justifyContent = 'center'; UK.confetti(sc); UK.arm(sc); try { const n = Math.max(0, Math.min(3, o.stars | 0)); if (window.GF && GF.sfxSeq && n) GF.sfxSeq([...Array(n)].map((_, i) => ['star', 210 + i * 300, { st: [0, 4, 7][i] }]).concat([['celebrate', 210 + n * 300 + 60]])); else sfx('celebrate'); } catch (e) { sfx('celebrate'); } return sc; }
       /* 성인: 큰 버튼은 하나(다음 > 다시 > 처음으로 중 첫째), 나머지는 아래 작은 둥근 아이콘. 별과 겹치는 「★」 칩은 뺀다(2차 리뷰 G4) */
       const all = [];
       if (o.onNext) all.push({ text: o.nextText || GF.t('c17.ui_kit.001'), cls: 'green', icon: 'next', onclick: o.onNext });
@@ -2108,7 +2256,8 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
       const chips = (o.chips || []).filter((x) => !/^\s*★/.test(String(x.text || '')));
       const sc = UK.modal({ title: o.title, stars: o.stars, body: o.body, big: o.big, chips: chips.length ? chips : null, actions: acts, parent: o.parent }); UK.confetti(sc);
       if (all.length > 1) { const sub = el('div', 'uk-res-sub', sc.firstChild); all.slice(1).forEach((x) => UK.round({ icon: x.icon, cls: 'sm', label: x.text, onclick: () => { sc.close(); x.onclick && x.onclick(); } }, sub)); }
-      try { const n = Math.max(0, Math.min(3, o.stars | 0)); if (window.GF && GF.sfxSeq && n) GF.sfxSeq([...Array(n)].map((_, i) => ['star', 120 + i * 230, { st: [0, 4, 7][i] }]).concat([['celebrate', 120 + n * 230 + 60]])); else sfx('celebrate'); } catch (e) { sfx('celebrate'); }      // 별 하나마다 한 음씩 올라가고 마지막에 팡파르(C4)
+      try { const n = Math.max(0, Math.min(3, o.stars | 0)); if (window.GF && GF.sfxSeq && n) GF.sfxSeq([...Array(n)].map((_, i) => ['star', 210 + i * 300, { st: [0, 4, 7][i] }]).concat([['celebrate', 210 + n * 300 + 60]])); else sfx('celebrate'); } catch (e) { sfx('celebrate'); }      // 별 하나마다 한 음씩 올라가고 마지막에 팡파르(C4) · UI v2: 별 300ms 간격(소리 = 팝 정점)
+      UK.arm(sc); try { const pill = document.getElementById('b-stars') || document.querySelector('.screen.on .uk-pill'), st = sc.querySelector('.uk-stars'); if (pill && pill.offsetParent && st && (o.stars | 0) > 0) setTimeout(() => UK.fly(st, pill, Math.min(5, 2 + (o.stars | 0))), 1300); } catch (e) { /* */ }   // 별이 위 알약으로 날아감
       return sc;
     },
     confetti(parent) {
@@ -4859,10 +5008,10 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
     grp.insertBefore(b, grp.firstChild);
     const sync = () => { b.style.display = (GF.stack || []).length <= 1 ? '' : 'none'; }; const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); sync(); }; sync();
   }
-  /** 보호자 메뉴 열기(유아): 제목을 3초 길게 누르면 구구단 잠금 뒤에 열린다 */
+  /** 보호자 메뉴 열기(유아): 제목을 2초 길게 누르면 구구단 잠금 뒤에 열린다 */
   function kidHold() {
     let t = null; const stop = () => { clearTimeout(t); t = null; };
-    document.addEventListener('pointerdown', (e) => { const x = e.target && e.target.closest && e.target.closest('.uk-title'); if (!x) return; stop(); t = setTimeout(() => GF.gate(() => openSettings('parent')), 3000); }, true);
+    document.addEventListener('pointerdown', (e) => { const x = e.target && e.target.closest && e.target.closest('.uk-title'); if (!x) return; stop(); t = setTimeout(() => GF.gate(() => openSettings('parent')), 2000)   /* UI v2 §3-8: 2초 */; }, true);
     ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => document.addEventListener(ev, stop, true));
   }
 

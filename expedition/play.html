@@ -6903,7 +6903,8 @@ html[lang="en"] .xs .xh .xh-nat, html[lang="en"] .xh .xh-nat { font-size: 11px; 
   }
   /* D50 몬스터 결정 텍스처: gf-asset 이 만든 이음매 없는 타일(점=결정 · 선=조각 · 면=돌 · 입체=금빛 결정)을 SVG 필터(feImage→feTile→알파 합성→soft-light)로 몸통 위에 얹는다. 필터는 문서에 한 번만(GeoMon.texture) — 없으면 그냥 단색 */
   const TEXK = { '점': 'c', '선': 's', '면': 'h', '입체': 'c2' };
-  const wrap = (inner, o) => { o = o || {}; const s = o.size || 200, tf = o.tex && typeof document !== 'undefined' && document.getElementById('xtxdefs') ? ` filter="url(#xtx_${o.tex})"` : ''; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="${s}" height="${s}" class="geomon ${o.cls || ''}"${o.tone ? ` style="filter:hue-rotate(${o.tone * 18}deg) saturate(1.05)"` : ''} role="img" aria-label="${o.label || '기하학 몬스터'}"><g${tf}>${inner}</g></svg>`; };
+  let texOv = null;      /* D50 M2: 새 나라(25~29)에서는 몬스터 몸 질감을 나라 텍스처(n25~n29)로 — 전투 화면이 setTex 로 켜고 끈다 */
+  const wrap = (inner, o) => { o = o || {}; const s = o.size || 200, tf = o.tex && typeof document !== 'undefined' && document.getElementById('xtx_' + o.tex) ? ` filter="url(#xtx_${o.tex})"` : ''; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="${s}" height="${s}" class="geomon ${o.cls || ''}"${o.tone ? ` style="filter:hue-rotate(${o.tone * 18}deg) saturate(1.05)"` : ''} role="img" aria-label="${o.label || '기하학 몬스터'}"><g${tf}>${inner}</g></svg>`; };
   const texture = (tiles) => { const d = typeof document !== 'undefined' ? document : null; if (!d || d.getElementById('xtxdefs') || !tiles) return; const h = d.createElement('div'); h.innerHTML = '<svg id="xtxdefs" width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true"><defs>' + Object.keys(tiles).map((k) => `<filter id="xtx_${k}" x="0" y="0" width="200" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feImage href="${tiles[k]}" x="0" y="0" width="100" height="100" preserveAspectRatio="none" result="t"/><feTile in="t" result="tt"/><feComposite in="tt" in2="SourceAlpha" operator="in" result="m"/><feComponentTransfer in="m" result="m2"><feFuncA type="linear" slope=".7"/></feComponentTransfer><feBlend in="m2" in2="SourceGraphic" mode="soft-light"/></filter>`).join('') + '</defs></svg>'; (d.body || d.documentElement).appendChild(h.firstChild); };
   const shadow = (cx, cy, rx) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${(rx * 0.16).toFixed(1)}" fill="rgba(80,60,40,.18)"/>`;
 
@@ -7264,7 +7265,8 @@ html[lang="en"] .xs .xh .xh-nat, html[lang="en"] .xh .xh-nat { font-size: 11px; 
   const api = {
     COL, OL, shade, face, rng, MON,
     list: () => Object.keys(MON).map((id) => Object.assign({ id }, MON[id], { fn: undefined })),
-    svg: (id, st, o) => wrap(MON[id].fn(st == null ? 0 : st, o), Object.assign({ label: MON[id].name, tex: TEXK[MON[id].tier] }, o)),
+    svg: (id, st, o) => wrap(MON[id].fn(st == null ? 0 : st, o), Object.assign({ label: MON[id].name, tex: (texOv && typeof document !== 'undefined' && document.getElementById('xtx_' + texOv)) ? texOv : TEXK[MON[id].tier] }, o)),
+    setTex: (k) => { texOv = k || null; },
     texture: texture,
     inner: (id, st, o) => MON[id].fn(st == null ? 0 : st, o),
     cubeFace: (fc, st, o) => wrap(cubeFaceSvg(fc, st == null ? 0 : st), Object.assign({ label: '정육면체 ' + fc }, o)),
@@ -7953,8 +7955,11 @@ html[lang="en"] .xs .xh .xh-nat, html[lang="en"] .xh .xh-nat { font-size: 11px; 
   /* D50 그림 묶음(gf-asset ComfyUI, 상업 이용 가능): 전투·로비 배경과 몬스터 텍스처 — 빌드본은 GF_DATA.exp_art 로 인라인, 개발본은 ui/art/ */
   const ART = (n) => (window.GF_DATA && GF_DATA.exp_art && GF_DATA.exp_art[n]) || ('ui/art/' + n);
   const XB_TEMPLE = ['bg/exp_bg_temple_2201.webp', 'bg/exp_bg_temple_2202.webp', 'bg/exp_bg_temple_2203.webp', 'bg/exp_bg_temple_2204.webp'], XB_VALLEY = ['bg/exp_bg_valley_2101.webp', 'bg/exp_bg_valley_2103.webp', 'bg/exp_bg_valley_2104.webp', 'bg/exp_bg_v1_1002.webp'];
+  const N2BG = { 25: 'n25_clock', 26: 'n26_porridge', 27: 'n27_oz', 28: 'n28_frog', 29: 'n29_alice' };
   const xbImg = (r, st, p) => {      // 전투 배경 그림: 대장·주간 보스 = 금 기둥 신전(나라마다 다른 장) · 일반 = 푸른 골짜기 4종을 단계로 돌려 쓴다, 나라마다 색조를 조금 돌림
-    const id = st && st.id > 0 && st.id <= 288 ? st.id : 1, nat = Math.floor((id - 1) / 12), boss = !!((st && (st.boss || st.mid)) || (p && p.wkb)), list = boss ? XB_TEMPLE : XB_VALLEY, f = list[(boss ? nat + id : nat * 3 + id) % list.length];
+    const rid = st && st.id > 288 && st.id <= 348 ? st.id : 0, n2 = rid ? N2BG[Math.floor((rid - 1) / 12) + 1] : null, isBoss = !!((st && (st.boss || st.mid)) || (p && p.wkb));
+    if (n2) { const d2 = el('div', 'xb-img', r); d2.style.backgroundImage = 'url("' + ART('bg/exp_bg_' + n2 + (isBoss ? '_boss' : '_a') + '.webp') + '")'; d2.style.setProperty('--hue', '0deg'); r.classList.add('xb-on'); r.insertBefore(d2, r.firstChild); return; }      /* D50 M2 새 나라 25~29: 나라마다 전용 배경(일반 · 대장) */
+    const id = st && st.id > 0 && st.id <= 288 ? st.id : 1, nat = Math.floor((id - 1) / 12), boss = isBoss, list = boss ? XB_TEMPLE : XB_VALLEY, f = list[(boss ? nat + id : nat * 3 + id) % list.length];
     const d = el('div', 'xb-img', r); d.style.backgroundImage = 'url("' + ART(f) + '")'; d.style.setProperty('--hue', (((nat * 29) % 70) - 25) + 'deg'); r.classList.add('xb-on'); r.insertBefore(d, r.firstChild);
   };
   const elIcon = (e) => `<i class="ex-el ${e}" title="${D.el[e].name}">${D.el[e].icon}</i>`;
@@ -7990,7 +7995,7 @@ html[lang="en"] .xs .xh .xh-nat, html[lang="en"] .xh .xh-nat { font-size: 11px; 
   GF.pill = () => (window.XI ? XI.chip('gem', S ? S.gems : 0) + (S && S.gold ? XI.chip('gold', S.gold) : '') : `<span class="ex-pill">💎 ${S ? S.gems : 0}</span>`);
   GF.home = () => { GF.stack = []; GF.go('xhome'); };
   {      // D41: 하단 탭 바(원정·동료·모집·도감·상점) — 화면이 바뀔 때 켜고 끈다
-    const o0 = GF.onScreen; GF.onScreen = function (n) { if (o0) o0.apply(this, arguments); if (window.XI) XI.onScreen(n, REMOTE); };
+    const o0 = GF.onScreen; GF.onScreen = function (n) { if (n !== 'xbattle' && window.GeoMon && GeoMon.setTex) GeoMon.setTex(null); if (o0) o0.apply(this, arguments); if (window.XI) XI.onScreen(n, REMOTE); };
   }
   const back = (r, to) => { const b = UK.btn({ text: GF.t('c16.exp.004'), cls: 'ghost sm ex-back', onclick: () => GF.go(to || 'xhome') }, r); return b; };
   const head = (r, t, sub) => { const h = el('div', 'ex-head', r); el('div', 'uk-title', h, t); if (sub) el('div', 'ex-sub', h, sub); return h; };
@@ -8525,7 +8530,7 @@ html[lang="en"] .xs .xh .xh-nat, html[lang="en"] .xh .xh-nat { font-size: 11px; 
   GF.screen('xbattle', {
     bare: false,
     enter(r, p) {
-      r.classList.add('uk', 'ex', 'exb'); GF.bg('field', r); bar(); { const nb = window.ExpArt && ExpArt.bg(p.chorus || p.practice || p.hard || p.walk || p.evt || p.dun || p.wkb ? 99 : (p.stage || 1)); if (nb) r.appendChild(nb); } /* 1~3나라 전투 배경(시차) */ const st = p.chorus ? SC.chorusStage() : p.practice ? SC.practiceStage() : p.hard ? (p.srv ? p.srv.stage : SC.hardStage(D, p.hard.n)) : p.walk ? (p.srv ? p.srv.stage : SC.walkStage(D, p.walk.n, walkSeasonNow().idx, S.cleared)) : p.wkb ? (p.srv ? p.srv.stage : { id: 9000, name: '', enemies: [] }) : p.evt ? (p.srv ? p.srv.stage : SC.eventStage(D, evById(p.evt.id), p.evt.k, S.cleared)) : p.dun ? (p.srv ? p.srv.stage : SC.dungeonStage(D, p.dun.day, p.dun.tier, S.cleared)) : D.stages.find((x) => x.id === p.stage); try { xbImg(r, st, p); } catch (e) { /* 그림 실패 무시 */ }
+      r.classList.add('uk', 'ex', 'exb'); GF.bg('field', r); bar(); { const nb = window.ExpArt && ExpArt.bg(p.chorus || p.practice || p.hard || p.walk || p.evt || p.dun || p.wkb ? 99 : (p.stage || 1)); if (nb) r.appendChild(nb); } /* 1~3나라 전투 배경(시차) */ const st = p.chorus ? SC.chorusStage() : p.practice ? SC.practiceStage() : p.hard ? (p.srv ? p.srv.stage : SC.hardStage(D, p.hard.n)) : p.walk ? (p.srv ? p.srv.stage : SC.walkStage(D, p.walk.n, walkSeasonNow().idx, S.cleared)) : p.wkb ? (p.srv ? p.srv.stage : { id: 9000, name: '', enemies: [] }) : p.evt ? (p.srv ? p.srv.stage : SC.eventStage(D, evById(p.evt.id), p.evt.k, S.cleared)) : p.dun ? (p.srv ? p.srv.stage : SC.dungeonStage(D, p.dun.day, p.dun.tier, S.cleared)) : D.stages.find((x) => x.id === p.stage); try { xbImg(r, st, p); } catch (e) { /* 그림 실패 무시 */ } try { if (window.GeoMon && GeoMon.setTex) GeoMon.setTex(st && st.id > 288 && st.id <= 348 ? 'n' + (Math.floor((st.id - 1) / 12) + 1) : null); } catch (e) { /* 질감 실패 무시 */ }
       if (REMOTE && !p.srv && p.evt) { GF.bg('field', r); el('p', 'ex-wait', r, GF.t('c16.exp.072')); http('POST', '/event/start', { ev: p.evt.id, k: p.evt.k }).then((srv) => { if (r.isConnected) GF.replace('xbattle', { evt: p.evt, srv }); }).catch((e) => { UK.toast(e.code === 'event_closed' ? '지금은 열려 있지 않은 이벤트예요' : e.code === 'locked' ? '앞 칸을 먼저 깨요' : '서버에 연결하지 못했어요', document.getElementById('safe')); GF.replace('xevent'); }); return; }
       if (REMOTE && !p.srv && p.chorus) { GF.bg('field', r); el('p', 'ex-wait', r, GF.t('c16.exp.072')); http('POST', '/chorus/start', {}).then((srv) => { if (r.isConnected) GF.replace('xbattle', { chorus: 1, srv }); }).catch((e) => { UK.toast(e.code === 'locked' ? D.bal.chorus.unlock + '단계를 깬 뒤에 열려요' : '서버에 연결하지 못했어요', document.getElementById('safe')); GF.replace('xchorus'); }); return; }
       if (REMOTE && !p.srv && p.hard) { GF.bg('field', r); el('p', 'ex-wait', r, GF.t('c16.exp.072')); http('POST', '/hard/start', { n: p.hard.n }).then((srv) => { if (r.isConnected) GF.replace('xbattle', { hard: p.hard, srv }); }).catch((e) => { UK.toast(e.code === 'stage_locked' ? '앞 단계를 먼저 깨야 해요' : e.code === 'locked' ? '1회차를 다 깬 뒤에 열려요' : '서버에 연결하지 못했어요', document.getElementById('safe')); GF.replace('xhard'); }); return; }
@@ -8845,7 +8850,7 @@ html[lang="en"] .xs .xh .xh-nat, html[lang="en"] .xh .xh-nat { font-size: 11px; 
     UK.mode('adult');
     if (window.ExpEN && ExpEN.active) await ExpEN.init((opts && opts.base) != null ? opts.base : '../../');      // D47 영어판 사전(en 일 때만 실제로 기다림)
     await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'expedition_slice', 'art_slots'], storeKey: 'gfx:slice:ui:v1', async start() {
-      if (window.GeoMon && GeoMon.texture) { try { GeoMon.texture({ c: ART('tex/c.webp'), s: ART('tex/s.webp'), h: ART('tex/h.webp'), c2: ART('tex/c2.webp') }); } catch (e) { /* 텍스처 실패 무시 */ } }
+      if (window.GeoMon && GeoMon.texture) { try { { const tl = { c: ART('tex/c.webp'), s: ART('tex/s.webp'), h: ART('tex/h.webp'), c2: ART('tex/c2.webp') }; [25, 26, 27, 28, 29].forEach((n) => { if (!window.GF_DATA || !GF_DATA.exp_art || GF_DATA.exp_art['tex/n' + n + '.webp']) tl['n' + n] = ART('tex/n' + n + '.webp'); }); GeoMon.texture(tl); } } catch (e) { /* 텍스처 실패 무시 */ } }
       if (window.ExpSnd) { ExpSnd.install(); try { ExpSnd.out(); } catch (e) { /* 오디오 없음 */ } }      // D48 전용 소리(부팅 뒤라 데이터 경로가 정해진 때)
       D = GF.data.expedition_slice; if (window.GF_WEB_DEMO) { D.stages = D.stages.slice(0, 36); if (D.nations) D.nations = D.nations.slice(0, 3); }      // [H2] 웹 체험판: 1~3나라(36단계)까지 — 서버·계정 없음, 저장은 이 기기 안
       D.units.forEach((u) => { UD[u.id] = u; }); S = REMOTE ? fresh() : load(); if (/[?&]seed=(\d+)/.test(location.search)) S.seed = +RegExp.$1; if (REMOTE) { await remoteBoot(); nbInit(); } GF.tale.init('expedition', null, { kid: false });

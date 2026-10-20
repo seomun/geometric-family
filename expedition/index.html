@@ -5,11 +5,14 @@
 <link rel="icon" type="image/png" sizes="32x32" href="art/favicon_32.png"><link rel="apple-touch-icon" href="art/favicon_192.png"><link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet"><style>/* 기하학 원정대 전용 UI 키트 (D38 시안) — 10앱 UK 키트(games/engine/ui-kit)와 따로 간다.
    톤: 진한 남색·자주·금 광원 · 두꺼운 금테 패널 · 큰 제목 글꼴(Black Han Sans, 배포 시 woff2 부분집합으로 번들) · 모서리 각진 프레임 · 발광 버튼.
    쓰는 곳(시안): lobby_mock.html · battle_hud_mock.html · landing/index.html · keyart.html. 본 구현 땐 exp.js 화면들이 이 클래스(.xi-*)로 옮겨 간다. */
+/* D50 글꼴: 서브셋 woff2 를 같이 둔다(구글 폰트 의존 없음, tools/exp_font_subset.py · OFL 전문은 fonts/). 빌드본은 base64 로 인라인 */
+@font-face { font-family: 'Black Han Sans'; src: url('fonts/bhs.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Gasoek One'; src: url('fonts/gasoek.woff2') format('woff2'); font-display: swap; }
 :root {
   --xi-ink: #070A22; --xi-navy: #0B1030; --xi-night: #141A4A; --xi-violet: #3A1A6E; --xi-purple: #6A2BA8; --xi-magenta: #B0307F;
   --xi-gold: #FFC94A; --xi-gold2: #FFE9A6; --xi-gold3: #B07A12; --xi-cyan: #5CE1FF; --xi-red: #FF4D5E; --xi-green: #5BE38B; --xi-text: #F4EEFF; --xi-dim: #A9A3D6;
   --xi-deep: #1C2366; --xi-g3: #4DA3FF; --xi-g4: #B06BFF; --xi-g5: #FFC94A; --xi-a-support: #F08A3C; --xi-a-flash: #FF4D7A; --xi-a-care: #4D8BFF; --xi-logo: 'Gasoek One', 'Black Han Sans', sans-serif;
-  --xi-title: 'Black Han Sans', 'Noto Sans KR', 'Malgun Gothic', sans-serif; --xi-body: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  --xi-title: 'Black Han Sans', 'Noto Sans KR', 'Malgun Gothic', sans-serif; --xi-body: 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans CJK KR', sans-serif;
 }
 .xi { font-family: var(--xi-body); color: var(--xi-text); }
 .xi-bg { background: radial-gradient(120% 70% at 50% 18%, #5B2A9A 0%, #2A1763 38%, #0B1030 78%, #050718 100%); }

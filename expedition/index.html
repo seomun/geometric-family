@@ -418,6 +418,92 @@ footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 1
     return g + face(st, 100, 108, 1.0);
   }
 
+
+  /* ───────── D50 M2 새 몬스터 14종: 점 3(꼭짓점·교점·중점) · 선 3(대각선·곡선·평행선) · 면 3(마름모·사다리꼴·평행사변형) · 입체 대장 5(쌍뿔·엇각기둥·육팔면체·별 다면체·클라인 병) ───────── */
+  function vertex(st) {    // 점 계열: 꼭짓점 — 모서리 셋이 만나는 점(둥근 몸에서 뿔 셋이 뻗음)
+    const c = COL.care, tidy = st === 2; let g = shadow(100, 176, 64); const arms = tidy ? [[-34, -70], [34, -70], [0, 66]] : [[-74, -52], [78, -38], [-6, 84]];
+    arms.forEach(([dx, dy], i) => { const x = 100 + dx, y = 104 + dy; g += `<path d="M100 104 L${x} ${y}" stroke="${OL}" stroke-width="13" stroke-linecap="round"/><path d="M100 104 L${x} ${y}" stroke="${shade(c, .28)}" stroke-width="7" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="${9 - i}" fill="${shade(c, .45)}" stroke="${OL}" stroke-width="3.5"/>`; });
+    g += `<circle cx="100" cy="104" r="50" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="82" cy="80" rx="16" ry="9" fill="#fff" opacity=".28" transform="rotate(-28 82 80)"/>`;
+    return g + face(st, 100, 108, 0.98);
+  }
+  function inter(st) {     // 점 계열: 교점 — X 로 만나는 두 선의 가운데 점
+    const c = COL.care, tidy = st === 2; let g = shadow(100, 176, 62);
+    g += `<g transform="rotate(${tidy ? 45 : 32} 100 104)"><rect x="14" y="92" width="172" height="24" rx="12" fill="${shade(c, .3)}" stroke="${OL}" stroke-width="4"/></g><g transform="rotate(${tidy ? -45 : -58} 100 104)"><rect x="14" y="92" width="172" height="24" rx="12" fill="${shade(c, .12)}" stroke="${OL}" stroke-width="4"/></g>`;
+    g += `<circle cx="100" cy="104" r="46" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="84" cy="84" rx="14" ry="8" fill="#fff" opacity=".28" transform="rotate(-28 84 84)"/>`;
+    return g + face(st, 100, 107, 0.9);
+  }
+  function mid(st) {       // 점 계열: 중점 — 양끝 점 사이 한가운데 매달린 점
+    const c = COL.care, tidy = st === 2, y = tidy ? 100 : 86; let g = shadow(100, 178, 60);
+    g += `<path d="M20 ${tidy ? 100 : 60} L100 ${y + 40} L180 ${tidy ? 100 : 60}" stroke="${OL}" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 ${tidy ? 100 : 60} L100 ${y + 40} L180 ${tidy ? 100 : 60}" stroke="${shade(c, .3)}" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+    g += `<circle cx="20" cy="${tidy ? 100 : 60}" r="11" fill="${shade(c, .45)}" stroke="${OL}" stroke-width="3.5"/><circle cx="180" cy="${tidy ? 100 : 60}" r="11" fill="${shade(c, .45)}" stroke="${OL}" stroke-width="3.5"/>`;
+    g += `<circle cx="100" cy="${y + 40}" r="44" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="86" cy="${y + 22}" rx="13" ry="7" fill="#fff" opacity=".28" transform="rotate(-28 86 ${y + 22})"/>`;
+    return g + face(st, 100, y + 43, 0.88);
+  }
+  function diag(st) {      // 선 계열: 대각선 — 사각을 가로지르는 긴 선
+    const c = COL.flash, tidy = st === 2; let g = shadow(100, 176, 76);
+    g += `<rect x="40" y="48" width="120" height="120" rx="10" fill="none" stroke="${OL}" stroke-width="3" stroke-dasharray="7 7" opacity=".4"/>`;
+    g += `<g transform="rotate(${tidy ? 38 : 46} 100 108)">${poly([[6, 108], [32, 84], [168, 84], [194, 108], [168, 132], [32, 132]], c, 4.5)}<rect x="46" y="90" width="70" height="8" rx="4" fill="#fff" opacity=".3"/></g>`;
+    return g + face(st, 100, 110, 1.0);
+  }
+  function curve(st) {     // 선 계열: 곡선 — S 자로 흔들리는 선
+    const c = COL.flash, tidy = st === 2; let g = shadow(100, 176, 74); const a = tidy ? 14 : 34;
+    const d = `M18 ${130 + a} C 70 ${40 - a} 130 ${210 - a} 182 ${74 - a}`; g += `<path d="${d}" stroke="${OL}" stroke-width="36" fill="none" stroke-linecap="round"/><path d="${d}" stroke="${c}" stroke-width="27" fill="none" stroke-linecap="round"/><path d="${d}" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".28" transform="translate(-2 -6)"/>`;
+    g += `<circle cx="100" cy="108" r="40" fill="${c}" stroke="${OL}" stroke-width="4.5"/>`;
+    return g + face(st, 100, 111, 0.9);
+  }
+  function para(st) {      // 선 계열: 평행선 — 나란한 두 선(둘이 쌍둥이처럼)
+    const c = COL.flash, tidy = st === 2; let g = shadow(100, 176, 76);
+    g += `<g transform="rotate(${tidy ? 0 : 6} 100 120)">${poly([[14, 118], [186, 118], [186, 154], [14, 154]], shade(c, -.1), 4.5)}</g>`;
+    g += `<g transform="rotate(${tidy ? 0 : -6} 100 80)">${poly([[14, 56], [186, 56], [186, 108], [14, 108]], c, 4.5)}${poly([[14, 56], [34, 82], [14, 108]], shade(c, .3), 4.5)}<rect x="44" y="62" width="66" height="8" rx="4" fill="#fff" opacity=".3"/></g>`;
+    return g + face(st, 108, tidy ? 84 : 84, 0.98);
+  }
+  function rhomb(st) {     // 면 계열: 마름모 — 네 변이 같은 기울어진 사각
+    const c = COL.support, tidy = st === 2; let g = shadow(100, 178, 70);
+    g += poly([[100, 20], [180, 106], [100, 184], [20, 106]], c, 4.5) + poly([[100, 20], [120, 40], [60, 92], [40, 84]], shade(c, .3), 3, 'opacity=".5"');
+    if (!tidy) g += `<path d="M100 20 L108 8 M180 106 L194 100 M20 106 L6 100" stroke="${OL}" stroke-width="4" stroke-linecap="round"/>`;
+    return g + face(st, 100, 108, 1.0);
+  }
+  function trap(st) {      // 면 계열: 사다리꼴 — 윗변이 짧은 사각
+    const c = COL.support, tidy = st === 2; let g = shadow(100, 178, 80);
+    g += `<g transform="rotate(${tidy ? 0 : -4} 100 120)">${poly([[58, 52], [142, 52], [186, 156], [14, 156]], c, 4.5)}${poly([[58, 52], [142, 52], [132, 70], [68, 70]], shade(c, .3), 3, 'opacity=".55"')}</g>`;
+    return g + face(st, 100, 110, 1.1);
+  }
+  function para2(st) {     // 면 계열: 평행사변형 — 기울어진 면(짝 변이 나란함)
+    const c = COL.support, tidy = st === 2; let g = shadow(100, 178, 80); const sh = tidy ? 24 : 42;
+    g += poly([[14 + sh, 58], [186, 58], [186 - sh, 154], [14, 154]], c, 4.5) + `<rect x="${44 + sh / 2}" y="64" width="62" height="8" rx="4" fill="#fff" opacity=".3"/>`;
+    return g + face(st, 100 + sh / 2 - 12, 110, 1.05);
+  }
+  function bipyr(st, o) {  // 입체 대장: 쌍뿔 — 위아래 뿔 두 쪽(시계 바늘 모양)
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 186, 64);
+    if (!hide.includes('bot')) g += poly([[100, 188], [30, 104], [170, 104]], shade(c, -.28), 4.5) + poly([[100, 188], [100, 104], [170, 104]], shade(c, -.12), 4.5);
+    if (!hide.includes('top')) g += poly([[100, 14], [30, 104], [170, 104]], c, 4.5) + poly([[100, 14], [100, 104], [30, 104]], shade(c, .22), 4.5) + face(st, 100, 86, 0.8);
+    return g;
+  }
+  function antiprism(st, o) {  // 입체 대장: 엇각기둥 — 윗면과 아랫면이 엇갈린 기둥(솥 뚜껑 모양)
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
+    if (!hide.includes('side')) g += poly([[26, 76], [63, 90], [100, 76], [137, 90], [174, 76], [174, 148], [137, 162], [100, 148], [63, 162], [26, 148]], c, 4.5) + `<path d="M63 90 L63 162 M137 90 L137 162" stroke="${OL}" stroke-width="2.6" opacity=".35"/>` + face(st, 100, 120, 0.95);
+    if (!hide.includes('top')) g += poly([[26, 76], [63, 56], [137, 56], [174, 76], [137, 90], [63, 90]], shade(c, .3), 4.5);
+    return g;
+  }
+  function cuboct(st, o) {  // 입체 대장: 육팔면체 — 정사각 6 + 정삼각 8(모서리를 깎은 상자)
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
+    g += poly([[56, 40], [144, 40], [182, 78], [182, 150], [144, 184], [56, 184], [18, 150], [18, 78]], shade(c, -.3), 4.5);
+    if (!hide.includes('tri')) [[[56, 40], [18, 78], [56, 78]], [[144, 40], [182, 78], [144, 78]], [[18, 150], [56, 184], [56, 150]], [[182, 150], [144, 184], [144, 150]]].forEach((t) => { g += poly(t, shade(c, .3), 3.6); });
+    if (!hide.includes('sq')) g += poly([[56, 78], [144, 78], [144, 150], [56, 150]], c, 4.5) + face(st, 100, 116, 0.95);
+    return g;
+  }
+  function stella(st, o) {  // 입체 대장: 별 다면체 — 뾰족한 가시가 돋은 몸(빗방울 가시)
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70), pts = [];
+    if (!hide.includes('spikes')) { for (let i = 0; i < 16; i++) { const a = -Math.PI / 2 + i * Math.PI / 8, r = i % 2 ? 54 : 92; pts.push([100 + Math.cos(a) * r, 106 + Math.sin(a) * r]); } g += poly(pts, shade(c, .12), 4.5); }
+    if (!hide.includes('core')) g += poly([[100, 56], [150, 106], [100, 156], [50, 106]], c, 4.5) + `<ellipse cx="82" cy="84" rx="14" ry="7" fill="#fff" opacity=".3" transform="rotate(-30 82 84)"/>` + face(st, 100, 108, 0.85);
+    return g;
+  }
+  function klein(st, o) {  // 입체 대장: 클라인 병 — 목이 몸 안으로 되돌아가는 병(찻주전자 닮음)
+    o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
+    if (!hide.includes('neck')) g += `<path d="M118 76 C 156 40 188 60 170 92 C 156 118 128 120 112 128" stroke="${OL}" stroke-width="30" fill="none" stroke-linecap="round"/><path d="M118 76 C 156 40 188 60 170 92 C 156 118 128 120 112 128" stroke="${shade(c, .22)}" stroke-width="21" fill="none" stroke-linecap="round"/>`;
+    if (!hide.includes('body')) g += `<ellipse cx="86" cy="130" rx="64" ry="52" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="62" cy="104" rx="16" ry="8" fill="#fff" opacity=".3" transform="rotate(-28 62 104)"/>` + face(st, 82, 134, 0.95);
+    return g;
+  }
   const MON = {
     dot: { fn: dot, name: '동글점', tier: '점', el: 'care', shape: '원', line: '점 하나가 둥글게 뭉치면? 동그라미!', facts: '꼭짓점 0 · 면 1(곡면)' },
     line: { fn: line, name: '뾰족선', tier: '선', el: 'flash', shape: '삼각', line: '삼각형이 일렬로 서면 지그재그 선', facts: '삼각형 5 · 꼭짓점 15' },
@@ -460,12 +546,26 @@ footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 1
     cuboid: { fn: cuboid, name: '직육면체 대장', tier: '입체(보스)', el: 'boss', shape: '직육면체', line: '긴 상자 모양 대장', facts: '면 6 · 모서리 12 · 꼭짓점 8', faces: ['side', 'top', 'front'] },
     hemi: { fn: hemi, name: '반구 대장', tier: '입체(보스)', el: 'boss', shape: '반구', line: '둥근 지붕이 먼저 떨어져요', facts: '면 2(곡면 1)', faces: ['dome', 'base'] },
     ellip: { fn: ellip, name: '타원체 대장', tier: '입체(보스)', el: 'boss', shape: '타원체', line: '럭비공처럼 길쭉해요', facts: '곡면 1' },
+    vertex: { fn: vertex, name: '꼭짓점', tier: '점', el: 'care', shape: '원', line: '모서리 셋이 만나는 점', facts: '모서리 3 · 만나는 점 1' },
+    inter: { fn: inter, name: '교점', tier: '점', el: 'care', shape: '원', line: '두 선이 만나는 한 점', facts: '선 2 · 만나는 점 1' },
+    mid: { fn: mid, name: '중점', tier: '점', el: 'care', shape: '원', line: '양끝에서 같은 거리, 한가운데 점', facts: '끝점 2 · 가운데 1' },
+    diag: { fn: diag, name: '대각선', tier: '선', el: 'flash', shape: '삼각', line: '사각을 가로지르는 가장 긴 선', facts: '꼭짓점과 꼭짓점을 이어요' },
+    curve: { fn: curve, name: '곡선', tier: '선', el: 'flash', shape: '삼각', line: '곧지 않고 부드럽게 휜 선', facts: '곡선 1' },
+    para: { fn: para, name: '평행선', tier: '선', el: 'flash', shape: '삼각', line: '아무리 가도 만나지 않는 두 선', facts: '선 2 · 간격 같음' },
+    rhomb: { fn: rhomb, name: '마름모', tier: '면', el: 'support', shape: '사각', line: '네 변의 길이가 같아요', facts: '변 4 · 꼭짓점 4' },
+    trap: { fn: trap, name: '사다리꼴', tier: '면', el: 'support', shape: '사각', line: '마주 보는 한 쌍이 나란해요', facts: '변 4 · 나란한 변 1쌍' },
+    para2: { fn: para2, name: '평행사변형', tier: '면', el: 'support', shape: '사각', line: '마주 보는 변이 모두 나란해요', facts: '변 4 · 나란한 변 2쌍' },
+    bipyr: { fn: bipyr, name: '쌍뿔 대장', tier: '입체(보스)', el: 'boss', shape: '쌍뿔', line: '뿔 두 쪽이 맞붙었어요', facts: '면 6 · 꼭짓점 5', faces: ['top', 'bot'] },
+    antiprism: { fn: antiprism, name: '엇각기둥 대장', tier: '입체(보스)', el: 'boss', shape: '엇각기둥', line: '윗면과 아랫면이 엇갈린 기둥', facts: '면 8 · 삼각 6 + 삼각 2', faces: ['top', 'side'] },
+    cuboct: { fn: cuboct, name: '육팔면체 대장', tier: '입체(보스)', el: 'boss', shape: '육팔면체', line: '정사각 6 · 정삼각 8', facts: '면 14 · 모서리 24', faces: ['tri', 'sq'] },
+    stella: { fn: stella, name: '별 다면체 대장', tier: '입체(보스)', el: 'boss', shape: '별 다면체', line: '가시가 돋은 별 모양', facts: '꼭짓점 12 · 가시 12', faces: ['spikes', 'core'] },
+    klein: { fn: klein, name: '병 대장', tier: '입체(보스)', el: 'boss', shape: '클라인 병', line: '안팎이 없는 병(찻주전자 닮음)', facts: '곡면 1 · 안팎이 하나', faces: ['neck', 'body'] },
     fractal: { fn: fractal, name: '겹겹삼각', tier: '특별(프랙탈)', el: 'special', shape: '프랙탈', line: '삼각 안에 삼각 안에 삼각…', facts: '삼각형 27(3단) · 구멍 13' },
   };
   const api = {
     COL, OL, shade, face, rng, MON,
     list: () => Object.keys(MON).map((id) => Object.assign({ id }, MON[id], { fn: undefined })),
-    svg: (id, st, o) => wrap(MON[id].fn(st == null ? 0 : st, o), Object.assign({ label: MON[id].name, tex: (texOv && typeof document !== 'undefined' && document.getElementById('xtx_' + texOv)) ? texOv : TEXK[MON[id].tier] }, o)),
+    svg: (id, st, o) => wrap(MON[id].fn(st == null ? 0 : st, o), Object.assign({ label: MON[id].name, tex: (texOv && typeof document !== 'undefined' && document.getElementById('xtx_' + texOv)) ? texOv : TEXK[String(MON[id].tier).replace(/\(.*\)/, '')] }, o)),
     setTex: (k) => { texOv = k || null; },
     texture: texture,
     inner: (id, st, o) => MON[id].fn(st == null ? 0 : st, o),

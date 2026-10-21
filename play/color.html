@@ -1728,7 +1728,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       else st();
     };
     const main = GF.homeKit(r, { kid: true, key: 'toddler', title: GF.t('c17.gf.007'), fam: ['wife.good', 'baby.good', 'dong_dad.good'], first: !GF.state.stages.c1A, play, mainLabel: GF.t('c17.gf.002'),
-      pills: [['book', '#FFE0E8', () => GF.go('shelf'), GF.t('c17.gf.003')], ['game', '#E1F4FF', () => GF.go('playroom'), GF.t('c17.gf.004')], ['album', '#FFF3C2', () => GF.go('album', { book: 1 }), GF.t('c17.gf.005')], ['home', '#FFE3C2', () => GF.go('khouse'), GF.t('c17.gf.006')]].map((b) => ({ svg: IC[b[0]], bg: b[1], fn: b[2], label: b[3] })) });
+      pills: [['book', '#FFE0E8', () => GF.go('shelf'), GF.t('c17.gf.003')], ['game', '#E1F4FF', () => GF.go('playroom'), GF.t('c17.gf.004')], ['album', '#FFF3C2', () => GF.go('album', { book: 1 }), GF.t('c17.gf.005')]].concat(GF.craft && GF.data.craft_recipes ? [['craft', '#E9DDFB', () => GF.go('craft'), GF.t('craft.title')]] : []).concat([['home', '#FFE3C2', () => GF.go('khouse'), GF.t('c17.gf.006')]]).map((b) => ({ svg: IC[b[0]], bg: b[1], fn: b[2], label: b[3], badge: b[0] === 'craft' && GF.craft.canNew() ? IC.sparkle : undefined })) });
+    { const kp = r.querySelector('.hk-kpills'); if (kp && kp.children.length >= 5) kp.classList.add('k5'); }   // 알약 5개(공방 추가)면 한 줄에 맞게 조금 작게
     main.classList.add('homeplay');   /* 옛 시험·도구가 찾는 이름(모양은 .hk-kid 규칙이 이김) */
     // 부모 메뉴: 제목을 3초 길게
     let pt = null; const logo = r.querySelector('.hk-ttl');
@@ -2065,6 +2066,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     pn.appendChild(UK.stars(stars, 3));
     setTimeout(() => GF.sfx('star'), 150);
     const row = el('div', 'acts row', pn); row.style.justifyContent = 'center';
+    if (GF.craft && GF.data.craft_recipes) GF.craft.roundDrop(pn, row, run.kind === 'story' ? def.mode : run.mode, run.ch, run.i, last && run.kind === 'story');   // 뚝딱 공방(D45): 라운드마다 재료 하나(단계 끝이면 하나 더)
     if (!last) {
       const nb = el('button', 'uk-round lg', row, IC.play); nb.onclick = () => { GF.sfx('pick'); run.i++; clearTimers(); r.innerHTML = ''; GF.screens.round.enter(r); };
       return;
@@ -2175,8 +2177,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   async function loadData(namesOpt) {
     if (window.GF_DATA_P) { try { await window.GF_DATA_P; } catch (e) { /* 아래 개별 파일 읽기로 */ } }   // 웹 배포본: 큰 데이터는 옆 파일(<앱>.data.json)로 따로 받는다(tools/web_fast_paint.py --split)
     if (window.GF_DATA) return window.GF_DATA;
-    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items', 'housing']).concat(['names', 'ops']), out = {};
-    await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else if (n === 'ops') out[n] = null; else if (n === 'room_items') out[n] = null; else throw e; } }));
+    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items', 'housing', 'craft_recipes']).concat(['names', 'ops']), out = {};
+    await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else if (n === 'ops') out[n] = null; else if (n === 'room_items' || n === 'craft_recipes') out[n] = null; else throw e; } }));
     if (GF.lang === 'en') await Promise.all(names.map((n) => fetch(GF.base + 'data/en/' + n + '.json').then((r) => (r.ok ? r.json() : null)).then((j) => { if (!j || !j.strings) return; const s = {}; Object.keys(j.strings).forEach((p) => { if (j.strings[p]) s[p] = j.strings[p]; }); (out.i18n_en = out.i18n_en || {})[n] = s; }).catch(() => {})));   // 개발본: 영어 덮어쓰기 파일(data/en/*, 빌드본은 GF_DATA.i18n_en 에 이미 있음)
     return out;
   }
@@ -2482,6 +2484,18 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     m2_chesstable: (c) => svg(72, 58, `<ellipse cx="36" cy="22" rx="32" ry="11" ${st('#FFF6E5')}/><g clip-path="url(#ct)"><clipPath id="ct"><ellipse cx="36" cy="22" rx="30" ry="9.5"/></clipPath><path d="M6 13h10v6H6zM26 13h10v6H26zM46 13h10v6H46zM16 19h10v6H16zM36 19h10v6H36zM56 19h10v6H56zM6 25h10v6H6zM26 25h10v6H26zM46 25h10v6H46z" fill="${c}"/></g><ellipse cx="36" cy="22" rx="32" ry="11" fill="none" stroke="${INK}" stroke-width="${SW}"/><path d="M36 33v18M24 54h24" stroke="${INK}" stroke-width="3.4" stroke-linecap="round"/><path d="M46 8h10v6q0 4-5 4t-5-4z" ${st('#fff', 1.8)}/><path d="M56 10q4 0 3 4" fill="none" stroke="${INK}" stroke-width="1.6"/>`),
     m2_cardshelf: (c) => svg(56, 80, `<rect x="6" y="4" width="44" height="72" rx="6" ${st('#FFF6E5')}/><path d="M10 28h36M10 52h36" stroke="${INK}" stroke-width="2.4"/><path d="M14 10h6v14h-6zM22 12h5v12h-5zM30 10h7v14h-7zM14 34h8v14h-8zM26 36h6v12h-6zM36 34h6v14h-6zM14 58h6v14h-6zM32 58h9v14h-9z" fill="${c}" opacity=".85"/><path d="M14 64c0-3 4-3 4 0 0-3 4-3 4 0 0 3-4 6-4 6s-4-3-4-6z" fill="#E5484D"/>${face(28, 66, .55)}`),
     m2_teapot: (c) => svg(56, 54, `<rect x="18" y="2" width="16" height="12" rx="2" ${st('#3A2E39', 2)}/><rect x="13" y="13" width="26" height="4" rx="2" ${st('#3A2E39', 2)}/><path d="M18 9h16" stroke="#E5484D" stroke-width="2.4"/><ellipse cx="26" cy="34" rx="18" ry="16" ${st(c)}/><path d="M44 30q10-4 9-12" fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round"/><path d="M8 28q-8 2-4 12 3 5 6 2" fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>${face(26, 35, .9)}<path d="M18 50h16" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`),
+  });
+
+  /* 뚝딱 공방(D45) 가구 — 재료 둘로 만든 모양이 보이게(판자 결·벽돌 줄·천 바늘땀). 나머지 공방 가구는 기존 그림(table·bed·shelf·window·plant·party)을 쓴다 */
+  Object.assign(A, {
+    cr_chair: (c) => svg(46, 54, `<rect x="8" y="4" width="30" height="22" rx="4" ${st(c)}/><path d="M14 10h18M14 16h18" stroke="${shade(c, -.25)}" stroke-width="1.4"/><rect x="4" y="26" width="38" height="10" rx="3" ${st(shade(c, .1))}/><path d="M9 36v14M37 36v14" stroke="${INK}" stroke-width="3.4" stroke-linecap="round"/><rect x="16" y="28" width="14" height="6" rx="1.5" fill="#F6A55B" stroke="${INK}" stroke-width="1.2"/>${face(23, 14, .6)}`),
+    cr_doll: (c) => svg(42, 52, `<path d="M8 50q0-18 13-18t13 18z" ${st(c)}/><path d="M12 42h18" stroke="${INK}" stroke-width="1.2" stroke-dasharray="2 2"/><circle cx="21" cy="20" r="14" ${st('#7B8BE0')}/>${face(21, 20, .9).replace(/fill="#4A3030"/g, 'fill="#fff"').replace(/stroke="#4A3030"/g, 'stroke="#fff"')}<circle cx="11" cy="25" r="2.4" fill="#FF8FA8" opacity=".8"/><circle cx="31" cy="25" r="2.4" fill="#FF8FA8" opacity=".8"/>`),
+    cr_cart: (c) => svg(74, 50, `<path d="M58 14l12-10" stroke="${INK}" stroke-width="3.4" stroke-linecap="round"/><rect x="6" y="10" width="54" height="26" rx="5" ${st(c)}/><path d="M6 22h54" stroke="${INK}" stroke-width="1.4" opacity=".4"/><circle cx="18" cy="40" r="8" ${st('#FFF3B0', 2.4)}/><circle cx="18" cy="40" r="2" fill="${INK}"/><circle cx="48" cy="40" r="8" ${st('#FFF3B0', 2.4)}/><circle cx="48" cy="40" r="2" fill="${INK}"/>${face(33, 22, .7)}`),
+    cr_fence: (c) => svg(96, 40, `<rect x="2" y="8" width="92" height="28" rx="4" ${st(c)}/><path d="M2 17h92M2 27h92M16 8v9M40 8v9M64 8v9M88 8v9M28 17v10M52 17v10M76 17v10M16 27v9M40 27v9M64 27v9" stroke="${INK}" stroke-width="1.4" opacity=".55"/>${face(48, 21, .6)}`),
+    cr_blanket: (c) => svg(80, 36, `<rect x="4" y="6" width="72" height="26" rx="8" ${st(c)}/><path d="M22 6v26M40 6v26M58 6v26" stroke="${shade(c, -.2)}" stroke-width="2"/><rect x="22" y="6" width="18" height="26" fill="${shade(c, .3)}" opacity=".6"/><rect x="58" y="6" width="18" height="26" rx="0" fill="${shade(c, .3)}" opacity=".6"/><rect x="4" y="6" width="72" height="26" rx="8" fill="none" stroke="${INK}" stroke-width="${SW}"/>${face(31, 19, .6)}`),
+    cr_glasses: (c) => svg(56, 26, `<circle cx="14" cy="14" r="10" fill="#D6F1FF" stroke="${c}" stroke-width="4"/><circle cx="42" cy="14" r="10" fill="#D6F1FF" stroke="${c}" stroke-width="4"/><path d="M24 12q4-4 8 0" fill="none" stroke="${c}" stroke-width="3.4"/><path d="M10 10q3-2 6 0M38 10q3-2 6 0" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`),
+    cr_gourd: (c) => svg(50, 48, `<path d="M25 4q2 4 0 6" stroke="#3E8A4E" stroke-width="3" stroke-linecap="round"/><path d="M27 6q8-4 12 2-6 3-12-2z" fill="#6CCB8A" stroke="${INK}" stroke-width="1.4"/><ellipse cx="25" cy="28" rx="21" ry="17" ${st(c)}/><path d="M18 14q-6 14 0 28M32 14q6 14 0 28" fill="none" stroke="${shade(c, -.2)}" stroke-width="1.4"/>${face(25, 28, .9)}<path d="M40 14l2-4M44 18l4-1" stroke="#FFC933" stroke-width="2" stroke-linecap="round"/>`),
+    cr_rope: (c) => svg(30, 80, `<path d="M15 2q-8 8 0 16t0 16 0 16 0 16 0 12" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/><path d="M15 2q-8 8 0 16t0 16 0 16 0 16 0 12" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round"/><path d="M11 10l8 4M11 26l8 4M11 42l8 4M11 58l8 4" stroke="${shade(c, -.25)}" stroke-width="1.6"/><circle cx="15" cy="74" r="5" ${st('#FFC933', 2)}/>`),
   });
 
   /* 한 벌(방 대표): 같은 가족의 가구 셋을 한 장에 모아 둔다 */

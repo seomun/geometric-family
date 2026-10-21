@@ -554,6 +554,8 @@ img { -webkit-user-drag: none; pointer-events: none; }
 [data-uk="kid"] .rm-tools .uk-btn svg { display: block; }
 .rm-plate { display: inline-flex; align-items: center; gap: 8px; border: 3px dashed; border-radius: var(--uk-r-m); padding: 4px 14px 4px 8px; box-shadow: var(--uk-sh); font-family: var(--uk-font); } .rm-plate img { height: 44px; width: auto; } .rm-plate small { display: block; font: 700 calc(14px * var(--uk-fs-k, 1))/1 var(--uk-font); color: var(--uk-ink2); } .rm-plate b { font: 900 calc(18px * var(--uk-fs-k, 1))/1.2 var(--uk-font); color: var(--uk-ink); }
 .h2-searow{flex-wrap:wrap;align-items:center;gap:4px 8px}.h2-searow>b{white-space:nowrap;min-width:2.4em}.h2-seachip{white-space:nowrap;font-size:18px}.h2-seachip.on{opacity:.55}.h2-seachip.cur{outline:2px solid #f5b400;border-radius:8px}
+/* 보너스 칸(허브 10/22 #6): 다른 앱에서만 얻는 가구 — 숙제가 아니라 덤. 흐리게, 누르는 단추 없음 */
+.h2-task.bonus { opacity: .62; border-style: dashed; } .h2-task.bonus img { filter: saturate(.6); }
 
 /* 공통 부가 UI(설정·보호자 메뉴·통계·업적·출석·쉬어요) — 키트 토큰만 */
 .xt-sheet { max-height: 560px; overflow-y: auto; touch-action: pan-y; }   /* 설정 줄이 많아져도 화면 안에서 스크롤 */
@@ -991,6 +993,11 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
 .xt-sheet > .uk-x { right: 8px; top: 8px; width: 44px; height: 44px; border-width: 3px; }
 .xt-sheet { padding-bottom: 0; }
 .xt-sheet .acts { bottom: 0; margin: 0 -16px; padding: 14px 16px 16px; background: linear-gradient(rgba(255,255,255,0), var(--uk-card, #fff) 14px); }
+/* 「이야기 보기」(허브 10/22 첫 판까지 5초): 첫 판을 깬 뒤 홈 오른쪽 위에 — 미뤄 둔 프롤로그를 여는 단추 */
+.tale-offer { position: absolute; right: 12px; top: 78px; z-index: 30; display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 22px; border: 3px solid var(--uk-line, #4A3030); background: #FFF1B8; font: 800 15px/1 var(--uk-font, sans-serif); color: var(--uk-ink, #3A2E39); box-shadow: 0 4px 0 rgba(74, 48, 48, .25); cursor: pointer; animation: tale-offer 1.6s ease-in-out 3; }
+.tale-offer.kid { width: 64px; height: 64px; padding: 10px; justify-content: center; } .tale-offer svg { width: 100%; height: 100%; }
+.hk-ttl .tale-offer { position: static; display: inline-flex; margin: 10px auto 0; }   /* 공통 홈에선 제목판 바로 아래 가운데(제목을 덮지 않게, 재점검 10/22) */
+@keyframes tale-offer { 50% { transform: translateY(-4px) scale(1.04); } }
 
 /* 이야기 지도(GF.saga) — 사가 맵. 그림은 슬롯(map:*), 없으면 이 CSS·이모지 임시 그림 */
 .sg-root { position: absolute; left: 0; right: 0; top: 66px; bottom: 0; }
@@ -1604,8 +1611,9 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     hill: () => sky('#FFD9A8', '#FFF0D9') + '<circle cx="80" cy="130" r="50" fill="#FFB347" opacity=".9"/>' + G(rep(() => hill(520, '#C9E08A', [180, 330, 170]) + hill(600, '#A9D36E', [60, 220, 90])) + band(600, '#A9D36E') + '<g class="sway"><rect x="288" y="380" width="14" height="150" fill="#8A5A3B"/><circle cx="295" cy="370" r="64" fill="#7FBF5A"/><circle cx="270" cy="395" r="9" fill="#FF9A3C"/><circle cx="312" cy="380" r="9" fill="#FF9A3C"/><circle cx="296" cy="345" r="9" fill="#FF9A3C"/></g>') + butterfly(360, '#FF8FA8', '#FFF3B0'),
     field: () => sky('#CDEFFF', '#F7FCFF') + cloud(90, 90, 1) + cloud(260, 150, .8) + G(rep(() => hill(500, '#B6E6A0', [180, 340, 100])) + band(520, '#C79A6B') + band(558, '#A97B4E', 6) + band(598, '#A97B4E', 6)) + butterfly(320, '#B197FC', '#fff'),
     night: () => sky('#1F2A5C', '#4B5C9C') + rep(() => [[40, 80], [120, 150], [250, 70], [320, 160], [200, 210], [60, 260], [310, 300]].map((p) => '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3" fill="#FFF3B0"/>').join('')) + '<circle cx="270" cy="120" r="40" fill="#FFF3B0"/><circle cx="286" cy="110" r="36" fill="#2B3870"/>' + G(rep(() => hill(660, '#2F4A6B', [180, 330, 160])) + band(640, '#2F4A6B')),
-    indoor: () => '<rect x="-1500" y="-1500" width="3360" height="1880" fill="#FFE1B8"/><g><rect x="244" y="70" width="96" height="104" rx="10" fill="#BFE8FF" stroke="#8A5A3B" stroke-width="6"/><path d="M292 70v104M244 122h96" stroke="#8A5A3B" stroke-width="4"/></g>' + band(470, '#D9A66B', 1700) + band(470, '#B98550', 6) + '<rect x="-1500" y="476" width="3360" height="1700" fill="#E3B27F" opacity=".5"/>',
-    indoor2: () => '<rect x="-1500" y="-1500" width="3360" height="1880" fill="#FFE1B8"/>' + band(470, '#D9A66B', 1700) + band(470, '#B98550', 6) + '<rect x="-1500" y="476" width="3360" height="1700" fill="#E3B27F" opacity=".5"/>',
+    indoor: () => '<rect x="-1500" y="-1500" width="3360" height="1970" fill="#FFE1B8"/><g><rect x="244" y="70" width="96" height="104" rx="10" fill="#BFE8FF" stroke="#8A5A3B" stroke-width="6"/><path d="M292 70v104M244 122h96" stroke="#8A5A3B" stroke-width="4"/></g>' + band(470, '#D9A66B', 1700) + band(470, '#B98550', 6) + '<rect x="-1500" y="476" width="3360" height="1700" fill="#E3B27F" opacity=".5"/>',
+    /* 벽(#FFE1B8)이 y 380 에서 끝나고 바닥이 470 에서 시작해 그 사이 90 이 비어 있었다 → 맨 바탕색이 띠처럼 비쳐 「판 위 반투명 띠」로 보였음(퍼블리셔 리뷰 10/22 #7). 벽을 바닥선(470)까지 */
+    indoor2: () => '<rect x="-1500" y="-1500" width="3360" height="1970" fill="#FFE1B8"/>' + band(470, '#D9A66B', 1700) + band(470, '#B98550', 6) + '<rect x="-1500" y="476" width="3360" height="1700" fill="#E3B27F" opacity=".5"/>',
     house: () => sky('#BFE8FF', '#FFF6E5') + cloud(80, 90, 1) + cloud(250, 60, .8) + G(rep(() => hill(560, '#B6E6A0', [180, 340, 120])) + band(560, '#8FD67A')),
   };
   /* 그림 슬롯(docs/18): data/art_slots.json 의 {bg,props,cover,room,icons}[id] 에 SVG 경로(또는 data URI)를 넣으면 코드 그림 대신 쓴다. 받은 SVG 를 넣기만 하면 교체. */
@@ -1787,7 +1795,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         go.onclick = () => {
           GF.sfx('pick'); const st = () => Stage.start({ kind: 'story', ch: nx.ch, k: nx.k, id: nx.id });
           const pro = GF.data.story[nx.ch] && GF.data.story[nx.ch].pro;
-          if (!GF.state.seen[nx.ch] && pro && !(navigator.webdriver && !/[?&]greet=1/.test(location.search))) { GF.state.seen[nx.ch] = 1; Store.save(); GF.go('greet', { cuts: pro, auto: 3200, then: () => { GF.stack.pop(); st(); } }); }   // 첫 실행 1회: 프롤로그 3컷
+          if (!GF.state.seen[nx.ch] && pro && GF.progress0() > 0 && !(navigator.webdriver && !/[?&]greet=1/.test(location.search))) { GF.state.seen[nx.ch] = 1; Store.save(); GF.go('greet', { cuts: pro, auto: 3200, then: () => { GF.stack.pop(); st(); } }); }   // 첫 실행 1회: 프롤로그 3컷
           else st();
         };
         if (!GF.state.stages.c1A && window.UK) setTimeout(() => { if (go.isConnected) UK.finger(r, go, { tap: true }); }, 900);
@@ -1811,7 +1819,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const play = () => {
       if (!nx) { GF.go('shelf'); return; }
       const st = () => Stage.start({ kind: 'story', ch: nx.ch, k: nx.k, id: nx.id }), pro = GF.data.story[nx.ch] && GF.data.story[nx.ch].pro;
-      if (!GF.state.seen[nx.ch] && pro && !(navigator.webdriver && !/[?&]greet=1/.test(location.search))) { GF.state.seen[nx.ch] = 1; Store.save(); GF.go('greet', { cuts: pro, auto: 3200, then: () => { GF.stack.pop(); st(); } }); }   // 첫 실행 1회: 프롤로그 3컷
+      if (!GF.state.seen[nx.ch] && pro && GF.progress0() > 0 && !(navigator.webdriver && !/[?&]greet=1/.test(location.search))) { GF.state.seen[nx.ch] = 1; Store.save(); GF.go('greet', { cuts: pro, auto: 3200, then: () => { GF.stack.pop(); st(); } }); }   // 첫 실행 1회: 프롤로그 3컷
       else st();
     };
     const main = GF.homeKit(r, { kid: true, key: 'toddler', title: GF.t('c17.gf.007'), fam: ['wife.good', 'baby.good', 'dong_dad.good'], first: !GF.state.stages.c1A, play, mainLabel: GF.t('c17.gf.002'),
@@ -2008,7 +2016,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /* 첫 만남 인사: 첫 실행 1회, 세 가족 한 컷(①은 프롤로그 3컷)을 자동으로 넘기고 아무 데나 탭하면 바로 건너뛴다. 5앱 같은 모양(GF.story) */
   GF.screen('greet', {
     wide: () => true,
-    enter(r, p) { GF.story(r, p.cuts, () => { GF.state.greeted = 1; Store.save(); if (p.then) p.then(); else GF.back(); GF.proTale(); }, { auto: p.auto || 3200, skipAll: true }); },
+    enter(r, p) { let ended = false; const end = () => { if (ended) return; ended = true; GF.state.greeted = 1; Store.save(); if (p.then) p.then(); else GF.back(); GF.proTale(); }; GF.story(r, p.cuts, end, { auto: p.auto || 3200, skipAll: true }); const sk = el('button', 'tale-skip', r, window.UK && UK.icon ? UK.icon('skip') : '»'); sk.setAttribute('aria-label', 'skip'); sk.onclick = (e) => { e.stopPropagation(); GF.sfx('tap'); end(); }; },   // 컷신 건너뛰기(허브 10/22) — 모든 앱 같은 자리
   });
   const GREET = {
     'gf:idle:ui:v1': [{ bg: 'indoor', text: GF.L('c17.gf.026'), chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
@@ -2021,14 +2029,21 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     'gf:day:ui:v1': [{ bg: 'home', text: GF.L('c17.gf.033'), chars: [{ id: 'nemo_kids.kid1', x: 80, y: 600 }, { id: 'baby.joy', x: 190, y: 600 }, { id: 'wife.joy', x: 300, y: 600 }] }],
     'gf:quiz:ui:v1': [{ bg: 'indoor2', text: GF.L('c17.gf.034'), chars: [{ id: 'nemo_dad.joy', x: 80, y: 600 }, { id: 'wife.joy', x: 190, y: 600 }, { id: 'dong_dad.joy', x: 300, y: 600 }] }],
   };
-  GF.proTale = () => { if (GF.tale && GF.tale.ready) setTimeout(() => GF.tale.prologue(document.getElementById('safe')), 300); };   // 이야기 프롤로그(첫 인사 다음, 한 번)
+  /* 첫 판까지 5초(허브 10/22, 퍼블리셔 리뷰 #2): 아직 한 판도 안 깬 첫 실행은 타이틀 → 바로 1판. 이야기(프롤로그)는 첫 판을 깬 뒤 홈의 「이야기 보기」로(tale.js T.offer) */
+  GF.progress0 = () => { try { const c = GF.extras && GF.extras.cfg; return c && typeof c.progress === 'function' ? Number(c.progress()) || 0 : 0; } catch (e) { return 0; } };
+  GF.autoFirstPlay = () => {
+    try { if ((navigator.webdriver && !/[?&]first=1/.test(location.search)) || localStorage.getItem('gf:qa:nofirst')) return; } catch (e) { /* 저장소 없음 = 그대로 */ }
+    setTimeout(() => { if ((GF.stack || []).length > 1 || document.querySelector('.uk-scrim, .tale-ov')) return; const m = document.querySelector('.screen.on .hk-main'); if (m) m.click(); }, 250);
+  };
+  GF.proTale = () => { if (!(GF.tale && GF.tale.ready)) return; if (GF.progress0() === 0 && !GF.tale.seen('prologue')) { GF.tale.defer(); return; } setTimeout(() => GF.tale.prologue(document.getElementById('safe')), 300); };   // 이야기 프롤로그(첫 판을 깬 뒤 한 번 — 첫 실행엔 미룸)
   GF.maybeGreet = () => {
-    const cuts = GREET[KEY]; if (!cuts) { GF.proTale(); return; }
+    const cuts = GREET[KEY]; if (!cuts) { const first = GF.progress0() === 0; GF.proTale(); if (first) GF.autoFirstPlay(); return; }   // 인사 컷이 없는 앱(놀이터): 첫 실행이면 바로 1판
     const ids = cuts.flatMap((c) => c.chars.map((q) => q.id)); try { if (GF.data.idle_balance) ids.push(...(JSON.stringify(GF.data.idle_balance).match(/"[a-z_]+\.[a-z0-9]+"/g) || []).map((x) => x.slice(1, -1)).filter((x) => !/^art\./.test(x))); } catch (e) { /* 미리 읽기 실패는 무시 */ }
     GF.predecode(ids);                                                         // 인사가 떠 있는 동안(없어도 홈 직후) 다음 화면 그림을 디코딩
+    const first = !GF.state.greeted && GF.progress0() === 0;
     if (GF.state.greeted) { GF.proTale(); return; }
     if (navigator.webdriver && !/[?&]greet=1/.test(location.search)) { GF.proTale(); return; }       // 자동 시험(smoke)은 건너뜀. 인사 확인은 ?greet=1
-    GF.go('greet', { cuts });
+    GF.go('greet', { cuts, auto: first ? 1600 : 0, then: first ? () => { GF.back(); GF.autoFirstPlay(); } : null });   // 첫 실행: 타이틀 1.6초 → 바로 1판
   };
   GF.screen('book', {
     wide: () => true,
@@ -2104,7 +2119,9 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       GF.go('round');
     },
   });
-  const starsOf = (res) => (res.mistakes === 0 && !res.hints ? 3 : res.mistakes <= 2 ? 2 : 1);
+  /** 결과 카드에 칩·스티커를 넣을 때: UK.result 는 새 가구가 있으면 집 카드를 먼저 띄우고 결과 카드는 나중에 만든다(room2 감쌈) — 주인공(hero)이 카드에 붙는 순간을 기다렸다 그 카드에 넣는다 */
+  GF.whenSheet = (hero, cb) => { let n = 0; const f = () => { if (hero && hero.isConnected && hero.parentNode) { cb(hero.parentNode); return; } if (n++ < 130) setTimeout(f, 150); }; f(); };
+  const starsOf = (res) => (res.mistakes <= 1 && (res.hints || 0) <= 1 ? 3 : res.mistakes <= 3 ? 2 : 1);   // 유아는 관대하게(허브 10/22 #10): 한 번 틀리거나 힌트 한 번까지는 ★3
   let timers = [], hintFn = null, hintT = [], hintCount = 0;
   const clearTimers = () => { timers.forEach(clearTimeout); timers = []; hintT.forEach(clearTimeout); hintT = []; hintFn = null; };
   function armHint() {
@@ -2147,17 +2164,18 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     run.level = res.mistakes >= 3 ? -1 : run.zero >= 2 ? 1 : 0;
     const total = run.kind === 'story' ? def.stages[run.k].rounds.length : Infinity, last = run.i + 1 >= total;
     const heroes = run.kind === 'story' ? def.heroes : [GAME_HERO[run.mode].replace('.good', '.joy')];
-    const ov = el('div', 'uk-scrim', r), pn = el('div', 'uk-sheet', ov);          // 결과 = 키트 팝업(모든 게임 같은 모양)
-    if (GF.ads && GF.ads.kidResult) GF.ads.kidResult(ov);   // 유아 배너는 결과 창 맨 아래에만(QA 10/20 K-3)
-    const hero = el('div', 'hero', pn); hero.appendChild(GF.img(rnd(heroes)));
-    pn.appendChild(UK.stars(stars, 3));
-    setTimeout(() => GF.sfx('star'), 150);
-    const row = el('div', 'acts row', pn); row.style.justifyContent = 'center';
-    if (GF.craft && GF.data.craft_recipes) GF.craft.roundDrop(pn, row, run.kind === 'story' ? def.mode : run.mode, run.ch, run.i, last && run.kind === 'story');   // 뚝딱 공방(D45): 라운드마다 재료 하나(단계 끝이면 하나 더)
-    if (!last) {
-      const nb = el('button', 'uk-round lg', row, IC.play); nb.onclick = () => { GF.sfx('pick'); run.i++; clearTimers(); r.innerHTML = ''; GF.screens.round.enter(r); };
-      return;
-    }
+    /* 결과 = 유아 3앱 같은 틀(허브 10/22 #10): UK.result({kid}) — 위 주인공 · 별 · 「다음」 크게 · 아래 작은 「다시」 */
+    const heroEl = el('div', 'hero'); heroEl.appendChild(GF.img(rnd(heroes)));
+    const nextRound = () => { GF.sfx('pick'); run.i++; clearTimers(); r.innerHTML = ''; GF.screens.round.enter(r); };
+    const nextStage = () => { GF.sfx('pick'); if (run.k < 2 || run.k === 3) GF.popTo('stages', { ch: run.ch }); else GF.replace('book', { ch: run.ch, part: 'epi' }); };
+    const again = () => { GF.sfx('pick'); const o = run; GF.stack.pop(); Stage.start({ kind: 'story', ch: o.ch, k: o.k, id: o.id }); };
+    let gainEl = null;
+    const ov = UK.result({ kid: true, title: '', stars, parent: r, hero: heroEl, onNext: last ? nextStage : nextRound, onRetry: last && run.kind === 'story' ? again : null });
+    GF.whenSheet(heroEl, (pn) => { const row = pn.querySelector('.acts') || pn.querySelector('.uk-res-sub'); if (GF.ads && GF.ads.kidResult) GF.ads.kidResult(pn.parentNode);   // 유아 배너는 결과 창 맨 아래에만(QA 10/20 K-3)
+      if (GF.craft && GF.data.craft_recipes) GF.craft.roundDrop(pn, row, run.kind === 'story' ? def.mode : run.mode, run.ch, run.i, last && run.kind === 'story');   // 뚝딱 공방(D45): 라운드마다 재료 하나(단계 끝이면 하나 더)
+      setTimeout(() => { if (gainEl) { pn.insertBefore(gainEl, row); setTimeout(() => GF.sfx('star'), 500); } }, 0); });   // 스티커는 아래 단계 완료 계산 뒤에 정해진다
+    void ov;
+    if (!last) return;
     // 스테이지 완료
     const avg = Math.max(1, Math.floor(run.res.reduce((a, b) => a + b, 0) / run.res.length));   // 평균 내림: 한 라운드라도 틀리면 ★3 이 안 된다
     const rec = GF.state.stages[run.id] || {}; rec.done = true; rec.stars = Math.max(rec.stars || 0, avg); GF.state.stages[run.id] = rec; Store.save(); refreshBar();
@@ -2166,10 +2184,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const n = run.ch.slice(2);
     if (run.k === 2 && window.Room && Room.data) { const gi = { ch1: 'k_party', ch2: 'k_train' }[run.ch] || 'k_' + run.ch; if (Room.grant(gi)) { GF.sfx('star'); const it = Room.item(gi), gf = el('div', 'kgift', r); const im = el('img', '', gf); im.src = Room.src(it, it.colors[0]); setTimeout(() => gf.remove(), 2600); } }   // 장을 끝내면 아이 방에 장난감 하나
     if (run.k === 2 && ['A', 'B', 'C'].every((l) => (GF.state.stages['c' + n + l] || {}).stars === 3)) Reward.sticker(run.ch + '_star');
-    if (gain) { const s = Reward.stickerEl(run.ch + '_' + 'ABCD'[run.k]); pn.insertBefore(s, row); setTimeout(() => GF.sfx('star'), 500); }
-    const again = el('button', 'uk-round lg gold', row, IC.again); again.onclick = () => { GF.sfx('pick'); const o = run; GF.stack.pop(); Stage.start({ kind: 'story', ch: o.ch, k: o.k, id: o.id }); };
-    const nxt = el('button', 'uk-round lg', row, IC.play);
-    nxt.onclick = () => { GF.sfx('pick'); if (run.k < 2 || run.k === 3) GF.popTo('stages', { ch: run.ch }); else GF.replace('book', { ch: run.ch, part: 'epi' }); };
+    if (gain) gainEl = Reward.stickerEl(run.ch + '_' + 'ABCD'[run.k]);   // 결과 카드가 붙으면 GF.whenSheet 가 넣는다
   }
   // 놀이방(자유) 모드에서는 라운드가 끝없이 이어진다 (finish 의 total = Infinity)
 
@@ -2481,10 +2496,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     result(o) {
       document.querySelectorAll('.uk-finger').forEach((x) => x.remove());   // 판에서 쓰던 손가락 안내가 결과 창 글자 위에 남지 않게(2차 리뷰 P3)
       const acts = [];
-      if (o.kid) { const sc = UK.modal({ title: o.title, stars: o.stars, chips: o.chips, parent: o.parent }); const a = el('div', 'acts row', sc.firstChild);
+      if (o.kid) { const sc = UK.modal({ title: o.title, stars: o.stars, chips: o.chips, parent: o.parent }); if (o.hero) { o.hero.classList.add('uk-res-hero'); sc.firstChild.insertBefore(o.hero, sc.firstChild.firstChild); } const a = el('div', 'acts row', sc.firstChild);   /* 유아 결과 한 틀(허브 10/22 #10): 위 주인공(o.hero) · 별 · 「다음」 크게 · 아래 작은 다시/집 */
         if (o.onNext) UK.round({ icon: 'next', cls: 'lg', onclick: () => { sc.close(); o.onNext(); } }, a);
-        if (o.onRetry) { const sub = el('div', 'uk-res-sub', sc.firstChild); UK.round({ icon: 'replay', cls: 'sm', onclick: () => { sc.close(); o.onRetry(); } }, sub); }   /* UI v2: 결과 = 별·「다음」 하나 크게, 「다시」는 아래 작은 아이콘(유아도) */
-        if (!o.onNext && o.onRetry) a.remove();
+        if (o.onRetry || o.onHome) { const sub = el('div', 'uk-res-sub', sc.firstChild); if (o.onRetry) UK.round({ icon: 'replay', cls: 'sm', onclick: () => { sc.close(); o.onRetry(); } }, sub); if (o.onHome) UK.round({ icon: 'home', cls: 'sm', onclick: () => { sc.close(); o.onHome(); } }, sub); }   /* UI v2: 결과 = 별·「다음」 하나 크게, 「다시」는 아래 작은 아이콘(유아도) */
+        if (!o.onNext && (o.onRetry || o.onHome)) a.remove();
         a.style.justifyContent = 'center'; UK.confetti(sc); UK.arm(sc); try { const n = Math.max(0, Math.min(3, o.stars | 0)); if (window.GF && GF.sfxSeq && n) GF.sfxSeq([...Array(n)].map((_, i) => ['star', 210 + i * 300, { st: [0, 4, 7][i] }]).concat([['celebrate', 210 + n * 300 + 60]])); else sfx('celebrate'); } catch (e) { sfx('celebrate'); } return sc; }
       /* 성인: 큰 버튼은 하나(다음 > 다시 > 처음으로 중 첫째), 나머지는 아래 작은 둥근 아이콘. 별과 겹치는 「★」 칩은 뺀다(2차 리뷰 G4) */
       const all = [];
@@ -2840,10 +2855,17 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 
   /* ---------------- 집 이야기 · 할 일 · 다음 목표 ---------------- */
   Room.chapter = () => chapters().find((c) => !chDone(c)) || null;
+  /* 허브 10/22(퍼블리셔 리뷰 #6): 앱마다 「우리 집」 할 일은 그 앱 안에서만 끝난다 — 다른 앱에서만 얻는 가구의 할 일은 「보너스 칸」(보이지만 필수 아님).
+     필수 = 이 앱 가구 또는 누구나 받는 가구(이야기·이벤트·계절·기타). 그룹 공유 저장(D12)은 그대로라 다른 앱에서 받은 것도 칸은 채워진다. ⑪ 은 별도 앱이라 늘 보너스 */
+  const gNorm = (g) => (g === 'tables' ? 'idle' : g === 'coloring' ? 'color' : g || 'other');
+  const OPEN_G = new Set(['story', 'event', 'other', 'all', 'season']);
+  Room.myGame = () => gNorm(Room.cfg.app || Room.cfg.game);
+  Room.mine = (it) => { if (!it) return true; const g = gNorm((it.src && it.src.game) || it.game); return OPEN_G.has(g) || g === Room.myGame() || (g === 'playground' && Room.myGame() === 'play') || (g === 'play' && Room.myGame() === 'playground'); };
   Room.tasks = function () {
-    const c = Room.chapter(); if (!c) return { chapter: null, list: [], show: [], done: 0 };
-    const list = c.tasks.map((t) => { const need = t.need.map((id) => ({ id, own: Room.has(id), it: Room.item(id) })), miss = need.filter((n) => !n.own); return { id: t.id, label: t.label, need, done: !miss.length, miss: miss[0] || null }; });
-    return { chapter: c, list, show: list.filter((t) => !t.done).slice(0, 3), done: list.filter((t) => t.done).length };
+    const c = Room.chapter(); if (!c) return { chapter: null, list: [], show: [], bonus: [], done: 0 };
+    const all = c.tasks.map((t) => { const need = t.need.map((id) => ({ id, own: Room.has(id), it: Room.item(id) })), miss = need.filter((n) => !n.own); return { id: t.id, label: t.label, need, done: !miss.length, miss: miss[0] || null, bonus: need.length > 0 && need.every((n) => !Room.mine(n.it)) }; });
+    const list = all.filter((t) => !t.bonus), bonus = all.filter((t) => t.bonus);
+    return { chapter: c, list, bonus, show: list.filter((t) => !t.done).slice(0, 3), done: list.filter((t) => t.done).length };
   };
   /* BM-E1 다음 방 미리 보기: 가구 자리(anchors)에 들어갈 가구를 검은 실루엣으로 깔고 방 전체를 흐리게 — 열리기 전에도 「저 방엔 뭐가 놓일까」를 보여 준다. 조각 수는 그 방 이야기 장의 누적 목표(housing.story[].shards) */
   Room.roomShards = (rid) => { const c = chapters().find((q) => q.room === rid); return (c && !kid() && c.shards) || 0; };
@@ -2937,7 +2959,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   };
   Room.band = function (parent, opts) {
     opts = opts || {}; try { Room.themeSync(opts.toastParent || parent); } catch (e) { /* 세트 도착 실패는 띠를 막지 않는다 */ } const old = parent.querySelector(':scope > .h2-band'); if (old) old.remove(); if (!H() || !Room.S) return null;
-    const here = !!opts.here && !kid(), g = here ? Room.nextGoalHere(Room.cfg.app || Room.cfg.game) : Room.nextGoal(Room.cfg.app || Room.cfg.game); if (!g) { if (!here) Room.todoLine(parent, false); return null; } const b = el('button', 'h2-band' + (kid() ? ' kid' : '') + (here ? ' here' : ''), parent);
+    const here = !!opts.here && !kid(), g = Room.nextGoalHere(Room.cfg.app || Room.cfg.game); if (!g) { if (!here) Room.todoLine(parent, false); return null; } const b = el('button', 'h2-band' + (kid() ? ' kid' : '') + (here ? ' here' : ''), parent);   // 홈 띠도 이 앱에서 할 수 있는 목표만(허브 10/22 #6)
     if (here) { const im0 = el('img', '', b); im0.src = Room.src(g.item); im0.alt = ''; const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : GF.t('c17.room2.016')) + g.label); const pr = el('i', 'h2-bprog', tx); el('em', '', pr).style.width = Math.round(100 * g.prog[0] / Math.max(1, g.prog[1])) + '%'; if (g.prog[0] > 0) el('small', 'h2-bpn', tx, g.prog[0] + '/' + g.prog[1]); el('span', 'h2-arrow', b, UK.icon('home')); b.onclick = (e) => { e.stopPropagation(); if (opts.house) opts.house(); else if (Room.cfg.openHouse) Room.cfg.openHouse(); }; return b; }   // 한 줄 한 정보 + 진척 막대, 누르면 우리 집
     const im = el('img', '', b); im.src = Room.src(g.item); im.alt = ''; const ic = APPICON[g.game] || '🎁';
     if (kid()) { el('span', 'h2-bic', b, ic); }   /* 유아: 초록 › 화살표 없음 — 결과 창의 큰 「다음」 › 와 같은 그림이 둘이었음(QA 10/20 D-2). 띠 전체를 누르면 그대로 간다 */ else { const tx = el('span', 'h2-btx', b); el('b', '', tx, (g.why === 'wish' ? '♥ ' : GF.t('c17.room2.017')) + g.label + ' · ' + g.hint); el('span', 'h2-arrow', b, UK.icon('next')); }
@@ -3375,7 +3397,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     function checkRooms() { const nr = Room.newRooms(); if (!nr.length || !parent.isConnected || document.querySelector('.h2-reveal')) return; Room.roomReveal(nr[0].id, parent, (go) => { if (go) { cur = nr[0].id; sel = null; drawAll(); } setTimeout(checkRooms, 400); }); }
     function lvUp(L) { Room.albumAdd('lv:' + L.lv, 'level', GF.t('c16.room2.031', { lv: L.lv }), GF.t('c17.room2.032', { v: Number(L.cozy).toLocaleString('ko-KR') }), cur); setTimeout(checkRooms, 1400); try { UK.confetti(parent); GF.sfx && GF.sfx('celebrate'); } catch (e) {} const nr = rooms().find((r) => r.unlock === L.lv); if (!nr) toastH(kid() ? '⭐' : GF.t('c16.room2.032', { lv: L.lv }), parent); }      // 새 방이 열리면 연출이 이름을 알려 준다(토스트로 미리 말하지 않음)
     function drawSheet() {
-      sheet.innerHTML = ''; sheet.className = 'h2-sheet' + (expanded ? ' open' : ''); const T = Room.tasks(), g = Room.nextGoal(Room.cfg.app || Room.cfg.game);
+      sheet.innerHTML = ''; sheet.className = 'h2-sheet' + (expanded ? ' open' : ''); const T = Room.tasks(), g = Room.nextGoalHere(Room.cfg.app || Room.cfg.game);   // 다른 앱 가구는 목표로 내세우지 않음(보너스 칸에만)
       const handle = el('div', 'h2-handle', sheet, '<i></i>'); const line = el('div', 'h2-line', sheet);
       if (g) { const im = el('img', '', line); im.src = Room.src(g.item); im.alt = ''; if (kid()) { el('span', 'h2-tic', line, APPICON[g.game] || '🎁'); } else { const tx = el('span', 'h2-ltx', line); el('small', '', tx, T.chapter ? T.chapter.title + ' ' + T.done + '/' + T.list.length : GF.t('c17.room2.120')); el('b', '', tx, GF.t('c16.room2.040', { label: g.label })); } const b = el('button', 'h2-go', line, UK.icon('next')); b.setAttribute('aria-label', 'go'); b.onclick = (e) => { e.stopPropagation(); Room.goApp(g.game, { parent, home: opts.go && (() => opts.go(g.game)) }); }; }
       else if (!kid()) el('span', 'h2-ltx', line, GF.t('c17.room2.121'));
@@ -3387,6 +3409,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         const go = () => Room.goApp(sr.game, { parent, home: opts.go && (() => opts.go(sr.game)) });
         if (kid()) { el('span', 'h2-tic', row, APPICON[sr.game] || '🎁'); const b = el('button', 'h2-go', row, UK.icon('next')); b.setAttribute('aria-label', 'go'); b.onclick = go; }
         else { const tx = el('div', 'h2-ttx', row); el('b', '', tx, t.label); el('small', '', tx, sr.hint || ''); const b = el('button', 'h2-go', row, GF.t('c16.room2.019')); b.onclick = go; } });
+      (T.bonus || []).filter((t) => !t.done).slice(0, 4).forEach((t) => { const it = t.miss && t.miss.it, row = el('div', 'h2-task bonus' + (kid() ? ' kid' : ''), body); const im = el('img', '', row); im.src = it ? Room.src(it) : ''; im.alt = ''; if (kid()) el('span', 'h2-tic', row, '⭐'); else { const tx = el('div', 'h2-ttx', row); el('b', '', tx, t.label); el('small', '', tx, GF.t('room.bonus')); } });   // 보너스 칸: 다른 앱 가구 — 누르는 단추 없음(숙제 아님)
       if (T.chapter && T.chapter.shards && !kid()) el('p', 'h2-tt', body, GF.t('c17.room2.122', { shardN: Math.min(Room.shardN(), T.chapter.shards), shards: T.chapter.shards }));
       if (!T.show.length && T.chapter && !kid()) el('p', 'h2-tt', body, GF.t('c16.room2.020'));
       if (kid()) { el('div', 'h2-bar wide', body, `<i style="width:${c.pct}%"></i>`); return; }
@@ -3463,7 +3486,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (!it) return null; S.seasonDay = key; Room.save(); return Room.grant(it.id) ? it : null;
   };
   Room.checkStory = function (parent, cb) {
-    const c = Room.chapter(); if (!c) return false; const T = Room.tasks(); if (T.done < c.tasks.length) return false; if (c.shards && Room.shardN() < c.shards) return false; const S = ensure();
+    const c = Room.chapter(); if (!c) return false; const T = Room.tasks(); if (T.done < T.list.length) return false; if (c.shards && Room.shardN() < c.shards) return false; const S = ensure();   // 필수(이 앱에서 끝낼 수 있는) 할 일만(허브 10/22 #6)
     S.story[c.room] = { done: 1, t: Date.now() }; Room.save(); Room.albumAdd('ch:' + c.room, 'chapter', c.title, GF.t('c17.room2.142'), c.room); const fin = () => { const nx = c.reward && c.reward.unlock && rooms().find((r) => r.id === c.reward.unlock); const sc = UK.modal({ parent: ovRoot(parent), title: kid() ? '' : GF.t('c17.room2.143'), big: '🏠', body: kid() ? '' : (GF.t('c17.room2.145', { title: c.title, v: (c.reward && c.reward.cozy) || 0, v2: nx ? GF.t('c17.room2.144', { name: nx.name }) : '' })), actions: [{ text: kid() ? null : GF.t('c17.room2.146'), icon: kid() ? 'play' : null, cls: 'green', onclick: () => { cb && cb(); } }].concat(kid() ? [] : [{ text: GF.t('c16.room2.088'), onclick: () => { Room.moodPick(c.room, parent, cb); } }]) }); try { UK.confetti(sc); GF.sfx && GF.sfx('celebrate'); } catch (e) {} };
     if (window.GF && GF.tale && GF.tale.play && c.cuts && c.cuts.length) GF.tale.play(c.cuts, ovRoot(parent), fin, { bg: 'indoor2' }); else fin(); return true;
   };
@@ -4166,6 +4189,16 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const auto = () => !!navigator.webdriver && !T.force && !/[?&]story=1/.test(location.search);
   const safe = () => document.getElementById('safe');
   T.init = (app, data, opt) => { T.app = app; T.d = data || null; T.kid = !!(opt && opt.kid); T.ready = !!data; };
+  /* 첫 판까지 5초(허브 10/22): 첫 실행엔 프롤로그를 미루고(T.defer), 첫 판을 깬 뒤 홈(맨 아래 화면)에 「이야기 보기」 단추(T.offer) — 누르면 프롤로그 */
+  T.defer = () => { const s = st(); if (!s.deferPro) { s.deferPro = 1; LS(key(), s); } };
+  T.offer = () => {
+    document.querySelectorAll('.tale-offer').forEach((e) => e.remove());
+    if (!T.ready || !st().deferPro || T.seen('prologue') || (GF.stack || []).length > 1 || !(GF.progress0 && GF.progress0() > 0)) return;
+    const host = document.querySelector('.screen.on .hk-ttl') || document.querySelector('.screen.on'); if (!host || !(T.d && (T.d.prologue || []).length)) return;
+    const b = el('button', 'tale-offer' + (T.kid ? ' kid' : ''), host, T.kid ? (GF.IC && GF.IC.book) || '📖' : '📖 ' + GF.t('ui.tale.offer')); b.setAttribute('aria-label', GF.t('ui.tale.offer'));
+    b.onclick = (e) => { e.stopPropagation(); GF.sfx('page'); b.remove(); T.prologue(safe()); };
+  };
+  { const prev = GF.onScreen; GF.onScreen = function (n) { if (prev) prev.apply(this, arguments); try { setTimeout(T.offer, 60); } catch (e) { /* 단추 실패 무시 */ } }; }
   /* ---------------- 미니 판(튜토리얼 컷) ----------------
      이야기 컷 안에 「실제 게임 판 조각」으로 그린 작은 판. 각 게임이 자기 그림 함수로 T.mini.reg(앱, (host, spec, still) => …) 를 등록한다.
      spec = {app?, …게임별 값}. 같은 동작을 반복해 보여 주고(M.loop), 컷이 바뀌면(host 가 떨어지면) 멈춘다. still=true 면 끝 모양만 그린다(설명 카드 그림). */
@@ -4235,7 +4268,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     return go((T.d.prologue || []).concat(add), parent, () => { if (add.length) { T.mark('s1'); afterBeat('s1'); } cb && cb(); }, { bg: 'indoor' }, 'prologue');
   };
   /** 장의 첫 판 앞: 기(시작) 컷 */
-  T.before = function (n, idx, parent, cb) { const c = ch(n); if (!T.ready || !c || idx !== 1) return (cb && cb(), false); return go(c.start, parent, cb, { bg: BG[c.tale] }, 's' + n); };
+  T.before = function (n, idx, parent, cb) { const c = ch(n); if (!T.ready || !c || idx !== 1) return (cb && cb(), false); if (n === 1 && GF.progress0 && GF.progress0() === 0 && !T.seen('prologue')) { T.defer(); return (cb && cb(), false); } return go(c.start, parent, cb, { bg: BG[c.tale] }, 's' + n); };   // 첫 실행 1장 기 컷도 미룸 — 나중에 「이야기 보기」 프롤로그에 붙어 나온다(본 표시 안 함)
   /** 판을 깬 직후: 장 중간(승·전) 컷 또는 장 끝(결) 컷, 마지막 장이면 엔딩. per = 장당 판 수 */
   T.after = function (n, idx, per, parent, cb) {
     const c = ch(n); if (!T.ready || !c) return (cb && cb(), false);
@@ -5768,7 +5801,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (!ui) return; const s = C.S(), isNew = !s.found[rec.id]; s.found[rec.id] = s.found[rec.id] || Date.now(); s.made = (s.made || 0) + 1;
     if (rec.out.mat) C.add(rec.out.mat, 1);
     const it = C.itemOf(rec); let placed = false;
-    if (it) { try { placed = Room.grant(it.id); if (Room.placeAt) Room.placeAt(it.id); if (typeof ci === 'string' && Room.S && Room.S.placed) { Object.values(Room.S.placed).forEach((L) => (L || []).forEach((p) => { if (p.id === it.id) p.c = ci; })); Room.save(); } } catch (e) { /* 집 저장 실패 — 도감은 남음 */ } }   // 붓으로 고른 색이 집에 놓인 가구 색(어느 방에 놓였든)
+    if (it) { try { placed = Room.grant(it.id); Room._recent = []; if (Room.placeAt) Room.placeAt(it.id); if (typeof ci === 'string' && Room.S && Room.S.placed) { Object.values(Room.S.placed).forEach((L) => (L || []).forEach((p) => { if (p.id === it.id) p.c = ci; })); Room.save(); } } catch (e) { /* 집 저장 실패 — 도감은 남음 */ } }   // 붓으로 고른 색이 집에 놓인 가구 색(어느 방에 놓였든)
     C.save(); clearSlots(); ui.busy = false;
     ov.innerHTML = ''; ov.className = 'cr-act cr-done';
     const big = el('img', 'cr-dimg', ov); big.src = C.art(rec.id, ci); big.alt = '';
@@ -5983,7 +6016,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
           const story = false;
           const result0 = () => { const nx = !LV.kind && D.levels.find((l) => l.id === LV.id + 1), it = gained[0] && Room.item(gained[0]);
             const DROP = { brush: ['thread'], chew: ['water'], dress: ['cloth'], sleep: ['cushion'], tidy: ['box'] };   // 뚝딱 공방 재료(하루 = 실·천·생활 소품)
-            const rs = UK.result({ kid: true, title: '', stars: 3, parent: r, onNext: nx ? () => GF.replace('dplay', { n: nx.id }) : () => GF.home2(), onRetry: () => GF.replace('dplay', LV.kind ? { level: LV } : { n: LV.id }) }); if (it && it.emoji) { const sh = r.querySelector('.uk-sheet'); if (sh) { const b = el('div', 'uk-big', null, it.emoji); sh.insertBefore(b, sh.children[1] || null); } } { const sh2 = rs.querySelector('.uk-sheet') || rs; if (GF.craft && GF.data.craft_recipes) GF.craft.give(DROP[LV.type] || ['thread'], sh2, sh2.querySelector('.acts')); } try { Room.band(rs.querySelector('.uk-sheet') || rs, { go: () => GF.go('dmap'), toastParent: r }); } catch (e) {} };
+            const rs = UK.result({ kid: true, title: '', stars: 3, parent: r, hero: (() => { const h = el('div', 'hero'); h.appendChild(GF.img('baby.joy')); return h; })(), onNext: nx ? () => GF.replace('dplay', { n: nx.id }) : () => GF.home2(), onRetry: () => GF.replace('dplay', LV.kind ? { level: LV } : { n: LV.id }) }); if (it && it.emoji) { const sh = r.querySelector('.uk-sheet'); if (sh) { const b = el('div', 'uk-big', null, it.emoji); sh.insertBefore(b, sh.children[1] || null); } } { const sh2 = rs.querySelector('.uk-sheet') || rs; if (GF.craft && GF.data.craft_recipes) GF.craft.give(DROP[LV.type] || ['thread'], sh2, sh2.querySelector('.acts')); } try { Room.band(rs.querySelector('.uk-sheet') || rs, { go: () => GF.go('dmap'), toastParent: r }); } catch (e) {} };
           const result = () => { if (gained.length && Room.H) Room.dropCard(gained[gained.length - 1], r, result0, { openHouse: () => GF.go('dhouse') }); else result0(); };   // 결과의 주인공 = 집에 놓기(글자 없음)
           GF.polish.finished(); GF.tale.done(r, LV, result);   // 말풍선 · 승전결 컷(장 끝) · 마지막 장이면 엔딩
         }, slow(900));

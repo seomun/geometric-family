@@ -655,6 +655,7 @@ body.gf-inplay #b-home, body.gf-inplay #b-stars, body.gf-inplay #b-set, body.gf-
 .tb-hide { opacity: 0 !important; transition: opacity .2s; }
 .tale-band.out { opacity: 0; transform: translateY(-12px); }
 .tale-band.kid { width: max-content; margin: 0 auto; padding: 6px; }
+.h2-card .h2-craft { position: absolute; left: 4px; top: 4px; font-style: normal; font-size: 15px; line-height: 1; } .h2-crafthd { margin-top: 2px; } .h2-crafthd b { color: #2E8A4E; } .h2-howto { display: block; margin: 2px 4px 6px; font: 400 13px/1.3 var(--uk-font); color: #6E5A4A; }   /* 카탈로그 공방 표시(10/22) */
 body.gf-inplay .uk-toast, body.gf-inplay :is(.mg-tip, .bk-tip, .tl-tip, .sr-tip, .sp-tip) { left: 76px !important; right: 14px !important; } body.gf-inplay :is(.mg-tip, .bk-tip, .tl-tip, .sr-tip, .sp-tip) { height: auto !important; min-height: 40px; line-height: 1.3 !important; padding-top: 7px !important; padding-bottom: 7px !important; }   /* 폭이 줄어 두 줄이 되면 줄 간격 40px 그대로면 레벨 줄을 덮음 */   /* 판 위 안내 토스트(위쪽)가 ⏸ 단추 밑에 깔려 앞 글자가 가려지던 것(스토어 1번 장 점검 10/22) — ⏸ 오른쪽부터 */
 .tale-band .tb-txt b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tale-band .tb-txt span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }   /* 영어처럼 긴 글: 띠는 제목 한 줄 + 두 줄까지(판 HUD 를 덮지 않게) */
 .hk-ttl .tale-offer.kid { display: inline-flex; width: 56px; height: 56px; margin: 0 0 0 8px; vertical-align: middle; }   /* 유아 책 단추는 제목 옆(아래로 내리면 가족 머리와 겹침) */
@@ -1366,6 +1367,12 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 .uk-sheet .uk-btn.cr-opened { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 2px auto 8px; min-height: 46px; font-size: 17px; width: auto; padding: 0 16px; } .uk-sheet .uk-btn.cr-opened svg { width: 28px; height: 28px; }
 .cr-drop:has(.cr-dlab) { flex-wrap: wrap; row-gap: 2px; } .cr-drop .cr-dlab { flex-basis: 100%; max-width: none; }   /* 「공방 재료」는 칩 위 한 줄(영어가 세로로 꺾이던 것) */
 .uk-sheet .uk-btn.cr-opened { max-width: calc(100% - 12px); white-space: normal; line-height: 1.2; font-size: 15px; text-align: left; }
+/* 레벨 보상 도안 카드(결과 창) · 도안 책에서 찾아온 줄 반짝 */
+.uk-sheet .cr-bpcard { display: flex; align-items: center; gap: 8px; margin: 4px 2px 8px; padding: 8px; border-radius: 16px; background: #FFF6CF; border: 2px solid #E8C66A; text-align: left; flex-wrap: wrap; }
+.uk-sheet .cr-bpcard > img { flex: none; width: 52px; height: 52px; object-fit: contain; } .uk-sheet .cr-bptx { flex: 1; min-width: 0; } .uk-sheet .cr-bptx b { font: 400 16px/1.2 var(--uk-font); color: #3A2E39; }
+.uk-sheet .cr-bpcard .cr-bpin { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; } .uk-sheet .cr-bpcard .cr-bpi { position: relative; display: inline-flex; flex-direction: column; align-items: center; width: 42px; } .uk-sheet .cr-bpcard .cr-bpi img { width: 26px; height: 26px; } .uk-sheet .cr-bpcard .cr-bpi b { position: absolute; right: -2px; top: -4px; font: 400 11px/1 var(--uk-num, Jua); } .uk-sheet .cr-bpcard .cr-bpi small { font: 400 10px/1.1 var(--uk-font); color: #6E5A4A; max-width: 42px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uk-sheet .uk-btn.cr-bpmake { flex-basis: 100%; min-height: 42px; font-size: 16px; }
+.cr-bps .cr-bpr.flash { animation: cr-glow .6s ease-in-out 4 alternate; border-color: #E8C66A; }
 
 /* 막둥이의 하루(유아) — 키트 토큰만. 놀이 UI 에는 글자 없음(그림·점·손가락·소리). */
 .dy { position: absolute; inset: 0; }
@@ -3579,11 +3586,14 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const tabs = el('div', 'h2-tabs', head); const T = [['all', GF.t('c17.room2.148')], ['set', GF.t('c17.room2.149')], ['wish', '♥'], ['new', GF.t('c17.room2.150')]];
     const isPlaced = (id) => Object.values(ensure().placed).some((L) => L.some((p) => p.id === id));
     const items = () => Room.data.items.filter(inGroup).filter((i) => { if (tab === 'wish') return Room.wishOn(i.id); if (tab === 'new') return Room.has(i.id) && !isPlaced(i.id); return true; });
+    /* 뚝딱 공방(허브 10/22, D45): 성인 카탈로그는 「만들 수 있음(공방)」이 맨 앞, 가구마다 「만드는 법 ▶」 — 도안을 아는 가구는 그 앱 공방의 도안으로 */
+    const CR = !kid() && GF.craft && GF.craft.cfg && GF.craft.cfg.group === 'adult' && GF.craft.recipeFor ? GF.craft : null, recOf = (it) => (CR ? CR.recipeFor(it.id) : null);
+    const canCraft = (it) => { const rc = !Room.has(it.id) && recOf(it); return !!(rc && CR.known(rc)); };
     function drawTabs() { tabs.innerHTML = ''; T.forEach(([k, n]) => { const b = el('button', 'h2-tab' + (k === tab ? ' on' : ''), tabs, kid() ? { all: '▦', set: '◈', wish: '♥', new: '✦' }[k] : n); b.onclick = () => { tab = k; drawAll(); }; }); }
     function card(parent2, it) {
       const own = Room.has(it.id), c = el('button', 'h2-card' + (own ? '' : ' off') + (selId === it.id ? ' sel' : ''), parent2), im = el('img', '', c); im.src = Room.src(it); im.alt = '';
       if (!kid()) { el('b', '', c, it.name.replace(/^(도형 블록|네모|세모|동그라미) /, '')); el('small', '', c, GF.t('c17.room2.031', { v: it.cozy || 0 })); } else el('small', '', c, own ? '' : (APPICON[(it.src || {}).game] || '🎁'));
-      if (Room.wishOn(it.id)) el('i', 'h2-heart', c, '♥'); c.onclick = () => { selId = it.id; drawAll(); }; return c;
+      if (Room.wishOn(it.id)) el('i', 'h2-heart', c, '♥'); if (canCraft(it)) el('i', 'h2-craft', c, '🔨'); c.onclick = () => { selId = it.id; drawAll(); }; return c;
     }
     function drawBody() {
       body.innerHTML = '';
@@ -3591,7 +3601,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         const R = roomDef(opts.room); if (R) { const bn = el('button', 'h2-dreambn', body, kid() ? '✨' : GF.t('c17.room2.151', { name: R.name })); bn.onclick = () => Room.dreamRoom(R.id, sh); }          // 세트 탭 맨 위: 꿈의 방
         sets().filter((s) => Room.data.items.some((i) => i.set === s.id && inGroup(i))).forEach((s) => { const its = Room.data.items.filter((i) => i.set === s.id && inGroup(i)), got = its.filter((i) => Room.has(i.id)).length; const h = el('div', 'h2-sh2', body, (kid() ? '' : `<b>${s.name}</b>`) + `<span>${got}/${its.length}</span>`); const pg = el('div', 'uk-progress gold', h); pg.innerHTML = `<i style="width:${got / its.length * 100}%"></i>`; if (!kid()) { const dr = el('button', 'h2-dream', h, GF.t('c16.room2.022')); dr.onclick = () => Room.dream(s.id, sh); } const g = el('div', 'h2-grid', body); its.forEach((it) => card(g, it)); }); return;
       }
-      const g = el('div', 'h2-grid', body); const L = items(); if (!L.length) el('p', 'h2-empty', body, kid() ? '' : (tab === 'wish' ? GF.t('c17.room2.152') : GF.t('c17.room2.153'))); L.forEach((it) => card(g, it));
+      const L = items(); if (!L.length) el('p', 'h2-empty', body, kid() ? '' : (tab === 'wish' ? GF.t('c17.room2.152') : GF.t('c17.room2.153')));
+      const A = CR ? L.filter(canCraft) : [];
+      if (A.length) { el('div', 'h2-sh2 h2-crafthd', body, `<b>🔨 ${GF.t('craft.a.cancraft')}</b><span>${A.length}</span>`); const ga = el('div', 'h2-grid', body); A.forEach((it) => card(ga, it)); el('div', 'h2-sh2', body, `<b>${GF.t('craft.a.others')}</b>`); }
+      const g = el('div', 'h2-grid', body); L.filter((it) => !A.includes(it)).forEach((it) => card(g, it));
     }
     function drawDet() {
       det.innerHTML = ''; const it = selId && Room.item(selId); if (!it) { if (!kid()) el('p', 'h2-hint', det, GF.t('c16.room2.023')); return; } const own = Room.has(it.id), sr = it.src || {};
@@ -3603,6 +3616,11 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       { const vs = Room.variants(it), sw = el('div', 'h2-swrow', det); vs.forEach((v) => { const open = Room.variantOpen(v.i, it), d = el('i', 'h2-sw' + (open ? '' : ' lock'), sw); d.style.background = v.sw; if (!open) d.textContent = '🔒'; d.title = open ? '' : GF.t('c17.room2.157', { i: Room.variantNeed(v.i) }); });
         if (!kid()) { const op = vs.filter((v) => Room.variantOpen(v.i, it)).length, nx = vs.find((v) => !Room.variantOpen(v.i, it)); el('small', '', sw, GF.t('c16.room2.085', { op: op, length: vs.length }) + (nx ? GF.t('c17.room2.158', { i: Room.variantNeed(nx.i) }) : GF.t('c17.room2.159'))); } }
       const a = el('div', 'h2-acts', det); if (own) UK.btn({ text: kid() ? null : GF.t('c17.room2.034'), icon: kid() ? 'home' : null, cls: 'green sm', onclick: () => { Room.placeAt(it.id); sc.remove(); opts.onClose && opts.onClose(); } }, a);
+      else if (recOf(it)) {   // 만드는 법 ▶: 도안을 알면(또는 이 앱 판 보상 도안이면) 이 앱 공방의 그 도안, 아니면 도안을 주는 앱으로
+        const rc = recOf(it), known = CR.known(rc), here = CR.cfg.workshop && (known || !rc.lvl || rc.lvl.app === CR.cfg.app);
+        const hw = el('small', 'h2-howto', null, known ? GF.t('craft.a.recipe', { list: rc.in.map((id) => (CR.mat(id) || {}).name || id).join(' · ') }) : rc.lvl ? (/:/.test(String(rc.lvl.at)) ? GF.t('craft.a.bptier') : GF.t('craft.a.bpwhere', { app: APPNAME[rc.lvl.app] || rc.lvl.app, n: rc.lvl.at })) : GF.t('craft.a.bpws', { n: rc.unlock || 0 })); det.insertBefore(hw, a);   // 재료·받는 곳은 단추 위에
+        UK.btn({ text: GF.t('craft.a.howto'), cls: 'gold sm', onclick: () => { if (here) { sc.remove(); opts.onClose && opts.onClose(); GF.go('craft', { show: rc.id }); } else Room.goApp(rc.lvl ? rc.lvl.app : 'merge', { parent: sc, home: opts.go && (() => { sc.remove(); opts.go(rc.lvl ? rc.lvl.app : 'merge'); }) }); } }, a);
+      }
       else UK.btn({ text: kid() ? null : GF.t('c17.room2.160'), icon: kid() ? 'next' : null, cls: 'gold sm', onclick: () => Room.goApp(sr.game, { parent: sc, home: opts.go && (() => { sc.remove(); opts.go(sr.game); }) }) }, a);
     }
     function drawAll() { drawTabs(); drawBody(); drawDet(); } drawAll(); return sc;
@@ -5176,6 +5194,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /* ---------------- 일시정지 메뉴: 판 중 ‹ → 계속/다시/지도로 (첫 조작 전·판이 끝난 뒤에는 메뉴 없이 바로 나감) ---------------- */
   let touched = false, fin = false;
   P.pause = function (r, again) {
+    P._last = { r, again };   // ⏸ 지킴이가 되살릴 때 쓰는 마지막 판 화면
     touched = false; fin = false; const arm = () => { touched = true; r.removeEventListener('pointerup', arm, true); }; r.addEventListener('pointerup', arm, true);
     const menu = function () {
       const kid = P.kid, leave = () => { GF.backHook = null; GF.back(); };
@@ -5194,6 +5213,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     GF.backHook = function () { return (!touched || fin || document.querySelector('.uk-scrim')) ? false : menu(); };   // 하드웨어 뒤로: 첫 조작 전·판이 끝난 뒤엔 바로 나감
     { playBar(true); if (!P._pbW) { P._pbW = 1; const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); if (!GF.backHook && document.body.classList.contains('gf-inplay')) playBar(false); }; } }
   };
+  /* ⏸ 지킴이(허브 10/22 — 리뷰어가 본 「다시 연 판에 ⏸ 없음」 + 간헐 오류 reading 'pause'): 화면이 바뀐 뒤 0.45초에 한 번,
+     P.pause 를 부른 판 화면이 지금 떠 있는데 ⏸(gf-inplay·뒤로 가로채기)가 없으면 다시 건다. 다른 화면이면 아무것도 안 함 */
+  P.guard = () => { const L = P._last; if (!L || !L.r || !L.r.isConnected || !L.r.classList.contains('on')) return false; if (document.body.classList.contains('gf-inplay') && GF.backHook) return false; try { P.pause(L.r, L.again); P._fixed = (P._fixed || 0) + 1; return true; } catch (e) { return false; } };
+  { const prev = GF.onScreen; GF.onScreen = function () { if (prev) prev.apply(this, arguments); setTimeout(() => { try { P.guard(); } catch (e) { /* 지킴이 실패 무시 */ } }, 450); }; }
   /* 판 화면 상단바 = 일시정지 하나(+판 안 목표 HUD) — 성인·유아 같은 틀(유아 메뉴는 그림 단추만). 홈·별·설정·소리·소식은 숨기고 ‹ 를 ⏸ 로 — 누르면 늘 메뉴(2차 리뷰 G1) */
   const PAUSE_IC = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="8" y="6" width="6" height="20" rx="2.5" fill="#5A463A"/><rect x="18" y="6" width="6" height="20" rx="2.5" fill="#5A463A"/></svg>';
   function playBar(on) {
@@ -5584,7 +5607,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const stage = el('div', 'hk-stage', r); el('i', 'hk-floor', stage); (o.fam || ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy']).forEach((id) => stage.appendChild(GF.img(id)));
     /* 앱 모티프(G3): 그 앱에서 받는 가구 두 개를 무대 바닥 양끝에 — 7앱 홈이 같은 그림으로 보이지 않게(3차 리뷰: 스토어 스크린샷에서 앱 구분) */
     try { (o.props || []).filter((id) => window.Room && Room.item && Room.item(id)).slice(0, 2).forEach((id, i) => { const im = el('img', 'hk-prop ' + (i ? 'r' : 'l'), stage); im.src = Room.src(Room.item(id)); im.alt = ''; stage.classList.add('hk-has-props'); }); } catch (e) { /* 소품 그림 없으면 가족만 */ }
-    if (open && (o.icons || []).length) { const col = el('div', 'hk-icons', r); o.icons.filter(Boolean).slice(0, 4).forEach((x) => { const b = el('button', 'hk-ic' + (x.hot ? ' hot' : ''), col); el('span', 'hk-icb', b, IC(x.icon)); el('small', '', b, x.label); if (x.badge) el('i', 'hk-badge' + (x.badge === '✔' ? ' ok' : ''), b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
+    const icons = (o.icons || []).filter(Boolean).filter((x) => x.id !== 'craft').concat(!o.kid && GF.craft && GF.craft.homeIcon ? [GF.craft.homeIcon()].filter(Boolean) : []);   // 성인 퍼즐 앱 공통: 뚝딱 공방(허브 10/22)
+    if (open && icons.length) { const col = el('div', 'hk-icons', r); icons.slice(0, 4).forEach((x) => { const b = el('button', 'hk-ic' + (x.hot ? ' hot' : ''), col); el('span', 'hk-icb', b, IC(x.icon)); el('small', '', b, x.label); if (x.badge) el('i', 'hk-badge' + (x.badge === '✔' ? ' ok' : ''), b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
     if (open && window.Room && Room.H) { const bw = el('div', 'h2-bandwrap hk-band', r); try { if (!Room.band(bw, { go: o.levels, toastParent: r, here: true, house: o.house })) bw.classList.add('hk-noband'); } catch (e) { /* 목표 띠 실패 무시 */ } } else el('div', 'h2-bandwrap hk-noband', r);   // 한 줄 한 정보(리뷰 P5): 띠 안 작은 칩(0/3·0/4)은 홈에서 뺌(작은 일·꾸미기 도전은 📮 소식 상자 3칸) · 3판 전엔 목표 띠도 없음(공용 띠가 자동으로 붙지 않게 자리만)
     /* 유아(o.kid): 글자 없는 판 — 초록 ▶ 하나 + 그림 알약(o.pills: [{icon, label, fn, bg, badge}]) 늘 보임, 목표 띠·아이콘 줄 없음(2차 리뷰 N1) */
     const main = UK.btn({ text: o.kid ? null : (o.mainText || (o.first ? GF.t('ui.hk.start') : GF.t('ui.hk.level', { n: o.level }))), icon: 'play', cls: 'green block hk-main', onclick: () => { GF.sfx('pick'); if (GF.polish && GF.polish.beforePlay) GF.polish.beforePlay(o.play); else o.play(); } }, r);
@@ -5741,8 +5765,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /** 그림 주소: 재료(1·2단) = CraftArt, 가구(3·4단) = Room 그림 */
   C.art = (id, ci) => { const r = D().recipes.find((x) => x.id === id), it = r && C.itemOf(r); if (it) return Room.src(it, typeof ci === 'string' ? ci : it.colors[ci || 0]);   // ci = 색 자리 번호 또는 실제 색(#hex)
     const m = C.mat(id) || (r && r.out.mat && C.mat(r.out.mat)); return CraftArt.uri(m ? m.id : id); };
-  C.total = () => D().mats.filter((m) => m.t === 1).length + D().recipes.length;
-  C.foundCount = () => D().mats.filter((m) => m.t === 1 && (C.S().found[m.id] || C.inv(m.id))).length + D().recipes.filter((r) => C.S().found[r.id]).length;
+  C.total = () => D().mats.filter((m) => m.t === 1).length + D().recipes.filter((r) => !r.lvl).length;   // 레벨 보상 도안(lvl)은 도감 칸에 안 셈
+  C.foundCount = () => D().mats.filter((m) => m.t === 1 && (C.S().found[m.id] || C.inv(m.id))).length + D().recipes.filter((r) => !r.lvl && C.S().found[r.id]).length;
   /** 지금 가진 재료로 만들 수 있는(아직 못 만든) 레시피 — 힌트·홈 배지 */
   C.makeable = (newOnly) => (AD() ? D().recipes.filter((r) => (!newOnly || !C.S().found[r.id]) && C.known(r) && C.canMake(r)) : D().recipes.filter((r) => (!newOnly || !C.S().found[r.id]) && (r.in[0] === r.in[1] ? C.inv(r.in[0]) >= 2 : C.inv(r.in[0]) >= 1 && C.inv(r.in[1]) >= 1)));
   /* ---------- 성인 3칸 도안 ---------- */
@@ -5750,7 +5774,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   C.find3 = (ins, tool) => D().recipes.find((r) => C.key3(r.in, r.tool) === C.key3(ins, tool)) || null;
   C.findMats = (ins) => { const k = ins.slice().sort().join('+'); return D().recipes.find((r) => r.in.slice().sort().join('+') === k) || null; };
   C.prog = () => { try { return C.cfg.progress ? C.cfg.progress() : (GF.progress0 ? GF.progress0() : 0); } catch (e) { return 0; } };
-  C.known = (r) => !!C.S().found[r.id] || (!r.hidden && C.prog() >= (r.unlock || 0));   // 도안이 열림(해금 판 수를 넘었거나 이미 만듦) — 숨은 도안은 만들어 봐야 열림
+  C.known = (r) => !!C.S().found[r.id] || (r.lvl ? !!(C.S().bp || {})[r.id] : (!r.hidden && C.prog() >= (r.unlock || 0)));   // 레벨 보상 도안 = 그 판을 깨서 받았을 때   // 도안이 열림(해금 판 수를 넘었거나 이미 만듦) — 숨은 도안은 만들어 봐야 열림
   C.need = (r) => { const n = {}; r.in.forEach((i) => { n[i] = (n[i] || 0) + 1; }); return n; };
   C.canMake = (r) => Object.entries(C.need(r)).every(([i, k]) => C.inv(i) >= k);
   C.rowOf = (id) => D().recipes.filter((r) => r.row === id);
@@ -5759,7 +5783,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       공방이 있는 앱(③)은 공방이 열린 뒤(openAt 판)부터, 다른 성인 앱은 이 기기에서 공방을 한 번 연 뒤부터만(단독 설치 사용자에게 쓸 데 없는 칩을 보이지 않게) */
   C.adultDrop = (app, n, pn, before) => {
     if (!AD() || !D().drop || !D().drop[app]) return []; const s = C.S(), dr = D().drop[app];
-    if (C.cfg.workshop ? C.prog() < (D().openAt || 0) : !s.open) return [];
+    if (C.cfg.workshop ? !C.isOpen() : !s.open) return [];
     if (n == null || !(n > 0)) { s.cnt = s.cnt || {}; n = s.cnt[app] = (s.cnt[app] || 0) + 1; }
     const ids = [dr.main[n % dr.main.length]];
     if (dr.side && n % (dr.sideEvery || 3) === 0) ids.push(dr.side[Math.floor(n / (dr.sideEvery || 3)) % dr.side.length]);
@@ -5767,10 +5791,26 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     ids.forEach((id) => C.add(id, 1)); if (pn) chips(ids, pn, before); return ids;
   };
   /** 결과 창이 실제로 뜬 뒤(우리 집 가구 카드가 먼저 떠도) 그 창 별 아래에 칩 — 재료는 지금 바로 넣는다 */
+  /* 레벨 보상 = 완성품 대신 도안 + 꼭 맞는 재료 묶음(허브 10/22, D45 「공방이 가구 입수 경로 대체」). 이미 가진 가구면 null(앱은 예전처럼 Room.grant → 이미 있음).
+     시즌 한정·세트 완성 보상은 앱이 그대로 완성품을 준다(이 함수를 부르지 않음) */
+  C.isOpen = () => C.prog() >= (D().openAt || 3) || Object.keys(C.S().bp || {}).length > 0;
+  C.homeIcon = () => (AD() && C.cfg.workshop && C.isOpen() ? { id: 'craft', icon: IC.craft, label: GF.t('craft.a.home'), fn: () => GF.go('craft'), badge: !C.S().open || C.makeable(true).length ? '!' : 0, hot: !C.S().open } : null);   // 공통 홈 아이콘(새로 만들 수 있으면 「!」)
+  C.recipeFor = (itemId) => D().recipes.find((r) => r.out && r.out.item === itemId) || null;
+  C._pend = [];
+  C.giveBP = (itemId) => {
+    if (!AD()) return null; const r = D().recipes.find((x) => x.lvl && x.out.item === itemId); if (!r || (window.Room && Room.has && Room.has(itemId))) return null;
+    const s = C.S(); s.bp = s.bp || {}; if (!s.bp[r.id]) { s.bp[r.id] = Date.now(); r.in.forEach((id) => { s.inv[id] = Math.min(99, (s.inv[id] || 0) + 1); if (!s.found[id]) s.found[id] = Date.now(); }); s.told = 1; C.save(); C._pend.push(r); }
+    return r;
+  };
+  function bpCards(L, sh) {   // 결과 창 별 아래: 「새 도안 · 이름」 + 재료 묶음 + 「공방에서 만들기 ▶」
+    L.forEach((rec) => { const it = C.itemOf(rec), c = el('div', 'cr-bpcard'), im = el('img', '', c); im.src = it ? Room.src(it) : ''; im.alt = ''; const tx = el('div', 'cr-bptx', c); el('b', '', tx, GF.t('craft.a.gotbp', { name: rec.name })); el('div', 'cr-bpin', tx, icoIn(rec));
+      const b = el('button', 'uk-btn green cr-bpmake', c, GF.t('craft.a.makeit')); b.onclick = () => { GF.sfx('pick'); document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.stack = [GF.stack[0]]; GF.go('craft', { fill: rec.id }); };
+      const st = sh.querySelector('.uk-stars'); if (st && st.parentNode) st.parentNode.insertBefore(c, st.nextSibling); else sh.appendChild(c); });
+  }
   C.dropChips = (app, n, root) => {
-    const ids = C.adultDrop(app, n, null); if (!ids.length) return ids; let k = 0;
-    const fresh = C.cfg.workshop && !C.S().open && !C.S().told; if (fresh) { C.S().told = 1; C.save(); }
-    const tick = () => { const sh = [...(root || document).querySelectorAll('.uk-scrim .uk-sheet')].find((x) => x.querySelector('.uk-stars') && !x.closest('.h2-drop') && !x.querySelector('.cr-drop')); if (sh) { chips(ids, sh, null); if (fresh) { const d = sh.querySelector('.cr-drop'), b = el('button', 'uk-btn sky cr-opened'); b.innerHTML = IC.craft + '<span>' + GF.t('craft.a.opened') + '</span>'; b.onclick = () => { GF.sfx('pick'); document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.stack = [GF.stack[0]]; GF.go('craft'); }; if (d && d.parentNode) d.parentNode.insertBefore(b, d.nextSibling); } } else if (k++ < 60) setTimeout(tick, 150); };
+    const ids = C.adultDrop(app, n, null), pend = C._pend.splice(0); if (!ids.length && !pend.length) return ids; let k = 0;
+    const fresh = C.cfg.workshop && !pend.length && !C.S().open && !C.S().told; if (fresh) { C.S().told = 1; C.save(); }
+    const tick = () => { const sh = [...(root || document).querySelectorAll('.uk-scrim .uk-sheet')].find((x) => x.querySelector('.uk-stars') && !x.closest('.h2-drop') && !x.querySelector('.cr-drop')); if (sh) { if (pend.length) bpCards(pend, sh); if (ids.length) chips(ids, sh, null); if (fresh) { const d = sh.querySelector('.cr-drop'), b = el('button', 'uk-btn sky cr-opened'); b.innerHTML = IC.craft + '<span>' + GF.t('craft.a.opened') + '</span>'; b.onclick = () => { GF.sfx('pick'); document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.stack = [GF.stack[0]]; GF.go('craft'); }; if (d && d.parentNode) d.parentNode.insertBefore(b, d.nextSibling); } } else if (k++ < 60) setTimeout(tick, 150); };
     setTimeout(tick, 60); return ids;
   };
   C.canNew = () => C.makeable(true).length > 0 || C.yardLeft() > 0;
@@ -5816,10 +5856,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   GF.screen('craft', {
     wide: () => false,
     leave() { if (ui) { clearTimeout(ui.idle); ui = null; C.recover(); } },   // 떠날 때 칸 재료 돌려주기 · 누른 도안 완성
-    enter(r) {
+    enter(r, p) {
       GF.bg('indoor', r); r.classList.add('uk', 'cr');
       const rec0 = C.recover(); if (rec0) setTimeout(() => { try { UK.toast((AD() ? GF.t('craft.a.recover', { name: rec0.name }) : '✓'), r); } catch (e) { /* */ } }, 600);   // 지난번 만들다 나간 것 완성 알림
-      if (AD()) return enterA(r);   // 성인 3칸 도안
+      if (AD()) { enterA(r); const q = p || {}, rf = (id) => D().recipes.find((x) => x.id === id); if (q.fill && rf(q.fill) && C.known(rf(q.fill)) && C.canMake(rf(q.fill))) setTimeout(() => fillA(rf(q.fill)), 250); else if (q.fill || q.show) setTimeout(() => openBP(q.fill || q.show), 250); return; }   // 성인 3칸 도안 · 결과 창 「공방에서 만들기」 = 바로 채움 · 카탈로그 「만드는 법」 = 그 도안
       const first = C.starter();
       ui = { r, slots: [null, null], busy: false, idle: null };
       const bench = el('div', 'cr-bench', r);
@@ -6020,14 +6060,15 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     h.appendChild(GF.img(c.hint.who)); const b = el('button', 'cr-abub', h, GF.t('craft.a.tip', { name: c.name })); b.onclick = () => { fillA(c); h.classList.remove('on'); }; h.classList.add('on');
   }
   const icoIn = (r) => Object.entries(C.need(r)).map(([id, k]) => `<span class="cr-bpi${C.inv(id) >= k ? '' : ' no'}"><img src="${CraftArt.uri(id)}" alt="">${k > 1 ? '<b>×' + k + '</b>' : ''}<small>${(C.mat(id) || {}).name || ''}</small></span>`).join('');
-  function openBP() {   // 도안 책: 단마다 — 열린 도안(재료·도구·넣기) / 잠긴 도안(몇 판 뒤) / 숨은 도안(요술 조각 + 옛이야기 제목)
+  function openBP(showId) {   // 도안 책: 단마다 — 열린 도안(재료·도구·넣기) / 잠긴 도안(몇 판 뒤) / 숨은 도안(요술 조각 + 옛이야기 제목)
     if (!ui) return; const sc = UK.modal({ parent: ui.r, title: '📐 ' + GF.t('craft.a.bp'), dismiss: true }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet', 'cr-bps');
     const body = el('div', 'cr-bpl', sh), p = C.prog();
-    [3, 2, 4].forEach((t) => {
+    const secs = [['l', D().recipes.filter((r) => r.lvl && C.known(r))], [3, D().recipes.filter((r) => r.t === 3 && !r.lvl)], [2, D().recipes.filter((r) => r.t === 2)], [4, D().recipes.filter((r) => r.t === 4)]].filter((x) => x[1].length);   // 맨 위 = 판을 깨서 받은 도안(레벨 보상)
+    secs.forEach(([t, list]) => {
       el('h4', 'cr-bph', body, GF.t('craft.a.t' + t));
       const rank = (r) => (C.known(r) ? (C.canMake(r) ? 0 : 1) : 2);
-      D().recipes.filter((r) => r.t === t).map((r, i) => [r, i]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map((x) => x[0]).forEach((r) => {
-        const known = C.known(r), got = !!C.S().found[r.id], row = el('div', 'cr-bpr' + (known ? '' : r.hidden ? ' hid' : ' lock') + (got ? ' got' : ''), body);
+      list.map((r, i) => [r, i]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map((x) => x[0]).forEach((r) => {
+        const known = C.known(r), got = !!C.S().found[r.id], row = el('div', 'cr-bpr' + (known ? '' : r.hidden ? ' hid' : ' lock') + (got ? ' got' : ''), body); row.dataset.id = r.id;
         const im = el('img', 'cr-bpimg', row); im.src = C.art(r.id, 0); im.alt = '';
         const mid = el('div', 'cr-bpm', row);
         if (known) { el('b', '', mid, r.name + (got ? ' <i>✓</i>' : '')); el('div', 'cr-bpin', mid, icoIn(r) + '<span class="cr-bpt">' + TOOLS[r.act] + '<small>' + GF.t('craft.a.tool.' + r.tool) + '</small></span>'); const can = C.canMake(r); const go = el('button', 'uk-btn ' + (can ? 'green' : 'cr-bpno') + ' cr-bpgo', row, GF.t(can ? 'craft.a.put' : 'craft.a.short')); go.disabled = !can; go.onclick = () => { sc.close(); fillA(r); }; }
@@ -6036,6 +6077,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       });
     });
     el('div', 'acts row', sh).appendChild(UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.close() }));
+    if (showId) { const row = body.querySelector(`.cr-bpr[data-id="${showId}"]`); if (row) { setTimeout(() => row.scrollIntoView({ block: 'center' }), 60); row.classList.add('flash'); } }   // 카탈로그 「만드는 법」으로 왔으면 그 도안으로
   }
   function openDexA() {   // 도감: 줄마다(재료·가구·옛이야기) 진척 + 줄 보상
     if (!ui) return; const sc = UK.modal({ parent: ui.r, title: GF.t('craft.a.dex') + ' ' + C.foundCount() + ' / ' + C.total(), dismiss: true }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet', 'cr-bps');
@@ -6352,7 +6394,7 @@ const th = LV.theme || 'teeth', face = el('div', 'dy-face', stage); face.innerHT
         setTimeout(() => { if (!finished && !SV.tips.sleep && stage.isConnected) { UK.finger(r, lights[0], { tap: true, ms: 6000 }); SV.tips.sleep = 1; save(); } else kick(hintSleep, 5000); }, slow(900));
       };
       DY.debug.level = () => LV; DY.debug.finished = () => finished; DY.debug.got = () => [got, goalN]; DY.debug.stage = stage;
-      ACT[LV.type](); GF.tale.level(r, LV); GF.polish.pause(r, () => GF.replace('dplay', LV.kind ? { level: LV } : { n: LV.id }));
+      ACT[LV.type](); GF.tale.level(r, LV); if (GF.polish && GF.polish.pause) GF.polish.pause(r, () => GF.replace('dplay', LV.kind ? { level: LV } : { n: LV.id }));
     },
   });
   GF.screen('dhouse', {

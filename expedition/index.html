@@ -11,7 +11,7 @@
 :root {
   --xi-ink: #070A22; --xi-navy: #0B1030; --xi-night: #141A4A; --xi-violet: #3A1A6E; --xi-purple: #6A2BA8; --xi-magenta: #B0307F;
   --xi-gold: #FFC94A; --xi-gold2: #FFE9A6; --xi-gold3: #B07A12; --xi-cyan: #5CE1FF; --xi-red: #FF4D5E; --xi-green: #5BE38B; --xi-text: #F4EEFF; --xi-dim: #A9A3D6;
-  --xi-deep: #1C2366; --xi-g3: #4DA3FF; --xi-g4: #B06BFF; --xi-g5: #FFC94A; --xi-a-support: #F08A3C; --xi-a-flash: #FF4D7A; --xi-a-care: #4D8BFF; --xi-logo: 'Gasoek One', 'Black Han Sans', sans-serif;
+  --xi-deep: #1C2366; --xi-g3: #4DA3FF; --xi-g4: #B06BFF; --xi-g5: #FFC94A; --xi-a-support: #3DAE5B; --xi-a-flash: #FF4D7A; --xi-a-care: #4D8BFF; --xi-logo: 'Gasoek One', 'Black Han Sans', sans-serif;
   --xi-title: 'Black Han Sans', 'Noto Sans KR', 'Malgun Gothic', sans-serif; --xi-body: 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans CJK KR', sans-serif;
 }
 .xi { font-family: var(--xi-body); color: var(--xi-text); }
@@ -79,7 +79,7 @@ footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 1
    시안 단계 코드라 서버·전투·밸런스와 연결되지 않는다(작가 OK 뒤 본 구현). */
 (function (root, factory) { const api = factory(); if (typeof module === 'object' && module.exports) module.exports = api; else root.GeoMon = api; })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
-  const OL = '#6b5443', COL = { flash: '#E5334A', support: '#F08A3C', care: '#3B6FD6', boss: '#3FA796', special: '#E7B73E' };
+  const OL = '#6b5443', COL = { flash: '#E5334A', support: '#3DAE5B', care: '#3B6FD6', boss: '#3FA796', special: '#E7B73E' };
   const shade = (hex, a) => { const n = parseInt(hex.slice(1), 16), f = (v) => Math.max(0, Math.min(255, Math.round(a >= 0 ? v + (255 - v) * a : v * (1 + a)))); return '#' + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => f(v).toString(16).padStart(2, '0')).join(''); };
   const P = (pts) => pts.map((p) => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
   const poly = (pts, fill, sw, extra) => `<polygon points="${P(pts)}" fill="${fill}" stroke="${OL}" stroke-width="${sw || 4}" stroke-linejoin="round" ${extra || ''}/>`;

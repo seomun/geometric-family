@@ -987,6 +987,10 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
 #b-parent.holding::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 4px solid transparent; border-top-color: #fff; border-right-color: #fff; animation: kpHold 2s linear forwards; }   /* 보호자 입구 길게 누르기(2초) 진행 테두리 */
 @keyframes kpHold { 0% { transform: rotate(0); opacity: .4; } 100% { transform: rotate(540deg); opacity: 1; } }
 .h2-gotline { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px auto 4px; padding: 6px 12px; border-radius: 14px; background: #FFF6E5; font: 800 calc(15px * var(--uk-fs-k, 1))/1.3 var(--uk-font); color: var(--uk-ink); max-width: 100%; } .h2-gotline img { width: 36px; height: 36px; object-fit: contain; flex: none; }   /* 첫 5판: 가구·업적은 결과 창 안 한 줄(QA 10/20 C-5) */
+/* 퍼블리셔 리뷰 10/22 #4: 스크롤되는 시트(설정·소식 상자)에서 ✕ 가 모서리 밖(-14px)이라 잘렸고, 닫기 띠 아래 바닥 여백으로 목록이 비쳤다 → ✕ 는 시트 안쪽 위, 닫기 띠는 바닥까지 꽉 채움 */
+.xt-sheet > .uk-x { right: 8px; top: 8px; width: 44px; height: 44px; border-width: 3px; }
+.xt-sheet { padding-bottom: 0; }
+.xt-sheet .acts { bottom: 0; margin: 0 -16px; padding: 14px 16px 16px; background: linear-gradient(rgba(255,255,255,0), var(--uk-card, #fff) 14px); }
 
 /* 이야기 지도(GF.saga) — 사가 맵. 그림은 슬롯(map:*), 없으면 이 CSS·이모지 임시 그림 */
 .sg-root { position: absolute; left: 0; right: 0; top: 66px; bottom: 0; }
@@ -2501,6 +2505,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     m2_teapot: (c) => svg(56, 54, `<rect x="18" y="2" width="16" height="12" rx="2" ${st('#3A2E39', 2)}/><rect x="13" y="13" width="26" height="4" rx="2" ${st('#3A2E39', 2)}/><path d="M18 9h16" stroke="#E5484D" stroke-width="2.4"/><ellipse cx="26" cy="34" rx="18" ry="16" ${st(c)}/><path d="M44 30q10-4 9-12" fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round"/><path d="M8 28q-8 2-4 12 3 5 6 2" fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>${face(26, 35, .9)}<path d="M18 50h16" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`),
   });
 
+  /* ⑪ 288단계(뒤틀왕) 전리품: 곧게 펴진 왕관 — 빨강 세모 가시 셋이 똑바로 선 모양(gf-game 요청 10/22) */
+  A.m2_crown = (c) => svg(56, 46, `<rect x="6" y="26" width="44" height="14" rx="4" ${st('#FFC933')}/><path d="M8 28L14 6l8 22M20 28L28 4l8 24M34 28L42 6l6 22" ${st(c)}/><circle cx="14" cy="6" r="3" fill="#FFF3B0" stroke="${INK}" stroke-width="1.6"/><circle cx="28" cy="4" r="3" fill="#FFF3B0" stroke="${INK}" stroke-width="1.6"/><circle cx="42" cy="6" r="3" fill="#FFF3B0" stroke="${INK}" stroke-width="1.6"/><path d="M12 33h32" stroke="${INK}" stroke-width="1.4" stroke-dasharray="3 3"/>${twinkle(50, 12, .7)}`);
   /* 뚝딱 공방(D45) 가구 — 재료 둘로 만든 모양이 보이게(판자 결·벽돌 줄·천 바늘땀). 나머지 공방 가구는 기존 그림(table·bed·shelf·window·plant·party)을 쓴다 */
   Object.assign(A, {
     cr_chair: (c) => svg(46, 54, `<rect x="8" y="4" width="30" height="22" rx="4" ${st(c)}/><path d="M14 10h18M14 16h18" stroke="${shade(c, -.25)}" stroke-width="1.4"/><rect x="4" y="26" width="38" height="10" rx="3" ${st(shade(c, .1))}/><path d="M9 36v14M37 36v14" stroke="${INK}" stroke-width="3.4" stroke-linecap="round"/><rect x="16" y="28" width="14" height="6" rx="1.5" fill="#F6A55B" stroke="${INK}" stroke-width="1.2"/>${face(23, 14, .6)}`),
@@ -3322,7 +3328,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       tools.innerHTML = ''; const B = (ic, label, fn, on) => { const b = el('button', 'h2-fb' + (on ? ' on' : ''), tools, kid() ? UK.icon(ic) : UK.icon(ic) + '<span>' + label + '</span>'); b.setAttribute('aria-label', label); b.onclick = fn; };
       const LM = ['auto', 'day', 'eve', 'night'], LI = { auto: '🕒', day: '☀️', eve: '🌇', night: '🌙' }, LN = { auto: GF.t('c17.room2.125'), day: GF.t('c17.room2.126'), eve: GF.t('c17.room2.127'), night: GF.t('c17.room2.128') }, cm = LM.includes(S.light) ? S.light : 'auto'; const lt = el('button', 'h2-fb', tools, LI[cm] + (kid() ? '' : '<span>' + LN[cm] + '</span>')); lt.setAttribute('aria-label', 'light'); lt.onclick = () => { S.light = LM[(LM.indexOf(cm) + 1) % LM.length]; Room.save(); drawAll(); };
       if (Room.moodOpen(cur)) { const mb = el('button', 'h2-fb', tools, GF.t('c17.room2.129')); mb.setAttribute('aria-label', 'mood'); mb.onclick = () => Room.moodPick(cur, parent, drawAll); }
-      B('gift', GF.t('c17.room2.130'), () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, GF.t('c17.room2.131')); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid()) B('heart', GF.t('c17.room2.132'), () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); toastH(GF.t('c16.room2.041', { name: P.name, have: r.have }) + (r.missing.length ? GF.t('c16.room2.042', { length: r.missing.length }) : ''), parent); const u = UK.btn({ text: GF.t('c16.block.004'), cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? GF.t('c17.room2.133') : GF.t('c17.room2.028'), () => { place = !place; sel = null; drawAll(); }, place); B('share', GF.t('c17.room2.134'), () => Room.photoStudio(cur, parent));
+      B('gift', GF.t('c17.room2.130'), () => Room.catalog(parent, { onClose: drawAll, go: opts.go, room: cur })); if (!kid()) { const vb = el('button', 'h2-fb', tools, GF.t('c17.room2.131')); vb.setAttribute('aria-label', 'visit'); vb.onclick = () => Room.visitSheet(parent); } if (!kid()) B('heart', GF.t('c17.room2.132'), () => Room.presetSheet(cur, parent, (r, P) => { drawAll(); toastH(GF.t('c16.room2.041', { name: P.name, have: r.have }) + (r.missing.length ? GF.t('c16.room2.042', { length: r.missing.length }) : ''), parent); const u = UK.btn({ text: GF.t('c16.block.004'), cls: 'ghost sm h2-undo', onclick: () => { Room.undoPreset(); u.remove(); drawAll(); } }, view); setTimeout(() => u.remove(), 9000); })); B(place ? 'check' : 'brush', place ? GF.t('c17.room2.133') : GF.t('c17.room2.028'), () => { place = !place; sel = null; drawAll(); }, place); B('share', GF.t('c17.room2.134'), () => (kid() && Room.cfg.guard ? Room.cfg.guard(() => Room.photoStudio(cur, parent)) : Room.photoStudio(cur, parent)));   /* 유아: 사진 카드 화면부터 보호자 확인(퍼블리셔 리뷰 10/22 아이 안전) */
     }
     function drawSel() {
       selbar.innerHTML = ''; if (!place) return; if (sel == null) { el('p', 'h2-hint', selbar, kid() ? '' : GF.t('c17.room2.135')); return; } const p = (S.placed[cur] || [])[sel], it = p && Room.item(p.id); if (!it) return;
@@ -4488,7 +4494,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     T.forEach((x) => { const b = el('button', 'ops-trit' + (x.got >= x.need ? ' ok' : ''), row); el('span', 'ic', b, x.got >= x.need ? '✔' : x.icon); el('small', '', b, x.label); el('b', '', b, x.got + '/' + x.need); b.onclick = () => { if (GF.sfx) GF.sfx('tap'); if (sc && sc.close) sc.close(); x.open(); }; });
     el('p', 'xt-p ops-trin', body, GF.t('ops.tri.note')); return row;
   };
-  const mailNew = () => { const s = st(), seen = s.mailSeen || []; return O.mailItems().filter((x) => !seen.includes(x.id)).length + (O.d && O.d.news && s.newsSeen && s.newsSeen !== O.d.news.version ? 1 : 0); };
+  /* 퍼블리셔 리뷰 10/22 #4: 처음 깐 날부터 빨간 배지 4 는 소음 — 앱을 처음 연 순간 이미 있던 소식은 「본 것」으로 두고, 그 뒤에 새로 생긴 것만 배지(상자 안 목록은 그대로 다 보임) */
+  const mailNew = () => { const s = st(); if (!s.mailInit) { s.mailInit = 1; s.mailSeen = O.mailItems().map((x) => x.id).concat(s.mailSeen || []).slice(0, 60); if (O.d && O.d.news && !s.newsSeen) s.newsSeen = O.d.news.version; put(s); } const seen = s.mailSeen || []; return O.mailItems().filter((x) => !seen.includes(x.id)).length + (O.d && O.d.news && s.newsSeen && s.newsSeen !== O.d.news.version ? 1 : 0); };
   O.mailNew = mailNew;
   O.openMail = function () {
     const L = O.mailItems(), { sc, body } = sheet('📮 ' + GF.t('ops.mail.title')); O.triRow(body, sc); el('p', 'xt-p ops-mfair', body, GF.t('ops.mail.fair'));
@@ -4893,19 +4900,19 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   I.playBeat = function (chId, beat) { const n = +String(chId).replace(/\D/g, ''), tale = ((GF.data.ops || {}).playTale || {})[n]; return tale ? I.beat('play', tale, beat) : false; };
   I.toast = (tale, beat, tries) => { try { if (tries === undefined) { setTimeout(() => I.toast(tale, beat, 0), 1500); return; }   // 컷 직후 바로 띄우지 않는다(설명 카드가 먼저)
       if ((document.querySelector('.uk-scrim') || document.querySelector('.tale-ov')) && tries < 6) { setTimeout(() => I.toast(tale, beat, (tries || 0) + 1), 1600); return; }   // 설명 카드·컷이 떠 있는 동안은 기다렸다가 알림(안내가 겹치지 않게)
- const T = (GF.data.ops.tales || {})[tale] || {}; UK.toast(GF.t('ops.ip.card', { title: T.title || tale, n: I.cardCount(tale) }), document.getElementById('safe')); GF.sfx('star'); } catch (e) {} };
+ const T = (GF.data.ops.tales || {})[tale] || {}; UK.toast(I.kid ? '🃏 ' + I.cardCount(tale) + ' / 4' : GF.t('ops.ip.card', { title: T.title || tale, n: I.cardCount(tale) }), document.getElementById('safe'));   /* 유아: 글자 없이 그림 + 숫자(퍼블리셔 리뷰 10/22 #3) */ GF.sfx('star'); } catch (e) {} };
 
   /* ---------------- 도장: 앱별 규칙(ops.json stamps[앱]=[{id,at}]) — 앱 진행 수(progress)가 기준을 넘으면 확정 ---------------- */
   I.stamps = (app) => (I.get().stamps[app || I.app] || []).slice();
   I.addStamp = function (app, id) { if (!I.ready) return false; const a = I.L.stamps[app] = I.L.stamps[app] || []; if (a.includes(id)) return false; a.push(id); changed('stamp', { app, id }); I.checkPlate(); return true; };
   I.syncStamps = function () {
     if (!I.ready || !I.cfg || typeof I.cfg.progress !== 'function') return; const rules = ((GF.data.ops.stamps || {})[I.app]) || []; let n = 0; try { n = +I.cfg.progress() || 0; } catch (e) { return; }
-    rules.forEach((r) => { if (r.at != null && n >= r.at) { if (I.addStamp(I.app, r.id)) { try { UK.toast(GF.t('ops.ip.stamp', { name: GF.t('ops.ip.stamp.' + r.id) }), document.getElementById('safe')); GF.sfx('star'); } catch (e) {} } } });
+    rules.forEach((r) => { if (r.at != null && n >= r.at) { if (I.addStamp(I.app, r.id)) { try { UK.toast(I.kid ? '⭐' : GF.t('ops.ip.stamp', { name: GF.t('ops.ip.stamp.' + r.id) }), document.getElementById('safe')); GF.sfx('star'); } catch (e) {} } } });
   };
   I.stampTotal = () => { const g = I.get().stamps, ap = ((GF.data.ops.apps || {})[I.kid ? 'kid' : 'adult']) || []; return ap.reduce((a, x) => a + (g[x] || []).length, 0); };
   /** 문패 장식: 앱 도장 세트(앱 5개 중 N개)를 모으면 확정 */
   const PLATES = [{ id: 'ribbon', need: 5 }, { id: 'sparkle', need: 15 }, { id: 'crown', need: 30 }];
-  I.checkPlate = function () { const n = I.stampTotal(), kidScale = I.kid ? 0.4 : 1; PLATES.forEach((p) => { if (n >= Math.ceil(p.need * kidScale) && !I.L.plate.includes(p.id)) { I.L.plate.push(p.id); changed('plate', { id: p.id }); try { UK.toast(GF.t('ops.ip.plate', { name: GF.t('ops.ip.plate.' + p.id) }), document.getElementById('safe')); GF.sfx('celebrate'); } catch (e) {} } }); };
+  I.checkPlate = function () { const n = I.stampTotal(), kidScale = I.kid ? 0.4 : 1; PLATES.forEach((p) => { if (n >= Math.ceil(p.need * kidScale) && !I.L.plate.includes(p.id)) { I.L.plate.push(p.id); changed('plate', { id: p.id }); try { UK.toast(I.kid ? '🏅' : GF.t('ops.ip.plate', { name: GF.t('ops.ip.plate.' + p.id) }), document.getElementById('safe')); GF.sfx('celebrate'); } catch (e) {} } }); };
   I.plateNeed = (id) => Math.ceil(PLATES.find((p) => p.id === id).need * (I.kid ? 0.4 : 1));
   I.plates = () => I.get().plate.slice();
 
@@ -4994,7 +5001,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const LS = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || 'null'); localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} return null; };
   const safe = () => document.getElementById('safe');
   const key = () => 'gf:' + P.app + ':pol', st = () => Object.assign({ fsAsked: 0, noticed: 0 }, LS(key()) || {}), put = (s) => LS(key(), s);
-  const busy = () => !!document.querySelector('.tale-ov, .uk-scrim, #xt-rest');
+  const busy = () => !!document.querySelector('.tale-ov, .uk-scrim, #xt-rest') || (GF.stack && GF.stack.length > 1);   // 안내 토스트는 홈(맨 아래 화면)에서만 — 판·결과 창 위에 겹치지 않게(퍼블리셔 리뷰 10/22 #5)
 
   /* ---------------- 앱 정보 ---------------- */
   P.version = () => { try { const n = window.GFOps && GFOps.version && GFOps.version(); if (n) return n; } catch (e) {} return (GF.data && GF.data.ops && GF.data.ops.news && GF.data.ops.news.version) || ''; };
@@ -5028,6 +5035,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /* 글자 크기는 첫 실행 1회, 첫 판을 열기 직전에(판 밖) 묻고 고르면 바로 그 판으로 — 예전엔 5초 타이머라 판 도중(구슬)·「시작하기」 직후에 떠서 시작을 두 번 눌러야 했음(QA 10/20 C-1·B-2) */
   P.beforePlay = function (fn) {
     if (P.kid || !P.ready || (navigator.webdriver && !/[?&]ops=1/.test(location.search))) return fn(); const s = st(); if (s.fsAsked) return fn();
+    /* 퍼블리셔 리뷰 10/22 #2: 첫 판 앞에서 묻지 않는다(타이틀 → 이야기 → 모달이 겹쳐 첫 「시작」 탭을 먹었음). 세 번째 판을 열 때 한 번 — 이미 놀아 본 뒤라 끊김이 덜하다. 설정 「큰 글씨」로 언제든 바꿀 수 있음 */
+    s.plays = (s.plays || 0) + 1; if (s.plays < 3) { put(s); return fn(); }
     s.fsAsked = 1; put(s); sizeChoice(() => { const s2 = st(); s2.noticed = 1; put(s2); fn(); setTimeout(notices, 4000); });
   };
   P.firstRun = function () {

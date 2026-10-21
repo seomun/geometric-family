@@ -485,6 +485,13 @@ footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 1
     if (!hide.includes('top')) g += poly([[26, 76], [63, 56], [137, 56], [174, 76], [137, 90], [63, 90]], shade(c, .3), 4.5);
     return g;
   }
+  function dice(st, o) {  // 이벤트 대장: 주사위 — 눈금이 찍힌 정육면체(위 면 5 · 앞 면 6 · 옆 면 3, 비스듬히 본 모습)
+    o = o || {}; const hide = o.hide || [], c = o.c || COL.boss, pip = (x, y) => `<circle cx="${x}" cy="${y}" r="5" fill="#fff" stroke="${OL}" stroke-width="1.6"/>`; let g = shadow(100, 190, 70);
+    if (!hide.includes('side')) g += poly([[100, 188], [172, 150], [172, 76], [100, 114]], shade(c, -.25), 4.5) + pip(120, 136) + pip(136, 126) + pip(152, 116) + pip(120, 160) + pip(136, 150) + pip(152, 140);
+    if (!hide.includes('top')) g += poly([[100, 114], [172, 76], [100, 40], [28, 76]], shade(c, .25), 4.5) + pip(100, 77) + pip(80, 76) + pip(120, 76) + pip(100, 60) + pip(100, 94);
+    if (!hide.includes('front')) g += poly([[28, 76], [100, 114], [100, 188], [28, 150]], c, 4.5) + pip(48, 98) + pip(78, 114) + face(st, 64, 128, 0.62);
+    return g;
+  }
   function cuboct(st, o) {  // 입체 대장: 육팔면체 — 정사각 6 + 정삼각 8(모서리를 깎은 상자)
     o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
     g += poly([[56, 40], [144, 40], [182, 78], [182, 150], [144, 184], [56, 184], [18, 150], [18, 78]], shade(c, -.3), 4.5);
@@ -556,6 +563,7 @@ footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 1
     trap: { fn: trap, name: '사다리꼴', tier: '면', el: 'support', shape: '사각', line: '마주 보는 한 쌍이 나란해요', facts: '변 4 · 나란한 변 1쌍' },
     para2: { fn: para2, name: '평행사변형', tier: '면', el: 'support', shape: '사각', line: '마주 보는 변이 모두 나란해요', facts: '변 4 · 나란한 변 2쌍' },
     bipyr: { fn: bipyr, name: '쌍뿔 대장', tier: '입체(보스)', el: 'boss', shape: '쌍뿔', line: '뿔 두 쪽이 맞붙었어요', facts: '면 6 · 꼭짓점 5', faces: ['top', 'bot'] },
+    dice: { fn: dice, name: '주사위 대장', tier: '입체(보스)', el: 'boss', shape: '주사위', line: '눈이 여섯, 어느 면이 나올까요', facts: '면 6 · 눈금 21', faces: ['top', 'front'] },
     antiprism: { fn: antiprism, name: '엇각기둥 대장', tier: '입체(보스)', el: 'boss', shape: '엇각기둥', line: '윗면과 아랫면이 엇갈린 기둥', facts: '면 8 · 삼각 6 + 삼각 2', faces: ['top', 'side'] },
     cuboct: { fn: cuboct, name: '육팔면체 대장', tier: '입체(보스)', el: 'boss', shape: '육팔면체', line: '정사각 6 · 정삼각 8', facts: '면 14 · 모서리 24', faces: ['tri', 'sq'] },
     stella: { fn: stella, name: '별 다면체 대장', tier: '입체(보스)', el: 'boss', shape: '별 다면체', line: '가시가 돋은 별 모양', facts: '꼭짓점 12 · 가시 12', faces: ['spikes', 'core'] },

@@ -655,6 +655,9 @@ body.gf-inplay #b-home, body.gf-inplay #b-stars, body.gf-inplay #b-set, body.gf-
 .tb-hide { opacity: 0 !important; transition: opacity .2s; }
 .tale-band.out { opacity: 0; transform: translateY(-12px); }
 .tale-band.kid { width: max-content; margin: 0 auto; padding: 6px; }
+/* 캔디크러시 벤치마크(10/22): BM-14-2 남은 수 경고 맥박 · BM-14-3 남은 수 피날레 큰 글자 */
+.pz-low { animation: pzLow 1s ease-in-out infinite; } @keyframes pzLow { 50% { transform: scale(1.08); background: #FFE1D6; color: #C2562E; box-shadow: 0 0 0 3px rgba(229, 72, 77, .25); } } html[data-rm="1"] .pz-low { animation: none; background: #FFE1D6; color: #C2562E; }
+.pz-lofin { position: absolute; left: 50%; top: 42%; z-index: 60; transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none; font: 400 calc(30px * var(--uk-fs-k, 1))/1 var(--uk-title-font, Jua); font-style: normal; color: #fff; -webkit-text-stroke: 1.5px #4A3030; text-shadow: 0 4px 0 #4A3030; animation: pzLoFin 1.2s ease-out forwards; } @keyframes pzLoFin { 0% { transform: translate(-50%, -50%) scale(.4); opacity: 0; } 20% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; } 75% { opacity: 1; } 100% { transform: translate(-50%, -80%) scale(1); opacity: 0; } }
 .h2-card .h2-craft { position: absolute; left: 4px; top: 4px; font-style: normal; font-size: 15px; line-height: 1; } .h2-crafthd { margin-top: 2px; } .h2-crafthd b { color: #2E8A4E; } .h2-howto { display: block; margin: 2px 4px 6px; font: 400 13px/1.3 var(--uk-font); color: #6E5A4A; }   /* 카탈로그 공방 표시(10/22) */
 body.gf-inplay .uk-toast, body.gf-inplay :is(.mg-tip, .bk-tip, .tl-tip, .sr-tip, .sp-tip) { left: 76px !important; right: 14px !important; } body.gf-inplay :is(.mg-tip, .bk-tip, .tl-tip, .sr-tip, .sp-tip) { height: auto !important; min-height: 40px; line-height: 1.3 !important; padding-top: 7px !important; padding-bottom: 7px !important; }   /* 폭이 줄어 두 줄이 되면 줄 간격 40px 그대로면 레벨 줄을 덮음 */   /* 판 위 안내 토스트(위쪽)가 ⏸ 단추 밑에 깔려 앞 글자가 가려지던 것(스토어 1번 장 점검 10/22) — ⏸ 오른쪽부터 */
 .tale-band .tb-txt b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tale-band .tb-txt span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }   /* 영어처럼 긴 글: 띠는 제목 한 줄 + 두 줄까지(판 HUD 를 덮지 않게) */
@@ -5226,6 +5229,35 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     else if (b._ic) { b.innerHTML = b._ic; b._ic = null; b.removeAttribute('aria-label'); b.onclick = () => { GF.sfx('tap'); GF.back(); }; }
   }
   P.finished = function () { fin = true; };
+  /* ---- 캔디크러시 벤치마크(docs/bench/14, 허브 10/22) ---- */
+  /** BM-14-1 가만히 있으면 둘 곳 반짝: 판 화면에서 ms(기본 8초) 동안 손을 안 대면 peek() — 힌트 단추와 같은 그림이지만 힌트 수에 안 셈(별·순위 그대로).
+      다시 손대면 처음부터. 판이 끝났거나 창·컷·안내 띠가 떠 있으면 건너뜀 */
+  P.idle = function (r, peek, ms) {
+    ms = ms || 8000; let t = null;
+    const arm = () => { clearTimeout(t); if (!r.isConnected) return; t = setTimeout(() => { if (!r.isConnected) return; if (!r.classList.contains('on') || fin || document.querySelector('.uk-scrim, .tale-ov, .tale-band:not(.out), .cr-act')) { arm(); return; } try { peek(); P._peeks = (P._peeks || 0) + 1; } catch (e) { /* 반짝 실패 무시 */ } arm(); }, ms); };
+    r.addEventListener('pointerdown', arm, true); arm(); return arm;
+  };
+  /** BM-14-2 남은 수 경고: 남은 수(left)가 at 이하이면 칩이 부드럽게 맥박, 한 판에 한 번 짧은 한마디(key = 'polish.low' 또는 'polish.lowp') */
+  P.low = function (chip, left, at, r, key) {
+    if (!chip) return; const on = left > 0 && left <= at; chip.classList.toggle('pz-low', on);
+    if (on && r && !chip.dataset.lowSaid) { chip.dataset.lowSaid = '1'; try { const t = UK.toast(GF.t(key || 'polish.low', { n: left }), r); t.classList.add('sm'); } catch (e) { /* 알림 실패 무시 */ } GF.sfx('tap', { gain: 0.6 }); }
+  };
+  /** BM-14-3 남은 수 피날레(「아껴서 깼어요」): 깬 순간 남은 수(최대 10)가 판 위에서 하나씩 반짝 터지며 숫자 칸이 0까지 내려감 → 큰 글자 → 끝나면 resolve.
+      연출만(별·보상·경제 변화 없음). 움직임 줄이기면 바로 resolve. o = { n, cells: [요소…], counter, fmt: (남은) => 글, key } */
+  P.leftover = function (r, o) {
+    return new Promise((res) => {
+      const n = Math.min((o && o.n) || 0, 10); if (n <= 0 || document.documentElement.dataset.rm === '1' || !r || !r.isConnected) { res(); return; }
+      const cells = ((o.cells || []).filter((e) => e && e.isConnected)), sf = safe(); let k = 0, left = o.n;
+      const step = () => {
+        if (k >= n || !r.isConnected) { try { const lab = el('i', 'pz-lofin', r, GF.t(o.key || 'polish.leftover', { n: o.n })); setTimeout(() => lab.remove(), 1200); } catch (e) { /* */ } GF.sfx('star'); setTimeout(res, 700); return; }
+        left--; if (o.counter && o.fmt) o.counter.innerHTML = o.fmt(Math.max(0, left));
+        const c = cells.length ? cells[(k * 7 + 3) % cells.length] : null;
+        if (c && sf) { const b = c.getBoundingClientRect(), sr = sf.getBoundingClientRect(), kk = sr.width / (sf.offsetWidth || sr.width) || 1; try { GF.burst(sf, (b.left + b.width / 2 - sr.left) / kk, (b.top + b.height / 2 - sr.top) / kk, 7); } catch (e) { /* */ } }
+        GF.sfx('pop1', { st: k * 2, gain: 0.8 }); k++; setTimeout(step, 130);
+      };
+      setTimeout(step, 120);
+    });
+  };
   /* 판을 깬 순간의 「와」(허브 10/19 첫 3판 점검): 판 전체가 한 번 환해지고 가운데서 큰 링·터짐, 별 소리 네 음이 올라감 — 결과 창(꽃가루·팡파르) 직전 0.65초 틈에.
      성인 퍼즐만(유아는 번쩍임 약하게 원칙), 움직임 줄이기면 소리만. 앱은 승리 직후 GF.sfx('star') 대신 이것을 부른다 */
   P.finale = function (r) {

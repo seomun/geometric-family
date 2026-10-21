@@ -655,6 +655,9 @@ body.gf-inplay #b-home, body.gf-inplay #b-stars, body.gf-inplay #b-set, body.gf-
 .tb-hide { opacity: 0 !important; transition: opacity .2s; }
 .tale-band.out { opacity: 0; transform: translateY(-12px); }
 .tale-band.kid { width: max-content; margin: 0 auto; padding: 6px; }
+/* 캔디크러시 벤치마크(10/22): BM-14-2 남은 수 경고 맥박 · BM-14-3 남은 수 피날레 큰 글자 */
+.pz-low { animation: pzLow 1s ease-in-out infinite; } @keyframes pzLow { 50% { transform: scale(1.08); background: #FFE1D6; color: #C2562E; box-shadow: 0 0 0 3px rgba(229, 72, 77, .25); } } html[data-rm="1"] .pz-low { animation: none; background: #FFE1D6; color: #C2562E; }
+.pz-lofin { position: absolute; left: 50%; top: 42%; z-index: 60; transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none; font: 400 calc(30px * var(--uk-fs-k, 1))/1 var(--uk-title-font, Jua); font-style: normal; color: #fff; -webkit-text-stroke: 1.5px #4A3030; text-shadow: 0 4px 0 #4A3030; animation: pzLoFin 1.2s ease-out forwards; } @keyframes pzLoFin { 0% { transform: translate(-50%, -50%) scale(.4); opacity: 0; } 20% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; } 75% { opacity: 1; } 100% { transform: translate(-50%, -80%) scale(1); opacity: 0; } }
 .h2-card .h2-craft { position: absolute; left: 4px; top: 4px; font-style: normal; font-size: 15px; line-height: 1; } .h2-crafthd { margin-top: 2px; } .h2-crafthd b { color: #2E8A4E; } .h2-howto { display: block; margin: 2px 4px 6px; font: 400 13px/1.3 var(--uk-font); color: #6E5A4A; }   /* 카탈로그 공방 표시(10/22) */
 body.gf-inplay .uk-toast, body.gf-inplay :is(.mg-tip, .bk-tip, .tl-tip, .sr-tip, .sp-tip) { left: 76px !important; right: 14px !important; } body.gf-inplay :is(.mg-tip, .bk-tip, .tl-tip, .sr-tip, .sp-tip) { height: auto !important; min-height: 40px; line-height: 1.3 !important; padding-top: 7px !important; padding-bottom: 7px !important; }   /* 폭이 줄어 두 줄이 되면 줄 간격 40px 그대로면 레벨 줄을 덮음 */   /* 판 위 안내 토스트(위쪽)가 ⏸ 단추 밑에 깔려 앞 글자가 가려지던 것(스토어 1번 장 점검 10/22) — ⏸ 오른쪽부터 */
 .tale-band .tb-txt b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tale-band .tb-txt span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }   /* 영어처럼 긴 글: 띠는 제목 한 줄 + 두 줄까지(판 HUD 를 덮지 않게) */
@@ -4521,6 +4524,14 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     bell(buf, off, f, n, v) { let p1 = 0, p2 = 0; const len = Math.min(1.6 * SR, buf.length - off) | 0; for (let i = 0; i < len; i++) { const t = i / SR; p1 += f / SR; p2 += f * 2.76 / SR; buf[off + i] += (Math.sin(TAU * p1) * Math.exp(-t * 2.6) + Math.sin(TAU * p2) * 0.18 * Math.exp(-t * 7)) * Math.min(1, i / (0.003 * SR)) * v; } },
     kick(buf, off, f, n, v) { let ph = 0; const len = 0.16 * SR | 0; for (let i = 0; i < len && off + i < buf.length; i++) { const t = i / SR; ph += (110 * Math.exp(-t * 28) + 42) / SR; buf[off + i] += Math.sin(TAU * ph) * Math.exp(-t * 20) * v; } },
     tick(buf, off, f, n, v) { let seed = (off * 2654435761) >>> 0, lp = 0; const len = 0.04 * SR | 0; for (let i = 0; i < len && off + i < buf.length; i++) { seed = (seed * 1664525 + 1013904223) >>> 0; const w = (seed / 4294967296) * 2 - 1; lp += (w - lp) * 0.5; buf[off + i] += (w - lp) * Math.exp(-i / (0.011 * SR)) * v; } },
+    /* ⑪ 나라·대장 배경음 7곡용 목소리(gf-asset 2026-10-22) — 기존 목소리는 그대로 */
+    flute(buf, off, f, n, v) { let ph = 0, seed = (off * 1103515245 + 12345) >>> 0, lp = 0; const a = 0.06 * SR, r = 0.14 * SR; for (let i = 0; i < n && off + i < buf.length; i++) { const t = i / SR, vib = 1 + 0.005 * Math.sin(TAU * 5.2 * t) * Math.min(1, t / 0.25); ph += f * vib / SR; seed = (seed * 1664525 + 1013904223) >>> 0; lp += (((seed / 4294967296) * 2 - 1) - lp) * 0.08; const s = Math.sin(TAU * ph) * 0.86 + Math.sin(TAU * ph * 2) * 0.1 + lp * 0.18; buf[off + i] += s * env(i, n, a, r, 0.85) * v; } },
+    harp(buf, off, f, n, v) { let p1 = 0, p2 = 0; const len = Math.min(n + 0.7 * SR, 2.0 * SR) | 0; for (let i = 0; i < len && off + i < buf.length; i++) { const t = i / SR; p1 += f / SR; p2 += f * 2 / SR; buf[off + i] += (Math.sin(TAU * p1) * Math.exp(-t * 3.0) + Math.sin(TAU * p2) * 0.22 * Math.exp(-t * 7.5)) * Math.min(1, i / (0.004 * SR)) * v; } },
+    cel(buf, off, f, n, v) { let p1 = 0, p2 = 0; const len = Math.min(1.3 * SR, buf.length - off) | 0; for (let i = 0; i < len; i++) { const t = i / SR; p1 += f / SR; p2 += f * 4 / SR; buf[off + i] += (Math.sin(TAU * p1) * Math.exp(-t * 3.8) + Math.sin(TAU * p2) * 0.28 * Math.exp(-t * 12)) * Math.min(1, i / (0.002 * SR)) * v; } },
+    str(buf, off, f, n, v) { const a = 0.22 * SR, r = 0.32 * SR, ph = [0, 0.4, 0.75], dt = [1, 1.0042, 0.9958]; let lp = 0, lp2 = 0; for (let i = 0; i < n + r && off + i < buf.length; i++) { const t = i / SR, vib = 1 + 0.0035 * Math.sin(TAU * 5.1 * t); let s = 0; for (let k = 0; k < 3; k++) { ph[k] += f * dt[k] * vib / SR; s += 2 * (ph[k] - Math.floor(ph[k])) - 1; } lp += (s / 3 - lp) * 0.12; lp2 += (lp - lp2) * 0.18; const e = i < a ? i / a : i > n ? Math.max(0, 1 - (i - n) / r) : 1; buf[off + i] += lp2 * e * v; } },
+    wood(buf, off, f, n, v) { let p1 = 0, p2 = 0; const len = 0.45 * SR | 0; for (let i = 0; i < len && off + i < buf.length; i++) { const t = i / SR; p1 += f / SR; p2 += f * 3.93 / SR; buf[off + i] += (Math.sin(TAU * p1) * Math.exp(-t * 11) + Math.sin(TAU * p2) * 0.32 * Math.exp(-t * 34)) * Math.min(1, i / (0.0015 * SR)) * v; } },
+    reed(buf, off, f, n, v) { let ph = 0; const a = 0.035 * SR, r = 0.1 * SR; for (let i = 0; i < n && off + i < buf.length; i++) { const t = i / SR, vib = 1 + 0.003 * Math.sin(TAU * 4.8 * t) * Math.min(1, t / 0.3); ph += f * vib / SR; const x = TAU * ph, s = Math.sin(x) * 0.7 + Math.sin(3 * x) * 0.22 + Math.sin(5 * x) * 0.09; buf[off + i] += s * env(i, n, a, r, 0.82) * v; } },
+    warp(buf, off, f, n, v) { let p1 = 0, p2 = 0; const a = 0.012 * SR, r = 0.08 * SR; for (let i = 0; i < n && off + i < buf.length; i++) { const t = i / SR, bend = Math.pow(2, (-1 + Math.min(1, t / 0.07)) / 12), wob = 1 + 0.022 * Math.sin(TAU * 6.5 * t); p1 += f * bend * wob / SR; p2 += f * bend * wob * 1.011 / SR; const s = (4 * Math.abs(p1 - Math.floor(p1) - 0.5) - 1) * 0.6 + (4 * Math.abs(p2 - Math.floor(p2) - 0.5) - 1) * 0.4; buf[off + i] += s * env(i, n, a, r, 0.78) * v; } },
   };
   /** 곡 → Float32Array(SR). 꼬리 소리는 처음에 겹쳐 더해 이음매 없이 반복된다 */
   function gen(song, sr) {
@@ -4576,6 +4587,51 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       { voice: 'bass', vol: 0.8, bars: ['D2', 'B1', 'G1', 'A1', 'D2', 'B1', 'G1', 'A1', 'E2', 'A1', 'D2', 'G1', 'D2', 'B1', 'G1', 'A1'].map((r) => `${r}/1 ${r}/0.5 ${r}/0.5 ${r}/1 ${r}/1`) },
       { voice: 'pluck', vol: 0.6, bars: ['D', 'Bm', 'G', 'A', 'D', 'Bm', 'G', 'A', 'Em', 'A', 'D', 'G', 'D', 'Bm', 'G', 'A'].map((c) => { const [a, b, d] = { D: ['D5', 'F#5', 'A5'], Bm: ['B4', 'D5', 'F#5'], G: ['G4', 'B4', 'D5'], A: ['A4', 'C#5', 'E5'], Em: ['E5', 'G5', 'B5'] }[c]; return `${a}/0.5 -/0.5 ${b}/0.5 ${d}/0.5 -/0.5 ${b}/0.5 ${a}/0.5 -/0.5`; }) },
       { voice: 'lead', vol: 0.5, bars: [Z, Z, Z, Z, 'F#5/1.5 E5/0.5 D5/2', 'D5/1 F#5/1 B4/2', 'B4/1.5 D5/0.5 G5/2', 'E5/2 A4/2', 'G5/1.5 F#5/0.5 E5/2', 'E5/1 C#5/1 A4/2', 'F#5/1 A5/1 F#5/1 D5/1', 'D5/1 B4/1 G4/2', Z, Z, Z, Z] },
+    ] },
+    /* ---------- ⑪ 나라·대장 배경음 7곡 (gf-asset 2026-10-22, gf-game 요청) — 곡마다 조·빠르기·악기 조합이 다르다. 깔개는 낮게, 멜로디는 높게(가운데 음역 비움: 구슬·타격 효과음 자리) ---------- */
+    x_bgm_f_village: { use: '⑪ 동화 마을·들판 나라(아기돼지·콩쥐팥쥐·흥부·의좋은 형제…) — 하프와 플루트의 포근한 포크', key: 'F 장조', bpm: 96, bars: 16, rms: 0.054, tracks: [
+      { voice: 'bass', vol: 0.8, bars: ['F1', 'C2', 'D2', 'Bb1', 'F1', 'C2', 'Bb1', 'C2', 'D2', 'Bb1', 'F1', 'C2', 'Bb1', 'C2', 'F1', 'F1'].map((r) => { const f = { F1: 'C2', C2: 'G2', D2: 'A2', Bb1: 'F2' }[r]; return `${r}/2 ${f}/2`; }) },
+      { voice: 'harp', vol: 0.6, bars: ['F', 'C', 'Dm', 'Bb', 'F', 'C', 'Bb', 'C', 'Dm', 'Bb', 'F', 'C', 'Bb', 'C', 'F', 'F'].map((c) => { const [a, b, d] = { F: ['F3', 'A3', 'C4'], C: ['E3', 'G3', 'C4'], Dm: ['D3', 'F3', 'A3'], Bb: ['D3', 'F3', 'Bb3'] }[c]; return arp(a, b, d); }) },
+      { voice: 'wood', vol: 0.12, bars: rep('-/1 C5/0.5 -/0.5 -/1 C5/0.5 C5/0.5', 16) },
+      { voice: 'flute', vol: 0.4, bars: ['C5/1 F5/1 A5/1.5 G5/0.5', 'G5/2 E5/1 C5/1', 'D5/1 F5/1 A5/1 F5/1', 'F5/2 D5/2', 'C5/1 F5/1 A5/1 C6/1', 'Bb5/1 A5/1 G5/2', 'F5/1 G5/0.5 F5/0.5 D5/2', 'E5/2 G5/2', 'A5/1.5 G5/0.5 F5/1 D5/1', 'F5/1 D5/1 Bb4/2', 'C5/1 F5/1 A5/2', 'G5/1 E5/1 C5/2', 'D5/1 F5/1 Bb5/1 A5/1', 'G5/1.5 F5/0.5 E5/2', 'F5/2 A5/1 G5/1', 'F5/4'] },
+    ] },
+    x_bgm_f_night: { use: '⑪ 밤·별·하늘 나라(해님 달님·구름 위 거인·오작교·피노키오·구두장이) — 셀레스타 별빛과 낮은 현', key: 'E♭ 장조', bpm: 88, bars: 16, rms: 0.05, tracks: [
+      { voice: 'str', vol: 0.62, bars: [['Eb2', 'Bb2', 'G3'], ['C2', 'G2', 'Eb3'], ['Ab1', 'Eb2', 'C3'], ['Bb1', 'F2', 'D3'], ['Eb2', 'Bb2', 'G3'], ['G1', 'D2', 'Bb2'], ['Ab1', 'Eb2', 'C3'], ['Bb1', 'F2', 'D3'], ['C2', 'G2', 'Eb3'], ['Ab1', 'Eb2', 'C3'], ['Eb2', 'Bb2', 'G3'], ['Bb1', 'F2', 'D3'], ['Ab1', 'Eb2', 'C3'], ['Bb1', 'F2', 'D3'], ['Eb2', 'Bb2', 'G3'], ['Eb2', 'Bb2', 'G3']].map(CH) },
+      { voice: 'bass', vol: 0.6, bars: ['Eb1', 'C1', 'Ab1', 'Bb1', 'Eb1', 'G1', 'Ab1', 'Bb1', 'C1', 'Ab1', 'Eb1', 'Bb1', 'Ab1', 'Bb1', 'Eb1', 'Eb1'].map((r) => `${r}/4`) },
+      { voice: 'cel', vol: 0.26, bars: ['Eb', 'Cm', 'Ab', 'Bb', 'Eb', 'Gm', 'Ab', 'Bb', 'Cm', 'Ab', 'Eb', 'Bb', 'Ab', 'Bb', 'Eb', 'Eb'].map((c) => { const [a, b, d, e] = { Eb: ['Eb5', 'G5', 'Bb5', 'Eb6'], Cm: ['C5', 'Eb5', 'G5', 'C6'], Ab: ['Ab4', 'C5', 'Eb5', 'Ab5'], Bb: ['Bb4', 'D5', 'F5', 'Bb5'], Gm: ['G4', 'Bb4', 'D5', 'G5'] }[c]; return `${a}/0.5 ${b}/0.5 ${d}/0.5 ${e}/0.5 ${d}/0.5 ${b}/0.5 ${d}/0.5 ${b}/0.5`; }) },
+      { voice: 'bell', vol: 0.36, bars: [Z, Z, Z, Z, 'G5/2 Bb5/2', 'D6/2 Bb5/2', 'C6/2 Ab5/2', 'F5/4', 'G5/2 Eb5/2', 'C6/2 Ab5/2', 'Bb5/2 G5/2', 'F5/2 D5/2', 'Eb5/2 C6/2', 'Bb5/2 D6/2', 'Eb6/4', Z] },
+    ] },
+    x_bgm_f_forest: { use: '⑪ 숲 나라(브레멘·과자 숲·빨간 모자·혹부리·세 마리 곰) — 마림바 잔걸음과 리드 관악', key: 'D 도리안', bpm: 108, bars: 16, rms: 0.054, tracks: [
+      { voice: 'pluck', vol: 0.7, bars: ['D2/1 A2/1 F2/1 A2/1', 'G2/1 D2/1 B2/1 D2/1', 'D2/1 A2/1 F2/1 A2/1', 'C2/1 G2/1 E2/1 G2/1', 'D2/1 A2/1 F2/1 A2/1', 'G2/1 D2/1 B2/1 D2/1', 'A2/1 E2/1 C2/1 E2/1', 'C2/1 G2/1 E2/1 G2/1', 'F2/1 C2/1 A2/1 C2/1', 'C2/1 G2/1 E2/1 G2/1', 'G2/1 D2/1 B2/1 D2/1', 'A2/1 E2/1 C2/1 E2/1', 'D2/1 A2/1 F2/1 A2/1', 'G2/1 D2/1 B2/1 D2/1', 'C2/1 G2/1 E2/1 G2/1', 'D2/1 A2/1 D2/2'] },
+      { voice: 'wood', vol: 0.3, bars: ['Dm', 'G', 'Dm', 'C', 'Dm', 'G', 'Am', 'C', 'F', 'C', 'G', 'Am', 'Dm', 'G', 'C', 'Dm'].map((c) => { const [a, b, d] = { Dm: ['D5', 'F5', 'A5'], G: ['D5', 'G5', 'B5'], C: ['E5', 'G5', 'C6'], Am: ['E5', 'A5', 'C6'], F: ['F5', 'A5', 'C6'] }[c]; return `${a}/0.5 -/0.5 ${b}/0.5 ${d}/0.5 -/0.5 ${b}/0.5 ${a}/0.5 -/0.5`; }) },
+      { voice: 'tick', vol: 0.08, bars: rep('-/0.5 A5/0.5 -/0.5 A5/0.5 -/0.5 A5/0.5 -/0.5 A5/0.5', 16) },
+      { voice: 'reed', vol: 0.4, bars: [Z, Z, 'A4/1 B4/0.5 C5/0.5 D5/1 A4/1', 'G4/2 E4/2', 'A4/1 C5/1 D5/1 F5/1', 'E5/1 D5/1 B4/2', 'C5/1 B4/0.5 A4/0.5 E5/2', 'G4/2 -/2', 'F4/1 A4/1 C5/1 A4/1', 'G4/1 E4/1 G4/2', 'B4/1 A4/0.5 G4/0.5 D5/2', 'C5/1 B4/1 A4/2', 'D5/1 F5/1 E5/1 D5/1', 'B4/1 G4/1 B4/2', 'C5/1 D5/1 E5/1 C5/1', 'D5/4'] },
+    ] },
+    x_bgm_f_water: { use: '⑪ 물·연못·바다 나라(우렁 각시 논·선녀 연못·용궁·금도끼 연못·청개구리) — 하프 물결과 물방울 종', key: 'A 장조(리디안 D#)', bpm: 94, bars: 16, rms: 0.05, tracks: [
+      { voice: 'str', vol: 0.42, bars: [['A1', 'E2', 'C#3'], ['B1', 'F#2', 'D#3'], ['F#1', 'C#2', 'A2'], ['E1', 'B1', 'G#2'], ['A1', 'E2', 'C#3'], ['B1', 'F#2', 'D#3'], ['C#2', 'G#2', 'E3'], ['E1', 'B1', 'G#2'], ['D2', 'A2', 'F#3'], ['A1', 'E2', 'C#3'], ['B1', 'F#2', 'D#3'], ['E1', 'B1', 'G#2'], ['F#1', 'C#2', 'A2'], ['D2', 'A2', 'F#3'], ['E1', 'B1', 'G#2'], ['A1', 'E2', 'C#3']].map(CH) },
+      { voice: 'bass', vol: 0.65, bars: ['A1', 'B1', 'F#1', 'E1', 'A1', 'B1', 'C#2', 'E1', 'D2', 'A1', 'B1', 'E1', 'F#1', 'D2', 'E1', 'A1'].map((r) => `${r}/2.5 ${r}/1.5`) },
+      { voice: 'harp', vol: 0.42, bars: ['A', 'B', 'F#m', 'E', 'A', 'B', 'C#m', 'E', 'D', 'A', 'B', 'E', 'F#m', 'D', 'E', 'A'].map((c) => { const [a, b, d, e] = { A: ['A3', 'C#4', 'E4', 'A4'], B: ['B3', 'D#4', 'F#4', 'B4'], 'F#m': ['F#3', 'A3', 'C#4', 'F#4'], E: ['E3', 'G#3', 'B3', 'E4'], 'C#m': ['C#4', 'E4', 'G#4', 'C#5'], D: ['D3', 'F#3', 'A3', 'D4'] }[c]; return `${a}/0.5 ${b}/0.5 ${d}/0.5 ${e}/0.5 ${d}/0.5 ${b}/0.5 ${d}/0.5 ${e}/0.5`; }) },
+      { voice: 'harp', vol: 0.55, bars: [Z, Z, 'C#5/1.5 E5/0.5 F#5/2', 'E5/2 B4/2', 'C#5/1 E5/1 A5/2', 'D#5/1 F#5/1 B5/2', 'G#5/1.5 E5/0.5 C#5/2', 'B4/4', 'A4/1 D5/1 F#5/2', 'E5/1 C#5/1 A4/2', 'B4/1 D#5/1 F#5/1 A5/1', 'G#5/2 E5/2', 'F#5/1.5 E5/0.5 C#5/2', 'D5/1 F#5/1 A5/2', 'G#5/1 B5/1 E5/2', 'A5/4'] },
+      { voice: 'bell', vol: 0.28, bars: rep('-/1.5 E6/0.5 -/1 B5/0.5 -/0.5', 16) },
+    ] },
+    x_bgm_f_castle: { use: '⑪ 성·궁전 나라(장화 신은 고양이·신데렐라 시계탑·오즈·앨리스·눈의 여왕) — 현 선율과 피치카토 쿵짝짝, 장엄하되 소박하게', key: 'B♭ 장조', bpm: 112, bars: 16, rms: 0.055, tracks: [
+      { voice: 'bass', vol: 0.8, bars: ['Bb1', 'F1', 'G1', 'Eb2', 'Bb1', 'F1', 'Eb2', 'F1', 'G1', 'Eb2', 'Bb1', 'F1', 'Eb2', 'F1', 'Bb1', 'Bb1'].map((r) => `${r}/1 -/1 ${r}/1 -/1`) },
+      { voice: 'pluck', vol: 0.42, bars: ['Bb', 'F', 'Gm', 'Eb', 'Bb', 'F', 'Eb', 'F', 'Gm', 'Eb', 'Bb', 'F', 'Eb', 'F', 'Bb', 'Bb'].map((c) => { const t = { Bb: '[D4,F4,Bb4]', F: '[C4,F4,A4]', Gm: '[D4,G4,Bb4]', Eb: '[Eb4,G4,Bb4]' }[c]; return `-/1 ${t}/0.5 -/0.5 ${t}/0.5 -/0.5 ${t}/0.5 -/0.5`; }) },
+      { voice: 'str', vol: 0.62, bars: ['F5/2 Bb5/1 D6/1', 'C6/2 A5/2', 'Bb5/1 G5/1 D5/1 G5/1', 'G5/2 Eb5/2', 'F5/2 Bb5/1 D6/1', 'C6/1 A5/1 F5/2', 'G5/1.5 Bb5/0.5 Eb6/1 D6/1', 'C6/4', 'D6/1.5 C6/0.5 Bb5/1 G5/1', 'Eb5/2 G5/2', 'F5/1 Bb5/1 D6/2', 'C6/1 A5/1 F5/2', 'Eb6/1.5 D6/0.5 C6/1 Bb5/1', 'A5/2 C6/2', 'Bb5/2 F5/1 D5/1', 'Bb5/4'] },
+      { voice: 'bell', vol: 0.35, bars: [Z, Z, Z, 'Bb5/4', Z, Z, Z, 'F5/4', Z, Z, Z, 'Bb5/4', Z, Z, Z, 'D6/4'] },
+    ] },
+    x_bgm_warp: { use: '⑪ 뒤틀왕 전용(상성을 뒤집는 끝판 장난꾸러기) — 삐딱한 음정·어긋난 박자의 낙서 같은 익살(공포 아님)', key: 'C# 단조(반음 비틀기)', bpm: 100, bars: 16, rms: 0.054, tracks: [
+      { voice: 'pluck', vol: 0.72, bars: ['C#2/1 -/0.5 C#2/0.5 G#1/1 C2/1', 'C#2/1 -/0.5 E2/0.5 D2/1 C#2/1', 'F#1/1 -/0.5 F#1/0.5 C2/1 C#2/1', 'G#1/1 G1/1 G#1/1 -/1', 'C#2/1 -/0.5 C#2/0.5 G#1/1 C2/1', 'C#2/1 -/0.5 E2/0.5 D2/1 C#2/1', 'A1/1 -/0.5 A1/0.5 D#2/1 E2/1', 'G#1/0.5 G1/0.5 F#1/0.5 G1/0.5 G#1/2', 'F#1/1 -/0.5 A1/0.5 C2/1 C#2/1', 'C#2/1 -/0.5 C#2/0.5 G#1/1 C2/1', 'D2/1 -/0.5 D2/0.5 G#1/1 D2/1', 'G#1/1 G1/1 G#1/1 -/1', 'C#2/1 -/0.5 C#2/0.5 G#1/1 C2/1', 'A1/1 A#1/1 B1/1 C2/1', 'G#1/1 -/1 D2/1 G1/1', 'C#2/2 -/2'] },
+      { voice: 'wood', vol: 0.24, bars: rep('-/0.5 G#5/0.25 -/0.75 C#6/0.5 -/0.25 G5/0.25 -/1 G#5/0.5', 16) },
+      { voice: 'tick', vol: 0.1, bars: ['-/0.75 A5/0.25 -/1 A5/0.5 -/0.25 A5/0.25 -/1', '-/0.5 A5/0.5 -/0.75 A5/0.25 -/1.5 A5/0.5'].concat(rep('-/0.75 A5/0.25 -/1 A5/0.5 -/0.25 A5/0.25 -/1', 7), rep('-/0.5 A5/0.5 -/0.75 A5/0.25 -/1.5 A5/0.5', 7)) },
+      { voice: 'warp', vol: 0.46, bars: [Z, Z, '-/0.5 C#5/0.5 D5/0.5 -/0.5 G#4/1 A4/0.5 -/0.5', 'G#4/0.5 G4/0.5 -/1 C#5/1.5 -/0.5', 'E5/0.5 -/0.25 D#5/0.25 E5/1 -/0.5 B4/0.5 C5/1', 'C#5/2 -/1 G4/0.5 G#4/0.5', '-/0.5 F#5/0.5 F5/0.5 -/0.5 C#5/1 D5/1', 'C#5/0.5 C5/0.5 B4/0.5 C5/0.5 C#5/2', '-/0.5 A4/0.5 C5/0.5 D#5/0.5 F#5/1 -/1', 'E5/0.5 D#5/0.5 E5/0.5 -/0.5 G#4/2', '-/0.5 D5/0.5 C#5/0.5 -/0.5 A4/1 G#4/1', 'G4/0.5 G#4/0.5 -/1 C#5/1.5 -/0.5', 'E5/0.5 F5/0.5 F#5/0.5 G5/0.5 G#5/1 -/1', 'A5/0.5 -/0.5 G5/0.5 -/0.5 D#5/1 E5/1', 'C#5/0.5 D5/0.5 C#5/0.5 C5/0.5 G#4/2', 'C#5/2 -/2'] },
+    ] },
+    x_bgm_boss2: { use: '⑪ 나라 대장전 둘째 곡(x_bgm_boss 와 번갈아) — 정다면체 대장의 단단한 결정, 낮은 현 오스티나토와 수정 종', key: 'B 화성단조', bpm: 120, bars: 16, rms: 0.057, tracks: [
+      { voice: 'str', vol: 0.55, bars: ['Bm', 'G', 'Em', 'F#', 'Bm', 'G', 'C', 'F#', 'Em', 'Bm', 'G', 'F#', 'Bm', 'G', 'F#', 'Bm'].map((c) => { const [a, b] = { Bm: ['B2', 'F#3'], G: ['G2', 'D3'], Em: ['E2', 'B2'], 'F#': ['F#2', 'C#3'], C: ['C3', 'G3'] }[c]; return `${a}/0.5 ${b}/0.5 ${a}/0.5 ${b}/0.5 ${a}/0.5 ${b}/0.5 ${a}/0.5 ${b}/0.5`; }) },
+      { voice: 'bass', vol: 0.85, bars: ['B1', 'G1', 'E1', 'F#1', 'B1', 'G1', 'C2', 'F#1', 'E1', 'B1', 'G1', 'F#1', 'B1', 'G1', 'F#1', 'B1'].map((r) => { const o = r.replace(/\d$/, (d) => +d + 1); return `${r}/1 ${o}/0.5 ${r}/0.5 ${r}/1 ${o}/1`; }) },
+      { voice: 'kick', vol: 0.58, bars: rep('B1/1 B1/1 B1/1 B1/1', 16) },
+      { voice: 'bell', vol: 0.4, bars: ['[B5,F#6]/2 -/2', '-/4', '[E6,B6]/2 -/2', '[F#5,A#5]/1 -/3', '[B5,F#6]/2 -/2', '-/4', '[C6,G6]/2 -/2', '[A#5,F#6]/1 -/3', '[E6,B6]/2 -/2', '-/4', '[D6,G6]/2 -/2', '[A#5,F#6]/1 -/3', '[B5,F#6]/2 -/2', '-/4', '[A#5,F#6]/2 -/2', '[B5,F#6]/4'] },
+      { voice: 'lead', vol: 0.6, bars: [Z, Z, Z, Z, 'B5/1 D6/0.5 C#6/0.5 B5/1 F#5/1', 'G5/1 B5/1 D6/2', 'E6/1 D6/0.5 C#6/0.5 B5/1 G5/1', 'A#5/2 F#5/2', 'G5/1 F#5/0.5 E5/0.5 G5/1 B5/1', 'F#5/1 D5/1 B4/2', 'B4/1 D5/1 G5/1 B5/1', 'C#6/2 A#5/2', 'B5/1 F#6/1 E6/1 D6/1', 'D6/1 C#6/1 B5/2', 'A#5/1 C#6/1 E6/1 F#6/1', 'B5/4'] },
     ] },
   };
   /* ---------------- 재생 (브라우저) ---------------- */
@@ -5317,6 +5373,35 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     else if (b._ic) { b.innerHTML = b._ic; b._ic = null; b.removeAttribute('aria-label'); b.onclick = () => { GF.sfx('tap'); GF.back(); }; }
   }
   P.finished = function () { fin = true; };
+  /* ---- 캔디크러시 벤치마크(docs/bench/14, 허브 10/22) ---- */
+  /** BM-14-1 가만히 있으면 둘 곳 반짝: 판 화면에서 ms(기본 8초) 동안 손을 안 대면 peek() — 힌트 단추와 같은 그림이지만 힌트 수에 안 셈(별·순위 그대로).
+      다시 손대면 처음부터. 판이 끝났거나 창·컷·안내 띠가 떠 있으면 건너뜀 */
+  P.idle = function (r, peek, ms) {
+    ms = ms || 8000; let t = null;
+    const arm = () => { clearTimeout(t); if (!r.isConnected) return; t = setTimeout(() => { if (!r.isConnected) return; if (!r.classList.contains('on') || fin || document.querySelector('.uk-scrim, .tale-ov, .tale-band:not(.out), .cr-act')) { arm(); return; } try { peek(); P._peeks = (P._peeks || 0) + 1; } catch (e) { /* 반짝 실패 무시 */ } arm(); }, ms); };
+    r.addEventListener('pointerdown', arm, true); arm(); return arm;
+  };
+  /** BM-14-2 남은 수 경고: 남은 수(left)가 at 이하이면 칩이 부드럽게 맥박, 한 판에 한 번 짧은 한마디(key = 'polish.low' 또는 'polish.lowp') */
+  P.low = function (chip, left, at, r, key) {
+    if (!chip) return; const on = left > 0 && left <= at; chip.classList.toggle('pz-low', on);
+    if (on && r && !chip.dataset.lowSaid) { chip.dataset.lowSaid = '1'; try { const t = UK.toast(GF.t(key || 'polish.low', { n: left }), r); t.classList.add('sm'); } catch (e) { /* 알림 실패 무시 */ } GF.sfx('tap', { gain: 0.6 }); }
+  };
+  /** BM-14-3 남은 수 피날레(「아껴서 깼어요」): 깬 순간 남은 수(최대 10)가 판 위에서 하나씩 반짝 터지며 숫자 칸이 0까지 내려감 → 큰 글자 → 끝나면 resolve.
+      연출만(별·보상·경제 변화 없음). 움직임 줄이기면 바로 resolve. o = { n, cells: [요소…], counter, fmt: (남은) => 글, key } */
+  P.leftover = function (r, o) {
+    return new Promise((res) => {
+      const n = Math.min((o && o.n) || 0, 10); if (n <= 0 || document.documentElement.dataset.rm === '1' || !r || !r.isConnected) { res(); return; }
+      const cells = ((o.cells || []).filter((e) => e && e.isConnected)), sf = safe(); let k = 0, left = o.n;
+      const step = () => {
+        if (k >= n || !r.isConnected) { try { const lab = el('i', 'pz-lofin', r, GF.t(o.key || 'polish.leftover', { n: o.n })); setTimeout(() => lab.remove(), 1200); } catch (e) { /* */ } GF.sfx('star'); setTimeout(res, 700); return; }
+        left--; if (o.counter && o.fmt) o.counter.innerHTML = o.fmt(Math.max(0, left));
+        const c = cells.length ? cells[(k * 7 + 3) % cells.length] : null;
+        if (c && sf) { const b = c.getBoundingClientRect(), sr = sf.getBoundingClientRect(), kk = sr.width / (sf.offsetWidth || sr.width) || 1; try { GF.burst(sf, (b.left + b.width / 2 - sr.left) / kk, (b.top + b.height / 2 - sr.top) / kk, 7); } catch (e) { /* */ } }
+        GF.sfx('pop1', { st: k * 2, gain: 0.8 }); k++; setTimeout(step, 130);
+      };
+      setTimeout(step, 120);
+    });
+  };
   /* 판을 깬 순간의 「와」(허브 10/19 첫 3판 점검): 판 전체가 한 번 환해지고 가운데서 큰 링·터짐, 별 소리 네 음이 올라감 — 결과 창(꽃가루·팡파르) 직전 0.65초 틈에.
      성인 퍼즐만(유아는 번쩍임 약하게 원칙), 움직임 줄이기면 소리만. 앱은 승리 직후 GF.sfx('star') 대신 이것을 부른다 */
   P.finale = function (r) {
@@ -6199,7 +6284,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       const mv = el('span', 'uk-chip bd-mv', chips), sc2 = el('span', 'uk-chip', chips);
       function head() {
         const n = daily ? score : Math.min(st.n, g.n); gn.textContent = daily ? GF.t('c16.bead.014', { score: score }) : n + '/' + g.n; gb.firstChild.style.width = Math.round((daily ? Math.min(1, used / DAILY_MOVES) : n / g.n) * 100) + '%';
-        mv.textContent = GF.t('c16.bead.015', { left: left() }); mv.classList.toggle('low', left() <= 2); sc2.textContent = daily ? GF.t('c16.bead.016', { used: used, DAILY_MOVES: DAILY_MOVES }) : ''; sc2.style.display = daily ? '' : 'none';   /* 별 기준 칩은 판에서 빼고 일시정지 메뉴로(다른 퍼즐과 같음, 3차 리뷰) */ goalBox.classList.toggle('ok', !daily && st.n >= g.n);
+        mv.textContent = GF.t('c16.bead.015', { left: left() }); mv.classList.toggle('low', left() <= 2); if (!daily && GF.polish.low) GF.polish.low(mv, left(), 5, used > 0 ? r : null);   /* BM-14-2 남은 5수부터 맥박 + 한마디 */ sc2.textContent = daily ? GF.t('c16.bead.016', { used: used, DAILY_MOVES: DAILY_MOVES }) : ''; sc2.style.display = daily ? '' : 'none';   /* 별 기준 칩은 판에서 빼고 일시정지 메뉴로(다른 퍼즐과 같음, 3차 리뷰) */ goalBox.classList.toggle('ok', !daily && st.n >= g.n);
       }
       const ctl = { board, nextAt: () => 0, ready: () => !busy && !done, helpReady: () => false }, core = { tick: 0 };
       const firstTime = !daily && !SV.tips.slide && LV.id === 1;
@@ -6213,14 +6298,14 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         setTimeout(() => {
           try { const rc = boardW.getBoundingClientRect(), sr = r.getBoundingClientRect(), k = sr.width / 360; GF.burst(document.getElementById('safe'), (rc.left + rc.width / 2 - sr.left) / k, (rc.top + rc.height / 2 - sr.top) / k, 8 + streak * 3, { combo: streak >= 2 ? streak : 0 }); } catch (e) { /* 연출 실패 무시 */ }
           if (streak >= 2) { GF.sfx('ok', { st: [0, 2, 4, 7, 9, 12][Math.min(streak - 2, 5)] }); say(GF.t('c16.bead.018', { streak: streak })); }
-          if (won()) { done = true; setTimeout(finish, slow(700)); } else if (daily && used >= DAILY_MOVES) { done = true; setTimeout(finishDaily, slow(700)); } else if (!daily && left() <= 0) { done = true; setTimeout(lose, slow(600)); } else busy = false;
+          if (won()) { done = true; setTimeout(() => (GF.polish.leftover ? GF.polish.leftover(r, { n: left(), cells: [].concat(...ui.cells()), counter: mv, fmt: (n) => GF.t('c16.bead.015', { left: n }), key: 'polish.leftover' }) : Promise.resolve()).then(finish), slow(700)); }   /* BM-14-3 남은 수 피날레 */ else if (daily && used >= DAILY_MOVES) { done = true; setTimeout(finishDaily, slow(700)); } else if (!daily && left() <= 0) { done = true; setTimeout(lose, slow(600)); } else busy = false;
         }, delay == null ? slow(520) : delay);
       }
-      const hintBtn = UK.btn({ text: GF.t('c16.block.005'), icon: 'info', cls: 'sky sm', onclick: hint }, btns); UK.btn({ text: GF.t('c16.sort.002'), icon: 'replay', cls: 'ghost sm', onclick: () => GF.replace('bplay', daily ? { daily: 1 } : { n: LV.id }) }, btns); void hintBtn;
-      function hint() {
+      const hintBtn = UK.btn({ text: GF.t('c16.block.005'), icon: 'info', cls: 'sky sm', onclick: hint }, btns); UK.btn({ text: GF.t('c16.sort.002'), icon: 'replay', cls: 'ghost sm', onclick: () => GF.replace('bplay', daily ? { daily: 1 } : { n: LV.id }) }, btns); void hintBtn; if (GF.polish.idle) GF.polish.idle(r, () => hint('peek'));   /* BM-14-1 */
+      function hint(mode) {   // mode 'peek' = 가만히 있을 때 무료 반짝(BM-14-1, 힌트 수에 안 셈)
         if (busy || done) return; let best = null, bv = -1; const cand = DRAG ? PZ.dragCandidates(board, 2).map((path) => ({ path })) : PZ.moves(board);
         cand.forEach((m) => { const pv = PZ.preview(board, m, {}); if (!pv) return; const t = { n: st.n }; if (!daily) PZ.goalProg(g, t, pv.res); const v = daily ? PZ.scoreOf(pv.res) : (t.n - st.n) + pv.res.combo * 0.01 - (m.path ? m.path.length * 0.0001 : 0); if (v > bv) { bv = v; best = m; } });
-        if (!best) return; hinted++; GF.sfx('pick'); const cs = ui.cells();
+        if (!best) return; if (mode !== 'peek') { hinted++; GF.sfx('pick'); } const cs = ui.cells();
         if (best.path) { const a0 = best.path[0], a1 = best.path[best.path.length - 1]; UK.finger(r, cs[a0[0]][a0[1]], { to: cs[a1[0]][a1[1]], ms: 5000 }); return; }
         const from = best.axis === 'row' ? cs[best.idx][0] : cs[0][best.idx], to = best.axis === 'row' ? cs[best.idx][Math.min(5, best.shift)] : cs[Math.min(4, best.shift)][best.idx]; UK.finger(r, from, { to, ms: 5000 });
       }

@@ -1209,6 +1209,7 @@ html[data-rm="1"] .uk-fly { display: none; }
    미리보기 카드(.hk-prev)가 있는 홈은 같은 「다음 가구」를 카드가 보여 주므로 띠를 빼고, 없는 홈은 카드 자리(504)로. 아이콘 줄이 열리면 가족은 그 오른쪽으로(겹침 금지) */
 .hk:has(.hk-prev) .hk-band { display: none; }
 .hk .hk-band { top: 504px; }
+.hk-icons:has(> .hk-ic:nth-child(3)) { gap: 3px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-icb { width: 48px; height: 48px; border-radius: 15px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-icb svg { width: 26px; height: 26px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-ic small { font-size: 12px; }   /* 아이콘 셋 이상(공방 추가)이면 작게 — 영어 두 줄 이름이 주 버튼에 닿지 않게(리뷰 10/22) */
 .hk:has(.hk-icons) .hk-stage { left: 80px; } .hk:has(.hk-icons) .hk-stage img:not(.hk-prop) { height: 146px; }
 [data-uk="kid"] .hk.hk-kid .uk-btn.hk-main, [data-uk="kid"] #safe:not(.wide) .homeplay { width: 168px; margin-left: -84px; height: 96px; min-height: 96px; border-radius: 48px; top: 346px; }
 [data-uk="kid"] .hk.hk-kid .uk-btn.hk-main svg { width: 60px; height: 60px; }
@@ -2610,6 +2611,9 @@ html[data-rm="1"] .ifocus { animation: none; box-shadow: 0 0 0 5px rgba(255,216,
     cr_fence: (c) => svg(96, 40, `<rect x="2" y="8" width="92" height="28" rx="4" ${st(c)}/><path d="M2 17h92M2 27h92M16 8v9M40 8v9M64 8v9M88 8v9M28 17v10M52 17v10M76 17v10M16 27v9M40 27v9M64 27v9" stroke="${INK}" stroke-width="1.4" opacity=".55"/>${face(48, 21, .6)}`),
     cr_blanket: (c) => svg(80, 36, `<rect x="4" y="6" width="72" height="26" rx="8" ${st(c)}/><path d="M22 6v26M40 6v26M58 6v26" stroke="${shade(c, -.2)}" stroke-width="2"/><rect x="22" y="6" width="18" height="26" fill="${shade(c, .3)}" opacity=".6"/><rect x="58" y="6" width="18" height="26" rx="0" fill="${shade(c, .3)}" opacity=".6"/><rect x="4" y="6" width="72" height="26" rx="8" fill="none" stroke="${INK}" stroke-width="${SW}"/>${face(31, 19, .6)}`),
     cr_glasses: (c) => svg(56, 26, `<circle cx="14" cy="14" r="10" fill="#D6F1FF" stroke="${c}" stroke-width="4"/><circle cx="42" cy="14" r="10" fill="#D6F1FF" stroke="${c}" stroke-width="4"/><path d="M24 12q4-4 8 0" fill="none" stroke="${c}" stroke-width="3.4"/><path d="M10 10q3-2 6 0M38 10q3-2 6 0" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`),
+    /* 성인 공방 옛이야기 소품(10/22): 도깨비 방망이 · 금도끼 */
+    cr_club: (c) => svg(30, 70, `<path d="M11 66l2-30h4l2 30z" ${st('#8A5A3B')}/><path d="M15 4q12 4 12 20t-12 16Q3 36 3 24T15 4z" ${st(c)}/>${[[10, 14], [20, 12], [9, 26], [21, 26], [15, 20]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.6" ${st('#FFC933', 1.4)}/>`).join('')}${twinkle(26, 6, .6)}`),
+    cr_axe: (c) => svg(40, 60, `<path d="M20 58V10" stroke="${INK}" stroke-width="7" stroke-linecap="round"/><path d="M20 58V10" stroke="#C99A6B" stroke-width="4" stroke-linecap="round"/><path d="M18 8q-16 2-16 14t16 12z" ${st(c)}/><path d="M6 16q2 6 0 12" fill="none" stroke="#fff" stroke-width="1.6" opacity=".7"/>${twinkle(32, 10, .7)}`),
     cr_gourd: (c) => svg(50, 48, `<path d="M25 4q2 4 0 6" stroke="#3E8A4E" stroke-width="3" stroke-linecap="round"/><path d="M27 6q8-4 12 2-6 3-12-2z" fill="#6CCB8A" stroke="${INK}" stroke-width="1.4"/><ellipse cx="25" cy="28" rx="21" ry="17" ${st(c)}/><path d="M18 14q-6 14 0 28M32 14q6 14 0 28" fill="none" stroke="${shade(c, -.2)}" stroke-width="1.4"/>${face(25, 28, .9)}<path d="M40 14l2-4M44 18l4-1" stroke="#FFC933" stroke-width="2" stroke-linecap="round"/>`),
     cr_rope: (c) => svg(30, 80, `<path d="M15 2q-8 8 0 16t0 16 0 16 0 16 0 12" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/><path d="M15 2q-8 8 0 16t0 16 0 16 0 16 0 12" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round"/><path d="M11 10l8 4M11 26l8 4M11 42l8 4M11 58l8 4" stroke="${shade(c, -.25)}" stroke-width="1.6"/><circle cx="15" cy="74" r="5" ${st('#FFC933', 2)}/>`),
   });
@@ -5906,7 +5910,7 @@ html[data-rm="1"] .ifocus { animation: none; box-shadow: 0 0 0 5px rgba(255,216,
         const lg = st.reward.laugh; S.l += lg; GF.sfx('celebrate'); const pct = Math.round(dexCount() / B.dexTotal * 100);
         /* 보상 창엔 기사 출처를 넣지 않는다(출처는 사연 다시 보기 아래 작은 글, 2차 리뷰 N4). 소품·식탁 열림 알림은 창을 닫고 식탁으로 돌아간 뒤에(겹침 방지) */
         let after = '';
-        UK.modal({ parent: r, title: GF.t('c16.idle.023', { k: FAM[o.k] }), body: B.tables[o.k].tag + '<br>' + (p.ending ? GF.t('c17.idle.055') : p.season ? GF.t('c16.idle.024', { season: st.season }) : GF.t('c16.idle.025', { dexCount: dexCount(), dexTotal: B.dexTotal, pct: pct })), big: GF.t('c16.idle.026', { lg: lg }), actions: [{ text: GF.t('c16.idle.004'), onclick: () => { GF.back(); if (after) setTimeout(() => { try { toast(after); } catch (e) { /* 알림 실패 무시 */ } }, 450); } }].concat(toonOf(st.id) ? [{ text: GF.t('c16.idle.030'), keep: true, onclick: () => toonView(st, r) }] : []) });
+        const im_ = UK.modal({ parent: r, title: GF.t('c16.idle.023', { k: FAM[o.k] }), body: B.tables[o.k].tag + '<br>' + (p.ending ? GF.t('c17.idle.055') : p.season ? GF.t('c16.idle.024', { season: st.season }) : GF.t('c16.idle.025', { dexCount: dexCount(), dexTotal: B.dexTotal, pct: pct })), big: GF.t('c16.idle.026', { lg: lg }), actions: [{ text: GF.t('c16.idle.004'), onclick: () => { GF.back(); if (after) setTimeout(() => { try { toast(after); } catch (e) { /* 알림 실패 무시 */ } }, 450); } }].concat(toonOf(st.id) ? [{ text: GF.t('c16.idle.030'), keep: true, onclick: () => toonView(st, r) }] : []) }); try { if (GF.craft && GF.data.craft_adult) { const sh_ = im_.querySelector('.uk-sheet'); GF.craft.adultDrop('idle', null, sh_, sh_ && sh_.querySelector('.acts')); } } catch (e) { /* 공방 없음 */ }
         save(); { const n0 = Room.owned().length, tk = UI.toastOk; UI.toastOk = false; checkProps(); UI.toastOk = tk; const got = Room.owned().length > n0, d = dexCount(), msg = [got ? GF.t('c17.idle.056') : '', !p.season && !p.ending && d === 1 ? GF.t('c17.idle.057') : '', !p.season && !p.ending && d === 2 ? GF.t('c17.idle.058') : ''].filter(Boolean).join(' · ');   /* 한 줄(토스트가 머리 카드를 덮지 않게) */ after = msg; }   // 첫 1분 보상·단계 개방 알림(10/19)
       }
     },
@@ -6013,7 +6017,8 @@ html[data-rm="1"] .ifocus { animation: none; box-shadow: 0 0 0 5px rgba(255,216,
     } catch (e) { console.error('code chars', e); }
   }
   IDLE.start = async function (opts) {
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'idle_balance', 'idle_stories', 'story_idle', 'toon_cuts', 'maps/idle', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:idle:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'idle_balance', 'idle_stories', 'story_idle', 'toon_cuts', 'maps/idle', 'room_items', 'housing', 'art_slots', 'craft_adult'], storeKey: 'gf:idle:ui:v1', async start() {
+      if (GF.craft && GF.data.craft_adult) GF.craft.setup({ group: 'adult', app: 'idle', workshop: false });   /* 뚝딱 공방 재료(docs/43 §7) — 공방은 ③ 합치기, 여기선 재료만(공방을 한 번 연 기기에서만) */ 
       await loadCodeChars();
       B = GF.data.idle_balance; ST = GF.data.idle_stories; S = load();
       { const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); document.body.classList.toggle('gf-inner', n !== 'itable'); }; }   /* 식탁 안쪽 화면 상단바 = ‹ 하나(퍼즐 판처럼, 3차 리뷰) */

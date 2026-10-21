@@ -1209,6 +1209,7 @@ html[data-rm="1"] .uk-fly { display: none; }
    미리보기 카드(.hk-prev)가 있는 홈은 같은 「다음 가구」를 카드가 보여 주므로 띠를 빼고, 없는 홈은 카드 자리(504)로. 아이콘 줄이 열리면 가족은 그 오른쪽으로(겹침 금지) */
 .hk:has(.hk-prev) .hk-band { display: none; }
 .hk .hk-band { top: 504px; }
+.hk-icons:has(> .hk-ic:nth-child(3)) { gap: 3px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-icb { width: 48px; height: 48px; border-radius: 15px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-icb svg { width: 26px; height: 26px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-ic small { font-size: 12px; }   /* 아이콘 셋 이상(공방 추가)이면 작게 — 영어 두 줄 이름이 주 버튼에 닿지 않게(리뷰 10/22) */
 .hk:has(.hk-icons) .hk-stage { left: 80px; } .hk:has(.hk-icons) .hk-stage img:not(.hk-prop) { height: 146px; }
 [data-uk="kid"] .hk.hk-kid .uk-btn.hk-main, [data-uk="kid"] #safe:not(.wide) .homeplay { width: 168px; margin-left: -84px; height: 96px; min-height: 96px; border-radius: 48px; top: 346px; }
 [data-uk="kid"] .hk.hk-kid .uk-btn.hk-main svg { width: 60px; height: 60px; }
@@ -2551,6 +2552,9 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     cr_fence: (c) => svg(96, 40, `<rect x="2" y="8" width="92" height="28" rx="4" ${st(c)}/><path d="M2 17h92M2 27h92M16 8v9M40 8v9M64 8v9M88 8v9M28 17v10M52 17v10M76 17v10M16 27v9M40 27v9M64 27v9" stroke="${INK}" stroke-width="1.4" opacity=".55"/>${face(48, 21, .6)}`),
     cr_blanket: (c) => svg(80, 36, `<rect x="4" y="6" width="72" height="26" rx="8" ${st(c)}/><path d="M22 6v26M40 6v26M58 6v26" stroke="${shade(c, -.2)}" stroke-width="2"/><rect x="22" y="6" width="18" height="26" fill="${shade(c, .3)}" opacity=".6"/><rect x="58" y="6" width="18" height="26" rx="0" fill="${shade(c, .3)}" opacity=".6"/><rect x="4" y="6" width="72" height="26" rx="8" fill="none" stroke="${INK}" stroke-width="${SW}"/>${face(31, 19, .6)}`),
     cr_glasses: (c) => svg(56, 26, `<circle cx="14" cy="14" r="10" fill="#D6F1FF" stroke="${c}" stroke-width="4"/><circle cx="42" cy="14" r="10" fill="#D6F1FF" stroke="${c}" stroke-width="4"/><path d="M24 12q4-4 8 0" fill="none" stroke="${c}" stroke-width="3.4"/><path d="M10 10q3-2 6 0M38 10q3-2 6 0" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`),
+    /* 성인 공방 옛이야기 소품(10/22): 도깨비 방망이 · 금도끼 */
+    cr_club: (c) => svg(30, 70, `<path d="M11 66l2-30h4l2 30z" ${st('#8A5A3B')}/><path d="M15 4q12 4 12 20t-12 16Q3 36 3 24T15 4z" ${st(c)}/>${[[10, 14], [20, 12], [9, 26], [21, 26], [15, 20]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.6" ${st('#FFC933', 1.4)}/>`).join('')}${twinkle(26, 6, .6)}`),
+    cr_axe: (c) => svg(40, 60, `<path d="M20 58V10" stroke="${INK}" stroke-width="7" stroke-linecap="round"/><path d="M20 58V10" stroke="#C99A6B" stroke-width="4" stroke-linecap="round"/><path d="M18 8q-16 2-16 14t16 12z" ${st(c)}/><path d="M6 16q2 6 0 12" fill="none" stroke="#fff" stroke-width="1.6" opacity=".7"/>${twinkle(32, 10, .7)}`),
     cr_gourd: (c) => svg(50, 48, `<path d="M25 4q2 4 0 6" stroke="#3E8A4E" stroke-width="3" stroke-linecap="round"/><path d="M27 6q8-4 12 2-6 3-12-2z" fill="#6CCB8A" stroke="${INK}" stroke-width="1.4"/><ellipse cx="25" cy="28" rx="21" ry="17" ${st(c)}/><path d="M18 14q-6 14 0 28M32 14q6 14 0 28" fill="none" stroke="${shade(c, -.2)}" stroke-width="1.4"/>${face(25, 28, .9)}<path d="M40 14l2-4M44 18l4-1" stroke="#FFC933" stroke-width="2" stroke-linecap="round"/>`),
     cr_rope: (c) => svg(30, 80, `<path d="M15 2q-8 8 0 16t0 16 0 16 0 16 0 12" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/><path d="M15 2q-8 8 0 16t0 16 0 16 0 16 0 12" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round"/><path d="M11 10l8 4M11 26l8 4M11 42l8 4M11 58l8 4" stroke="${shade(c, -.25)}" stroke-width="1.6"/><circle cx="15" cy="74" r="5" ${st('#FFC933', 2)}/>`),
   });
@@ -5818,7 +5822,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         if (LV.kind === 'daily' && GF.ads) GF.ads.resultHook = { placement: 'daily2x', ask: GF.t('c16.block.013'), onReward: bonusShard };
         const chips = [{ icon: 'star', text: '★ ' + stars }, { icon: 'info', text: GF.t('c16.sort.014', { moves: S.moves }) }]; gained.forEach((id) => chips.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
         const next = !LV.kind && D.levels.find((l) => l.id === LV.id + 1);
-        UK.result({ title: GF.t('c16.sort.003'), stars, chips, parent: r, onNext: next ? () => GF.replace('splay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
+        UK.result({ title: GF.t('c16.sort.003'), stars, chips, parent: r, onNext: next ? () => GF.replace('splay', { n: next.id }) : null, nextText: GF.t('c16.block.014'), onRetry: () => GF.replace('splay', LV.kind ? { level: LV } : { n: LV.id }), retryText: GF.t('c16.sort.002'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') }); try { if (GF.craft && GF.data.craft_adult) GF.craft.dropChips('sort', LV.kind ? null : LV.id, r); } catch (e) { /* 공방 없음 */ }
       }
       function finish() {
         busy = true; GF.extras && GF.extras.resumeClear(); const st = GF.polish.easy(S.moves <= LV.par + 4 ? 3 : S.moves <= LV.par + 12 ? 2 : 1, LV);
@@ -5847,7 +5851,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   });
   SR.start = async function (opts) {
     UK.mode('adult');
-    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'sort_levels', 'sort_extra', 'story_sort', 'maps/sort', 'room_items', 'housing', 'art_slots'], storeKey: 'gf:sort:ui:v1', async start() {
+    await GF.boot(Object.assign({ dataNames: ['chars', 'anchors', 'sounds', 'sort_levels', 'sort_extra', 'story_sort', 'maps/sort', 'room_items', 'housing', 'art_slots', 'craft_adult'], storeKey: 'gf:sort:ui:v1', async start() {
+      if (GF.craft && GF.data.craft_adult) GF.craft.setup({ group: 'adult', app: 'sort', workshop: false });   /* 뚝딱 공방 재료(docs/43 §7) — 공방은 ③ 합치기, 여기선 재료만(공방을 한 번 연 기기에서만) */ 
       D = GF.data.sort_levels; X = GF.data.sort_extra; GF.saga.init('sort', GF.data['maps/sort']); GF.tale.init('sort', GF.data.story_sort, { kid: false });
       Room.init({ home: () => GF.go('slevels'), openHouse: () => GF.go('shouse'), housing: GF.data.housing, app: 'sort', data: GF.data.room_items, game: 'sort', mode: 'adult', autoPlace: true, store: Room.sharedStore('gf:house:adult:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
       GF.rank.init({ app: 'sort', boards: { daily: { title: GF.t('c16.block.010'), levelAt: (d, dn) => dailyLevelAt(d, dn), bot: (L, rule, rng, eps) => { const r = C.botPlay(L, rng, eps, rule); return { won: r.won, score: GF.rank.eff({ par: L.par, actions: r.moves, tools: 0, attempts: 1 }) }; } } } });

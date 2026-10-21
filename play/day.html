@@ -1209,6 +1209,7 @@ html[data-rm="1"] .uk-fly { display: none; }
    미리보기 카드(.hk-prev)가 있는 홈은 같은 「다음 가구」를 카드가 보여 주므로 띠를 빼고, 없는 홈은 카드 자리(504)로. 아이콘 줄이 열리면 가족은 그 오른쪽으로(겹침 금지) */
 .hk:has(.hk-prev) .hk-band { display: none; }
 .hk .hk-band { top: 504px; }
+.hk-icons:has(> .hk-ic:nth-child(3)) { gap: 3px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-icb { width: 48px; height: 48px; border-radius: 15px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-icb svg { width: 26px; height: 26px; } .hk-icons:has(> .hk-ic:nth-child(3)) .hk-ic small { font-size: 12px; }   /* 아이콘 셋 이상(공방 추가)이면 작게 — 영어 두 줄 이름이 주 버튼에 닿지 않게(리뷰 10/22) */
 .hk:has(.hk-icons) .hk-stage { left: 80px; } .hk:has(.hk-icons) .hk-stage img:not(.hk-prop) { height: 146px; }
 [data-uk="kid"] .hk.hk-kid .uk-btn.hk-main, [data-uk="kid"] #safe:not(.wide) .homeplay { width: 168px; margin-left: -84px; height: 96px; min-height: 96px; border-radius: 48px; top: 346px; }
 [data-uk="kid"] .hk.hk-kid .uk-btn.hk-main svg { width: 60px; height: 60px; }
@@ -1314,6 +1315,57 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 /* 색칠북 액자 결과: 재료 칩은 액자 오른쪽 세로로(별·단추와 겹치지 않게) */
 .cl-hang .cr-drop { position: absolute; right: 10px; top: 86px; flex-direction: column; gap: 8px; margin: 0; z-index: 4; }
 .cl-hang .cr-chip { width: 48px; height: 48px; } .cl-hang .cr-chip img { width: 36px; height: 36px; }
+/* ---- 성인 3칸 도안(허브 10/22) — 360 기준: 위 단추 줄 · 재료 3칸 · 도구 3 · 상태 한 줄 · 만들기 · 가족 한마디 · 재료 선반 ---- */
+.cr-a .cr-atop { position: absolute; left: 12px; right: 12px; top: 8px; display: flex; gap: 10px; z-index: 3; } .cr-a .cr-atop .uk-btn { flex: 1; min-height: 46px; font-size: 17px; }
+.cr-a .cr-adexbtn { flex: 0 0 auto !important; padding: 0 14px; display: flex; align-items: center; gap: 6px; } .cr-a .cr-adexbtn svg { width: 26px; height: 26px; } .cr-a .cr-adexbtn .cr-dexn { font: 400 16px/1 var(--uk-num, Jua); }
+.cr-a .cr-abench { position: absolute; left: 12px; right: 12px; top: 66px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.cr-a .cr-aslot { position: relative; width: 88px; height: 92px; border-radius: 20px; border: 3px dashed #C9B49A; background: #FFF9F0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px; cursor: pointer; }
+.cr-a .cr-aslot.full { border-style: solid; border-color: #4A3030; background: #fff; box-shadow: 0 4px 0 rgba(74, 48, 48, .2); } .cr-a .cr-aslot img { width: 56px; height: 56px; pointer-events: none; }
+.cr-a .cr-aslot small, .cr-a .cr-amat small { font: 400 12px/1.1 var(--uk-font); color: #5A463A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.cr-a .cr-aplus { font: 400 26px/1 var(--uk-num, Jua); color: #8A6A50; font-style: normal; }
+.cr-a .cr-atools { position: absolute; left: 24px; right: 24px; top: 172px; display: flex; gap: 10px; justify-content: center; }
+.cr-a .cr-atool { flex: 1; max-width: 100px; height: 68px; border-radius: 18px; border: 3px solid #D8CBB8; background: #FBF6EE; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer; padding: 2px; }
+.cr-a .cr-atool svg { width: 38px; height: 38px; } .cr-a .cr-atool small { font: 400 14px/1 var(--uk-font); color: #5A463A; }
+.cr-a .cr-atool.on { border-color: #4A3030; background: #FFE9A8; box-shadow: 0 3px 0 rgba(74, 48, 48, .25); transform: translateY(-2px); }
+.cr-a .cr-astatus { position: absolute; left: 14px; right: 14px; top: 250px; min-height: 22px; text-align: center; font: 400 15px/1.3 var(--uk-font); color: #6E5A4A; }
+.cr-a .cr-astatus.ok { color: #2E8A4E; } .cr-a .cr-astatus.warn { color: #C2562E; }
+.cr-a .uk-btn.cr-amake { position: absolute; left: 40px; right: 40px; width: auto; top: 280px; min-height: 56px; font-size: 22px; } .cr-a .uk-btn.cr-amake.off { filter: grayscale(.8); opacity: .55; }
+.cr-a .cr-ahelp { position: absolute; left: 12px; right: 12px; top: 346px; height: 44px; display: none; align-items: center; gap: 8px; } .cr-a .cr-ahelp.on { display: flex; }
+.cr-a .cr-ahelp img { width: 40px; height: 44px; object-fit: contain; } .cr-a .cr-abub { flex: 1; min-height: 38px; border-radius: 16px; border: 2px solid #4A3030; background: #fff; font: 400 15px/1.2 var(--uk-font); color: #3A2E39; text-align: left; padding: 6px 12px; cursor: pointer; }
+.cr-a .cr-shelf.cr-ashelf { top: 396px; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px; }
+.cr-a .cr-amat { height: 82px; flex-direction: column; gap: 0; padding: 2px; } .cr-a .cr-amat img { width: 46px; height: 46px; } .cr-a .cr-amat.rare { background: #FFF6CF; border-color: #C99A00; }
+.cr-a .cr-aempty { grid-column: 1 / -1; text-align: center; font: 400 15px/1.4 var(--uk-font); color: #6E5A4A; padding: 18px 6px; }
+.cr-a .cr-dname { display: flex; flex-direction: column; align-items: center; gap: 2px; font-family: var(--uk-font); color: #3A2E39; } .cr-a .cr-dname em { font-style: normal; font-size: 15px; color: #2E8A4E; } .cr-a .cr-dname b { font-size: 24px; font-weight: 400; } .cr-a .cr-dname small { font-size: 14px; color: #8A6A50; }
+/* 도안 책·도감(시트) */
+.cr-bps .cr-bpl { max-height: 62vh; overflow-y: auto; padding: 2px 2px 8px; text-align: left; }
+.cr-bps .cr-bph { margin: 12px 2px 6px; font: 400 17px/1.2 var(--uk-title-font, Jua); color: #3A2E39; } .cr-bps .cr-bph span { color: #8A6A50; font-size: 15px; } .cr-bps .cr-bph i { color: #2E8A4E; font-style: normal; }
+.cr-bps .cr-bpr { display: flex; align-items: center; gap: 8px; padding: 8px; margin: 0 0 8px; border-radius: 16px; background: #fff; border: 2px solid #E6D9C6; }
+.cr-bps .cr-bpr.lock, .cr-bps .cr-bpr.hid { background: #F4EEE5; } .cr-bps .cr-bpr.lock .cr-bpimg, .cr-bps .cr-bpr.hid .cr-bpimg { filter: brightness(0); opacity: .3; } .cr-bps .cr-bpr.got { border-color: #9ED3A8; }
+.cr-bps .cr-bpimg { flex: none; width: 52px; height: 52px; object-fit: contain; }
+.cr-bps .cr-bpm { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; } .cr-bps .cr-bpm b { font: 400 16px/1.2 var(--uk-font); color: #3A2E39; } .cr-bps .cr-bpm b i { color: #2E8A4E; font-style: normal; }
+.cr-bps .cr-bpin { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.cr-bps .cr-bpi, .cr-bps .cr-bpt { position: relative; display: inline-flex; flex-direction: column; align-items: center; width: 44px; } .cr-bps .cr-bpi img, .cr-bps .cr-bpt svg { width: 30px; height: 30px; }
+.cr-bps .cr-bpi b { position: absolute; right: -2px; top: -4px; font: 400 12px/1 var(--uk-num, Jua); color: #3A2E39; } .cr-bps .cr-bpi small, .cr-bps .cr-bpt small { font: 400 11px/1.1 var(--uk-font); color: #6E5A4A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 44px; }
+.cr-bps .cr-bpi.no img { opacity: .35; } .cr-bps .cr-bpi.no small { color: #C2562E; } .cr-bps .cr-bpt { margin-left: 4px; padding-left: 6px; border-left: 2px dashed #E6D9C6; }
+.cr-bps .cr-bpq { font: 400 14px/1 var(--uk-font); color: #8A6A50; } .cr-bps .cr-bpnote { font: 400 13px/1.3 var(--uk-font); color: #8A6A50; }
+.cr-bps .uk-btn.cr-bpgo { flex: none; min-height: 40px; width: 72px; padding: 0 6px; font-size: 15px; }
+.cr-bps .cr-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin-top: 4px; } .cr-bps .cr-cell { min-width: 0; overflow: hidden; } .cr-bps .cr-cell { cursor: default; display: flex; flex-direction: column; align-items: center; } .cr-bps .cr-cell small { font: 400 10px/1.1 var(--uk-font); color: #5A463A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.cr-bps .cr-cell .cr-ci { height: 70%; } .cr-bps .cr-cell .cr-cf { position: absolute; right: 2px; bottom: 14px; width: 20px; height: 20px; }
+.cr-rowfam { display: flex; justify-content: center; gap: 4px; margin: 4px 0 6px; } .cr-rowfam img { height: 70px; } .cr-rowitem { display: block; margin: 6px auto; height: 80px; }
+.cr-chip.rare { background: #FFF6CF; border-color: #C99A00; } .cr-chip small { display: none; }
+.uk-sheet .cr-drop .cr-chip:has(small) { flex-direction: column; height: auto; padding: 4px 2px; } .uk-sheet .cr-drop .cr-chip small { display: block; font: 400 11px/1.1 var(--uk-font); color: #5A463A; white-space: nowrap; max-width: 52px; overflow: hidden; text-overflow: ellipsis; }
+.cr-bps .uk-btn.cr-bpgo.cr-bpno { background: #EFE6DA; color: #8A6A50; box-shadow: none; border: 2px dashed #CDBFA9; opacity: 1; }   /* 재료 모자람 = 글자가 보이는 흐린 칸(흰 단추에 흰 글자로 비던 것) */
+.cr-a .cr-abench { left: 10px; right: 10px; padding: 10px 6px; border-radius: 24px; background: #FFF6E5; border: 3px solid #E6D9C6; box-shadow: 0 4px 0 rgba(74, 48, 48, .12); }   /* 작업대 — 뒤 벽 창문이 칸 사이로 비치지 않게 */
+/* 리뷰 10/22 반영: 작업대 판이 생겨 도구 줄·상태·만들기·선반을 아래로 · 수량 배지는 칸 오른쪽 위(이름을 덮지 않게) · 다 쓴 재료는 자리 지키며 흐리게 */
+.cr-a .cr-atools { top: 196px; } .cr-a .cr-astatus { top: 272px; } .cr-a .uk-btn.cr-amake { top: 300px; } .cr-a .cr-ahelp { top: 364px; } .cr-a .cr-shelf.cr-ashelf { top: 414px; }
+.cr-a .cr-amat .cr-n { top: -7px; right: -7px; bottom: auto; } .cr-a .cr-amat.zero { opacity: .42; box-shadow: none; } .cr-a .cr-amat.zero .cr-n { background: #EFE6DA; }
+.cr-a .cr-ayard { flex: 0 0 auto !important; padding: 0 12px; font-size: 16px !important; } .cr-a .cr-ayard span { font: 400 16px/1 var(--uk-num, Jua); } .cr-a .cr-ayard.off { opacity: .45; }
+.cr-a .cr-acap { font: 400 18px/1.3 var(--uk-font); color: #3A2E39; text-align: center; padding: 0 18px; }
+.cr-bps .uk-btn.cr-bpgo.cr-bpno { color: #6E5A4A; font-weight: 400; text-shadow: none; }
+.cr-drop .cr-dlab { align-self: center; font: 400 13px/1.2 var(--uk-font); color: #8A6A50; font-style: normal; max-width: 52px; text-align: center; }
+.uk-sheet .uk-btn.cr-opened { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 2px auto 8px; min-height: 46px; font-size: 17px; width: auto; padding: 0 16px; } .uk-sheet .uk-btn.cr-opened svg { width: 28px; height: 28px; }
+.cr-drop:has(.cr-dlab) { flex-wrap: wrap; row-gap: 2px; } .cr-drop .cr-dlab { flex-basis: 100%; max-width: none; }   /* 「공방 재료」는 칩 위 한 줄(영어가 세로로 꺾이던 것) */
+.uk-sheet .uk-btn.cr-opened { max-width: calc(100% - 12px); white-space: normal; line-height: 1.2; font-size: 15px; text-align: left; }
 
 /* 막둥이의 하루(유아) — 키트 토큰만. 놀이 UI 에는 글자 없음(그림·점·손가락·소리). */
 .dy { position: absolute; inset: 0; }
@@ -2614,6 +2666,9 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     cr_fence: (c) => svg(96, 40, `<rect x="2" y="8" width="92" height="28" rx="4" ${st(c)}/><path d="M2 17h92M2 27h92M16 8v9M40 8v9M64 8v9M88 8v9M28 17v10M52 17v10M76 17v10M16 27v9M40 27v9M64 27v9" stroke="${INK}" stroke-width="1.4" opacity=".55"/>${face(48, 21, .6)}`),
     cr_blanket: (c) => svg(80, 36, `<rect x="4" y="6" width="72" height="26" rx="8" ${st(c)}/><path d="M22 6v26M40 6v26M58 6v26" stroke="${shade(c, -.2)}" stroke-width="2"/><rect x="22" y="6" width="18" height="26" fill="${shade(c, .3)}" opacity=".6"/><rect x="58" y="6" width="18" height="26" rx="0" fill="${shade(c, .3)}" opacity=".6"/><rect x="4" y="6" width="72" height="26" rx="8" fill="none" stroke="${INK}" stroke-width="${SW}"/>${face(31, 19, .6)}`),
     cr_glasses: (c) => svg(56, 26, `<circle cx="14" cy="14" r="10" fill="#D6F1FF" stroke="${c}" stroke-width="4"/><circle cx="42" cy="14" r="10" fill="#D6F1FF" stroke="${c}" stroke-width="4"/><path d="M24 12q4-4 8 0" fill="none" stroke="${c}" stroke-width="3.4"/><path d="M10 10q3-2 6 0M38 10q3-2 6 0" stroke="#fff" stroke-width="2" stroke-linecap="round"/>`),
+    /* 성인 공방 옛이야기 소품(10/22): 도깨비 방망이 · 금도끼 */
+    cr_club: (c) => svg(30, 70, `<path d="M11 66l2-30h4l2 30z" ${st('#8A5A3B')}/><path d="M15 4q12 4 12 20t-12 16Q3 36 3 24T15 4z" ${st(c)}/>${[[10, 14], [20, 12], [9, 26], [21, 26], [15, 20]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.6" ${st('#FFC933', 1.4)}/>`).join('')}${twinkle(26, 6, .6)}`),
+    cr_axe: (c) => svg(40, 60, `<path d="M20 58V10" stroke="${INK}" stroke-width="7" stroke-linecap="round"/><path d="M20 58V10" stroke="#C99A6B" stroke-width="4" stroke-linecap="round"/><path d="M18 8q-16 2-16 14t16 12z" ${st(c)}/><path d="M6 16q2 6 0 12" fill="none" stroke="#fff" stroke-width="1.6" opacity=".7"/>${twinkle(32, 10, .7)}`),
     cr_gourd: (c) => svg(50, 48, `<path d="M25 4q2 4 0 6" stroke="#3E8A4E" stroke-width="3" stroke-linecap="round"/><path d="M27 6q8-4 12 2-6 3-12-2z" fill="#6CCB8A" stroke="${INK}" stroke-width="1.4"/><ellipse cx="25" cy="28" rx="21" ry="17" ${st(c)}/><path d="M18 14q-6 14 0 28M32 14q6 14 0 28" fill="none" stroke="${shade(c, -.2)}" stroke-width="1.4"/>${face(25, 28, .9)}<path d="M40 14l2-4M44 18l4-1" stroke="#FFC933" stroke-width="2" stroke-linecap="round"/>`),
     cr_rope: (c) => svg(30, 80, `<path d="M15 2q-8 8 0 16t0 16 0 16 0 16 0 12" fill="none" stroke="${INK}" stroke-width="7" stroke-linecap="round"/><path d="M15 2q-8 8 0 16t0 16 0 16 0 16 0 12" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round"/><path d="M11 10l8 4M11 26l8 4M11 42l8 4M11 58l8 4" stroke="${shade(c, -.25)}" stroke-width="1.6"/><circle cx="15" cy="74" r="5" ${st('#FFC933', 2)}/>`),
   });
@@ -5621,6 +5676,15 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     box: () => svg(`<path d="M8 18l16-8 16 8v18l-16 8-16-8z" ${st('#F6A55B')}/><path d="M8 18l16 8 16-8M24 26v18" fill="none" stroke="${INK}" stroke-width="2"/>`),
     roof: () => svg(`<path d="M4 34L24 10l20 24z" ${st('#E5484D')}/><path d="M12 26h24M18 19h12" stroke="#fff" stroke-width="1.6" opacity=".7"/><rect x="21" y="18" width="6" height="6" rx="1" fill="#FFF3B0" stroke="${INK}" stroke-width="1.4"/>`),
     cushion: () => svg(`<path d="M8 16q16-6 32 0 4 8 0 16-16 6-32 0-4-8 0-16z" ${st('#8FD3F4')}/><circle cx="24" cy="24" r="2.4" fill="${INK}"/><path d="M8 16l4 4M40 16l-4 4M8 32l4-4M40 32l-4-4" stroke="${INK}" stroke-width="1.4"/>`),
+    /* 성인판(10/22) 재료 — 1단 돌·곡식·그릇·반짝 조각, 2단 나무틀·유리·반죽·타일 */
+    stone: () => svg(`<path d="M8 32q-2-10 8-16 10-6 20 0 8 6 6 14-4 8-16 8T8 32z" ${st('#B9C2CC')}/><path d="M16 22q5-3 10-1M28 30q4 1 6-2" fill="none" stroke="#8C96A3" stroke-width="1.8" stroke-linecap="round"/>`),
+    grain: () => svg(`<path d="M24 42V10" stroke="#C99A6B" stroke-width="2.6" stroke-linecap="round"/>${[12, 18, 24, 30].map((y) => `<ellipse cx="19" cy="${y}" rx="5" ry="3" transform="rotate(-30 19 ${y})" ${st('#FFD36B', 1.8)}/><ellipse cx="29" cy="${y}" rx="5" ry="3" transform="rotate(30 29 ${y})" ${st('#FFD36B', 1.8)}/>`).join('')}`),
+    dish: () => svg(`<ellipse cx="24" cy="30" rx="18" ry="8" ${st('#fff')}/><path d="M6 28q18 18 36 0" fill="#EAF3FB" stroke="${INK}" stroke-width="2.4"/><path d="M14 30q10 4 20 0" fill="none" stroke="#8FD3F4" stroke-width="2"/>`),
+    shine: () => svg(`<path d="M24 4l5 13 13 5-13 5-5 13-5-13-13-5 13-5z" ${st('#FFE066')}/><path d="M24 12l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#fff" opacity=".85"/><circle cx="39" cy="9" r="2.4" fill="#FFC933"/><circle cx="9" cy="39" r="2" fill="#FFC933"/>`),
+    frame: () => svg(`<rect x="7" y="7" width="34" height="34" rx="3" ${st('#C99A6B')}/><rect x="14" y="14" width="20" height="20" rx="2" fill="#FFF6E5" stroke="${INK}" stroke-width="2"/><path d="M7 7l7 7M41 7l-7 7M7 41l7-7M41 41l-7-7" stroke="${INK}" stroke-width="1.6"/>`),
+    glass: () => svg(`<path d="M10 10h28l-4 30H14z" ${st('#CDEBFA')}/><path d="M16 14l-2 18M22 14l-1 8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M10 10h28" stroke="${INK}" stroke-width="2.6"/>`),
+    dough: () => svg(`<path d="M8 32q0-14 16-16t16 12q0 8-16 8T8 32z" ${st('#F6E2B8')}/><path d="M16 26q4-3 8 0M26 24q4-2 7 1" fill="none" stroke="#D8B97F" stroke-width="1.8" stroke-linecap="round"/>`),
+    tile: () => svg(`<rect x="6" y="6" width="36" height="36" rx="4" ${st('#8FD3F4')}/><path d="M24 6v36M6 24h36" stroke="${INK}" stroke-width="2"/><path d="M15 11l4 4-4 4-4-4zM33 29l4 4-4 4-4-4z" fill="#FF8FA8"/><circle cx="33" cy="15" r="3" fill="#FFC933"/><circle cx="15" cy="33" r="3" fill="#6CCB8A"/>`),
     pot: () => svg(`<path d="M24 4l7 12H17z" ${st('#6CCB8A')}/><path d="M16 10l6 12H10zM32 10l6 12H26z" ${st('#4FB36F')}/><path d="M12 24h24l-3 18H15z" ${st('#E07A5F')}/>`),
   };
   window.CraftArt = { make: (id) => (A[id] ? A[id]() : ''), has: (id) => !!A[id], uri: (id) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(A[id] ? A[id]() : '') };
@@ -5633,14 +5697,16 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
    데이터 data/craft_recipes.json(tools/craft_build.py) · 재료 그림 engine/craft/craft-art.js · 가구 그림 room-art.js */
 (function () {
   'use strict';
-  const el = GF.el, IC = GF.IC, KEY = 'gf:craft:kid:v1';
+  const el = GF.el, IC = GF.IC;
+  /* 성인판(허브 10/22, docs/43 §4·§7): C.setup({ group: 'adult' }) 이면 3칸 도안(재료 3 + 도구) · data/craft_adult.json · 저장 gf:craft:adult:v1(성인 형제 앱끼리 나눔) */
+  const AD = () => C.cfg.group === 'adult', KEY = () => 'gf:craft:' + (AD() ? 'adult' : 'kid') + ':v1';
   IC.craft = '<svg viewBox="0 0 64 64"><rect x="8" y="34" width="34" height="22" rx="5" fill="#F6A55B" stroke="#6b5443" stroke-width="3" stroke-linejoin="round"/><path d="M8 42h34" stroke="#6b5443" stroke-width="2.4" opacity=".5"/><path d="M36 30l16-16" stroke="#8A5A3B" stroke-width="6" stroke-linecap="round"/><rect x="40" y="4" width="22" height="14" rx="4" transform="rotate(45 51 11)" fill="#B9C2CC" stroke="#6b5443" stroke-width="3"/><path d="M14 22l3-6 3 6-6-3 6 0z" fill="#FFC933"/></svg>';
   IC.pot = '<svg viewBox="0 0 64 64"><path d="M8 26h48q0 30-24 30T8 26z" fill="#5B5F7A" stroke="#4A3030" stroke-width="4" stroke-linejoin="round"/><ellipse cx="32" cy="26" rx="25" ry="7" fill="#7C809E" stroke="#4A3030" stroke-width="4"/><path d="M22 14l3-6 3 6-6-3 6 0zM38 12l2-5 2 5-5-2 5 0z" fill="#FFC933"/><circle cx="25" cy="40" r="2.6" fill="#fff"/><circle cx="39" cy="40" r="2.6" fill="#fff"/></svg>';   // 「또 만들기」 = 빈 냄비(▶ 는 놀이 시작 뜻으로만 — 독립 리뷰 10/21 #4)
   const C = (GF.craft = {});
   /** 앱별 설정(D45 확장 10/21): home·house = 그 앱의 홈·우리 집 화면, paintAll = 가구를 모두 붓으로 마무리(색칠북: 내가 칠한 색이 물건 색), pal = 기본 물감 */
-  C.cfg = { app: 'play', home: 'home', house: 'khouse', paintAll: false, pal: null };
-  C.setup = (o) => Object.assign(C.cfg, o || {});
-  const D = () => GF.data.craft_recipes || { mats: [], recipes: [] };
+  C.cfg = { app: 'play', home: 'home', house: 'khouse', paintAll: false, pal: null, group: 'kid', workshop: true, progress: null };
+  C.setup = (o) => { Object.assign(C.cfg, o || {}); S = null; return C; };   // workshop = 이 앱에 공방 화면이 있음(성인: ③ 합치기만) · progress() = 도안 해금에 쓰는 깬 판 수
+  const D = () => (AD() ? GF.data.craft_adult : GF.data.craft_recipes) || { mats: [], recipes: [] };
   const today = () => { const d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); };
   let S = null;
   /* 저장: 이 기기 localStorage + APK 에선 같은 서명 유아 형제 앱(놀이터·색칠북·하루)과 나눔(ShareStore, 우리 집과 같은 D12 안 A — 키 gf:craft:kid:v1).
@@ -5648,17 +5714,29 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const parse = (t) => { try { const v = typeof t === 'string' ? JSON.parse(t) : t; return v && typeof v === 'object' && v.inv && typeof v.inv === 'object' ? v : null; } catch (e) { return null; } };
   C.merge = (list) => { const vs = list.map(parse).filter(Boolean); if (!vs.length) return null; const top = vs.reduce((a, b) => ((b.t || 0) > (a.t || 0) ? b : a)), out = JSON.parse(JSON.stringify(top));
     out.found = out.found || {}; vs.forEach((v) => { Object.entries(v.found || {}).forEach(([k, ts]) => { if (!out.found[k] || ts < out.found[k]) out.found[k] = ts; }); out.made = Math.max(out.made || 0, v.made || 0); out.starter = Math.max(out.starter || 0, v.starter || 0); }); return out; };
-  const peers = () => { try { return window.GFShare ? JSON.parse(GFShare.peers(KEY) || '[]') : []; } catch (e) { return []; } };
-  C.S = () => { if (S) return S; let loc = null; try { loc = localStorage.getItem(KEY); } catch (e) { loc = null; } const v = C.merge([loc].concat(peers())); S = Object.assign({ v: 1, t: 0, inv: {}, found: {}, tries: {}, yard: { d: 0, n: 0 }, starter: 0, made: 0 }, v || {}); return S; };
-  C.save = () => { const s = C.S(); s.t = Date.now(); const t = JSON.stringify(s); try { localStorage.setItem(KEY, t); } catch (e) { /* 저장 불가 — 이번 판만 */ } try { if (window.GFShare) GFShare.put(KEY, t); } catch (e) { /* 공유 실패 무시 */ } };
+  const peers = () => { try { return window.GFShare ? JSON.parse(GFShare.peers(KEY()) || '[]') : []; } catch (e) { return []; } };
+  C.S = () => { if (S) return S; let loc = null; try { loc = localStorage.getItem(KEY()); } catch (e) { loc = null; } const v = C.merge([loc].concat(peers())); S = Object.assign({ v: 1, t: 0, inv: {}, found: {}, tries: {}, yard: { d: 0, n: 0 }, starter: 0, made: 0, open: 0, rows: {}, cnt: {} }, v || {}); return S; };
+  C.save = () => { const s = C.S(); s.t = Date.now(); const t = JSON.stringify(s); try { localStorage.setItem(KEY(), t); } catch (e) { /* 저장 불가 — 이번 판만 */ } try { if (window.GFShare) GFShare.put(KEY(), t); } catch (e) { /* 공유 실패 무시 */ } };
   /* 다른 형제 앱에서 놀다 돌아오면 다시 읽는다(Room.refresh 와 같은 때) */
   document.addEventListener('visibilitychange', () => { if (document.visibilityState !== 'visible') return; S = null; try { if (ui && GF.cur && GF.cur.name === 'craft') drawShelf(); } catch (e) { /* 화면 없음 */ } });
-  C.reset = () => { S = null; try { localStorage.removeItem(KEY); } catch (e) { /* */ } };
+  C.reset = () => { S = null; try { localStorage.removeItem(KEY()); } catch (e) { /* */ } };
   C.mat = (id) => D().mats.find((m) => m.id === id);
   C.key = (a, b) => [a, b].sort().join('+');
   C.find = (a, b) => { const k = C.key(a, b); return D().recipes.find((r) => C.key(r.in[0], r.in[1]) === k) || null; };
   C.inv = (id) => C.S().inv[id] || 0;
-  C.add = (id, n) => { const s = C.S(); s.inv[id] = Math.min(99, (s.inv[id] || 0) + (n || 1)); C.save(); };
+  C.add = (id, n) => { const s = C.S(); s.inv[id] = Math.min(99, (s.inv[id] || 0) + (n || 1)); if (C.mat(id) && !s.found[id]) s.found[id] = Date.now(); C.save(); };   // 도감은 「한 번이라도 얻음」(다 써도 「?」로 돌아가지 않게 — 리뷰 10/22 #2)
+  /* 손실 없음(리뷰 10/22 #1): 칸에 넣은 재료(held)와 「만들기」를 누른 도안(pend)을 저장해 두고, 만들기 동작 중 앱을 닫거나 화면을 떠나도
+     다음에 공방에 들어오면(또는 떠날 때) 칸 재료는 돌려주고 누른 도안은 완성해 준다 */
+  function grantOut(rec, ci) {
+    const s = C.S(), isNew = !s.found[rec.id]; s.found[rec.id] = s.found[rec.id] || Date.now(); s.made = (s.made || 0) + 1; s.pend = null; s.held = [];
+    if (rec.out.mat) { s.inv[rec.out.mat] = Math.min(99, (s.inv[rec.out.mat] || 0) + 1); if (!s.found[rec.out.mat]) s.found[rec.out.mat] = Date.now(); }
+    const it = C.itemOf(rec);
+    if (it) { try { Room.grant(it.id); Room._recent = []; if (Room.placeAt) Room.placeAt(it.id); if (typeof ci === 'string' && Room.S && Room.S.placed) { Object.values(Room.S.placed).forEach((L) => (L || []).forEach((p) => { if (p.id === it.id) p.c = ci; })); Room.save(); } } catch (e) { /* 집 저장 실패 — 도감은 남음 */ } }   // 붓으로 고른 색이 집에 놓인 가구 색(어느 방에 놓였든)
+    C.save(); return { it, isNew };
+  }
+  C.recover = () => { const s = C.S(); let done = null; if (s.held && s.held.length) { s.held.forEach((id) => { s.inv[id] = Math.min(99, (s.inv[id] || 0) + 1); }); s.held = []; } if (s.pend) { const rec = D().recipes.find((r) => r.id === s.pend); s.pend = null; if (rec) { grantOut(rec, null); done = rec; } } C.save(); return done; };
+  function held() { if (!ui) return; const s = C.S(); s.held = ui.slots.filter((x) => x != null); C.save(); }
+  function commit(rec) { const s = C.S(); s.held = []; s.pend = rec.id; C.save(); }
   C.itemOf = (r) => r.out && r.out.item && window.Room && Room.item(r.out.item);
   /** 그림 주소: 재료(1·2단) = CraftArt, 가구(3·4단) = Room 그림 */
   C.art = (id, ci) => { const r = D().recipes.find((x) => x.id === id), it = r && C.itemOf(r); if (it) return Room.src(it, typeof ci === 'string' ? ci : it.colors[ci || 0]);   // ci = 색 자리 번호 또는 실제 색(#hex)
@@ -5666,7 +5744,35 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   C.total = () => D().mats.filter((m) => m.t === 1).length + D().recipes.length;
   C.foundCount = () => D().mats.filter((m) => m.t === 1 && (C.S().found[m.id] || C.inv(m.id))).length + D().recipes.filter((r) => C.S().found[r.id]).length;
   /** 지금 가진 재료로 만들 수 있는(아직 못 만든) 레시피 — 힌트·홈 배지 */
-  C.makeable = (newOnly) => D().recipes.filter((r) => (!newOnly || !C.S().found[r.id]) && (r.in[0] === r.in[1] ? C.inv(r.in[0]) >= 2 : C.inv(r.in[0]) >= 1 && C.inv(r.in[1]) >= 1));
+  C.makeable = (newOnly) => (AD() ? D().recipes.filter((r) => (!newOnly || !C.S().found[r.id]) && C.known(r) && C.canMake(r)) : D().recipes.filter((r) => (!newOnly || !C.S().found[r.id]) && (r.in[0] === r.in[1] ? C.inv(r.in[0]) >= 2 : C.inv(r.in[0]) >= 1 && C.inv(r.in[1]) >= 1)));
+  /* ---------- 성인 3칸 도안 ---------- */
+  C.key3 = (ins, tool) => ins.slice().sort().join('+') + '|' + tool;
+  C.find3 = (ins, tool) => D().recipes.find((r) => C.key3(r.in, r.tool) === C.key3(ins, tool)) || null;
+  C.findMats = (ins) => { const k = ins.slice().sort().join('+'); return D().recipes.find((r) => r.in.slice().sort().join('+') === k) || null; };
+  C.prog = () => { try { return C.cfg.progress ? C.cfg.progress() : (GF.progress0 ? GF.progress0() : 0); } catch (e) { return 0; } };
+  C.known = (r) => !!C.S().found[r.id] || (!r.hidden && C.prog() >= (r.unlock || 0));   // 도안이 열림(해금 판 수를 넘었거나 이미 만듦) — 숨은 도안은 만들어 봐야 열림
+  C.need = (r) => { const n = {}; r.in.forEach((i) => { n[i] = (n[i] || 0) + 1; }); return n; };
+  C.canMake = (r) => Object.entries(C.need(r)).every(([i, k]) => C.inv(i) >= k);
+  C.rowOf = (id) => D().recipes.filter((r) => r.row === id);
+  C.rowDone = (id) => C.rowOf(id).every((r) => C.S().found[r.id]);
+  /** 성인 재료 얻기(docs/43 §7): 판을 깨면 그 앱 재료 하나(판 번호로 정해짐) + 보조 재료(합치기 세 판마다) + 요술 조각(정해진 판마다).
+      공방이 있는 앱(③)은 공방이 열린 뒤(openAt 판)부터, 다른 성인 앱은 이 기기에서 공방을 한 번 연 뒤부터만(단독 설치 사용자에게 쓸 데 없는 칩을 보이지 않게) */
+  C.adultDrop = (app, n, pn, before) => {
+    if (!AD() || !D().drop || !D().drop[app]) return []; const s = C.S(), dr = D().drop[app];
+    if (C.cfg.workshop ? C.prog() < (D().openAt || 0) : !s.open) return [];
+    if (n == null || !(n > 0)) { s.cnt = s.cnt || {}; n = s.cnt[app] = (s.cnt[app] || 0) + 1; }
+    const ids = [dr.main[n % dr.main.length]];
+    if (dr.side && n % (dr.sideEvery || 3) === 0) ids.push(dr.side[Math.floor(n / (dr.sideEvery || 3)) % dr.side.length]);
+    if (dr.shineEvery && n % dr.shineEvery === 0) ids.push('shine');
+    ids.forEach((id) => C.add(id, 1)); if (pn) chips(ids, pn, before); return ids;
+  };
+  /** 결과 창이 실제로 뜬 뒤(우리 집 가구 카드가 먼저 떠도) 그 창 별 아래에 칩 — 재료는 지금 바로 넣는다 */
+  C.dropChips = (app, n, root) => {
+    const ids = C.adultDrop(app, n, null); if (!ids.length) return ids; let k = 0;
+    const fresh = C.cfg.workshop && !C.S().open && !C.S().told; if (fresh) { C.S().told = 1; C.save(); }
+    const tick = () => { const sh = [...(root || document).querySelectorAll('.uk-scrim .uk-sheet')].find((x) => x.querySelector('.uk-stars') && !x.closest('.h2-drop') && !x.querySelector('.cr-drop')); if (sh) { chips(ids, sh, null); if (fresh) { const d = sh.querySelector('.cr-drop'), b = el('button', 'uk-btn sky cr-opened'); b.innerHTML = IC.craft + '<span>' + GF.t('craft.a.opened') + '</span>'; b.onclick = () => { GF.sfx('pick'); document.querySelectorAll('.uk-scrim').forEach((x) => x.remove()); GF.stack = [GF.stack[0]]; GF.go('craft'); }; if (d && d.parentNode) d.parentNode.insertBefore(b, d.nextSibling); } } else if (k++ < 60) setTimeout(tick, 150); };
+    setTimeout(tick, 60); return ids;
+  };
   C.canNew = () => C.makeable(true).length > 0 || C.yardLeft() > 0;
   C.yardLeft = () => { const s = C.S(), d = today(); return s.yard.d === d ? Math.max(0, (D().drop ? D().drop.yardPerDay : 2) - s.yard.n) : (D().drop ? D().drop.yardPerDay : 2); };
 
@@ -5681,8 +5787,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /** 결과 창에 재료 칩(글자 없이 그림 + 반짝) — gf.js finish() 가 부른다 */
   /** 결과 창에 재료 칩 — 앱마다 정한 재료 ids 를 준다(색칠북·하루) */
   C.give = (ids, pn, before) => {
-    if (!D().mats.length || !pn) return; ids = ids.filter((id) => C.mat(id)); if (!ids.length) return; ids.forEach((id) => C.add(id, 1));
-    const row = el('div', 'cr-drop'); ids.forEach((id, k) => { const b = el('span', 'cr-chip', row); const im = el('img', '', b); im.src = CraftArt.uri(id); im.alt = ''; b.style.animationDelay = (0.25 + k * 0.18) + 's'; });
+    if (!D().mats.length || !pn) return; ids = ids.filter((id) => C.mat(id)); if (!ids.length) return; ids.forEach((id) => C.add(id, 1)); chips(ids, pn, before);
+  };
+  function chips(ids, pn, before) {   // 결과 창 재료 칩(그림 + 반짝 · 성인은 이름)
+    const row = el('div', 'cr-drop'); if (AD()) el('em', 'cr-dlab', row, GF.t('craft.a.mats')); ids.forEach((id, k) => { const b = el('span', 'cr-chip' + (id === 'shine' ? ' rare' : ''), row); const im = el('img', '', b); im.src = CraftArt.uri(id); im.alt = ''; if (AD()) el('small', '', b, (C.mat(id) || {}).name || ''); b.style.animationDelay = (0.25 + k * 0.18) + 's'; });
     const st = pn.querySelector('.uk-stars'); if (before && before.parentNode === pn) pn.insertBefore(row, before); else if (st && st.parentNode) st.parentNode.insertBefore(row, st.nextSibling); else pn.appendChild(row);   // 결과 창 별 바로 아래(카드 아래로 숨지 않게)
     setTimeout(() => GF.sfx('get', { gain: 0.7 }), 650);
   };
@@ -5698,7 +5806,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /** 마당 줍기: 하루 2번, 바탕 재료 하나(날짜·횟수로 정해짐) */
   C.yardPick = () => {
     if (C.yardLeft() <= 0) return null; const s = C.S(), d = today(); if (s.yard.d !== d) s.yard = { d, n: 0 };
-    const pool = ['wood', 'clay', 'water', 'thread', 'paint', 'sq', 'tr', 'ci'], id = pool[(d + s.yard.n * 3) % pool.length]; s.yard.n++; C.add(id, 1); return id;
+    const pool = (D().drop && D().drop.yard) || ['wood', 'clay', 'water', 'thread', 'paint', 'sq', 'tr', 'ci'], id = pool[(d + s.yard.n * 3) % pool.length]; s.yard.n++; C.add(id, 1); return id;
   };
   /** 처음 들어오면 한 번: 바로 판자를 만들어 볼 수 있게(나무 2 · 네모 조각 2 · 실 2) */
   C.starter = () => { const s = C.S(); if (s.starter) return false; s.starter = 1; [['wood', 2], ['sq', 2], ['thread', 2]].forEach(([id, n]) => C.add(id, n)); return true; };
@@ -5707,9 +5815,11 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   let ui = null;
   GF.screen('craft', {
     wide: () => false,
-    leave() { if (ui) { clearTimeout(ui.idle); ui = null; } },
+    leave() { if (ui) { clearTimeout(ui.idle); ui = null; C.recover(); } },   // 떠날 때 칸 재료 돌려주기 · 누른 도안 완성
     enter(r) {
       GF.bg('indoor', r); r.classList.add('uk', 'cr');
+      const rec0 = C.recover(); if (rec0) setTimeout(() => { try { UK.toast((AD() ? GF.t('craft.a.recover', { name: rec0.name }) : '✓'), r); } catch (e) { /* */ } }, 600);   // 지난번 만들다 나간 것 완성 알림
+      if (AD()) return enterA(r);   // 성인 3칸 도안
       const first = C.starter();
       ui = { r, slots: [null, null], busy: false, idle: null };
       const bench = el('div', 'cr-bench', r);
@@ -5731,7 +5841,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   function nudge() {   // 빈 냄비·빈 칸을 누르면: 선반 재료가 차례로 통통 + 손가락이 첫 재료를 가리킴
     if (!ui) return; GF.sfx('tap'); const L = [...ui.shelf.querySelectorAll('.cr-mat')]; L.forEach((b, i) => setTimeout(() => GF.jump(b), i * 90)); if (L[0] && window.UK && UK.finger) setTimeout(() => { if (ui) UK.finger(ui.r, L[0], { tap: true, ms: 2600 }); }, 300);
   }
-  function arm() { if (!ui) return; clearTimeout(ui.idle); ui.helper.classList.remove('on'); ui.idle = setTimeout(() => hint(false), 7000); }
+  function arm() { if (!ui) return; clearTimeout(ui.idle); if (ui.adult) return helpA(); ui.helper.classList.remove('on'); ui.idle = setTimeout(() => hint(false), 7000); }
   function yardShow() { if (!ui) return; const on = C.yardLeft() > 0; ui.yard.classList.toggle('on', on); let z = ui.yard.querySelector('.cr-zz'); if (!on && !z && IC.zzz) { z = el('i', 'cr-zz', ui.yard, IC.zzz); } if (on && z) z.remove(); }   // 오늘 다 주웠으면 풀더미가 잠듦(내일 또 — 리뷰 정책 점검)
   function pickYard() {
     const id = C.yardPick(); if (!id) { GF.sfx('tap'); GF.jump(ui.yard); return; }
@@ -5741,8 +5851,9 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     yardShow();
   }
   /** 선반: 가진 재료(1·2단·화분)만, 그림 + 작은 숫자 */
+  C.refresh = () => { try { drawShelf(); if (ui && ui.adult) { statusA(); helpA(); } } catch (e) { /* 화면 없음 */ } };   // 밖에서 재료를 넣은 뒤 선반 다시 그리기(시험·다른 화면)
   function drawShelf(pop) {
-    if (!ui) return; const sh = ui.shelf; sh.innerHTML = '';
+    if (!ui) return; if (ui.adult) return drawShelfA(pop); const sh = ui.shelf; sh.innerHTML = '';
     const order = D().mats.map((m) => m.id), have = order.filter((id) => C.inv(id) > 0);
     if (!have.length) { const e = el('button', 'cr-empty', sh, IC.play); e.setAttribute('aria-label', GF.t('craft.getmore')); e.onclick = () => { GF.sfx('pick'); GF.popTo(C.cfg.home); }; return; }
     have.forEach((id) => {
@@ -5755,13 +5866,13 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (k < 0 || C.inv(id) <= 0) { GF.sfx('tap'); return; }
     C.S().inv[id]--; C.save(); ui.slots[k] = id; GF.sfx('pick', { st: k * 4 });
     const s = ui.slotEls[k]; s.innerHTML = ''; const im = el('img', '', s); im.src = CraftArt.uri(id); im.alt = ''; s.classList.add('full'); GF.jump(s);
-    drawShelf(); if (btn) btn.blur();
+    drawShelf(); if (btn) btn.blur(); held();
     if (ui.slots[0] != null && ui.slots[1] != null) { ui.busy = true; setTimeout(mix, 520); }
   }
   function unslot(k) {
-    if (!ui || ui.busy || ui.slots[k] == null) return; C.add(ui.slots[k], 1); ui.slots[k] = null; const s = ui.slotEls[k]; s.innerHTML = ''; s.classList.remove('full'); GF.sfx('cancel'); drawShelf();
+    if (!ui || ui.busy || ui.slots[k] == null) return; C.add(ui.slots[k], 1); ui.slots[k] = null; const s = ui.slotEls[k]; s.innerHTML = ''; s.classList.remove('full'); GF.sfx('cancel'); drawShelf(); held();
   }
-  function clearSlots() { ui.slots = [null, null]; ui.slotEls.forEach((s) => { s.innerHTML = ''; s.classList.remove('full'); }); }
+  function clearSlots() { ui.slots = ui.slots.map(() => null); ui.slotEls.forEach((s) => { s.innerHTML = ''; s.classList.remove('full'); }); held(); if (ui.adult) statusA(); }
   function mix() {
     if (!ui) return; const [a, b] = ui.slots, rec = C.find(a, b);
     ui.pot.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-4deg)' }, { transform: 'rotate(4deg)' }, { transform: 'rotate(0)' }], { duration: 500 }); GF.sfx('drop');
@@ -5775,7 +5886,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       }, 480);
       return;
     }
-    setTimeout(() => act(rec), 420);
+    commit(rec); setTimeout(() => act(rec), 420);
   }
 
   /* ---------- 만들기 동작 3종 ---------- */
@@ -5786,11 +5897,12 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const stage = el('div', 'cr-astage', ov), im = el('img', 'cr-aimg', stage); im.src = C.art(rec.id, ci); im.alt = ''; im.draggable = false;
     const tool = el('div', 'cr-tool ' + rec.act, stage); tool.innerHTML = TOOLS[rec.act];
     const bar = el('div', 'cr-prog', ov); const fill = el('i', '', bar);
+    if (AD()) el('div', 'cr-acap', ov, GF.t('craft.a.act.' + rec.act));   // 성인: 「톡톡 세 번」·「좌우로 슥슥」·「톡톡 칠해요」(리뷰 #3)
     let pal = null;
     /* 색 점은 가구일 때만(고른 색이 집 가구 색) — 재료는 정해진 무늬라 고를 것이 없다(리뷰 #6) */
     if (rec.act === 'paint' && it) { pal = el('div', 'cr-pal', ov); if (C.cfg.paintAll) pal.classList.add('many'); cols.slice(0, C.cfg.paintAll ? 6 : 4).forEach((c, k) => { const d = el('button', 'cr-pc' + (k === 0 ? ' on' : ''), pal); d.style.background = c; d.setAttribute('aria-label', GF.t('craft.color')); d.onclick = (e) => { e.stopPropagation(); ci = c; im.src = C.art(rec.id, ci); pal.querySelectorAll('.cr-pc').forEach((x) => x.classList.toggle('on', x === d)); GF.sfx('tap'); }; }); }
     const show = () => { const k = Math.min(1, prog / need); fill.style.width = (k * 100) + '%'; im.style.filter = `grayscale(${1 - k}) brightness(${0.75 + 0.25 * k})`; if (rec.act === 'paint' && it) im.src = C.art(rec.id, ci); };
-    show(); let fT = null; const finger = () => { clearTimeout(fT); fT = setTimeout(() => { if (!done && ov.isConnected && window.UK && UK.finger) UK.finger(ov, stage, { tap: rec.act !== 'rub', ms: 2600 }); }, rec.act === 'rub' && !C.S().found[rec.id] ? 600 : 2400); }; finger();   // 문지르기는 처음이면 0.6초 만에 손가락(리뷰 #5)
+    show(); let fT = null; const finger = () => { clearTimeout(fT); fT = setTimeout(() => { if (!done && ov.isConnected && window.UK && UK.finger) UK.finger(ov, stage, { tap: rec.act !== 'rub', ms: 2600 }); }, AD() ? 900 : rec.act === 'rub' && !C.S().found[rec.id] ? 600 : 2400); }; finger();   // 문지르기는 처음이면 0.6초 만에 손가락(리뷰 #5)
     const pos = (e) => { const b = stage.getBoundingClientRect(); return [(e.clientX - b.left) / b.width * 100, (e.clientY - b.top) / b.height * 100]; };
     const step = (amt, e) => {
       if (done) return; prog += amt; finger();
@@ -5817,17 +5929,16 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 
   /* ---------- 짜잔 ---------- */
   function finish(rec, ov, ci) {
-    if (!ui) return; const s = C.S(), isNew = !s.found[rec.id]; s.found[rec.id] = s.found[rec.id] || Date.now(); s.made = (s.made || 0) + 1;
-    if (rec.out.mat) C.add(rec.out.mat, 1);
-    const it = C.itemOf(rec); let placed = false;
-    if (it) { try { placed = Room.grant(it.id); Room._recent = []; if (Room.placeAt) Room.placeAt(it.id); if (typeof ci === 'string' && Room.S && Room.S.placed) { Object.values(Room.S.placed).forEach((L) => (L || []).forEach((p) => { if (p.id === it.id) p.c = ci; })); Room.save(); } } catch (e) { /* 집 저장 실패 — 도감은 남음 */ } }   // 붓으로 고른 색이 집에 놓인 가구 색(어느 방에 놓였든)
+    if (!ui) return; const g = grantOut(rec, ci), isNew = g.isNew, it = g.it; let placed = !!it;
     C.save(); clearSlots(); ui.busy = false;
     ov.innerHTML = ''; ov.className = 'cr-act cr-done';
     const big = el('img', 'cr-dimg', ov); big.src = C.art(rec.id, ci); big.alt = '';
     if (isNew) { const st = el('div', 'cr-new', ov, IC.star); st.setAttribute('aria-hidden', 'true'); }
     GF.sfx('celebrate'); if (isNew) setTimeout(() => GF.sfx('star'), 350); GF.confetti(ov); GF.jump(big);
+    const newRows = ui.adult ? rowsA() : [];
+    if (ui.adult) { el('div', 'cr-dname', ov, (isNew ? '<em>' + GF.t(rec.hidden ? 'craft.a.secret' : 'craft.a.new') + '</em>' : '') + '<b>' + rec.name + '</b>' + (it && rec.hidden && rec.tale ? '<small>' + rec.tale + '</small>' : '')); }
     const row = el('div', 'cr-drow', ov);
-    const ok = el('button', 'uk-round lg', row, IC.pot); ok.setAttribute('aria-label', GF.t('craft.more')); ok.onclick = () => { GF.sfx('pick'); ov.remove(); drawShelf(rec.out.mat || null); const n = ui && ui.r.querySelector('.cr-dexn'); if (n) n.textContent = C.foundCount() + '/' + C.total(); arm(); };
+    const ok = el('button', 'uk-round lg', row, IC.pot); ok.setAttribute('aria-label', GF.t('craft.more')); ok.onclick = () => { GF.sfx('pick'); ov.remove(); drawShelf(rec.out.mat || null); const n = ui && ui.r.querySelector('.cr-dexn'); if (n) n.textContent = C.foundCount() + '/' + C.total(); arm(); if (newRows.length) showRows(newRows); };
     if (it && Room.dropCard) setTimeout(() => { if (!ov.isConnected) return; Room.dropCard(it.id, ui.r, () => {}, { openHouse: () => GF.go(C.cfg.house) }); }, 1500);   // 만든 가구가 집 어디에 놓였는지 작은 방 그림으로 반짝(리뷰 #1·#2·재미 1순위) — 유아 다른 보상과 같은 카드
     void placed;
   }
@@ -5843,6 +5954,119 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   }
   function guide() {   // 처음: 손가락이 나무 → 나무를 차례로
     if (!ui || C.S().made) return; const b = ui.shelf.querySelector('.cr-mat[data-id="wood"]'); if (b && window.UK && UK.finger) UK.finger(ui.r, b, { tap: true, ms: 6000 });
+  }
+
+  /* ---------- 성인 3칸 도안(허브 10/22) — 재료 셋 + 도구 하나 → 만들기. 글자 있는 성인 화면 ---------- */
+  const TOOL_ORDER = ['hammer', 'saw', 'brush'];
+  function enterA(r) {
+    r.classList.add('cr-a'); const s = C.S(), first = !s.open; s.open = 1;
+    if (!s.starter) { s.starter = 1; [['wood', 7], ['sq', 2], ['ci', 2], ['stone', 1]].forEach(([id, n]) => { s.inv[id] = (s.inv[id] || 0) + n; }); }   // 처음 한 번: 판자 둘 + 나무틀 → 큰 상까지 바로(첫 도안 성공)
+    C.save();
+    ui = { r, adult: true, slots: [null, null, null], tool: null, busy: false, idle: null };
+    const top = el('div', 'cr-atop', r);
+    const bp = el('button', 'uk-btn sky cr-abpbtn', top, '📐 ' + GF.t('craft.a.bp')); bp.onclick = () => { GF.sfx('page'); openBP(); };
+    ui.yard = el('button', 'uk-btn ghost cr-ayard', top, '🌿 <span></span>'); ui.yard.setAttribute('aria-label', GF.t('craft.a.yard')); ui.yard.onclick = () => { const id = C.yardPick(); if (!id) { GF.sfx('tap'); GF.jump(ui.yard); return; } GF.sfx('get'); try { UK.toast(GF.t('craft.a.yardgot', { name: (C.mat(id) || {}).name || id }), ui.r); } catch (e) { /* */ } yardA(); drawShelfA(id); statusA(); helpA(); }; yardA();
+    const dex = el('button', 'uk-btn ghost cr-adexbtn', top, IC.book + '<span class="cr-dexn">' + C.foundCount() + '/' + C.total() + '</span>'); dex.setAttribute('aria-label', GF.t('craft.a.dex')); dex.onclick = () => { GF.sfx('page'); openDexA(); };
+    const bench = el('div', 'cr-abench', r);
+    ui.slotEls = [0, 1, 2].map((k) => { if (k) el('i', 'cr-aplus', bench, '+'); const b = el('button', 'cr-aslot', bench); b.setAttribute('aria-label', GF.t('craft.slot')); b.onclick = () => { if (ui.slots[k] == null) { GF.sfx('tap'); [...ui.shelf.querySelectorAll('.cr-amat:not(.zero)')].slice(0, 6).forEach((x, i) => setTimeout(() => GF.jump(x), i * 70)); } else unslotA(k); }; return b; });
+    const tools = el('div', 'cr-atools', r);
+    ui.toolEls = TOOL_ORDER.map((t) => { const b = el('button', 'cr-atool', tools, TOOLS[(D().tools || {})[t] || 'tap'] + '<small>' + GF.t('craft.a.tool.' + t) + '</small>'); b.dataset.t = t; b.onclick = () => { GF.sfx('tap'); ui.tool = t; ui.toolEls.forEach((x) => x.classList.toggle('on', x.dataset.t === ui.tool)); statusA(); }; return b; });
+    ui.status = el('div', 'cr-astatus', r);
+    ui.make = UK.btn({ text: GF.t('craft.a.make'), icon: 'check', cls: 'green block cr-amake', onclick: makeA }, r);
+    ui.helper = el('div', 'cr-ahelp', r);
+    ui.shelf = el('div', 'cr-shelf cr-ashelf', r); drawShelfA(); statusA(); helpA();
+    if (first) setTimeout(() => { if (ui && ui.adult && window.UK && UK.finger) UK.finger(ui.r, bp, { tap: true, ms: 4200 }); }, 700);
+  }
+  function yardA() { if (!ui || !ui.yard) return; const n = C.yardLeft(); ui.yard.querySelector('span').textContent = n; ui.yard.classList.toggle('off', n <= 0); }
+  function drawShelfA(pop) {
+    if (!ui) return; const sh = ui.shelf; sh.innerHTML = ''; const s = C.S(), have = D().mats.filter((m) => C.inv(m.id) > 0 || s.found[m.id]);
+    if (!have.length) { el('div', 'cr-aempty', sh, GF.t('craft.a.empty')); return; }
+    have.forEach((m) => { const b = el('button', 'cr-mat cr-amat' + (m.rare ? ' rare' : '') + (C.inv(m.id) > 0 ? '' : ' zero'), sh); b.dataset.id = m.id; const im = el('img', '', b); im.src = CraftArt.uri(m.id); im.alt = ''; el('i', 'cr-n', b, String(C.inv(m.id))); el('small', '', b, m.name); b.onclick = () => putA(m.id, b); if (pop === m.id) GF.jump(b); });
+  }
+  function putA(id, btn) {
+    if (!ui || ui.busy) return; const k = ui.slots.indexOf(null); if (k < 0 || C.inv(id) <= 0) { GF.sfx('tap'); if (k < 0) GF.jump(ui.slotEls[2]); return; }
+    C.S().inv[id]--; C.save(); ui.slots[k] = id; GF.sfx('pick', { st: k * 3 }); const s = ui.slotEls[k]; s.innerHTML = ''; const im = el('img', '', s); im.src = CraftArt.uri(id); im.alt = ''; el('small', '', s, (C.mat(id) || {}).name || ''); s.classList.add('full'); GF.jump(s);
+    drawShelfA(); if (btn) btn.blur(); held(); statusA();
+  }
+  function unslotA(k) { if (!ui || ui.busy || ui.slots[k] == null) return; C.add(ui.slots[k], 1); ui.slots[k] = null; ui.slotEls[k].innerHTML = ''; ui.slotEls[k].classList.remove('full'); GF.sfx('cancel'); drawShelfA(); held(); statusA(); }
+  function statusA() {
+    if (!ui || !ui.adult) return; const n = ui.slots.filter((x) => x != null).length, full = n === 3, st = ui.status; let txt = '', cls = '';
+    const rec = full && ui.tool ? C.find3(ui.slots, ui.tool) : null, mats = full ? C.findMats(ui.slots) : null;
+    if (!full || !ui.tool) txt = GF.t('craft.a.pick', { n }) + (full && !ui.tool ? ' · ' + GF.t('craft.a.picktool') : '');
+    else if (rec && C.known(rec)) { txt = GF.t('craft.a.ready', { name: rec.name }); cls = 'ok'; }
+    else if (rec) { txt = GF.t('craft.a.maybe'); cls = 'ok'; }   // 숨은·아직 안 열린 도안 — 이름은 숨기고 「뭔가 될 것 같아요」
+    else if (mats && C.known(mats)) { txt = GF.t('craft.a.wrongtool'); cls = 'warn'; }
+    else txt = GF.t('craft.a.nomatch');
+    st.textContent = txt; st.className = 'cr-astatus ' + cls; ui.make.disabled = !(full && ui.tool); ui.make.classList.toggle('off', !(full && ui.tool));
+  }
+  function makeA() {
+    if (!ui || ui.busy || ui.slots.includes(null) || !ui.tool) return; const ins = ui.slots.slice(), rec = C.find3(ins, ui.tool);
+    ui.busy = true; GF.sfx('drop');
+    if (!rec) {   // 맞는 도안 없음: 연기 퐁 + 재료 그대로(손실 없음)
+      const k = C.key3(ins, ui.tool), s = C.S(); s.tries[k] = (s.tries[k] || 0) + 1; C.save();
+      setTimeout(() => { if (!ui) return; GF.sfx('pop2', { gain: 0.6 }); const p = el('div', 'cr-puff', ui.r); for (let i = 0; i < 6; i++) { const c = el('i', '', p); c.style.setProperty('--a', (i * 60) + 'deg'); } setTimeout(() => p.remove(), 900);
+        ins.forEach((id) => C.add(id, 1)); const keep = ui.tool; clearSlots(); ui.tool = keep; drawShelfA(); ui.busy = false; statusA(); ui.status.textContent = GF.t(C.findMats(ins) && C.known(C.findMats(ins)) ? 'craft.a.wrongtool' : 'craft.a.none'); ui.status.className = 'cr-astatus warn'; }, 420);
+      return;
+    }
+    commit(rec); setTimeout(() => act(rec), 300);
+  }
+  function fillA(rec) {   // 도안 「넣기」: 칸을 비우고 그 도안 재료·도구로 채움
+    if (!ui) return; ui.slots.forEach((id, k) => { if (id != null) C.add(id, 1); }); clearSlots();
+    rec.in.forEach((id, k) => { if (C.inv(id) > 0) { C.S().inv[id]--; ui.slots[k] = id; const s = ui.slotEls[k]; const im = el('img', '', s); im.src = CraftArt.uri(id); im.alt = ''; el('small', '', s, (C.mat(id) || {}).name || ''); s.classList.add('full'); } });
+    C.save(); held(); ui.tool = rec.tool; ui.toolEls.forEach((x) => x.classList.toggle('on', x.dataset.t === ui.tool)); drawShelfA(); statusA(); GF.sfx('pick'); GF.jump(ui.make);
+  }
+  function helpA() {   // 가족 한마디: 지금 만들 수 있는 새 도안(누르면 채움) — 없으면 아무것도 안 띄움
+    if (!ui || !ui.adult) return; const h = ui.helper; h.innerHTML = ''; h.classList.remove('on'); const c = C.makeable(true)[0]; if (!c) return;
+    h.appendChild(GF.img(c.hint.who)); const b = el('button', 'cr-abub', h, GF.t('craft.a.tip', { name: c.name })); b.onclick = () => { fillA(c); h.classList.remove('on'); }; h.classList.add('on');
+  }
+  const icoIn = (r) => Object.entries(C.need(r)).map(([id, k]) => `<span class="cr-bpi${C.inv(id) >= k ? '' : ' no'}"><img src="${CraftArt.uri(id)}" alt="">${k > 1 ? '<b>×' + k + '</b>' : ''}<small>${(C.mat(id) || {}).name || ''}</small></span>`).join('');
+  function openBP() {   // 도안 책: 단마다 — 열린 도안(재료·도구·넣기) / 잠긴 도안(몇 판 뒤) / 숨은 도안(요술 조각 + 옛이야기 제목)
+    if (!ui) return; const sc = UK.modal({ parent: ui.r, title: '📐 ' + GF.t('craft.a.bp'), dismiss: true }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet', 'cr-bps');
+    const body = el('div', 'cr-bpl', sh), p = C.prog();
+    [3, 2, 4].forEach((t) => {
+      el('h4', 'cr-bph', body, GF.t('craft.a.t' + t));
+      const rank = (r) => (C.known(r) ? (C.canMake(r) ? 0 : 1) : 2);
+      D().recipes.filter((r) => r.t === t).map((r, i) => [r, i]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map((x) => x[0]).forEach((r) => {
+        const known = C.known(r), got = !!C.S().found[r.id], row = el('div', 'cr-bpr' + (known ? '' : r.hidden ? ' hid' : ' lock') + (got ? ' got' : ''), body);
+        const im = el('img', 'cr-bpimg', row); im.src = C.art(r.id, 0); im.alt = '';
+        const mid = el('div', 'cr-bpm', row);
+        if (known) { el('b', '', mid, r.name + (got ? ' <i>✓</i>' : '')); el('div', 'cr-bpin', mid, icoIn(r) + '<span class="cr-bpt">' + TOOLS[r.act] + '<small>' + GF.t('craft.a.tool.' + r.tool) + '</small></span>'); const can = C.canMake(r); const go = el('button', 'uk-btn ' + (can ? 'green' : 'cr-bpno') + ' cr-bpgo', row, GF.t(can ? 'craft.a.put' : 'craft.a.short')); go.disabled = !can; go.onclick = () => { sc.close(); fillA(r); }; }
+        else if (r.hidden) { el('b', '', mid, GF.t('craft.a.hidden')); el('div', 'cr-bpin', mid, `<span class="cr-bpi"><img src="${CraftArt.uri('shine')}" alt=""><small>${(C.mat('shine') || {}).name}</small></span><span class="cr-bpq">+ ? + ?</span>`); el('small', 'cr-bpnote', mid, GF.t('craft.a.hiddenl', { tale: r.tale || '' })); }
+        else { el('b', '', mid, '🔒 ' + r.name); el('small', 'cr-bpnote', mid, GF.t('craft.a.lock', { n: r.unlock, left: Math.max(0, r.unlock - p) })); }
+      });
+    });
+    el('div', 'acts row', sh).appendChild(UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.close() }));
+  }
+  function openDexA() {   // 도감: 줄마다(재료·가구·옛이야기) 진척 + 줄 보상
+    if (!ui) return; const sc = UK.modal({ parent: ui.r, title: GF.t('craft.a.dex') + ' ' + C.foundCount() + ' / ' + C.total(), dismiss: true }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet', 'cr-bps');
+    const body = el('div', 'cr-bpl', sh), s = C.S();
+    const m1 = D().mats.filter((m) => m.t === 1); el('h4', 'cr-bph', body, GF.t('craft.a.t1') + ' <span>' + m1.filter((m) => s.found[m.id] || C.inv(m.id)).length + '/' + m1.length + '</span>');
+    const g1 = el('div', 'cr-grid', body); m1.forEach((m) => { const got = !!(s.found[m.id] || C.inv(m.id)), d = el('div', 'cr-cell t1' + (got ? ' got' : ''), g1); const im = el('img', 'cr-ci', d); im.src = CraftArt.uri(m.id); im.alt = ''; el('small', '', d, got ? m.name : '?'); });
+    (D().rows || []).forEach((rw) => {
+      const L = C.rowOf(rw.id), n = L.filter((r) => s.found[r.id]).length, rr = rw.reward || {};
+      el('h4', 'cr-bph', body, rw.name + ' <span>' + n + '/' + L.length + '</span>' + (s.rows[rw.id] ? ' <i>✓</i>' : ''));
+      el('small', 'cr-bpnote', body, GF.t('craft.a.rowr', { list: rewardText(rr) }));
+      const g = el('div', 'cr-grid', body); L.forEach((r) => { const got = !!s.found[r.id], d = el('div', 'cr-cell t' + r.t + (got ? ' got' : ''), g); const im = el('img', 'cr-ci', d); im.src = C.art(r.id, 0); im.alt = ''; if (!got) { const f = el('img', 'cr-cf', d); f.src = CraftArt.uri(r.hidden ? 'shine' : r.in[0]); f.alt = ''; } el('small', '', d, got || C.known(r) ? r.name : '?'); });
+    });
+    el('div', 'acts row', sh).appendChild(UK.btn({ text: GF.t('c16.gf.002'), cls: 'ghost', onclick: () => sc.close() }));
+  }
+  function rewardText(rr) { const L = []; if (rr.shine) L.push((C.mat('shine') || {}).name + ' ' + rr.shine); if (rr.shards) L.push(GF.t('craft.a.shards', { n: rr.shards })); if (rr.item && window.Room && Room.item(rr.item)) L.push(Room.item(rr.item).name); return L.join(' · '); }
+  /** 줄을 다 채운 순간 한 번: 요술 조각 · 집 조각 · 줄 보상 가구 */
+  function rowsA() {
+    const s = C.S(), out = [];
+    (D().rows || []).forEach((rw) => { if (s.rows[rw.id] || !C.rowDone(rw.id)) return; s.rows[rw.id] = Date.now(); const rr = rw.reward || {};
+      if (rr.shine) C.add('shine', rr.shine);
+      try { if (rr.shards && window.Room && Room.S) { Room.S.shards = Room.S.shards || { n: 0 }; Room.S.shards.n = (Room.S.shards.n || 0) + rr.shards; Room.save(); } } catch (e) { /* 집 없음 */ }
+      try { if (rr.item && window.Room && Room.item(rr.item)) { Room.grant(rr.item); Room._recent = []; if (Room.placeAt) Room.placeAt(rr.item); } } catch (e) { /* 집 저장 실패 */ }
+      out.push(rw); });
+    C.save(); return out;
+  }
+  function showRows(L) {
+    const rw = L[0]; if (!rw || !ui) return; const rr = rw.reward || {};
+    const sc = UK.modal({ parent: ui.r, title: GF.t('craft.a.row', { row: rw.name }), body: GF.t('craft.a.rowr', { list: rewardText(rr) }), actions: [{ text: GF.t('ui.tale.ok'), cls: 'green', onclick: () => { if (L.length > 1) setTimeout(() => showRows(L.slice(1)), 200); } }] });
+    const sh = sc.querySelector('.uk-sheet'), fam = el('div', 'cr-rowfam'); ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy'].forEach((id) => fam.appendChild(GF.img(id))); sh.insertBefore(fam, sh.firstChild);
+    if (rr.item && window.Room && Room.item(rr.item)) { const im = el('img', 'cr-rowitem'); im.src = Room.src(Room.item(rr.item)); im.alt = ''; sh.insertBefore(im, sh.querySelector('.acts')); }
+    GF.sfx('celebrate'); try { GF.confetti(sh); } catch (e) { /* */ }
   }
 
   /* ---------- 도감 30칸 ---------- */

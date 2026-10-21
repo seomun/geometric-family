@@ -104,7 +104,7 @@ footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 1
   /* D50 몬스터 결정 텍스처: gf-asset 이 만든 이음매 없는 타일(점=결정 · 선=조각 · 면=돌 · 입체=금빛 결정)을 SVG 필터(feImage→feTile→알파 합성→soft-light)로 몸통 위에 얹는다. 필터는 문서에 한 번만(GeoMon.texture) — 없으면 그냥 단색 */
   const TEXK = { '점': 'c', '선': 's', '면': 'h', '입체': 'c2' };
   let texOv = null;      /* D50 M2: 새 나라(25~29)에서는 몬스터 몸 질감을 나라 텍스처(n25~n29)로 — 전투 화면이 setTex 로 켜고 끈다 */
-  const wrap = (inner, o) => { o = o || {}; const s = o.size || 200, tf = o.tex && typeof document !== 'undefined' && document.getElementById('xtx_' + o.tex) ? ` filter="url(#xtx_${o.tex})"` : ''; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="${s}" height="${s}" class="geomon ${o.cls || ''}"${o.tone ? ` style="filter:hue-rotate(${o.tone * 18}deg) saturate(1.05)"` : ''} role="img" aria-label="${o.label || '기하학 몬스터'}"><g${tf}>${inner}</g></svg>`; };
+  const wrap = (inner, o) => { o = o || {}; const s = o.size || 200, tf = o.tex && typeof document !== 'undefined' && document.getElementById('xtx_' + o.tex) ? ` filter="url(#xtx_${o.tex})"` : ''; return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="${s}" height="${s}" class="geomon ${o.cls || ''}"${o.twist ? ' style="filter:hue-rotate(255deg) saturate(.75) brightness(.78)"' : o.tone ? ` style="filter:hue-rotate(${o.tone * 18}deg) saturate(1.05)"` : ''} role="img" aria-label="${o.label || '기하학 몬스터'}"><g${tf}>${inner}</g>${o.twist ? '<g fill="none" stroke-linecap="round"><path d="M22 52 L74 38 M30 78 L96 58 M118 150 L176 132 M104 172 L170 160" stroke="#14091f" stroke-width="5" opacity=".55"/><path d="M22 52 L74 38 M118 150 L176 132" stroke="#FF2D4D" stroke-width="1.8" opacity=".7"/><path d="M146 36 l14 14 M160 36 l-14 14" stroke="#fff" stroke-width="5"/><path d="M146 36 l14 14 M160 36 l-14 14" stroke="#14091f" stroke-width="1.6"/></g>' : ''}</svg>`; };
   const texture = (tiles) => { const d = typeof document !== 'undefined' ? document : null; if (!d || d.getElementById('xtxdefs') || !tiles) return; const h = d.createElement('div'); h.innerHTML = '<svg id="xtxdefs" width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true"><defs>' + Object.keys(tiles).map((k) => `<filter id="xtx_${k}" x="0" y="0" width="200" height="200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feImage href="${tiles[k]}" x="0" y="0" width="100" height="100" preserveAspectRatio="none" result="t"/><feTile in="t" result="tt"/><feComposite in="tt" in2="SourceAlpha" operator="in" result="m"/><feComponentTransfer in="m" result="m2"><feFuncA type="linear" slope=".7"/></feComponentTransfer><feBlend in="m2" in2="SourceGraphic" mode="soft-light"/></filter>`).join('') + '</defs></svg>'; (d.body || d.documentElement).appendChild(h.firstChild); };
   const shadow = (cx, cy, rx) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${(rx * 0.16).toFixed(1)}" fill="rgba(80,60,40,.18)"/>`;
 
@@ -505,6 +505,29 @@ footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 1
     if (!hide.includes('core')) g += poly([[100, 56], [150, 106], [100, 156], [50, 106]], c, 4.5) + `<ellipse cx="82" cy="84" rx="14" ry="7" fill="#fff" opacity=".3" transform="rotate(-30 82 84)"/>` + face(st, 100, 108, 0.85);
     return g;
   }
+  /** D47 끝판 악당 뒤틀왕: 모서리가 어긋난 별 다면체 + 부러진 가시 + 삐딱한 왕관 + 검은 사인펜 낙서 얼굴(✕눈·지그재그 웃음). 선이 항상 조금씩 떨린다(구겨진 종이 위 낙서). st 0 비웃음 · 1 쓰러짐(눈 ✕✕) · 2 곧아짐(싫어!) · 3 도발(이빨) */
+  function twistking(st, o) {
+    o = o || {}; const hide = o.hide || [], R = rng(4711), j = (m) => (R() - 0.5) * m, INK = '#14091f', BODY = '#3d2063', HI = '#6f45a8', RED = '#FF2D4D'; let g = shadow(100, 190, 66);
+    const wob = (pts, w) => pts.map(([x, y]) => [x + j(w), y + j(w)]);
+    if (!hide.includes('spikes')) {
+      const pts = []; for (let i = 0; i < 24; i++) { const a = -Math.PI / 2 + i * Math.PI / 12 + j(0.08), outer = i % 2 === 0, r = outer ? 78 + (i % 6 === 0 ? 14 : 0) + j(12) : 44 + j(8); pts.push([100 + Math.cos(a) * r * 1.02, 112 + Math.sin(a) * r * 0.98]); }
+      pts[16] = [100 - 70, 112 - 6]; pts[15] = [100 - 40, 112 + 34];      // 왼쪽 가시 하나는 꺾여 부러졌다
+      const a1 = wob(pts, 3), a2 = wob(pts, 3.4);
+      g += `<polygon points="${P(pts)}" fill="${BODY}" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/><polygon points="${P(a1)}" fill="none" stroke="${HI}" stroke-width="1.8" opacity=".55" stroke-linejoin="round"/><polygon points="${P(a2)}" fill="none" stroke="${RED}" stroke-width="1.4" opacity=".45" stroke-linejoin="round"/>`;
+      g += `<path d="M30 100 l-9 -4 l7 -8 l-6 -7" stroke="${INK}" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;      // 부러진 가시 금
+    }
+    if (!hide.includes('core')) {
+      g += `<path d="M62 112 L100 58 L140 112 L100 166 Z" fill="${BODY}" stroke="${INK}" stroke-width="4" stroke-linejoin="round"/><path d="M62 112 L100 58 L100 112 Z" fill="${HI}" opacity=".35"/><path d="M70 150 q30 -14 62 -3 M72 74 q-10 20 -3 42" stroke="${RED}" stroke-width="2.2" fill="none" opacity=".4" stroke-linecap="round"/>`;
+      g += `<path d="M64 56 L72 30 L84 50 L96 22 L108 50 L122 28 L130 56 Z" fill="${RED}" stroke="${INK}" stroke-width="3.6" stroke-linejoin="round" transform="rotate(-6 100 56)"/>`;      // 삐딱한 왕관(빨간 형광펜)
+      const tf = 'translate(100 104) scale(1.05)';
+      if (st === 1) g += `<g transform="${tf}"><path d="M-26 -14 L-8 2 M-8 -14 L-26 2" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/><path d="M8 -14 L26 2 M26 -14 L8 2" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/><path d="M-16 24 q5 -9 10 0 t10 0 t10 0" stroke="${RED}" stroke-width="4.4" fill="none" stroke-linecap="round"/></g>`;
+      else if (st === 2) g += `<g transform="${tf}"><circle cx="-16" cy="-4" r="9" fill="#fff" stroke="${INK}" stroke-width="3"/><circle cx="16" cy="-4" r="9" fill="#fff" stroke="${INK}" stroke-width="3"/><circle cx="-16" cy="-3" r="3" fill="${INK}"/><circle cx="16" cy="-3" r="3" fill="${INK}"/><path d="M-14 20 L14 20" stroke="${RED}" stroke-width="5" stroke-linecap="round"/><path d="M26 -20 q5 7 0 11 q-5 -4 0 -11 Z" fill="#9AD8F2" stroke="${INK}" stroke-width="2"/></g>`;
+      else g += `<g transform="${tf}"><path d="M-27 -10 L-9 8 M-9 -10 L-27 8" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="17" cy="-1" r="11" fill="#fff" stroke="${INK}" stroke-width="3.2"/><circle cx="19" cy="1" r="4.4" fill="${INK}"/><path d="M4 -16 L30 -8" stroke="${INK}" stroke-width="6" stroke-linecap="round"/><path d="M-26 -18 L-6 -12" stroke="${INK}" stroke-width="5.4" stroke-linecap="round"/>`
+        + (st === 3 ? `<path d="M-30 12 L-22 24 L-14 10 L-6 26 L2 10 L10 26 L18 10 L26 22 L32 8 L28 34 L-26 34 Z" fill="${INK}" stroke="${RED}" stroke-width="3" stroke-linejoin="round"/><path d="M-20 22 l4 8 M-4 24 l4 8 M12 24 l4 8" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>`
+          : `<path d="M-24 18 L-14 28 L-4 14 L6 28 L16 14 L26 24 L30 12" stroke="${RED}" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M-24 18 L-14 28 L-4 14 L6 28 L16 14 L26 24 L30 12" stroke="${INK}" stroke-width="1.6" fill="none" stroke-linejoin="round"/></g>`);
+    }
+    return g;
+  }
   function klein(st, o) {  // 입체 대장: 클라인 병 — 목이 몸 안으로 되돌아가는 병(찻주전자 닮음)
     o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
     if (!hide.includes('neck')) g += `<path d="M118 76 C 156 40 188 60 170 92 C 156 118 128 120 112 128" stroke="${OL}" stroke-width="30" fill="none" stroke-linecap="round"/><path d="M118 76 C 156 40 188 60 170 92 C 156 118 128 120 112 128" stroke="${shade(c, .22)}" stroke-width="21" fill="none" stroke-linecap="round"/>`;
@@ -564,6 +587,7 @@ footer { padding: 36px 6vw 50px; text-align: center; color: #7F79B5; font: 500 1
     para2: { fn: para2, name: '평행사변형', tier: '면', el: 'support', shape: '사각', line: '마주 보는 변이 모두 나란해요', facts: '변 4 · 나란한 변 2쌍' },
     bipyr: { fn: bipyr, name: '쌍뿔 대장', tier: '입체(보스)', el: 'boss', shape: '쌍뿔', line: '뿔 두 쪽이 맞붙었어요', facts: '면 6 · 꼭짓점 5', faces: ['top', 'bot'] },
     dice: { fn: dice, name: '주사위 대장', tier: '입체(보스)', el: 'boss', shape: '주사위', line: '눈이 여섯, 어느 면이 나올까요', facts: '면 6 · 눈금 21', faces: ['top', 'front'] },
+    twistking: { fn: twistking, name: '뒤틀왕', tier: '입체(보스)', el: 'boss', shape: '뒤틀린 별 다면체', line: '반듯한 건 다 비틀어 주마', facts: '가시 12 · 모서리가 어긋났어요', faces: ['spikes', 'core'] },
     antiprism: { fn: antiprism, name: '엇각기둥 대장', tier: '입체(보스)', el: 'boss', shape: '엇각기둥', line: '윗면과 아랫면이 엇갈린 기둥', facts: '면 8 · 삼각 6 + 삼각 2', faces: ['top', 'side'] },
     cuboct: { fn: cuboct, name: '육팔면체 대장', tier: '입체(보스)', el: 'boss', shape: '육팔면체', line: '정사각 6 · 정삼각 8', facts: '면 14 · 모서리 24', faces: ['tri', 'sq'] },
     stella: { fn: stella, name: '별 다면체 대장', tier: '입체(보스)', el: 'boss', shape: '별 다면체', line: '가시가 돋은 별 모양', facts: '꼭짓점 12 · 가시 12', faces: ['spikes', 'core'] },

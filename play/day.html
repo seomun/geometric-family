@@ -998,7 +998,8 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
 /* 「이야기 보기」(허브 10/22 첫 판까지 5초): 첫 판을 깬 뒤 홈 오른쪽 위에 — 미뤄 둔 프롤로그를 여는 단추 */
 .tale-offer { position: absolute; right: 12px; top: 78px; z-index: 30; display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 22px; border: 3px solid var(--uk-line, #4A3030); background: #FFF1B8; font: 800 15px/1 var(--uk-font, sans-serif); color: var(--uk-ink, #3A2E39); box-shadow: 0 4px 0 rgba(74, 48, 48, .25); cursor: pointer; animation: tale-offer 1.6s ease-in-out 3; }
 .tale-offer.kid { width: 64px; height: 64px; padding: 10px; justify-content: center; } .tale-offer svg { width: 100%; height: 100%; }
-.hk-ttl .tale-offer { position: static; display: inline-flex; margin: 10px auto 0; }   /* 공통 홈에선 제목판 바로 아래 가운데(제목을 덮지 않게, 재점검 10/22) */
+.hk-ttl .tale-offer { position: static; display: flex; width: max-content; margin: 10px auto 0; }   /* 제목 카드 옆이 아니라 늘 그 아래 줄 가운데 */
+.tale-offer:not(.hk-ttl .tale-offer) { top: 8px; }   /* 공통 홈 틀이 아닌 화면(식탁): 위 단추 줄과 첫 카드 사이 빈 띠에 — 카드 모서리를 덮지 않게 */   /* 공통 홈에선 제목판 바로 아래 가운데(제목을 덮지 않게, 재점검 10/22) */
 @keyframes tale-offer { 50% { transform: translateY(-4px) scale(1.04); } }
 
 /* 이야기 지도(GF.saga) — 사가 맵. 그림은 슬롯(map:*), 없으면 이 CSS·이모지 임시 그림 */
@@ -1198,6 +1199,11 @@ html[data-rm="1"] .uk-fly { display: none; }
 .hk .uk-btn.hk-main::before { top: 7px; height: 40%; left: 16px; right: 16px; }
 .hk .uk-btn.hk-main svg { width: 38px; height: 38px; }
 .hk-subs { top: 512px; }
+/* 휴대폰 점검(허브 10/22): v2 에서 주 버튼이 398 로 올라와 목표 띠(396)와 같은 자리 — 3판을 깬 뒤 띠가 주 버튼 밑에 깔렸다.
+   미리보기 카드(.hk-prev)가 있는 홈은 같은 「다음 가구」를 카드가 보여 주므로 띠를 빼고, 없는 홈은 카드 자리(504)로. 아이콘 줄이 열리면 가족은 그 오른쪽으로(겹침 금지) */
+.hk:has(.hk-prev) .hk-band { display: none; }
+.hk .hk-band { top: 504px; }
+.hk:has(.hk-icons) .hk-stage { left: 80px; } .hk:has(.hk-icons) .hk-stage img:not(.hk-prop) { height: 146px; }
 [data-uk="kid"] .hk.hk-kid .uk-btn.hk-main, [data-uk="kid"] #safe:not(.wide) .homeplay { width: 168px; margin-left: -84px; height: 96px; min-height: 96px; border-radius: 48px; top: 346px; }
 [data-uk="kid"] .hk.hk-kid .uk-btn.hk-main svg { width: 60px; height: 60px; }
 .hk.hk-kid .hk-stage { top: 112px; height: 222px; } .hk.hk-kid .hk-stage img { height: 150px; }   /* 유아: ▶(346~442) 와 가족 발이 겹치지 않게 */
@@ -1212,7 +1218,7 @@ html[data-rm="1"] .uk-fly { display: none; }
 .hk-pv-board { flex: none; width: 92px; height: 92px; border-radius: 14px; background: #FFF3DF; box-shadow: inset 0 0 0 2px #EADBC8; } .hk-pv-board svg { width: 100%; height: 100%; display: block; }
 .hk-pv-mid { flex: 1; min-width: 0; background: none; text-align: left; display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 0 2px !important; }
 .hk-pv-lv { font: 400 calc(26px * var(--uk-fs-k, 1))/1.05 var(--uk-num); color: var(--uk-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.hk-pv-goal { font: 400 calc(16px * var(--uk-fs-k, 1))/1.2 var(--uk-title-font); color: var(--uk-ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hk-pv-goal { font: 400 calc(16px * var(--uk-fs-k, 1))/1.2 var(--uk-title-font); color: var(--uk-ink2); white-space: normal; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: keep-all; }   /* 좁은 폭(375)에서 「한 가지 구슬 모으기」가 말줄임 → 두 줄까지 */
 .hk-pv-map { font: 400 calc(14px * var(--uk-fs-k, 1))/1 var(--uk-title-font); color: var(--uk-green-d); }
 .hk-pv-item { flex: none; width: 86px; border-radius: 14px; background: #FFF4D6 !important; box-shadow: inset 0 0 0 2px #EED9AE; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 4px !important; }
 .hk-pv-item img { width: 48px; height: 48px; object-fit: contain; } .hk-pv-item small { font: 400 12px/1.1 var(--uk-title-font); max-width: 78px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -2156,6 +2162,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
           ctx.timeout(() => finish(r, res, def), 1500);
         },
       };
+      GF._roundDone = (m) => ctx.done({ mistakes: m || 0 });   // 시험용(tools/mobile_check.js): 지금 라운드를 깬 것으로
       r.querySelectorAll('.fly').forEach((e) => { e.style.display = 'none'; });          // 놀이 영역에서는 나비를 숨긴다
       area.addEventListener('pointerdown', () => { ensureAudio(); armHint(); }, true);
       mode.setup(area, cfg, ctx);

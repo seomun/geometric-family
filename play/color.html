@@ -5580,8 +5580,16 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const D = () => GF.data.craft_recipes || { mats: [], recipes: [] };
   const today = () => { const d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); };
   let S = null;
-  C.S = () => { if (S) return S; let v = null; try { v = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { v = null; } S = Object.assign({ v: 1, inv: {}, found: {}, tries: {}, yard: { d: 0, n: 0 }, starter: 0, made: 0 }, v || {}); return S; };
-  C.save = () => { try { localStorage.setItem(KEY, JSON.stringify(C.S())); } catch (e) { /* 저장 불가 — 이번 판만 */ } };
+  /* 저장: 이 기기 localStorage + APK 에선 같은 서명 유아 형제 앱(놀이터·색칠북·하루)과 나눔(ShareStore, 우리 집과 같은 D12 안 A — 키 gf:craft:kid:v1).
+     합치는 법: 재료는 쓰면 줄어드는 값이라 「가장 나중에 저장한 앱」의 상태를 그대로 쓴다(t). 도감(found)·만든 수는 잃지 않게 모두 합친다. */
+  const parse = (t) => { try { const v = typeof t === 'string' ? JSON.parse(t) : t; return v && typeof v === 'object' && v.inv && typeof v.inv === 'object' ? v : null; } catch (e) { return null; } };
+  C.merge = (list) => { const vs = list.map(parse).filter(Boolean); if (!vs.length) return null; const top = vs.reduce((a, b) => ((b.t || 0) > (a.t || 0) ? b : a)), out = JSON.parse(JSON.stringify(top));
+    out.found = out.found || {}; vs.forEach((v) => { Object.entries(v.found || {}).forEach(([k, ts]) => { if (!out.found[k] || ts < out.found[k]) out.found[k] = ts; }); out.made = Math.max(out.made || 0, v.made || 0); out.starter = Math.max(out.starter || 0, v.starter || 0); }); return out; };
+  const peers = () => { try { return window.GFShare ? JSON.parse(GFShare.peers(KEY) || '[]') : []; } catch (e) { return []; } };
+  C.S = () => { if (S) return S; let loc = null; try { loc = localStorage.getItem(KEY); } catch (e) { loc = null; } const v = C.merge([loc].concat(peers())); S = Object.assign({ v: 1, t: 0, inv: {}, found: {}, tries: {}, yard: { d: 0, n: 0 }, starter: 0, made: 0 }, v || {}); return S; };
+  C.save = () => { const s = C.S(); s.t = Date.now(); const t = JSON.stringify(s); try { localStorage.setItem(KEY, t); } catch (e) { /* 저장 불가 — 이번 판만 */ } try { if (window.GFShare) GFShare.put(KEY, t); } catch (e) { /* 공유 실패 무시 */ } };
+  /* 다른 형제 앱에서 놀다 돌아오면 다시 읽는다(Room.refresh 와 같은 때) */
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState !== 'visible') return; S = null; try { if (ui && GF.cur && GF.cur.name === 'craft') drawShelf(); } catch (e) { /* 화면 없음 */ } });
   C.reset = () => { S = null; try { localStorage.removeItem(KEY); } catch (e) { /* */ } };
   C.mat = (id) => D().mats.find((m) => m.id === id);
   C.key = (a, b) => [a, b].sort().join('+');

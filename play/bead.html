@@ -5697,7 +5697,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /** 보너스 규칙(능동 상한은 tools/puzzle_sim.js 가 단언) */
   const RULE = { base3: 0.10, per4: 0.04, comboStep: 0.1, adv: 1.5, atkPerGauge: 1.5, capGauge: 0.45, capAtk: 1.5, healPerHeart: 0.012, capHeal: 0.10, starCd: 1, moveEvery: 10, pow: 0.23 }   /* pow: 전체 보너스 축척. tools/puzzle_sim.js --battle 로 D30 상한(최적 플레이의 문턱 하락 ≤5%·전투 시간 단축 ≤40%)에 맞춰 조정 — D30 갱신(문턱 -10%·시간 -40%): 최적 문턱 약 -9%·시간 약 -14%, 무작위 -3% */;
   const WEIGHTS = [0.23, 0.23, 0.23, 0.23, 0.08];      // v3(구슬 5종)
-  const WEIGHTS4 = [0.21, 0.21, 0.21, 0.15, 0.08, 0.14];      // v4(D44): 풀·불·물 0.21 · 회복 0.15 · 별 0.08 · 방어 0.14 — 콤보 분포는 P5 에서 시뮬로 맞춘다
+  let WEIGHTS4 = [0.28, 0.28, 0.28, 0.05, 0.03, 0.08];      // v4(D44 P5): 풀·불·물 0.28 · 회복 0.05 · 별 0.03 · 방어 0.08 — 구슬 6종에서도 콤보 분포가 v3 에 가깝도록 속성 구슬을 몰아 줬다(tools/pad_v4_dist.js: 기획서 0.21/0.15/0.14 는 서툰 3.5→2.5·고수 5.4→4.1 콤보로 떨어졌다)
 
   function rnd(b) { b.rs = (b.rs + 0x6D2B79F5) >>> 0; let t = b.rs; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
   function pick(b) { const W = b.v >= 4 ? WEIGHTS4 : WEIGHTS; let x = rnd(b); for (let k = 0; k < W.length; k++) { x -= W[k]; if (x < 0) return k; } return 0; }
@@ -5865,7 +5865,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   function goalProg(g, st, res) { const c = res.cleared; if (g.t === 'collect') st.n += c[g.k]; else if (g.t === 'any' || g.t === 'tight') st.n += c[0] + c[1] + c[2]; else if (g.t === 'heart') st.n += c[3]; else if (g.t === 'star') st.n += c[4]; else if (g.t === 'combo') st.n = Math.max(st.n, res.combo); return st; }
   /** 오늘의 콤보(일일 모드) 한 수 점수: 지운 구슬 수 × (1 + 0.5×(콤보-1)) */
   const scoreOf = (res) => Math.round(res.cleared.reduce((a, x) => a + x, 0) * (1 + 0.5 * Math.max(0, res.combo - 1)));
-  return { SHIELD, DRAG, drag, normPath, applyDrag, packPath, unpackPath, dragCandidates, goalProg, scoreOf, SUPPORT, FLASH, CARE, HEART, STAR, KIND_EL, SHAPE, RULE, create, clone, findGroups, moves, hasMove, failState, slide, swap, play, bonus, preview, hint, assist, ensure };
+  return { setWeights4: (a) => { WEIGHTS4 = a.slice(); }, SHIELD, DRAG, drag, normPath, applyDrag, packPath, unpackPath, dragCandidates, goalProg, scoreOf, SUPPORT, FLASH, CARE, HEART, STAR, KIND_EL, SHAPE, RULE, create, clone, findGroups, moves, hasMove, failState, slide, swap, play, bonus, preview, hint, assist, ensure };
 });/*PZ-END*/
 
 /* ⑪ 구슬 판 화면(games/32 §3 S3) — 전투 화면 가운데에 놓는 6×5 판. 한 줄 밀기(손가락으로 줄을 옆/위아래로 밀어 놓기), 시간 제한 없음, 한 수는 moveEvery 틱에 한 번(게이지가 차면 켜짐).

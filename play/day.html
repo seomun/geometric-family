@@ -654,6 +654,8 @@ body.gf-inplay #b-home, body.gf-inplay #b-stars, body.gf-inplay #b-set, body.gf-
 .screen:has(> .tale-band:not(.out)) .uk-caption { visibility: hidden; }   /* 안내 띠가 있는 동안 토스트는 띠 아래로, 같은 규칙을 말하는 판 안 자막은 잠깐 숨김 */
 .tb-hide { opacity: 0 !important; transition: opacity .2s; }
 .tale-band.out { opacity: 0; transform: translateY(-12px); }
+.tale-band.kid { width: max-content; margin: 0 auto; padding: 6px; }   /* 유아 말풍선 띠: 글자 없이 미니 시연만, 가운데 */
+.tale-band .tb-faces { display: flex; flex: none; } .tale-band .tb-faces img, .tale-band .tb-faces svg { width: 40px; height: 48px; object-fit: contain; }
 @keyframes tbIn { from { opacity: 0; transform: translateY(-14px); } }
 .tale-band .tb-txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; font-family: var(--uk-font); color: #5A463A; } .tale-band .tb-txt { gap: 2px; } .tale-band .tb-txt b { font-size: 17px; line-height: 1.2; } .tale-band .tb-txt span { font-size: 14px; line-height: 1.3; }
 .cut-mini.in-band { position: relative; left: auto; right: auto; top: auto; flex: none; width: 340px; height: 190px; transform: scale(.3); transform-origin: 0 0; margin: 0 -238px -133px 0; box-shadow: none; }
@@ -2035,7 +2037,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     try { if ((navigator.webdriver && !/[?&]first=1/.test(location.search)) || localStorage.getItem('gf:qa:nofirst')) return; } catch (e) { /* 저장소 없음 = 그대로 */ }
     setTimeout(() => { if ((GF.stack || []).length > 1 || document.querySelector('.uk-scrim, .tale-ov')) return; const m = document.querySelector('.screen.on .hk-main'); if (m) m.click(); }, 250);
   };
-  GF.proTale = () => { if (!(GF.tale && GF.tale.ready)) return; if (GF.progress0() === 0 && !GF.tale.seen('prologue')) { GF.tale.defer(); return; } setTimeout(() => GF.tale.prologue(document.getElementById('safe')), 300); };   // 이야기 프롤로그(첫 판을 깬 뒤 한 번 — 첫 실행엔 미룸)
+  GF.firstRun = () => GF.progress0() === 0 && !/[?&]story=1/.test(location.search);   // 첫 판 전(이야기 미룸) — ?story=1 은 이야기 흐름 시험용이라 미루지 않음
+  GF.proTale = () => { if (!(GF.tale && GF.tale.ready)) return; if (GF.firstRun() && !GF.tale.seen('prologue')) { GF.tale.defer(); return; } setTimeout(() => GF.tale.prologue(document.getElementById('safe')), 300); };   // 이야기 프롤로그(첫 판을 깬 뒤 한 번 — 첫 실행엔 미룸)
   GF.maybeGreet = () => {
     const cuts = GREET[KEY]; if (!cuts) { const first = GF.progress0() === 0; GF.proTale(); if (first) GF.autoFirstPlay(); return; }   // 인사 컷이 없는 앱(놀이터): 첫 실행이면 바로 1판
     const ids = cuts.flatMap((c) => c.chars.map((q) => q.id)); try { if (GF.data.idle_balance) ids.push(...(JSON.stringify(GF.data.idle_balance).match(/"[a-z_]+\.[a-z0-9]+"/g) || []).map((x) => x.slice(1, -1)).filter((x) => !/^art\./.test(x))); } catch (e) { /* 미리 읽기 실패는 무시 */ }
@@ -4268,7 +4271,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     return go((T.d.prologue || []).concat(add), parent, () => { if (add.length) { T.mark('s1'); afterBeat('s1'); } cb && cb(); }, { bg: 'indoor' }, 'prologue');
   };
   /** 장의 첫 판 앞: 기(시작) 컷 */
-  T.before = function (n, idx, parent, cb) { const c = ch(n); if (!T.ready || !c || idx !== 1) return (cb && cb(), false); if (n === 1 && GF.progress0 && GF.progress0() === 0 && !T.seen('prologue')) { T.defer(); return (cb && cb(), false); } return go(c.start, parent, cb, { bg: BG[c.tale] }, 's' + n); };   // 첫 실행 1장 기 컷도 미룸 — 나중에 「이야기 보기」 프롤로그에 붙어 나온다(본 표시 안 함)
+  T.before = function (n, idx, parent, cb) { const c = ch(n); if (!T.ready || !c || idx !== 1) return (cb && cb(), false); if (n === 1 && GF.firstRun && GF.firstRun() && !T.seen('prologue')) { T.defer(); return (cb && cb(), false); } return go(c.start, parent, cb, { bg: BG[c.tale] }, 's' + n); };   // 첫 실행 1장 기 컷도 미룸 — 나중에 「이야기 보기」 프롤로그에 붙어 나온다(본 표시 안 함)
   /** 판을 깬 직후: 장 중간(승·전) 컷 또는 장 끝(결) 컷, 마지막 장이면 엔딩. per = 장당 판 수 */
   T.after = function (n, idx, per, parent, cb) {
     const c = ch(n); if (!T.ready || !c) return (cb && cb(), false);
@@ -4298,8 +4301,9 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const r = T.ready && T.d.rules && T.d.rules[type]; if (!r || T.seen('r:' + type) || auto()) { if (r && !T.seen('r:' + type)) T.mark('r:' + type); cb && cb(); return false; }
     T.mark('r:' + type); parent = parent || safe();
     if (!T.kid) return T.band(r, parent, cb);                                                              // 성인: 판을 가리는 창 대신 위쪽 띠 + 움직이는 미니 시연, 판은 바로 시작(2차 리뷰 G3)
-    if (r.cuts && r.cuts.length) { T.play(r.cuts, parent, () => T.card(r, parent, cb)); return true; }          // 새 판 종류: 배역이 그 규칙을 보여 주는 컷 → 설명 카드
-    return T.card(r, parent, cb);
+    /* 유아도 판을 가리는 카드 대신 판 위 말풍선 띠(글자 없이 미니 시연만, 허브 10/22 「11앱 무입력으로 판까지」). 첫 판(진행 0)에는 컷도 건너뜀 */
+    if (r.cuts && r.cuts.length && !(GF.firstRun && GF.firstRun())) { T.play(r.cuts, parent, () => T.band(r, parent, cb)); return true; }   // 새 판 종류: 배역이 그 규칙을 보여 주는 컷 → 말풍선 띠
+    return T.band(r, parent, cb);
   };
   T.card = function (r, parent, cb) {
     const sc = UK.modal({ parent, title: T.kid ? '' : r.title, big: r.icon || '', body: T.kid ? '' : r.text, actions: [{ text: T.kid ? '' : GF.t('ui.tale.ok'), icon: T.kid ? 'play' : undefined, cls: 'green', onclick: () => { cb && cb(); } }] });
@@ -4310,9 +4314,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /** 성인 첫 판 안내 띠: 탭을 가로채지 않는다(pointer-events 없음). 첫 조작 뒤 또는 7초 뒤 저절로 사라진다. cb 는 다음 틱에 바로(손가락 시연이 이어서) */
   T.band = function (r, parent, cb) {
     parent.querySelectorAll('.tale-band').forEach((x) => x.remove());
-    const b = el('div', 'tale-band', parent); b.setAttribute('role', 'status');
+    const b = el('div', 'tale-band' + (T.kid ? ' kid' : ''), parent); b.setAttribute('role', 'status');
     if (r.mini && M.has(r.mini)) { const h = M.draw(b, r.mini, false); if (h) h.classList.add('in-band'); }
-    el('div', 'tb-txt', b, '<b>' + (r.icon ? r.icon + ' ' : '') + r.title + '</b><span>' + r.text + '</span>');
+    if (r.faces && r.faces.length) { const f = el('div', 'tb-faces', b); r.faces.slice(0, 2).forEach((id) => f.appendChild(GF.img(id))); }   // 장 소개(구슬 등): 배역 얼굴
+    if (!T.kid) el('div', 'tb-txt', b, '<b>' + (r.icon ? r.icon + ' ' : '') + r.title + '</b><span>' + r.text + '</span>');   // 유아는 글자 없이
     /* 겹침 금지(3차 리뷰 N2): 띠가 가리는 글자(레벨 줄·목표 HUD)는 띠가 있는 동안 잠깐 숨긴다 — 큰 글씨 모드·좁은 폭에서도 글자 위에 띠가 얹히지 않게 */
     const hid = []; requestAnimationFrame(() => { if (!b.isConnected) return; const br = b.getBoundingClientRect(); parent.querySelectorAll('*').forEach((e) => { if (b.contains(e) || e.closest('.tale-band')) return; const own = [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()); if (!own || !e.offsetParent) return; const q = e.getBoundingClientRect(); if (q.bottom > br.top && q.top < br.bottom && q.right > br.left && q.left < br.right) { e.classList.add('tb-hide'); hid.push(e); } }); });
     let gone = false; const hide = () => { if (gone) return; gone = true; hid.forEach((e) => e.classList.remove('tb-hide')); parent.removeEventListener('pointerup', up, true); b.classList.add('out'); setTimeout(() => b.remove(), 400); };

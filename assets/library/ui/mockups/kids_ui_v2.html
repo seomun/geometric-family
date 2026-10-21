@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10앱 UI v2 시안</title>
+<!-- gf-asset 시안(docs/44 §3). 캐릭터 그림은 정본 PNG 를 읽기만 한다(수정 없음). 소리는 assets/library/audio 의 ★1 을 catalog.json 으로 찾아 튼다
+     (http 로 열어야 소리 남: python -m http.server --directory assets/library). 글꼴 = OFL(Google Fonts 판, RFN 없음) 도서관 사본. -->
+<style>
+@font-face { font-family: Jua; src: url(../fonts/Jua-Regular.ttf); font-display: swap; }
+@font-face { font-family: Bagel; src: url(../fonts/BagelFatOne-Regular.ttf); font-display: swap; }
+:root {
+  /* ── 10앱 UI v2 토큰(docs/44 §3-1) ── */
+  --k-bg: #FFF3DF; --k-bg2: #FFE7C4; --k-card: #FFFDF8; --k-ink: #3A2E39; --k-ink2: #6B5E70; --k-line: #6b5443;
+  --k-go: #5CC97B; --k-go-d: #3B9E5B;        /* 확정·진행 = 초록 */
+  --k-sub: #6EC6F0; --k-sub-d: #3F95C4;      /* 보조 = 파랑 */
+  --k-no: #FF8E6E; --k-no-d: #D8603F;        /* 취소·닫기 = 주황빨강 */
+  --k-gold: #FFC933; --k-gold-d: #D49A00;    /* 보상 = 금 */
+  --k-pink: #FF8FA8; --k-dim: rgba(40,30,50,.45);
+  --k-r: 999px; --k-r-panel: 28px; --k-band: 5px; --k-hit: 64px; --k-hit-kid: 80px;
+  --k-font: Jua, "Noto Sans KR", "Malgun Gothic", sans-serif; --k-num: Bagel, Jua, sans-serif;
+  --k-press: 80ms; --k-release: 120ms; --k-pop: cubic-bezier(.2,1.6,.4,1);
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: #2b2430; color: var(--k-ink); font-family: var(--k-font); }
+h1 { color: #fff; font-size: 20px; margin: 16px; } p.n { color: #d8cfe0; margin: 0 16px 12px; font-size: 14px; line-height: 1.5; }
+.wrap { display: flex; flex-wrap: wrap; gap: 20px; padding: 0 16px 40px; }
+.ph { position: relative; width: 360px; height: 720px; max-width: 100%; border-radius: 28px; overflow: hidden; flex: none;
+  background: linear-gradient(var(--k-bg), var(--k-bg2)); box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+.ph .cap { position: absolute; left: 0; right: 0; bottom: -28px; text-align: center; color: #fff; font-size: 14px; }
+.col { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+
+/* ── 버튼 3종 ── */
+.btn { --c: var(--k-go); --d: var(--k-go-d); position: relative; min-height: var(--k-hit); padding: 0 28px; border: 0; border-radius: var(--k-r);
+  background: var(--c); color: #fff; font: 400 24px/1 var(--k-font); letter-spacing: .5px; cursor: pointer;
+  box-shadow: 0 var(--k-band) 0 var(--d), 0 calc(var(--k-band) + 3px) 8px rgba(0,0,0,.18);
+  text-shadow: 0 2px 0 var(--d); transition: transform var(--k-release), box-shadow var(--k-release); }
+.btn::before { content: ""; position: absolute; left: 10px; right: 10px; top: 5px; height: 38%; border-radius: var(--k-r); background: rgba(255,255,255,.32); }
+.btn:active { transform: translateY(var(--k-band)); box-shadow: 0 0 0 var(--d); transition-duration: var(--k-press); }
+.btn.big { min-height: var(--k-hit-kid); font-size: 30px; padding: 0 40px; }
+.btn.sub { --c: var(--k-sub); --d: var(--k-sub-d); } .btn.no { --c: var(--k-no); --d: var(--k-no-d); } .btn.gold { --c: var(--k-gold); --d: var(--k-gold-d); color: var(--k-ink); text-shadow: 0 1px 0 #fff6; }
+.ibtn { position: relative; width: 56px; height: 56px; border-radius: 50%; border: 3px solid var(--k-line); background: var(--k-card); display: grid; place-items: center;
+  box-shadow: 0 4px 0 #d9c3a3; cursor: pointer; transition: transform var(--k-release); }
+.ibtn::after { content: ""; position: absolute; inset: -4px; }   /* 터치 64px */
+.ibtn:active { transform: translateY(4px); box-shadow: 0 0 0 #d9c3a3; transition-duration: var(--k-press); }
+.ibtn svg { width: 28px; height: 28px; }
+.dot { position: absolute; right: -2px; top: -2px; width: 14px; height: 14px; border-radius: 50%; background: var(--k-no); border: 2px solid #fff; }
+
+/* ── 상단 바(왼 집 · 가운데 목표 · 오른 재화) ── */
+.top { position: absolute; left: 12px; right: 12px; top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; z-index: 3; }
+.pill { position: relative; height: 44px; padding: 0 16px 0 40px; border-radius: 22px; background: var(--k-card); border: 3px solid var(--k-line);
+  display: flex; align-items: center; font: 400 24px/1 var(--k-num); color: var(--k-ink); }
+.pill .ic { position: absolute; left: -6px; top: 50%; width: 42px; height: 42px; transform: translateY(-50%); }
+.pill.bump { animation: bump .4s var(--k-pop); } @keyframes bump { 40% { transform: scale(1.15); } }
+
+/* ── 홈 ── */
+.logo { position: absolute; left: 0; right: 0; top: 86px; text-align: center; font: 400 46px/1 var(--k-font); letter-spacing: 2px;
+  -webkit-text-stroke: 8px #fff; paint-order: stroke fill; }
+.logo b { font-weight: 400; } .logo .a { color: #E8870F; } .logo .b { color: #2F8FD0; } .logo .c { color: #FF6F91; } .logo .d { color: #3BA864; }
+.fam { position: absolute; left: 0; right: 0; top: 190px; height: 240px; display: flex; justify-content: center; align-items: flex-end; gap: 0; }
+.fam img { width: 132px; height: auto; margin: 0 -8px; animation: breathe 2.4s ease-in-out infinite; transform-origin: 50% 100%; } .fam img:nth-child(2) { width: 112px; animation-delay: .3s; } .fam img:nth-child(3) { animation-delay: .6s; }
+@keyframes breathe { 50% { transform: scaleY(1.03); } }
+.play { position: absolute; left: 50%; top: 455px; transform: translateX(-50%); }
+.tiles { position: absolute; left: 14px; right: 14px; top: 586px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tile { position: relative; height: 72px; border-radius: 22px; border: 3px solid var(--k-line); display: grid; place-items: center; cursor: pointer;
+  box-shadow: 0 5px 0 #d9c3a3; transition: transform var(--k-release); }
+.tile:active { transform: translateY(5px); box-shadow: none; transition-duration: var(--k-press); }
+.tile svg { width: 38px; height: 38px; } .tile.sel { transform: scale(1.06); }
+.t1 { background: #FFD9E2; } .t2 { background: #D8F0FF; } .t3 { background: #FFF1B8; } .t4 { background: #E2F6E2; }
+.note { position: absolute; left: 12px; right: 12px; bottom: 10px; font-size: 13px; color: var(--k-ink2); text-align: center; }
+
+/* ── 결과·보상 ── */
+.dim { position: absolute; inset: 0; background: var(--k-dim); opacity: 0; transition: opacity .15s; z-index: 5; } .dim.on { opacity: 1; }
+.panel { position: absolute; left: 22px; right: 22px; top: 150px; padding: 26px 20px 22px; border-radius: var(--k-r-panel); background: var(--k-card);
+  border: 4px solid var(--k-line); box-shadow: 0 8px 0 #c9ab84; text-align: center; z-index: 6; transform: scale(.6); opacity: 0; }
+.panel.on { animation: pop .35s var(--k-pop) forwards; } @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+.panel h2 { margin: 0 0 6px; font: 400 34px/1 var(--k-font); color: var(--k-go-d); }
+.close { position: absolute; right: -14px; top: -14px; width: 52px; height: 52px; border-radius: 50%; background: var(--k-no); border: 4px solid #fff; color: #fff;
+  font: 400 26px/1 var(--k-font); display: grid; place-items: center; box-shadow: 0 4px 0 var(--k-no-d); cursor: pointer; }
+.close::after { content: ""; position: absolute; inset: -6px; }
+.stars { display: flex; justify-content: center; gap: 6px; margin: 8px 0 12px; } .stars i { width: 64px; height: 64px; opacity: 0; transform: scale(.3); }
+.stars i:nth-child(2) { margin-top: -14px; } .stars i.on { animation: pop .3s var(--k-pop) forwards; }
+.gain { display: flex; justify-content: center; gap: 10px; margin-bottom: 16px; }
+.chip { display: flex; align-items: center; gap: 6px; padding: 6px 14px 6px 6px; border-radius: 99px; background: #FFF4D6; font: 400 24px/1 var(--k-num); }
+.chip svg { width: 32px; height: 32px; }
+.panel .row { display: flex; justify-content: center; gap: 14px; margin-top: 14px; }
+.fly { position: absolute; width: 30px; height: 30px; z-index: 9; pointer-events: none; }
+.bar { height: 22px; border-radius: 11px; background: #EFE3CF; border: 3px solid var(--k-line); overflow: hidden; margin: 0 8px 4px; }
+.bar i { display: block; height: 100%; width: 30%; background: linear-gradient(var(--k-gold), #FFAE00); transition: width .75s ease-out; }
+.small { font-size: 15px; color: var(--k-ink2); }
+
+/* ── 판·튜토리얼 손 ── */
+.board { position: absolute; left: 20px; right: 20px; top: 150px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.cell { aspect-ratio: 1; border-radius: 20px; background: var(--k-card); border: 3px solid var(--k-line); display: grid; place-items: center; box-shadow: 0 4px 0 #d9c3a3; cursor: pointer; }
+.cell svg { width: 56%; height: 56%; } .cell.hint { animation: breath2 1.2s ease-in-out infinite; } @keyframes breath2 { 50% { transform: scale(1.05); } }
+.cell.ok { animation: okp .35s var(--k-pop); } @keyframes okp { 50% { transform: scale(1.18); } }
+.cell.shake { animation: shk .3s; } @keyframes shk { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.hand { position: absolute; width: 64px; height: 64px; z-index: 4; pointer-events: none; opacity: 0; transition: opacity .2s; }
+.hand.on { opacity: 1; animation: tap 1.6s infinite; } @keyframes tap { 0%, 12% { transform: scale(1); } 22% { transform: scale(.9); } 32%, 100% { transform: scale(1); } }
+.ripple { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; border: 4px solid var(--k-pink); opacity: 0; z-index: 3; pointer-events: none; }
+.ripple.go { animation: rip .5s ease-out; } @keyframes rip { from { transform: scale(.4); opacity: 1; } to { transform: scale(3); opacity: 0; } }
+.safe { position: absolute; left: 0; right: 0; bottom: 0; height: 96px; background: repeating-linear-gradient(45deg, rgba(107,84,67,.06) 0 10px, transparent 10px 20px);
+  font-size: 13px; color: var(--k-ink2); display: grid; place-items: center; }
+</style>
+</head>
+<body>
+<h1>10앱 UI v2 시안 — 「누르고 싶은 단추, 한 화면에 할 일 하나」</h1>
+<p class="n">docs/44 §3 규격의 견본. ① 홈 ② 결과·보상(창은 “다시 보기”로 재생) ③ 판 + 튜토리얼 손(3초 가만히 있으면 손이 나옴, 아무 칸이나 누르면 숨음). 눌림 80ms·복귀 120ms, 별 300ms 간격, 보상 아이콘이 위 재화 칸으로 날아감.</p>
+<div class="wrap">
+
+<!-- ① 홈 -->
+<div class="col"><div class="ph" id="home">
+  <div class="top">
+    <button class="ibtn" aria-label="설정"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="#FF8FA8" stroke="#6b5443" stroke-width="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" stroke="#6b5443" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+    <div class="pill" id="starPill"><svg class="ic" viewBox="0 0 40 40"><path d="M20 3l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="#FFC933" stroke="#6b5443" stroke-width="2.6" stroke-linejoin="round"/></svg><span id="starN">12</span></div>
+    <button class="ibtn" aria-label="소리"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#8FD3F4" stroke="#6b5443" stroke-width="2" stroke-linejoin="round"/><path d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11" stroke="#6b5443" stroke-width="2" stroke-linecap="round" fill="none"/></svg></button>
+  </div>
+  <div class="logo"><b class="a">기</b><b class="b">하</b><b class="a">학</b> <b class="c">가</b><b class="d">족</b></div>
+  <div class="fam"><img src="../../../wife/good.png" alt=""><img src="../../../nemo_dad/good.png" alt=""><img src="../../../dong_dad/good.png" alt=""></div>
+  <button class="btn big play" data-snd="ui_confirm">▶ 놀자!</button>
+  <div class="tiles">
+    <div class="tile t1" data-snd="ui_tap"><svg viewBox="0 0 40 40"><path d="M6 10c5-2 10-2 14 1v22c-4-3-9-3-14-1z" fill="#FF8FA8" stroke="#6b5443" stroke-width="2.6"/><path d="M34 10c-5-2-10-2-14 1v22c4-3 9-3 14-1z" fill="#FFC933" stroke="#6b5443" stroke-width="2.6"/></svg></div>
+    <div class="tile t2 sel" data-snd="ui_tap"><svg viewBox="0 0 40 40"><rect x="5" y="6" width="13" height="13" rx="3" fill="#ecb383" stroke="#6b5443" stroke-width="2.4"/><path d="M28 6l7 12H21z" fill="#8FD3F4" stroke="#6b5443" stroke-width="2.4" stroke-linejoin="round"/><circle cx="12" cy="28" r="7" fill="#3B4A7A" stroke="#6b5443" stroke-width="2.4"/><rect x="22" y="22" width="13" height="13" rx="3" fill="#6CCB8A" stroke="#6b5443" stroke-width="2.4"/></svg><span class="dot"></span></div>
+    <div class="tile t3" data-snd="ui_tap"><svg viewBox="0 0 40 40"><path d="M20 4l5 10 11 1-8 8 2 11-10-5-10 5 2-11-8-8 11-1z" fill="#FFC933" stroke="#6b5443" stroke-width="2.6" stroke-linejoin="round"/></svg></div>
+    <div class="tile t4" data-snd="ui_tap"><svg viewBox="0 0 40 40"><path d="M6 19L20 7l14 12v15H6z" fill="#FF8FA8" stroke="#6b5443" stroke-width="2.6" stroke-linejoin="round"/><rect x="16" y="23" width="8" height="11" rx="2" fill="#FFF6E5" stroke="#6b5443" stroke-width="2.2"/></svg></div>
+  </div>
+  <div class="note">주 버튼 하나(초록·80px) · 아래 타일은 그림만(고유색) · 새 소식은 점</div>
+  <div class="cap">① 홈</div>
+</div></div>
+
+<!-- ② 결과 + 보상 -->
+<div class="col"><div class="ph" id="res">
+  <div class="top">
+    <button class="ibtn" aria-label="집"><svg viewBox="0 0 24 24"><path d="M3 11L12 3l9 8v10H3z" fill="#FF8FA8" stroke="#6b5443" stroke-width="2" stroke-linejoin="round"/></svg></button>
+    <div class="pill" id="coinPill"><svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="#FFC933" stroke="#6b5443" stroke-width="2.6"/><rect x="15" y="15" width="10" height="10" rx="2" fill="#FFF1B8" stroke="#6b5443" stroke-width="2"/></svg><span id="coinN">40</span></div>
+    <span style="width:56px"></span>
+  </div>
+  <div style="position:absolute;inset:80px 20px auto;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;opacity:.5">
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div>
+  <div class="dim" id="dim"></div>
+  <div class="panel" id="panel">
+    <button class="close" aria-label="닫기" data-snd="ui_cancel">✕</button>
+    <h2>잘했어!</h2>
+    <div class="stars" id="stars">
+      <i><svg viewBox="0 0 40 40"><path d="M20 3l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="#FFC933" stroke="#6b5443" stroke-width="2.4" stroke-linejoin="round"/></svg></i>
+      <i><svg viewBox="0 0 40 40"><path d="M20 3l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="#FFC933" stroke="#6b5443" stroke-width="2.4" stroke-linejoin="round"/></svg></i>
+      <i><svg viewBox="0 0 40 40"><path d="M20 3l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="#FFC933" stroke="#6b5443" stroke-width="2.4" stroke-linejoin="round"/></svg></i>
+    </div>
+    <div class="gain"><span class="chip" id="gainChip"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="#FFC933" stroke="#6b5443" stroke-width="2.6"/><rect x="15" y="15" width="10" height="10" rx="2" fill="#FFF1B8" stroke="#6b5443" stroke-width="2"/></svg>+5</span></div>
+    <div class="bar"><i id="prog"></i></div><div class="small">다음 가구까지</div>
+    <div class="row"><button class="btn big" id="nextBtn" data-snd="ui_confirm">다음 ▶</button></div>
+    <div class="row"><button class="ibtn" aria-label="다시" data-snd="ui_tap"><svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 107-7H8" stroke="#6b5443" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M9 2L6 5l3 3" stroke="#6b5443" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+  </div>
+  <button class="btn sub" id="replay" style="position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:7">다시 보기</button>
+  <div class="cap">② 결과 → 보상이 위 칸으로 날아감</div>
+</div></div>
+
+<!-- ③ 판 + 튜토리얼 손 -->
+<div class="col"><div class="ph" id="play">
+  <div class="top">
+    <button class="ibtn" aria-label="집"><svg viewBox="0 0 24 24"><path d="M3 11L12 3l9 8v10H3z" fill="#FF8FA8" stroke="#6b5443" stroke-width="2" stroke-linejoin="round"/></svg></button>
+    <div class="pill" style="padding-left:16px"><svg style="width:30px;height:30px;margin-right:6px" viewBox="0 0 40 40"><path d="M20 5l15 26H5z" fill="#8FD3F4" stroke="#6b5443" stroke-width="2.6" stroke-linejoin="round"/></svg>찾기</div>
+    <span style="width:56px"></span>
+  </div>
+  <div class="board" id="board"></div>
+  <img class="hand" id="hand" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M24 8a5 5 0 0110 0v18l12 2a6 6 0 015 7l-3 15a8 8 0 01-8 6H30a8 8 0 01-6-3L12 39a5 5 0 017-7l5 5z' fill='%23fff' stroke='%236b5443' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <div class="ripple" id="rip"></div>
+  <div class="safe">아래 96px = 손목 오작동 방지 빈 띠(유아 앱)</div>
+  <div class="cap">③ 판 · 3초 무입력 → 손 시연</div>
+</div></div>
+
+</div>
+<script>
+// ── 소리: catalog.json 에서 칸별 ★1 을 찾아 쓴다(없으면 조용히) ──
+const SND = {}; const A = {};
+fetch('../../audio/catalog.json').then(r => r.json()).then(c => {
+  for (const e of c.entries) if (e.selected && e.rank === 1) SND[e.sub] = '../../audio/' + e.file;
+}).catch(() => {});
+function snd(sub) { const f = SND[sub]; if (!f) return; try { const a = (A[sub] = A[sub] || new Audio(f)); a.currentTime = 0; a.play().catch(() => {}); } catch (e) {} }
+document.addEventListener('pointerdown', e => { const t = e.target.closest('[data-snd]'); if (t) snd(t.dataset.snd); });
+
+// ── ② 결과 시퀀스: 어둡게 150ms → 창 350ms → 별 300ms 간격 → 진행 바 750ms → 다음 버튼은 0.8초부터 ──
+const $ = id => document.getElementById(id);
+function result() {
+  $('dim').classList.remove('on'); $('panel').classList.remove('on'); [...$('stars').children].forEach(s => s.classList.remove('on')); $('prog').style.width = '30%';
+  $('nextBtn').disabled = true; $('nextBtn').style.opacity = .5;
+  requestAnimationFrame(() => $('dim').classList.add('on'));
+  setTimeout(() => $('panel').classList.add('on'), 150);
+  [...$('stars').children].forEach((s, i) => setTimeout(() => { s.classList.add('on'); snd('rw_star'); }, 500 + i * 300));
+  setTimeout(() => { $('prog').style.width = '72%'; }, 1400);
+  setTimeout(() => { $('nextBtn').disabled = false; $('nextBtn').style.opacity = 1; }, 800);
+}
+// 받기(다음) → 아이콘 5개가 재화 칸으로 날아감(450ms, 60ms 간격), 도착 칸 1.15배 + 숫자 증가
+$('nextBtn').addEventListener('click', () => {
+  const ph = $('res').getBoundingClientRect(), from = $('gainChip').getBoundingClientRect(), to = $('coinPill').getBoundingClientRect();
+  for (let i = 0; i < 5; i++) setTimeout(() => {
+    const f = document.createElement('img'); f.className = 'fly';
+    f.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='15' fill='%23FFC933' stroke='%236b5443' stroke-width='2.6'/%3E%3C/svg%3E";
+    const x0 = from.left - ph.left + 10, y0 = from.top - ph.top, x1 = to.left - ph.left + 4, y1 = to.top - ph.top + 6;
+    f.style.left = x0 + 'px'; f.style.top = y0 + 'px'; $('res').appendChild(f);
+    f.animate([{ transform: 'translate(0,0) scale(1)' }, { transform: `translate(${(x1 - x0) * .4}px,${(y1 - y0) * .2 - 60}px) scale(1.2)`, offset: .45 }, { transform: `translate(${x1 - x0}px,${y1 - y0}px) scale(.8)` }],
+      { duration: 450, easing: 'cubic-bezier(.5,0,.6,1)' }).onfinish = () => {
+      f.remove(); const p = $('coinPill'); p.classList.remove('bump'); void p.offsetWidth; p.classList.add('bump'); $('coinN').textContent = +$('coinN').textContent + 1; snd('rw_coin');
+    };
+  }, i * 60);
+});
+$('replay').addEventListener('click', result);
+document.querySelector('#panel .close').addEventListener('click', () => { $('dim').classList.remove('on'); $('panel').classList.remove('on'); });
+result();
+
+// ── ③ 판 + 손: 3초 무입력 → 손(1.6초 주기), 아무 터치나 하면 즉시 숨김. 오답 = 살짝 흔들림(벌 없음) ──
+const shapes = ['tri', 'sq', 'ci', 'sq', 'ci', 'sq', 'ci', 'sq', 'ci', 'sq', 'sq', 'ci'];
+const svgOf = s => s === 'tri' ? '<svg viewBox="0 0 40 40"><path d="M20 5l15 26H5z" fill="#8FD3F4" stroke="#6b5443" stroke-width="2.6" stroke-linejoin="round"/></svg>'
+  : s === 'sq' ? '<svg viewBox="0 0 40 40"><rect x="7" y="7" width="26" height="26" rx="5" fill="#ecb383" stroke="#6b5443" stroke-width="2.6"/></svg>'
+  : '<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#C4B3A0" stroke="#6b5443" stroke-width="2.6"/></svg>';
+shapes.forEach((s, i) => { const c = document.createElement('div'); c.className = 'cell'; c.dataset.s = s; c.innerHTML = svgOf(s); $('board').appendChild(c); });
+let idle;
+function showHand() { const t = $('board').querySelector('[data-s="tri"]'); if (!t) return; t.classList.add('hint');
+  const ph = $('play').getBoundingClientRect(), r = t.getBoundingClientRect(); const h = $('hand');
+  h.style.left = (r.left - ph.left + r.width * .45) + 'px'; h.style.top = (r.top - ph.top + r.height * .4) + 'px'; h.classList.add('on'); }
+function hideHand() { $('hand').classList.remove('on'); $('board').querySelectorAll('.hint').forEach(c => c.classList.remove('hint')); clearTimeout(idle); idle = setTimeout(showHand, 3000); }
+$('play').addEventListener('pointerdown', e => {
+  hideHand(); const c = e.target.closest('.cell'); if (!c) return;
+  const ph = $('play').getBoundingClientRect(), r = $('rip'); r.style.left = (e.clientX - ph.left) + 'px'; r.style.top = (e.clientY - ph.top) + 'px'; r.classList.remove('go'); void r.offsetWidth; r.classList.add('go');
+  if (c.dataset.s === 'tri') { c.classList.add('ok'); snd('rw_star'); setTimeout(() => c.classList.remove('ok'), 400); }
+  else { c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); snd('ui_tap'); }
+});
+hideHand();
+</script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>원정대 UI v2 시안</title>
+<!-- gf-asset 시안(docs/44 §4). 배경·텍스처 = assets/library/art/expedition(로컬 생성, Open RAIL++-M), 캐릭터 = 정본 PNG 읽기만.
+     글꼴 = Gasoek One(로고)·Black Han Sans(제목·숫자), OFL·RFN 없음. 소리 = assets/library/audio ★1(http 로 열 때). 확률 수치는 견본. -->
+<style>
+@font-face { font-family: Gasoek; src: url(../fonts/GasoekOne-Regular.ttf); font-display: swap; }
+@font-face { font-family: BHS; src: url(../fonts/BlackHanSans-Regular.ttf); font-display: swap; }
+:root {
+  /* ── ⑪ UI v2 토큰(docs/44 §4-1) ── */
+  --x-ink: #070A22; --x-navy: #0B1030; --x-night: #141A4A; --x-deep: #1C2366; --x-text: #F4EEFF; --x-dim: #A9A3D6;
+  --x-gold: #FFC94A; --x-gold2: #FFE9A6; --x-gold3: #B07A12; --x-red: #FF4D5E; --x-green: #5BE38B;
+  --x-r3: #4DA3FF; --x-r4: #B06BFF; --x-r5: #FFC94A;                         /* 등급색 3★ 파랑 · 4★ 보라 · 5★ 금(바꾸지 않음) */
+  --x-sup: #F08A3C; --x-fla: #FF4D7A; --x-car: #4D8BFF;                      /* 속성: 받치기(□) · 번쩍(△) · 돌보기(○) — 색 + 모양 둘 다 */
+  --x-logo: Gasoek, BHS, sans-serif; --x-title: BHS, "Noto Sans KR", sans-serif; --x-body: "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --x-frame: 0 0 0 2px var(--x-gold3), 0 0 0 3px #000a, inset 0 0 0 1px #ffffff22, 0 8px 24px #0009;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: #05060f; color: var(--x-text); font-family: var(--x-body); }
+h1 { font: 400 22px/1.2 var(--x-title); margin: 16px; color: var(--x-gold2); } p.n { color: var(--x-dim); margin: 0 16px 12px; font-size: 14px; line-height: 1.5; }
+.wrap { display: flex; flex-wrap: wrap; gap: 20px; padding: 0 16px 48px; }
+.ph { position: relative; width: 360px; height: 740px; max-width: 100%; border-radius: 28px; overflow: hidden; flex: none; background: var(--x-navy); box-shadow: 0 0 0 1px #2a2f6a, 0 12px 40px #000; }
+.cap { text-align: center; color: var(--x-dim); font-size: 14px; margin-top: 8px; }
+.bgimg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.bgimg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(#0B103000 30%, #0B1030cc 70%, #0B1030); }
+
+/* ── 상단 재화 바(최대 3칸, 유료석만 금테) ── */
+.top { position: absolute; left: 10px; right: 10px; top: 10px; display: flex; gap: 6px; align-items: center; z-index: 5; }
+.cur { flex: 1; height: 34px; border-radius: 17px; background: #070A22cc; box-shadow: 0 0 0 1px #3b418a; display: flex; align-items: center; gap: 6px; padding: 0 4px 0 6px;
+  font: 400 17px/1 var(--x-title); } .cur.paid { box-shadow: 0 0 0 2px var(--x-gold); }
+.cur i { width: 22px; height: 22px; flex: none; border-radius: 50%; } .cur b { flex: 1; font-weight: 400; }
+.cur .plus { width: 24px; height: 24px; border-radius: 50%; background: var(--x-green); color: var(--x-ink); display: grid; place-items: center; font: 900 18px/1 sans-serif; }
+.gear { width: 34px; height: 34px; border-radius: 50%; background: #070A22cc; box-shadow: 0 0 0 1px #3b418a; display: grid; place-items: center; }
+
+/* ── 버튼 3종 ── */
+.go { position: relative; display: block; width: 100%; height: 76px; border: 0; border-radius: 16px; cursor: pointer;
+  background: linear-gradient(#FFE9A6, #FFC94A 45%, #E09A1A); box-shadow: 0 0 0 3px #7a4f08, 0 6px 0 #6b4306, 0 10px 24px #FFC94A55;
+  font: 400 34px/1 var(--x-title); color: #3a1f00; letter-spacing: 6px; text-shadow: 0 1px 0 #fff8; transition: transform 90ms; overflow: hidden; }
+.go small { display: block; margin-top: 4px; font: 700 13px/1 var(--x-body); letter-spacing: 0; color: #5a3500; }
+.go::after { content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%; background: linear-gradient(100deg, transparent, #fff8, transparent); animation: shine 2.6s infinite; }
+@keyframes shine { 60%, 100% { left: 130%; } }
+.go:active { transform: translateY(5px); box-shadow: 0 0 0 3px #7a4f08, 0 1px 0 #6b4306; }
+.sub { height: 52px; padding: 0 16px; border: 0; border-radius: 12px; background: linear-gradient(#2A3290, #1A1F5E); color: var(--x-text);
+  box-shadow: 0 0 0 2px #5961c9, 0 4px 0 #0a0d2e; font: 400 18px/1 var(--x-title); cursor: pointer; }
+.sub:active { transform: translateY(3px); box-shadow: 0 0 0 2px #5961c9; }
+.ico { width: 52px; height: 52px; border-radius: 14px; background: #070A22cc; box-shadow: 0 0 0 2px #3b418a; display: grid; place-items: center; position: relative;
+  color: var(--x-gold2); font: 700 11px/1 var(--x-body); } .ico svg { width: 26px; height: 26px; } .ico .dot { position: absolute; right: -3px; top: -3px; width: 12px; height: 12px; border-radius: 50%; background: var(--x-red); }
+
+/* ── 프레임 패널(금 2px 바깥 + 어두운 1px 안쪽) ── */
+.panel { border-radius: 14px; background: linear-gradient(#1C2366ee, #0F1440ee); box-shadow: var(--x-frame); padding: 10px 12px; }
+.panel h3 { margin: 0 0 4px; font: 400 20px/1.1 var(--x-title); color: var(--x-gold2); } .panel small { color: var(--x-dim); font-size: 13px; }
+
+/* ── 하단 탭 바 5칸(가운데 1.2배) ── */
+.tabs { position: absolute; left: 0; right: 0; bottom: 0; height: 66px; display: grid; grid-template-columns: repeat(5, 1fr); align-items: end; background: linear-gradient(#0B1030, #070A22);
+  box-shadow: 0 -1px 0 var(--x-gold3); z-index: 5; }
+.tab { height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font: 700 12px/1 var(--x-body); color: var(--x-dim); }
+.tab svg { width: 24px; height: 24px; } .tab.on { color: var(--x-gold); } .tab.mid { height: 72px; margin-top: -12px; border-radius: 18px 18px 0 0; background: linear-gradient(#2A3290, #141A4A); box-shadow: 0 0 0 1px var(--x-gold3); }
+.tab.mid svg { width: 30px; height: 30px; }
+
+/* ── 로비 ── */
+.logo { position: absolute; left: 0; right: 0; top: 70px; text-align: center; font: 400 38px/1 var(--x-logo); color: var(--x-gold2);
+  text-shadow: 0 3px 0 var(--x-gold3), 0 0 18px #FFC94A88; letter-spacing: 1px; }
+.logo small { display: block; font: 400 12px/1 var(--x-title); letter-spacing: 4px; color: var(--x-dim); text-shadow: none; margin-top: 6px; }
+.hero { position: absolute; left: 0; right: 0; top: 150px; height: 260px; display: flex; justify-content: center; align-items: flex-end; }
+.hero::before { content: ""; position: absolute; left: 50%; top: 40%; width: 320px; height: 320px; transform: translate(-50%, -50%); background: radial-gradient(#FFE9A688, #FFC94A22 45%, transparent 70%); }
+.hero img { position: relative; width: 120px; filter: drop-shadow(0 6px 10px #000a); } .hero img.c { width: 168px; z-index: 2; }
+.side { position: absolute; top: 120px; display: flex; flex-direction: column; gap: 10px; z-index: 4; } .side.l { left: 10px; } .side.r { right: 10px; }
+.next { position: absolute; left: 14px; right: 14px; top: 430px; z-index: 4; }
+.next .meta { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 99px; background: #070A22; box-shadow: 0 0 0 1px #3b418a; font: 700 12px/1 var(--x-body); }
+.el { width: 18px; height: 18px; flex: none; }
+.cta { position: absolute; left: 14px; right: 14px; top: 540px; z-index: 4; }
+.timer { position: absolute; left: 14px; top: 50px; font: 700 11px/1 var(--x-body); color: var(--x-dim); z-index: 5; }
+
+/* ── 전투 HUD(위 45% 무대 · 팀 HP · 아래 55% 판) ── */
+.stage { position: absolute; left: 0; right: 0; top: 0; height: 45%; overflow: hidden; }
+.foe { position: absolute; left: 50%; top: 92px; width: 150px; height: 150px; transform: translateX(-50%); }
+.foe .body { position: absolute; inset: 10px; clip-path: polygon(50% 0, 100% 30%, 92% 85%, 50% 100%, 8% 85%, 0 30%); background-size: 120px; box-shadow: inset 0 0 30px #000; }
+.foe .rim { position: absolute; inset: 10px; clip-path: polygon(50% 0, 100% 30%, 92% 85%, 50% 100%, 8% 85%, 0 30%); background: linear-gradient(135deg, #fff6 0%, transparent 35%, transparent 70%, #FFC94A55); }
+.foe .eyes { position: absolute; left: 48px; top: 64px; width: 54px; height: 20px; display: flex; justify-content: space-between; } .foe .eyes i { width: 18px; height: 20px; border-radius: 50%; background: #fff; box-shadow: inset 4px -2px 0 #070A22; }
+.foe.hit { animation: fh .25s; } @keyframes fh { 30% { transform: translateX(-50%) translateX(6px); filter: brightness(2); } 60% { transform: translateX(-50%) translateX(-4px); } }
+.ehp { position: absolute; left: 50%; top: 76px; width: 120px; height: 8px; transform: translateX(-50%); border-radius: 4px; background: #0009; box-shadow: 0 0 0 1px #000; overflow: hidden; }
+.ehp i { display: block; height: 100%; width: 78%; background: linear-gradient(90deg, #FF4D5E, #FF8A5E); transition: width .3s; }
+.turn { position: absolute; left: calc(50% + 66px); top: 64px; width: 30px; height: 30px; border-radius: 50%; background: #070A22; box-shadow: 0 0 0 2px var(--x-red); display: grid; place-items: center; font: 400 18px/1 var(--x-title); }
+.turn.warn { animation: blink .6s infinite; } @keyframes blink { 50% { box-shadow: 0 0 0 4px var(--x-red), 0 0 14px var(--x-red); } }
+.dmg { position: absolute; font: 400 34px/1 var(--x-title); color: #fff; -webkit-text-stroke: 6px #3a0000; paint-order: stroke fill; pointer-events: none; z-index: 6; }
+.dmg.crit { color: var(--x-gold); font-size: 44px; }
+.party { position: absolute; left: 6px; right: 6px; top: calc(45% - 74px); display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; z-index: 3; }
+.pc { position: relative; height: 64px; border-radius: 10px; background: #070A22cc; box-shadow: 0 0 0 2px #3b418a; overflow: hidden; display: grid; place-items: end center; }
+.pc img { width: 60px; margin-bottom: -6px; } .pc .el { position: absolute; left: 3px; top: 3px; }
+.pc.ready { box-shadow: 0 0 0 2px var(--x-gold); } .pc.ready::after { content: ""; position: absolute; inset: -40%; background: conic-gradient(transparent 0 70%, #FFE9A6 85%, transparent); animation: spin 1.6s linear infinite; mix-blend-mode: screen; }
+@keyframes spin { to { transform: rotate(1turn); } }
+.thp { position: absolute; left: 8px; right: 8px; top: 45%; height: 12px; border-radius: 6px; background: #000a; box-shadow: 0 0 0 1px #000, 0 0 0 2px #3b418a; z-index: 3; overflow: hidden; }
+.thp i { position: absolute; left: 0; top: 0; bottom: 0; width: 64%; background: linear-gradient(90deg, #3BA864, #5BE38B); } .thp em { position: absolute; left: 64%; top: 0; bottom: 0; width: 12%; background: #5BE38B66; }
+.thp b { position: absolute; inset: 0; font: 400 11px/12px var(--x-title); text-align: center; color: #fff; -webkit-text-stroke: 2px #000; paint-order: stroke fill; }
+.mtimer { position: absolute; left: 8px; right: 8px; top: calc(45% + 16px); height: 5px; border-radius: 3px; background: #ffffff1a; z-index: 3; }
+.mtimer i { display: block; height: 100%; width: 100%; background: var(--x-gold); border-radius: 3px; } .mtimer i.last { background: var(--x-red); }
+.board { position: absolute; left: 8px; right: 8px; top: calc(45% + 28px); bottom: 10px; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(5, 1fr); gap: 4px;
+  padding: 6px; border-radius: 14px; background: #070A22; box-shadow: 0 0 0 2px var(--x-gold3); }
+.orb { border-radius: 50%; display: grid; place-items: center; box-shadow: inset 0 -4px 0 #0005, inset 0 4px 0 #fff4; }
+.orb svg { width: 52%; height: 52%; } .o0 { background: var(--x-sup); } .o1 { background: var(--x-fla); } .o2 { background: var(--x-car); } .o3 { background: #5BE38B; } .o4 { background: #C8A8FF; }
+.combo { position: absolute; right: 14px; top: calc(45% + 40px); font: 400 30px/1 var(--x-title); color: #fff; -webkit-text-stroke: 5px #2a0a4a; paint-order: stroke fill; z-index: 6; opacity: 0; }
+.combo small { display: block; font-size: 14px; text-align: right; color: var(--x-gold2); -webkit-text-stroke: 3px #2a0a4a; }
+.combo.gold { color: var(--x-gold); }
+
+/* ── 가챠 ── */
+.banner { position: absolute; left: 12px; right: 12px; top: 56px; height: 300px; border-radius: 16px; overflow: hidden; box-shadow: var(--x-frame); }
+.banner .bgimg::after { background: linear-gradient(#0B103000 40%, #0B1030); }
+.banner img { position: absolute; left: 50%; bottom: 40px; width: 190px; transform: translateX(-50%); filter: drop-shadow(0 0 18px #FFC94A); }
+.banner h3 { position: absolute; left: 14px; right: 14px; bottom: 10px; margin: 0; font: 400 22px/1.1 var(--x-title); color: var(--x-gold2); }
+.banner .lim { position: absolute; left: 10px; top: 10px; } .banner .rate { position: absolute; right: 10px; top: 10px; }
+.pity { position: absolute; left: 14px; right: 14px; top: 370px; } .pity .bar { height: 10px; border-radius: 5px; background: #000a; box-shadow: 0 0 0 1px #3b418a; overflow: hidden; margin-top: 6px; } .pity .bar i { display: block; height: 100%; width: 38%; background: linear-gradient(90deg, var(--x-r4), var(--x-r5)); }
+.pulls { position: absolute; left: 14px; right: 14px; top: 430px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pull { height: 72px; border: 0; border-radius: 14px; cursor: pointer; font: 400 22px/1 var(--x-title); color: #3a1f00; background: linear-gradient(#FFE9A6, #FFC94A 50%, #E09A1A); box-shadow: 0 0 0 2px #7a4f08, 0 5px 0 #6b4306; }
+.pull small { display: block; margin-top: 4px; font: 700 13px/1 var(--x-body); } .pull.one { background: linear-gradient(#3D47B8, #232A7A); color: var(--x-text); box-shadow: 0 0 0 2px #5961c9, 0 5px 0 #0a0d2e; }
+.legal { position: absolute; left: 14px; right: 14px; top: 516px; display: flex; gap: 8px; } .legal .sub { flex: 1; height: 44px; font-size: 15px; } .legal .sub.odds { box-shadow: 0 0 0 2px var(--x-gold), 0 4px 0 #0a0d2e; }
+.fine { position: absolute; left: 14px; right: 14px; top: 572px; font-size: 11.5px; line-height: 1.5; color: var(--x-dim); }
+.reveal { position: absolute; inset: 0; z-index: 8; display: none; place-items: center; background: #05060f; }
+.reveal.on { display: grid; } .reveal .door { width: 180px; height: 260px; border-radius: 90px 90px 10px 10px; box-shadow: 0 0 0 4px #fff3; transition: background .4s, box-shadow .4s; background: #141A4A; }
+.reveal .card { position: absolute; width: 200px; padding: 14px; border-radius: 16px; text-align: center; background: linear-gradient(#2A3290, #0B1030); opacity: 0; transform: rotateY(90deg); transition: transform .45s, opacity .2s; }
+.reveal .card.on { opacity: 1; transform: rotateY(0); } .reveal .card img { width: 150px; } .reveal .card b { display: block; font: 400 22px/1.2 var(--x-title); color: var(--x-gold2); }
+.reveal .skip { position: absolute; right: 14px; top: 14px; } .reveal .stg { position: absolute; left: 0; right: 0; bottom: 30px; text-align: center; color: var(--x-dim); font-size: 13px; }
+.odds { position: absolute; inset: 40px 18px; z-index: 9; display: none; overflow: auto; } .odds.on { display: block; }
+.odds table { width: 100%; border-collapse: collapse; font-size: 13px; } .odds td, .odds th { padding: 5px 4px; border-bottom: 1px solid #ffffff1a; text-align: left; } .odds th { color: var(--x-gold2); font-weight: 700; }
+</style>
+</head>
+<body>
+<h1>원정대 UI v2 시안 — 「대형 RPG 의 무게, 할 일은 하나」</h1>
+<p class="n">docs/44 §4 규격 견본. ① 로비(큰 「출정」 하나·재화 3칸·탭 5칸) ② 전투 HUD(위 45% 무대 · 팀 HP · 이동 타이머 5초 · 콤보 팝 · 데미지 숫자 · 충전된 동료 금테) — 판을 누르면 한 턴 시연 ③ 소환(확률 정보 상시 · 천장 N/90 · 기간 · 미성년 결제 고지) — 「10회」 를 누르면 4단계 공개.</p>
+<div class="wrap">
+
+<!-- ① 로비 -->
+<div><div class="ph" id="lobby">
+  <div class="bgimg" style="background-image:url(../../art/expedition/bg/exp_bg_temple_2202.webp)"></div>
+  <div class="top">
+    <div class="cur"><i style="background:radial-gradient(#9BE7FF,#3A8BD0)"></i><b>48/60</b><span class="plus">+</span></div>
+    <div class="cur"><i style="background:radial-gradient(#FFE9A6,#E09A1A)"></i><b>12,480</b><span class="plus">+</span></div>
+    <div class="cur paid"><i style="background:radial-gradient(#FFB3F0,#B06BFF)"></i><b>1,500</b><span class="plus">+</span></div>
+    <div class="gear"><svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5" fill="none" stroke="#FFE9A6" stroke-width="2.4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" stroke="#FFE9A6" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+  </div>
+  <div class="timer">이용 1시간 12분</div>
+  <div class="logo">기하학 원정대<small>GEOMETRIC EXPEDITION</small></div>
+  <div class="side l"><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z" fill="none" stroke="#FFE9A6" stroke-width="2"/><path d="M8 10h8M8 14h8" stroke="#FFE9A6" stroke-width="2"/></svg></div><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 21V4h10l-2 4 2 4H6" fill="none" stroke="#FFE9A6" stroke-width="2"/></svg><span class="dot"></span></div></div>
+  <div class="side r"><div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="11" rx="2" fill="none" stroke="#FFE9A6" stroke-width="2"/><path d="M4 13h16M12 9v11M12 9c-2-4-6-4-6-1s6 1 6 1 6 2 6-1-4-3-6 1" fill="none" stroke="#FFE9A6" stroke-width="2"/></svg><span class="dot"></span></div><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 11L12 3l9 8v10H3z" fill="none" stroke="#FFE9A6" stroke-width="2"/></svg></div></div>
+  <div class="hero"><img src="../../../nemo_dad/good.png" alt=""><img class="c" src="../../../wife/wink.png" alt=""><img src="../../../dong_dad/calm.png" alt=""></div>
+  <div class="next panel"><small>1나라 · 아기돼지 마을</small><h3>8. 숲 속 오솔길</h3>
+    <div class="meta"><span class="tag">권장 전투력 1,200</span><span class="tag">적 <svg class="el" viewBox="0 0 20 20"><path d="M10 2l8 15H2z" fill="#FF4D7A" stroke="#fff" stroke-width="1.5"/></svg>×3</span><span class="tag">행동력 6</span></div></div>
+  <div class="cta"><button class="go" data-snd="ui_confirm">출 정<small>탭해서 이 단계로</small></button></div>
+  <div class="tabs">
+    <div class="tab on"><svg viewBox="0 0 24 24"><path d="M5 19L19 5M14 5h5v5" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>원정</div>
+    <div class="tab"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 20c1-4 4-6 6-6s5 2 6 6M16 11a3 3 0 100-6M18 14c2 1 3 3 3 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>편성</div>
+    <div class="tab mid on"><svg viewBox="0 0 24 24"><path d="M12 2l3 7 7 .5-5.5 4.5 2 7.5L12 17l-6.5 4.5 2-7.5L2 9.5 9 9z" fill="#FFC94A" stroke="#7a4f08" stroke-width="1.5"/></svg>소환</div>
+    <div class="tab"><svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 6V4h6v2" fill="none" stroke="currentColor" stroke-width="2"/></svg>가방</div>
+    <div class="tab"><svg viewBox="0 0 24 24"><path d="M4 9l2-5h12l2 5M4 9h16v11H4z" fill="none" stroke="currentColor" stroke-width="2"/></svg>상점</div>
+  </div>
+</div><div class="cap">① 로비</div></div>
+
+<!-- ② 전투 HUD -->
+<div><div class="ph" id="battle">
+  <div class="stage"><div class="bgimg" style="background-image:url(../../art/expedition/bg/exp_bg_valley_2103.webp)"></div>
+    <div class="ehp"><i id="ehp"></i></div><div class="turn warn" id="turn">1</div>
+    <div class="foe" id="foe"><div class="body" style="background-image:url(../../art/expedition/tex/exp_tex_crystal_2303_tile.webp)"></div><div class="rim"></div><div class="eyes"><i></i><i></i></div></div>
+  </div>
+  <div class="party" id="party"></div>
+  <div class="thp"><i></i><em></em><b>3,412 / 5,300 (+640)</b></div>
+  <div class="mtimer"><i id="mt"></i></div>
+  <div class="board" id="obd"></div>
+  <div class="combo" id="combo">3 COMBO<small>×2.0</small></div>
+</div><div class="cap">② 전투 HUD — 판을 눌러 한 턴</div></div>
+
+<!-- ③ 소환 -->
+<div><div class="ph" id="gacha">
+  <div class="top">
+    <div class="cur paid"><i style="background:radial-gradient(#FFB3F0,#B06BFF)"></i><b>1,500</b><span class="plus">+</span></div>
+    <div class="cur"><i style="background:radial-gradient(#9BE7FF,#3A8BD0)"></i><b>소환권 3</b></div>
+    <div class="gear"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="#FFE9A6" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg></div>
+  </div>
+  <div class="banner"><div class="bgimg" style="background-image:url(../../art/expedition/bg/exp_bg_temple_2204.webp)"></div>
+    <img src="../../../husband/wink.png" alt=""><span class="tag lim">기간 한정 · 10/21~11/03</span><span class="tag rate">픽업 ★5 2.5% 중 절반</span><h3>픽업 ★5 「번쩍 한 방」 세모 남편</h3></div>
+  <div class="pity panel" style="padding:8px 12px"><small>천장 — 77회 안에 ★5 확정</small> <b style="float:right;font:400 16px/1 var(--x-title);color:var(--x-gold2)">31 / 77</b><div class="bar"><i></i></div></div>
+  <div class="pulls"><button class="pull one" data-snd="ui_confirm">1회<small>💎 150</small></button><button class="pull" id="pull10" data-snd="ui_confirm">10회<small>💎 1,425 · ★4 이상 1장 보장</small></button></div>
+  <div class="legal"><button class="sub odds" id="oddsBtn">확률 정보</button><button class="sub">소환 기록</button></div>
+  <div class="fine">확률형 아이템 포함 · 유료 재화와 교환 가능한 무료 재화로도 소환할 수 있어요. 미성년자가 법정대리인 동의 없이 결제하면 취소할 수 있어요. 디지털 재화는 사용 후 청약철회가 제한될 수 있어요.</div>
+  <div class="odds panel" id="odds"><h3>확률 정보 (견본 수치)</h3>
+    <table><tr><th>등급</th><th>확률</th><th>내용</th></tr><tr><td style="color:var(--x-r5)">★5</td><td>2.5%</td><td>픽업 세모 남편 1.25% · 그 외 ★5 12종 각 0.096%</td></tr>
+    <tr><td style="color:var(--x-r4)">★4</td><td>12.5%</td><td>18종 각 0.694%</td></tr><tr><td style="color:var(--x-r3)">★3</td><td>85.0%</td><td>24종 각 3.54%</td></tr></table>
+    <p style="font-size:12.5px;color:var(--x-dim);line-height:1.5">단계 ① 등급 결정 → ② 등급 안에서 균등. 77회째 ★5 확정(천장), 10회 소환의 마지막 1장은 ★4 이상. 웹 공개: (주소) · 확률은 바뀌면 미리 알림.</p>
+    <button class="sub" style="width:100%" id="oddsClose">닫기</button></div>
+  <div class="reveal" id="rv"><div class="door" id="door"></div><div class="card" id="card"><img src="../../../husband/wink.png" alt=""><b>★5 세모 남편</b></div>
+    <button class="sub skip" id="skip">건너뛰기</button><div class="stg" id="stg"></div></div>
+</div><div class="cap">③ 소환 — 「10회」 를 눌러 4단계</div></div>
+
+</div>
+<script>
+const SND = {}; const A = {};
+fetch('../../audio/catalog.json').then(r => r.json()).then(c => { for (const e of c.entries) if (e.selected && e.rank === 1) SND[e.sub] = '../../audio/' + e.file; }).catch(() => {});
+function snd(s) { const f = SND[s]; if (!f) return; try { const a = (A[s] = A[s] || new Audio(f)); a.currentTime = 0; a.play().catch(() => {}); } catch (e) {} }
+document.addEventListener('pointerdown', e => { const t = e.target.closest('[data-snd]'); if (t) snd(t.dataset.snd); });
+const $ = id => document.getElementById(id);
+const EL = ['<path d="M3 3h14v14H3z" fill="#F08A3C" stroke="#fff" stroke-width="1.5"/>', '<path d="M10 2l8 15H2z" fill="#FF4D7A" stroke="#fff" stroke-width="1.5"/>', '<circle cx="10" cy="10" r="7.5" fill="#4D8BFF" stroke="#fff" stroke-width="1.5"/>'];
+// 파티 5칸(정본 PNG 읽기만) · 2번째·4번째가 충전 완료(금테 회전)
+[['nemo_dad/good', 0, 0], ['wife/good', 1, 1], ['dong_dad/good', 2, 0], ['husband/good', 1, 1], ['baby/joy', 2, 0]].forEach(([p, el, rd]) => {
+  const d = document.createElement('div'); d.className = 'pc' + (rd ? ' ready' : ''); d.innerHTML = `<svg class="el" viewBox="0 0 20 20">${EL[el]}</svg><img src="../../../${p}.png" alt="">`; $('party').appendChild(d); });
+// 판 6×5
+const OS = ['<rect x="5" y="5" width="14" height="14" rx="2" fill="#fff"/>', '<path d="M12 3l9 16H3z" fill="#fff"/>', '<circle cx="12" cy="12" r="8" fill="#fff"/>', '<path d="M12 20s-8-5-8-11a4 4 0 018-1 4 4 0 018 1c0 6-8 11-8 11z" fill="#fff"/>', '<path d="M12 3l2.5 6 6.5.5-5 4 1.5 6.5L12 16l-5.5 4 1.5-6.5-5-4 6.5-.5z" fill="#fff"/>'];
+for (let i = 0; i < 30; i++) { const k = (i * 7 + (i >> 2)) % 5; const o = document.createElement('div'); o.className = 'orb o' + k; o.innerHTML = `<svg viewBox="0 0 24 24">${OS[k]}</svg>`; $('obd').appendChild(o); }
+// 한 턴 시연: 이동 타이머 5초(마지막 1초 빨강) → 콤보 1·2·3(0.15초 팝, 3부터 금) → 데미지 숫자(0.1 등장·0.6 유지·0.3 사라짐, 80ms 간격) → 적 HP·턴
+let busy = false;
+$('obd').addEventListener('pointerdown', () => {
+  if (busy) return; busy = true; const mt = $('mt'); mt.className = ''; mt.style.transition = 'none'; mt.style.width = '100%'; void mt.offsetWidth;
+  mt.style.transition = 'width 2.5s linear'; mt.style.width = '0%';             // 시연은 2.5초로 줄임(실제 5초)
+  setTimeout(() => mt.classList.add('last'), 2000);
+  setTimeout(() => {
+    [1, 2, 3].forEach((n, i) => setTimeout(() => {
+      const c = $('combo'); c.firstChild.nodeValue = n + ' COMBO'; c.lastChild.textContent = '×' + (1 + .5 * (n - 1)).toFixed(1); c.classList.toggle('gold', n >= 3);
+      c.animate([{ opacity: 1, transform: 'scale(1)' }, { opacity: 1, transform: 'scale(1.3)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 150, fill: 'forwards' }); snd(n < 3 ? 'pz_pop_s' : 'pz_combo');
+    }, i * 350));
+    setTimeout(() => {
+      const st = $('battle').getBoundingClientRect(), f = $('foe').getBoundingClientRect();
+      [[812, 0], [904, 0], [2480, 1]].forEach(([v, crit], i) => setTimeout(() => {
+        const d = document.createElement('div'); d.className = 'dmg' + (crit ? ' crit' : ''); d.textContent = v.toLocaleString();
+        d.style.left = (f.left - st.left + 20 + i * 34) + 'px'; d.style.top = (f.top - st.top + 40) + 'px'; $('battle').appendChild(d);
+        d.animate([{ transform: 'translateY(10px) scale(.6)', opacity: 0 }, { transform: 'translateY(0) scale(1.1)', opacity: 1, offset: .1 }, { transform: 'translateY(-6px) scale(1)', opacity: 1, offset: .7 }, { transform: 'translateY(-26px)', opacity: 0 }], { duration: 1000 }).onfinish = () => d.remove();
+        $('foe').classList.remove('hit'); void $('foe').offsetWidth; $('foe').classList.add('hit'); snd(crit ? 'hit_crit' : 'hit_mid');
+      }, i * 80));
+      setTimeout(() => { $('ehp').style.width = '34%'; $('turn').textContent = '3'; $('turn').classList.remove('warn'); $('combo').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }); }, 400);
+      setTimeout(() => { $('ehp').style.width = '78%'; $('turn').textContent = '1'; $('turn').classList.add('warn'); busy = false; }, 3000);
+    }, 1200);
+  }, 2600);
+});
+// 소환 4단계: ① 진입(이 화면) ② 시작 연출 1.8초(건너뛰기) ③ 등급 색 단서(문 색 파랑→보라→금 + 소리) ④ 카드 공개
+let tm = [];
+function stopAll() { tm.forEach(clearTimeout); tm = []; }
+function reveal(skip) {
+  stopAll(); const rv = $('rv'), door = $('door'), card = $('card'), stg = $('stg'); rv.classList.add('on'); card.classList.remove('on'); door.style.background = '#141A4A'; door.style.boxShadow = '0 0 0 4px #fff3';
+  const to = (ms, f) => tm.push(setTimeout(f, skip ? 0 : ms));
+  stg.textContent = '② 시작 연출 — 언제든 건너뛰기'; snd('mg_cast');
+  to(900, () => { door.style.background = 'radial-gradient(#9BD0FF,#4DA3FF)'; door.style.boxShadow = '0 0 40px #4DA3FF'; stg.textContent = '③ 등급 단서 — 파랑'; });
+  to(1400, () => { door.style.background = 'radial-gradient(#E3C4FF,#B06BFF)'; door.style.boxShadow = '0 0 50px #B06BFF'; stg.textContent = '③ 보라로 바뀜'; });
+  to(1900, () => { door.style.background = 'radial-gradient(#FFF3C4,#FFC94A)'; door.style.boxShadow = '0 0 80px #FFC94A'; stg.textContent = '③ 금 — ★5!'; snd('rw_fanfare'); });
+  to(2600, () => { card.classList.add('on'); stg.textContent = '④ 카드 공개 · 화면을 누르면 닫힘(10연차는 격자로 펼친 뒤 최고 등급만 이렇게)'; });
+}
+$('pull10').addEventListener('click', () => reveal(false));
+$('skip').addEventListener('click', e => { e.stopPropagation(); reveal(true); });
+$('rv').addEventListener('click', () => { if ($('card').classList.contains('on')) { $('rv').classList.remove('on'); stopAll(); } });
+$('oddsBtn').addEventListener('click', () => $('odds').classList.add('on')); $('oddsClose').addEventListener('click', () => $('odds').classList.remove('on'));
+</script>
+</body>
+</html>

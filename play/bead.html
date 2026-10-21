@@ -5686,21 +5686,22 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 })();
 
 /* ⑪ 기하학 원정대 — 구슬 판 코어(결정론). 브라우저(window.ExpPuzzle)와 node(tools/puzzle_sim.js)가 같은 코드를 쓴다. 설계: games/32_PUZZLE_IDLE.md §1·§3, D30.
-   구슬 종류: 0 받치기(네모) · 1 번쩍(세모) · 2 돌보기(동그라미) · 3 하트(회복) · 4 별(스킬 충전).
+   구슬 종류(화면 이름): 0 풀 공격 · 1 불 공격 · 2 물 공격 · 3 회복(하트) · 4 별(필살기 충전) · 5 방어(방패, v4 부터). 내부 속성 id 는 support(풀)·flash(불)·care(물) 그대로 — 화면 이름·아이콘만 불/물/풀(D44).
    입력 방식 둘 다 지원: slide(한 줄 밀기, ⑪ 6×5) · swap(인접 교환, ⑫ 3×3 대비). 자유 드래그 교환(퍼즐앤드래곤식)은 특허 미확인이라 없다.
    판은 JSON 으로 직렬화 가능한 평범한 객체(난수 상태 b.rs 포함) → 같은 시드·같은 입력이면 같은 결과. 매 입력 뒤 「움직일 수 있는 수가 있음」을 보장한다(없으면 결정론적으로 섞음). */
 /*PZ-BEGIN*/(function (root, factory) { if (typeof module === 'object' && module.exports) module.exports = factory(); else root.ExpPuzzle = factory(); })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
-  const SUPPORT = 0, FLASH = 1, CARE = 2, HEART = 3, STAR = 4;
+  const SUPPORT = 0, FLASH = 1, CARE = 2, HEART = 3, STAR = 4, SHIELD = 5;
   const KIND_EL = ['support', 'flash', 'care'];                 // 구슬 0~2 → battle-core 속성 이름
-  const SHAPE = ['square', 'triangle', 'circle', 'heart', 'star']; // 색맹 대응 도형(구슬마다 모양 표시)
+  const SHAPE = ['leaf', 'flame', 'drop', 'heart', 'star', 'shield']; /* D44: 구슬 모양 = 원소 아이콘(잎·불꽃·물방울) + 하트·별·방패 */ // 색맹 대응 도형(구슬마다 모양 표시)
   /** 보너스 규칙(능동 상한은 tools/puzzle_sim.js 가 단언) */
   const RULE = { base3: 0.10, per4: 0.04, comboStep: 0.1, adv: 1.5, atkPerGauge: 1.5, capGauge: 0.45, capAtk: 1.5, healPerHeart: 0.012, capHeal: 0.10, starCd: 1, moveEvery: 10, pow: 0.23 }   /* pow: 전체 보너스 축척. tools/puzzle_sim.js --battle 로 D30 상한(최적 플레이의 문턱 하락 ≤5%·전투 시간 단축 ≤40%)에 맞춰 조정 — D30 갱신(문턱 -10%·시간 -40%): 최적 문턱 약 -9%·시간 약 -14%, 무작위 -3% */;
-  const WEIGHTS = [0.23, 0.23, 0.23, 0.23, 0.08];
+  const WEIGHTS = [0.23, 0.23, 0.23, 0.23, 0.08];      // v3(구슬 5종)
+  const WEIGHTS4 = [0.21, 0.21, 0.21, 0.15, 0.08, 0.14];      // v4(D44): 풀·불·물 0.21 · 회복 0.15 · 별 0.08 · 방어 0.14 — 콤보 분포는 P5 에서 시뮬로 맞춘다
 
   function rnd(b) { b.rs = (b.rs + 0x6D2B79F5) >>> 0; let t = b.rs; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
-  function pick(b) { let x = rnd(b); for (let k = 0; k < 5; k++) { x -= WEIGHTS[k]; if (x < 0) return k; } return 0; }
-  const clone = (b) => ({ rows: b.rows, cols: b.cols, mode: b.mode, rs: b.rs, rpg: b.rpg, g: b.g.map((r) => r.slice()) });
+  function pick(b) { const W = b.v >= 4 ? WEIGHTS4 : WEIGHTS; let x = rnd(b); for (let k = 0; k < W.length; k++) { x -= W[k]; if (x < 0) return k; } return 0; }
+  const clone = (b) => ({ rows: b.rows, cols: b.cols, mode: b.mode, rs: b.rs, rpg: b.rpg, v: b.v, g: b.g.map((r) => r.slice()) });
 
   /** 연속 3개 이상(가로·세로) 칸을 찾아 같은 종류끼리 이어진 덩어리로 묶는다 */
   function findGroups(g) {
@@ -5762,14 +5763,14 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 
   /** 새 판. o = {cols=6, rows=5, seed=1, mode='slide'|'swap'}. 3×3 swap 은 kinds 가 적어야 풀리므로 구슬 종류를 3(+하트)로 줄이지 않고 ensure 로 보장 */
   function create(o) {
-    o = o || {}; const b = { rows: o.rows || 5, cols: o.cols || 6, mode: o.mode || 'slide', rs: ((o.seed == null ? 1 : o.seed) * 2654435761) >>> 0, rpg: !!o.rpg, g: [] };
+    o = o || {}; const b = { rows: o.rows || 5, cols: o.cols || 6, mode: o.mode || 'slide', rs: ((o.seed == null ? 1 : o.seed) * 2654435761) >>> 0, rpg: !!o.rpg, v: o.v || 3, g: [] };
     for (let r = 0; r < b.rows; r++) b.g.push(new Array(b.cols).fill(0));
     fillNoMatch(b); return ensure(b);
   }
 
   /** 지우고 → 떨어뜨리고 → 채우기를 연쇄가 끝날 때까지. 반환 steps[i] = [{kind,n}] (연쇄 한 단계에서 지워진 덩어리들) */
   function resolve(b) {
-    const steps = [], frames = [], cleared = [0, 0, 0, 0, 0], start = b.g.map((r) => r.slice()); let guard = 0;
+    const steps = [], frames = [], cleared = [0, 0, 0, 0, 0, 0], start = b.g.map((r) => r.slice()); let guard = 0;
     for (;;) {
       const groups = findGroups(b.g); if (!groups.length || guard++ > 30) break;
       steps.push(groups.map((x) => ({ kind: x.kind, n: x.n, cells: x.cells })));
@@ -5805,7 +5806,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   function bonus(res, ctx) {
     ctx = ctx || {}; const adv = ctx.adv || [], mulCombo = 1 + RULE.comboStep * Math.max(0, res.combo - 1), gauge = {}, atk = {}; let hearts = 0, stars = 0;
     res.steps.forEach((st) => st.forEach((x) => {
-      if (x.kind === HEART) { hearts += x.n; return; } if (x.kind === STAR) { stars += x.n; return; }
+      if (x.kind === HEART) { hearts += x.n; return; } if (x.kind === STAR) { stars += x.n; return; } if (x.kind === SHIELD) return;
       const el = KIND_EL[x.kind], v = (RULE.base3 + RULE.per4 * (x.n - 3)) * mulCombo * (adv.indexOf(el) >= 0 ? RULE.adv : 1);
       gauge[el] = (gauge[el] || 0) + v * RULE.pow;
     }));
@@ -5864,7 +5865,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   function goalProg(g, st, res) { const c = res.cleared; if (g.t === 'collect') st.n += c[g.k]; else if (g.t === 'any' || g.t === 'tight') st.n += c[0] + c[1] + c[2]; else if (g.t === 'heart') st.n += c[3]; else if (g.t === 'star') st.n += c[4]; else if (g.t === 'combo') st.n = Math.max(st.n, res.combo); return st; }
   /** 오늘의 콤보(일일 모드) 한 수 점수: 지운 구슬 수 × (1 + 0.5×(콤보-1)) */
   const scoreOf = (res) => Math.round(res.cleared.reduce((a, x) => a + x, 0) * (1 + 0.5 * Math.max(0, res.combo - 1)));
-  return { DRAG, drag, normPath, applyDrag, packPath, unpackPath, dragCandidates, goalProg, scoreOf, SUPPORT, FLASH, CARE, HEART, STAR, KIND_EL, SHAPE, RULE, create, clone, findGroups, moves, hasMove, failState, slide, swap, play, bonus, preview, hint, assist, ensure };
+  return { SHIELD, DRAG, drag, normPath, applyDrag, packPath, unpackPath, dragCandidates, goalProg, scoreOf, SUPPORT, FLASH, CARE, HEART, STAR, KIND_EL, SHAPE, RULE, create, clone, findGroups, moves, hasMove, failState, slide, swap, play, bonus, preview, hint, assist, ensure };
 });/*PZ-END*/
 
 /* ⑪ 구슬 판 화면(games/32 §3 S3) — 전투 화면 가운데에 놓는 6×5 판. 한 줄 밀기(손가락으로 줄을 옆/위아래로 밀어 놓기), 시간 제한 없음, 한 수는 moveEvery 틱에 한 번(게이지가 차면 켜짐).
@@ -5873,14 +5874,15 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 (function (root) {
   'use strict';
   const PZ = root.ExpPuzzle, N = { rows: 5, cols: 6 };
-  const COL = ['#F08A3C', '#E5334A', '#3B6FD6', '#FF6FAE', '#F5C518'], DARK = ['#C9611C', '#B71C32', '#254FA8', '#C23A7A', '#C79A00'];
-  const NAME = ['받치기', '번쩍', '돌보기', '하트', '별'];
-  const GLYPH = [   // 색맹 대응: 구슬마다 도형(네모·세모·동그라미·하트·별) — 흰색 문양
-    '<rect x="-9" y="-9" width="18" height="18" rx="3" fill="#fff"/>',
-    '<path d="M0-11 L11 8 L-11 8 Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>',
-    '<circle r="10" fill="#fff"/>',
+  const COL = ['#3DAE5B', '#E5334A', '#3B6FD6', '#FF6FAE', '#F5C518', '#8D9BB0'], DARK = ['#26803F', '#B71C32', '#254FA8', '#C23A7A', '#C79A00', '#5F6D82'];
+  const NAME = ['풀 공격', '불 공격', '물 공격', '회복', '필살기', '방어'];
+  const GLYPH = [   // D44: 구슬 모양 = 원소 아이콘(잎사귀·불꽃·물방울) + 하트·별·방패 — 흰색 문양(색 + 모양 두 겹)
+    '<path d="M0-11 C10-8 11 2 0 11 C-11 2 -10-8 0-11 Z" fill="#fff"/><path d="M0-5 L0 8" stroke="rgba(0,0,0,.28)" stroke-width="1.8" stroke-linecap="round"/>',
+    '<path d="M0-12 C3-6 9-3 9 3 C9 8 5 11 0 11 C-5 11 -9 8 -9 3 C-9-1 -6-4 -4-7 C-3-4 -2-3 0-2 C1-6 0-9 0-12 Z" fill="#fff"/>',
+    '<path d="M0-12 C6-4 9 0 9 4 C9 9 5 12 0 12 C-5 12 -9 9 -9 4 C-9 0 -6-4 0-12 Z" fill="#fff"/>',
     '<path d="M0 10 C-14 0 -9-11 0-5 C9-11 14 0 0 10 Z" fill="#fff"/>',
-    '<path d="M0-11 L3.2-3.6 L11-3.4 L4.8 1.6 L7 9.5 L0 5 L-7 9.5 L-4.8 1.6 L-11-3.4 L-3.2-3.6 Z" fill="#fff"/>'];
+    '<path d="M0-11 L3.2-3.6 L11-3.4 L4.8 1.6 L7 9.5 L0 5 L-7 9.5 L-4.8 1.6 L-11-3.4 L-3.2-3.6 Z" fill="#fff"/>',
+    '<path d="M0-11 L9-8 L9 1 C9 7 4 10 0 12 C-4 10 -9 7 -9 1 L-9-8 Z" fill="#fff"/>'];
   const bead = (k) => `<svg viewBox="-16 -16 32 32" class="pz-b"><circle r="15" fill="${DARK[k]}"/><circle r="13.2" cy="-1" fill="${COL[k]}"/><ellipse cx="-4.5" cy="-8" rx="6" ry="3" fill="#fff" opacity=".35"/><g transform="translate(0 1) scale(.82)">${GLYPH[k]}</g></svg>`;
   function mount(parent, o) {
     const ctl = o.ctl, b = ctl.board, box = document.createElement('div'); box.className = 'ex-pz'; parent.appendChild(box);
@@ -5953,7 +5955,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   'use strict';
   const PZ = root.ExpPuzzle, UI = root.ExpPuzzleUI, N = { rows: 5, cols: 6 };
   const synth = (id, alt) => (root.GF && GF.synth && GF.synth.has(id) ? id : alt);      // x_ 합성음이 있으면 그것, 없으면 기존 소리
-  const GCOL = ['#F08A3C', '#E5334A', '#3B6FD6', '#FF6FAE', '#F5C518'];
+  const GCOL = ['#3DAE5B', '#E5334A', '#3B6FD6', '#FF6FAE', '#F5C518'];
   function mount(parent, o) {
     const b = o.board, box = document.createElement('div'); box.className = 'ex-pz pd'; parent.appendChild(box);
     box.innerHTML = '<div class="pd-timer"><i></i></div><div class="pz-grid"></div><div class="pz-say" aria-live="polite"></div>';

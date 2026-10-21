@@ -680,8 +680,21 @@ const env = (cx, cy, w, label) => { const h = w * 0.64;
 cut(900, `
   <rect x="60" y="60" width="600" height="440" rx="14" fill="#fff" stroke="${INK2}" stroke-width="8"/>
   <path d="M60,60 L150,60 L60,150 Z M660,60 L570,60 L660,150 Z" fill="#2b2b30"/>
-  ${T(W / 2, 290, '故 김태섭', 60, { font: HEAD })}
-  ${T(W / 2, 370, '(영정 자리)', 30, { fill: '#8a8174' })}
+  <!-- 영정: 흑백 사진 액자 + 국화 + 위패 (가상) -->
+  <rect x="235" y="92" width="250" height="300" rx="6" fill="#3a3530" stroke="${INK2}" stroke-width="6"/>
+  <rect x="252" y="109" width="216" height="266" fill="#d9d6d0"/>
+  <rect x="252" y="109" width="216" height="266" fill="url(#none)" stroke="#bdb8b0" stroke-width="2"/>
+  <path d="M252,375 q108,-70 216,0 Z" fill="#6f6a64"/>
+  <path d="M300,360 l60,-36 l60,36" fill="#55504a" stroke="#4a4540" stroke-width="3"/>
+  <path d="M296,175 h128 l22,150 h-172 Z" fill="#9a958e" stroke="#4a4540" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M318,232 q14,-10 28,0 M374,232 q14,-10 28,0" fill="none" stroke="#2e2a26" stroke-width="5" stroke-linecap="round"/>
+  <path d="M338,280 q22,16 44,0" fill="none" stroke="#2e2a26" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="324" cy="262" r="9" fill="#c9a9a4" opacity=".55"/><circle cx="396" cy="262" r="9" fill="#c9a9a4" opacity=".55"/>
+  <path d="M235,92 L300,92 L235,157 Z M485,92 L420,92 L485,157 Z" fill="#141414"/>
+  ${[150, 205, 515, 570].map((x, i) => `<g transform="translate(${x},${i % 2 ? 420 : 412})">${[0, 72, 144, 216, 288].map(a => `<ellipse cx="0" cy="-16" rx="9" ry="18" fill="#fbfaf5" stroke="#cfcab8" stroke-width="2" transform="rotate(${a})"/>`).join('')}<circle r="8" fill="#f2e7a6"/></g>`).join('')}
+  <rect x="300" y="404" width="120" height="70" rx="6" fill="#f6f1e6" stroke="${INK2}" stroke-width="5"/>
+  ${T(W / 2, 449, '故 김태섭', 26, { font: HEAD })}
+  <path d="M350,402 q-8,-24 4,-40 M370,402 q8,-22 -2,-36" fill="none" stroke="#b9b4ab" stroke-width="3" stroke-linecap="round" opacity=".8"/>
   ${hl(W / 2, 640, 640, 150, C.hlY, -2)}
   ${T(W / 2, 622, '죽은 사람은', 56, { font: HEAD })}
   ${T(W / 2, 700, '어떻게 추억되는가?', 56, { font: HEAD })}
@@ -765,9 +778,16 @@ gap(true);
 
 // ── 9 : 네모 한 방 ──
 cut(820, `
-  <rect x="120" y="50" width="480" height="330" rx="12" fill="#fff" stroke="${INK2}" stroke-width="7"/>
-  ${T(W / 2, 120, '건강검진 결과표', 40, { font: HEAD })}
-  <path d="M170,170 h380 M170,220 h380 M170,270 h300" stroke="#c9c0b0" stroke-width="8"/><rect x="170" y="300" width="130" height="40" fill="#ff8c8c" stroke="${INK2}" stroke-width="4"/>
+  <!-- 건강검진 결과통보서 (가상) -->
+  <rect x="80" y="36" width="560" height="372" rx="10" fill="#fff" stroke="${INK2}" stroke-width="7"/>
+  <rect x="80" y="36" width="560" height="52" rx="10" fill="#2f5d8a"/><rect x="80" y="70" width="560" height="18" fill="#2f5d8a"/>
+  ${T(W / 2, 71, '2026 일반건강검진 결과통보서', 26, { font: HEAD, fill: '#fff' })}
+  ${T(96, 116, '수검자  남궁○ (남, 만 51세)    검진일 2026.09.14', 18, { anchor: 'start', fill: '#5a5148' })}
+  ${T(96, 140, '항목', 17, { anchor: 'start', fill: '#8a8174' })}${T(300, 140, '결과', 17, { anchor: 'start', fill: '#8a8174' })}${T(470, 140, '판정', 17, { anchor: 'start', fill: '#8a8174' })}
+  <rect x="92" y="150" width="536" height="34" fill="#f7f3ec"/>${T(100, 173, '혈압', 19, { anchor: 'start' })}${T(300, 173, '138/89 mmHg', 19, { anchor: 'start' })}${T(470, 173, '경계', 18, { anchor: 'start', fill: '#8a6d2f' })}<rect x="92" y="184" width="536" height="34" fill="#fff"/>${T(100, 207, '공복혈당', 19, { anchor: 'start' })}${T(300, 207, '118 mg/dL', 19, { anchor: 'start' })}${T(470, 207, '공복혈당장애 의심', 18, { anchor: 'start', fill: '#d63b3b' })}<rect x="92" y="218" width="536" height="34" fill="#f7f3ec"/>${T(100, 241, '총콜레스테롤', 19, { anchor: 'start' })}${T(300, 241, '241 mg/dL', 19, { anchor: 'start' })}${T(470, 241, '고콜레스테롤혈증 의심', 18, { anchor: 'start', fill: '#d63b3b' })}<rect x="92" y="252" width="536" height="34" fill="#fff"/>${T(100, 275, '간기능 γ-GTP', 19, { anchor: 'start' })}${T(300, 275, '78 U/L', 19, { anchor: 'start' })}${T(470, 275, '경계', 18, { anchor: 'start', fill: '#8a6d2f' })}<rect x="92" y="286" width="536" height="34" fill="#f7f3ec"/>${T(100, 309, '체질량지수', 19, { anchor: 'start' })}${T(300, 309, '26.4 kg/㎡', 19, { anchor: 'start' })}${T(470, 309, '비만 1단계', 18, { anchor: 'start', fill: '#d63b3b' })}<rect x="92" y="320" width="536" height="34" fill="#fff"/>${T(100, 343, '위내시경', 19, { anchor: 'start' })}${T(300, 343, '만성 위축성 위염', 19, { anchor: 'start' })}${T(470, 343, '1년 뒤 추적', 18, { anchor: 'start', fill: '#8a6d2f' })}
+  <rect x="92" y="358" width="536" height="40" fill="#fff1f0" stroke="#d63b3b" stroke-width="3"/>
+  ${T(104, 385, '종합판정  질환 의심 — 2차 검진 필요', 22, { anchor: 'start', font: HEAD, fill: '#d63b3b' })}
+  <g transform="translate(575,370) rotate(-12)"><circle r="34" fill="none" stroke="#d63b3b" stroke-width="4"/>${T(0, 7, '재검', 22, { font: HEAD, fill: '#d63b3b' })}</g>
   ${sticker(nemoDad({ x: 255, y: 420, w: 210, h: 186, emo: 'sad', suit: true }))}
   ${hl(W / 2, 700, 640, 110, C.hlY, -2)}
   ${T(W / 2, 722, '아. 난 진짜 아프면 안 되는데.', 46, { font: HEAD })}

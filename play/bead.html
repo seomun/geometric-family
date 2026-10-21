@@ -5953,6 +5953,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
    opts = { board, dragTime, canMove(), onDrag(path) → {ok,res}|{ok:false,reason}, sfx(id,o), maxCell, fx:true }  반환 { el, cellEl, animatePath(path, cb), redraw(), setEnabled(v), say(t), timeUp() , destroy() } */
 (function (root) {
   'use strict';
+  const LK = (ko, en) => (typeof GF !== 'undefined' && GF && GF.lang === 'en' ? en : ko);      /* 영어판(⑪·구슬 줄 맞추기 공용): 한국어 글자는 여기서 바로 고른다 */
   const PZ = root.ExpPuzzle, UI = root.ExpPuzzleUI, N = { rows: 5, cols: 6 };
   const synth = (id, alt) => (root.GF && GF.synth && GF.synth.has(id) ? id : alt);      // x_ 합성음이 있으면 그것, 없으면 기존 소리
   const GCOL = ['#3DAE5B', '#E5334A', '#3B6FD6', '#FF6FAE', '#F5C518'];
@@ -5995,7 +5996,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     }
     function submit(path) {
       busy = true; if (window.ExpSnd && ExpSnd.ready === true) ExpSnd.play('xs_release', { vol: 0.8 }); const out = o.onDrag(path);
-      if (!out || !out.ok) { box.classList.add('nope'); setTimeout(() => box.classList.remove('nope'), 380); sfx('hmm'); setSay(out && out.reason === 'nomatch' ? '같은 모양 3개가 안 이어졌어요. 다시!' : ''); draw(); busy = false; return; }
+      if (!out || !out.ok) { box.classList.add('nope'); setTimeout(() => box.classList.remove('nope'), 380); sfx('hmm'); setSay(out && out.reason === 'nomatch' ? LK('같은 모양 3개가 안 이어졌어요. 다시!', 'No match of 3 — try again!') : ''); draw(); busy = false; return; }
       reveal(out.res, () => { busy = false; out.after && out.after(); });
     }
     /** 터짐 → 낙하 → 연쇄를 단계마다 보여 준다. 끝나면 done */
@@ -6004,7 +6005,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       const steps = res.steps, frames = res.frames || []; let i = 0, count = 0; const sp = () => Math.max(1, (o.speed && o.speed()) || 1), GAP = () => 300 / sp();
       const mult = (c) => (root.ExpBattle && ExpBattle.comboMult ? ExpBattle.comboMult(c) : 1 + 0.5 * (c - 1));
       const cnt = document.createElement('div'); cnt.className = 'pz-count'; cnt.style.display = 'none'; box.appendChild(cnt);
-      const showCount = (c, kind) => { cnt.style.display = ''; cnt.className = 'pz-count t' + Math.min(5, Math.ceil(c / 2)) + (c >= 8 ? ' max' : ''); cnt.innerHTML = '<b>' + c + '</b><span>콤보</span><i>×' + mult(c).toFixed(1) + '</i>'; cnt.style.setProperty('--gc', GCOL[kind] || '#FFC94A'); cnt.classList.remove('punch'); void cnt.offsetWidth; cnt.classList.add('punch'); };
+      const showCount = (c, kind) => { cnt.style.display = ''; cnt.className = 'pz-count t' + Math.min(5, Math.ceil(c / 2)) + (c >= 8 ? ' max' : ''); cnt.innerHTML = '<b>' + c + '</b><span>' + LK('콤보', 'combo') + '</span><i>×' + mult(c).toFixed(1) + '</i>'; cnt.style.setProperty('--gc', GCOL[kind] || '#FFC94A'); cnt.classList.remove('punch'); void cnt.offsetWidth; cnt.classList.add('punch'); };
       const popGroup = (g, cb) => {
         count++; g.cells.forEach(([r, c]) => { const e = at[r] && at[r][c]; if (e) { e.classList.add('pop'); if (root.GF && GF.fx) try { const px = c * cell + cell / 2, py = r * cell + cell / 2; GF.fx.spark(grid, px, py, { n: 6, power: 38, colors: [GCOL[g.kind] || '#fff', '#fff'] }); } catch (x) { /* 연출 실패 무시 */ } } });
         if (window.ExpSnd && ExpSnd.ready === true) ExpSnd.pop(g.n, count); else sfx(synth('x_pop', 'ok'), { st: [0, 2, 4, 7, 9, 12, 14, 16][Math.min(count - 1, 7)] });

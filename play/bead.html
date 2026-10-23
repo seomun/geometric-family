@@ -176,6 +176,7 @@ html[lang="en"] body { overflow-wrap: break-word; hyphens: auto; }   /* 영어�
 html[lang="en"] .uk-caption { white-space: normal; line-height: 1.25 !important; padding-top: 8px; padding-bottom: 8px; height: auto !important; }   /* 영어 안내 자막은 두 줄까지 감기 */
 html[lang="en"] .uk-toast { height: auto !important; white-space: normal !important; line-height: 1.3 !important; padding-top: 8px !important; padding-bottom: 8px !important; }   /* 영어 토스트·판 안내 한마디는 줄바꿈 */
 html[lang="en"] .bk-tip, html[lang="en"] .tl-tip, html[lang="en"] .sr-tip, html[lang="en"] .sp-tip, html[lang="en"] .bd-tip, html[lang="en"] .mg-tip { white-space: normal !important; line-height: 1.25 !important; height: auto !important; padding: 8px 14px !important; }   /* 영어 판 안내 자막은 줄바꿈(두 줄까지) */
+/* 큰 묶음·한 줄(10/23 FX.bigPop·FX.lineClear — ⑪ v8 과 공용) */ .fx-big { position: absolute; z-index: 103; pointer-events: none; white-space: nowrap; font-style: normal; font: 400 calc(30px * var(--uk-fs-k, 1))/1 var(--uk-title, Jua); -webkit-text-stroke: 5px #fff; paint-order: stroke fill; text-shadow: 0 3px 0 rgba(58,46,57,.25); } .fx-big.huge { font-size: calc(40px * var(--uk-fs-k, 1)); } .fx-line { position: absolute; z-index: 101; pointer-events: none; border-radius: 22px; background: linear-gradient(90deg, transparent, var(--fx-c, #FFE27A) 18%, #fff 50%, var(--fx-c, #FFE27A) 82%, transparent); box-shadow: 0 0 22px var(--fx-c, #FFE27A); mix-blend-mode: screen; }
 
 /* 기하학 가족 놀이터 — 공통 UI. 기준 360×640 세로, 레터박스. 글자 없이 그림·소리로 안내. */
 :root { --cream: var(--uk-cream); --nemo: #F6C28B; --semo: #8FD3F4; --dong: var(--uk-dong); --ink: var(--uk-ink); --pink: var(--uk-pink); --gold: var(--uk-gold); --green: var(--uk-green); }
@@ -3462,7 +3463,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     function lvUp(L) { Room.albumAdd('lv:' + L.lv, 'level', GF.t('c16.room2.031', { lv: L.lv }), GF.t('c17.room2.032', { v: Number(L.cozy).toLocaleString('ko-KR') }), cur); setTimeout(checkRooms, 1400); try { UK.confetti(parent); GF.sfx && GF.sfx('celebrate'); } catch (e) {} const nr = rooms().find((r) => r.unlock === L.lv); if (!nr) { if (kid()) toastH('⭐', parent); else lvCard(L); } }      // 새 방이 열리면 연출이 이름을 알려 준다(토스트로 미리 말하지 않음)
     /* BM-17-3(Egg, Inc. 새 알 문턱 · 다음 알 미리보기): 우리 집 레벨이 오르면 이정표 카드 — 「Lv N」 · 아늑함 · 다음 레벨까지 · 가장 가까운 다음에 열리는 것(방·테마 세트).
        누르거나 4.5초 뒤 접힘(막지 않음) · 성인만(유아는 ⭐ 그대로) */
-    function lvCard(L) {
+    function lvCard(L, tries) {
+      if (tries == null) { setTimeout(() => lvCard(L, 0), 400); return; }   /* 집에 들어올 때 계절 선물 등 한마디가 레벨업 바로 뒤에 생기므로 잠깐 기다려 본다 */
+      if (tries < 6 && [...document.querySelectorAll('.uk-toast')].some((t) => t.offsetParent)) { setTimeout(() => lvCard(L, (tries || 0) + 1), 500); return; }   /* 한마디(계절 선물 등)가 떠 있으면 비킨 뒤에(최대 3초, 실사용 QA 10/23) */
+      if (!parent.isConnected) return;
       const old = parent.querySelector('.h2-mile'); if (old) old.remove(); const L2 = Room.levelInfo(), u = Room.nextUnlock(L.lv);
       const c = el('button', 'h2-mile', parent, `<b>🏠 ${GF.t('room.mile.lv', { lv: L.lv })}</b><span>${GF.t('room.mile.cozy', { v: Number(L2.cozy).toLocaleString('ko-KR') })}</span>`
         + (!L2.max ? `<small>${GF.t('room.mile.next', { lv: L.lv + 1, v: Math.max(0, L2.next - L2.cozy) })}</small>` : '') + (u ? `<em>${GF.t('room.mile.unlock', { lv: u.lv, name: u.icon + ' ' + u.name })}</em>` : ''));
@@ -4509,6 +4513,30 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (rm()) return; parent = host(parent); document.querySelectorAll('.fx-praise').forEach((e) => e.remove());
     const t = el('i', 'fx-praise t' + tier + (kid ? ' kid' : ''), parent, GF.t('fx.praise.' + (kid ? 'k' : '') + tier)); t.style.cssText = `left:${x}px;top:${y - (kid ? 70 : 40)}px`;
     t.animate([{ transform: 'translate(-50%,0) scale(.3) rotate(-8deg)', opacity: 0 }, { transform: 'translate(-50%,-10px) scale(' + (kid ? 1.1 : 1.15 + tier * 0.1) + ') rotate(' + (kid ? 0 : 3) + 'deg)', opacity: 1, offset: 0.22 }, { transform: 'translate(-50%,-16px) scale(1)', opacity: 1, offset: 0.7 }, { transform: 'translate(-50%,-34px) scale(.95)', opacity: 0 }], { duration: kid ? 1300 : 950, easing: 'ease-out' }).onfinish = () => t.remove();
+  };
+  /** 큰 묶음 터짐(10/23, ⑪ v8 「덩어리 크기」 손맛을 공용으로 — gf-game 과 합의: ⑪ popGroup 도 v8 뒤 이것을 부른다).
+      gridEl 기준 (cx,cy) 에서 n 개짜리 묶음이 터질 때: 5개↑ = 판 흔들림 + 큰 링 + 빛 + 큰 터짐 소리, 7개↑ = 거대(흔들림·링·글자·소리 한 단계 더).
+      color = 묶음 색(링·파편), label = 띄울 글자(없으면 「n개!」). 움직임 줄이기면 소리와 글자만 */
+  FX.bigPop = (gridEl, o) => {
+    o = o || {}; const n = o.n || 5; if (n < 5) return; const huge = n >= 7, parent = host(gridEl), x = o.cx || 0, y = o.cy || 0, col = o.color || '#FFC933';
+    try { GF.sfx('pop3', { st: huge ? 4 : 0 }); if (huge) setTimeout(() => GF.sfx('star', { gain: 0.8 }), 120); } catch (e) { /* 소리 없음 */ }
+    if (!rm()) { FX.shake(huge ? 3 : 2); FX.glow(parent, x, y, { size: huge ? 240 : 170, alpha: 0.8 }); FX.ring(parent, x, y, { size: huge ? 9 : 6, color: col }); if (huge) setTimeout(() => FX.ring(parent, x, y, { size: 12, color: '#fff' }), 140);
+      FX.spark(parent, x, y, { n: Math.min(30, 10 + n * 2), power: huge ? 130 : 95, colors: [col, '#fff', '#FFC933'] }); }
+    document.querySelectorAll('.fx-big').forEach((e) => e.remove());
+    const t = el('i', 'fx-big' + (huge ? ' huge' : ''), parent, o.label || GF.t('fx.big', { n })); t.style.cssText = `left:${x}px;top:${y - 30}px;color:${col}`;
+    if (rm() || !t.animate) { setTimeout(() => t.remove(), 900); return; }
+    t.animate([{ transform: 'translate(-50%,0) scale(.3)', opacity: 0 }, { transform: 'translate(-50%,-14px) scale(' + (huge ? 1.45 : 1.2) + ')', opacity: 1, offset: 0.25 }, { transform: 'translate(-50%,-22px) scale(1)', opacity: 1, offset: 0.7 }, { transform: 'translate(-50%,-34px) scale(.95)', opacity: 0 }], { duration: huge ? 1100 : 900, easing: 'ease-out' }).onfinish = () => t.remove();
+  };
+  /** 한 줄 빔(10/23, ⑪ v8 「한 줄 폭발」 공용판): rootEl 안을 가로(또는 세로)로 빛이 쓸고 지나간다.
+      rect = {x,y,w,h} (rootEl 기준 px) 을 주면 그 줄만, 없으면 rootEl 가운데를 가로로 꽉. axis 'col' 이면 세로. 움직임 줄이기면 소리만 */
+  FX.lineClear = (rootEl, color, rect, axis) => {
+    try { GF.sfx('sparkle', { gain: 0.9 }); GF.sfx('pop2', { st: 5 }); } catch (e) { /* 소리 없음 */ }
+    if (rm()) return; const parent = host(rootEl), W = parent.clientWidth, H = parent.clientHeight, col = color || '#FFE27A', v = axis === 'col';
+    const r = rect || (v ? { x: W / 2 - 22, y: 0, w: 44, h: H } : { x: 0, y: H / 2 - 22, w: W, h: 44 });
+    const b = el('i', 'fx-line', parent); b.style.cssText = `left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px;--fx-c:${col}`;
+    b.animate([{ transform: v ? 'scaleY(0)' : 'scaleX(0)', opacity: 1 }, { transform: 'scale(1)', opacity: 1, offset: 0.4 }, { transform: v ? 'scale(1.25,1)' : 'scale(1,1.25)', opacity: 0 }], { duration: 620, easing: 'ease-out' }).onfinish = () => b.remove();
+    for (let i = 0; i < 5; i++) setTimeout(() => FX.spark(parent, v ? r.x + r.w / 2 : r.x + (r.w * (i + 0.5)) / 5, v ? r.y + (r.h * (i + 0.5)) / 5 : r.y + r.h / 2, { n: 6, power: 50, colors: [col, '#fff'] }), 60 + i * 50);
+    FX.shake(1);
   };
   FX.comboText = (parent, x, y, n) => {
     if (n >= 2) FX.praise(parent, x, y, n >= 4 ? 3 : n - 1, false);   // 연쇄 2 = 좋아 · 3 = 멋져 · 4+ = 최고야
@@ -6108,6 +6136,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const steps = [], frames = [], cleared = [0, 0, 0, 0, 0, 0], start = b.g.map((r) => r.slice()); let guard = 0;
     for (;;) {
       const groups = findGroups(b.g); if (!groups.length || guard++ > 30) break;
+      if (b.v >= 8) groups.sort((x, y) => x.n - y.n || (x.cells[0][0] * 100 + x.cells[0][1]) - (y.cells[0][0] * 100 + y.cells[0][1]));      /* v8: 한 단계 안의 묶음은 작은 것부터 차례로 터진다(마지막 = 가장 큰 묶음의 피날레). 같으면 위·왼쪽부터 */
       steps.push(groups.map((x) => ({ kind: x.kind, n: x.n, cells: x.cells })));
       groups.forEach((x) => { cleared[x.kind] += x.n; x.cells.forEach(([y, c]) => { b.g[y][c] = -1; }); });
       for (let c = 0; c < b.cols; c++) {
@@ -6161,7 +6190,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       const seen = new Map(); dragCandidates(b, (ctx && ctx.steps) || 2).forEach((path) => { const g2 = applyDrag(b.g, path), key = g2.map((r) => r.join('')).join('/'); if (seen.has(key)) return; const gs = findGroups(g2), kinds = new Set(gs.filter((x) => x.kind < 3 && !(ctx && ctx.w && !ctx.w[KIND_EL[x.kind]])).map((x) => x.kind)); seen.set(key, { path, n: gs.reduce((a, x) => a + x.n, 0), col: ctx && ctx.cover ? kinds.size : 0 }); });
       cand = Array.from(seen.values()).sort((x, y) => y.col - x.col || y.n - x.n || x.path.length - y.path.length).slice(0, (ctx && ctx.top) || 24).map((x) => ({ path: x.path }));
     } else cand = moves(b, mode);
-    let best = null, bv = -1; cand.forEach((m) => { const p = preview(b, m, ctx); if (!p) return; const v = value(p.bonus, ctx) + p.res.combo * 0.001; if (v > bv) { bv = v; best = m; } });
+    let best = null, bv = -1; cand.forEach((m) => { const p = preview(b, m, ctx); if (!p) return; const v = (ctx && ctx.score ? ctx.score(p.res) : value(p.bonus, ctx)) + p.res.combo * 0.001;      /* ctx.score(res): 시뮬용 「고수」 — 실제 v8 피해 식으로 수를 고른다(게임 안 AI 는 안 씀) */ if (v > bv) { bv = v; best = m; } });
     return best;
   }
   /** 「판 도우미」(25턴 막힘): 상성 유리 구슬 5개를 한 번 맞춰 준 것으로 취급하는 가짜 결과. 판은 건드리지 않는다 */
@@ -6337,19 +6366,24 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     /** 터짐 → 낙하 → 연쇄를 단계마다 보여 준다. 끝나면 done */
     function reveal(res, done) {
       /* D49 쌓이는 쾌감: 터진 묶음을 하나씩 차례로 터뜨린다(묶음 하나 = 콤보 1). 콤보 수·배율 표시가 올라가고 소리 높이도 한 칸씩 오른다. 다 터뜨린 뒤에 낙하. */
-      const steps = res.steps, frames = res.frames || []; let i = 0, count = 0; const sp = () => Math.max(1, (o.speed && o.speed()) || 1), GAP = () => 300 / sp();
-      const mult = (c) => (root.ExpBattle && ExpBattle.comboMult ? ExpBattle.comboMult(c) : 1 + 0.5 * (c - 1));
+      const steps = res.steps, frames = res.frames || []; let i = 0, count = 0; const sp = () => Math.max(1, (o.speed && o.speed()) || 1), totalG = steps.reduce((a, st) => a + st.length, 0), GAP = () => (b.v >= 8 ? Math.max(60, Math.min(220, 650 / Math.max(1, totalG))) : 300) / sp(), FALL = () => (b.v >= 8 ? Math.max(90, Math.min(190, 440 / Math.max(1, steps.length))) : 240) / sp(), AFTER = () => (b.v >= 8 ? Math.max(80, Math.min(230, 300 / Math.max(1, steps.length))) : 300) / sp();      /* v8: 묶음이 많을수록 터짐 간격을 줄여 한 턴 연출 상한(4초·2배속 2초)을 지킨다 */
+      const V8 = b.v >= 8, mult = (c) => (V8 && root.ExpBattle && ExpBattle.comboMult8 ? ExpBattle.comboMult8(c) : root.ExpBattle && ExpBattle.comboMult ? ExpBattle.comboMult(c) : 1 + 0.5 * (c - 1));      /* v8: 콤보 곡선·덩어리 크기 배율·연쇄 단계 배율을 판 위에서 바로 보여 준다 */
       const cnt = document.createElement('div'); cnt.className = 'pz-count'; cnt.style.display = 'none'; box.appendChild(cnt);
       const showCount = (c, kind) => { cnt.style.display = ''; cnt.className = 'pz-count t' + Math.min(5, Math.ceil(c / 2)) + (c >= 8 ? ' max' : ''); cnt.innerHTML = '<b>' + c + '</b><span>' + LK('콤보', 'combo') + '</span><i>×' + mult(c).toFixed(1) + '</i>'; cnt.style.setProperty('--gc', GCOL[kind] || '#FFC94A'); cnt.classList.remove('punch'); void cnt.offsetWidth; cnt.classList.add('punch'); };
       const popGroup = (g, cb) => {
         count++; g.cells.forEach(([r, c]) => { const e = at[r] && at[r][c]; if (e) { e.classList.add('pop'); if (root.GF && GF.fx) try { const px = c * cell + cell / 2, py = r * cell + cell / 2; GF.fx.spark(grid, px, py, { n: 6, power: 38, colors: [GCOL[g.kind] || '#fff', '#fff'] }); } catch (x) { /* 연출 실패 무시 */ } } });
         if (window.ExpSnd && ExpSnd.ready === true) ExpSnd.pop(g.n, count); else sfx(synth('x_pop', 'ok'), { st: [0, 2, 4, 7, 9, 12, 14, 16][Math.min(count - 1, 7)] });
+        if (V8 && root.ExpBattle) {      /* v8 덩어리 크기: 이 묶음의 배율을 터지는 자리에 띄우고, 5개 이상은 판이 흔들리며 큰 링 · 별도 소리(7개 이상은 더 크게) */
+          const sm = ExpBattle.sizeMult8(g.n), cx = g.cells.reduce((a, c) => a + c[1], 0) / g.cells.length, cy = g.cells.reduce((a, c) => a + c[0], 0) / g.cells.length, tag = document.createElement('i'); tag.className = 'pz-sz t' + (g.n >= 7 ? 3 : g.n >= 5 ? 2 : g.n === 4 ? 1 : 0); tag.textContent = '×' + (sm % 1 ? sm.toFixed(1) : sm); tag.style.cssText = `left:${cx * cell + cell / 2}px;top:${cy * cell + cell / 2}px;--gc:${GCOL[g.kind] || '#FFC94A'}`; grid.appendChild(tag); setTimeout(() => tag.remove(), 950 / sp());
+          if (g.n >= 5) { grid.classList.remove('pz-quake'); void grid.offsetWidth; grid.classList.add('pz-quake'); setTimeout(() => grid.classList.remove('pz-quake'), 420 / sp()); if (root.GF && GF.fx) try { GF.fx.ring(grid, cx * cell + cell / 2, cy * cell + cell / 2, { size: Math.min(9, 3 + g.n * 0.6) }); } catch (x) { /* 무시 */ } sfx(g.n >= 7 ? 'x_blob7' : 'x_blob5'); }
+        }
         showCount(count, g.kind); if (count >= 4 && root.GF && GF.fx) try { GF.fx.ring(grid, grid.clientWidth / 2, grid.clientHeight / 2, { size: Math.min(7, 2 + count * 0.5) }); } catch (x) { /* 무시 */ }
         setTimeout(cb, GAP() * (g.n >= 5 ? 1.25 : 1));
       };
       const next = () => {
-        if (i >= steps.length) { setTimeout(() => cnt.remove(), 500); if (res.final) draw(res.final, false); done && done(); return; }
+        if (i >= steps.length) { setTimeout(() => cnt.remove(), b.v >= 8 ? 300 : 500); if (res.final) draw(res.final, false); done && done(); return; }
         const groups = steps[i]; let gi = 0;
+        if (V8 && i > 0 && root.ExpBattle) { const cb = document.createElement('div'); cb.className = 'pz-chain'; cb.innerHTML = '<b>' + LK('연쇄', 'Chain') + ' ' + (i + 1) + '</b><i>×' + ExpBattle.chainMult8(i + 1) + '</i>'; box.appendChild(cb); setTimeout(() => cb.remove(), 900 / sp()); }      /* v8 연쇄(연타): 낙하 뒤 다시 터지는 단계마다 배율 띠 */
         const nextG = () => {
           if (gi < groups.length) { popGroup(groups[gi++], nextG); return; }
           setTimeout(() => {
@@ -6360,8 +6394,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
               const keep = []; for (let r = N.rows - 1; r >= 0; r--) { const e = at[r][c]; if (popped.has(r * N.cols + c)) { e.remove(); } else keep.push(e); }
               for (let r = N.rows - 1, k = 0; r >= 0; r--, k++) { if (k < keep.length) { nat[r][c] = keep[k]; place(keep[k], r, c, 220); } else { const e = mk(f[r][c], r - (N.rows - keep.length) - 1, c, ''); void e.offsetWidth; place(e, r, c, 300); nat[r][c] = e; } }
             }
-            at = nat; i++; setTimeout(next, 300 / sp());
-          }, 240 / sp());
+            at = nat; i++; setTimeout(next, AFTER());
+          }, FALL());
         };
         nextG();
       };
@@ -6444,7 +6478,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       if (!daily) { SV.last = LV.id; save(); }
       const say = (msg) => { const t = UK.toast(msg, r); t.style.cssText += ';top:8px;left:10px;right:10px;height:40px;display:flex;align-items:center;justify-content:center;padding:0 12px;font-size:calc(18px * var(--uk-fs-k, 1));white-space:nowrap;overflow:hidden;z-index:30;pointer-events:none'; return t; };
       el('div', 'bd-hd', r, daily ? GF.t('c17.bead.012') : `<b>${GF.t('ui.hk.level', { n: LV.id })}</b><span>${D.chapters[LV.chapter - 1]}</span>`);
-      const DRAG = D.input === 'drag' && !!window.ExpPuzzleDrag, board = PZ.create({ seed: LV.seed, mode: DRAG ? 'drag' : 'slide' }), st = { n: 0 }; let used = 0, score = 0, busy = false, extra = 0, hinted = 0, done = false;
+      const DRAG = D.input === 'drag' && !!window.ExpPuzzleDrag, board = PZ.create({ seed: LV.seed, mode: DRAG ? 'drag' : 'slide' }), st = { n: 0 }; let used = 0, score = 0, bonus = 0, busy = false, extra = 0, hinted = 0, done = false;
       const left = () => LV.limit + extra - used, g = LV.goal;
       const goalBox = el('div', 'bd-goal', r), chips = el('div', 'bd-chips', r), boardW = el('div', 'bd-boardw', r), btns = el('div', 'bd-btns2', r), tip = el('div', 'bd-tip', r);
       const gi = el('span', 'bd-gico', goalBox); if (!daily) gi.innerHTML = goalIcon(g); else gi.textContent = '🌟'; const gt = el('b', '', goalBox, daily ? GF.t('c17.bead.013') : goalText(g)), gb = el('div', 'bd-bar', goalBox, '<i></i>'), gn = el('em', '', goalBox);
@@ -6456,10 +6490,25 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       const ctl = { board, nextAt: () => 0, ready: () => !busy && !done, helpReady: () => false }, core = { tick: 0 };
       const firstTime = !daily && !SV.tips.slide && LV.id === 1;
       const ui = DRAG ? ExpPuzzleDrag.mount(boardW, { board, dragTime: D.dragTime == null ? 0 : D.dragTime, maxCell: 56, sfx: (id, op) => { try { GF.sfx(id, op); } catch (e) { /* 소리 실패 무시 */ } }, canMove: () => !busy && !done && left() > 0,
-        onDrag: (path) => { if (busy || done || left() <= 0) return { ok: false, reason: 'busy' }; const res = PZ.drag(board, path); if (!res.ok) return res; used++; if (daily) score += PZ.scoreOf(res); else PZ.goalProg(g, st, res); busy = true; head(); if (!SV.tips.slide) { SV.tips.slide = 1; save(); ui.say(''); } return { ok: true, res, after: () => after(res, 0) }; } }) : UI.mount(boardW, { ctl, core, noMeter: true, maxCell: 56, tutorial: firstTime && !(navigator.webdriver && !/[?&]pz=1/.test(location.search)), tutText: [GF.t('c17.bead.014'), GF.t('c17.bead.015'), GF.t('c17.bead.016')],
+        onDrag: (path) => { if (busy || done || left() <= 0) return { ok: false, reason: 'busy' }; const res = PZ.drag(board, path); if (!res.ok) return res; used++; if (daily) { score += PZ.scoreOf(res); bonus += bigBonus(res); } else PZ.goalProg(g, st, res); bigFx(res); busy = true; head(); if (!SV.tips.slide) { SV.tips.slide = 1; save(); ui.say(''); } return { ok: true, res, after: () => after(res, 0) }; } }) : UI.mount(boardW, { ctl, core, noMeter: true, maxCell: 56, tutorial: firstTime && !(navigator.webdriver && !/[?&]pz=1/.test(location.search)), tutText: [GF.t('c17.bead.014'), GF.t('c17.bead.015'), GF.t('c17.bead.016')],
         sfx: (id, op) => { try { GF.sfx(id, op); } catch (e) { /* 소리 실패 무시 */ } }, hold: (v) => { if (!v) { SV.tips.slide = 1; save(); } }, finger: (t, to) => UK.finger(r, t, { to, ms: 12000 }),
-        onMove: (axis, idx, shift) => { if (busy || done || left() <= 0) return { ok: false, reason: 'busy' }; const res = PZ.slide(board, axis, idx, shift); if (!res.ok) return res; used++; if (daily) score += PZ.scoreOf(res); else PZ.goalProg(g, st, res); after(res); return { ok: true, res }; } });
+        onMove: (axis, idx, shift) => { if (busy || done || left() <= 0) return { ok: false, reason: 'busy' }; const res = PZ.slide(board, axis, idx, shift); if (!res.ok) return res; used++; if (daily) { score += PZ.scoreOf(res); bonus += bigBonus(res); } else PZ.goalProg(g, st, res); bigFx(res); after(res); return { ok: true, res }; } });
       const star = () => (used <= LV.par ? 3 : used <= LV.par + 3 ? 2 : 1), won = () => !daily && st.n >= g.n;
+      /* 큰 묶음·한 줄(10/23, ⑪ 원정대 v8 손맛 — gf-game 수치): 묶음 5개↑ = 큰 터짐(FX.bigPop) · 7개↑ = 거대 · 가로/세로 일직선 5개↑ = 한 줄(FX.lineClear).
+         연출 중심 — 오늘의 한 판만 보너스 점수를 따로 쌓아 결과에 보여 준다(완만한 곡선 5→+5 … 9↑→+18, 한 줄 +10). 별·최고점·목표는 원래 기준 그대로 */
+      const BCOL = ['#3DAE5B', '#E5334A', '#3B6FD6', '#FF6FAE', '#F5C518', '#8D9BB0'];
+      const bigList = (res) => { const out = []; (res.steps || []).forEach((stp, si) => stp.forEach((gr) => { if (!gr.cells || gr.n < 5) return; const rs = new Set(gr.cells.map((c) => c[0])), cs = new Set(gr.cells.map((c) => c[1])); out.push({ gr, si, line: rs.size === 1 ? 'row' : cs.size === 1 ? 'col' : '' }); })); return out; };
+      const bigBonus = (res) => bigList(res).reduce((a, b) => a + (b.gr.n >= 9 ? 18 : [0, 0, 0, 0, 0, 5, 8, 12, 15][b.gr.n]) + (b.line ? 10 : 0), 0);
+      function bigFx(res) {
+        const L = bigList(res).slice(0, 3); if (!L.length || !ui || !ui.cells) return;
+        const rectOf = (rc) => { const cellsAt = ui.cells(), box = boardW.getBoundingClientRect(), k = box.width / (boardW.offsetWidth || box.width) || 1, e = cellsAt[rc[0]] && cellsAt[rc[0]][rc[1]]; if (!e || !e.isConnected) return null;   /* 칸은 그때그때(판을 다시 그리면 칸 요소가 바뀐다) */ if (!e) return null; const q = e.getBoundingClientRect(); if (!q.width) return null; return { x: (q.left - box.left) / k, y: (q.top - box.top) / k, w: q.width / k, h: q.height / k }; };
+        L.forEach((b, i) => setTimeout(() => {   /* 판이 그 단계를 터뜨리는 때에 맞춰(연쇄 단계마다 0.45초) */
+          const rr = b.gr.cells.map(rectOf).filter(Boolean); if (!rr.length) return; const x0 = Math.min(...rr.map((q) => q.x)), y0 = Math.min(...rr.map((q) => q.y)), x1 = Math.max(...rr.map((q) => q.x + q.w)), y1 = Math.max(...rr.map((q) => q.y + q.h)), col = BCOL[b.gr.kind] || '#FFC933';
+          if (b.line) GF.fx.lineClear(boardW, col, { x: x0 - 4, y: y0 + (y1 - y0) / 2 - 22, w: x1 - x0 + 8, h: 44, ...(b.line === 'col' ? { x: x0 + (x1 - x0) / 2 - 22, y: y0 - 4, w: 44, h: y1 - y0 + 8 } : {}) }, b.line);
+          GF.fx.bigPop(boardW, { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, n: b.gr.n, color: col, label: b.line ? GF.t('fx.line') : null });
+          if (daily) { const v = (b.gr.n >= 9 ? 18 : [0, 0, 0, 0, 0, 5, 8, 12, 15][b.gr.n]) + (b.line ? 10 : 0); setTimeout(() => say(GF.t('bead.bonus', { v })), 300); }
+        }, 120 + b.si * 450 + i * 120));
+      }
       function after(res, delay) {
         busy = true; head(); const streak = res.combo;
         setTimeout(() => {
@@ -6490,7 +6539,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       function finishDaily() {
         const best = score > (SV.daily.best || 0); SV.daily.best = Math.max(SV.daily.best || 0, score); SV.daily.plays = (SV.daily.plays || 0) + 1; SV.daily.streak = dailyStreak(SV.daily); SV.daily.bestStreak = Math.max(SV.daily.bestStreak || 0, SV.daily.streak); SV.daily.date = today(); SV.daily.done = 1; const gained = [], it = DAILY_REW[SV.daily.plays]; if (it && Room.grant(it)) gained.push(it);
         const stars = score >= DAILY_STARS[2] ? 3 : score >= DAILY_STARS[1] ? 2 : score >= DAILY_STARS[0] ? 1 : 0; SV.shards++; save(); bar(); GF.extras && GF.extras.check(); GF.sfx('star'); GF.polish.finished();
-        const chips2 = [{ icon: 'star', text: best ? GF.t('c17.bead.018') : GF.t('c16.block.026', { best: SV.daily.best }) }]; if (SV.daily.streak >= 2) chips2.push({ icon: 'heart', text: GF.t('c16.bead.024', { streak: SV.daily.streak }) }); gained.forEach((id) => chips2.push({ icon: 'home', text: (Room.item(id) || {}).name || id }));
+        const chips2 = [{ icon: 'star', text: best ? GF.t('c17.bead.018') : GF.t('c16.block.026', { best: SV.daily.best }) }]; if (SV.daily.streak >= 2) chips2.push({ icon: 'heart', text: GF.t('c16.bead.024', { streak: SV.daily.streak }) }); gained.forEach((id) => chips2.push({ icon: 'home', text: (Room.item(id) || {}).name || id })); if (bonus > 0) chips2.push({ icon: 'star', text: GF.t('bead.bonus.chip', { v: bonus }) });   /* 보너스는 따로(별·최고점은 원래 점수) */
         UK.result({ title: stars ? GF.t('c17.bead.019') : GF.t('c17.bead.020'), stars, big: GF.t('c16.bead.014', { score: score }), chips: chips2, parent: r, onRetry: () => GF.replace('bplay', { daily: 1 }), retryText: GF.t('c16.block.007'), onHome: () => GF.home2(), homeText: GF.t('c16.block.009') });
       }
       function offerMore() { return GF.ads && GF.ads.offer({ placement: 'extra', ask: GF.t('c16.bead.005'), parent: r, onReward: () => { extra += 5; done = false; busy = false; head(); say(GF.t('c16.bead.010')); } }); }
@@ -6499,7 +6548,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         const sc = UK.modal({ title: GF.t('c16.bead.006'), body: GF.t('c17.bead.021', { v: Math.max(0, g.n - st.n) }), parent: r, actions: [{ text: GF.t('c16.sort.002'), icon: 'replay', cls: 'green', onclick: retry }, { text: GF.t('c16.bead.007'), cls: 'ghost', onclick: () => GF.replace('blevels') }] }); void sc;
         if (GF.ads) { const acts = r.querySelector('.uk-sheet .acts'); if (acts && GF.ads.eligible && GF.ads.eligible()) UK.btn({ text: GF.t('c16.bead.008'), icon: 'gift', cls: 'gold', onclick: () => { r.querySelectorAll('.uk-scrim').forEach((e) => e.remove()); offerMore(); } }, acts); }
       }
-      BD.debug.state = () => ({ board, st, used, score, LV, done, busy }); BD.debug.play = (m) => { const o = ui; void o; return null; }; BD.debug.slide = (axis, idx, shift) => { if (busy || done) return { ok: false }; const res = PZ.slide(board, axis, idx, shift); if (!res.ok) return res; used++; if (daily) score += PZ.scoreOf(res); else PZ.goalProg(g, st, res); ui.redraw(); after(res); return { ok: true, res }; }; BD.debug.hintMove = () => PZ.hint(board, { steps: 2 }, DRAG ? 'drag' : 'slide'); BD.debug.drag = (path) => ui.submit(path); BD.debug.isDrag = DRAG; BD.debug.move = (m) => (m.path ? BD.debug.drag(m.path) : BD.debug.slide(m.axis, m.idx, m.shift)); BD.debug.lose = lose; BD.debug.finish = finish;
+      BD.debug.state = () => ({ board, st, used, score, bonus, LV, done, busy }); BD.debug.play = (m) => { const o = ui; void o; return null; }; BD.debug.slide = (axis, idx, shift) => { if (busy || done) return { ok: false }; const res = PZ.slide(board, axis, idx, shift); if (!res.ok) return res; used++; if (daily) { score += PZ.scoreOf(res); bonus += bigBonus(res); } else PZ.goalProg(g, st, res); bigFx(res); ui.redraw(); after(res); return { ok: true, res }; }; BD.debug.hintMove = () => PZ.hint(board, { steps: 2 }, DRAG ? 'drag' : 'slide'); BD.debug.drag = (path) => ui.submit(path); BD.debug.isDrag = DRAG; BD.debug.move = (m) => (m.path ? BD.debug.drag(m.path) : BD.debug.slide(m.axis, m.idx, m.shift)); BD.debug.lose = lose; BD.debug.finish = finish;
       /* 첫 판 손가락 시연: 장 카드·창이 떠 있으면 닫힐 때까지 기다렸다가(QA 10/20 B-1: 장 카드 때문에 시연이 한 번도 안 나왔음) */
       const demo = (k) => { if (done || !r.isConnected || used > 0) return; if (busy || document.querySelector('.uk-scrim, .tale-ov')) { if (k < 60) setTimeout(() => demo(k + 1), 700); return; } const m = PZ.hint(board, { steps: 2 }, 'drag'); if (!m) return; const cs = ui.cells(), a0 = m.path[0], a1 = m.path[m.path.length - 1]; ui.say(GF.t('c16.bead.011')); UK.finger(r, cs[a0[0]][a0[1]], { to: cs[a1[0]][a1[1]], ms: 12000 }); };
       if (DRAG && firstTime && !(navigator.webdriver && !/[?&]pz=1/.test(location.search))) setTimeout(() => demo(0), slow(1400));

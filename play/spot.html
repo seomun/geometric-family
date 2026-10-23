@@ -1582,7 +1582,44 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const seaweed = (x, y, h, c) => `<g class="sway" style="animation-delay:-${x % 3}s;transform-origin:${x}px ${y}px"><path d="M${x} ${y}c-14 -${h * 0.25} 14 -${h * 0.5} 0 -${h * 0.75}s10 -${h * 0.2} 4 -${h * 0.25}" stroke="${c}" stroke-width="9" fill="none" stroke-linecap="round"/></g>`;
   const fishS = (x, y, c, s) => `<g class="bob" style="animation-delay:-${(x + y) % 4}s"><g transform="translate(${x} ${y}) scale(${s || 1})"><ellipse cx="0" cy="0" rx="16" ry="10" fill="${c}"${SK}/><path d="M14 0l12 -9v18z" fill="${c}"${SK}/><circle cx="-7" cy="-2" r="2.4" fill="#4A3030"/><path d="M-2 -8q4 8 0 16" stroke="#fff" stroke-width="2" opacity=".5" fill="none"/></g></g>`;
   const palace = (x, y) => `<g><rect x="${x - 70}" y="${y - 12}" width="140" height="14" rx="4" fill="#E8D2A8"${SK}/><rect x="${x - 56}" y="${y - 66}" width="112" height="54" fill="#FFF3DC"${SK}/>` + [-50, -20, 12, 42].map((d) => `<rect x="${x + d}" y="${y - 66}" width="8" height="54" fill="#E05A5A"/>`).join('') + `<rect x="${x - 12}" y="${y - 50}" width="24" height="38" rx="12" fill="#5C6B8A"${SK}/><path d="M${x - 84} ${y - 62}Q${x - 58} ${y - 58} ${x - 46} ${y - 90}H${x + 46}Q${x + 58} ${y - 58} ${x + 84} ${y - 62}Q${x} ${y - 70} ${x - 84} ${y - 62}z" fill="#3F8FD8"${SK}/><rect x="${x - 48}" y="${y - 96}" width="96" height="8" rx="4" fill="#FFC933"${SK}/><circle cx="${x}" cy="${y - 108}" r="9" fill="#FFC933"${SK}/></g>`;   /* 용궁 */
+  /* ---- 실내 배경 소품(10/23: 동화·식탁 이야기 컷이 빈 벽(indoor2)으로 나오던 것) — 벽은 y 470 까지, 바닥 아래 ---- */
+  const room = (wall, floor, pat) => `<rect x="-1500" y="-1500" width="3360" height="1970" fill="${wall}"/>` + (pat || '') + band(470, floor, 1700) + band(470, '#8A5A3B', 6) + `<rect x="-1500" y="476" width="3360" height="1700" fill="#000" opacity=".04"/>` + rep(() => Array.from({ length: 6 }, (_, i) => `<path d="M${i * 60} 476v170" stroke="#000" stroke-width="2" opacity=".06"/>`).join(''));
+  const winOut = (x, y, w, h, scene) => `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="#BFE8FF"${SK}/>${scene || `<ellipse cx="${x + w * 0.5}" cy="${y + h * 0.9}" rx="${w * 0.7}" ry="${h * 0.3}" fill="#9ADB88"/><circle cx="${x + w * 0.75}" cy="${y + h * 0.28}" r="${w * 0.1}" fill="#FFE27A"/>`}<path d="M${x + w / 2} ${y}v${h}M${x} ${y + h / 2}h${w}" stroke="#8A5A3B" stroke-width="4"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="none" stroke="#8A5A3B" stroke-width="6"/></g>`;
+  const picFrame = (x, y, w, h, inner) => `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="#FFF8EC" stroke="#8A5A3B" stroke-width="4"/>${inner || ''}</g>`;
+  const shelf = (x, y, w, items) => `<rect x="${x}" y="${y}" width="${w}" height="7" rx="2" fill="#A8703F"${SK}/>` + (items || '');
+  const books = (x, y) => [['#FF8FA8', 12, 30], ['#8FD3F4', 10, 26], ['#FFC933', 14, 32], ['#9ADB88', 10, 24], ['#B197FC', 12, 28]].map((b, i, a) => { const bx = x + a.slice(0, i).reduce((s, q) => s + q[1] + 1, 0); return `<rect x="${bx}" y="${y - b[2]}" width="${b[1]}" height="${b[2]}" fill="${b[0]}" stroke="#4A3030" stroke-width="1.6"/>`; }).join('');
+  const plant = (x, y, s) => `<g transform="translate(${x} ${y}) scale(${s || 1})"><path d="M0 -20q-22 -26 -10 -50q6 22 10 30q4 -30 14 -40q4 26 -8 42q20 -18 30 -14q-12 20 -36 32z" fill="#5FB57B" stroke="#3F7A4E" stroke-width="2"/><path d="M-14 -22h28l-4 22h-20z" fill="#E8743B"${SK}/></g>`;
+  const pendant = (x, y) => `<g class="sway" style="animation-duration:6s"><path d="M${x} -20V${y - 18}" stroke="#4A3030" stroke-width="2"/><path d="M${x - 22} ${y}q22 -32 44 0z" fill="#FFC933"${SK}/><ellipse cx="${x}" cy="${y + 4}" rx="34" ry="10" fill="#FFF3B0" opacity=".45"/></g>`;
+  const bowl = (x, y, s, c) => `<g transform="translate(${x} ${y}) scale(${s || 1})"><path d="M-14 -10h28q0 14 -14 14t-14 -14z" fill="${c || '#fff'}"${SK}/><ellipse cx="0" cy="-10" rx="14" ry="3.5" fill="#F7F2E8" stroke="#4A3030" stroke-width="2"/><path d="M-5 -16q2 -6 0 -10M5 -16q2 -6 0 -10" stroke="#fff" stroke-width="2" opacity=".8" fill="none"/></g>`;
   const BG = {
+    /* 거실(10/23 새로): 이야기 프롤로그·엔딩 — 세 가족 액자(네모·세모·동그라미) · 창과 커튼 · 책꽂이 · 화분 · 벽시계 · 러그 */
+    living: () => room('#FFE8C8', '#D9A66B', rep(() => Array.from({ length: 30 }, (_, i) => `<circle cx="${(i % 6) * 60 + 30 + (Math.floor(i / 6) % 2) * 30}" cy="${Math.floor(i / 6) * 70 + 40}" r="3" fill="#F6D3A8"/>`).join('')))
+      + rep(() => winOut(240, 190, 96, 110) + '<path d="M228 180q14 64 0 128h16q-8 -64 0 -128zM350 180q-14 64 0 128h-16q8 -64 0 -128z" fill="#FF8FA8" stroke="#4A3030" stroke-width="2"/>'
+        + picFrame(28, 230, 46, 56, '<rect x="40" y="246" width="22" height="24" rx="4" fill="#F2A65A"/>') + picFrame(84, 214, 46, 56, '<path d="M107 226l14 30h-28z" fill="#FFC933"/>') + picFrame(140, 236, 46, 56, '<circle cx="163" cy="264" r="13" fill="#8FA8C8"/>')
+        + '<circle cx="60" cy="58" r="22" fill="#fff"' + SK + '/><path d="M60 58v-12M60 58l9 5" stroke="#4A3030" stroke-width="3"/>'
+        + shelf(20, 330, 120, books(28, 330) + plant(118, 330, 0.7)) + plant(330, 470, 1.2)) + rep(() => '<ellipse cx="180" cy="560" rx="150" ry="34" fill="#FF8FA8" opacity=".35"/>'),
+    /* 숲속 오두막(10/23 새로, 세 마리 곰): 통나무 벽 · 벽난로 · 큰·중간·작은 그릇과 의자 · 창밖 숲 */
+    cabin: () => room('#C98F5A', '#A97B4E', rep(() => Array.from({ length: 9 }, (_, i) => `<path d="M0 ${i * 54 + 20}h360" stroke="#A8703F" stroke-width="5"/><circle cx="${(i * 97) % 340 + 10}" cy="${i * 54 + 20}" r="6" fill="#B07A4C" stroke="#8A5A3B" stroke-width="2"/>`).join('')))
+      + rep(() => winOut(250, 214, 84, 80, '<path d="M250 294l20 -44 20 44zM280 294l22 -56 22 56z" fill="#3E8A4A"/>') + shelf(196, 330, 150, bowl(222, 330, 1.25, '#FFE0A8') + bowl(268, 330, 0.95, '#FFD1DC') + bowl(306, 330, 0.7, '#C8E6FF'))
+        + `<rect x="14" y="300" width="96" height="170" fill="#9C8B7A"${SK}/><rect x="34" y="370" width="56" height="100" rx="24" fill="#3A2E39"/><path d="M50 460c-10 -14 -2 -30 12 -40c0 12 12 16 8 30c-2 6 -6 10 -12 10z" fill="#FF8A3C"/><rect x="6" y="292" width="112" height="12" rx="3" fill="#7A6A5A"${SK}/>`
+        + `<rect x="150" y="410" width="170" height="14" rx="4" fill="#B07A4C"${SK}/><path d="M166 424v46M304 424v46" stroke="#8A5A3B" stroke-width="7"/>` + bowl(184, 408, 1.4, '#FFE0A8') + bowl(236, 408, 1.1, '#FFD1DC') + bowl(280, 408, 0.8, '#C8E6FF')
+        + `<path d="M48 120h40M48 140h40" stroke="#8A5A3B" stroke-width="3"/>` + plant(68, 112, 0.6)),
+    /* 공방(10/23 새로, 구두장이와 요정·피노키오): 판자 벽 · 연장 걸이(망치·톱·가위) · 구두 선반 · 작업대와 램프 · 나무 인형 */
+    workshop: () => room('#E8C99A', '#B98550', rep(() => Array.from({ length: 7 }, (_, i) => `<path d="M${i * 60} 0v470" stroke="#D2AD7A" stroke-width="3"/>`).join('')))
+      + rep(() => winOut(258, 206, 76, 76) + `<g transform="translate(0 104)"><rect x="24" y="110" width="150" height="90" rx="6" fill="#C98F5A"${SK}/>`
+        + '<path d="M50 126v46" stroke="#8A5A3B" stroke-width="6"/><rect x="40" y="122" width="22" height="12" rx="3" fill="#8C8C9A" stroke="#4A3030" stroke-width="2"/>'
+        + '<path d="M90 124l40 0l0 14l-40 10z" fill="#C8D0DA" stroke="#4A3030" stroke-width="2"/><path d="M84 124h10v26h-10z" fill="#8A5A3B"/>'
+        + '<circle cx="152" cy="140" r="8" fill="none" stroke="#4A3030" stroke-width="3"/><circle cx="152" cy="166" r="8" fill="none" stroke="#4A3030" stroke-width="3"/><path d="M158 146l12 12M158 160l12 -12" stroke="#4A3030" stroke-width="3"/></g>'   /* 연장 걸이는 자막 아래 보이는 띠로(10/23) */
+        + shelf(200, 316, 150, [[214, '#E05A5A'], [252, '#5C8FE0'], [290, '#FFC933']].map((s) => `<path d="M${s[0]} 316v-14q0 -8 10 -8h6q4 10 18 12q6 2 6 10z" fill="${s[1]}" stroke="#4A3030" stroke-width="2"/>`).join(''))
+        + '<g transform="translate(0 46)">' + shelf(24, 300, 130, '<circle cx="50" cy="270" r="9" fill="#F3DDB5" stroke="#4A3030" stroke-width="2"/><rect x="42" y="279" width="16" height="21" rx="4" fill="#E8C35A" stroke="#4A3030" stroke-width="2"/><path d="M50 266l12 -2" stroke="#4A3030" stroke-width="2"/>' + books(90, 300)) + '</g>'
+        + `<rect x="150" y="400" width="200" height="16" rx="4" fill="#A8703F"${SK}/><path d="M166 416v54M334 416v54" stroke="#8A5A3B" stroke-width="8"/><path d="M314 400v-40l-16 -14" stroke="#4A3030" stroke-width="3" fill="none"/><path d="M286 340l20 -6 6 18z" fill="#FFC933"${SK}/><ellipse cx="300" cy="398" rx="30" ry="6" fill="#FFF3B0" opacity=".5"/><path d="M190 396q20 -14 40 0z" fill="#8A5A3B"/>`),
+    /* 식탁 부엌(10/23 새로, 세 가족 식탁 이야기): 타일 벽 · 위 찬장 · 그릇 선반 · 펜던트 등 · 밥상(밥·국·반찬) · 냉장고와 자석 · 밥솥 */
+    dining: () => room('#FFF1DC', '#C9925E', rep(() => Array.from({ length: 6 }, (_, i) => `<path d="M0 ${300 + i * 28}h360" stroke="#F0DCC0" stroke-width="2"/>`).join('') + Array.from({ length: 12 }, (_, i) => `<path d="M${i * 30} 300v170" stroke="#F0DCC0" stroke-width="2"/>`).join('')))
+      + rep(() => `<rect x="10" y="40" width="200" height="90" rx="6" fill="#9ADB88"${SK}/><path d="M76 40v90M142 40v90" stroke="#4A3030" stroke-width="3"/><circle cx="66" cy="86" r="4" fill="#4A3030"/><circle cx="86" cy="86" r="4" fill="#4A3030"/><circle cx="152" cy="86" r="4" fill="#4A3030"/>`
+        + shelf(20, 230, 170, bowl(44, 230, 1, '#fff') + bowl(80, 230, 1, '#FFD1DC') + bowl(116, 230, 1, '#C8E6FF') + jar(160, 230, 0.5, '#E8743B'))
+        + `<rect x="262" y="210" width="84" height="260" rx="10" fill="#F4F8FF"${SK}/><path d="M262 300h84M276 236v40M276 316v60" stroke="#4A3030" stroke-width="3"/><circle cx="300" cy="250" r="7" fill="#FF8FA8"/><rect x="314" y="244" width="14" height="14" fill="#FFC933"/><path d="M296 330l8 -12 8 12z" fill="#8FD3F4"/>`
+        + `<rect x="210" y="248" width="40" height="34" rx="10" fill="#fff"${SK}/><rect x="216" y="256" width="28" height="10" rx="3" fill="#8FD3F4"/><rect x="200" y="282" width="60" height="7" fill="#A8703F"/>` + pendant(150, 300)
+        + `<rect x="60" y="414" width="200" height="14" rx="5" fill="#B07A4C"${SK}/><path d="M78 428v42M242 428v42" stroke="#8A5A3B" stroke-width="7"/>` + bowl(96, 412, 1, '#fff') + bowl(140, 412, 1, '#FFE0A8') + bowl(184, 412, 0.8, '#C8F0C8') + bowl(222, 412, 0.8, '#FFD1DC')),
     forest: () => sky('#A8DDB0', '#EAF7D6') + '<circle cx="290" cy="80" r="30" fill="#FFF3B0" opacity=".9"/>' + cloud(80, 90, .9)
       + G(rep(() => [[20, 430, 70], [120, 410, 90], [240, 440, 64], [330, 420, 80]].map((t) => '<rect x="' + (t[0] - 9) + '" y="' + t[1] + '" width="18" height="' + (560 - t[1]) + '" fill="#8A5A3B"/><circle cx="' + t[0] + '" cy="' + t[1] + '" r="' + t[2] + '" fill="#5FAF6B" stroke="#3E8A4A" stroke-width="3"/>').join('') + hill(560, '#7FBF5A', [180, 330, 70])) + band(560, '#7FBF5A')
         + [[40, 590], [140, 598], [250, 592], [320, 600]].map((m) => '<g transform="translate(' + m[0] + ' ' + m[1] + ')"><rect x="-3" y="0" width="6" height="12" fill="#FFF3E0"/><path d="M-12 2q12-18 24 0z" fill="#FF6B6B"/><circle cx="-4" cy="-4" r="2" fill="#fff"/><circle cx="4" cy="-6" r="2" fill="#fff"/></g>').join('') + flowers(606))
@@ -4291,9 +4328,11 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const build = () => { w.innerHTML = ''; w.style.cssText = 'position:relative;width:250px;height:140px'; to = mk(s.b, 1, w); to.style.cssText += ';position:absolute;right:10px;top:12px;font-size:72px' + (s.shadow ? ';filter:brightness(0);opacity:.35' : ''); it = mk(s.a, 0, w); it.style.cssText += ';position:absolute;left:10px;top:24px;font-size:56px;transition:all .8s'; };
     M.loop(host, build, [[900, () => { it.style.left = '122px'; it.style.top = '18px'; }], [700, () => { if (s.shadow) to.style.cssText += ';filter:none;opacity:1'; w.insertAdjacentHTML('beforeend', '<b class="tm-spk" style="position:absolute;right:20px;top:0;font-size:30px;font-weight:400">✨</b>'); }]], still);
   });
-  const BG = { pigs: 'field', bremen: 'village', gyeonwoo: 'night', bears: 'indoor2', jack: 'hill', kongjwi: 'village', heungbu: 'field', ureng: 'field', axe: 'forest', ant: 'hill', sun: 'night', hare: 'field', brothers: 'field', snowqueen: 'night' };
+  /* 동화마다 배경(10/23: 11편이 빈 벽 indoor2 로 나오고 계절·장소가 어긋나던 것 정리 — 콩쥐 장독대·금도끼 가을 연못·눈의 여왕 첫눈·선녀 보름달 연못·토끼전 용궁 등) */
+  const BG = { pigs: 'field', bremen: 'village', gyeonwoo: 'pondnight', bears: 'cabin', jack: 'hill', kongjwi: 'yard', heungbu: 'field', ureng: 'field', axe: 'autumn', ant: 'field', sun: 'night', hare: 'hill', brothers: 'hill', snowqueen: 'snow',
+    shoes: 'workshop', pino: 'workshop', hok: 'forest', fairywood: 'pondnight', rabbitliver: 'undersea', magpie: 'hill', tigerpersimmon: 'night', redhood: 'hill', hansel: 'forest', puss: 'village' };
   /** 데이터 컷 → GF.story 컷. 캐릭터는 id 목록(또는 {id,x,y}), bubble 은 종류 문자열 */
-  T.cuts = (raw, bg) => raw.map((c) => ({ bg: c.bg || bg || 'indoor2', text: c.text, voice: c.voice, chars: (c.chars || []).map((q, k, a) => (typeof q === 'string' ? { id: q, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 } : q)), mini: c.mini || null, bubble: c.bubble ? { type: c.bubble, at: 0 } : null }));
+  T.cuts = (raw, bg) => raw.map((c) => ({ bg: c.bg || bg || 'living', text: c.text, voice: c.voice, chars: (c.chars || []).map((q, k, a) => (typeof q === 'string' ? { id: q, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 } : q)), mini: c.mini || null, bubble: c.bubble ? { type: c.bubble, at: 0 } : null }));
   /** 컷 묶음을 화면 위에 띄운다. 끝나거나 건너뛰면 cb(). parent 는 화면 루트 */
   T.play = function (raw, parent, cb, o) {
     o = o || {}; try { GF.ads && GF.ads.noteStory && GF.ads.noteStory(); GF.ops && GF.ops.note && GF.ops.note('story'); } catch (e) {}   // 컷 직후에는 전면 광고 금지
@@ -4315,17 +4354,17 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (!T.ready) return (cb && cb(), false);
     /* 1장 기(시작) 컷을 소개에 이어 붙인다 — 따로 두면 「시작」 뒤 판 앞에서 컷을 또 넘겨야 해 첫 판까지 탭 8~9번(QA 10/20 C-1). 1장 컷은 본 것으로 표시(이야기 카드도 그대로) */
     const c1 = ch(1), add = c1 && c1.start && c1.start.length && !T.seen('s1') && !T.seen('prologue') && !auto() ? c1.start : [];
-    return go((T.d.prologue || []).concat(add), parent, () => { if (add.length) { T.mark('s1'); afterBeat('s1'); } cb && cb(); }, { bg: 'indoor' }, 'prologue');
+    return go((T.d.prologue || []).concat(add), parent, () => { if (add.length) { T.mark('s1'); afterBeat('s1'); } cb && cb(); }, { bg: 'living' }, 'prologue');
   };
   /** 장의 첫 판 앞: 기(시작) 컷 */
-  T.before = function (n, idx, parent, cb) { const c = ch(n); if (!T.ready || !c || idx !== 1) return (cb && cb(), false); if (n === 1 && GF.firstRun && GF.firstRun() && !T.seen('prologue')) { T.defer(); return (cb && cb(), false); } return go(c.start, parent, cb, { bg: BG[c.tale] }, 's' + n); };   // 첫 실행 1장 기 컷도 미룸 — 나중에 「이야기 보기」 프롤로그에 붙어 나온다(본 표시 안 함)
+  T.before = function (n, idx, parent, cb) { const c = ch(n); if (!T.ready || !c || idx !== 1) return (cb && cb(), false); if (n === 1 && GF.firstRun && GF.firstRun() && !T.seen('prologue')) { T.defer(); return (cb && cb(), false); } return go(c.start, parent, cb, { bg: c.bg || BG[c.tale] }, 's' + n); };   // 첫 실행 1장 기 컷도 미룸 — 나중에 「이야기 보기」 프롤로그에 붙어 나온다(본 표시 안 함)
   /** 판을 깬 직후: 장 중간(승·전) 컷 또는 장 끝(결) 컷, 마지막 장이면 엔딩. per = 장당 판 수 */
   T.after = function (n, idx, per, parent, cb) {
     const c = ch(n); if (!T.ready || !c) return (cb && cb(), false);
-    const mid = (c.mid || []).find((m) => m.after === idx); if (mid) return go(mid.cuts, parent, cb, { bg: BG[c.tale] }, 'm' + n + ':' + idx);
+    const mid = (c.mid || []).find((m) => m.after === idx); if (mid) return go(mid.cuts, parent, cb, { bg: c.bg || BG[c.tale] }, 'm' + n + ':' + idx);
     if (idx !== per) return (cb && cb(), false);
     const last = T.d.last === n, seq = (c.end || []).concat(last ? [] : []);
-    return go(seq, parent, () => { if (last && !T.seen('ending')) { T.mark('ending'); if (auto()) { cb && cb(); return; } T.play(T.d.ending || [], parent, () => T.finalCard(parent, cb), { bg: 'indoor2' }); } else cb && cb(); }, { bg: BG[c.tale] }, 'e' + n);
+    return go(seq, parent, () => { if (last && !T.seen('ending')) { T.mark('ending'); if (auto()) { cb && cb(); return; } T.play(T.d.ending || [], parent, () => T.finalCard(parent, cb), { bg: 'living' }); } else cb && cb(); }, { bg: c.bg || BG[c.tale] }, 'e' + n);
   };
   /** 엔딩 뒤 마지막 한 줄 카드 */
   T.finalCard = function (parent, cb) {
@@ -4333,7 +4372,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const a = el('div', 'acts', sh); UK.btn({ text: GF.t('ui.tale.next'), cls: 'green', icon: 'next', onclick: () => { sc.remove(); cb && cb(); } }, a); GF.sfx('celebrate'); try { UK.confetti(sc); } catch (e) {}
   };
   /** 지도의 이야기 책: 그 장 컷 전부(기·승·전·결) 다시 보기 */
-  T.replay = function (n, parent, cb) { const c = ch(n); if (!T.ready || !c) return (cb && cb(), false); const all = (c.start || []).concat(...(c.mid || []).map((m) => m.cuts), c.end || []); T.play(all, parent || safe(), cb, { bg: BG[c.tale] }); return true; };
+  T.replay = function (n, parent, cb) { const c = ch(n); if (!T.ready || !c) return (cb && cb(), false); const all = (c.start || []).concat(...(c.mid || []).map((m) => m.cuts), c.end || []); T.play(all, parent || safe(), cb, { bg: c.bg || BG[c.tale] }); return true; };
   /* ---------------- 판 안 말풍선 ---------------- */
   /** kind: 'start' | 'clear'. n 으로 돌려 가며 한마디(배역 캐릭터 얼굴 + 말). 유아 앱은 글 없이 얼굴+말풍선 그림+음성 슬롯 */
   T.say = function (parent, n, kind, k) {

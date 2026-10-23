@@ -1242,7 +1242,7 @@ html[data-rm="1"] .uk-fly { display: none; }
 .hk-pv-mid { flex: 1; min-width: 0; background: none; text-align: left; display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 0 2px !important; }
 .hk-pv-lv { font: 400 calc(26px * var(--uk-fs-k, 1))/1.05 var(--uk-num); color: var(--uk-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hk-pv-goal { font: 400 calc(16px * var(--uk-fs-k, 1))/1.2 var(--uk-title-font); color: var(--uk-ink2); white-space: normal; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: keep-all; }   /* 좁은 폭(375)에서 「한 가지 구슬 모으기」가 말줄임 → 두 줄까지 */
-.hk-pv-map { font: 400 calc(14px * var(--uk-fs-k, 1))/1 var(--uk-title-font); color: var(--uk-green-d); }
+.hk-pv-map { font: 400 calc(14px * var(--uk-fs-k, 1))/1 var(--uk-title-font); color: #2B7A45; }   /* 10/24 axe 대비: 크림 바탕 위 --uk-green-d(3.3:1) → 5.2:1 */
 .hk-pv-item { flex: none; width: 86px; border-radius: 14px; background: #FFF4D6 !important; box-shadow: inset 0 0 0 2px #EED9AE; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 4px !important; }
 .hk-pv-item img { width: 48px; height: 48px; object-fit: contain; } .hk-pv-item small { font: 400 12px/1.1 var(--uk-title-font); max-width: 78px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hk-pv-bar { display: block; width: 66px; height: 8px; border-radius: 4px; background: #EFE3CF; border: 1.5px solid var(--uk-line); overflow: hidden; } .hk-pv-bar em { display: block; height: 100%; background: linear-gradient(var(--uk-gold), #FFAE00); }
@@ -6127,7 +6127,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       const ss = seasonNow(), s = ss.length ? (ss.find((x) => !SV.seasonDone[seasonKey(x)]) || ss[0]) : null, sDone = s && SV.seasonDone[seasonKey(s)];
       const seasonIc = s ? { id: 'season', icon: 'star', label: s.title, fn: () => { const L = seasonLevel(s); if (L) GF.go('pplay', { level: L }); }, badge: sDone ? '✔' : '!', hot: !sDone } : null;
       GF.homeKit(r, { key: 'spot', fam: ['nemo_kids.kid3', 'dong_dad.warm', 'baby.surprise'], props: (() => { try { return Object.values(REW).slice(0, 2); } catch (e) { return []; } })(),   /* 앱마다 다른 배역·무대 가구(G3) */ title: GF.t('c17.spot.010'), level: last, preview: () => GF.mini.pair(), goalText: (() => { const L = D.levels.find((l) => l.id === last) || D.levels[0]; return (D.types || {})[L.type] || ''; })(),   /* 홈 미리보기(허브 10/21) */ first: !n, cleared: n, play: () => GF.go('pplay', { n: last }), levels: () => GF.go('plevels'), house: () => GF.go('phouse'),
-        icons: [{ id: 'daily', icon: 'gift', label: GF.t('ui.hk.daily'), fn: () => { const L = dailyLevel(); if (L) GF.go('pplay', { level: L }); }, badge: dailyDone ? '✔' : '1', hot: !dailyDone }, seasonIc, toonData() && { id: 'toon', icon: '🔍', label: GF.t('c17.spot.011'), fn: () => GF.go('ptoon'), badge: Object.keys(SV.toon || {}).length ? '' : 'N' }, { id: 'trio', icon: 'heart', label: GF.t('ui.hk.trio'), fn: () => GF.go('ptrio') }].filter(Boolean) });
+        icons: [{ id: 'daily', icon: 'gift', label: GF.t('ui.hk.daily'), fn: () => { const L = dailyLevel(); if (L) GF.go('pplay', { level: L }); }, badge: dailyDone ? '✔' : '1', hot: !dailyDone }, seasonIc, { id: 'trio', icon: 'heart', label: GF.t('ui.hk.trio'), fn: () => GF.go('ptrio'), badge: toonData() && !Object.keys(SV.toon || {}).length ? 'N' : '' }].filter(Boolean) });   /* 10/24 ui_audit: 「웹툰 숨은 가족」은 세 가족 판 화면 안으로(홈 터치 9 · 시즌 판이 열려도 공방이 밀려나지 않게), 아직 안 했으면 세 가족 판에 N */
     },
   });
   GF.screen('plevels', {
@@ -6147,6 +6147,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       el('div', 'sp-line', r, GF.t('c16.sort.004')).style.top = '172px';
       const box = el('div', 'sp-trio', r); box.style.top = '226px';
       Ls.forEach((L, i) => { const st = SV.trio[n + ':' + i] || 0, b = UK.btn({ text: RULE_TXT[i][0] + (st ? '  ' + '★'.repeat(st) : ''), cls: RULE_TXT[i][2] + ' block', onclick: () => { if (L) GF.go('pplay', { level: L }); } }, box); el('small', '', b, RULE_TXT[i][1]); });
+      if (toonData()) { const tb = UK.btn({ text: '🔍 ' + GF.t('c17.spot.011') + (Object.keys(SV.toon || {}).length ? '' : '  N'), cls: 'ghost block', onclick: () => GF.go('ptoon') }, box); tb.classList.add('sp-toonbtn'); }   /* BM-D3 웹툰 숨은 가족(홈에서 옮김, 10/24) */
     },
   });
 

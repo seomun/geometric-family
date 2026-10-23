@@ -4753,7 +4753,7 @@ html[data-rm="1"] .ifocus { animation: none; box-shadow: 0 0 0 5px rgba(255,216,
     if (O.kid) return []; const out = [], X = GF.extras, C = GF.craft, dl = GF._hkDaily;
     if (dl) out.push({ id: 'daily', ic: '📅', t: GF.t('ui.hk.daily'), s: dl.done ? '✔' : '▶', ok: dl.done, go: dl.done ? null : dl.fn });
     try { if (C && C.cfg && C.cfg.group === 'adult' && C.isOpen && C.isOpen() && C.homeIcon && C.homeIcon()) { const n = C.yardLeft(); out.push({ id: 'yard', ic: '🌿', t: GF.t('craft.a.yard'), s: n ? GF.t('ops.stop.yardn', { n }) : '✔', ok: !n, go: n ? () => GF.go('craft') : null }); } } catch (e) { /* 공방 없음 */ }
-    try { const A = X && X.attendInfo && X.attendInfo(); if (A) out.push({ id: 'att', ic: '⭐', t: GF.t('ops.stop.att'), s: A.can ? '🎁' : A.total && A.toNext === 5 ? '✔ ' + A.total : (5 - A.toNext) + '/5', ok: !A.can && !!A.total && A.toNext === 5,   /* 막 받은 날은 0/5 대신 ✔ n(실사용 QA 10/23) */ go: () => X.openAttend() }); } catch (e) { /* 도장 없음 */ }
+    try { const A = X && X.attendInfo && X.attendInfo(); if (A) out.push({ id: 'att', ic: '⭐', t: GF.t('ops.stop.att'), s: A.can ? '🎁' : A.total && A.toNext === 5 ? String(A.total) : (5 - A.toNext) + '/5', ok: !A.can && !!A.total && A.toNext === 5, /* 막 받은 날은 0/5 대신 초록 칸 + 도장 수(칸 아이콘이 ✔, 실사용 QA 10/23) */ go: () => X.openAttend() }); } catch (e) { /* 도장 없음 */ }
     return out;
   };
   O.tomorrow = function () {

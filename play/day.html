@@ -3261,7 +3261,16 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     Room.placedIn(target).push({ id, x: pos.x, y: pos.y, flip: 0, c: it.colors[0] }); Room.save(); return { room: target };
   };
   /** 얻었지만 아직 맞는 방이 없어 못 놓은 가구를, 방이 열리면 놓는다 */
-  Room.sweep = function () { const S = ensure(); if (!S || !H()) return 0; let n = 0; Room.owned().forEach((id) => { if (!Object.values(S.placed).some((L) => L.some((p) => p.id === id))) { const r = Room.placeAt(id); if (r && !r.already) n++; } }); return n; };
+  /* 10/24 housing_sim 원인: 방이 꽉 차 못 놓는 가구(후반 100개 안팎)를 sweep 마다 다시 자리 찾기(개당 ~11ms) → 집을 열 때마다 1초 넘게 멈추고, 시뮬은 탭이 죽었다.
+     못 놓은 가구는 기억해 두고 「자리가 늘 수 있을 때」(새 방이 열리거나 어느 방 가구 수가 줄었을 때)만 다시 해 본다 — 가구를 놓으면 자리는 줄기만 하니 그 사이엔 못 놓는 그대로다 */
+  let noFit = { rooms: '', cnt: {}, ids: new Set() };
+  Room.sweep = function () {
+    const S = ensure(); if (!S || !H()) return 0; let n = 0; const placed = new Set(); Object.values(S.placed).forEach((L) => L.forEach((p) => placed.add(p.id)));
+    const rs = Room.unlockedRooms().map((r) => r.id), key = rs.join(','), grew = key !== noFit.rooms || rs.some((rid) => (S.placed[rid] || []).length < (noFit.cnt[rid] || 0)); if (grew) noFit = { rooms: key, cnt: {}, ids: new Set() };
+    Room.owned().forEach((id) => { if (placed.has(id) || noFit.ids.has(id)) return; const r = Room.placeAt(id); if (r && !r.already) { n++; placed.add(id); } else if (!r) noFit.ids.add(id); });
+    rs.forEach((rid) => { noFit.cnt[rid] = (S.placed[rid] || []).length; }); return n;
+  };
+  Room._noFitReset = () => { noFit = { rooms: '', cnt: {}, ids: new Set() }; };   /* 시험·배치 초기화용 */
   /* ---------------- 테마 프리셋(A1): 가진 가구만 한 번에 놓는다 ---------------- */
   Room.presets = (rid) => ((H() && H().presets) || []).filter((p) => p.group === grp() && (!rid || p.room === rid));
   Room.presetStatus = function (pid) {

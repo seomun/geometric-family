@@ -1404,7 +1404,16 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     page() { tone(330, 0, 0.1, 'sine', 0.15); },
   };
   // 소리는 "자리(슬롯)": 코드는 id 만 안다. 파일·음량은 data/sounds.json (docs/16_SOUND.md). 교체 = 파일만 바꾸면 되고 코드 수정 없음.
-  const snd = () => GF.data.sounds || { sfx: {}, music: {}, voice: {}, alias: {} };
+  /* 소리 팔레트 v2(10/23, 기능 플래그): sounds.json 의 v2.on 이거나 시험(주소 ?snd=v2 · localStorage gf:snd:v2=1)이면 v2 파일·음량·콤보 3단 화음·배경음으로 갈아 낀 판을 쓴다.
+     ?snd=v1 이면 끔. 빌드본은 빌드 때 이미 갈아 끼워져(applied) 여기서 다시 하지 않는다. 만들기 tools/sound_v2_build.py */
+  const v2On = (d) => { if (!d || !d.v2 || d.v2.applied) return false; const q = (location.search.match(/[?&]snd=(v1|v2)\b/) || [])[1]; if (q) return q === 'v2'; try { if (localStorage.getItem('gf:snd:v2') === '1') return true; } catch (e) { /* 저장소 없음 */ } return !!d.v2.on; };
+  const mergeV2 = (d) => {
+    const v = d.v2, sfx = {}; Object.keys(d.sfx || {}).forEach((k) => { sfx[k] = Object.assign({}, d.sfx[k], v.sfx[k] || {}); }); Object.keys(v.sfx || {}).forEach((k) => { if (!sfx[k]) sfx[k] = Object.assign({}, v.sfx[k]); });
+    Object.keys(v.layers || {}).forEach((k) => { if (sfx[k]) sfx[k].layers = v.layers[k]; });
+    return Object.assign({}, d, { sfx, music: Object.assign({}, d.music, v.music), appMusic: Object.assign({}, d.appMusic, v.appMusic), v2: Object.assign({}, v, { applied: true }) });
+  };
+  const snd = () => { const d = GF.data.sounds || { sfx: {}, music: {}, voice: {}, alias: {} }; return v2On(d) ? (d._v2m || (d._v2m = mergeV2(d))) : d; };
+  GF.soundV2 = () => !!(snd().v2 && snd().v2.applied);   // 시험·설정 화면용: 지금 v2 소리인가
   const urlOf = (file) => (file && ((GF.data.audio && GF.data.audio[file]) || (GF.audioBase || '') + file)) || null;   // 빌드본은 data URI 로 인라인
   const bufs = {}; let loading = false;
   function loadSounds() {
@@ -6374,8 +6383,11 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         count++; g.cells.forEach(([r, c]) => { const e = at[r] && at[r][c]; if (e) { e.classList.add('pop'); if (root.GF && GF.fx) try { const px = c * cell + cell / 2, py = r * cell + cell / 2; GF.fx.spark(grid, px, py, { n: 6, power: 38, colors: [GCOL[g.kind] || '#fff', '#fff'] }); } catch (x) { /* 연출 실패 무시 */ } } });
         if (window.ExpSnd && ExpSnd.ready === true) ExpSnd.pop(g.n, count); else sfx(synth('x_pop', 'ok'), { st: [0, 2, 4, 7, 9, 12, 14, 16][Math.min(count - 1, 7)] });
         if (V8 && root.ExpBattle) {      /* v8 덩어리 크기: 이 묶음의 배율을 터지는 자리에 띄우고, 5개 이상은 판이 흔들리며 큰 링 · 별도 소리(7개 이상은 더 크게) */
-          const sm = ExpBattle.sizeMult8(g.n), cx = g.cells.reduce((a, c) => a + c[1], 0) / g.cells.length, cy = g.cells.reduce((a, c) => a + c[0], 0) / g.cells.length, tag = document.createElement('i'); tag.className = 'pz-sz t' + (g.n >= 7 ? 3 : g.n >= 5 ? 2 : g.n === 4 ? 1 : 0); tag.textContent = '×' + (sm % 1 ? sm.toFixed(1) : sm); tag.style.cssText = `left:${cx * cell + cell / 2}px;top:${cy * cell + cell / 2}px;--gc:${GCOL[g.kind] || '#FFC94A'}`; grid.appendChild(tag); setTimeout(() => tag.remove(), 950 / sp());
-          if (g.n >= 5) { grid.classList.remove('pz-quake'); void grid.offsetWidth; grid.classList.add('pz-quake'); setTimeout(() => grid.classList.remove('pz-quake'), 420 / sp()); if (root.GF && GF.fx) try { GF.fx.ring(grid, cx * cell + cell / 2, cy * cell + cell / 2, { size: Math.min(9, 3 + g.n * 0.6) }); } catch (x) { /* 무시 */ } sfx(g.n >= 7 ? 'x_blob7' : 'x_blob5'); }
+          const sm = ExpBattle.sizeMult8(g.n), lab = '×' + (sm % 1 ? sm.toFixed(1) : sm), cx = g.cells.reduce((a, c) => a + c[1], 0) / g.cells.length * cell + cell / 2, cy = g.cells.reduce((a, c) => a + c[0], 0) / g.cells.length * cell + cell / 2, shared = g.n >= 5 && root.GF && GF.fx && GF.fx.bigPop;
+          if (shared) { try { GF.fx.bigPop(grid, { cx, cy, n: g.n, color: GCOL[g.kind] || '#FFC94A', label: lab }); } catch (x) { /* 무시 */ } }      /* 공용 연출(games/engine/fx.js, gf-play): 5개↑ 흔들림·빛·링·파편·큰 글자·소리(pop3/star) 모두 공용 것을 쓴다 */
+          else { const tag = document.createElement('i'); tag.className = 'pz-sz t' + (g.n >= 7 ? 3 : g.n >= 5 ? 2 : g.n === 4 ? 1 : 0); tag.textContent = lab; tag.style.cssText = `left:${cx}px;top:${cy}px;--gc:${GCOL[g.kind] || '#FFC94A'}`; grid.appendChild(tag); setTimeout(() => tag.remove(), 950 / sp());
+            if (g.n >= 5) { grid.classList.remove('pz-quake'); void grid.offsetWidth; grid.classList.add('pz-quake'); setTimeout(() => grid.classList.remove('pz-quake'), 420 / sp()); if (root.GF && GF.fx) try { GF.fx.ring(grid, cx, cy, { size: Math.min(9, 3 + g.n * 0.6) }); } catch (x) { /* 무시 */ } } }
+          if (g.n >= 5 && !shared) sfx(g.n >= 7 ? 'x_blob7' : 'x_blob5');
         }
         showCount(count, g.kind); if (count >= 4 && root.GF && GF.fx) try { GF.fx.ring(grid, grid.clientWidth / 2, grid.clientHeight / 2, { size: Math.min(7, 2 + count * 0.5) }); } catch (x) { /* 무시 */ }
         setTimeout(cb, GAP() * (g.n >= 5 ? 1.25 : 1));

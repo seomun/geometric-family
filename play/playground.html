@@ -1441,7 +1441,16 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     page() { tone(330, 0, 0.1, 'sine', 0.15); },
   };
   // 소리는 "자리(슬롯)": 코드는 id 만 안다. 파일·음량은 data/sounds.json (docs/16_SOUND.md). 교체 = 파일만 바꾸면 되고 코드 수정 없음.
-  const snd = () => GF.data.sounds || { sfx: {}, music: {}, voice: {}, alias: {} };
+  /* 소리 팔레트 v2(10/23, 기능 플래그): sounds.json 의 v2.on 이거나 시험(주소 ?snd=v2 · localStorage gf:snd:v2=1)이면 v2 파일·음량·콤보 3단 화음·배경음으로 갈아 낀 판을 쓴다.
+     ?snd=v1 이면 끔. 빌드본은 빌드 때 이미 갈아 끼워져(applied) 여기서 다시 하지 않는다. 만들기 tools/sound_v2_build.py */
+  const v2On = (d) => { if (!d || !d.v2 || d.v2.applied) return false; const q = (location.search.match(/[?&]snd=(v1|v2)\b/) || [])[1]; if (q) return q === 'v2'; try { if (localStorage.getItem('gf:snd:v2') === '1') return true; } catch (e) { /* 저장소 없음 */ } return !!d.v2.on; };
+  const mergeV2 = (d) => {
+    const v = d.v2, sfx = {}; Object.keys(d.sfx || {}).forEach((k) => { sfx[k] = Object.assign({}, d.sfx[k], v.sfx[k] || {}); }); Object.keys(v.sfx || {}).forEach((k) => { if (!sfx[k]) sfx[k] = Object.assign({}, v.sfx[k]); });
+    Object.keys(v.layers || {}).forEach((k) => { if (sfx[k]) sfx[k].layers = v.layers[k]; });
+    return Object.assign({}, d, { sfx, music: Object.assign({}, d.music, v.music), appMusic: Object.assign({}, d.appMusic, v.appMusic), v2: Object.assign({}, v, { applied: true }) });
+  };
+  const snd = () => { const d = GF.data.sounds || { sfx: {}, music: {}, voice: {}, alias: {} }; return v2On(d) ? (d._v2m || (d._v2m = mergeV2(d))) : d; };
+  GF.soundV2 = () => !!(snd().v2 && snd().v2.applied);   // 시험·설정 화면용: 지금 v2 소리인가
   const urlOf = (file) => (file && ((GF.data.audio && GF.data.audio[file]) || (GF.audioBase || '') + file)) || null;   // 빌드본은 data URI 로 인라인
   const bufs = {}; let loading = false;
   function loadSounds() {

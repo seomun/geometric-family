@@ -1367,7 +1367,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 /* 리뷰 10/22 반영: 작업대 판이 생겨 도구 줄·상태·만들기·선반을 아래로 · 수량 배지는 칸 오른쪽 위(이름을 덮지 않게) · 다 쓴 재료는 자리 지키며 흐리게 */
 .cr-a .cr-atools { top: 196px; } .cr-a .cr-astatus { top: 272px; } .cr-a .uk-btn.cr-amake { top: 300px; } .cr-a .cr-ahelp { top: 364px; } .cr-a .cr-shelf.cr-ashelf { top: 414px; }
 .cr-a .cr-amat .cr-n { top: -7px; right: -7px; bottom: auto; } .cr-a .cr-amat.zero { opacity: .42; box-shadow: none; } .cr-a .cr-amat.zero .cr-n { background: #EFE6DA; }
-.cr-a .cr-ayard { flex: 0 0 auto !important; padding: 0 12px; font-size: 16px !important; } .cr-a .cr-ayard span { font: 400 16px/1 var(--uk-num, Jua); } .cr-a .cr-ayard.off { opacity: .45; }
+.cr-a .cr-ayard { flex: 0 0 auto; display: flex; gap: 4px; padding: 3px; border-radius: 16px; background: #E9D9B8; touch-action: none; user-select: none; } /* BM-15-3 풀더미 칸 */ .cr-a .cr-yplot { position: relative; width: 40px; height: 40px; border: 0; border-radius: 12px; padding: 0; background: #C9A270; box-shadow: inset 0 -4px 0 rgba(0,0,0,.12); cursor: pointer; overflow: hidden; } .cr-a .cr-ybush { position: absolute; left: 3px; right: 3px; bottom: 2px; height: 26px; border-radius: 14px 14px 8px 8px; background: radial-gradient(circle at 30% 40%, #8FD06A 0 30%, #6DB653 31%); } .cr-a .cr-yplot.ready img { position: absolute; left: 50%; top: 4px; width: 22px; height: 22px; transform: translateX(-50%); animation: cr-ypeek 1.8s ease-in-out infinite; } .cr-a .cr-ysprout { position: absolute; inset: 0; display: grid; place-items: center; font-style: normal; font-size: 18px; opacity: .85; } .cr-a .cr-yplot.sprout { background: #B89466; } @keyframes cr-ypeek { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, -2px); } } html[data-rm="1"] .cr-a .cr-yplot.ready img { animation: none; }
 .cr-a .cr-acap { font: 400 18px/1.3 var(--uk-font); color: #3A2E39; text-align: center; padding: 0 18px; }
 .cr-bps .uk-btn.cr-bpgo.cr-bpno { color: #6E5A4A; font-weight: 400; text-shadow: none; }
 .cr-drop .cr-dlab { align-self: center; font: 400 13px/1.2 var(--uk-font); color: #8A6A50; font-style: normal; max-width: 52px; text-align: center; }
@@ -1380,6 +1380,9 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 .uk-sheet .cr-bpcard .cr-bpin { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; } .uk-sheet .cr-bpcard .cr-bpi { position: relative; display: inline-flex; flex-direction: column; align-items: center; width: 42px; } .uk-sheet .cr-bpcard .cr-bpi img { width: 26px; height: 26px; } .uk-sheet .cr-bpcard .cr-bpi b { position: absolute; right: -2px; top: -4px; font: 400 11px/1 var(--uk-num, Jua); } .uk-sheet .cr-bpcard .cr-bpi small { font: 400 10px/1.1 var(--uk-font); color: #6E5A4A; max-width: 42px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .uk-sheet .uk-btn.cr-bpmake { flex-basis: 100%; min-height: 42px; font-size: 16px; }
 .cr-bps .cr-bpr.flash { animation: cr-glow .6s ease-in-out 4 alternate; border-color: #E8C66A; }
+/* BM-15-2 가족 부탁 쪽지(10/23) */ .cr-a .cr-aord { flex: 0 0 auto !important; position: relative; padding: 0 10px; font-size: 18px !important; } .cr-a .cr-aord .cr-ordn { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; border-radius: 10px; background: #FF5A5A; color: #fff; font: 900 12px/20px var(--uk-num, Jua); font-style: normal; } .cr-a .cr-aord.hot { animation: cr-ordhot 2.4s ease-in-out infinite; } @keyframes cr-ordhot { 0%, 90%, 100% { transform: none; } 95% { transform: rotate(-6deg); } } .cr-ords .cr-ord { display: flex; align-items: center; gap: 10px; margin: 8px 0; padding: 8px 10px; border-radius: 16px; background: #FFF8EC; box-shadow: 0 2px 0 #E8DCC8; text-align: left; } .cr-ords .cr-ord.can { background: #E8F8EC; } .cr-ords .cr-ord.done { opacity: .6; } .cr-ordface { width: 48px; height: 56px; flex: 0 0 48px; } .cr-ordface img { width: 100%; height: 100%; object-fit: contain; } .cr-ordmid { flex: 1; min-width: 0; } .cr-ordmid b { display: block; font-size: calc(14px * var(--uk-fs-k, 1)); } .cr-ordmid small { display: block; opacity: .75; font-size: calc(12px * var(--uk-fs-k, 1)); } .cr-ordneed { display: flex; gap: 6px; margin: 4px 0; } .cr-ordit { display: inline-flex; align-items: center; gap: 2px; padding: 2px 6px; border-radius: 10px; background: #fff; } .cr-ordit img { width: 24px; height: 24px; } .cr-ordit i { font: 900 13px/1 var(--uk-num, Jua); font-style: normal; color: #B0563A; } .cr-ordit.ok i { color: #2F9E5B; } .cr-ordact { display: flex; flex-direction: column; gap: 4px; } .cr-orddone { font-size: 24px; color: #2F9E5B; } html[data-rm="1"] .cr-a .cr-aord.hot { animation: none; }
+/* BM-15 위 줄 맞춤(10/23): 도안·풀더미 3칸·부탁·도감이 360px 폭에 들어가게 */ .cr-a .cr-atop { gap: 6px; } .cr-a .cr-atop .cr-abpbtn { flex: 1 1 auto; min-width: 0; padding: 0 10px; font-size: 15px; white-space: nowrap; overflow: hidden; } .cr-a .cr-yplot { width: 34px; height: 46px; } .cr-a .cr-ybush { height: 24px; } .cr-a .cr-yplot.ready img { width: 20px; height: 20px; top: 6px; } .cr-a .cr-adexbtn { padding: 0 10px; gap: 4px; } .cr-a .cr-aord { padding: 0 8px; min-width: 44px; } .cr-ords .cr-ordit i { display: inline-block; white-space: nowrap; } .cr-ords .cr-ordact .uk-btn { min-width: 84px; padding: 0 10px; }
+.cr-a .cr-yplot { width: 30px; } .cr-a .cr-ayard { gap: 3px; padding: 3px 4px; } .cr-a .cr-adexbtn .cr-dexn { font-size: 14px; } .cr-a .cr-atop .cr-abpbtn { font-size: 14px; padding: 0 8px; } .cr-ords .cr-ordact .uk-btn { min-height: 38px; font-size: 15px; min-width: 76px; }   /* 10/23 위 줄 넘침 2차 */
 
 /* 막둥이의 하루(유아) — 키트 토큰만. 놀이 UI 에는 글자 없음(그림·점·손가락·소리). */
 .dy { position: absolute; inset: 0; }
@@ -6031,9 +6034,29 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     pn.insertBefore(row, before); setTimeout(() => GF.sfx('get', { gain: 0.7 }), 650);
   };
   /** 마당 줍기: 하루 2번, 바탕 재료 하나(날짜·횟수로 정해짐) */
-  C.yardPick = () => {
-    if (C.yardLeft() <= 0) return null; const s = C.S(), d = today(); if (s.yard.d !== d) s.yard = { d, n: 0 };
-    const pool = (D().drop && D().drop.yard) || ['wood', 'clay', 'water', 'thread', 'paint', 'sq', 'tr', 'ci'], id = pool[(d + s.yard.n * 3) % pool.length]; s.yard.n++; C.add(id, 1); return id;
+  const yardPool = () => (D().drop && D().drop.yard) || ['wood', 'clay', 'water', 'thread', 'paint', 'sq', 'tr', 'ci'];
+  const yardToday = () => { const s = C.S(), d = today(); if (!s.yard || s.yard.d !== d) s.yard = { d, n: 0, p: [] }; if (!s.yard.p) s.yard.p = Array.from({ length: s.yard.n }, (_, i) => i); return s.yard; };   // p = 오늘 주운 칸(예전 저장 {d,n} 은 앞에서부터 n 칸)
+  /* BM-15-2(Hay Day 트럭 주문 · Township 헬리콥터 주문): 「가족 부탁」 쪽지 하루 3장 — 남는 바탕 재료 두 가지를 드리면 요술 조각 하나와 고맙다는 한마디.
+     시간 제한·벌 없음, 쪽지마다 하루 한 번 「다른 부탁」으로 바꿀 수 있고, 드린 쪽지는 내일 새로(남는 재료를 귀한 재료로 바꾸는 길) */
+  const ORD_POOL = ['wood', 'stone', 'clay', 'water', 'thread', 'paint', 'sq', 'tr', 'ci', 'grain', 'dish'], ORD_WHO = ['nemo_mom.joy', 'wife.joy', 'dong_dad.joy', 'nemo_grandma.good', 'husband.joy'];
+  const ordToday = () => { const s = C.S(), d = today(); if (!s.ord || s.ord.d !== d) s.ord = { d, done: [], sw: {} }; return s.ord; };
+  C.orders = () => {
+    const o = ordToday(), d = today(), pool = ORD_POOL.filter((id) => C.mat(id));
+    return [0, 1, 2].map((k) => {
+      const sw = o.sw[k] || 0, sd = d * 7 + k * 13 + sw * 31, a = pool[sd % pool.length]; let b = pool[(sd * 3 + 5) % pool.length]; if (b === a) b = pool[(pool.indexOf(a) + 4) % pool.length];
+      const need = [[a, 2 + (sd % 2)], [b, 2 + ((sd >> 1) % 2)]];
+      return { k, who: ORD_WHO[(sd + k) % ORD_WHO.length], need, done: o.done.includes(k), swapped: sw > 0, can: need.every(([id, n]) => C.inv(id) >= n), reward: 'shine' };
+    });
+  };
+  C.ordReady = () => C.orders().filter((q) => !q.done && q.can).length;
+  C.deliver = (k) => { const q = C.orders()[k]; if (!q || q.done || !q.can) return false; const s = C.S(); q.need.forEach(([id, n]) => { s.inv[id] = Math.max(0, (s.inv[id] || 0) - n); }); ordToday().done.push(k); C.add(q.reward, 1); return q; };
+  C.swapOrder = (k) => { const o = ordToday(); if (o.done.includes(k) || o.sw[k]) return false; o.sw[k] = 1; C.save(); return true; };
+  /** BM-15-3: 풀더미 칸들 — [{ready, id}] (다 자란 칸엔 나올 재료가 정해져 있다: 날짜·칸 번호) */
+  C.yardPlots = () => { const y = yardToday(), d = today(), pool = yardPool(), per = D().drop ? D().drop.yardPerDay : 2; return Array.from({ length: per }, (_, k) => ({ ready: !y.p.includes(k), id: pool[(d + k * 3) % pool.length] })); };
+  C.yardPick = (k) => {
+    if (C.yardLeft() <= 0) return null; const y = yardToday(), P = C.yardPlots();
+    if (k == null) k = P.findIndex((q) => q.ready); if (!P[k] || !P[k].ready) return null;   // 칸을 안 주면 앞에서부터(예전 호출 그대로)
+    y.p.push(k); y.n = y.p.length; C.add(P[k].id, 1); return P[k].id;
   };
   /** 처음 들어오면 한 번: 바로 판자를 만들어 볼 수 있게(나무 2 · 네모 조각 2 · 실 2) */
   C.starter = () => { const s = C.S(); if (s.starter) return false; s.starter = 1; [['wood', 2], ['sq', 2], ['thread', 2]].forEach(([id, n]) => C.add(id, n)); return true; };
@@ -6192,7 +6215,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     ui = { r, adult: true, slots: [null, null, null], tool: null, busy: false, idle: null };
     const top = el('div', 'cr-atop', r);
     const bp = el('button', 'uk-btn sky cr-abpbtn', top, '📐 ' + GF.t('craft.a.bp')); bp.onclick = () => { GF.sfx('page'); openBP(); };
-    ui.yard = el('button', 'uk-btn ghost cr-ayard', top, '🌿 <span></span>'); ui.yard.setAttribute('aria-label', GF.t('craft.a.yard')); ui.yard.onclick = () => { const id = C.yardPick(); if (!id) { GF.sfx('tap'); GF.jump(ui.yard); return; } GF.sfx('get'); try { UK.toast(GF.t('craft.a.yardgot', { name: (C.mat(id) || {}).name || id }), ui.r); } catch (e) { /* */ } yardA(); drawShelfA(id); statusA(); helpA(); }; yardA();
+    ui.yard = el('div', 'cr-ayard', top); ui.yard.setAttribute('role', 'group'); ui.yard.setAttribute('aria-label', GF.t('craft.a.yard')); yardA(); yardSweep();   // BM-15-3 풀더미 칸(누르거나 쓱 쓸어 줍기)
+    ui.ord = el('button', 'uk-btn ghost cr-aord', top, '📝<i class="cr-ordn"></i>'); ui.ord.setAttribute('aria-label', GF.t('craft.a.ord')); ui.ord.onclick = () => { GF.sfx('page'); openOrders(); };   // BM-15-2 가족 부탁
     const dex = el('button', 'uk-btn ghost cr-adexbtn', top, IC.book + '<span class="cr-dexn">' + C.foundCount() + '/' + C.total() + '</span>'); dex.setAttribute('aria-label', GF.t('craft.a.dex')); dex.onclick = () => { GF.sfx('page'); openDexA(); };
     const bench = el('div', 'cr-abench', r);
     ui.slotEls = [0, 1, 2].map((k) => { if (k) el('i', 'cr-aplus', bench, '+'); const b = el('button', 'cr-aslot', bench); b.setAttribute('aria-label', GF.t('craft.slot')); b.onclick = () => { if (ui.slots[k] == null) { GF.sfx('tap'); [...ui.shelf.querySelectorAll('.cr-amat:not(.zero)')].slice(0, 6).forEach((x, i) => setTimeout(() => GF.jump(x), i * 70)); } else unslotA(k); }; return b; });
@@ -6204,7 +6228,53 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     ui.shelf = el('div', 'cr-shelf cr-ashelf', r); drawShelfA(); statusA(); helpA();
     if (first) setTimeout(() => { const hb = ui && ui.helper && ui.helper.querySelector('.cr-abub'); if (ui && ui.adult && window.UK && UK.finger) UK.finger(ui.r, hb || bp, { tap: true, ms: 4200 }); }, 500);   // 처음엔 가족 한마디(「큰 상 만들 수 있겠는데요?」)를 가리킴 — 누르면 칸·도구가 채워짐
   }
-  function yardA() { if (!ui || !ui.yard) return; const n = C.yardLeft(); ui.yard.querySelector('span').textContent = n; ui.yard.classList.toggle('off', n <= 0); }
+  /* BM-15-3(Hay Day 밭 자람 · 낫으로 쓸어 거두기 · 작물은 상하지 않음): 마당 줍기 하루 n번 = 풀더미 n칸. 다 자란 칸엔 나올 재료가 살짝 보이고,
+     누르거나 손가락으로 쓱 쓸면 주워진다. 주운 칸은 새싹(「내일 다시 자라요」) — 시들거나 사라지는 것 없음 */
+  function yardA() {
+    if (!ui || !ui.yard) return; const box = ui.yard; box.innerHTML = '';
+    C.yardPlots().forEach((p, k) => {
+      const b = el('button', 'cr-yplot ' + (p.ready ? 'ready' : 'sprout'), box); b.dataset.k = k; b.onclick = (e) => { if (e.detail === 0) pickPlot(k, false); };   // 키보드(Enter)만 — 손가락은 pointerdown 이 줍는다
+      if (p.ready) { el('i', 'cr-ybush', b); const im = el('img', '', b); im.src = CraftArt.uri(p.id); im.alt = ''; b.setAttribute('aria-label', GF.t('craft.a.yardpick', { name: (C.mat(p.id) || {}).name || p.id })); }
+      else { el('i', 'cr-ysprout', b, '🌱'); b.setAttribute('aria-label', GF.t('craft.a.yardtmr')); }
+    });
+    box.classList.toggle('off', C.yardLeft() <= 0);
+  }
+  function ordA() { if (!ui || !ui.ord) return; const n = C.ordReady(), i = ui.ord.querySelector('.cr-ordn'); i.textContent = n || ''; i.style.display = n ? '' : 'none'; ui.ord.classList.toggle('hot', n > 0); }
+  function openOrders() {   // BM-15-2 가족 부탁 쪽지 3장
+    if (!ui) return; const sc = UK.modal({ parent: ui.r, title: '📝 ' + GF.t('craft.a.ord'), dismiss: true }), sh = sc.querySelector('.uk-sheet'); sh.classList.add('xt-sheet', 'cr-ords');
+    const draw = () => {
+      sh.querySelectorAll('.cr-ord, .cr-ordnote').forEach((x) => x.remove());
+      C.orders().forEach((q) => {
+        const row = el('div', 'cr-ord' + (q.done ? ' done' : q.can ? ' can' : ''), sh); const face = el('div', 'cr-ordface', row); try { face.appendChild(GF.img(q.who)); } catch (e) { /* 얼굴 실패 무시 */ }
+        const mid = el('div', 'cr-ordmid', row); el('b', '', mid, GF.t('craft.a.ord.who.' + q.who.split('.')[0]));
+        const nd = el('div', 'cr-ordneed', mid); q.need.forEach(([id, n]) => { const c = el('span', 'cr-ordit' + (C.inv(id) >= n ? ' ok' : ''), nd); const im = el('img', '', c); im.src = CraftArt.uri(id); im.alt = ''; el('i', '', c, Math.min(C.inv(id), n) + '/' + n); });
+        el('small', '', mid, q.done ? GF.t('craft.a.ord.thanks') : GF.t('craft.a.ord.gift', { name: (C.mat(q.reward) || {}).name || q.reward }));
+        const act = el('div', 'cr-ordact', row);
+        if (q.done) { el('span', 'cr-orddone', act, '✔'); return; }
+        UK.btn({ text: GF.t('craft.a.ord.give'), cls: (q.can ? 'green' : 'ghost') + ' sm', onclick: () => {
+          if (!q.can) { GF.sfx('hmm'); GF.jump(nd); return; }
+          C.deliver(q.k); GF.sfx('star'); try { UK.toast(GF.t('craft.a.ord.got', { name: (C.mat(q.reward) || {}).name || q.reward }), ui.r); } catch (e) { /* */ } draw(); drawShelfA(q.reward); statusA(); helpA(); ordA();
+        } }, act);
+        if (!q.swapped) UK.btn({ text: GF.t('craft.a.ord.swap'), cls: 'ghost sm', onclick: () => { if (C.swapOrder(q.k)) { GF.sfx('page'); draw(); ordA(); } } }, act);
+      });
+      el('p', 'xt-p cr-ordnote', sh, GF.t('craft.a.ord.note'));
+    };
+    draw();
+  }
+  function pickPlot(k, sweep) {
+    const p = C.yardPlots()[k]; if (!p) return;
+    if (!p.ready) { if (!sweep) { GF.sfx('tap'); try { UK.toast(GF.t('craft.a.yardtmr'), ui.r); } catch (e) { /* */ } } return; }
+    const id = C.yardPick(k); if (!id) return; GF.sfx('get', { st: (C.yardPlots().filter((q) => !q.ready).length - 1) * 3 });
+    yardA(); drawShelfA(id); statusA(); helpA();
+    clearTimeout(ui.yardT); ui.yardGot = (ui.yardGot || []).concat([id]);
+    ui.yardT = setTimeout(() => { const names = ui.yardGot.map((x) => (C.mat(x) || {}).name || x); ui.yardGot = []; try { UK.toast(GF.t('craft.a.yardgot', { name: names.join(' · ') }), ui.r); } catch (e) { /* */ } }, sweep ? 350 : 0);   // 쓸어 주우면 한마디는 한 번에
+  }
+  function yardSweep() {
+    let on = false; const plotAt = (x, y) => { const t = document.elementFromPoint(x, y); const b = t && t.closest && t.closest('.cr-yplot'); return b && ui.yard.contains(b) ? +b.dataset.k : -1; };
+    ui.yard.addEventListener('pointerdown', (e) => { const k = plotAt(e.clientX, e.clientY); if (k < 0) return; on = true; pickPlot(k, false); });
+    ui.yard.addEventListener('pointermove', (e) => { if (!on) return; const k = plotAt(e.clientX, e.clientY); if (k >= 0) pickPlot(k, true); });
+    const off = () => { on = false; }; ui.yard.addEventListener('pointerup', off); ui.yard.addEventListener('pointerleave', off); ui.yard.addEventListener('pointercancel', off);
+  }
   function drawShelfA(pop) {
     if (!ui) return; const sh = ui.shelf; sh.innerHTML = ''; const s = C.S(), have = D().mats.filter((m) => C.inv(m.id) > 0 || s.found[m.id]);
     if (!have.length) { el('div', 'cr-aempty', sh, GF.t('craft.a.empty')); return; }
@@ -6217,7 +6287,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   }
   function unslotA(k) { if (!ui || ui.busy || ui.slots[k] == null) return; C.add(ui.slots[k], 1); ui.slots[k] = null; ui.slotEls[k].innerHTML = ''; ui.slotEls[k].classList.remove('full'); GF.sfx('cancel'); drawShelfA(); held(); statusA(); }
   function statusA() {
-    if (!ui || !ui.adult) return; const n = ui.slots.filter((x) => x != null).length, full = n === 3, st = ui.status; let txt = '', cls = '';
+    if (!ui || !ui.adult) return; ordA(); const n = ui.slots.filter((x) => x != null).length, full = n === 3, st = ui.status; let txt = '', cls = '';
     const rec = full && ui.tool ? C.find3(ui.slots, ui.tool) : null, mats = full ? C.findMats(ui.slots) : null;
     if (!full || !ui.tool) txt = GF.t('craft.a.pick', { n }) + (full && !ui.tool ? ' · ' + GF.t('craft.a.picktool') : '');
     else if (rec && C.known(rec)) { txt = GF.t('craft.a.ready', { name: rec.name }); cls = 'ok'; }

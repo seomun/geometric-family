@@ -1366,6 +1366,7 @@ html[data-rm="1"] .ifocus { animation: none; box-shadow: 0 0 0 5px rgba(255,216,
 .uk-scrim.iq-ask { background: rgba(40,30,50,.22); } .uk-scrim.iq-ask .uk-sheet { position: relative; top: 150px; }   /* 사연 끝 질문은 화면 아래 — 위 자막의 마지막 문장을 가리지 않게(QA I-4) */
 .grow.lock { position: static; right: auto; bottom: auto; width: auto; height: auto; }   /* gf.css 의 놀이터 자물쇠 .lock(absolute)이 잠긴 식구 줄까지 띄워 「모시기」 단추를 가렸음(QA 10/20 I-5) */
 
+/* BM-15-1 차려진 밥상 쓸어 거두기(10/23) */ .idishes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 10px 0 2px; padding: 10px; border-radius: 18px; background: #FFF1DC; touch-action: none; user-select: none; } .idish { width: 54px; height: 54px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 3px 0 #E8C9A0; font-size: 30px; line-height: 54px; padding: 0; cursor: pointer; animation: idish-in .35s ease-out both; transition: transform .25s, opacity .25s; } .idish.got { transform: scale(.3) translateY(-30px); opacity: 0; pointer-events: none; } .idish-hint { font-size: calc(13px * var(--uk-fs-k, 1)); opacity: .7; text-align: center; margin-bottom: 6px; } @keyframes idish-in { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } } html[data-rm="1"] .idish { animation: none; transition: none; }
 </style></head>
 <body><style>#gf-splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#FDE9CF;font-family:"Jua","Gowun Dodum",system-ui,sans-serif;color:#5A463A;transition:opacity .35s}#gf-splash.out{opacity:0;pointer-events:none}#gf-splash b{font-size:clamp(30px,9vw,44px);line-height:1.2;text-align:center;padding:0 16px}#gf-splash small{font-size:16px;opacity:.75}#gf-splash svg{width:min(78vw,340px);height:auto}</style><div id="gf-splash" role="status" aria-live="polite"><b>기하학 가족: 세 가족 식탁</b><svg viewBox="0 0 300 120" aria-hidden="true"><rect x="14" y="24" width="80" height="80" rx="16" fill="#E8870F"/><path d="M150 18L196 104H104z" fill="#F6DE5C"/><circle cx="246" cy="64" r="42" fill="#7E8CC2"/><g fill="#4A3030"><circle cx="42" cy="60" r="5"/><circle cx="66" cy="60" r="5"/><circle cx="140" cy="76" r="5"/><circle cx="160" cy="76" r="5"/><circle cx="234" cy="60" r="5"/><circle cx="258" cy="60" r="5"/></g></svg><small>기하학 가족 · 불러오는 중</small></div>
 <div id="stage"><div id="inset"></div>
@@ -5974,7 +5975,7 @@ html[data-rm="1"] .ifocus { animation: none; box-shadow: 0 0 0 5px rgba(255,216,
       /* 지금 누를 곳 하나만 반짝: 사연 > (첫 사연 뒤) 식구 앉히기 > 밥상 차리기 */
       let lastFocus = '', fingerOff = null;
       UI.upd.push(() => {
-        const r_ = rates(now()); $q(hd, '#iw').textContent = fmt(S.w); $q(hd, '#iwr').textContent = r_.w > 0 ? GF.t('c17.idle.021', { w: fmtRate(r_.w) }) : ''; $q(hd, '#il').textContent = fmt(S.l); $q(hd, '#il').parentNode.style.visibility = S.l > 0 ? 'visible' : 'hidden';   /* 0 은 숨김(리뷰 원칙 8) */
+        const r_ = rates(now()); if (UI.pend && !document.querySelector('.idishes')) UI.pend = 0; $q(hd, '#iw').textContent = fmt(S.w - (UI.pend || 0));   /* BM-15-1: 아직 안 거둔 밥상만큼 빼고 보인다(창이 사라지면 바로 0) */ $q(hd, '#iwr').textContent = r_.w > 0 ? GF.t('c17.idle.021', { w: fmtRate(r_.w) }) : ''; $q(hd, '#il').textContent = fmt(S.l); $q(hd, '#il').parentNode.style.visibility = S.l > 0 ? 'visible' : 'hidden';   /* 0 은 숨김(리뷰 원칙 8) */
         $q(hd, '#idx').textContent = dexCount() ? Math.round(dexCount() / B.dexTotal * 100) + '%' : '';
         const n = readyStories().length, bd = $q(sb, '.badge'); bd.style.display = n ? 'inline-flex' : 'none'; bd.textContent = n; const thr = nextThr(); $q(sb, '.snext').textContent = n ? GF.t('c17.idle.022') : thr ? GF.t('c17.idle.023', { v: fmt(Math.max(0, thr - S.tot)) }) : GF.t('c17.idle.024'); sb.classList.toggle('ready', !!n); sb.style.setProperty('--p', (n ? 100 : thr ? Math.min(100, Math.round(S.tot / thr * 100)) : 0) + '%');
         /* 자리: 흐름 줄은 첫 사연 전까지만 · 열린 식탁은 위에서부터, 잠긴 식탁은 불투명 한 줄에 나란히 · 계절 띠는 그 아래(3차 리뷰: 겹쳐 쌓인 반투명 카드) */
@@ -6001,11 +6002,30 @@ html[data-rm="1"] .ifocus { animation: none; box-shadow: 0 0 0 5px rgba(255,216,
     },
   });
 
+  /* BM-15-1(Hay Day 낫 쓸기 · 작물은 상하지 않음): 자리를 비운 사이 쌓인 온기를 숫자 한 줄 대신 「차려진 밥상」으로 — 손가락으로 쓱 쓸거나 눌러 거두면
+     하나씩 위 온기 칸으로 날아간다. 온기는 돌아온 순간 이미 더해져 있고(경제 그대로) 머리 숫자만 거둔 만큼 올라간다. 「한 번에 거두기」 하나로도 끝(압박 없음) */
   function welcomeBack(parent, w) {
     const hrs = w.ms / 3600000, cap = w.capped;
-    const acts = [{ text: GF.t('c16.idle.001'), onclick: () => GF.sfx('star') }];
-    if (IDLE.hooks.adAvailable()) acts.push({ text: GF.t('c16.idle.002'), cls: 'dong', onclick: () => IDLE.hooks.rewardedAd('offline2x', (ok) => { if (ok) { S.w += w.gained; S.tot += w.gained; save(); } }) });
-    UK.modal({ parent, title: GF.t('c16.idle.003'), body: GF.t('c17.idle.028', { v: hrs >= 1 ? GF.t('c17.idle.025', { hrs: Math.floor(hrs), v: Math.floor((hrs % 1) * 60) }) : GF.t('c17.idle.026', { v: Math.max(1, Math.floor(w.ms / 60000)) }), v2: cap ? GF.t('c17.idle.027') : '' }), big: GF.t('c17.idle.029', { gained: fmt(w.gained) }), actions: acts });
+    const N = Math.max(3, Math.min(9, Math.round(2 + hrs * 1.2))), share = w.gained / N, DISH = ['🍚', '🍲', '🥘', '🍳', '🥗'];
+    let left = N, sc = null, sweeping = false;
+    UI.pend = w.gained;
+    const take = (d) => {
+      if (!d || d.classList.contains('got')) return; d.classList.add('got'); left--; UI.pend = left ? Math.max(0, UI.pend - share) : 0;
+      try { UK.fly(d, document.querySelector('.screen.on #iw'), 1, 'warm'); } catch (e) { /* 연출 실패 무시 */ }
+      GF.sfx('get', { st: Math.min(12, (N - left) * 2), gain: 0.6 }); UI.upd.forEach((f) => f());
+      if (!left) setTimeout(() => { if (sc) sc.close(); toast(GF.t('idle.sweep.done', { gained: fmt(w.gained) })); }, 450);
+    };
+    const acts = [{ text: GF.t('idle.sweep.all'), cls: 'green', keep: true, onclick: () => [...sc.querySelectorAll('.idish:not(.got)')].forEach((d, i) => setTimeout(() => take(d), i * 90)) }];
+    if (IDLE.hooks.adAvailable()) acts.push({ text: GF.t('c16.idle.002'), cls: 'dong', keep: true, onclick: () => { UI.pend = 0; sc.close(); IDLE.hooks.rewardedAd('offline2x', (ok) => { if (ok) { S.w += w.gained; S.tot += w.gained; save(); } }); } });
+    sc = UK.modal({ parent, title: GF.t('c16.idle.003'), body: GF.t('c17.idle.028', { v: hrs >= 1 ? GF.t('c17.idle.025', { hrs: Math.floor(hrs), v: Math.floor((hrs % 1) * 60) }) : GF.t('c17.idle.026', { v: Math.max(1, Math.floor(w.ms / 60000)) }), v2: cap ? GF.t('c17.idle.027') : '' }), big: GF.t('c17.idle.029', { gained: fmt(w.gained) }), actions: acts });
+    const sh = sc.querySelector('.uk-sheet'), tray = el('div', 'idishes'); sh.insertBefore(tray, sh.querySelector('.acts'));
+    for (let k = 0; k < N; k++) { const d = el('button', 'idish', tray, DISH[k % DISH.length]); d.style.animationDelay = (k * 0.06) + 's'; d.setAttribute('aria-label', GF.t('idle.sweep.one')); d.onclick = () => take(d); }
+    UI.upd.forEach((f) => f());   // 밥상 칸이 생긴 뒤에 머리 숫자를 고친다(칸이 없으면 바로 0 으로 되돌리는 안전장치가 있다)
+    tray.after(el('div', 'idish-hint', null, GF.t('idle.sweep.hint')));
+    const mv = (e) => { if (!sweeping) return; const t = document.elementFromPoint(e.clientX, e.clientY); take(t && t.closest && t.closest('.idish')); }, up = () => { sweeping = false; };
+    tray.addEventListener('pointerdown', (e) => { sweeping = true; take(e.target.closest && e.target.closest('.idish')); });
+    window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
+    const close0 = sc.close; sc.close = () => { window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); close0(); };
     GF.sfx('celebrate');
   }
 

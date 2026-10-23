@@ -2979,10 +2979,13 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const gNorm = (g) => (g === 'tables' ? 'idle' : g === 'coloring' ? 'color' : g || 'other');
   const OPEN_G = new Set(['story', 'event', 'other', 'all', 'season']);
   Room.myGame = () => gNorm(Room.cfg.app || Room.cfg.game);
-  Room.mine = (it) => { if (!it) return true; const g = gNorm((it.src && it.src.game) || it.game); return OPEN_G.has(g) || g === Room.myGame() || (g === 'playground' && Room.myGame() === 'play') || (g === 'play' && Room.myGame() === 'playground'); };
+  /* 10/24 1주차 QA: 이야기 카드 가구(t_<옛이야기>_a/_k)는 그 옛이야기 카드 4장을 주는 앱(ops.cardMap)이 모두 이 앱일 때만 「이 앱 가구」 — 아니면 다른 앱 숙제라 보너스(전엔 누구나로 쳐서 합치기 밖 앱이 7장에서 영영 멈췄다) */
+  const cardApps = (it) => { const m = /^t_([a-z]+)_([ak])$/.exec((it && it.id) || ''), M = (window.GF && GF.data && GF.data.ops && GF.data.ops.cardMap) || {}; return m ? ((M[m[2] === 'k' ? 'kid' : 'adult'] || {})[m[1]] || []).map(gNorm) : null; };
+  Room.timedItem = (it) => !!(it && ((it.src && (it.src.months || []).length) || (it.cond && it.cond.t === 'season')));   /* 그 철·그 날에만 받는 가구 */
+  Room.mine = (it) => { if (!it) return true; const g = gNorm((it.src && it.src.game) || it.game); if (g === 'story') { const ca = cardApps(it); if (ca && ca.length) { const me = gNorm(Room.myGame()); return ca.every((a) => a === me || (a === 'playground' && me === 'play') || (a === 'play' && me === 'playground')); } } return OPEN_G.has(g) || g === Room.myGame() || (g === 'playground' && Room.myGame() === 'play') || (g === 'play' && Room.myGame() === 'playground'); };
   Room.tasks = function () {
     const c = Room.chapter(); if (!c) return { chapter: null, list: [], show: [], bonus: [], done: 0 };
-    const all = c.tasks.map((t) => { const need = t.need.map((id) => ({ id, own: Room.has(id), it: Room.item(id) })), miss = need.filter((n) => !n.own); return { id: t.id, label: t.label, need, done: !miss.length, miss: miss[0] || null, bonus: need.length > 0 && need.every((n) => !Room.mine(n.it)) }; });
+    const all = c.tasks.map((t) => { const need = t.need.map((id) => ({ id, own: Room.has(id), it: Room.item(id) })), miss = need.filter((n) => !n.own), timed = miss.some((n) => Room.timedItem(n.it)); return { id: t.id, label: t.label, need, done: !miss.length, miss: miss[0] || null, timed, bonus: need.length > 0 && (need.every((n) => !Room.mine(n.it)) || timed) }; });   /* 10/24 1주차 QA: 철·날짜에 묶인 가구(김장 김치·연말 트리…)는 보너스 — 그 철이 아니면 장이 몇 주씩 멈췄다 */
     const list = all.filter((t) => !t.bonus), bonus = all.filter((t) => t.bonus);
     return { chapter: c, list, bonus, show: list.filter((t) => !t.done).slice(0, 3), done: list.filter((t) => t.done).length };
   };
@@ -3573,7 +3576,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         const go = () => Room.goApp(sr.game, { parent, home: opts.go && (() => opts.go(sr.game)) });
         if (kid()) { el('span', 'h2-tic', row, APPICON[sr.game] || '🎁'); const b = el('button', 'h2-go', row, UK.icon('next')); b.setAttribute('aria-label', 'go'); b.onclick = go; }
         else { const tx = el('div', 'h2-ttx', row); el('b', '', tx, t.label); el('small', '', tx, sr.hint || ''); const b = el('button', 'h2-go', row, GF.t('c16.room2.019')); b.onclick = go; } });
-      (T.bonus || []).filter((t) => !t.done).slice(0, 4).forEach((t) => { const it = t.miss && t.miss.it, row = el('div', 'h2-task bonus' + (kid() ? ' kid' : ''), body); const im = el('img', '', row); im.src = it ? Room.src(it) : ''; im.alt = ''; if (kid()) el('span', 'h2-tic', row, '⭐'); else { const tx = el('div', 'h2-ttx', row); el('b', '', tx, t.label); el('small', '', tx, GF.t('room.bonus')); } });   // 보너스 칸: 다른 앱 가구 — 누르는 단추 없음(숙제 아님)
+      (T.bonus || []).filter((t) => !t.done).slice(0, 4).forEach((t) => { const it = t.miss && t.miss.it, row = el('div', 'h2-task bonus' + (kid() ? ' kid' : ''), body); const im = el('img', '', row); im.src = it ? Room.src(it) : ''; im.alt = ''; if (kid()) el('span', 'h2-tic', row, '⭐'); else { const tx = el('div', 'h2-ttx', row); el('b', '', tx, t.label); el('small', '', tx, t.timed ? GF.t('room.timed', { hint: (it && it.src && it.src.hint) || '' }) : GF.t('room.bonus')); } });   // 보너스 칸: 다른 앱 가구 — 누르는 단추 없음(숙제 아님)
       if (T.chapter && T.chapter.shards && !kid()) el('p', 'h2-tt', body, GF.t('c17.room2.122', { shardN: Math.min(Room.shardN(), T.chapter.shards), shards: T.chapter.shards }));
       if (!T.show.length && T.chapter && !kid()) el('p', 'h2-tt', body, GF.t('c16.room2.020'));
       if (kid()) { el('div', 'h2-bar wide', body, `<i style="width:${c.pct}%"></i>`); return; }

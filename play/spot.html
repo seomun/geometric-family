@@ -559,6 +559,7 @@ img { -webkit-user-drag: none; pointer-events: none; }
 .h2-searow{flex-wrap:wrap;align-items:center;gap:4px 8px}.h2-searow>b{white-space:nowrap;min-width:2.4em}.h2-seachip{white-space:nowrap;font-size:18px}.h2-seachip.on{opacity:.55}.h2-seachip.cur{outline:2px solid #f5b400;border-radius:8px}
 /* 보너스 칸(허브 10/22 #6): 다른 앱에서만 얻는 가구 — 숙제가 아니라 덤. 흐리게, 누르는 단추 없음 */
 .h2-task.bonus { opacity: .62; border-style: dashed; } .h2-task.bonus img { filter: saturate(.6); }
+/* BM-17-3 우리 집 레벨 이정표 카드(10/23) */ .h2-mile { position: absolute; left: 16px; right: 16px; top: 72px; z-index: 40; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 14px 16px; border: 0; border-radius: 22px; background: #FFF4D6; box-shadow: 0 6px 0 #E8C98A, 0 12px 28px rgba(58,46,57,.2); color: #3A2E39; font-family: var(--uk-font); cursor: pointer; animation: h2-mile-in .45s cubic-bezier(.2,1.4,.4,1) both; } .h2-mile b { font-size: calc(20px * var(--uk-fs-k, 1)); color: #C9531A; } .h2-mile span { font-size: calc(15px * var(--uk-fs-k, 1)); font-weight: 800; } .h2-mile small { font-size: calc(13px * var(--uk-fs-k, 1)); opacity: .75; } .h2-mile em { font-style: normal; margin-top: 4px; padding: 4px 10px; border-radius: 12px; background: #fff; font-size: calc(13px * var(--uk-fs-k, 1)); font-weight: 800; } .h2-mile.out { transition: transform .35s, opacity .35s; transform: translateY(-20px); opacity: 0; } @keyframes h2-mile-in { from { transform: translateY(-24px) scale(.9); opacity: 0; } to { transform: none; opacity: 1; } } html[data-rm="1"] .h2-mile { animation: none; }
 
 /* 공통 부가 UI(설정·보호자 메뉴·통계·업적·출석·쉬어요) — 키트 토큰만 */
 .xt-sheet { max-height: 560px; overflow-y: auto; touch-action: pan-y; }   /* 설정 줄이 많아져도 화면 안에서 스크롤 */
@@ -2926,6 +2927,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   Room.lvFloor = function () { const S = Room.S; if (!S) return 1; let f = S.lv || 1; (S.album || []).forEach((a) => { if (a.kind === 'level' && /^lv:\d+$/.test(a.k)) f = Math.max(f, +a.k.slice(3)); }); return f; };
   Room.level = function (cozy) { return Math.max(Room.levelRaw(cozy), Room.lvFloor()); };
   Room.levelInfo = function () { const c = Room.cozy(), T = table(), lv = Room.level(c), cur = T.find((l) => l.lv === lv), nx = T.find((l) => l.lv === lv + 1); return { lv, raw: Room.levelRaw(c), floor: Room.lvFloor(), cozy: c, cur: cur ? cur.cozy : 0, next: nx ? nx.cozy : null, pct: nx ? Math.max(0, Math.min(1, (c - cur.cozy) / (nx.cozy - cur.cozy))) : 1, max: !nx }; };
+  /** BM-17-3: lv 보다 위에서 가장 가까이 열리는 것 — 방(unlock) 또는 테마 세트(lv). {lv, kind, name, icon} | null */
+  Room.nextUnlock = function (lv) { const c = []; rooms().forEach((r) => { if ((r.unlock || 1) > lv) c.push({ lv: r.unlock, kind: 'room', name: r.name, icon: '🚪' }); }); if (!kid()) ((H() && H().themeSets) || []).forEach((t) => { if ((t.lv || 0) > lv) c.push({ lv: t.lv, kind: 'theme', name: t.name, icon: t.icon || '🎁' }); }); c.sort((a, b) => a.lv - b.lv); return c[0] || null; };
   const unlocked = (r) => Room.level() >= (r.unlock || 1) || ((ensure().placed[r.id] || []).length > 0);
   Room.unlockedRooms = () => rooms().filter(unlocked);
 
@@ -3471,7 +3474,17 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     }
     function afterChange() { drawTop(); drawSheet(); const L = Room.levelInfo(); if (L.raw > L.floor) { S.lv = L.raw; Room.save(); lvUp(Object.assign({}, L, { lv: L.raw })); if (Room.sweep()) drawStage(); } }
     function checkRooms() { const nr = Room.newRooms(); if (!nr.length || !parent.isConnected || document.querySelector('.h2-reveal')) return; Room.roomReveal(nr[0].id, parent, (go) => { if (go) { cur = nr[0].id; sel = null; drawAll(); } setTimeout(checkRooms, 400); }); }
-    function lvUp(L) { Room.albumAdd('lv:' + L.lv, 'level', GF.t('c16.room2.031', { lv: L.lv }), GF.t('c17.room2.032', { v: Number(L.cozy).toLocaleString('ko-KR') }), cur); setTimeout(checkRooms, 1400); try { UK.confetti(parent); GF.sfx && GF.sfx('celebrate'); } catch (e) {} const nr = rooms().find((r) => r.unlock === L.lv); if (!nr) toastH(kid() ? '⭐' : GF.t('c16.room2.032', { lv: L.lv }), parent); }      // 새 방이 열리면 연출이 이름을 알려 준다(토스트로 미리 말하지 않음)
+    function lvUp(L) { Room.albumAdd('lv:' + L.lv, 'level', GF.t('c16.room2.031', { lv: L.lv }), GF.t('c17.room2.032', { v: Number(L.cozy).toLocaleString('ko-KR') }), cur); setTimeout(checkRooms, 1400); try { UK.confetti(parent); GF.sfx && GF.sfx('celebrate'); } catch (e) {} const nr = rooms().find((r) => r.unlock === L.lv); if (!nr) { if (kid()) toastH('⭐', parent); else lvCard(L); } }      // 새 방이 열리면 연출이 이름을 알려 준다(토스트로 미리 말하지 않음)
+    /* BM-17-3(Egg, Inc. 새 알 문턱 · 다음 알 미리보기): 우리 집 레벨이 오르면 이정표 카드 — 「Lv N」 · 아늑함 · 다음 레벨까지 · 가장 가까운 다음에 열리는 것(방·테마 세트).
+       누르거나 4.5초 뒤 접힘(막지 않음) · 성인만(유아는 ⭐ 그대로) */
+    function lvCard(L) {
+      const old = parent.querySelector('.h2-mile'); if (old) old.remove(); const L2 = Room.levelInfo(), u = Room.nextUnlock(L.lv);
+      const c = el('button', 'h2-mile', parent, `<b>🏠 ${GF.t('room.mile.lv', { lv: L.lv })}</b><span>${GF.t('room.mile.cozy', { v: Number(L2.cozy).toLocaleString('ko-KR') })}</span>`
+        + (!L2.max ? `<small>${GF.t('room.mile.next', { lv: L.lv + 1, v: Math.max(0, L2.next - L2.cozy) })}</small>` : '') + (u ? `<em>${GF.t('room.mile.unlock', { lv: u.lv, name: u.icon + ' ' + u.name })}</em>` : ''));
+      c.onclick = () => { try { GF.sfx('tap'); } catch (e) { /* 소리 */ } c.remove(); };
+      setTimeout(() => { if (!c.isConnected) return; c.classList.add('out'); setTimeout(() => c.remove(), 400); }, 4500);
+    }
+    Room._lvUp = (lv) => lvUp(Object.assign({}, Room.levelInfo(), { lv }));   // 시험용(tools/bm17_smoke.js): 이 화면의 레벨업 연출을 그대로 부른다
     function drawSheet() {
       sheet.innerHTML = ''; sheet.className = 'h2-sheet' + (expanded ? ' open' : ''); const T = Room.tasks(), g = Room.nextGoalHere(Room.cfg.app || Room.cfg.game);   // 다른 앱 가구는 목표로 내세우지 않음(보너스 칸에만)
       const handle = el('div', 'h2-handle', sheet, '<i></i>'); const line = el('div', 'h2-line', sheet);

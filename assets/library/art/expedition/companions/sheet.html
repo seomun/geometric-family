@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>동료 43종 시트</title>
+<!-- gf-asset 점검 시트: ?mode=new|sil|before|pairs. 「before」 는 지금 게임의 코드 키트(games/expedition/exp-art.js, 읽기만). -->
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #1a1d3a; color: #f4eeff; font-family: Jua, sans-serif; }
+  h1 { font-size: 22px; margin: 14px 16px 4px; } p { margin: 0 16px 10px; color: #a9a3d6; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(var(--cols, 11), var(--cell, 96px)); gap: 8px; padding: 8px 16px 20px; }
+  .c { background: #fffdf8; border-radius: 12px; padding: 4px 2px 3px; text-align: center; color: #3a2e39; font-size: 12px; line-height: 1.1; }
+  .c .im { width: var(--img, 64px); height: calc(var(--img, 64px) * 1.06); margin: 0 auto; }
+  .c .im svg { width: 100%; height: 100%; display: block; }
+  .sil .c { background: #fff; } .sil .im svg { filter: brightness(0); }
+  .pair { display: flex; gap: 6px; background: #2a2f6a; border-radius: 14px; padding: 8px; }
+</style>
+</head>
+<body>
+<div id="out"></div>
+<script src="companions.js"></script>
+<script src="../../../../../games/expedition/exp-art.js"></script>
+<script>
+const NAMES = { u_swallow: '제비', u_magpie: '까치', u_snowcrow: '눈 까마귀', u_sparrow: '참새', u_owl: '부엉이', u_crane: '두루미', u_cicada: '매미', u_toad: '두꺼비', u_frog: '개구리', u_tadpole: '올챙이',
+  u_tiger: '바람 호랑이', u_persimmon_tiger: '호랑이', u_lion: '겁쟁이 사자', u_cheshire: '체셔 고양이', u_wolf: '늑대', u_fox: '여우', u_mouse: '생쥐', u_squirrel: '다람쥐', u_deer: '사슴', u_snake: '구렁이', u_gatekeeper: '용궁 문지기',
+  u_dokkaebi: '도깨비', u_phantom: '허깨비 도둑', u_wind: '바람 친구', u_giant: '구름 거인', u_wonnim: '욕심쟁이 원님', u_skyelder: '하늘 어른', u_granny: '과자집 할머니', u_wizard: '변신 마법사', u_ajumma: '깐깐한 아주머니', u_fairy: '요정',
+  u_scarecrow: '허수아비', u_pumpkin: '호박 마차', u_pot: '팥죽 솥', u_gj_cabbage: '배추 이모', u_gj_pepper: '고춧가루 삼촌', u_gj_garlic: '마늘 동생', u_gs_yeot: '엿 아저씨', u_gs_rice: '찹쌀떡 누나', u_gs_pencil: '연필 선생', u_gy_tree: '트리 삼촌', u_gy_soup: '떡국 이모', u_gy_snow: '눈사람 동생' };
+const EL = { u_swallow: 'care', u_magpie: 'flash', u_snowcrow: 'care', u_sparrow: 'flash', u_owl: 'care', u_crane: 'support', u_cicada: 'flash', u_toad: 'care', u_frog: 'support', u_tadpole: 'care', u_tiger: 'care', u_persimmon_tiger: 'flash', u_lion: 'flash', u_cheshire: 'flash', u_wolf: 'support', u_fox: 'care', u_mouse: 'care', u_squirrel: 'flash', u_deer: 'care', u_snake: 'flash', u_gatekeeper: 'support', u_dokkaebi: 'flash', u_phantom: 'flash', u_wind: 'flash', u_giant: 'support', u_wonnim: 'care', u_skyelder: 'support', u_granny: 'care', u_wizard: 'flash', u_ajumma: 'flash', u_fairy: 'care', u_scarecrow: 'support', u_pumpkin: 'care', u_pot: 'support', u_gj_cabbage: 'support', u_gj_pepper: 'flash', u_gj_garlic: 'care', u_gs_yeot: 'support', u_gs_rice: 'care', u_gs_pencil: 'flash', u_gy_tree: 'flash', u_gy_soup: 'care', u_gy_snow: 'support' };
+const PAIRS = [['u_sparrow', 'u_gs_rice'], ['u_mouse', 'u_fairy', 'u_fox'], ['u_toad', 'u_gj_garlic', 'u_gy_soup'], ['u_tiger', 'u_persimmon_tiger'], ['u_wind', 'u_giant'], ['u_skyelder', 'u_wizard'], ['u_wonnim', 'u_phantom'], ['u_gy_tree']];
+const q = new URLSearchParams(location.search), mode = q.get('mode') || 'new', img = +(q.get('img') || 64);
+const ids = ExpCompanions.ids;
+const cell = (id, html) => `<div class="c"><div class="im">${html}</div>${NAMES[id] || id}</div>`;
+const before = (id) => window.ExpArt ? ExpArt.creature({ id, name: NAMES[id], el: EL[id] }) : '';
+const out = document.getElementById('out');
+document.documentElement.style.setProperty('--img', img + 'px'); document.documentElement.style.setProperty('--cell', (img + 32) + 'px');
+// 실루엣 겹침 수치: 64px 이진 마스크끼리 IoU(겹친 넓이 / 합친 넓이). 1 에 가까울수록 실루엣이 같다.
+window.silIoU = async (which) => {
+  const N = 64, masks = {};
+  for (const id of ids) {
+    let s = which === 'before' ? before(id) : ExpCompanions.svg(id);
+    if (!/xmlns=/.test(s)) s = s.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    s = s.replace('<svg', `<svg width="${N}" height="${Math.round(N * 1.06)}"`);
+    const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s); await im.decode();
+    const cv = document.createElement('canvas'); cv.width = N; cv.height = Math.round(N * 1.06); const g = cv.getContext('2d'); g.drawImage(im, 0, 0);
+    const d = g.getImageData(0, 0, cv.width, cv.height).data, m = new Uint8Array(cv.width * cv.height);
+    for (let i = 0; i < m.length; i++) m[i] = d[i * 4 + 3] > 40 ? 1 : 0;
+    masks[id] = m;
+  }
+  const res = [];
+  for (let i = 0; i < ids.length; i++) for (let j = i + 1; j < ids.length; j++) {
+    const a = masks[ids[i]], b = masks[ids[j]]; let I = 0, U = 0;
+    for (let k = 0; k < a.length; k++) { I += a[k] & b[k]; U += a[k] | b[k]; }
+    res.push([I / U, ids[i], ids[j]]);
+  }
+  res.sort((x, y) => y[0] - x[0]);
+  const mean = res.reduce((s, r) => s + r[0], 0) / res.length, over = res.filter((r) => r[0] > 0.8).length;
+  return { mean: +mean.toFixed(3), max: +res[0][0].toFixed(3), over80: over, top: res.slice(0, 8).map((r) => [+r[0].toFixed(3), NAMES[r[1]], NAMES[r[2]]]) };
+};
+if (mode === 'pairs') {
+  out.innerHTML = `<h1>64px 겹침 위험 짝 8개 — 위: 새 그림 · 아래: 검은 실루엣</h1><div class="grid" style="--cols:4;--cell:auto">` +
+    PAIRS.map((p) => `<div class="pair">${p.map((id) => cell(id, ExpCompanions.svg(id))).join('')}</div><div class="pair sil">${p.map((id) => cell(id, ExpCompanions.svg(id))).join('')}</div>`).join('') + '</div>';
+} else {
+  const title = { new: '새 코드 그림 키트(ExpCompanions) 43종', sil: '검은 실루엣 — 이름 없이 3초 안에 구분되나', before: '지금 게임의 코드 키트(KITS) — 같은 43종' }[mode];
+  out.innerHTML = `<h1>${title} · ${img}px</h1><p>외곽선 #6b5443 · 플랫 · 동료 몸은 □△○ 정형 없이 종 고유 외곽 · 사양 notes/art_spec_exp_companions.md</p>` +
+    `<div class="grid ${mode === 'sil' ? 'sil' : ''}">` + ids.map((id) => cell(id, mode === 'before' ? before(id) : ExpCompanions.svg(id))).join('') + '</div>';
+}
+</script>
+</body>
+</html>

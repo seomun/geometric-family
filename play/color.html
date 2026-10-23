@@ -997,6 +997,12 @@ html[data-rm="1"] .hk-stage img { animation: none; }
 .hk-kp { position: relative; flex: 1; max-width: 84px; height: 72px; border: 0; border-radius: 22px; background: #fff; box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; cursor: pointer; } .hk-kp:active { transform: translateY(2px); } .hk-kp svg { width: 44px; height: 44px; } .hk-kp .hk-emo { font-size: 36px; }
 .hk-klbl { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); white-space: nowrap; padding: 4px 10px; border-radius: 10px; background: rgba(46,36,48,.92); color: #fff; font: 800 15px/1.2 var(--uk-font); pointer-events: none; }
 .hk-kck { position: absolute; right: 4px; bottom: 4px; width: 22px; height: 22px; } .hk-kck svg { width: 22px; height: 22px; }
+/* 유아 시즌 이벤트 방울(BM-18-2, 10/23): 무대 오른쪽 위 · 천천히 반짝 · 다 하면 ✔ */
+.hk-kev { position: absolute; right: 14px; top: 156px; z-index: 3; width: 68px; height: 68px; border: 4px solid #fff; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #FFF7D6, #FFD36E); box-shadow: 0 4px 0 rgba(0,0,0,.14), 0 0 0 6px rgba(255,211,110,.35); display: flex; align-items: center; justify-content: center; font-size: 36px; line-height: 1; padding: 0; cursor: pointer; animation: hkKev 2.2s ease-in-out infinite; }
+.hk-kev.ok { animation: none; background: #F2F2F2; box-shadow: 0 4px 0 rgba(0,0,0,.12); }
+.hk-kev .hk-kck { right: -4px; bottom: -4px; font-size: 18px; font-style: normal; }
+@keyframes hkKev { 0%, 100% { transform: scale(1) rotate(-4deg); } 50% { transform: scale(1.08) rotate(4deg); } }
+[data-rm="1"] .hk-kev { animation: none; }
 .hk-main .hk-fa { position: absolute; right: 30px; top: 50%; width: 2px; height: 2px; pointer-events: none; }
 /* 2차 리뷰 P5: 다음 목표 = 그 앱 가구 한 줄 + 진척 막대(말줄임·0/4 칩 없음) */
 .h2-band.here .h2-btx { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; } .h2-band.here .h2-btx b { white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: calc(16px * var(--uk-fs-k, 1)); }
@@ -1829,11 +1835,14 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /* 시즌 판 열림 판정(10/19 버그: 「추석」이 9·10월 달 단위라 추석이 지난 10월 하순에도 보였음). 음력 명절은 실제 날짜 창(2주 전~3일 뒤), 수능은 11월 1일~시험 다음 날, 나머지는 데이터의 months */
   GF.LUNAR = { 2026: ['02-17', '09-25'], 2027: ['02-07', '09-15'], 2028: ['01-26', '10-03'], 2029: ['02-13', '09-22'], 2030: ['02-03', '09-12'] };   // [설, 추석] — room2 가족 달력과 같은 표
   GF.SUNEUNG = { 2026: '11-19', 2027: '11-18', 2028: '11-16', 2029: '11-15', 2030: '11-14' };   // 수능(셋째 목요일 전후, 해마다 확인)
-  GF.seasonKind = (s) => { const k = String((s && s.id) || '') + ' ' + String((s && s.title) || ''); return /chuseok|s_chu|추석/.test(k) ? 'chuseok' : /seol|s_seol|설날|설 /.test(k) ? 'seol' : /suneung|s_sat|수능/.test(k) ? 'suneung' : null; };
+  GF.seasonKind = (s) => { const k = String((s && s.id) || '') + ' ' + String((s && s.title) || ''); return /chuseok|s_chu|추석/.test(k) ? 'chuseok' : /seol|s_seol|설날|설 /.test(k) ? 'seol' : /suneung|s_sat|수능/.test(k) ? 'suneung' : /kimjang|s_kim|김장/.test(k) ? 'kimjang' : /yeonmal|s_year|연말(?!정산)/.test(k) ? 'yeonmal' : null; };
+  /* 10앱 시즌 이벤트 3종(10/23 허브, BM-18-1): ⑪ 원정대 data/expedition_slice.json bal.events 의 win 과 같은 날 — tools/ev3_calendar_check.py 가 대조한다 */
+  GF.EVWIN = { suneung: ['11-12', '11-18'], kimjang: ['11-19', '11-29'], yeonmal: ['12-20', '12-31'] };
+  GF.EV3 = ['suneung', 'kimjang', 'yeonmal'];
   GF.seasonOpen = function (s, d) {
     d = d || new Date(); const y = d.getFullYear(), day = Date.UTC(y, d.getMonth(), d.getDate()), at = (yy, md) => Date.UTC(yy, +md.slice(0, 2) - 1, +md.slice(3)), D = 86400000, k = GF.seasonKind(s);
     if (k === 'chuseok' || k === 'seol') { for (const yy of [y - 1, y, y + 1]) { const L = GF.LUNAR[yy]; if (!L) continue; const h = at(yy, L[k === 'seol' ? 0 : 1]); if (day >= h - 14 * D && day <= h + 3 * D) return true; } return !GF.LUNAR[y] && (s.months || []).includes(d.getMonth() + 1); }
-    if (k === 'suneung') { const e = GF.SUNEUNG[y]; return e ? day >= at(y, '11-01') && day <= at(y, e) + D : (s.months || []).includes(d.getMonth() + 1); }
+    if (GF.EVWIN[k]) { const w = GF.EVWIN[k]; return day >= at(y, w[0]) && day <= at(y, w[1]); }   /* 수능·김장·연말 = 원정대와 같은 날짜 창(예전 수능 11/1~시험 다음 날 · 김장·연말 달 단위를 대체) */
     return (s.months || []).includes(d.getMonth() + 1);
   };
   GF.hero = (parent, id) => { const d = el('div', 'hero-art', parent); d.style.backgroundImage = 'url("' + (GF.slot('hero', id) || HERO[id] || '') + '")'; try { GF.brand(parent, { playground: 'toddler', coloring: 'color' }[id] || id); } catch (e) { /* 브랜드 카드는 장식 */ } return d; };
@@ -1888,6 +1897,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     refreshBar();
     s.enter(s.el, s.params);
     if (GF.onScreen) GF.onScreen(name);                     // 광고 배너: 홈·지도에서만 켠다(ads.js)
+    if (GF.extras && GF.extras.ev3) setTimeout(() => { try { GF.extras.ev3(); } catch (e) { /* 한정 가구 확인은 곁가지 */ } }, 900);   /* 시즌 이벤트 3종을 다 깼으면 한정 가구(BM-18-3) */
     { const bid = GF.bgmFor && GF.bgmFor(name, s.params); if (bid) GF.bgm.play(bid); else GF.bgm.play(name === 'round' ? ((run && run.ch === 'ch4') ? 'night' : 'theme_kids') : name === 'book' ? (s.params.ch === 'ch4' ? 'night' : 'theme_kids') : 'theme_main'); }
   }
   GF.go = (name, params) => { GF.stack.push({ name, params }); show(name, params); };
@@ -2017,7 +2027,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       if (!GF.state.seen[nx.ch] && pro && GF.progress0() > 0 && !(navigator.webdriver && !/[?&]greet=1/.test(location.search))) { GF.state.seen[nx.ch] = 1; Store.save(); GF.go('greet', { cuts: pro, auto: 3200, then: () => { GF.stack.pop(); st(); } }); }   // 첫 실행 1회: 프롤로그 3컷
       else st();
     };
-    const main = GF.homeKit(r, { kid: true, key: 'toddler', title: GF.t('c17.gf.007'), fam: ['wife.good', 'baby.good', 'dong_dad.good'], first: !GF.state.stages.c1A, play, mainLabel: GF.t('c17.gf.002'),
+    const evNow = GF.playEventNow();
+    const main = GF.homeKit(r, { kid: true, key: 'toddler', title: GF.t('c17.gf.007'), fam: ['wife.good', 'baby.good', 'dong_dad.good'], first: !GF.state.stages.c1A, play, mainLabel: GF.t('c17.gf.002'), ev: evNow ? { emoji: evNow.icon, label: evNow.title, fn: () => GF.playEvent(evNow), done: GF.playEventDone(evNow) } : null,
       pills: [['book', '#FFE0E8', () => GF.go('shelf'), GF.t('c17.gf.003')], ['game', '#E1F4FF', () => GF.go('playroom'), GF.t('c17.gf.004')], ['album', '#FFF3C2', () => GF.go('album', { book: 1 }), GF.t('c17.gf.005')]].concat(GF.craft && GF.data.craft_recipes ? [['craft', '#E9DDFB', () => GF.go('craft'), GF.t('craft.title')]] : []).concat([['home', '#FFE3C2', () => GF.go('khouse'), GF.t('c17.gf.006')]]).map((b) => ({ svg: IC[b[0]], bg: b[1], fn: b[2], label: b[3], badge: b[0] === 'craft' && GF.craft.canNew() ? IC.sparkle : undefined })) });
     { const kp = r.querySelector('.hk-kpills'); if (kp && kp.children.length >= 5) kp.classList.add('k5'); }   // 알약 5개(공방 추가)면 한 줄에 맞게 조금 작게
     main.classList.add('homeplay');   /* 옛 시험·도구가 찾는 이름(모양은 .hk-kid 규칙이 이김) */
@@ -2307,11 +2318,18 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   }
 
   /* ---------------- 스테이지 러너 ---------------- */
+  /* 놀이터 시즌 이벤트(BM-18-2, 10/23): data/play_events.json 세 판 — 열린 동안 홈 방울, 지난 것은 「올해의 달력」에서 · 깬 해 기록 GF.state.events */
+  GF.playEvents = () => ((GF.data.play_events && GF.data.play_events.events) || []);
+  GF.playEventDone = (e) => !!((GF.state && GF.state.events) || {})[e.id + ':' + new Date().getFullYear()];
+  GF.playEvent = (e) => Stage.start({ kind: 'event', id: e.id, def: e });
+  GF.playEventNow = () => GF.playEvents().find((e) => GF.seasonOpen(e, new Date())) || null;
   let run = null;
+  const runDef = () => (run.kind === 'story' ? GF.data.stages[run.ch] : run.kind === 'event' ? run.def : null);   /* 이야기 판 = 장 정의 · 시즌 이벤트 판(BM-18-2) = data/play_events.json 한 개 */
   const Stage = (GF.Stage = {
     start(o) {
       run = Object.assign({ i: 0, res: [], level: 0, zero: 0 }, o);
       if (o.kind === 'story') GF.preload(GF.data.stages[o.ch].stages[o.k]);
+      else if (o.kind === 'event' && o.def) GF.preload(o.def);
       GF.go('round');
     },
   });
@@ -2329,14 +2347,14 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     hintT.push(setTimeout(() => { hintFn && hintFn(2); }, 10000));
   }
   GF.screen('round', {
-    wide: () => { const m = run.kind === 'story' ? GF.data.stages[run.ch].mode : run.mode; return !!(GF.modes[m] && GF.modes[m].land); },
+    wide: () => { const d = runDef(), m = d ? d.mode : run.mode; return !!(GF.modes[m] && GF.modes[m].land); },
     leave() { clearTimers(); },
     enter(r) {
-      const def = run.kind === 'story' ? GF.data.stages[run.ch] : null;
-      const modeName = run.kind === 'story' ? def.mode : run.mode, mode = GF.modes[modeName];
-      GF.bg(run.kind === 'story' ? def.bg : 'house', r);
+      const def = runDef();
+      const modeName = def ? def.mode : run.mode, mode = GF.modes[modeName];
+      GF.bg(def ? def.bg : 'house', r);
       const area = el('div', 'playarea', r); if (GF.polish && GF.polish.pause) GF.polish.pause(r);   /* 판 상단바 = ⏸ 하나(그림 단추 메뉴: 계속·나가기·소리) */
-      const cfg = run.kind === 'story' ? def.stages[run.k].rounds[run.i] : mode.free(run.diff, run.i);
+      const cfg = run.kind === 'story' ? def.stages[run.k].rounds[run.i] : run.kind === 'event' ? def.rounds[run.i] : mode.free(run.diff, run.i);
       hintCount = 0; let finished = false;
       const ctx = {
         W: GF.safe.w, H: GF.safe.h - 64, AW: GF.safe.w, AX: 0, level: run.level, sfx: (id, o) => { kidPraise(id); return GF.sfx(id, o); }, img: GF.img, shuffle, rnd, say: GF.say,
@@ -2368,20 +2386,21 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const stars = starsOf(res); run.res.push(stars);
     run.zero = res.mistakes === 0 && !res.hints ? run.zero + 1 : 0;
     run.level = res.mistakes >= 3 ? -1 : run.zero >= 2 ? 1 : 0;
-    const total = run.kind === 'story' ? def.stages[run.k].rounds.length : Infinity, last = run.i + 1 >= total;
-    const heroes = run.kind === 'story' ? def.heroes : [GAME_HERO[run.mode].replace('.good', '.joy')];
+    const ev = run.kind === 'event', total = run.kind === 'story' ? def.stages[run.k].rounds.length : ev ? def.rounds.length : Infinity, last = run.i + 1 >= total;
+    const heroes = def ? def.heroes : [GAME_HERO[run.mode].replace('.good', '.joy')];
     /* 결과 = 유아 3앱 같은 틀(허브 10/22 #10): UK.result({kid}) — 위 주인공 · 별 · 「다음」 크게 · 아래 작은 「다시」 */
     const heroEl = el('div', 'hero'); heroEl.appendChild(GF.img(rnd(heroes)));
     const nextRound = () => { GF.sfx('pick'); run.i++; clearTimers(); r.innerHTML = ''; GF.screens.round.enter(r); };
-    const nextStage = () => { GF.sfx('pick'); if (run.k < 2 || run.k === 3) GF.popTo('stages', { ch: run.ch }); else GF.replace('book', { ch: run.ch, part: 'epi' }); };
-    const again = () => { GF.sfx('pick'); const o = run; GF.stack.pop(); Stage.start({ kind: 'story', ch: o.ch, k: o.k, id: o.id }); };
+    const nextStage = () => { GF.sfx('pick'); if (ev) { GF.popTo('home'); return; } if (run.k < 2 || run.k === 3) GF.popTo('stages', { ch: run.ch }); else GF.replace('book', { ch: run.ch, part: 'epi' }); };
+    const again = () => { GF.sfx('pick'); const o = run; GF.stack.pop(); Stage.start(ev ? { kind: 'event', id: o.id, def: o.def } : { kind: 'story', ch: o.ch, k: o.k, id: o.id }); };
     let gainEl = null;
-    const ov = UK.result({ kid: true, title: '', stars, parent: r, hero: heroEl, onNext: last ? nextStage : nextRound, onRetry: last && run.kind === 'story' ? again : null });
+    const ov = UK.result({ kid: true, title: '', stars, parent: r, hero: heroEl, onNext: last ? nextStage : nextRound, onRetry: last && (run.kind === 'story' || ev) ? again : null });
     GF.whenSheet(heroEl, (pn) => { const row = pn.querySelector('.acts') || pn.querySelector('.uk-res-sub'); if (GF.ads && GF.ads.kidResult) GF.ads.kidResult(pn.parentNode);   // 유아 배너는 결과 창 맨 아래에만(QA 10/20 K-3)
-      if (GF.craft && GF.data.craft_recipes) GF.craft.roundDrop(pn, row, run.kind === 'story' ? def.mode : run.mode, run.ch, run.i, last && run.kind === 'story');   // 뚝딱 공방(D45): 라운드마다 재료 하나(단계 끝이면 하나 더)
+      if (!ev && GF.craft && GF.data.craft_recipes) GF.craft.roundDrop(pn, row, run.kind === 'story' ? def.mode : run.mode, run.ch, run.i, last && run.kind === 'story');   // 뚝딱 공방(D45): 라운드마다 재료 하나(단계 끝이면 하나 더)
       setTimeout(() => { if (gainEl) { pn.insertBefore(gainEl, row); setTimeout(() => GF.sfx('star'), 500); } }, 0); });   // 스티커는 아래 단계 완료 계산 뒤에 정해진다
     void ov;
     if (!last) return;
+    if (ev) { const ek = run.id + ':' + new Date().getFullYear(); GF.state.events = GF.state.events || {}; GF.state.events[ek] = Math.max(GF.state.events[ek] || 0, Math.max(1, Math.floor(run.res.reduce((a, b) => a + b, 0) / run.res.length))); Store.save(); return; }   /* 시즌 이벤트 판: 해마다 깬 기록만(스티커·장 보상 없음) — 셋 다면 한정 가구는 extras.ev3 가 화면 바뀔 때 */
     // 스테이지 완료
     const avg = Math.max(1, Math.floor(run.res.reduce((a, b) => a + b, 0) / run.res.length));   // 평균 내림: 한 라운드라도 틀리면 ★3 이 안 된다
     const rec = GF.state.stages[run.id] || {}; rec.done = true; rec.stars = Math.max(rec.stars || 0, avg); GF.state.stages[run.id] = rec; Store.save(); refreshBar();
@@ -2485,7 +2504,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   async function loadData(namesOpt) {
     if (window.GF_DATA_P) { try { await window.GF_DATA_P; } catch (e) { /* 아래 개별 파일 읽기로 */ } }   // 웹 배포본: 큰 데이터는 옆 파일(<앱>.data.json)로 따로 받는다(tools/web_fast_paint.py --split)
     if (window.GF_DATA) return window.GF_DATA;
-    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items', 'housing', 'craft_recipes']).concat(['names', 'ops']), out = {};
+    const names = (namesOpt || ['chars', 'stages', 'story', 'stickers', 'sounds', 'anchors', 'art_slots', 'room_items', 'housing', 'craft_recipes', 'play_events']).concat(['names', 'ops']), out = {};
     await Promise.all(names.map(async (n) => { try { out[n] = await (await fetch(GF.base + 'data/' + n + '.json')).json(); } catch (e) { if (n === 'art_slots') out[n] = {}; else if (n === 'ops') out[n] = null; else if (n === 'room_items' || n === 'craft_recipes') out[n] = null; else throw e; } }));
     if (GF.lang === 'en') await Promise.all(names.map((n) => fetch(GF.base + 'data/en/' + n + '.json').then((r) => (r.ok ? r.json() : null)).then((j) => { if (!j || !j.strings) return; const s = {}; Object.keys(j.strings).forEach((p) => { if (j.strings[p]) s[p] = j.strings[p]; }); (out.i18n_en = out.i18n_en || {})[n] = s; }).catch(() => {})));   // 개발본: 영어 덮어쓰기 파일(data/en/*, 빌드본은 GF_DATA.i18n_en 에 이미 있음)
     return out;
@@ -2505,7 +2524,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     GF.state = Store.load();
     if (window.Room && GF.data.room_items && !opts.dataNames) {   // ① 놀이터: 유아 그룹 집(아이 방만 보임, 가족 집은 보호자 잠금 뒤)
       Room.init({ home: () => GF.go('map'), openHouse: () => GF.go('khouse'), housing: GF.data.housing, app: 'playground', data: GF.data.room_items, game: 'playground', mode: 'kid', autoPlace: true, guard: (cb) => Gate.ask(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id) });
-      if (GF.extras) GF.extras.init({ app: 'play', kid: true, noHold: true, progress: () => Object.values(GF.state.stages || {}).filter((x) => x.stars > 0).length, stats: () => [[GF.t('c17.extras.015'), totalStars()], [GF.t('c17.gf.042'), Object.values(GF.state.stages).filter((x) => x.stars > 0).length], [GF.t('c17.gf.043'), Object.keys(GF.state.stickers || {}).length]], reset: () => GF.resetState() });
+      if (GF.extras) GF.extras.init({ app: 'play', kid: true, noHold: true, calendar: () => GF.playEvents().map((e) => ({ id: e.id, title: e.title, months: e.months, icon: '📅', done: GF.playEventDone(e), play: () => GF.playEvent(e) })), progress: () => Object.values(GF.state.stages || {}).filter((x) => x.stars > 0).length, stats: () => [[GF.t('c17.extras.015'), totalStars()], [GF.t('c17.gf.042'), Object.values(GF.state.stages).filter((x) => x.stars > 0).length], [GF.t('c17.gf.043'), Object.keys(GF.state.stickers || {}).length]], reset: () => GF.resetState() });
     }
     (window.requestIdleCallback || ((fn) => setTimeout(fn, 900)))(() => { ensureAudio(); loadSounds(); }, { timeout: 2500 });      // 소리 준비는 첫 화면이 뜬 뒤(저사양 첫 진입 단축, C7). 첫 터치 때는 GF.sfx·pointerdown 이 바로 준비한다
     fit(); window.addEventListener('resize', () => { fit(); const s = GF.cur; if (s && wantWide(s, s.params) !== !!GF.safeWide) show(s.name, s.params); });
@@ -3002,7 +3021,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const APPICON = { merge: '✨', spot: '🔍', block: '🧱', sort: '🗄️', tile: '🀄', day: '☀️', idle: '🍲', quiz: '❓', color: '🖍️', playground: '🎠', story: '📖', event: '🎉', other: '🎁' };
   const APPNAME = { expedition: GF.L('c17.room2.001'), merge: GF.L('c17.room2.002'), spot: GF.L('c17.room2.003'), block: GF.L('c17.room2.004'), sort: GF.L('c17.room2.005'), tile: GF.L('c17.room2.006'), day: GF.L('c17.room2.007'), idle: GF.L('c17.room2.008'), quiz: GF.L('c17.room2.009'), color: GF.L('c17.room2.010'), playground: GF.L('c17.room2.011'), story: GF.L('c17.room2.012'), event: GF.L('c17.room2.013') };
   const EMOTE = { sit: '💛', eat: '🍚', read: '📖', sleep: '💤', play: '🎵', watch: '👀' };
-  const KIDSETS = ['kid', 'daybath', 'wall', 'story_k', 'kseason', 'kseason3', 'kgift'];
+  const KIDSETS = ['kid', 'daybath', 'wall', 'story_k', 'kseason', 'kseason3', 'kgift', 'kev3'];   /* kev3 = 유아 시즌 이벤트 3종 한정(10/23) */
   const R2 = (Room.v2 = { view: 'diorama' });
   const kid = () => Room.cfg.mode === 'kid', grp = () => (kid() ? 'kid' : 'adult');
   const inGroup = (it) => (kid() ? KIDSETS.includes(it.set) : !KIDSETS.includes(it.set));
@@ -4608,7 +4627,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const COL = ['#FFC933', '#FF8FA8', '#8FD3F4', '#6CCB8A', '#fff', '#B197FC'];
   const STAR = '<svg viewBox="-10 -10 20 20"><path d="M0-9 L2.6-2.9 L9-2.7 L4 1.4 L5.7 7.6 L0 4 L-5.7 7.6 L-4 1.4 L-9-2.7 L-2.6-2.9 Z" fill="currentColor"/></svg>';
   const FX = (window.GF && (GF.fx = GF.fx || {})) || {};
-  const host = (p) => { p = p || document.getElementById('safe') || document.body; try { if (getComputedStyle(p).position === 'static') p.style.position = 'relative'; } catch (e) { /* 무시 */ } return p; };
+  const hosted = new WeakSet();      /* 한 번 position 을 확인한 부모는 다시 getComputedStyle 하지 않는다(매 입자 호출마다 강제 스타일 계산 → 저사양에서 프레임 끊김) */
+  const host = (p) => { p = p || document.getElementById('safe') || document.body; if (hosted.has(p)) return p; try { if (getComputedStyle(p).position === 'static') p.style.position = 'relative'; hosted.add(p); } catch (e) { /* 무시 */ } return p; };
 
   /** 눌림: 누르면 납작, 떼면 통통 튀어 오름(스프링 느낌). 대상 하나에 직접 쓰거나 FX.autoPress() 로 버튼 전체에 */
   FX.squash = (n, k) => { if (rm() || !n || !n.animate) return; k = k || 1; n.animate([{ transform: 'scale(1,1)' }, { transform: `scale(${1 + .16 * k},${1 - .16 * k})`, offset: .25 }, { transform: `scale(${1 - .09 * k},${1 + .13 * k})`, offset: .55 }, { transform: `scale(${1 + .03 * k},${1 - .03 * k})`, offset: .8 }, { transform: 'scale(1,1)' }], { duration: 420, easing: 'ease-out' }); };
@@ -4616,9 +4636,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   FX.bounceIn = (n, delay) => { if (rm() || !n || !n.animate) return; n.animate([{ transform: 'scale(0) rotate(-25deg)', opacity: 0 }, { transform: 'scale(1.35) rotate(8deg)', opacity: 1, offset: .55 }, { transform: 'scale(.88) rotate(-3deg)', offset: .75 }, { transform: 'scale(1) rotate(0)', opacity: 1 }], { duration: 560, delay: delay || 0, easing: 'cubic-bezier(.3,1.2,.5,1)', fill: 'backwards' }); };
   /** 반짝 파티클: 별·동그라미가 사방으로 튀었다가 중력으로 처짐. (x,y) 는 parent 기준 px */
   FX.spark = (parent, x, y, o) => {
-    if (rm()) return; o = o || {}; parent = host(parent); if (document.querySelectorAll('.fx-p').length > (FX.cap != null ? FX.cap : 70)) return; const n = o.n || 16, cols = o.colors || COL;   // 동시에 70개 넘으면 건너뜀(저사양 보호)
+    if (rm()) return; o = o || {}; parent = host(parent); if ((FX._live || 0) > (FX.cap != null ? FX.cap : 70)) return; const n = Math.max(1, Math.round((o.n || 16) * (FX.nq != null ? FX.nq : 1))), cols = o.colors || COL;   // 동시에 70개 넘으면 건너뜀(저사양 보호) · 입자 수는 연출 단계(FX.nq)에 비례
     for (let i = 0; i < n; i++) {
-      const p = el('i', 'fx-p', parent, i % 3 === 0 ? STAR : ''), ang = (i / n) * 6.283 + Math.random() * .5, d = (o.power || 70) * (.5 + Math.random() * .8), s = 10 + Math.random() * 12, dx = Math.cos(ang) * d, dy = Math.sin(ang) * d;
+      const p = el('i', 'fx-p', parent, i % 3 === 0 ? STAR : ''); FX._live = (FX._live || 0) + 1; setTimeout(() => { FX._live = Math.max(0, (FX._live || 1) - 1); }, 1100);
+      const ang = (i / n) * 6.283 + Math.random() * .5, d = (o.power || 70) * (.5 + Math.random() * .8), s = 10 + Math.random() * 12, dx = Math.cos(ang) * d, dy = Math.sin(ang) * d;
       p.style.cssText = `left:${x}px;top:${y}px;width:${s}px;height:${s}px;color:${cols[i % cols.length]};background:${i % 3 === 0 ? 'none' : cols[i % cols.length]};border-radius:50%`;
       p.style.marginLeft = p.style.marginTop = -s / 2 + 'px'; p.animate([{ transform: 'translate(0px,0px) scale(.3) rotate(0deg)', opacity: 1 }, { transform: `translate(${dx}px,${dy}px) scale(1.1) rotate(${Math.round(Math.random() * 90)}deg)`, opacity: 1, offset: .45 }, { transform: `translate(${dx * 1.15}px,${dy + 46}px) scale(.1) rotate(${Math.round(180 + Math.random() * 180)}deg)`, opacity: 0 }], { duration: 700 + Math.random() * 400, easing: 'cubic-bezier(.2,.7,.4,1)' }).onfinish = () => p.remove();
     }
@@ -4940,7 +4961,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       const here = ev.filter((e) => (e.months || []).includes(m)); if (!here.length) continue;
       const r = el('div', 'ops-cal' + (m === m0 ? ' now' : ''), body); el('b', '', r, GF.t('ops.cal.m', { m }));
       here.forEach((e) => {
-        const state = e.done ? 'done' : (e.months.includes(m0) ? 'now' : (m < m0 ? 'again' : 'later')), label = e.done ? GF.t('ops.cal.done') : state === 'now' ? GF.t('ops.cal.now') : state === 'again' ? GF.t('ops.cal.again') : GF.t('ops.cal.later', { m });
+        const w = GF.EVWIN && GF.seasonKind && GF.EVWIN[GF.seasonKind(e)], d0 = nowD(), md0 = String(m0).padStart(2, '0') + '-' + String(d0.getDate()).padStart(2, '0');   /* 수능·김장·연말은 날짜 창(BM-18-1): 같은 11월이라도 창이 지나면 다시 열기, 아직이면 나중 */
+        const state = e.done ? 'done' : w ? (GF.seasonOpen(e, d0) ? 'now' : (m < m0 || md0 > w[1] ? 'again' : 'later')) : (e.months.includes(m0) ? 'now' : (m < m0 ? 'again' : 'later')), label = e.done ? GF.t('ops.cal.done') : state === 'now' ? GF.t('ops.cal.now') : state === 'again' ? GF.t('ops.cal.again') : GF.t('ops.cal.later', { m });
         const b = el('button', 'ops-ev ' + state, r, (e.icon || '📅') + ' ' + e.title); el('small', '', b, label);
         b.onclick = () => { if (state === 'later') { GF.sfx('hmm'); UK.toast(label, safe()); return; } GF.sfx('pick'); sc.close(); e.play && e.play(); };
       });
@@ -5149,6 +5171,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const row = (label, node) => { const r = el('div', 'xt-row', body); el('span', '', r, label); if (node) r.appendChild(node); return r; };
     const tb = (text, fn) => { const b = el('button', 'xt-btn', null, text); b.onclick = fn; return b; };
     row(GF.t('ops.settings.motion'), UK.switch(O.motionOn(), (on) => { S().rm = on ? 1 : 0; if (GF.save) GF.save(); O.applyMotion(); }));
+    if (kid && O.cfg && O.cfg.calendar) row(GF.t('ops.settings.cal'), tb(GF.t('common.view'), () => { sc.close(); O.openCalendar(); }));   /* 유아 앱도 보호자 메뉴에서 지난 시즌 이벤트를 다시 연다(BM-18-3 「놓쳐도 다시」) */
     if (!kid && O.d) row('📮 ' + GF.t('ops.mail.title'), tb(GF.t('common.view'), () => { sc.close(); O.openMail(); }));
     if (!kid && O.d && O.d.news) row(GF.t('ops.settings.news'), tb(GF.t('common.view'), () => { sc.close(); O.openNews(); }));
     if (!kid) {
@@ -5808,6 +5831,23 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (GF.polish) GF.polish.init(cfg);   // 완성도 층(손상 복구·첫 실행 안내)
     if (GF.ops) GF.ops.init(cfg);   // 운영 공통 층(새 소식·복귀/금요일 선물·움직임 줄이기·문의)
   };
+  /** 시즌 이벤트 3종 한정 가구(10/23 허브, BM-18-3): 이 앱의 수능·김장·연말 이벤트 판(달력 cfg.calendar 의 done)을 셋 다 깨면 room_items 의 ev3_<앱> 한 점.
+      해가 달라도 셋을 모으면 된다(놓쳐도 다음 해·「올해의 달력」 다시 열기) · 한 번만 · 화면이 바뀔 때 엔진 show() 가 부른다 · 다른 카드가 떠 있으면 다음 화면으로 미룬다 */
+  X.ev3Id = () => 'ev3_' + ((X.cfg && X.cfg.app) || '');
+  X.ev3State = function () {
+    const ev = (X.cfg && X.cfg.calendar && X.cfg.calendar()) || [], L = load(), seen = (L.ev3 = L.ev3 || {}); let ch = 0;   /* 깬 적 있는 종류는 해가 바뀌어도 기억(앱별 gf:<앱>:x) */
+    ev.forEach((e) => { const k = GF.seasonKind(e); if (k && GF.EV3.includes(k) && e.done && !seen[k]) { seen[k] = 1; ch = 1; } });
+    if (ch) save(L);
+    return GF.EV3.map((k) => ({ k, done: !!seen[k], has: ev.some((e) => GF.seasonKind(e) === k) }));
+  };
+  X.ev3 = function () {
+    if (!X.ready || !window.Room || !Room.item || !Room.item(X.ev3Id()) || Room.has(X.ev3Id())) return null;
+    const st = X.ev3State(); if (!st.every((x) => x.done)) return null;
+    if (document.querySelector('.uk-scrim')) return null;
+    if (!Room.grant(X.ev3Id())) return null;
+    try { Room.dropCard(X.ev3Id(), (GF.cur && GF.cur.el) || document.body, () => { }); } catch (e) { /* 카드는 장식 — 가구는 이미 받음 */ }
+    return X.ev3Id();
+  };
   /** 별 지도(stars) 앱 공통 통계·업적 묶음 만들기(③⑥⑦⑧⑨) */
   X.levelApp = function (o) {
     const SV = o.SV, stars = () => Object.entries(SV().stars || {}), done = () => stars().filter((e) => e[1] > 0).length, sum = () => stars().reduce((a, e) => a + e[1], 0), full = () => stars().filter((e) => e[1] >= 3).length;
@@ -5854,6 +5894,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const main = UK.btn({ text: o.kid ? null : (o.mainText || (o.first ? GF.t('ui.hk.start') : GF.t('ui.hk.level', { n: o.level }))), icon: 'play', cls: 'green block hk-main', onclick: () => { GF.sfx('pick'); if (GF.polish && GF.polish.beforePlay) GF.polish.beforePlay(o.play); else o.play(); } }, r);
     if (!o.kid) requestAnimationFrame(() => { let f = parseFloat(getComputedStyle(main).fontSize) || 30; while (main.scrollWidth > main.clientWidth + 1 && f > 16) { f -= 1; main.style.fontSize = f + 'px'; } });   /* 긴 주 버튼 글(영어 「Start · Group Chat」)이 단추 밖으로 나가지 않게 줄여 맞춤(휴대폰 점검 10/22) */
     if (o.kid) { main.setAttribute('aria-label', o.mainLabel || 'play'); const sub = el('div', 'hk-subs hk-kpills', r); (o.pills || []).forEach((x) => { const b = el('button', 'hk-kp', sub, x.svg || IC(x.icon)); b.setAttribute('aria-label', x.label); if (x.bg) b.style.background = x.bg; if (x.badge) el('i', 'hk-kck', b, x.badge); let lt = null, long = false; b.addEventListener('pointerdown', () => { long = false; lt = setTimeout(() => { long = true; const t = el('span', 'hk-klbl', b, x.label); setTimeout(() => t.remove(), 1600); }, 550); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => clearTimeout(lt))); b.onclick = () => { if (long) return; GF.sfx('pick'); x.fn(); }; }); }   /* 보호자: 길게 누르면 이름표(아이는 짧게 눌러 바로 간다) */
+    if (o.kid && o.ev) { const b = el('button', 'hk-kev' + (o.ev.done ? ' ok' : ''), r, '<span>' + o.ev.emoji + '</span>'); b.setAttribute('aria-label', o.ev.label || ''); if (o.ev.done) el('i', 'hk-kck', b, '✔'); b.onclick = () => { GF.sfx('pick'); o.ev.fn(); }; }   /* 유아 시즌 이벤트(BM-18-2): 열린 동안 무대 오른쪽 위 반짝이는 그림 방울 하나 · o.ev = {emoji, label, fn, done} */
     if (o.kid) pokeStage(stage);   // 유아 홈: 무대의 가족·소품을 만지면 반응(사고 미니 BM 13 #1)
     const prevCard = !o.kid && o.preview ? homePreview(r, o) : null;   // 성인 퍼즐 홈 미리보기(허브 10/21) — 있으면 지도·우리 집 알약 대신 카드 안에서
     if (open && !prevCard) { const sub = el('div', 'hk-subs', r); if (o.levels) UK.btn({ text: GF.t('ui.hk.map'), icon: 'shapes', cls: 'ghost sm hk-pill', onclick: o.levels }, sub); if (o.house) UK.btn({ text: GF.t('ui.hk.house'), icon: 'home', cls: 'ghost sm hk-pill', onclick: o.house }, sub); }
@@ -6466,6 +6507,31 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   GF.pill = () => UK.icon('star') + '<span>' + doneCount() + '</span>';
   GF.home = () => { GF.stack = []; GF.go('chome'); }; GF.home2 = GF.home;
   const page = (id) => D.pages.find((p) => p.id === id);
+  /* 시즌 이벤트 3종(BM-18, 10/23): 수능 응원·김장·연말 색칠. 날짜 창(GF.seasonOpen)이 열린 동안이나 한 번 칠한 뒤에만 그림 길에 보이고,
+     부모 「올해의 달력」에서는 늘 다시 열린다. 깬 해 = SV.ev['<id>:<해>'] — 셋 다 깨면 엔진이 한정 가구 ev3_color 를 준다 */
+  const EVS = [{ id: 'suneung', page: 'ev_suneung', title: '수능 응원 색칠', en: 'Exam Cheer Coloring', months: [11], emoji: '📝' }, { id: 'kimjang', page: 'ev_kimjang', title: '김장 색칠', en: 'Kimchi-Day Coloring', months: [11], emoji: '🥬' }, { id: 'yeonmal', page: 'ev_yeonmal', title: '연말 색칠', en: 'Year-End Coloring', months: [12], emoji: '🎄' }];
+  let evNow = null; const today = () => (evNow ? new Date(evNow) : new Date());
+  const evOf = (pg) => EVS.find((e) => e.page === (pg && pg.id)), evKey = (e) => e.id + ':' + today().getFullYear(), evOpen = (e) => GF.seasonOpen({ id: e.page }, today()), evDone = (e) => !!(SV.ev || {})[evKey(e)];
+  const listed = (pg) => { const e = evOf(pg); return !e || evOpen(e) || !!SV.done[pg.id]; };
+  const openPage = (pg) => GF.go(pg.type === 'trace' && !SV.done[pg.id] ? 'ctrace' : pg.type === 'sticker' ? 'csticker' : pg.type === 'wall' ? 'cwall' : 'cpaint', { id: pg.id });
+  /** 그림 길 순서: 종류별 + 보이는 이벤트 판은 「지금 칠할 자리」(처음 안 칠한 그림) 앞에 끼움 — 길 끝(100칸 밖)으로 밀리지 않게 */
+  function ordered() {
+    const base = [], ev = []; TYPES.forEach((t) => D.pages.filter((p) => p.type === t).forEach((p) => { if (!evOf(p)) base.push(p); else if (listed(p)) ev.push(p); }));
+    const M = GF.data['maps/color'], cap = M && M.zones ? M.zones.length * (M.per || 10) : base.length + ev.length, k = base.findIndex((p) => !SV.done[p.id] && p.type !== 'wall');
+    base.splice(Math.max(0, Math.min(k < 0 ? base.length : k, cap - ev.length)), 0, ...ev); return base;
+  }
+  /* 이벤트 그림(선화) — 집 아이템 그림(RoomArt)과 같은 붓·굵기·작은 얼굴. 페이지 데이터는 art: 'ev_…' 한 줄 */
+  const EVART = (() => {
+    const st = (f, w) => `fill="${f}" stroke="${INK}" stroke-width="${w || 3}" stroke-linejoin="round" stroke-linecap="round"`, sv = (b) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">${b}</svg>`;
+    const fc = (x, y, k) => `<circle cx="${x - 5 * k}" cy="${y}" r="${1.9 * k}" fill="${INK}"/><circle cx="${x + 5 * k}" cy="${y}" r="${1.9 * k}" fill="${INK}"/><path d="M${x - 3 * k} ${y + 4 * k}q${3 * k} ${3 * k} ${6 * k} 0" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>`;
+    const star = (x, y, ro, ri) => 'M' + Array.from({ length: 10 }, (_, i) => { const r = i % 2 ? ri : ro, a = Math.PI * (-0.5 + i / 5); return (x + r * Math.cos(a)).toFixed(1) + ' ' + (y + r * Math.sin(a)).toFixed(1); }).join('L') + 'z';
+    const cab = (x, y, a) => `<g transform="translate(${x} ${y}) rotate(${a})"><ellipse cx="0" cy="0" rx="12" ry="21" ${st('#FFF6E5')}/><path d="M-12 -1q-3-21 12-21t12 21q-4-5-8 0-4-6-8 0-4-5-8 0z" ${st('#69DB7C')}/><path d="M-6 4v12" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" opacity=".5"/></g>`;
+    return {
+      ev_suneung: () => sv(`<path d="${star(22, 22, 15, 7)}" ${st('#FFD43B')}/><rect x="6" y="52" width="62" height="40" rx="8" ${st('#FF8FA8')}/><rect x="6" y="68" width="62" height="10" ${st('#FFF3B0', 2.4)}/><ellipse cx="19" cy="51" rx="10" ry="9" ${st('#FFF6E5')}/><ellipse cx="55" cy="51" rx="10" ry="9" ${st('#FFF6E5')}/><ellipse cx="37" cy="49" rx="11" ry="10" ${st('#FFF6E5')}/>${fc(37, 48, 0.9)}<rect x="75" y="8" width="16" height="11" rx="4" ${st('#FF8FA8')}/><rect x="75" y="19" width="16" height="7" ${st('#B9B2C0', 2.4)}/><rect x="75" y="26" width="16" height="48" ${st('#FFC933')}/><path d="M75 74L83 92 91 74z" ${st('#F6C28B')}/><path d="M80.3 86L83 92 85.7 86z" fill="${INK}"/>`),
+      ev_kimjang: () => sv(`<path d="M62 38C50 44 50 84 60 92H88C98 84 98 44 86 38z" ${st('#A9744F')}/><rect x="61" y="28" width="26" height="11" rx="4" ${st('#C99A6B')}/><path d="M56 62q18 6 36 0" fill="none" stroke="${INK}" stroke-width="2" opacity=".5"/><path d="M6 64H64L56 94H14z" ${st('#FF6B6B')}/>${cab(24, 40, -16)}${cab(45, 38, 12)}${fc(46, 47, 0.8)}<rect x="2" y="59" width="66" height="9" rx="4.5" ${st('#FF8FA8')}/>`),
+      ev_yeonmal: () => sv(`<path d="M40 14L58 40H22z" ${st('#8CE99A')}/><path d="M40 28L64 58H16z" ${st('#69DB7C')}/><path d="M40 46L70 80H10z" ${st('#51CF66')}/><rect x="34" y="80" width="12" height="12" ${st('#A9744F')}/><path d="${star(40, 12, 11, 5)}" ${st('#FFD43B', 2.6)}/><circle cx="31" cy="48" r="5" ${st('#FF6B6B', 2.4)}/><circle cx="56" cy="70" r="5" ${st('#4DABF7', 2.4)}/><circle cx="23" cy="72" r="5" ${st('#FFA94D', 2.4)}/>${fc(40, 64, 0.9)}<rect x="70" y="68" width="24" height="24" rx="3" ${st('#9775FA')}/><rect x="68" y="61" width="28" height="9" rx="3" ${st('#B197FC')}/><rect x="79" y="61" width="6" height="31" ${st('#FFD43B', 2.2)}/><path d="M82 61q-12-12-12-2 0 4 12 2zM82 61q12-12 12-2 0 4-12 2z" ${st('#F783AC', 2.2)}/>`),
+    };
+  })();
 
   /* ---------------- 그림 만들기: 룸 아이템 그림·도형 얼굴·장면 ---------------- */
   const FACE = (x, y, k) => `<circle cx="${x - 7 * k}" cy="${y}" r="${2.4 * k}" fill="${INK}"/><circle cx="${x + 7 * k}" cy="${y}" r="${2.4 * k}" fill="${INK}"/><path d="M${x - 5 * k} ${y + 6 * k}q${5 * k} ${5 * k} ${10 * k} 0" fill="none" stroke="${INK}" stroke-width="${2.2 * k}" stroke-linecap="round"/>`;
@@ -6482,7 +6548,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   function trace(dots) { const cx = dots.reduce((a, p) => a + p[0], 0) / dots.length, cy = dots.reduce((a, p) => a + p[1], 0) / dots.length, d = (k, ox, oy) => 'M' + dots.map((p) => (cx + (p[0] - cx) * k + ox).toFixed(1) + ' ' + (cy + (p[1] - cy) * k + oy).toFixed(1)).join('L') + 'z'; return { cx, cy, outer: d(1, 0, 0), inner: d(0.5, 0, 0) }; }
   function baseSVG(pg) {
     let root;
-    if (pg.art) root = parse(RoomArt.make(pg.art, '#F6C28B', {}));
+    if (pg.art) root = parse(EVART[pg.art] ? EVART[pg.art]() : RoomArt.make(pg.art, '#F6C28B', {}));
     else if (pg.shape) root = parse(shapeStr(pg.shape[0], pg.shape[1]));
     else if (pg.scene) root = sceneSVG(pg.scene);
     else if (pg.dots) { const t = trace(pg.dots); root = parse(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><path d="${t.outer}" fill="#F6C28B" stroke="${INK}" stroke-width="4" stroke-linejoin="round"/><path d="${t.inner}" fill="#FFD43B" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>${FACE(t.cx, t.cy - 4, 1.2)}</svg>`); }
@@ -6516,9 +6582,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     enter(r) {
       r.classList.add('uk', 'cl'); GF.bg('home', r);
       if (GF.homeKit) {   /* 유아 공통 틀(3차 리뷰: 유아 변형 확정) — 초록 ▶ = 아직 안 칠한 다음 그림, 그림 알약 = 그림책·우리 집(집은 늘 끝) */
-        const order = []; TYPES.forEach((t) => D.pages.filter((p) => p.type === t).forEach((p) => order.push(p))); const nx = order.find((pg) => !SV.done[pg.id] && pg.type !== 'wall');
+        const order = ordered(), nx = order.find((pg) => !SV.done[pg.id] && pg.type !== 'wall'), se = EVS.find((e) => evOpen(e) && page(e.page));
         GF.homeKit(r, { kid: true, key: 'color', title: GF.t('c17.color.001'), fam: ['nemo_kids.kid1', 'baby.joy', 'wife.joy'], first: !SV.intro, mainLabel: GF.t('c17.color.002'),
-          play: () => (nx ? GF.go(nx.type === 'trace' ? 'ctrace' : nx.type === 'sticker' ? 'csticker' : 'cpaint', { id: nx.id }) : GF.go('cbook')),
+          ev: se ? { emoji: se.emoji, label: se.title, fn: () => openPage(page(se.page)), done: evDone(se) } : null,   /* 시즌 이벤트가 열린 동안만 무대 오른쪽 위 그림 방울(엔진 .hk-kev, 깨면 ✔) */
+          play: () => (nx ? openPage(nx) : GF.go('cbook')),
           pills: [{ icon: 'brush', bg: '#FFE0E8', label: GF.t('c17.room2.279'), fn: () => GF.go('cbook') }].concat(GF.craft && GF.data.craft_recipes ? [{ svg: GF.IC.craft, bg: '#E9DDFB', label: GF.t('craft.title'), badge: GF.craft.canNew() ? GF.IC.sparkle : '', fn: () => GF.go('craft') }] : []).concat([{ icon: 'home', bg: '#FFE3C2', label: GF.t('c17.gf.006'), fn: () => GF.go('chouse') }]) });   // 뚝딱 공방(D45): 같은 유아 그룹 엔진·도감
         SV.intro = 1; save(); return;
       }
@@ -6539,17 +6606,17 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     else if (pg.type === 'wall') { const w = el('div', '', btn); w.style.cssText = 'width:100%;height:100%;border-radius:14px;' + Room.wallStyle({ pat: pg.pat, bg: pg.bg, fg: pg.fg }); }
     else if (pg.type === 'trace' && !d) { const t = trace(pg.dots); btn.innerHTML = `<svg viewBox="0 0 300 300">${pg.dots.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="12" fill="${['#FF8FA8', '#FFC933', '#8FD3F4', '#B197FC', '#6CCB8A'][i % 5]}"/>`).join('')}</svg>`; }
     else { const i = el('img', '', btn); i.src = d ? imageFor(pg.id) : paintedURI(pg, {}); }
-    if (pg.season) el('i', 'sn', btn, { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️' }[pg.season] || '');   // 계절 도안 표식(글자 없음)
+    if (pg.season) el('i', 'sn', btn, { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️', suneung: '📝', kimjang: '🥬', yeonmal: '🎄' }[pg.season] || '');   // 계절 도안 표식(글자 없음)
     if (d) { const ck = el('div', 'ck', btn, UK.icon('check')); ck.style.cssText = 'background:#fff;border-radius:50%;box-shadow:var(--uk-sh)'; }
   }
   GF.screen('cbook', {
     bare: false,
     enter(r) {
       r.classList.add('uk', 'cl'); GF.bg('home', r);
-      const order = []; TYPES.forEach((t) => D.pages.filter((p) => p.type === t).forEach((p) => order.push(p)));
+      const order = ordered();
       const lv = order.map((pg, k) => ({ id: k + 1, chapter: Math.floor(k / 10) + 1, type: pg.type, pg }));
       GF.saga.open(r, { levels: lv, kid: true, nodeCls: 'thumb', stars: (id) => (SV.done[lv[id - 1].pg.id] ? 3 : 0), unlocked: () => true, noGate: true,
-        render: (l, b) => thumb(l.pg, b), onNode: (l) => { const pg = l.pg; GF.go(pg.type === 'trace' && !SV.done[pg.id] ? 'ctrace' : pg.type === 'sticker' ? 'csticker' : pg.type === 'wall' ? 'cwall' : 'cpaint', { id: pg.id }); },
+        render: (l, b) => thumb(l.pg, b), onNode: (l) => openPage(l.pg),
         onChest: () => GF.go('chouse') });   /* 오른쪽 집 단추는 뺌 — 위 바의 집과 같은 그림이 둘(QA 10/20 D-1, 하루와 같게) */
     },
   });
@@ -6615,7 +6682,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       });
       function complete(auto) {
         if (!auto && filled() < need()) { GF.sfx('hmm'); done.classList.add('cl-shake'); setTimeout(() => done.classList.remove('cl-shake'), 420); return; }
-        SV.done[pg.id] = { fills: Object.assign({}, fills) }; delete cacheImg[pg.id]; save(); GF.refreshBar(); finishArt(r, pg);
+        SV.done[pg.id] = { fills: Object.assign({}, fills) }; { const ev = evOf(pg); if (ev) (SV.ev = SV.ev || {})[evKey(ev)] = 1; } delete cacheImg[pg.id]; save();   /* 이벤트 판이면 올해 깬 표시(달력 done · 한정 가구 셋 모으기) */ GF.refreshBar(); finishArt(r, pg);
       }
       CL.debug.fillAll = () => { colorable.forEach((i) => { const c = num ? R.orig[i] : PAL[(i % 8)]; color = c; fills[i] = c; R.regions[i].setAttribute('fill', c); }); complete(true); };
       if (pg.type === 'webtoon' && !p.skipStory) { const st = X.stories[(pg.chapter || 1) - 1]; if (st) { const ov = el('div', 'abs', r); ov.style.cssText = 'inset:0;z-index:60'; GF.story(ov, st.cuts.slice(0, 2).map((c) => ({ bg: 'indoor', text: c.text, chars: c.chars.map((id, k, a) => ({ id, x: a.length > 1 ? 50 + k * (260 / (a.length - 1)) : 180, y: 600 })), bubble: c.bubble ? { type: c.bubble, at: 0 } : null })), () => ov.remove()); } }
@@ -6741,9 +6808,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       D = GF.data.color_pages; X = GF.data.merge_extra;
       if (GF.craft) GF.craft.setup({ app: 'color', home: 'chome', house: 'chouse', paintAll: true, pal: PAL.slice(0, 6) });   // 뚝딱 공방: 가구는 모두 붓으로, 색 = 내가 칠한 색
       Room.init({ home: () => GF.go('cbook'), openHouse: () => GF.go('chouse'), housing: GF.data.housing, app: 'color', data: GF.data.room_items, game: 'coloring', mode: 'kid', autoPlace: false, guard: (cb) => GF.gate(cb), store: Room.sharedStore('gf:house:kid:v1'), charSrc: (id) => GF.src(id), slot: (k, id) => GF.slot(k, id), imageFor });
-      GF.saga.init('color', GF.data['maps/color']); GF.tale.init('color', GF.data.story_color, { kid: true }); GF.extras.init({ app: 'color', kid: true, progress: () => Object.keys(SV.done || {}).length, stats: () => [[GF.t('c17.color.005'), Object.keys(SV.done).length + ' / ' + D.pages.length], [GF.t('c17.color.006'), Room.placedIn('kid').filter((x) => x.img).length]], resetTips: () => { SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
+      GF.saga.init('color', GF.data['maps/color']); GF.tale.init('color', GF.data.story_color, { kid: true }); GF.extras.init({ app: 'color', kid: true, progress: () => Object.keys(SV.done || {}).length, stats: () => [[GF.t('c17.color.005'), Object.keys(SV.done).length + ' / ' + D.pages.filter(listed).length], [GF.t('c17.color.006'), Room.placedIn('kid').filter((x) => x.img).length]],
+        calendar: () => EVS.filter((e) => page(e.page)).map((e) => ({ id: e.id, title: (GF.lang === 'en' && e.en) || e.title, months: e.months, icon: '📅', done: evDone(e), play: () => openPage(page(e.page)) })), resetTips: () => { SV.intro = 0; save(); }, reset: () => { SV = blank(); save(); } });
       roomOK = true; document.getElementById('safe').classList.add('uk'); GF.go('chome');
-      CL.debug.D = () => D; CL.debug.SV = () => SV; CL.debug.reset = () => { SV = blank(); save(); }; CL.debug.page = page;
+      CL.debug.D = () => D; CL.debug.SV = () => SV; CL.debug.reset = () => { SV = blank(); save(); }; CL.debug.page = page; CL.debug.setDate = (d) => { evNow = d || null; }; CL.debug.openEv = (id) => openPage(page('ev_' + id)); CL.debug.order = () => ordered().map((p) => p.id);
     } }, opts || {}));
   };
 })();

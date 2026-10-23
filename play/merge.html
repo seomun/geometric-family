@@ -798,6 +798,10 @@ html[lang="en"] .mg-hd { right: 148px; } html[lang="en"] .tl-hd { right: 100px; 
 .h2-it.h2-a-hearts, .h2-it.h2-a-zzz, .h2-it.h2-a-sparkle, .h2-it.h2-a-notes, .h2-it.h2-a-steam, .h2-it.h2-a-drops, .h2-it.h2-a-page, .h2-it.h2-a-flash { animation: h2use .6s ease; }
 
 .h2-guestchip { left: auto !important; right: 10px; background: #E6F4FF !important; color: #1F5A8A !important; } .h2-gface { width: 52px; height: 60px; flex: none; display: flex; align-items: center; justify-content: center; } .h2-gface img { max-width: 100%; max-height: 100%; } .h2-pcard.off { opacity: .55; filter: grayscale(.4); }
+/* 손님 도감(BM-19, 10/24): 테두리 = 만나는 길(가족 초록 · 원정대 이웃 보라) · 카메오 다 모으면 금빛 · 못 만난 손님은 그림자 */
+.h2-gbook .h2-pcard.tier-fam { border-color: #9BD3A8; } .h2-gbook .h2-pcard.tier-nb { border-color: #B9A2E8; background: #F7F2FF; } .h2-gbook .h2-pcard.camall { box-shadow: 0 0 0 3px #F5C84B inset; }
+.h2-gbook .h2-pcard.off { background: #F4F1EC; border-style: dashed; } .h2-gbook .h2-pcard.off .h2-gface img { filter: brightness(0) opacity(.28); }
+.h2-gbook .h2-pcnt { color: #8A5A00; opacity: 1 !important; letter-spacing: .5px; } .h2-gbsec { margin: 12px 2px 2px; font-size: 15px; color: #5B4636; } .h2-gbnext { margin: 2px 0 6px; font-size: 14px; font-weight: 800; color: #2B7A45; }
 
 .h2-codebox { background: #fff8e6; border: 2px solid #ecd9a8; border-radius: 14px; padding: 10px 12px; margin: 8px 0; } .h2-codebox b { display: block; margin-bottom: 4px; } .h2-code { width: 100%; box-sizing: border-box; height: 64px; border: 2px solid #d9c9a8; border-radius: 10px; padding: 6px 8px; font: 700 11px/1.3 monospace; word-break: break-all; margin: 4px 0 6px; resize: none; }
 
@@ -2898,7 +2902,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const APPICON = { merge: '✨', spot: '🔍', block: '🧱', sort: '🗄️', tile: '🀄', day: '☀️', idle: '🍲', quiz: '❓', color: '🖍️', playground: '🎠', story: '📖', event: '🎉', other: '🎁' };
   const APPNAME = { expedition: GF.L('c17.room2.001'), merge: GF.L('c17.room2.002'), spot: GF.L('c17.room2.003'), block: GF.L('c17.room2.004'), sort: GF.L('c17.room2.005'), tile: GF.L('c17.room2.006'), day: GF.L('c17.room2.007'), idle: GF.L('c17.room2.008'), quiz: GF.L('c17.room2.009'), color: GF.L('c17.room2.010'), playground: GF.L('c17.room2.011'), story: GF.L('c17.room2.012'), event: GF.L('c17.room2.013') };
   const EMOTE = { sit: '💛', eat: '🍚', read: '📖', sleep: '💤', play: '🎵', watch: '👀' };
-  const KIDSETS = ['kid', 'daybath', 'wall', 'story_k', 'kseason', 'kseason3', 'kgift', 'kev3'];   /* kev3 = 유아 시즌 이벤트 3종 한정(10/23) */
+  const KIDSETS = ['kid', 'daybath', 'wall', 'story_k', 'kseason', 'kseason3', 'kgift', 'kev3', 'kguest'];   /* kev3 = 유아 시즌 이벤트 3종 한정(10/23) */
   const R2 = (Room.v2 = { view: 'diorama' });
   const kid = () => Room.cfg.mode === 'kid', grp = () => (kid() ? 'kid' : 'adult');
   const inGroup = (it) => (kid() ? KIDSETS.includes(it.set) : !KIDSETS.includes(it.set));
@@ -3330,7 +3334,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     ops.filter((c) => !!c.kid === kid()).forEach((c, idx) => {
       const got = !!(I && I.ready && I.hasCameo && I.hasCameo(c.id)); out.push({ id: 'cam:' + c.id, cam: true, got, char: c.who, group: grp(), who: whoName(c.who), app: APPNAME[c.host] || c.host, need: 200 + 60 * idx, step: 120, max: 3, frm: c.frm, prop: c.prop, host: c.host, likes: [], gifts: [null, null, '__app:' + c.frm], lines: [c.line, GF.t('c16.room2.033', { prop: c.prop }), GF.t('c17.room2.040')] });
     });
-    if (!kid()) ((H() && H().neighbors) || []).forEach((n, idx) => out.push({ id: n.id, nb: true, got: Room.has(n.loot), emoji: n.emoji, loot: n.loot, group: grp(), who: n.name, app: '기하학 원정대', need: 300 + 30 * idx, step: 150, max: 3, likes: [], gifts: [null, null, null], lines: n.lines }));      // A27: ⑪ 포섭 이웃 21명 — 마지막 단계 전리품 코드를 받아 놓으면 놀러 온다(선물 없음)
+    if (!kid()) ((H() && H().neighbors) || []).forEach((n, idx) => out.push({ id: n.id, nb: true, got: Room.has(n.loot), emoji: n.emoji, loot: n.loot, group: grp(), who: n.name, app: '기하학 원정대', need: 300 + 30 * idx, step: 150, max: 3, likes: [], gifts: [null, null, null], lines: n.lines, nation: n.nation, stage: n.stage }));      // A27: ⑪ 포섭 이웃 21명 — 마지막 단계 전리품 코드를 받아 놓으면 놀러 온다(선물 없음)
     return out;
   };
   /** 손님 그림: 가족 캐릭터는 시트 그림, 이웃(가족 밖)은 이모지 그림 */
@@ -3344,12 +3348,44 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const WHO = { wife: GF.L('c17.ops.006'), husband: GF.L('c17.rank.002'), nemo_dad: GF.L('c17.ops.007'), nemo_mom: GF.L('c17.rank.001'), nemo_grandma: GF.L('c17.ops.009'), dong_dad: GF.L('c17.ops.008'), 'nemo_kids.kid1': GF.L('c17.room2.041'), 'nemo_kids.kid2': GF.L('c17.room2.042'), 'nemo_kids.kid3': GF.L('c17.room2.043'), baby: GF.L('c17.room2.044') };
   const whoName = (ch) => WHO[ch] || WHO[String(ch).split('.')[0]] || GF.t('c17.room2.045');
   const likedBy = (g, p) => { if (g.nb) return p.id === g.loot; if (!g.cam) return g.likes.includes(p.id); const it = Room.item(p.id); return !!(it && it.src && it.src.game === g.frm); };
+  /* ---------------- 손님 도감(BM-19, 10/24 쿠키런 오븐브레이크 「쿠키 목록」의 수집 감각 — 뽑기 없음) ----------------
+     사람 단위로 묶는다(카메오는 그 가족 사람 카드에 「카메오 n/k」로 붙고, 원정대 이웃은 한 명씩). 아직 못 만난 손님도 그림자 + 만나는 곳 힌트로 보인다(BM-19-1).
+     테두리 = 만나는 길(가족 = 자주 · 원정대 이웃 = 드문) · 단골 별 = 방문 n/max 를 ★ 셋으로(BM-19-2). 만난 사람 수가 문턱을 넘으면 한정 가구 한 점씩(BM-19-3, 한 번 받으면 계속) */
+  const GB_MS = { adult: [[3, 'gb_3'], [8, 'gb_8'], [15, 'gb_15'], [25, 'gb_25']], kid: [[2, 'kgb_2'], [4, 'kgb_4']] };
+  Room.guestPeople = function () {
+    const S = ensure(), by = {};
+    Room.guestList().forEach((g) => {
+      const k = g.nb ? g.id : (g.who || whoName(g.char)), q = by[k] || (by[k] = { key: k, who: g.who || whoName(g.char), char: g.char, emoji: g.emoji, nb: !!g.nb, apps: [], props: [], cams: 0, camsGot: 0, n: 0, max: 0, need: g.need, lines: [], hint: '', ids: [], base: false });
+      if (g.cam) { q.cams++; if (g.got) { q.camsGot++; if (g.prop) q.props.push(g.prop); } else { if (!q.hint) q.hint = GF.t('gb.hintCam', { app: g.app }); return; } }
+      if (g.nb && !g.got) q.hint = GF.t('gb.hintNb', { nation: g.nation, stage: g.stage });
+      if (!g.cam && !g.nb) q.base = true;
+      const n = (S.guests[g.id] || {}).n || 0; if (g.app && !q.apps.includes(g.app)) q.apps.push(g.app); q.n += n; q.max += g.max; q.need = Math.min(q.need, g.need); q.ids.push(g.id); if (n) q.lines.push(g.lines[Math.min(n - 1, g.lines.length - 1)]);
+    });
+    return Object.values(by).map((q) => Object.assign(q, { met: q.n > 0, stars: q.n > 0 ? Math.max(1, Math.min(3, Math.ceil(3 * q.n / Math.max(1, q.max)))) : 0 }));
+  };
+  Room.guestMilestones = () => GB_MS[kid() ? 'kid' : 'adult'].filter((m) => Room.item(m[1]));
+  /** 만난 손님 수 문턱을 넘은 이정표 가구를 준다 — 새로 받은 것 목록(조용히 넣고 부른 쪽이 알림) */
+  Room.guestMilestone = function () {
+    const met = Room.guestPeople().filter((q) => q.met).length, got = [];
+    Room.guestMilestones().forEach(([n, id]) => { if (met >= n && !Room.has(id)) { Room._quiet = 1; try { if (Room.grant(id)) got.push({ n, id, name: (Room.item(id) || {}).name }); } finally { Room._quiet = 0; } } });
+    return got;
+  };
   Room.guestBook = function (parent) {
-    const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh', sc), S = ensure(), L0 = Room.guestList().filter((g) => (!g.cam && !g.nb) || g.got), by = {}; L0.forEach((g) => { const k = g.who || whoName(g.char), q = by[k] || (by[k] = { who: k, char: g.char, emoji: g.emoji, apps: [], props: [], n: 0, max: 0, need: g.need, lines: [], ids: [] }); if (g.app && !q.apps.includes(g.app)) q.apps.push(g.app); if (g.cam && g.prop) q.props.push(g.prop); const n = (S.guests[g.id] || {}).n || 0; q.n += n; q.max += g.max; q.need = Math.min(q.need, g.need); q.ids.push(g.id); if (n) q.lines.push(g.lines[Math.min(n - 1, g.lines.length - 1)]); });
-    const L = Object.values(by).sort((x, y) => ((y.n > 0) - (x.n > 0)) || x.need - y.need), seen = L.filter((g) => g.n > 0).length;
-    el('h2', '', sh, kid() ? '👋' : GF.t('c16.room2.034', { seen: seen, length: L.length })); if (!kid()) el('p', 'h2-dsub', sh, GF.t('c16.room2.011'));
-    L.forEach((g) => { const n = g.n, c = el('div', 'h2-pcard' + (n ? '' : ' off'), sh), pv = el('div', 'h2-gface', c); if (Room.cfg.charSrc) { const im = el('img', '', pv); im.src = Room.guestSrc(g); im.alt = ''; } const tx = el('div', 'h2-ptx', c);
-      if (!kid()) { el('b', '', tx, g.who + ' · ' + g.apps.join(' · ') + (g.props.length ? ' ' + g.props.join('') : '')); el('small', '', tx, n ? (g.lines[g.lines.length - 1] || '') : GF.t('c16.room2.035', { need: g.need })); el('small', 'h2-pcnt', tx, GF.t('c16.room2.084', { n: n, max: g.max })); } else el('small', '', tx, '⭐'.repeat(n)); });
+    const sc = el('div', 'uk-scrim h2-cat', ovRoot(parent)), sh = el('div', 'uk-sheet h2-presh h2-gbook', sc);
+    const gotNow = Room.guestMilestone(); gotNow.forEach((m) => { try { toastH(kid() ? '🎁' : GF.t('gb.ms', { n: m.n, name: m.name }), parent); } catch (e) { /* 알림 실패 무시 */ } });   /* 예전부터 만난 손님이 많던 사람도 도감을 열면 받는다 */
+    const P = Room.guestPeople().sort((x, y) => (y.met - x.met) || (x.nb - y.nb) || x.need - y.need), met = P.filter((q) => q.met).length;
+    el('h2', '', sh, kid() ? '👋 ' + '⭐'.repeat(Math.min(5, met)) : GF.t('gb.title', { n: met, t: P.length }));
+    if (!kid()) { el('p', 'h2-dsub', sh, GF.t('c16.room2.011')); const nx = Room.guestMilestones().find((m) => !Room.has(m[1])); el('p', 'h2-gbnext', sh, nx ? GF.t('gb.next', { next: nx[0], name: (Room.item(nx[1]) || {}).name, n: met }) : GF.t('gb.allgot')); }
+    const card = (g) => { const c = el('div', 'h2-pcard ' + (g.nb ? 'tier-nb' : 'tier-fam') + (g.met ? '' : ' off') + (g.cams && g.camsGot === g.cams ? ' camall' : ''), sh), pv = el('div', 'h2-gface', c);
+      if (Room.cfg.charSrc || g.emoji) { const im = el('img', '', pv); im.src = Room.guestSrc(g); im.alt = ''; } const tx = el('div', 'h2-ptx', c);
+      if (!kid()) { el('b', '', tx, (g.met || g.base ? g.who : GF.t('gb.unknown')) + (g.apps.length ? ' · ' + g.apps.join(' · ') : '') + (g.props.length ? ' ' + g.props.join('') : ''));
+        el('small', '', tx, g.met ? (g.lines[g.lines.length - 1] || '') : (g.base ? GF.t('c16.room2.035', { need: g.need }) : (g.hint || GF.t('c16.room2.035', { need: g.need }))));   /* 기본 가족 손님은 아늑함으로 온다(카메오 힌트는 카메오만인 사람에게) */
+        el('small', 'h2-pcnt', tx, '★'.repeat(g.stars) + '☆'.repeat(3 - g.stars) + (g.max ? '  ' + GF.t('c16.room2.084', { n: g.n, max: g.max }) : '') + (g.cams ? ' · ' + GF.t('gb.cams', { got: g.camsGot, t: g.cams }) : '')); }
+      else el('small', 'h2-pcnt', tx, '⭐'.repeat(g.stars) + '☆'.repeat(3 - g.stars)); };
+    const fam = P.filter((q) => !q.nb), nb = P.filter((q) => q.nb);
+    if (!kid() && nb.length) el('h3', 'h2-gbsec', sh, GF.t('gb.fam') + ' ' + fam.filter((q) => q.met).length + '/' + fam.length);
+    fam.forEach(card);
+    if (nb.length) { el('h3', 'h2-gbsec', sh, GF.t('gb.nb') + ' ' + nb.filter((q) => q.met).length + '/' + nb.length); nb.forEach(card); }
     UK.btn({ text: kid() ? null : GF.t('c17.room2.046'), icon: kid() ? 'close' : null, cls: 'ghost', onclick: () => sc.remove() }, el('div', 'acts', sh)); return sc;
   };
   /* ---------------- 집 구경 코드(A4): 방 배치를 짧은 글자로 주고받아 읽기 전용으로 구경(서버 없음) ---------------- */
@@ -3566,7 +3602,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
         const im = el('img', 'h2-guest', room); im.src = Room.guestSrc(g); im.alt = ''; im.style.cssText = `left:${fr.x}px;top:${fr.y}px`; room.__occ.push({ x: fr.x, y: fr.y, w: GW, h: GH, guest: true });
         const line = invited ? INVITE_LINES[(n + (g.id.length || 0)) % INVITE_LINES.length].replace('{it}', it.name) : seasonal ? g.seasonLines[sk.idx] : (g.lines.length ? g.lines[(n + Math.floor(Math.random() * 2)) % g.lines.length] : ''), BW = kid() ? 40 : 150, BH = kid() ? 34 : 40, bp = freeRect(room, BW, BH, { x: fr.x + GW / 2, y: fr.y - BH }, { x0: 4, y0: 6, x1: RW - 4, y1: RH - BH });
         const bb = el('div', 'h2-bubble', room, kid() ? '💖' : line); bb.style.cssText = `left:${bp.x}px;top:${bp.y}px;--tx:${Math.round(Math.max(14, Math.min(BW - 14, fr.x + GW / 2 - bp.x)))}px`; bb.classList.add(bp.y + BH <= fr.y + 12 ? 'tail-d' : 'tail-u');
-        setTimeout(() => { Room._quiet = 1; const gg = gift ? Room.grant(gift) : null; Room._quiet = 0; if (gg) { toastH(kid() ? '🎁' : GF.t('c17.room2.139', { name: (Room.item(gift) || {}).name }), parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} } afterChange(); }, 2600); setTimeout(() => { im.remove(); bb.remove(); }, 4400); }, 900);
+        setTimeout(() => { Room._quiet = 1; const gg = gift ? Room.grant(gift) : null; Room._quiet = 0; if (gg) { toastH(kid() ? '🎁' : GF.t('c17.room2.139', { name: (Room.item(gift) || {}).name }), parent); try { GF.sfx && GF.sfx('star'); } catch (e) {} } { const ms = Room.guestMilestone(); ms.forEach((m, k) => setTimeout(() => { toastH(kid() ? '🎁' : GF.t('gb.ms', { n: m.n, name: m.name }), parent); try { GF.sfx && GF.sfx('get'); } catch (e) { /* 소리 없음 */ } }, 1200 * (k + 1))); } afterChange(); }, 2600);   /* BM-19-3 손님 도감 이정표: 이 방문으로 만난 손님 수가 문턱을 넘으면 한정 가구 */ setTimeout(() => { im.remove(); bb.remove(); }, 4400); }, 900);
     }
     function drawAll() { drawTop(); drawNav(); drawStage(); drawTools(); drawSheet(); drawSel(); sceneCheck(!place); }
     Room._redraw = () => { sel = null; drawAll(); };

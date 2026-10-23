@@ -618,6 +618,7 @@ html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { a
 .ops-cal { text-align: left; margin: 6px 0; padding: 6px 8px; border-radius: 14px; background: #fff; box-shadow: var(--uk-sh); } .ops-cal.now { outline: 3px solid #6CCB8A; } .ops-cal > b { display: block; font: 900 var(--uk-fs-cap)/1.2 var(--uk-font); margin-bottom: 4px; }
 .ops-ev { display: flex; justify-content: space-between; align-items: center; width: 100%; min-height: 44px; margin: 3px 0; padding: 4px 12px; border: 0; border-radius: 12px; background: #F4EFE6; font: 800 var(--uk-fs-cap)/1.2 var(--uk-font); color: var(--uk-ink); } .ops-ev small { font-weight: 700; color: var(--uk-ink2); } .ops-ev.now { background: #DFF5E6; } .ops-ev.done { background: #FFF0B8; } .ops-ev.again { background: #E3F0FB; } .ops-ev.later { opacity: .6; }
 .ops-mis { display: flex; align-items: center; gap: 10px; margin: 6px 0; padding: 8px 12px; border-radius: 14px; background: #fff; box-shadow: var(--uk-sh); text-align: left; } .ops-mis .ic { font-size: 28px; } .ops-mis .tx { flex: 1; font: 800 var(--uk-fs-cap)/1.3 var(--uk-font); } .ops-mis b { font: 900 var(--uk-fs-cap)/1 var(--uk-font); } .ops-mis.ok { background: #E8F8EC; }
+.ops-stoph { margin: 14px 0 2px; font: 900 var(--uk-fs-cap)/1.2 var(--uk-font); color: #8B8092; text-align: left; } .ops-tmr { margin-top: 8px; padding: 6px 12px; border-radius: 12px; background: #FFF7E0; text-align: left; font: 700 calc(13px * var(--uk-fs-k, 1))/1.35 var(--uk-font); }   /* 오늘 들를 곳 · 내일 한 줄(재방문 점검 10/22) */
 .ops-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; } .ops-chips span { padding: 4px 10px; border-radius: 12px; background: #EDE7DD; font: 700 calc(13px * var(--uk-fs-k, 1))/1.2 var(--uk-font); color: #8B8092; } .ops-chips span.on { background: #FFF0B8; color: var(--uk-ink); }
 .ops-code { width: 100%; box-sizing: border-box; margin: 6px 0; padding: 8px; border: 2px solid #E2D8DE; border-radius: 12px; font: 600 12px/1.3 monospace; resize: none; }
 
@@ -4611,7 +4612,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const back = document.getElementById('b-back'); if (!back || O.kid || !O.ready) return; let b = document.getElementById('b-mail');
     if (!b) { b = el('button', 'round-btn', null, '<span>📮</span>'); b.id = 'b-mail'; b.setAttribute('aria-label', GF.t('ops.mail.title')); b.onclick = () => { if (GF.sfx) GF.sfx('tap'); O.openMail(); }; back.parentNode.insertBefore(b, back); }
     /* 홈에선 「홈」·「소리」(설정 안에 있음) 버튼·「별 0」 숨김(리뷰 P4) */
-    const root = (GF.stack || []).length <= 1; b.style.display = root ? '' : 'none'; back.style.display = root ? 'none' : ''; { const hm = document.getElementById('b-home'); if (hm) hm.style.display = root ? 'none' : ''; const so = document.getElementById('b-sound'); if (so) so.style.display = root ? 'none' : ''; const sp = document.getElementById('b-stars'); if (sp) sp.style.display = /^\s*0\s*$/.test(sp.textContent) ? 'none' : '';   /* 0 은 어느 화면에서도 숨김(원칙 8) */ } if (root) { mailDot(); if (O._mileOk) setTimeout(() => { if ((GF.stack || []).length <= 1) O.mileShow(); }, 900); }
+    const root = (GF.stack || []).length <= 1; b.style.display = root ? '' : 'none'; back.style.display = root ? 'none' : ''; { const hm = document.getElementById('b-home'); if (hm) hm.style.display = root ? 'none' : ''; const so = document.getElementById('b-sound'); if (so) so.style.display = root ? 'none' : ''; const sp = document.getElementById('b-stars'); if (sp) sp.style.display = /^\s*0\s*$/.test(sp.textContent) ? 'none' : '';   /* 0 은 어느 화면에서도 숨김(원칙 8) */ } if (root) { mailDot(); if (O._mileOk) setTimeout(homeGift, 900); }
   }
 
   /* ---------------- 문의 · FAQ ---------------- */
@@ -4691,6 +4692,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const sc = UK.modal({ parent: safe(), title: GF.t('ops.mile.title.' + m.k, { n: m.n }), big: got ? '🎁' : '💛', body, actions: [{ text: GF.t('ops.thanks'), cls: 'green', onclick: () => {} }] });
     try { GF.sfx('celebrate'); UK.confetti(sc); } catch (e) { /* 연출 실패 무시 */ } try { if (Room.albumAdd) Room.albumAdd('mile:' + O.app + ':' + m.k + ':' + m.n, 'gift', GF.t('ops.mile.title.' + m.k, { n: m.n }), who, null); } catch (e) { /* 앨범 실패 무시 */ } return true;
   };
+  /* 홈(맨 처음 화면)에 왔을 때 받을 선물 하나: 마일스톤 카드가 먼저, 없으면 출석 도장 5개 선물(재방문 점검 10/22 — 설정 안에서만 받을 수 있어 1주차에 묻혀 있던 것) */
+  function homeGift() { if ((GF.stack || []).length > 1 || O.mileShow() || document.querySelector('.tale-ov, .uk-scrim')) return; try { if (GF.extras && GF.extras.attendGift) GF.extras.attendGift(safe()); } catch (e) { /* 도장 선물 실패는 무시 */ } }
   function dayCount() { const s = st(), d = ymdN(nowD()); if (s.dayLast !== d) { s.dayLast = d; s.days = (s.days || 0) + 1; put(s); } }
   /** 금요일 선물(유아): 금요일에 열면 그 주에 한 번, 글자 없는 선물 상자 */
   O.fridayGift = function () {
@@ -4728,7 +4731,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /* ---------------- 오늘의 작은 일(미션): 3개, 못 해도 괜찮고 다 하면 확정 소품 1개(하루 1회) ---------------- */
   const POOL = [{ id: 'clear', n: 3, icon: '🎯' }, { id: 'star3', n: 1, icon: '⭐' }, { id: 'story', n: 1, icon: '📖' }, { id: 'house', n: 1, icon: '🏠' }, { id: 'daily', n: 1, icon: '📅' }];
   const dayKey = () => { const d = nowD(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); };
-  const misToday = (s) => { const k = dayKey(); if (!s.mis || s.mis.d !== k) { const n = Math.floor(Date.UTC(nowD().getFullYear(), nowD().getMonth(), nowD().getDate()) / DAY), pick = [n % 5, (n + 2) % 5, (n + 3) % 5]; s.mis = { d: k, ids: pick.map((i) => POOL[i].id), prog: {}, gift: 0 }; } return s.mis; };
+  const misPool = () => { const ok = O.cfg && O.cfg.mis; return ok ? POOL.filter((q) => ok.includes(q.id)) : POOL; };   // cfg.mis: 그 앱에서 할 수 있는 작은 일만(재방문 점검 10/22 — 퀴즈·식탁엔 「오늘의 한 판」이 없어 선물을 못 받는 날이 있었다)
+  const misToday = (s) => { const k = dayKey(), P = misPool(); if (!s.mis || s.mis.d !== k || s.mis.ids.some((id) => !P.some((q) => q.id === id))) { const n = Math.floor(Date.UTC(nowD().getFullYear(), nowD().getMonth(), nowD().getDate()) / DAY), L = P.length, pick = L >= 5 ? [n % 5, (n + 2) % 5, (n + 3) % 5] : L > 3 ? [n % L, (n + 1) % L, (n + 2) % L] : P.map((q, i) => i); s.mis = { d: k, ids: pick.map((i) => P[i].id), prog: {}, gift: 0 }; } return s.mis; };
   O.note = function (id) { if (!O.ready || O.kid) return; const s = st(), m = misToday(s); if (m.ids.includes(id)) { const def = POOL.find((q) => q.id === id); m.prog[id] = Math.min(def.n, (m.prog[id] || 0) + 1); } put(s); };
   O.noteResult = function (stars) { O.note('clear'); if ((stars || 0) >= 3) O.note('star3'); };
   O.missions = function () { const s = st(), m = misToday(s); put(s); return m.ids.map((id) => { const d = POOL.find((q) => q.id === id); return { id, n: d.n, icon: d.icon, got: m.prog[id] || 0 }; }); };
@@ -4739,8 +4743,26 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const all = list.every((x) => x.got >= x.n);
     if (all && !m.gift) { UK.btn({ text: GF.t('ops.mis.gift'), cls: 'gold block', onclick: () => { const s2 = st(), m2 = misToday(s2); if (m2.gift) return; const it = nextGift(); m2.gift = 1; put(s2); let got = null; if (it && Room.grant(it.id)) got = it; sc.close(); UK.toast(got ? GF.t('ops.mis.got', { name: got.name }) : GF.t('ops.mis.none'), safe()); GF.sfx('celebrate'); } }, body); }
     else if (m.gift) el('p', 'xt-p', body, GF.t('ops.mis.gifted'));
-    el('p', 'xt-p', body, GF.t('ops.mis.note'));
+    stops(body, sc);
   };
+  /* 오늘 들를 곳(재방문 점검 10/22): 오늘의 한 판 · 공방 마당 · 출석 도장을 작은 일 아래 한 곳에 — 상태만 보이고 누르면 그곳으로. 끝에 「내일 오면」 한 줄(미리 보여 주기만, 안 와도 잃는 것 없음) */
+  O.stops = function () {
+    if (O.kid) return []; const out = [], X = GF.extras, C = GF.craft, dl = GF._hkDaily;
+    if (dl) out.push({ id: 'daily', ic: '📅', t: GF.t('ui.hk.daily'), s: dl.done ? '✔' : '▶', ok: dl.done, go: dl.done ? null : dl.fn });
+    try { if (C && C.cfg && C.cfg.group === 'adult' && C.isOpen && C.isOpen() && C.homeIcon && C.homeIcon()) { const n = C.yardLeft(); out.push({ id: 'yard', ic: '🌿', t: GF.t('craft.a.yard'), s: n ? GF.t('ops.stop.yardn', { n }) : '✔', ok: !n, go: n ? () => GF.go('craft') : null }); } } catch (e) { /* 공방 없음 */ }
+    try { const A = X && X.attendInfo && X.attendInfo(); if (A) out.push({ id: 'att', ic: '⭐', t: GF.t('ops.stop.att'), s: A.can ? '🎁' : (5 - A.toNext) + '/5', ok: false, go: () => X.openAttend() }); } catch (e) { /* 도장 없음 */ }
+    return out;
+  };
+  O.tomorrow = function () {
+    const S0 = O.stops(), has = (id) => S0.some((x) => x.id === id), parts = [GF.t('ops.tmr.mis')]; if (has('daily')) parts.push(GF.t('ops.tmr.daily')); if (has('yard')) parts.push(GF.t('ops.tmr.yard'));
+    try { const A = GF.extras && GF.extras.attendInfo && GF.extras.attendInfo(); if (A && A.item) parts.push(GF.t((A.total + 1) % 5 === 0 ? 'ops.tmr.attg' : 'ops.tmr.att', { n: A.total + 1 })); } catch (e) { /* */ }
+    const dn = (st().days || 0) + 1; if (O.MILE.days.includes(dn)) parts.push(GF.t('ops.tmr.mile', { n: dn }));
+    return GF.t('ops.tmr.line', { v: parts.join(' · ') });
+  };
+  function stops(body, sc) {
+    const L = O.stops(); if (L.length) { el('h4', 'ops-stoph', body, GF.t('ops.stop.title')); const row = el('div', 'ops-tri ops-stops', body); L.forEach((x) => { const r = el('button', 'ops-trit ops-stop' + (x.ok ? ' ok' : ''), row); r.dataset.id = x.id; el('span', 'ic', r, x.ok ? '✔' : x.ic); el('small', '', r, x.t); el('b', '', r, x.s); r.onclick = () => { if (GF.sfx) GF.sfx('tap'); if (!x.go) { GF.jump && GF.jump(r); return; } sc.close(); x.go(); }; }); }   // 📮 「오늘·이번 주·이번 철」과 같은 칸 모양
+    el('p', 'xt-p ops-tmr', body, O.tomorrow()); el('p', 'xt-p', body, GF.t('ops.mis.note'));
+  }
 
 
   /* ---------------- 내 도형 개인화(3): 칭호·말투. ⑤ 결과(Room.me)가 성인 앱 전체에 반영된다 ---------------- */
@@ -4942,7 +4964,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (!O.kid) setTimeout(() => { try { if (O.iap.native()) O.iap.restore(); } catch (e) {} }, 2500);   // 재설치·기기 변경 복원(기기 안 조회)
     if (/[?&]ops=0/.test(location.search) || (navigator.webdriver && !/[?&]ops=1/.test(location.search))) { const s = st(); s.lastOpen = O._now(); put(s); return; }   // 자동 시험은 팝업을 띄우지 않는다(?ops=1 로 확인)
     O._mileOk = true;
-    if (O.kid) setTimeout(O.fridayGift, 3200); else { dayCount(); comeback(); newsAuto(); setTimeout(() => { if ((GF.stack || []).length <= 1) O.mileShow(); }, 5200); }
+    if (O.kid) setTimeout(O.fridayGift, 3200); else { dayCount(); comeback(); newsAuto(); setTimeout(homeGift, 5200); }
   };
 })();
 
@@ -5502,6 +5524,11 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     else el('p', 'xt-p', body, GF.t('c16.extras.001'));
   }
 
+  /** 출석 도장 요약(오늘 들를 곳·내일 한 줄 · 재방문 점검 10/22): 도장 수 · 다음 소품까지 · 지금 받을 수 있나 */
+  X.attendInfo = function () { if (!X.ready || X.cfg.kid) return null; const s = load(), total = s.days.length, it = nextItem(); return { total, toNext: 5 - (total % 5), can: !!it && Math.floor(total / 5) > s.claimed, item: it || null }; };
+  /** 도장 5개마다 선물을 홈에 왔을 때 저절로(확정 지급 · 한 번에 하나) — 전에는 설정 › 출석 보기 안에서만 받을 수 있었다 */
+  X.attendGift = function (parent) { if (!X.ready || X.cfg.kid) return false; const s = load(), it = nextItem(); if (!it || Math.floor(s.days.length / 5) <= s.claimed || !Room.grant(it)) return false; s.claimed++; save(s); const ri = Room.item(it); try { GF.sfx('star'); UK.toast(GF.t('ops.att.auto', { n: s.claimed * 5, name: ri ? ri.name : '' }), parent); } catch (e) { /* 연출 실패 무시 */ } return true; };
+
   /* ---------------- 쉬어요 알림(유아, 보호자가 정함) ---------------- */
   let restT = null, restStart = 0;
   X.restReset = function () { restStart = Date.now(); };
@@ -5599,7 +5626,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const stage = el('div', 'hk-stage', r); el('i', 'hk-floor', stage); (o.fam || ['nemo_dad.joy', 'wife.joy', 'dong_dad.joy']).forEach((id) => stage.appendChild(GF.img(id)));
     /* 앱 모티프(G3): 그 앱에서 받는 가구 두 개를 무대 바닥 양끝에 — 7앱 홈이 같은 그림으로 보이지 않게(3차 리뷰: 스토어 스크린샷에서 앱 구분) */
     try { (o.props || []).filter((id) => window.Room && Room.item && Room.item(id)).slice(0, 2).forEach((id, i) => { const im = el('img', 'hk-prop ' + (i ? 'r' : 'l'), stage); im.src = Room.src(Room.item(id)); im.alt = ''; stage.classList.add('hk-has-props'); }); } catch (e) { /* 소품 그림 없으면 가족만 */ }
-    const icons = (o.icons || []).filter(Boolean).filter((x) => x.id !== 'craft').concat(!o.kid && GF.craft && GF.craft.homeIcon ? [GF.craft.homeIcon()].filter(Boolean) : []);   // 성인 퍼즐 앱 공통: 뚝딱 공방(허브 10/22)
+    const icons = (o.icons || []).filter(Boolean).filter((x) => x.id !== 'craft').concat(!o.kid && GF.craft && GF.craft.homeIcon ? [GF.craft.homeIcon()].filter(Boolean) : []);
+    { const dI = open && icons.find((x) => x.id === 'daily'); GF._hkDaily = dI ? { done: dI.badge === '✔', fn: dI.fn } : null; }   // 오늘 들를 곳(GF.ops.stops)이 홈의 「오늘의 한 판」을 그대로 씀   // 성인 퍼즐 앱 공통: 뚝딱 공방(허브 10/22)
     if (open && icons.length) { const col = el('div', 'hk-icons', r); icons.slice(0, 4).forEach((x) => { const b = el('button', 'hk-ic' + (x.hot ? ' hot' : ''), col); el('span', 'hk-icb', b, IC(x.icon)); el('small', '', b, x.label); if (x.badge) el('i', 'hk-badge' + (x.badge === '✔' ? ' ok' : ''), b, x.badge); b.onclick = () => { GF.sfx('pick'); x.fn(); }; }); }
     if (open && window.Room && Room.H) { const bw = el('div', 'h2-bandwrap hk-band', r); try { if (!Room.band(bw, { go: o.levels, toastParent: r, here: true, house: o.house })) bw.classList.add('hk-noband'); } catch (e) { /* 목표 띠 실패 무시 */ } } else el('div', 'h2-bandwrap hk-noband', r);   // 한 줄 한 정보(리뷰 P5): 띠 안 작은 칩(0/3·0/4)은 홈에서 뺌(작은 일·꾸미기 도전은 📮 소식 상자 3칸) · 3판 전엔 목표 띠도 없음(공용 띠가 자동으로 붙지 않게 자리만)
     /* 유아(o.kid): 글자 없는 판 — 초록 ▶ 하나 + 그림 알약(o.pills: [{icon, label, fn, bg, badge}]) 늘 보임, 목표 띠·아이콘 줄 없음(2차 리뷰 N1) */

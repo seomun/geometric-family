@@ -618,6 +618,11 @@ html[data-big="1"][data-uk="adult"] .uk-toast, html[data-big="1"][data-uk="adult
 html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: .001s !important; scroll-behavior: auto !important; }
 
 .ops-cal { text-align: left; margin: 6px 0; padding: 6px 8px; border-radius: 14px; background: #fff; box-shadow: var(--uk-sh); } .ops-cal.now { outline: 3px solid #6CCB8A; } .ops-cal > b { display: block; font: 900 var(--uk-fs-cap)/1.2 var(--uk-font); margin-bottom: 4px; }
+/* 우리 가족 카드(10/24): 집마다 머리 + 한 사람씩 그림·이름·나이 / 하는 일 / 성격 / 소품 */
+.ops-famsh .xt-body { max-height: min(560px, 66vh); overflow-y: auto; } .ops-fam { text-align: left; margin: 10px 0 4px; } .ops-famhd { padding: 4px 4px 6px; } .ops-famhd b { display: block; font-size: 18px; } .ops-famhd small { display: block; font-size: 14px; color: #6B5B4E; font-weight: 700; }
+.ops-fcard { display: flex; gap: 10px; align-items: center; background: #fff; border-radius: 16px; box-shadow: var(--uk-sh); padding: 8px 10px; margin: 6px 0; border-left: 6px solid #E9C46A; } .ops-fam.nemo .ops-fcard { border-left-color: #F6C28B; } .ops-fam.semo .ops-fcard { border-left-color: #F7A8B8; } .ops-fam.dong .ops-fcard { border-left-color: #A9BCCB; }
+.ops-fpic { width: 64px; height: 72px; flex: none; display: flex; align-items: center; justify-content: center; } .ops-fpic img { max-width: 100%; max-height: 100%; object-fit: contain; } .ops-ftx { flex: 1; min-width: 0; } .ops-ftx b { display: block; font-size: 16px; } .ops-ftx small { display: block; font-size: 14px; line-height: 1.4; color: #4A3F37; font-weight: 600; } .ops-ftx small.job { color: #2B6A8A; font-weight: 800; } .ops-ftx small.props { color: #6B5B4E; }
+.ops-famweb { margin: 12px 0 4px; }
 .ops-ev { display: flex; justify-content: space-between; align-items: center; width: 100%; min-height: 44px; margin: 3px 0; padding: 4px 12px; border: 0; border-radius: 12px; background: #F4EFE6; font: 800 var(--uk-fs-cap)/1.2 var(--uk-font); color: var(--uk-ink); } .ops-ev small { font-weight: 700; color: var(--uk-ink2); } .ops-ev.now { background: #DFF5E6; } .ops-ev.done { background: #FFF0B8; } .ops-ev.again { background: #E3F0FB; } .ops-ev.later { opacity: .6; }
 .ops-mis { display: flex; align-items: center; gap: 10px; margin: 6px 0; padding: 8px 12px; border-radius: 14px; background: #fff; box-shadow: var(--uk-sh); text-align: left; } .ops-mis .ic { font-size: 28px; } .ops-mis .tx { flex: 1; font: 800 var(--uk-fs-cap)/1.3 var(--uk-font); } .ops-mis b { font: 900 var(--uk-fs-cap)/1 var(--uk-font); } .ops-mis.ok { background: #E8F8EC; }
 .ops-stoph { margin: 14px 0 2px; font: 900 var(--uk-fs-cap)/1.2 var(--uk-font); color: #8B8092; text-align: left; } .ops-tmr { margin-top: 8px; padding: 6px 12px; border-radius: 12px; background: #FFF7E0; text-align: left; font: 700 calc(13px * var(--uk-fs-k, 1))/1.35 var(--uk-font); }   /* 오늘 들를 곳 · 내일 한 줄(재방문 점검 10/22) */
@@ -5139,6 +5144,18 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 
   /* ---------------- 웹툰 보기(성인 전용): 블로그 주소(data/ops.json webtoonUrl, 비면 숨김). 유아 앱에는 없다 ---------------- */
   O.webtoonUrl = () => (!O.kid && O.d && O.d.webtoonUrl) || '';
+  /* ---------------- 우리 가족 카드(10/24 허브 「세 가족 웹툰 연결」, docs/46 기준): 세 집 13명 — 나이·하는 일·성격·소품. 데이터 ops.json family ----------------
+     성인 앱은 맨 아래 「웹툰 보러 가기(목차)」(webtoonUrl), 유아 앱은 보호자 메뉴에서만 열리고 바깥 링크가 없다 */
+  O.openFamily = function () {
+    const F = (O.d && O.d.family) || {}, P = F.people || [], { sc, body } = sheet(GF.t('fam.title')); sc.querySelector('.uk-sheet').classList.add('ops-famsh');
+    el('p', 'xt-p', body, O.kid ? GF.t('fam.knote') : GF.t('fam.note'));
+    (F.houses || []).forEach((h) => { const sec = el('div', 'ops-fam ' + h.id, body), hd = el('div', 'ops-famhd', sec); el('b', '', hd, h.icon + ' ' + h.name); el('small', '', hd, h.line);
+      P.filter((q) => q.house === h.id).forEach((q) => { const c = el('div', 'ops-fcard', sec), pic = el('div', 'ops-fpic', c), im = el('img', '', pic); im.alt = '';
+        im.src = q.svg ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(q.svg) : (GF.src ? GF.src(q.char) : ''); const tx = el('div', 'ops-ftx', c);
+        el('b', '', tx, q.name + ' · ' + GF.t('fam.age', { age: q.age })); el('small', 'job', tx, q.job); el('small', '', tx, q.trait); el('small', 'props', tx, q.props); }); });
+    if (O.webtoonUrl()) UK.btn({ text: '📖 ' + GF.t('fam.webtoon'), cls: 'green block', onclick: () => { sc.close(); O.openWebtoon(); } }, el('div', 'ops-famweb', body));
+    return sc;
+  };
   O.openWebtoon = function (path) { const u = O.webtoonUrl() + (path || ''); if (!O.webtoonUrl()) return; const n = O.native(); if (n && n.openUrl) { try { n.openUrl(u); } catch (e) {} } else { try { window.open(u, '_blank', 'noopener'); } catch (e) {} } };
 
   /* ---------------- 설정 줄(extras 가 부른다) ---------------- */
@@ -5146,6 +5163,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     const row = (label, node) => { const r = el('div', 'xt-row', body); el('span', '', r, label); if (node) r.appendChild(node); return r; };
     const tb = (text, fn) => { const b = el('button', 'xt-btn', null, text); b.onclick = fn; return b; };
     row(GF.t('ops.settings.motion'), UK.switch(O.motionOn(), (on) => { S().rm = on ? 1 : 0; if (GF.save) GF.save(); O.applyMotion(); }));
+    if (O.d && O.d.family) row(GF.t('fam.title'), tb(GF.t('common.view'), () => { sc.close(); O.openFamily(); }));   /* 우리 가족 카드(10/24) — 유아 앱은 보호자 메뉴 안이라 여기 그대로 */
     if (kid && O.cfg && O.cfg.calendar) row(GF.t('ops.settings.cal'), tb(GF.t('common.view'), () => { sc.close(); O.openCalendar(); }));   /* 유아 앱도 보호자 메뉴에서 지난 시즌 이벤트를 다시 연다(BM-18-3 「놓쳐도 다시」) */
     if (!kid && O.d) row('📮 ' + GF.t('ops.mail.title'), tb(GF.t('common.view'), () => { sc.close(); O.openMail(); }));
     if (!kid && O.d && O.d.news) row(GF.t('ops.settings.news'), tb(GF.t('common.view'), () => { sc.close(); O.openNews(); }));

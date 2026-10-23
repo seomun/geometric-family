@@ -618,6 +618,8 @@ html[data-big="1"][data-uk="adult"] .uk-toast, html[data-big="1"][data-uk="adult
 html[data-rm="1"] *, html[data-rm="1"] *::before, html[data-rm="1"] *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: .001s !important; scroll-behavior: auto !important; }
 
 .ops-cal { text-align: left; margin: 6px 0; padding: 6px 8px; border-radius: 14px; background: #fff; box-shadow: var(--uk-sh); } .ops-cal.now { outline: 3px solid #6CCB8A; } .ops-cal > b { display: block; font: 900 var(--uk-fs-cap)/1.2 var(--uk-font); margin-bottom: 4px; }
+/* 원정대 교차 홍보 한 줄(10/24, 성인 설정 맨 아래) */
+.xt-exp { display: block; width: 100%; margin: 12px 0 2px; padding: 12px 14px; border: 0; border-radius: 16px; background: #2E2A4A; color: #FFF6D8; font: 800 calc(14.5px * var(--uk-fs-k, 1))/1.3 var(--uk-title-font, inherit); text-align: left; letter-spacing: -.2px; box-shadow: var(--uk-sh); cursor: pointer; min-height: 48px; }
 /* 우리 가족 카드(10/24): 집마다 머리 + 한 사람씩 그림·이름·나이 / 하는 일 / 성격 / 소품 */
 .ops-famsh .xt-body { max-height: min(560px, 66vh); overflow-y: auto; } .ops-fam { text-align: left; margin: 10px 0 4px; } .ops-famhd { padding: 4px 4px 6px; } .ops-famhd b { display: block; font-size: 18px; } .ops-famhd small { display: block; font-size: 14px; color: #6B5B4E; font-weight: 700; }
 .ops-fcard { display: flex; gap: 10px; align-items: center; background: #fff; border-radius: 16px; box-shadow: var(--uk-sh); padding: 8px 10px; margin: 6px 0; border-left: 6px solid #E9C46A; } .ops-fam.nemo .ops-fcard { border-left-color: #F6C28B; } .ops-fam.semo .ops-fcard { border-left-color: #F7A8B8; } .ops-fam.dong .ops-fcard { border-left-color: #A9BCCB; }
@@ -5133,6 +5135,14 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
 
   /* ---------------- 웹툰 보기(성인 전용): 블로그 주소(data/ops.json webtoonUrl, 비면 숨김). 유아 앱에는 없다 ---------------- */
   O.webtoonUrl = () => (!O.kid && O.d && O.d.webtoonUrl) || '';
+  /* ---------------- 원정대 교차 홍보(10/24 허브): 성인 그룹 8앱 설정 맨 아래 한 줄(문구 xp.promo) → expPromoUrl. 유아 빌드는 games/tools/kid_build.py 가 주소·문구를 데이터째 뺀다.
+     유아 3앱(O.kid)과 ⑪ 원정대 자기 자신에는 절대 없다 — tools/exp_promo_smoke.js 가 유아 0건을 단언 */
+  O.expPromoUrl = () => (!O.kid && O.app !== 'expedition' && O.d && O.d.expPromoUrl) || '';
+  O.expPromo = function (body) {
+    const u = O.expPromoUrl(); if (!u || !body) return null;
+    const b = el('button', 'xt-exp', body, GF.t('xp.promo')); b.onclick = () => { try { GF.sfx && GF.sfx('tap'); } catch (e) { /* 소리 없음 */ } const n = O.native(); if (n && n.openUrl) { try { n.openUrl(u); } catch (e) { /* 열기 실패 */ } } else { try { window.open(u, '_blank', 'noopener'); } catch (e) { /* 막힘 */ } } };
+    return b;
+  };
   /* ---------------- 우리 가족 카드(10/24 허브 「세 가족 웹툰 연결」, docs/46 기준): 세 집 13명 — 나이·하는 일·성격·소품. 데이터 ops.json family ----------------
      성인 앱은 맨 아래 「웹툰 보러 가기(목차)」(webtoonUrl), 유아 앱은 보호자 메뉴에서만 열리고 바깥 링크가 없다 */
   O.openFamily = function () {
@@ -5687,6 +5697,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const tbtn = (text, fn) => { const b = el('button', 'xt-btn', null, text); b.onclick = fn; return b; };
 
   /** 설정(성인) / 보호자 메뉴(유아) */
+  X.openSettings = (kind) => openSettings(kind);   /* 시험용(tools/exp_promo_smoke.js — 유아는 관문 없이 보호자 화면 내용만 본다) */
   function openSettings(kind) {
     const c = X.cfg, kid = !!c.kid, { sc, body } = sheet(kid ? GF.t('ui.set.parent') : GF.t('ui.set.title')), s = S();
     row(body, GF.t('ui.set.sound'), UK.switch(!s.mute, (on) => { s.mute = !on; persist(); GF.refreshBar && GF.refreshBar(); GF.bgm && GF.bgm.sync && GF.bgm.sync(); }));
@@ -5713,6 +5724,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
     if (c.reset) { const b = tbtn(GF.t('ui.set.wipe'), () => { const run = () => { c.reset(); try { localStorage.removeItem(key()); } catch (e) {} location.reload(); }; if (GF.polish) GF.polish.confirmWipe(run); else run(); }); row(body, GF.t('ui.set.wipe.row'), b); }
     const ads = GF.ads && GF.ads.live && GF.ads.live() && !kid;
     el('small', 'xt-note', body, kid ? GF.t('ui.set.note.kid') : (ads ? GF.t('ui.set.note.ads') : GF.t('ui.set.note.plain')));
+    if (!kid && GF.ops && GF.ops.ready && GF.ops.expPromo) GF.ops.expPromo(body);   /* 원정대 교차 홍보 한 줄(성인 그룹만, 10/24) — 맨 아래 */
   }
   function openStats() { const { sc, body } = sheet(GF.t('ui.set.stats')); (X.cfg.stats ? X.cfg.stats() : []).forEach((r) => row(body, r[0], el('b', '', null, String(r[1])))); if (GF.rank && GF.rank.ready) GF.rank.boards().forEach((b) => row(body, GF.t('c16.extras.013', { title: b.title }), tbtn(GF.t('common.view'), () => { sc.close(); GF.rank.open(b.id); }))); }
 

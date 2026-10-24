@@ -595,7 +595,7 @@ html[data-big="1"][data-uk="adult"] .uk-toast, html[data-big="1"][data-uk="adult
 .rk-body { display: flex; flex-direction: column; gap: 6px; margin: 4px 0; max-height: 420px; overflow-y: auto; touch-action: pan-y; }
 .rk-row { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 4px 10px; border-radius: 18px; background: #fff; box-shadow: var(--uk-sh); } .rk-row.me { background: #FFF3C2; outline: 3px solid #FFC933; } .rk-row.first .rk-n { color: #C99A00; }
 .rk-a { flex: none; width: 40px; height: 40px; border-radius: 50%; background-color: #FFF6E5; background-size: 175%; background-position: 50% 8%; background-repeat: no-repeat; display: flex; align-items: center; justify-content: center; font-size: 24px; } .rk-a.me { background-image: none !important; box-shadow: 0 0 0 3px #FFC933; }
-.rk-n { flex: 1; text-align: left; font: 900 var(--uk-fs-body)/1.2 var(--uk-font); } .rk-s { font: 900 var(--uk-fs-body)/1.3 var(--uk-font); color: var(--uk-ink); white-space: nowrap; }
+.rk-n { flex: 1; text-align: left; font: 900 var(--uk-fs-body)/1.3 var(--uk-font); }   /* 10/24: 큰 글씨에서 두 줄로 접힌 이름(「2. 동그라미 아빠」) 아랫줄 글자가 줄 높이 1.2 밖으로 3px 넘쳐 잘려 보이던 것 */ .rk-s { font: 900 var(--uk-fs-body)/1.3 var(--uk-font); color: var(--uk-ink); white-space: nowrap; }
 .rk-line { padding: 8px 12px; border-radius: 16px; background: #DDF6E5; font: 800 var(--uk-fs-cap)/1.3 var(--uk-font); color: #1E6B3A; text-align: center; }
 .rk-note { margin: 2px 0 0; white-space: normal; }
 .rk-body { max-height: none; overflow: visible; gap: 5px; }
@@ -931,7 +931,7 @@ html[data-bigbtn="1"] .uk-btn { position: relative; } html[data-bigbtn="1"] .uk-
 html[data-bigbtn="1"] .uk-btn::before, html[data-bigbtn="1"] .h2-dreamchip::before, html[data-bigbtn="1"] .h2-fb::before, html[data-bigbtn="1"] .h2-go::before, html[data-bigbtn="1"] .uk-round::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, calc(var(--hit-kid, 72px) * 1.15)); height: max(100%, calc(var(--hit-kid, 72px) * 1.15)); transform: translate(-50%, -50%); }
 html[data-bigbtn="1"] .round-btn::before, html[data-bigbtn="1"] .tok::before, html[data-bigbtn="1"] .fcard::before, html[data-bigbtn="1"] .card::before { width: max(100%, calc(var(--hit-kid, 72px) * 1.18)); height: max(100%, calc(var(--hit-kid, 72px) * 1.18)); }
 /* 색 구분 돕기: 초록·분홍·하늘·금색 버튼을 Okabe-Ito 계열(파랑·주황·보라·노랑)로 — 붉은 계열과 초록 계열이 서로 같아 보이지 않게. 글자는 진한 색 그대로(대비 4.5:1 이상) */
-html[data-cb="1"] { --uk-green: #56B4E9; --uk-pink: #F0A93A; --uk-sky: #D9A9CB; --uk-gold: #F5E653; --uk-danger: #A8420F; }
+html[data-cb="1"] { --uk-green: #56B4E9; --uk-pink: #F0A93A; --uk-sky: #D9A9CB; --uk-gold: #F5E653; --uk-danger: #A8420F; --uk-green-btn: #0072B2; --uk-green-btn-d: #004F7C; --uk-sky-btn: #8A4F7D; --uk-sky-btn-d: #5E3555; }   /* 10/24: 단추 전용 색(대비 4.5↑)도 색 구분 팔레트로 — 흰 글자 대비 5.2·6.0 */
 html[data-cb="1"] .uk-btn.pink { background: #F0A93A; } html[data-cb="1"] .uk-btn.danger, html[data-cb="1"] .uk-btn.dong { color: #fff; }
 html[data-bigbtn="1"] .h2-btx b { white-space: normal !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; } html[data-bigbtn="1"] .h2-band { min-height: 66px; }
 /* 놀이터 홈 배치(C13): 세로는 띠를 놀이 버튼 위로, 가로(wide)는 카드 줄을 가리지 않게 오른쪽 아래로 */
@@ -1105,7 +1105,7 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
   /* 3-1 색 토큰: 이름은 그대로, 값·역할 고정 */
   --uk-cream: #FFF3DF; --uk-cream2: #FFE7C4; --uk-card: #FFFDF8; --uk-ink: #3A2E39; --uk-ink2: #5B4F60;
   --uk-line: #6b5443; --uk-band-c: #d9c3a3; --uk-panel-band: #c9ab84;
-  --uk-green: #5CC97B; --uk-green-d: #3B9E5B; --uk-sky: #6EC6F0; --uk-sky-d: #3F95C4;
+  --uk-green: #5CC97B; --uk-green-d: #3B9E5B; --uk-green-btn: #2D8450; --uk-green-btn-d: #1E5E37;   /* 10/24 a11y: 흰 글자 초록 단추 대비 2.08 → 4.64(단추만 짙게, 막대·배지 초록은 그대로) */ --uk-sky: #6EC6F0; --uk-sky-d: #3F95C4;
   --uk-no: #FF8E6E; --uk-no-d: #D8603F; --uk-gold: #FFC933; --uk-gold-d: #D49A00; --uk-pink: #FF8FA8; --uk-pink-d: #D96583;
   --uk-scrim: rgba(40,30,50,.45);
   --uk-band: 5px; --uk-press: 80ms; --uk-release: 120ms; --uk-pop-ease: cubic-bezier(.2,1.6,.4,1);
@@ -1114,14 +1114,14 @@ html[data-rm="1"] .hk .uk-btn.hk-main.hk-pulse { animation: none; box-shadow: 0 
 #stage { background: linear-gradient(var(--uk-cream), var(--uk-cream2)); }
 
 /* ---- 3-2 버튼 3종 ---- */
-.uk-btn { --c: var(--uk-green); --d: var(--uk-green-d); border-radius: 999px; background: var(--c); color: #fff;
+.uk-btn { --c: var(--uk-green-btn, #2D8450); --d: var(--uk-green-btn-d, #1E5E37); border-radius: 999px; background: var(--c); color: #fff;
   font-family: var(--uk-title-font); font-weight: 400; letter-spacing: .3px; text-shadow: 0 2px 0 var(--d);
   box-shadow: 0 var(--uk-band) 0 var(--d), 0 calc(var(--uk-band) + 3px) 8px rgba(0,0,0,.16); transition: transform var(--uk-release), box-shadow var(--uk-release); }
 .uk-btn::before { content: ""; position: absolute; left: 10px; right: 10px; top: 5px; height: 38%; border-radius: 999px; background: rgba(255,255,255,.32); pointer-events: none; }
 .uk-btn > * { position: relative; }
 .uk-btn:active { transform: translateY(var(--uk-band)); box-shadow: 0 0 0 var(--d); transition-duration: var(--uk-press); }
 .uk-btn svg { filter: drop-shadow(0 2px 0 var(--d)); }
-.uk-btn.sky, .uk-btn.sub { --c: var(--uk-sky); --d: var(--uk-sky-d); }
+.uk-btn.sky, .uk-btn.sub { --c: var(--uk-sky-btn, #2874A8); --d: var(--uk-sky-btn-d, #1B527A); }   /* 10/24 a11y: 흰 글자 하늘 단추(「힌트」) 대비 1.91 → 5.06 */
 .uk-btn.no, .uk-btn.danger { --c: var(--uk-no); --d: var(--uk-no-d); }
 .uk-btn.gold { --c: var(--uk-gold); --d: var(--uk-gold-d); color: var(--uk-ink); text-shadow: 0 1px 0 rgba(255,255,255,.4); } .uk-btn.gold svg { filter: none; }
 .uk-btn.pink { --c: var(--uk-pink); --d: var(--uk-pink-d); }
@@ -2640,7 +2640,7 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
       c.style.cssText = 'position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:99'; setTimeout(() => c.remove(), 2600); return c;
     },
     /** 설정 한 줄들: UK.settings(parent, {sound:true, onSound, captions:true, onCaptions, extra:[{label, node}]}) */
-    switch(on, onChange) { const b = el('button', 'uk-switch' + (on ? ' on' : '')); b.setAttribute('role', 'switch'); b.onclick = () => { const v = !b.classList.contains('on'); b.classList.toggle('on', v); sfx('tap'); onChange && onChange(v); }; return b; },
+    switch(on, onChange) { const b = el('button', 'uk-switch' + (on ? ' on' : '')); b.setAttribute('role', 'switch'); b.setAttribute('aria-checked', on ? 'true' : 'false'); b.onclick = () => { const v = !b.classList.contains('on'); b.classList.toggle('on', v); b.setAttribute('aria-checked', v ? 'true' : 'false'); sfx('tap'); onChange && onChange(v); }; return b; },
     settings(parent, o) {
       const p = el('div', 'uk-panel', parent); el('h4', '', p, o.title || GF.t('c17.ui_kit.004'));
       const row = (label, node) => { const r = el('div', 'uk-row', p); el('span', '', r, label); r.appendChild(node); return r; };
@@ -2916,7 +2916,8 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   const APPICON = { merge: '✨', spot: '🔍', block: '🧱', sort: '🗄️', tile: '🀄', day: '☀️', idle: '🍲', quiz: '❓', color: '🖍️', playground: '🎠', story: '📖', event: '🎉', other: '🎁' };
   const APPNAME = { expedition: GF.L('c17.room2.001'), merge: GF.L('c17.room2.002'), spot: GF.L('c17.room2.003'), block: GF.L('c17.room2.004'), sort: GF.L('c17.room2.005'), tile: GF.L('c17.room2.006'), day: GF.L('c17.room2.007'), idle: GF.L('c17.room2.008'), quiz: GF.L('c17.room2.009'), color: GF.L('c17.room2.010'), playground: GF.L('c17.room2.011'), story: GF.L('c17.room2.012'), event: GF.L('c17.room2.013') };
   const EMOTE = { sit: '💛', eat: '🍚', read: '📖', sleep: '💤', play: '🎵', watch: '👀' };
-  const KIDSETS = ['kid', 'daybath', 'wall', 'story_k', 'kseason', 'kseason3', 'kgift', 'kev3', 'kguest'];   /* kev3 = 유아 시즌 이벤트 3종 한정(10/23) */
+  const KIDSETS = ['kid', 'daybath', 'wall', 'story_k', 'kseason', 'kseason3', 'kgift', 'kev3', 'kguest', 'craft'];   /* kev3 = 유아 시즌 이벤트 3종 한정(10/23) · craft = 유아 뚝딱 공방 가구(10/24: 빠져 있어 성인 카탈로그에 유아 공방 가구 14개가 「못 얻는 가구」로 보였다) */
+  Room.KIDSETS = KIDSETS;   /* 시험이 같은 목록을 쓰게(housing_lines) */
   const R2 = (Room.v2 = { view: 'diorama' });
   const kid = () => Room.cfg.mode === 'kid', grp = () => (kid() ? 'kid' : 'adult');
   const inGroup = (it) => (kid() ? KIDSETS.includes(it.set) : !KIDSETS.includes(it.set));
@@ -5703,10 +5704,10 @@ html[lang="en"] .hk-pv-goal { white-space: normal; display: -webkit-box; -webkit
   /* 진동: 성인 앱만(유아 앱엔 VIBRATE 권한이 없다). 소리 id 에 맞춰 아주 짧게 */
   const HAP = { drop: 14, pick: 8, ok: 22, star: [22, 40, 26], hmm: 24, celebrate: [26, 40, 26, 40, 40], get: [16, 30, 28], fail: [30, 60, 20] };   /* 10/20: 조금 더 또렷하게, 가구 획득·실패 추가 */
   // 연쇄(소리 높이 st): 높을수록 길고 박자가 늘어난다. 클리어 팡파르는 별 개수만큼 톡톡.
-  const CHAIN = [16, 20, [16, 24, 20], [16, 24, 22, 24, 26], [18, 24, 24, 24, 28, 24, 34]];
+  const CHAIN = [22, 24, [16, 24, 20], [16, 24, 22, 24, 26], [18, 24, 24, 24, 28, 24, 34]];   /* 10/24: 첫 두 칸이 그냥 맞춤(HAP.ok 22)보다 약해 연쇄 1단계(20)가 덜 울렸다 — 22·24 로(연쇄가 높을수록 비감소) */
   GF.haptic = function (id, opt) {
     if (!X.ready || !X.cfg || X.cfg.kid || S().vib === false || !navigator.vibrate) return; let p = HAP[id];
-    if (id === 'ok' && opt && opt.st) p = CHAIN[Math.max(0, Math.min(4, Math.round(opt.st / 3)))] || p;           // 합치기 연쇄: 0 → 12반음까지 점점 강하게
+    if (id === 'ok' && opt && opt.st != null) p = CHAIN[Math.max(0, Math.min(4, Math.round(opt.st / 3)))] || p;           // 합치기 연쇄: 0 → 12반음까지 점점 강하게
     else if (id === 'star' && opt && opt.st) p = [14 + Math.min(10, Math.round(opt.st)), 30, 10];                    // 별 하나씩 올라가는 소리에 맞춘 작은 톡
     if (p) { try { navigator.vibrate(p); } catch (e) {} }
   };

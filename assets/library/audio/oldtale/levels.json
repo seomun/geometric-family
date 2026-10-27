@@ -1,0 +1,103 @@
+{
+ "bgm/village_peace": {
+  "sec": 45.7,
+  "lufs": -20.0,
+  "peak": -4.1,
+  "kb": 247
+ },
+ "bgm/hungry_hut": {
+  "sec": 53.3,
+  "lufs": -20.0,
+  "peak": -6.4,
+  "kb": 260
+ },
+ "bgm/swallow_flight": {
+  "sec": 48.0,
+  "lufs": -20.0,
+  "peak": -6.7,
+  "kb": 291
+ },
+ "bgm/gourd_tension": {
+  "sec": 52.2,
+  "lufs": -20.0,
+  "peak": -3.9,
+  "kb": 192
+ },
+ "bgm/nolbu_punish": {
+  "sec": 53.3,
+  "lufs": -20.0,
+  "peak": -4.5,
+  "kb": 227
+ },
+ "bgm/feast": {
+  "sec": 45.7,
+  "lufs": -20.0,
+  "peak": -5.0,
+  "kb": 264
+ },
+ "sfx/saw": {
+  "sec": 2.32,
+  "mmax": -16.8,
+  "peak": -6.0
+ },
+ "sfx/pour_rice": {
+  "sec": 2.66,
+  "mmax": -16.1,
+  "peak": -4.5
+ },
+ "sfx/pop": {
+  "sec": 0.94,
+  "mmax": -17.0,
+  "peak": -4.5
+ },
+ "sfx/gourd_split": {
+  "sec": 1.0,
+  "mmax": -18.5,
+  "peak": -6.5
+ },
+ "sfx/swallow_wing": {
+  "sec": 1.33,
+  "mmax": -17.1,
+  "peak": -6.0
+ },
+ "sfx/swallow_tweet": {
+  "sec": 1.17,
+  "mmax": -18.5,
+  "peak": -9.5
+ },
+ "sfx/wind": {
+  "sec": 3.69,
+  "mmax": -16.9,
+  "peak": -6.0
+ },
+ "sfx/footsteps": {
+  "sec": 1.84,
+  "mmax": -19.4,
+  "peak": -6.0
+ },
+ "sfx/door": {
+  "sec": 2.07,
+  "mmax": -16.3,
+  "peak": -4.5
+ },
+ "sfx/kid_laugh": {
+  "sec": 1.27,
+  "mmax": -17.4,
+  "peak": -6.0
+ },
+ "sfx/nolbu_slip": {
+  "sec": 1.65,
+  "mmax": -17.0,
+  "peak": -4.7
+ },
+ "sfx/treasure": {
+  "sec": 1.88,
+  "mmax": -17.0,
+  "peak": -6.1
+ },
+ "jingle": {
+  "sec": 2.9,
+  "mmax": -16.5,
+  "peak": -4.7
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "theme_short": {
+  "sec": 30.0,
+  "lufs": -20.0,
+  "peak": -4.1
+ },
+ "logo_sting": {
+  "sec": 2.85,
+  "mmax": -16.5,
+  "peak": -4.8
+ },
+ "sting_hook": {
+  "sec": 1.28,
+  "mmax": -17.5,
+  "peak": -5.6
+ },
+ "sting_choice": {
+  "sec": 2.19,
+  "mmax": -18.0,
+  "peak": -7.0
+ },
+ "whoosh": {
+  "sec": 0.93,
+  "mmax": -20.0,
+  "peak": -6.7
+ }
+}

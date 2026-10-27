@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>전설 동료 점검</title>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>body{background:#F6F1E6;font:13px "Noto Sans KR",sans-serif;color:#4A3A2E;margin:16px}h2{font:20px Jua,sans-serif;margin:16px 0 8px}.g{display:flex;flex-wrap:wrap;gap:12px}.c{text-align:center;width:var(--w,150px)}.c svg{width:100%;height:auto;background:#fff;border-radius:10px}.sil svg *{fill:#000!important;stroke:#000!important}.sil svg{background:#fff}#iou{white-space:pre;font:12px monospace;background:#fff;padding:8px;border-radius:8px}</style>
+<script src="../companions/companions.js"></script><script src="legends.js"></script>
+<h2>전설 동료 30종 (1차 8 + 2차 22, 절규 보류) — 전투·도감용(액자 없음)</h2><div class="g" id="a"></div>
+<h2>카드 그림 칸용 — 액자에서 한 발 나온 모습(frame:true)</h2><div class="g" id="b"></div>
+<h2>검은 실루엣 64px — 이름 없이 구분되나</h2><div class="g sil" id="c" style="--w:64px"></div>
+<h2>실루엣 겹침(IoU, 64px) — 기존 동료 43종 + 전설 30종</h2><div id="iou">재는 중…</div>
+<script>
+const L = ExpLegends, cell = (id, s, w) => `<div class="c" style="${w ? '--w:' + w + 'px' : ''}">${s}<div>${L.meta[id] ? L.meta[id].name : id}</div></div>`;
+a.innerHTML = L.ids.map((id) => cell(id, L.svg(id))).join('');
+b.innerHTML = L.ids.map((id) => cell(id, L.svg(id, { frame: true }))).join('');
+c.innerHTML = L.ids.map((id) => `<div class="c">${L.svg(id)}</div>`).join('');
+async function mask(s, N) {
+  s = s.replace('<svg', `<svg width="${N}" height="${Math.round(N * 1.06)}"`);
+  const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s); await im.decode();
+  const cv = document.createElement('canvas'); cv.width = N; cv.height = Math.round(N * 1.06); const g = cv.getContext('2d'); g.drawImage(im, 0, 0);
+  const d = g.getImageData(0, 0, cv.width, cv.height).data, m = new Uint8Array(cv.width * cv.height); for (let i = 0; i < m.length; i++) m[i] = d[i * 4 + 3] > 40 ? 1 : 0; return m;
+}
+window.legendIoU = async () => {
+  const N = 64, M = {};
+  for (const id of ExpCompanions.ids) M[id] = await mask(ExpCompanions.svg(id), N);
+  for (const id of L.ids) M[id] = await mask(L.svg(id), N);
+  const res = [];
+  for (const a of L.ids) for (const b of Object.keys(M)) { if (a === b || (L.has(b) && L.ids.indexOf(b) < L.ids.indexOf(a))) continue; let I = 0, U = 0; for (let k = 0; k < M[a].length; k++) { I += M[a][k] & M[b][k]; U += M[a][k] | M[b][k]; } res.push([I / U, a, b]); }
+  res.sort((x, y) => y[0] - x[0]);
+  return { pairs: res.length, max: +res[0][0].toFixed(3), over80: res.filter((r) => r[0] > .8).length, top: res.slice(0, 10).map((r) => [+r[0].toFixed(3), r[1], r[2]]) };
+};
+legendIoU().then((r) => { iou.textContent = `쌍 ${r.pairs} · 최대 ${r.max} · 0.8 넘는 쌍 ${r.over80}\n` + r.top.map((t) => t.join('  ')).join('\n'); window.IOU = r; });
+</script>

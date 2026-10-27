@@ -1,0 +1,71 @@
+{
+ "bgm/pond_mystic": {
+  "sec": 64.0,
+  "lufs": -20.0,
+  "peak": -6.7,
+  "kb": 312
+ },
+ "bgm/sansin_theme": {
+  "sec": 53.3,
+  "lufs": -20.0,
+  "peak": -6.3,
+  "kb": 277
+ },
+ "bgm/greedy_theme": {
+  "sec": 36.9,
+  "lufs": -20.0,
+  "peak": -4.6,
+  "kb": 159
+ },
+ "sfx/pungdeong": {
+  "sec": 1.54,
+  "mmax": -17.0,
+  "peak": -4.5
+ },
+ "sfx/pongdang": {
+  "sec": 0.87,
+  "mmax": -18.7,
+  "peak": -6.0
+ },
+ "sfx/bubbling": {
+  "sec": 2.08,
+  "mmax": -18.1,
+  "peak": -6.0
+ },
+ "sfx/kung": {
+  "sec": 0.63,
+  "mmax": -17.0,
+  "peak": -4.5
+ },
+ "sfx/sansin_chime": {
+  "sec": 2.56,
+  "mmax": -17.0,
+  "peak": -8.3
+ },
+ "sfx/rumble": {
+  "sec": 2.54,
+  "mmax": -18.1,
+  "peak": -6.0
+ },
+ "sfx/frog": {
+  "sec": 1.68,
+  "mmax": -17.4,
+  "peak": -6.0
+ },
+ "sfx/crow": {
+  "sec": 1.16,
+  "mmax": -15.5,
+  "peak": -4.5
+ },
+ "sfx/whisper": {
+  "sec": 2.44,
+  "mmax": -21.0,
+  "peak": -6.8
+ },
+ "sawsong/accomp_axe_72": {
+  "sec": 13.333
+ },
+ "sawsong/accomp_axe_80": {
+  "sec": 12.0
+ }
+}

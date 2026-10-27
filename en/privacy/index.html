@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Geometric Family</title>
+<meta name="description" content="How Geometric Family apps, website and upload tool handle personal information">
+<link rel="canonical" href="https://geometricfamily.com/en/privacy/"><link rel="alternate" hreflang="ko" href="https://geometricfamily.com/privacy/"><link rel="alternate" hreflang="en" href="https://geometricfamily.com/en/privacy/">
+<meta name="theme-color" content="#FFD84B">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website"><meta property="og:site_name" content="기하학 가족"><meta property="og:title" content="Privacy Policy — Geometric Family"><meta property="og:description" content="How Geometric Family apps, website and upload tool handle personal information"><meta property="og:url" content="https://geometricfamily.com/en/privacy/"><meta property="og:image" content="https://geometricfamily.com/og/home.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+/* 기하학 가족 웹 공통 디자인(2026-10-20 작가 「웹페이지 정돈이 필요하다」): 웹툰 목차·쇼츠·게임 목록·링크 허브 4쪽이 같은 머리·카드·색·간격.
+   정본 = tools/site_style.css → python tools/site_style.py 가 각 쪽 <!-- gf-site --> 사이에 끼운다(쪽마다 단일 HTML 유지). ⑪ 랜딩(/expedition/)은 따로. */
+:root { --ink: #6b5443; --paper: #f4ecdd; --bg: #e9dfcc; --card: #fff; --hot: #FFE9A8; --kid: #FFE3EA; --adult: #E3F0FF; --r: 18px; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Gowun Dodum', sans-serif; }
+.gf-wrap { max-width: 720px; margin: 0 auto; min-height: 100vh; background: var(--paper); padding: 0 16px 40px; box-shadow: 0 0 40px rgba(0,0,0,.12); }
+.gf-nav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 6px; margin: 0 -16px; padding: 10px 16px; background: rgba(244,236,221,.95); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border-bottom: 2px solid var(--ink); overflow-x: auto; scrollbar-width: none; }
+.gf-nav::-webkit-scrollbar { display: none; }
+.gf-nav .brand { display: flex; align-items: center; gap: 6px; margin-right: auto; padding-right: 6px; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 22px; white-space: nowrap; color: inherit; text-decoration: none; }
+.gf-nav .brand svg { width: 34px; height: 20px; flex: none; }
+.gf-nav a.tab { flex: none; min-height: 34px; display: inline-flex; align-items: center; padding: 0 12px; border: 2px solid var(--ink); border-radius: 17px; font-size: 14px; font-weight: 700; text-decoration: none; color: inherit; background: #fff; }
+.gf-nav a.tab.on { background: var(--ink); color: #fff; }
+.gf-hero { text-align: center; padding: 22px 0 4px; }
+.gf-hero h1 { font-family: Gaegu, sans-serif; font-size: 40px; margin: 0; letter-spacing: 1px; line-height: 1.1; }
+.gf-hero p { margin: 8px 0 0; font-size: 15px; line-height: 1.6; opacity: .85; word-break: keep-all; }
+.gf-hero svg, .gf-hero .art { display: block; width: 100%; height: auto; margin: 8px 0 0; }
+.gf-h2 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 28px 2px 12px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+.gf-h2 small { font-family: 'Gowun Dodum', sans-serif; font-size: 13px; opacity: .7; margin-left: 6px; }
+.gf-card { display: flex; align-items: center; gap: 14px; min-height: 64px; background: var(--card); border: 2.5px solid var(--ink); border-radius: var(--r); padding: 12px 16px; margin: 0 0 12px; color: inherit; text-decoration: none; box-shadow: 4px 5px 0 var(--ink); }
+a.gf-card:active, button.gf-card:active { transform: translate(2px, 3px); box-shadow: 1px 2px 0 var(--ink); }
+.gf-card .ic { font-size: 30px; width: 40px; text-align: center; flex: none; }
+.gf-card img.ic, .gf-card svg.ic { width: 64px; height: 64px; border-radius: 16px; font-size: 0; }
+.gf-card .t { display: block; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 23px; line-height: 1.15; word-break: keep-all; }
+.gf-card .k { display: block; font-size: 13px; opacity: .7; }
+.gf-card .d { display: block; font-size: 13.5px; opacity: .8; margin-top: 2px; line-height: 1.45; word-break: keep-all; }
+.gf-card.hot { background: var(--hot); } .gf-card.off { opacity: .5; pointer-events: none; border-style: dashed; box-shadow: none; }
+.gf-card.game { min-height: 104px; background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; border-color: #2c2450; box-shadow: 4px 6px 0 #2c2450; }
+.gf-card.game img.ic { width: 72px; height: 72px; background: #fff; } .gf-card.game .t { font-size: 27px; } .gf-card .go { margin-left: auto; font-size: 24px; flex: none; }
+.gf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.gf-grid .gf-card { flex-direction: column; justify-content: flex-start; text-align: center; margin: 0; padding: 14px 10px 12px; gap: 8px; }
+.gf-grid .gf-card .t { font-size: 20px; }
+.gf-grid.kid .gf-card { background: var(--kid); } .gf-grid.adult .gf-card { background: var(--adult); }
+.gf-note { margin: 22px 0 0; font-size: 13px; opacity: .7; line-height: 1.6; text-align: center; word-break: keep-all; }
+.gf-foot { text-align: center; font-size: 12px; opacity: .6; padding: 28px 0 0; line-height: 1.8; }
+.gf-foot a { color: inherit; }
+@media (min-width: 600px) { .gf-hero h1 { font-size: 46px; } .gf-wrap { padding: 0 24px 48px; } .gf-nav { margin: 0 -24px; padding: 10px 24px; } }
+@media (max-width: 440px) { .gf-nav .brand span { display: none; } .gf-nav a.tab { padding: 0 11px; } }   /* 좁은 폰: 브랜드는 도형 표시만, 메뉴 넷이 한 줄에 */
+/* 홈페이지(geometricfamily.com) 전용 — tools/site_style.css(웹 공통: 색·카드·머리 메뉴) 위에 얹는다. tools/build_home.py 가 쪽마다 인라인한다.
+   통일성: 색은 공통 토큰(--ink 갈색 선, --paper 종이, 노랑 #FFD84B = 인물 사전·소개 컷 바탕), 글꼴은 Gaegu(제목)·Gowun Dodum(본문), 카드는 굵은 갈색 테두리 + 아래 그림자. */
+:root { --yel: #FFD84B; --sky: #DCE8F7; --navy: #2c2450; --muted: rgba(107, 84, 67, .72); }
+.gf-wrap.hm { max-width: 1040px; }
+.gf-nav a.tab.ghost { background: transparent; border-color: transparent; font-weight: 400; }
+.hm section { scroll-margin-top: 64px; padding: 6px 0 10px; }
+.hm img { display: block; max-width: 100%; height: auto; }
+
+/* 첫 화면: 노란 판 + 세 가족 + 한 줄 + 할 일 하나(1화 보기) */
+.hero { margin: 16px 0 6px; background: var(--yel); border: 2.5px solid var(--ink); border-radius: 26px; box-shadow: 4px 5px 0 var(--ink); text-align: center; overflow: hidden; }
+.hero h1 { font-family: Gaegu, sans-serif; font-size: 48px; line-height: 1; margin: 26px 0 0; color: #2b211b; letter-spacing: 1px; }
+.hero .tag { margin: 10px 16px 0; font-size: 17px; line-height: 1.55; color: #3d2f25; word-break: keep-all; }
+.hero .art { width: 100%; max-width: 620px; aspect-ratio: 1000 / 420; margin: 6px auto 0; }
+.hero .cta { margin: 0 0 24px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 26px; border: 2.5px solid var(--ink); border-radius: 28px; background: var(--ink); color: #fff; font: 700 18px/1.2 'Gowun Dodum', sans-serif; text-decoration: none; box-shadow: 3px 4px 0 rgba(0,0,0,.18); cursor: pointer; }
+.btn:active { transform: translate(2px, 3px); box-shadow: none; }
+.btn.light { background: #fff; color: var(--ink); }
+.btn.yel { background: var(--yel); color: #2b211b; }
+.btn.wide { width: 100%; }
+
+.sec-h { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: Gaegu, sans-serif; font-size: 30px; margin: 34px 2px 14px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+.sec-h small { font-family: 'Gowun Dodum', sans-serif; font-size: 14px; color: var(--muted); }
+.lede { margin: -4px 2px 14px; font-size: 15px; line-height: 1.65; color: var(--muted); word-break: keep-all; }
+
+/* 캐릭터: 폰은 옆으로 넘기기, 넓으면 3칸 */
+.fams { display: grid; grid-auto-flow: column; grid-auto-columns: 78%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 4px 14px; margin: 0 -4px; scrollbar-width: none; }
+.fams::-webkit-scrollbar { display: none; }
+.fam { scroll-snap-align: start; background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; box-shadow: 4px 5px 0 var(--ink); overflow: hidden; }
+.fam img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--paper); }
+.fam div { padding: 12px 16px 16px; border-top: 2.5px solid var(--ink); }
+.fam b { font-family: Gaegu, sans-serif; font-size: 25px; } .fam i { font-style: normal; font-size: 13px; color: var(--muted); margin-left: 6px; }
+.fam p { margin: 4px 0 0; font-size: 14px; line-height: 1.55; word-break: keep-all; }
+.swipe { text-align: center; font-size: 12.5px; color: var(--muted); margin: -4px 0 0; }
+
+/* 웹툰 */
+.eps { display: grid; gap: 12px; }
+.ep { display: flex; align-items: center; gap: 14px; background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; padding: 10px 14px 10px 10px; color: inherit; text-decoration: none; box-shadow: 4px 5px 0 var(--ink); }
+.ep:active { transform: translate(2px, 3px); box-shadow: 1px 2px 0 var(--ink); }
+.ep img { width: 84px; height: 84px; border-radius: 12px; object-fit: cover; flex: none; border: 2px solid var(--ink); }
+.ep .k { display: block; font-size: 13px; color: var(--muted); } .ep .t { display: block; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 25px; line-height: 1.1; }
+.ep .d { display: block; font-size: 13.5px; line-height: 1.45; margin-top: 2px; word-break: keep-all; }
+.ep .go { margin-left: auto; font-size: 22px; flex: none; }
+.ep.first { background: var(--yel); }
+.more { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 16px 0 0; font-size: 14px; }
+.more a { color: inherit; }
+
+/* 게임 */
+.exp { position: relative; display: block; border: 2.5px solid var(--navy); border-radius: 22px; overflow: hidden; background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; text-decoration: none; box-shadow: 4px 6px 0 var(--navy); }
+.exp img { width: 100%; aspect-ratio: 1024 / 500; object-fit: cover; }
+.exp .body { padding: 14px 16px 18px; }
+.exp .line { margin: 0 0 10px; font-size: 15px; line-height: 1.55; word-break: keep-all; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; padding: 0; list-style: none; }
+.chips li { padding: 4px 11px; border-radius: 14px; background: rgba(255,255,255,.16); font-size: 13px; }
+.stores { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.store { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border: 2px dashed currentColor; border-radius: 12px; font-size: 13.5px; opacity: .85; color: inherit; text-decoration: none; }
+.store b { font-weight: 700; } .store small { font-size: 12px; opacity: .8; }
+a.store { border-style: solid; opacity: 1; }
+.apps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+.app { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px 10px; background: var(--adult); border: 2px solid var(--ink); border-radius: 18px; color: inherit; text-decoration: none; text-align: center; }
+.app.kid { background: var(--kid); }
+.app img { width: 64px; height: 64px; border-radius: 16px; background: #fff; }
+.app b { font-family: Gaegu, sans-serif; font-size: 17px; line-height: 1.1; word-break: keep-all; }
+.legend { display: flex; gap: 12px; justify-content: center; font-size: 12.5px; color: var(--muted); margin: 10px 0 0; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--ink); vertical-align: -1px; margin-right: 4px; }
+
+/* 영상: 쇼츠는 그림만 먼저(가볍게), 누르면 유튜브가 열린다 */
+.shorts { display: grid; grid-auto-flow: column; grid-auto-columns: 42%; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 2px 12px; scrollbar-width: none; }
+.shorts::-webkit-scrollbar { display: none; }
+.yt { position: relative; display: block; width: 100%; aspect-ratio: 9 / 16; border: 2.5px solid var(--ink); border-radius: 16px; overflow: hidden; background: #2b211b; scroll-snap-align: start; padding: 0; cursor: pointer; color: #fff; text-align: left; font: inherit; }
+.yt img { width: 100%; height: 100%; object-fit: cover; opacity: .92; }
+.yt .p { position: absolute; left: 50%; top: 42%; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%; background: rgba(0,0,0,.55); }
+.yt .p::after { content: ''; position: absolute; left: 21px; top: 16px; border-left: 17px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+.yt .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 10px 10px; background: linear-gradient(transparent, rgba(0,0,0,.75)); font-size: 13.5px; line-height: 1.35; word-break: keep-all; }
+.yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt.wide { aspect-ratio: 16 / 9; }
+.tale { margin-top: 22px; background: var(--sky); border: 2.5px solid var(--ink); border-radius: 22px; padding: 16px; box-shadow: 4px 5px 0 var(--ink); }
+.tale b { display: block; font-family: Gaegu, sans-serif; font-size: 25px; }
+.tale p { margin: 4px 0 12px; font-size: 14px; line-height: 1.6; word-break: keep-all; }
+.soon { display: flex; align-items: center; justify-content: center; min-height: 120px; border: 2px dashed var(--ink); border-radius: 16px; font-size: 15px; color: var(--muted); background: rgba(255,255,255,.5); text-align: center; padding: 12px; }
+
+/* IP·협업 */
+.ip { background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; padding: 18px 16px; box-shadow: 4px 5px 0 var(--ink); }
+.ip .one { margin: 0 0 14px; font-size: 16px; line-height: 1.65; word-break: keep-all; }
+.nums { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 0 0 16px; }
+.nums div { background: var(--paper); border-radius: 14px; padding: 10px 12px; }
+.nums b { display: block; font-family: Gaegu, sans-serif; font-size: 26px; line-height: 1.1; } .nums span { font-size: 13px; color: var(--muted); }
+.chan { margin: 0 0 16px; padding: 0; list-style: none; font-size: 14px; line-height: 2; }
+.chan a { color: inherit; }
+.ip .offer { margin: 0 0 14px; font-size: 14.5px; line-height: 1.6; word-break: keep-all; }
+
+/* 문의·바닥 */
+.contact { text-align: center; padding: 8px 0 0; }
+.contact p { font-size: 14.5px; line-height: 1.65; margin: 0 0 14px; word-break: keep-all; }
+.foot { margin-top: 40px; padding: 18px 0 0; border-top: 2px solid var(--ink); font-size: 12.5px; line-height: 1.9; color: var(--muted); text-align: center; word-break: keep-all; }
+.foot nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; margin-bottom: 8px; font-size: 14px; }
+.foot nav a { color: var(--ink); font-weight: 700; }
+.foot a { color: inherit; }
+
+/* 문서 쪽(방침·약관·앱 소개) */
+.doc { padding: 10px 0 0; }
+.doc h1 { font-family: Gaegu, sans-serif; font-size: 38px; margin: 22px 0 4px; line-height: 1.15; }
+.doc .meta { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+.doc h2 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 30px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--ink); scroll-margin-top: 64px; }
+.doc h3 { font-size: 16px; margin: 18px 0 6px; }
+.doc p, .doc li { font-size: 15px; line-height: 1.75; word-break: keep-all; }
+.doc ul, .doc ol { padding-left: 20px; margin: 6px 0; }
+.doc a { color: #3b5bb5; }
+.doc code { font-size: 13px; background: #fff; padding: 1px 5px; border-radius: 5px; border: 1px solid rgba(107,84,67,.25); }
+.doc .lead { font-size: 16px; }
+.doc .note { font-size: 13.5px; color: var(--muted); }
+.doc .sum { background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; padding: 14px 16px 10px; box-shadow: 4px 5px 0 var(--ink); margin: 16px 0; }
+.doc .sum > b { font-family: Gaegu, sans-serif; font-size: 22px; }
+.doc table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; background: #fff; font-size: 13.5px; line-height: 1.55; border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; display: block; overflow-x: auto; }
+.doc th, .doc td { border-bottom: 1px solid rgba(107,84,67,.22); padding: 8px 10px; text-align: left; vertical-align: top; word-break: keep-all; }
+.doc th { background: var(--paper); white-space: nowrap; }
+.doc .toc { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; }
+.doc .toc a { display: inline-block; padding: 4px 10px; border: 1.5px solid var(--ink); border-radius: 14px; font-size: 13px; color: var(--ink); text-decoration: none; background: #fff; }
+
+/* 앱 소개 쪽 */
+.apphead { display: flex; gap: 16px; align-items: center; margin: 22px 0 12px; }
+.apphead img { width: 96px; height: 96px; border-radius: 22px; border: 2.5px solid var(--ink); flex: none; background: #fff; }
+.apphead h1 { margin: 0; }
+.apphead .meta { margin: 4px 0 0; }
+.appwide { width: 100%; border: 2.5px solid var(--ink); border-radius: 18px; margin: 4px 0 14px; }
+
+@media (min-width: 700px) {
+  .hero { display: grid; grid-template-columns: 1fr 1.25fr; align-items: center; text-align: left; padding: 0 0 0 36px; }
+  .hero h1 { font-size: 64px; margin-top: 0; } .hero .tag { margin: 12px 0 22px; font-size: 19px; } .hero .cta { margin: 0; }
+  .hero .art { grid-column: 2; grid-row: 1 / span 3; margin: 26px 0 18px; }
+  .fams { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; }
+  .swipe { display: none; }
+  .eps { grid-template-columns: 1fr 1fr; }
+  .games2 { display: grid; grid-template-columns: 1.1fr 1fr; gap: 22px; align-items: start; }
+  .apps { grid-template-columns: repeat(4, 1fr); margin-top: 0; }
+  .shorts { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); overflow: visible; }
+  .vid2 { display: grid; grid-template-columns: 1fr; }
+  .nums { grid-template-columns: repeat(4, 1fr); }
+  .doc { max-width: 760px; margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+<div class="gf-wrap hm">
+<nav class="gf-nav" aria-label="기하학 가족"><a class="brand" href="/en/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>Geometric Family</span></a><a class="tab" href="/en/#about">Story</a><a class="tab" href="/en/#games">Games</a><a class="tab" href="/en/#partner">Partners</a><a class="tab ghost" href="/">한국어</a></nav>
+<main class="doc"><h1>Privacy Policy</h1><p class="meta">Effective 2026-10-27 · Geometric Family (independent creator)</p><ul class="toc"><li><a href="#scope">Scope</a></li><li><a href="#collect">Information we process</a></li><li><a href="#kids">Children</a></li><li><a href="#third">Service providers and international transfer</a></li><li><a href="#rights">Your rights</a></li><li><a href="#security">Security</a></li><li><a href="#cookies">Cookies</a></li><li><a href="#uploader">Geometric Family Uploader</a></li><li><a href="#contact">Contact</a></li><li><a href="#change">Changes</a></li></ul>
+<p class="lead">Geometric Family ("we", "the operator") makes webtoons, videos, mobile games and this website. This policy explains what personal information we process for each of the <a href="#scope">services below</a>. The Korean version at <a href="https://geometricfamily.com/privacy/">https://geometricfamily.com/privacy/</a> prevails if the two differ.</p>
+
+<div class="sum">
+  <b>In short</b>
+  <ul>
+    <li><b>11 casual game apps</b> (Playground, Coloring Book, Little One's Day, Three Family Table, Shape Merge and others): no accounts, and we do not collect names, contacts, photos or location. Progress stays on your device. Ads are served by Google AdMob.</li>
+    <li><b>Geometry Expedition</b>: an anonymous account (no name or email) stored on our server, with birth year-month for age checks, progress and purchase records. You can <a href="https://geometricfamily.com/delete/">delete your account</a> in the app or request it on the web.</li>
+    <li><b>Kids apps</b> (Playground, Coloring Book, Little One's Day) use child-directed, non-personalized ads only, and the advertising ID permission is removed.</li>
+    <li>We never sell personal information or share it with third parties for advertising.</li>
+  </ul>
+</div>
+
+<h2 id="scope">1. Scope</h2>
+<table>
+  <tr><th>Group</th><th>Services</th></tr>
+  <tr><td>Kids apps (ages 3–6)</td><td>Geometric Family Playground · Little One's Coloring Book · Little One's Day</td></tr>
+  <tr><td>General apps (13+)</td><td>Three Family Table · Shape Merge · Which Shape Are You? · Spot the Difference · Shape Blocks · Tidy Master · Family Tile Match · Bead Lines</td></tr>
+  <tr><td>Online game (15+)</td><td>Geometry Expedition (app and web demo)</td></tr>
+  <tr><td>Website</td><td>geometricfamily.com</td></tr>
+  <tr><td>Upload tool</td><td>"Geometric Family Uploader", used only by the operator to publish our own videos (<a href="#uploader">§8</a>)</td></tr>
+</table>
+
+<h2 id="collect">2. Information we process</h2>
+<h3>2-1. Game apps (except Geometry Expedition)</h3>
+<ul>
+  <li>The apps themselves collect <b>no personal information</b>: no sign-up, no analytics SDK.</li>
+  <li>Progress (cleared levels, stars, items and their placement, sound settings) is stored <b>only on the device</b> and is erased by "Reset progress" or uninstalling the app.</li>
+  <li>Sibling apps from us installed on the same device may share the in-game "house" (item IDs and positions) through an on-device store limited to apps signed with the same key. Nothing leaves the device.</li>
+  <li>"Which Shape Are You?" saves a result image to your photo gallery only when you tap "Save image", without requesting storage permission.</li>
+</ul>
+<h3>2-2. Geometry Expedition (server)</h3>
+<table>
+  <tr><th>Data</th><th>Purpose</th><th>Retention</th></tr>
+  <tr><td>Anonymous account ID (random, no name/email)</td><td>Store and restore progress</td><td>Until account deletion</td></tr>
+  <tr><td>Birth year and month (no day)</td><td>Block sign-up under 15; age-based monthly spending limits</td><td>Cleared on deletion (age band only kept)</td></tr>
+  <tr><td>Random install key (not a hardware ID or ad ID)</td><td>Keep you signed in; prevent abuse</td><td>Deleted within 7 days after the session (max 60 days) ends</td></tr>
+  <tr><td>Progress, team, companions, events</td><td>Server-side verification of battle results</td><td>Until account deletion</td></tr>
+  <tr><td>Currency ledger; random-item (gacha) logs incl. odds-table version</td><td>Prevent double grants; let odds and pity rules be audited</td><td>Until account deletion</td></tr>
+  <tr><td>Purchase records (order ID, item, amount, status, refunds)</td><td>Verify payments, refunds, spending limits</td><td><b>5 years</b> as required by Korean e-commerce law, even after deletion</td></tr>
+  <tr><td>Request log / abuse signals</td><td>Prevent duplicate processing / cheating</td><td>30 days / 180 days</td></tr>
+  <tr><td>IP address</td><td>Rate limiting only</td><td>Deleted automatically within a day</td></tr>
+</table>
+<p class="note">We also keep anonymous aggregate counts (daily event totals, funnel steps by install date) that are not linked to any account or device. The web demo stores everything in your browser only.</p>
+<h3>2-3. Website</h3>
+<p>No sign-up and no analytics. The site is hosted on GitHub Pages (GitHub may process technical logs such as IP addresses) and loads Google Fonts. Videos load YouTube (privacy-enhanced mode) only when you press play. If you email us, we keep your address and message for one year after we reply.</p>
+
+<h2 id="kids">3. Children</h2>
+<ul>
+  <li>Kids apps are designed for ages 3–6 and comply with the Google Play Families Policy: no data collected by the app, no purchases, no notifications, no external links; banner ads only on the home and map screens, with child-directed treatment (TFCD), max ad content rating G, non-personalized ads, and the AD_ID permission removed. Parent areas sit behind a math gate and show no ads.</li>
+  <li>Geometry Expedition is for users aged 15 and over and blocks sign-up below that age, so we do not knowingly process data of children under 14. If we learn that we have, we delete it promptly. Parents can contact us at any time.</li>
+</ul>
+
+<h2 id="third">4. Service providers and international transfer</h2>
+<table>
+  <tr><th>Recipient (country)</th><th>Data</th><th>Purpose</th></tr>
+  <tr><td>Google LLC — AdMob, UMP (USA)</td><td>IP address, device info, advertising ID (general apps, where permitted), ad interactions</td><td>Serving ads, fraud prevention, consent management</td></tr>
+  <tr><td>Cloudflare, Inc. — Workers, D1 (USA and other regions)</td><td>Geometry Expedition server data (§2-2)</td><td>Hosting (processor)</td></tr>
+  <tr><td>The app store you installed from — ONE store (Korea), Google Play (USA)</td><td>Payment details (handled by the store)</td><td>Purchases and refunds</td></tr>
+</table>
+<p>General apps show a consent form (Google UMP) where required and use personalized ads only within your choice. Geometry Expedition shows only optional rewarded ads, set to non-personalized. See <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">how Google uses information from sites or apps that use its services</a>. We never receive your card details.</p>
+
+<h2 id="rights">5. Your rights</h2>
+<ul>
+  <li>You (or a parent or guardian) may request access, correction, deletion or suspension of processing by <a href="#contact">contacting us</a>. We respond within 10 days.</li>
+  <li><b>Delete a Geometry Expedition account</b>: in the app, open the shop screen and tap "Delete account and data". Without the app, see the <a href="https://geometricfamily.com/delete/">account deletion page</a>. Purchase records are kept for the legal retention period.</li>
+  <li>You can reset or delete your advertising ID and opt out of personalized ads in your device settings.</li>
+</ul>
+
+<h2 id="security">6. Security</h2>
+<p>All server traffic uses HTTPS, server access is limited to the operator, accounts are random IDs without names, and access keys are never stored in public repositories.</p>
+
+<h2 id="cookies">7. Cookies</h2>
+<p>We do not use cookies to track you. Third-party services (AdMob, YouTube, GitHub) may use cookies or identifiers under their own policies.</p>
+
+<h2 id="uploader">8. Geometric Family Uploader (Google API Services)</h2>
+<p>"Geometric Family Uploader" is an internal tool the operator uses to upload our own videos to <b>our own YouTube channel</b>. It is not offered to other users.</p>
+<ul>
+  <li><b>Scopes</b>: YouTube Data API v3 <code>youtube.upload</code> and <code>youtube</code> — used only to upload videos to our channel, set titles, descriptions, tags, privacy status and thumbnails, add videos to playlists, and check processing status.</li>
+  <li><b>Storage</b>: the OAuth token is stored only in a private folder on the operator's computer and never sent to any server or third party. We do not read or store any other user's Google data, watch history or subscriber information.</li>
+  <li><b>Sharing</b>: Google user data is never sold, transferred to third parties, used for advertising, or read by humans.</li>
+  <li>Geometric Family Uploader's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</li>
+  <li>This tool uses YouTube API Services. By using it you agree to the <a href="https://www.youtube.com/t/terms" rel="noopener">YouTube Terms of Service</a>; the <a href="https://policies.google.com/privacy" rel="noopener">Google Privacy Policy</a> also applies. Access can be revoked at any time at <a href="https://myaccount.google.com/permissions" rel="noopener">Google security settings</a>.</li>
+</ul>
+
+<h2 id="contact">9. Contact</h2>
+<table>
+  <tr><th>Operator</th><td>Geometric Family (independent creator)</td></tr>
+  <tr><th>Business registration</th><td>To be added after business registration</td></tr>
+  <tr><th>Contact</th><td><a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a></td></tr>
+</table>
+
+<h2 id="change">10. Changes</h2>
+<p>Effective 2026-10-27. We will announce changes on this page and in app update notes at least 7 days in advance (30 days for material changes).</p>
+
+</main>
+<footer class="foot"><nav><a href="/en/privacy/">Privacy Policy</a><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관 (KO)</a><a href="/">한국어</a></nav>© 2026 Geometric Family (independent creator) · To be added after business registration<br>Contact: <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a><br>All stories and characters are fictional.</footer>
+</div>
+</body>
+</html>

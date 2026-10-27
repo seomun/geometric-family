@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기하학 가족 — 링크 모음</title>
 <!-- gf-og -->
-<meta property="og:type" content="website"><meta property="og:site_name" content="기하학 가족"><meta property="og:title" content="기하학 가족 — 링크 모음"><meta property="og:description" content="웹툰·블로그·도형 테스트·게임 체험판을 한곳에서. 당신은 어느 도형인가요?"><meta property="og:image" content="https://seomun.github.io/geometric-family/og/link.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://seomun.github.io/geometric-family/link.html"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website"><meta property="og:site_name" content="기하학 가족"><meta property="og:title" content="기하학 가족 — 링크 모음"><meta property="og:description" content="웹툰·블로그·도형 테스트·게임 체험판을 한곳에서. 당신은 어느 도형인가요?"><meta property="og:image" content="https://geometricfamily.com/og/link.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://geometricfamily.com/link.html"><meta name="twitter:card" content="summary_large_image">
 <!-- /gf-og -->
 <meta name="description" content="웹툰·블로그·도형 테스트·게임 체험판을 한곳에서. 당신은 어느 도형인가요?">
 <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
@@ -708,7 +708,7 @@ document.getElementById('hero').innerHTML = `` +
 </style>
 <script>
 (function () {
-  var SITE = 'https://seomun.github.io/geometric-family/';
+  var SITE = 'https://geometricfamily.com/';
   function toast(msg) { var t = document.createElement('div'); t.className = 'gfs-toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2600); }
   function copy(text) { try { if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).then(function () { return true; }, fb); } catch (e) {} return Promise.resolve(fb()); function fb() { try { var a = document.createElement('textarea'); a.value = text; a.setAttribute('readonly', ''); a.style.cssText = 'position:fixed;left:-999px;top:0'; document.body.appendChild(a); a.select(); var r = document.execCommand('copy'); a.remove(); return r; } catch (e) { return false; } } }
   window.gfShare = function (page, title) {

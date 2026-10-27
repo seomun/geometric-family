@@ -1,0 +1,163 @@
+{
+ "tap": {
+  "dur": 0.77,
+  "mmax": -19.7,
+  "target_mmax": -19.7,
+  "peak": -8.5,
+  "lufs_int": -22.3
+ },
+ "pick": {
+  "dur": 0.81,
+  "mmax": -17.5,
+  "target_mmax": -17.5,
+  "peak": -7.0,
+  "lufs_int": -20.3
+ },
+ "drop": {
+  "dur": 0.86,
+  "mmax": -18.5,
+  "target_mmax": -18.5,
+  "peak": -6.4,
+  "lufs_int": -22.0
+ },
+ "ok": {
+  "dur": 1.01,
+  "mmax": -15.9,
+  "target_mmax": -17.1,
+  "peak": -6.0,
+  "lufs_int": -19.1
+ },
+ "cancel": {
+  "dur": 1.0,
+  "mmax": -17.0,
+  "target_mmax": -16.2,
+  "peak": -6.0,
+  "lufs_int": -20.2
+ },
+ "hmm": {
+  "dur": 0.8,
+  "mmax": -15.3,
+  "target_mmax": -16.7,
+  "peak": -6.0,
+  "lufs_int": -16.9
+ },
+ "fail": {
+  "dur": 1.22,
+  "mmax": -14.4,
+  "target_mmax": -15.6,
+  "peak": -6.0,
+  "lufs_int": -18.1
+ },
+ "flip": {
+  "dur": 0.75,
+  "mmax": -16.8,
+  "target_mmax": -16.4,
+  "peak": -6.0,
+  "lufs_int": -18.7
+ },
+ "page": {
+  "dur": 0.85,
+  "mmax": -17.1,
+  "target_mmax": -17.5,
+  "peak": -6.0,
+  "lufs_int": -19.1
+ },
+ "door": {
+  "dur": 0.71,
+  "mmax": -17.9,
+  "target_mmax": -17.3,
+  "peak": -3.0,
+  "lufs_int": -20.7
+ },
+ "pop1": {
+  "dur": 0.87,
+  "mmax": -15.9,
+  "target_mmax": -15.9,
+  "peak": -6.3,
+  "lufs_int": -18.3
+ },
+ "pop2": {
+  "dur": 0.98,
+  "mmax": -14.4,
+  "target_mmax": -15.4,
+  "peak": -6.0,
+  "lufs_int": -17.7
+ },
+ "pop3": {
+  "dur": 2.07,
+  "mmax": -12.5,
+  "target_mmax": -10.7,
+  "peak": -3.0,
+  "lufs_int": -16.5
+ },
+ "sparkle": {
+  "dur": 1.13,
+  "mmax": -13.9,
+  "target_mmax": -12.9,
+  "peak": -4.5,
+  "lufs_int": -17.5
+ },
+ "star": {
+  "dur": 1.75,
+  "mmax": -14.4,
+  "target_mmax": -13.1,
+  "peak": -4.5,
+  "lufs_int": -18.3
+ },
+ "get": {
+  "dur": 1.72,
+  "mmax": -14.2,
+  "target_mmax": -12.1,
+  "peak": -6.0,
+  "lufs_int": -17.7
+ },
+ "praise1": {
+  "dur": 1.13,
+  "mmax": -15.9,
+  "target_mmax": -16.3,
+  "peak": -6.0,
+  "lufs_int": -19.7
+ },
+ "praise2": {
+  "dur": 1.68,
+  "mmax": -13.7,
+  "target_mmax": -12.6,
+  "peak": -4.5,
+  "lufs_int": -17.1
+ },
+ "praise3": {
+  "dur": 2.16,
+  "mmax": -14.3,
+  "target_mmax": -12.2,
+  "peak": -4.5,
+  "lufs_int": -18.2
+ },
+ "celebrate": {
+  "dur": 2.64,
+  "mmax": -13.7,
+  "target_mmax": -11.7,
+  "peak": -4.5,
+  "lufs_int": -16.8
+ },
+ "combo1": {
+  "dur": 0.98,
+  "mmax": -17.1,
+  "target_mmax": -17.1,
+  "peak": -6.2,
+  "lufs_int": -20.7
+ },
+ "combo2": {
+  "dur": 0.95,
+  "mmax": -16.0,
+  "target_mmax": -16.1,
+  "peak": -6.0,
+  "lufs_int": -19.6
+ },
+ "combo3": {
+  "dur": 1.43,
+  "mmax": -14.3,
+  "target_mmax": -15.100000000000001,
+  "peak": -6.0,
+  "lufs_int": -17.5
+ }
+}

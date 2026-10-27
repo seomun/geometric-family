@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /play/res/
+
+Sitemap: https://geometricfamily.com/sitemap.xml

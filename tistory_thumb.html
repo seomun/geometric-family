@@ -689,6 +689,57 @@ card('#ffe2c6', `
   ${T(202, H - 30, '짠내나는 경제학 · 네모 아빠', 24, { font: HEAD })}
 `);
 
+// ③ 소방 예산 (gf-tistory 요청 10/27) → c03.png → content/blog/tistory/img/08_소방예산_대표.png. 막대 차트 + 일반 소방차(기관 마크·로고 없음)
+const bar = (x, y, w, c, label, big) => `<rect x="${x}" y="${y}" width="${w}" height="64" rx="12" fill="${c}" stroke="${INK}" stroke-width="5"/>${T(x + 14, y - 12, label, 30, { font: HEAD, anchor: 'start' })}${T(x + w + 14, y + 44, big, 40, { font: HEAD, anchor: 'start', fill: c === '#ff8a3d' ? '#c2410c' : '#1d4f91' })}`;
+const truck = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><ellipse cx="0" cy="76" rx="120" ry="12" fill="#00000022"/>
+  <rect x="-110" y="-30" width="150" height="90" rx="10" fill="#e5483a" stroke="${INK}" stroke-width="6"/>
+  <path d="M40,-14 h46 q16,0 22,18 l8,34 v22 h-76z" fill="#e5483a" stroke="${INK}" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M54,-2 h28 q8,0 12,12 l4,16 h-44z" fill="#cfe9fb" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/>
+  <rect x="-96" y="-52" width="120" height="14" rx="6" fill="#d9dde3" stroke="${INK}" stroke-width="5"/><path d="M-96,-45 l-24,-26" stroke="${INK}" stroke-width="6" stroke-linecap="round"/>
+  <rect x="-100" y="22" width="130" height="8" rx="4" fill="#fff"/>
+  <circle cx="-62" cy="64" r="22" fill="#4a4a52" stroke="${INK}" stroke-width="5"/><circle cx="-62" cy="64" r="8" fill="#cfd3da"/><circle cx="64" cy="64" r="22" fill="#4a4a52" stroke="${INK}" stroke-width="5"/><circle cx="64" cy="64" r="8" fill="#cfd3da"/>
+  <rect x="56" y="-24" width="24" height="10" rx="5" fill="#ffd54a" stroke="${INK}" stroke-width="4"/></g>`;
+const qmark = (x, y, r = 1) => `<g transform="translate(${x},${y}) scale(${r}) rotate(10)">${T(0, 0, '?', 70, { font: HEAD, fill: '#e0533d' })}</g>`;
+card('#d9edf8', `
+  <rect x="0" y="0" width="${W}" height="250" fill="#24324f"/>
+  ${T(60, 118, '소방 예산 국비는 10.7%뿐', 86, { font: HEAD, fill: '#fff', anchor: 'start' })}
+  ${hl(380, 196, 650, 84, '#ffe066', -1.2)}
+  ${T(66, 220, '소방관 월급, 누가 내나', 54, { font: HEAD, anchor: 'start' })}
+  <rect x="40" y="276" width="640" height="270" rx="22" fill="#fff" stroke="${INK}" stroke-width="5"/>
+  ${bar(70, 336, 80, '#ff8a3d', '국비', '10.7%')}
+  ${bar(70, 456, 400, '#4a90d9', '지방비', '89.3%')}
+  <g transform="rotate(-6 860 400)">${sticker(nemoDad({ x: 760, y: 300, w: 230, h: 203, emo: 'worry', gaze: -1 }))}</g>
+  ${qmark(990, 330, 1)}${qmark(740, 300, 0.7)}
+  ${truck(1070, 510, 0.72)}
+  <rect x="32" y="${H - 60}" width="340" height="42" rx="21" fill="#fff" stroke="${INK2}" stroke-width="4"/>
+  ${T(202, H - 30, '짠내나는 경제학 · 네모 아빠', 24, { font: HEAD })}
+`);
+
+// ④ 건강보험료 임의계속가입 (gf-tistory 요청 10/27) → c04.png → content/blog/tistory/img/09_건강보험료_대표.png. 급여명세서·계산기·믹스커피(공단 로고·실제 서식 없음)
+const payslip = (x, y, rot = -6) => `<g transform="translate(${x},${y}) rotate(${rot})"><rect x="-70" y="-84" width="140" height="168" rx="8" fill="#fff" stroke="${INK}" stroke-width="5"/>
+  <rect x="-54" y="-66" width="108" height="16" rx="5" fill="#8ec5a0"/>${[-34, -18, -2, 14, 30].map((v, i) => `<rect x="-54" y="${v}" width="${i % 2 ? 70 : 108}" height="8" rx="3" fill="#c9b9a8"/>`).join('')}
+  <rect x="-54" y="50" width="60" height="14" rx="4" fill="#ffe066"/></g>`;
+const calc = (x, y, rot = 6) => `<g transform="translate(${x},${y}) rotate(${rot})"><rect x="-52" y="-72" width="104" height="144" rx="12" fill="#5d6b7e" stroke="${INK}" stroke-width="5"/>
+  <rect x="-40" y="-60" width="80" height="26" rx="5" fill="#c9efc6" stroke="${INK}" stroke-width="3"/>${[0, 1, 2, 3].map((r) => [0, 1, 2].map((c) => `<rect x="${-40 + c * 28}" y="${-22 + r * 24}" width="22" height="18" rx="4" fill="${c === 2 && r > 1 ? '#ffb347' : '#e9edf3'}"/>`).join('')).join('')}</g>`;
+const mixcup = (x, y) => `<g transform="translate(${x},${y})"><ellipse cx="0" cy="48" rx="54" ry="9" fill="#00000022"/>
+  <path d="M-34,-24 h68 l-8,68 h-52z" fill="#fff" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/><path d="M34,-10 q26,2 22,24 q-4,16 -26,14" fill="none" stroke="${INK}" stroke-width="5"/>
+  <ellipse cx="0" cy="-24" rx="34" ry="8" fill="#8a5a3a" stroke="${INK}" stroke-width="4"/>
+  <path d="M-8,-40 q-8,-14 0,-26 M10,-40 q-8,-14 0,-26" stroke="#aab" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <g transform="translate(-60,38) rotate(-30)"><rect x="-8" y="-34" width="16" height="68" rx="4" fill="#f4e0b8" stroke="${INK}" stroke-width="3.5"/></g></g>`;
+card('#e6f2dd', `
+  <rect x="0" y="0" width="${W}" height="250" fill="#24324f"/>
+  ${T(60, 118, '임의계속가입 신청 방법 2026', 86, { font: HEAD, fill: '#fff', anchor: 'start' })}
+  ${hl(506, 196, 900, 84, '#ffe066', -1.2)}
+  ${T(66, 220, '첫 고지서 납부기한 + 2개월 안에', 54, { font: HEAD, anchor: 'start' })}
+  <rect x="330" y="494" width="780" height="46" rx="12" fill="#c9985c" stroke="${INK}" stroke-width="5"/>
+  ${sticker(nemoDad({ x: 380, y: 290, w: 240, h: 212, emo: 'worry', gaze: 1 }))}
+  ${payslip(700, 450, -6)}${calc(830, 442, 6)}
+  ${sticker(nemoMom({ x: 940, y: 290, w: 220, h: 200, emo: 'joy' }))}${mixcup(960, 470)}
+  ${spark(660, 300, 14)}${spark(1140, 300, 12)}
+  <rect x="32" y="${H - 60}" width="340" height="42" rx="21" fill="#fff" stroke="${INK2}" stroke-width="4"/>
+  ${T(202, H - 30, '짠내나는 경제학 · 네모 아빠', 24, { font: HEAD })}
+`);
+
 document.getElementById('strip').innerHTML = cuts.join('');
 </script>
 </body>

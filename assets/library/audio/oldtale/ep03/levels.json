@@ -1,0 +1,49 @@
+{
+ "bgm/wolf_theme": {
+  "sec": 36.9,
+  "lufs": -20.0,
+  "peak": -4.9,
+  "kb": 160
+ },
+ "bgm/pig_theme": {
+  "sec": 32.0,
+  "lufs": -20.0,
+  "peak": -4.7,
+  "kb": 127
+ },
+ "sfx/wolf_blow": {
+  "sec": 2.99,
+  "mmax": -19.0,
+  "peak": -8.6
+ },
+ "sfx/straw_fly": {
+  "sec": 2.0,
+  "mmax": -18.5,
+  "peak": -6.5
+ },
+ "sfx/wood_crash": {
+  "sec": 1.85,
+  "mmax": -16.4,
+  "peak": -4.5
+ },
+ "sfx/brick_stand": {
+  "sec": 0.9,
+  "mmax": -17.2,
+  "peak": -4.5
+ },
+ "sfx/door_knock": {
+  "sec": 1.45,
+  "mmax": -18.3,
+  "peak": -6.0
+ },
+ "sfx/pot_splash": {
+  "sec": 1.91,
+  "mmax": -16.0,
+  "peak": -4.5
+ },
+ "sfx/pig_oink": {
+  "sec": 0.97,
+  "mmax": -18.3,
+  "peak": -6.0
+ }
+}

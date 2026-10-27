@@ -1,0 +1,397 @@
+{
+ "sfx": {
+  "xs_grab_0.mp3": {
+   "sec": 0.46,
+   "lufs": -18.0,
+   "peak": -2.7
+  },
+  "xs_grab_1.mp3": {
+   "sec": 0.56,
+   "lufs": -18.0,
+   "peak": -2.6
+  },
+  "xs_tick_0.mp3": {
+   "sec": 0.38,
+   "lufs": -21.0,
+   "peak": -3.1
+  },
+  "xs_tick_1.mp3": {
+   "sec": 0.45,
+   "lufs": -21.0,
+   "peak": -3.6
+  },
+  "xs_release_0.mp3": {
+   "sec": 0.5,
+   "lufs": -18.0,
+   "peak": -5.5
+  },
+  "xs_release_1.mp3": {
+   "sec": 0.62,
+   "lufs": -18.0,
+   "peak": -2.0
+  },
+  "xs_nomatch.mp3": {
+   "sec": 0.98,
+   "lufs": -21.0,
+   "peak": -7.4
+  },
+  "xs_pop1_0.mp3": {
+   "sec": 0.88,
+   "lufs": -16.0,
+   "peak": -3.2
+  },
+  "xs_pop1_1.mp3": {
+   "sec": 0.85,
+   "lufs": -16.0,
+   "peak": -2.6
+  },
+  "xs_pop2_0.mp3": {
+   "sec": 1.22,
+   "lufs": -15.0,
+   "peak": -3.4
+  },
+  "xs_pop2_1.mp3": {
+   "sec": 1.21,
+   "lufs": -15.0,
+   "peak": -2.8
+  },
+  "xs_pop3_0.mp3": {
+   "sec": 1.48,
+   "lufs": -14.0,
+   "peak": -2.3
+  },
+  "xs_pop3_1.mp3": {
+   "sec": 1.49,
+   "lufs": -14.0,
+   "peak": -2.1
+  },
+  "xs_combo.mp3": {
+   "sec": 1.47,
+   "lufs": -17.0,
+   "peak": -3.8
+  },
+  "xs_fanfare.mp3": {
+   "sec": 2.65,
+   "lufs": -13.0,
+   "peak": -3.0
+  },
+  "xs_atk_support_0.mp3": {
+   "sec": 0.88,
+   "lufs": -14.0,
+   "peak": -2.0
+  },
+  "xs_atk_support_1.mp3": {
+   "sec": 0.89,
+   "lufs": -14.0,
+   "peak": -2.3
+  },
+  "xs_atk_flash_0.mp3": {
+   "sec": 1.35,
+   "lufs": -14.0,
+   "peak": -2.1
+  },
+  "xs_atk_flash_1.mp3": {
+   "sec": 1.38,
+   "lufs": -14.0,
+   "peak": -2.9
+  },
+  "xs_atk_care_0.mp3": {
+   "sec": 1.53,
+   "lufs": -15.0,
+   "peak": -3.1
+  },
+  "xs_atk_care_1.mp3": {
+   "sec": 1.5,
+   "lufs": -15.0,
+   "peak": -2.8
+  },
+  "xs_hit_0.mp3": {
+   "sec": 0.51,
+   "lufs": -15.0,
+   "peak": -2.2
+  },
+  "xs_hit_1.mp3": {
+   "sec": 0.51,
+   "lufs": -15.0,
+   "peak": -2.1
+  },
+  "xs_hit_big_0.mp3": {
+   "sec": 1.52,
+   "lufs": -13.0,
+   "peak": -2.0
+  },
+  "xs_hit_big_1.mp3": {
+   "sec": 1.52,
+   "lufs": -13.2,
+   "peak": -2.0
+  },
+  "xs_hit_adv_0.mp3": {
+   "sec": 1.33,
+   "lufs": -13.0,
+   "peak": -2.5
+  },
+  "xs_hit_adv_1.mp3": {
+   "sec": 1.33,
+   "lufs": -13.0,
+   "peak": -2.2
+  },
+  "xs_hit_weak_0.mp3": {
+   "sec": 0.45,
+   "lufs": -19.0,
+   "peak": -3.8
+  },
+  "xs_hit_weak_1.mp3": {
+   "sec": 0.45,
+   "lufs": -19.0,
+   "peak": -2.7
+  },
+  "xs_hurt_0.mp3": {
+   "sec": 0.64,
+   "lufs": -15.0,
+   "peak": -2.8
+  },
+  "xs_hurt_1.mp3": {
+   "sec": 0.64,
+   "lufs": -15.0,
+   "peak": -2.1
+  },
+  "xs_down_0.mp3": {
+   "sec": 1.37,
+   "lufs": -15.0,
+   "peak": -4.2
+  },
+  "xs_down_1.mp3": {
+   "sec": 1.32,
+   "lufs": -15.0,
+   "peak": -2.0
+  },
+  "xs_shatter_0.mp3": {
+   "sec": 1.36,
+   "lufs": -12.0,
+   "peak": -2.6
+  },
+  "xs_shatter_1.mp3": {
+   "sec": 1.36,
+   "lufs": -12.0,
+   "peak": -2.6
+  },
+  "xs_boss.mp3": {
+   "sec": 2.7,
+   "lufs": -12.0,
+   "peak": -2.0
+  },
+  "xs_boss_hp.mp3": {
+   "sec": 1.3,
+   "lufs": -14.0,
+   "peak": -2.2
+  },
+  "xs_win.mp3": {
+   "sec": 3.2,
+   "lufs": -13.0,
+   "peak": -3.3
+  },
+  "xs_lose.mp3": {
+   "sec": 3.7,
+   "lufs": -15.0,
+   "peak": -4.7
+  },
+  "xs_ui_0.mp3": {
+   "sec": 0.45,
+   "lufs": -19.0,
+   "peak": -7.4
+  },
+  "xs_ui_1.mp3": {
+   "sec": 0.45,
+   "lufs": -19.0,
+   "peak": -5.0
+  },
+  "xs_ui_back.mp3": {
+   "sec": 0.68,
+   "lufs": -19.0,
+   "peak": -7.0
+  },
+  "xs_ui_open.mp3": {
+   "sec": 1.48,
+   "lufs": -18.0,
+   "peak": -4.6
+  },
+  "xs_ui_good.mp3": {
+   "sec": 1.4,
+   "lufs": -16.0,
+   "peak": -2.9
+  },
+  "xs_gacha_tense.mp3": {
+   "sec": 2.7,
+   "lufs": -15.0,
+   "peak": -3.1
+  },
+  "xs_gacha_flip3.mp3": {
+   "sec": 0.97,
+   "lufs": -17.0,
+   "peak": -3.5
+  },
+  "xs_gacha_flip4.mp3": {
+   "sec": 1.67,
+   "lufs": -14.0,
+   "peak": -3.4
+  },
+  "xs_gacha_flip5.mp3": {
+   "sec": 2.62,
+   "lufs": -12.0,
+   "peak": -2.5
+  },
+  "xs_charge.mp3": {
+   "sec": 1.2,
+   "lufs": -15.0,
+   "peak": -3.4
+  },
+  "xs_cut.mp3": {
+   "sec": 0.55,
+   "lufs": -14.0,
+   "peak": -2.7
+  },
+  "xs_crack.mp3": {
+   "sec": 0.61,
+   "lufs": -15.0,
+   "peak": -2.0
+  },
+  "xs_tidy.mp3": {
+   "sec": 1.0,
+   "lufs": -14.0,
+   "peak": -2.2
+  },
+  "xs_clang_0.mp3": {
+   "sec": 1.3,
+   "lufs": -14.0,
+   "peak": -3.4
+  },
+  "xs_clang_1.mp3": {
+   "sec": 1.3,
+   "lufs": -14.0,
+   "peak": -3.0
+  },
+  "xs_blob5_0.mp3": {
+   "sec": 1.84,
+   "lufs": -14.0,
+   "peak": -2.0
+  },
+  "xs_blob5_1.mp3": {
+   "sec": 1.83,
+   "lufs": -14.0,
+   "peak": -2.3
+  },
+  "xs_blob7.mp3": {
+   "sec": 2.3,
+   "lufs": -14.0,
+   "peak": -2.0
+  },
+  "xs_row.mp3": {
+   "sec": 2.05,
+   "lufs": -14.0,
+   "peak": -3.0
+  },
+  "xs_fusion.mp3": {
+   "sec": 2.24,
+   "lufs": -12.0,
+   "peak": -2.0
+  }
+ },
+ "bgm": {
+  "exp_home": {
+   "sec": 45.7,
+   "lufs": -20.0,
+   "peak": -3.8,
+   "kb": 246
+  },
+  "exp_map": {
+   "sec": 41.7,
+   "lufs": -20.0,
+   "peak": -4.8,
+   "kb": 242
+  },
+  "exp_shop": {
+   "sec": 38.4,
+   "lufs": -20.0,
+   "peak": -5.0,
+   "kb": 210
+  },
+  "exp_battle": {
+   "sec": 34.3,
+   "lufs": -20.0,
+   "peak": -3.5,
+   "kb": 195
+  },
+  "exp_boss": {
+   "sec": 40.0,
+   "lufs": -20.0,
+   "peak": -5.7,
+   "kb": 174
+  },
+  "exp_boss2": {
+   "sec": 36.9,
+   "lufs": -20.0,
+   "peak": -5.4,
+   "kb": 165
+  },
+  "exp_win": {
+   "sec": 32.0,
+   "lufs": -20.0,
+   "peak": -4.0,
+   "kb": 202
+  },
+  "exp_lose": {
+   "sec": 58.2,
+   "lufs": -20.0,
+   "peak": -7.6,
+   "kb": 274
+  },
+  "exp_f_village": {
+   "sec": 43.6,
+   "lufs": -20.0,
+   "peak": -4.4,
+   "kb": 244
+  },
+  "exp_f_night": {
+   "sec": 53.3,
+   "lufs": -20.0,
+   "peak": -5.5,
+   "kb": 273
+  },
+  "exp_f_forest": {
+   "sec": 40.0,
+   "lufs": -20.0,
+   "peak": -4.6,
+   "kb": 230
+  },
+  "exp_f_water": {
+   "sec": 48.0,
+   "lufs": -20.0,
+   "peak": -4.4,
+   "kb": 272
+  },
+  "exp_f_castle": {
+   "sec": 41.7,
+   "lufs": -20.0,
+   "peak": -3.6,
+   "kb": 238
+  },
+  "exp_warp": {
+   "sec": 53.3,
+   "lufs": -20.0,
+   "peak": -4.7,
+   "kb": 272
+  },
+  "exp_bead_home": {
+   "sec": 50.5,
+   "lufs": -20.0,
+   "peak": -5.2,
+   "kb": 283
+  },
+  "exp_bead_play": {
+   "sec": 38.4,
+   "lufs": -20.0,
+   "peak": -5.4,
+   "kb": 221
+  }
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "exp_home": {
+  "sec": 95.4,
+  "lufs": -20.0,
+  "peak": -5.3,
+  "kb": 396
+ },
+ "exp_boss": {
+  "sec": 121.4,
+  "lufs": -20.0,
+  "peak": -6.7,
+  "kb": 691
+ },
+ "exp_boss2": {
+  "sec": 112.3,
+  "lufs": -20.0,
+  "peak": -3.4,
+  "kb": 613
+ },
+ "exp_bead_home": {
+  "sec": 37.5,
+  "lufs": -20.0,
+  "peak": -5.7,
+  "kb": 132
+ },
+ "exp_f_village": {
+  "sec": 54.3,
+  "lufs": -20.0,
+  "peak": -5.5,
+  "kb": 272
+ },
+ "exp_f_night": {
+  "sec": 47.5,
+  "lufs": -20.0,
+  "peak": -3.5,
+  "kb": 178
+ },
+ "exp_f_forest": {
+  "sec": 69.5,
+  "lufs": -20.3,
+  "peak": -5.3,
+  "kb": 380
+ },
+ "exp_f_water": {
+  "sec": 47.5,
+  "lufs": -20.0,
+  "peak": -3.4,
+  "kb": 144
+ },
+ "exp_f_castle": {
+  "sec": 52.5,
+  "lufs": -20.0,
+  "peak": -4.1,
+  "kb": 163
+ },
+ "exp_win": {
+  "sec": 16.0,
+  "lufs": -20.0,
+  "peak": -4.1,
+  "kb": 71
+ }
+}

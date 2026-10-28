@@ -2,14 +2,14 @@
  "bgm/wolf_theme": {
   "sec": 36.9,
   "lufs": -20.0,
-  "peak": -4.9,
-  "kb": 160
+  "peak": -6.4,
+  "kb": 267
  },
  "bgm/pig_theme": {
   "sec": 32.0,
   "lufs": -20.0,
-  "peak": -4.7,
-  "kb": 127
+  "peak": -6.0,
+  "kb": 247
  },
  "sfx/wolf_blow": {
   "sec": 2.99,

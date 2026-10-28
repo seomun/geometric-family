@@ -1,0 +1,92 @@
+/* 기하학 가족 카드 틀 v1 — 등급 5종(B 나무·A 구리·S 은·SS 금·SSS 무지개) + 유아판(.kids)
+   규격: 3:4 세로, 크림 바탕, 둥근 모서리. 변수는 gf-play album.js 의 --gfc-* 와 같은 이름을 쓰고, 없으면 기본값.
+   크기: 카드 너비를 --w 하나로 정한다(예: style="--w:160px"). 안쪽 치수는 전부 em(= --w / 20).
+   성능: 움직임은 transform/opacity/background-position 만. blur·filter 없음. SSS 는 회전 판 하나(compositor) + 빛줄기 하나. */
+.gfc2{--w:160px;--bg:var(--gfc-bg,#FFF6E0);--ink:#4A3426;--line:#6b5443;
+  position:relative;display:block;width:var(--w);aspect-ratio:3/4;font-size:calc(var(--w) / 20);
+  font-family:'Jua','Gasoek One',system-ui,sans-serif;color:var(--ink);
+  filter:none;-webkit-tap-highlight-color:transparent;user-select:none}
+.gfc2 *,.gfc2 *::before,.gfc2 *::after{box-sizing:border-box}
+.gfc2-frame{position:absolute;inset:0;border-radius:1.5em;overflow:hidden;
+  box-shadow:0 .15em .5em rgba(80,50,20,.28),0 0 0 .13em var(--line);background:var(--mat)}
+/* 안쪽 크림 판 */
+.gfc2-in{position:absolute;inset:.95em;border-radius:.9em;background:var(--bg);overflow:hidden;
+  box-shadow:inset 0 0 0 .12em rgba(107,84,67,.55),inset 0 .2em .5em rgba(120,80,30,.12)}
+.gfc2-art{position:absolute;left:0;right:0;top:0;bottom:3.4em;display:flex;align-items:center;justify-content:center}
+.gfc2-art>img,.gfc2-art>svg{width:92%;height:92%;object-fit:contain;display:block}
+.gfc2-name{position:absolute;left:.7em;right:.7em;bottom:.6em;height:2.5em;border-radius:1.25em;background:var(--plate);
+  display:flex;align-items:center;justify-content:center;font-size:1.25em;line-height:1;white-space:nowrap;overflow:hidden;
+  color:#fff;text-shadow:0 .06em 0 rgba(60,35,15,.55);box-shadow:inset 0 0 0 .1em rgba(60,35,15,.45)}
+.gfc2-name b{font-weight:400;font-size:.8em}
+/* 등급 배지(왼쪽 위 동그라미) */
+.gfc2-rank{position:absolute;left:.1em;top:.1em;width:3.2em;height:3.2em;border-radius:50%;z-index:3;
+  display:flex;align-items:center;justify-content:center;font-size:1.25em;color:#fff;
+  background:var(--gem);box-shadow:0 .08em .25em rgba(60,35,15,.4),0 0 0 .1em var(--line),inset 0 .12em .2em rgba(255,255,255,.55);
+  text-shadow:0 .06em 0 rgba(60,35,15,.6);letter-spacing:-.04em}
+.g-SS .gfc2-rank,.g-SSS .gfc2-rank{font-size:1.05em}
+/* 모서리 장식 4개 */
+.gfc2 .cn{position:absolute;width:1.3em;height:1.3em;z-index:2}
+.gfc2 .cn.a{right:.3em;top:.3em}.gfc2 .cn.b{left:.3em;bottom:.3em}.gfc2 .cn.c{right:.3em;bottom:.3em}.gfc2 .cn.d{left:.3em;top:.3em}
+.gfc2 .cn{border-radius:50%;background:var(--cn)}
+/* 윗변 중앙 장식 */
+.gfc2 .tp{position:absolute;left:50%;top:-.2em;transform:translateX(-50%);width:6em;height:2.2em;z-index:3;display:block}
+.gfc2 .tp svg{width:100%;height:100%;display:block;overflow:visible}
+/* 재질 */
+.g-B{--mat:repeating-linear-gradient(90deg,rgba(90,52,24,.0) 0 .5em,rgba(90,52,24,.22) .5em .58em,rgba(255,220,170,.0) .58em 1.3em),
+   linear-gradient(180deg,#C99263,#A97649 55%,#BC875A);
+  --gem:linear-gradient(160deg,#C99263,#8A5A33);--plate:linear-gradient(180deg,#B88257,#946339);
+  --cn:radial-gradient(circle at 35% 30%,#E8C9A4 0 18%,#6e4624 55%,#4f3017 100%)}
+.g-A{--mat:linear-gradient(135deg,#F3AE76 0%,#C8743C 35%,#EFA770 52%,#B5642F 75%,#E59B62 100%);
+  --gem:linear-gradient(160deg,#F0A66B,#B35C28);--plate:linear-gradient(180deg,#D88650,#B4642F);
+  --cn:radial-gradient(circle at 35% 30%,#FFE2C4 0 16%,#D98B52 45%,#8F4A1F 100%)}
+.g-S{--mat:linear-gradient(135deg,#FAFCFF 0%,#AEB9CC 32%,#EDF1F7 50%,#8F9BB3 74%,#DCE3EE 100%);
+  --gem:linear-gradient(160deg,#C8D2E4,#7C89A6);--plate:linear-gradient(180deg,#8E9BB7,#6F7C99);
+  --cn:#fff}
+.g-S .cn{background:linear-gradient(135deg,#fff,#9AA7C0);clip-path:polygon(50% 0,62% 36%,100% 38%,70% 60%,80% 100%,50% 76%,20% 100%,30% 60%,0 38%,38% 36%)}
+.g-SS{--mat:linear-gradient(135deg,#FFEFA8 0%,#F2B91E 28%,#FFF3B8 48%,#D99A0B 72%,#FFD95A 100%);
+  --gem:linear-gradient(160deg,#FFE27A,#D4930A);--plate:linear-gradient(180deg,#E8A819,#BE7F08);
+  --cn:radial-gradient(circle at 35% 30%,#fff 0 14%,#FFD95A 40%,#C98A05 100%)}
+.g-SS .cn{background:linear-gradient(135deg,#FFF6C8,#E7A711);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.g-SSS{--mat:#ffd;--gem:conic-gradient(from 20deg,#ff6b8a,#ffb347,#fff176,#69e0a0,#5bc8ff,#a98bff,#ff6b8a);--plate:linear-gradient(90deg,#ff7aa0,#ffb347,#8fe39a,#6fc9ff,#b695ff);
+  --cn:radial-gradient(circle at 35% 30%,#fff 0 20%,#ffd1f0 50%,#9fd8ff 100%)}
+/* SSS 무지개 판: 큰 원뿔 그래디언트를 천천히 돌린다(transform 만) */
+.g-SSS .gfc2-frame::before{content:"";position:absolute;left:-50%;top:-50%;width:200%;height:200%;
+  background:conic-gradient(#ff6b8a,#ffb347,#fff176,#69e0a0,#5bc8ff,#a98bff,#ff6b8a);
+  animation:gfc2spin 7s linear infinite;will-change:transform}
+/* 빛줄기(홀로그램): 기울기 변수 --tx(-1~1)가 있으면 그 위치, 없으면 시간으로 흐름 */
+.g-SSS .gfc2-frame::after,.g-SSS .gfc2-in::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.0) 42%,rgba(255,255,255,.78) 50%,rgba(255,255,255,0) 58%,transparent 62%);
+  background-size:260% 100%;background-position:calc(50% + var(--tx,0) * 50%) 0;
+  animation:gfc2sheen 3.2s ease-in-out infinite;mix-blend-mode:soft-light}
+.g-SSS .gfc2-in::after{mix-blend-mode:soft-light;opacity:.55}
+.gfc2.tilt .gfc2-frame::after,.gfc2.tilt .gfc2-in::after{animation:none}
+.g-SSS .gfc2-in{box-shadow:inset 0 0 0 .12em rgba(107,84,67,.55),inset 0 .2em .5em rgba(120,80,30,.12),0 0 0 .08em #fff}
+/* SS 금: 반짝이 3개(opacity/transform) */
+.gfc2 .sp{position:absolute;width:1.5em;height:1.5em;z-index:4;pointer-events:none;
+  background:#fff;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);opacity:0;animation:gfc2tw 2.4s ease-in-out infinite}
+.gfc2 .sp.s1{left:12%;top:38%}.gfc2 .sp.s2{right:10%;top:58%;animation-delay:.8s;width:1.1em;height:1.1em}.gfc2 .sp.s3{left:48%;bottom:18%;animation-delay:1.5s;width:.9em;height:.9em}
+.g-B .sp,.g-A .sp,.g-S .sp{display:none}
+@keyframes gfc2spin{to{transform:rotate(360deg)}}
+@keyframes gfc2sheen{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+@keyframes gfc2tw{0%,100%{opacity:0;transform:scale(.4) rotate(0)}45%{opacity:1;transform:scale(1) rotate(25deg)}70%{opacity:0;transform:scale(.5) rotate(40deg)}}
+@media (prefers-reduced-motion:reduce){.gfc2 *,.gfc2 *::before,.gfc2 *::after{animation:none!important}}
+
+/* ── 유아판: 더 두껍고 둥글고 단순. 글자 대신 별 개수. 장식·배지 최소 ── */
+.gfc2.kids{font-family:'Jua',system-ui,sans-serif}
+.kids .gfc2-frame{border-radius:2.4em;box-shadow:0 .2em .6em rgba(80,50,20,.25),0 0 0 .15em var(--line)}
+.kids .gfc2-in{inset:1.5em;border-radius:1.5em}
+.kids .gfc2-art{bottom:3.2em}
+.kids .cn,.kids .tp,.kids .gfc2-rank{display:none}
+.kids .gfc2-name{display:none}
+.kids .stars{position:absolute;left:0;right:0;bottom:.35em;display:flex;justify-content:center;gap:.1em;height:2.8em;align-items:center}
+.kids .stars svg{width:2.1em;height:2.1em;overflow:visible}
+.kids.g-B{--mat:linear-gradient(180deg,#D9A36F,#BC875A)}
+.kids.g-A{--mat:linear-gradient(180deg,#F4B07C,#DB8650)}
+.kids.g-S{--mat:linear-gradient(180deg,#E7EDF7,#B5C0D6)}
+.kids.g-SS{--mat:linear-gradient(180deg,#FFE784,#F2B91E)}
+.kids.g-SSS .gfc2-frame::before{animation-duration:12s}
+.kids .sp{display:none}.kids.g-SS .sp.s1,.kids.g-SSS .sp.s1{display:block}
+.kids .gfc2-in{box-shadow:inset 0 0 0 .14em rgba(107,84,67,.5)}
+/* 유아판 별 개수: 이름 대신 별 줄(등급=1~5) */
+.kids .stars i{display:block;width:2.1em;height:2.1em;background:#F6C21B;clip-path:polygon(50% 4%,62% 36%,97% 38%,70% 60%,80% 96%,50% 76%,20% 96%,30% 60%,3% 38%,38% 36%)}
+.kids .stars i.off{background:#E3D6C0}

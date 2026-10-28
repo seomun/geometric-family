@@ -1,0 +1,447 @@
+{
+ "bgm": {
+  "exp_battle": {
+   "sec": 29.1,
+   "lufs": -20.0,
+   "peak": -6.5,
+   "kb": 231
+  },
+  "exp_boss": {
+   "sec": 31.0,
+   "lufs": -20.0,
+   "peak": -6.6,
+   "kb": 242
+  },
+  "exp_boss2": {
+   "sec": 27.8,
+   "lufs": -20.0,
+   "peak": -6.2,
+   "kb": 221
+  },
+  "exp_win": {
+   "sec": 30.0,
+   "lufs": -20.0,
+   "peak": -6.1,
+   "kb": 236
+  },
+  "exp_lose": {
+   "sec": 53.3,
+   "lufs": -20.0,
+   "peak": -6.6,
+   "kb": 437
+  },
+  "exp_home": {
+   "sec": 38.4,
+   "lufs": -20.0,
+   "peak": -5.6,
+   "kb": 291
+  },
+  "exp_map": {
+   "sec": 35.6,
+   "lufs": -20.0,
+   "peak": -3.4,
+   "kb": 275
+  },
+  "exp_shop": {
+   "sec": 34.3,
+   "lufs": -20.0,
+   "peak": -6.2,
+   "kb": 256
+  },
+  "exp_f_village": {
+   "sec": 36.9,
+   "lufs": -20.0,
+   "peak": -6.7,
+   "kb": 285
+  },
+  "exp_f_night": {
+   "sec": 48.0,
+   "lufs": -20.0,
+   "peak": -6.5,
+   "kb": 382
+  },
+  "exp_f_forest": {
+   "sec": 34.3,
+   "lufs": -20.0,
+   "peak": -6.7,
+   "kb": 256
+  },
+  "exp_f_water": {
+   "sec": 41.7,
+   "lufs": -20.0,
+   "peak": -6.7,
+   "kb": 317
+  },
+  "exp_f_castle": {
+   "sec": 35.6,
+   "lufs": -20.0,
+   "peak": -6.5,
+   "kb": 277
+  },
+  "exp_warp": {
+   "sec": 45.0,
+   "lufs": -20.0,
+   "peak": -3.6,
+   "kb": 350
+  },
+  "exp_bead_home": {
+   "sec": 38.4,
+   "lufs": -20.0,
+   "peak": -5.7,
+   "kb": 291
+  },
+  "exp_bead_play": {
+   "sec": 33.1,
+   "lufs": -20.0,
+   "peak": -3.9,
+   "kb": 258
+  }
+ },
+ "sfx": {
+  "xs_grab_0.mp3": {
+   "sec": 0.59,
+   "lufs": -18.0,
+   "peak": -3.3
+  },
+  "xs_grab_1.mp3": {
+   "sec": 0.56,
+   "lufs": -18.0,
+   "peak": -2.9
+  },
+  "xs_tick_0.mp3": {
+   "sec": 0.52,
+   "lufs": -21.0,
+   "peak": -4.0
+  },
+  "xs_tick_1.mp3": {
+   "sec": 0.52,
+   "lufs": -21.0,
+   "peak": -4.2
+  },
+  "xs_release_0.mp3": {
+   "sec": 0.7,
+   "lufs": -18.0,
+   "peak": -2.0
+  },
+  "xs_release_1.mp3": {
+   "sec": 0.7,
+   "lufs": -18.0,
+   "peak": -2.5
+  },
+  "xs_nomatch.mp3": {
+   "sec": 0.7,
+   "lufs": -21.0,
+   "peak": -10.2
+  },
+  "xs_pop1_0.mp3": {
+   "sec": 0.66,
+   "lufs": -16.0,
+   "peak": -3.8
+  },
+  "xs_pop1_1.mp3": {
+   "sec": 0.68,
+   "lufs": -16.0,
+   "peak": -2.0
+  },
+  "xs_pop2_0.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -3.5
+  },
+  "xs_pop2_1.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -2.6
+  },
+  "xs_pop3_0.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.7
+  },
+  "xs_pop3_1.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.2
+  },
+  "xs_combo.mp3": {
+   "sec": 0.7,
+   "lufs": -17.0,
+   "peak": -6.0
+  },
+  "xs_fanfare.mp3": {
+   "sec": 1.56,
+   "lufs": -13.0,
+   "peak": -2.7
+  },
+  "xs_atk_support_0.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.6
+  },
+  "xs_atk_support_1.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.6
+  },
+  "xs_atk_flash_0.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.7
+  },
+  "xs_atk_flash_1.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.5
+  },
+  "xs_atk_care_0.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -3.2
+  },
+  "xs_atk_care_1.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -3.2
+  },
+  "xs_hit_0.mp3": {
+   "sec": 0.65,
+   "lufs": -15.0,
+   "peak": -3.4
+  },
+  "xs_hit_1.mp3": {
+   "sec": 0.65,
+   "lufs": -15.0,
+   "peak": -3.5
+  },
+  "xs_hit_big_0.mp3": {
+   "sec": 0.9,
+   "lufs": -13.0,
+   "peak": -2.9
+  },
+  "xs_hit_big_1.mp3": {
+   "sec": 0.9,
+   "lufs": -13.0,
+   "peak": -2.9
+  },
+  "xs_hit_adv_0.mp3": {
+   "sec": 0.7,
+   "lufs": -13.0,
+   "peak": -2.0
+  },
+  "xs_hit_adv_1.mp3": {
+   "sec": 0.7,
+   "lufs": -13.0,
+   "peak": -2.1
+  },
+  "xs_hit_weak_0.mp3": {
+   "sec": 0.7,
+   "lufs": -19.0,
+   "peak": -5.9
+  },
+  "xs_hit_weak_1.mp3": {
+   "sec": 0.7,
+   "lufs": -19.0,
+   "peak": -5.7
+  },
+  "xs_hurt_0.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -2.7
+  },
+  "xs_hurt_1.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -2.3
+  },
+  "xs_down_0.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -4.9
+  },
+  "xs_down_1.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -4.4
+  },
+  "xs_shatter_0.mp3": {
+   "sec": 1.2,
+   "lufs": -12.0,
+   "peak": -2.8
+  },
+  "xs_shatter_1.mp3": {
+   "sec": 1.2,
+   "lufs": -12.0,
+   "peak": -2.2
+  },
+  "xs_boss.mp3": {
+   "sec": 2.2,
+   "lufs": -12.0,
+   "peak": -2.8
+  },
+  "xs_boss_hp.mp3": {
+   "sec": 0.8,
+   "lufs": -14.0,
+   "peak": -2.9
+  },
+  "xs_win.mp3": {
+   "sec": 2.14,
+   "lufs": -13.0,
+   "peak": -3.1
+  },
+  "xs_lose.mp3": {
+   "sec": 2.1,
+   "lufs": -15.0,
+   "peak": -3.7
+  },
+  "xs_ui_0.mp3": {
+   "sec": 0.62,
+   "lufs": -19.0,
+   "peak": -4.3
+  },
+  "xs_ui_1.mp3": {
+   "sec": 0.62,
+   "lufs": -19.0,
+   "peak": -3.5
+  },
+  "xs_ui_back.mp3": {
+   "sec": 0.7,
+   "lufs": -19.0,
+   "peak": -5.9
+  },
+  "xs_ui_open.mp3": {
+   "sec": 0.7,
+   "lufs": -18.0,
+   "peak": -6.1
+  },
+  "xs_ui_good.mp3": {
+   "sec": 0.7,
+   "lufs": -16.0,
+   "peak": -2.8
+  },
+  "xs_gacha_tense.mp3": {
+   "sec": 2.4,
+   "lufs": -15.0,
+   "peak": -2.7
+  },
+  "xs_gacha_flip3.mp3": {
+   "sec": 0.7,
+   "lufs": -17.0,
+   "peak": -2.3
+  },
+  "xs_gacha_flip4.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.2
+  },
+  "xs_gacha_flip5.mp3": {
+   "sec": 1.2,
+   "lufs": -12.0,
+   "peak": -3.5
+  },
+  "xs_charge.mp3": {
+   "sec": 1.0,
+   "lufs": -15.0,
+   "peak": -3.6
+  },
+  "xs_cut.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -3.5
+  },
+  "xs_crack.mp3": {
+   "sec": 0.62,
+   "lufs": -15.0,
+   "peak": -2.3
+  },
+  "xs_tidy.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -4.8
+  },
+  "xs_clang_0.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.2
+  },
+  "xs_clang_1.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.3
+  },
+  "xs_blob5_0.mp3": {
+   "sec": 1.0,
+   "lufs": -14.0,
+   "peak": -2.0
+  },
+  "xs_blob5_1.mp3": {
+   "sec": 1.0,
+   "lufs": -14.0,
+   "peak": -2.9
+  },
+  "xs_blob7.mp3": {
+   "sec": 1.4,
+   "lufs": -14.0,
+   "peak": -2.9
+  },
+  "xs_row.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.0
+  },
+  "xs_fusion.mp3": {
+   "sec": 1.2,
+   "lufs": -12.0,
+   "peak": -2.8
+  },
+  "xs_stun.mp3": {
+   "sec": 1.2,
+   "lufs": -14.0,
+   "peak": -2.3
+  },
+  "xs_double.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.1
+  },
+  "xs_chain_1.mp3": {
+   "sec": 0.7,
+   "lufs": -15.0,
+   "peak": -3.3
+  },
+  "xs_chain_2.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -2.1
+  },
+  "xs_chain_3.mp3": {
+   "sec": 0.7,
+   "lufs": -14.0,
+   "peak": -3.2
+  },
+  "xs_chain_4.mp3": {
+   "sec": 0.7,
+   "lufs": -13.0,
+   "peak": -2.9
+  },
+  "xs_chain_5.mp3": {
+   "sec": 0.7,
+   "lufs": -13.0,
+   "peak": -2.6
+  },
+  "xs_chain_6.mp3": {
+   "sec": 0.7,
+   "lufs": -12.0,
+   "peak": -2.0
+  },
+  "xs_chain_7.mp3": {
+   "sec": 0.7,
+   "lufs": -12.0,
+   "peak": -2.4
+  },
+  "xs_chain_8.mp3": {
+   "sec": 0.7,
+   "lufs": -12.0,
+   "peak": -2.8
+  }
+ }
+}

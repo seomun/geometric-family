@@ -1,0 +1,27 @@
+{
+ "sfx/burp": {
+  "sec": 1.03,
+  "mmax": -15.2,
+  "peak": -5.0
+ },
+ "sfx/cloud_bounce": {
+  "sec": 1.08,
+  "mmax": -17.0,
+  "peak": -7.0
+ },
+ "bgm/jack_theme": {
+  "sec": 33.1,
+  "lufs": -20.0,
+  "peak": -8.0
+ },
+ "bgm/giant_theme": {
+  "sec": 45.7,
+  "lufs": -20.0,
+  "peak": -7.3
+ },
+ "bgm/cloud_castle": {
+  "sec": 53.3,
+  "lufs": -20.0,
+  "peak": -9.1
+ }
+}

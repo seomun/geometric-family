@@ -246,12 +246,69 @@ a.store { border-style: solid; opacity: 1; }
   .nums { grid-template-columns: repeat(4, 1fr); }
   .doc { max-width: 760px; margin: 0 auto; }
 }
+
+/* 이렇게 쓰이고 있어요 */
+.cases { display: grid; gap: 16px; }
+.case { background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; padding: 14px 14px 16px; box-shadow: 4px 5px 0 var(--ink); }
+.case .kind { display: inline-block; padding: 3px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; }
+.case h3 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 6px 0 8px; line-height: 1.15; }
+.case p { margin: 10px 0 8px; font-size: 14px; line-height: 1.6; word-break: keep-all; }
+.case .lnk { display: inline-block; margin-right: 12px; font-size: 14px; font-weight: 700; color: #3b5bb5; }
+.cm { display: flex; gap: 8px; justify-content: center; align-items: flex-start; }
+.cm.vid .yt { max-width: 170px; }
+.cm.shots img { width: calc(50% - 4px); border: 2px solid var(--ink); border-radius: 12px; }
+.cm.cuts { overflow: hidden; gap: 6px; }
+.cm.cuts img { width: calc(33.3% - 4px); aspect-ratio: 1 / 1; border: 2px solid var(--ink); border-radius: 8px; object-fit: cover; }
+/* /games/ */
+.games h2 small, .games h3 small { font-family: 'Gowun Dodum', sans-serif; font-size: 13px; color: var(--muted); font-weight: 400; }
+.games .kind { display: inline-block; padding: 3px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; }
+.flag { background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; border: 2.5px solid var(--navy); border-radius: 24px; padding: 16px 16px 18px; box-shadow: 4px 6px 0 var(--navy); margin: 18px 0 8px; }
+.flag .kind { background: #fff; color: var(--navy); }
+.flag h2 { border: 0; margin: 0; padding: 0; font-size: 30px; } .flag h3 { color: #fff; font-size: 18px; margin: 20px 0 8px; }
+.flag .meta { color: #e8e2ff; margin: 2px 0 0; font-size: 13.5px; line-height: 1.5; }
+.flag a { color: #fff; } .flag .note { color: #d9d3f5; }
+.flaghead { display: flex; gap: 12px; align-items: center; margin: 10px 0 12px; } .flaghead .fi { border-radius: 16px; border: 2px solid #fff; }
+.flag .appwide { width: 100%; height: auto; border-radius: 14px; border: 2px solid #fff; }
+.spec { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 0; }
+.spec div { background: rgba(255,255,255,.14); border-radius: 12px; padding: 8px 10px; }
+.spec dt { font-size: 12px; color: #d9d3f5; } .spec dd { margin: 2px 0 0; font-size: 14px; font-weight: 700; line-height: 1.4; word-break: keep-all; }
+.loop, .money { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.loop li, .money li { display: flex; flex-direction: column; gap: 2px; background: rgba(255,255,255,.14); border-radius: 12px; padding: 9px 12px; font-size: 14px; line-height: 1.5; word-break: keep-all; }
+.flag .loop li { list-style: none; } .loop b, .money b { font-size: 15px; }
+.grades { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 8px; }
+.grades li { display: flex; flex-direction: column; align-items: center; min-width: 58px; padding: 8px 10px; border-radius: 12px; border: 2px solid #fff; background: rgba(255,255,255,.12); font-size: 12px; }
+.grades b { font-family: Gaegu, sans-serif; font-size: 24px; line-height: 1; }
+.grades .g-s { background: #6C7BD9; } .grades .g-ss { background: #E8870F; } .grades .g-sss { background: linear-gradient(135deg, #FFD84B, #FF8FA8); color: #2b211b; }
+.shotrow { display: grid; grid-auto-flow: column; grid-auto-columns: 46%; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
+.shotrow img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #fff; scroll-snap-align: start; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.actions .btn.light { color: var(--ink); }
+.lineup { display: grid; gap: 14px; margin: 10px 0 18px; }
+.lu { background: #fff; border: 2.5px solid var(--ink); border-radius: 20px; padding: 10px 12px 14px; box-shadow: 3px 4px 0 var(--ink); }
+.lu.kid { background: #fff7d9; }
+.lu img { width: 100%; height: auto; aspect-ratio: 1024 / 500; object-fit: cover; border-radius: 12px; border: 2px solid var(--ink); }
+.lu h3 { font-family: Gaegu, sans-serif; font-size: 24px; margin: 8px 0 2px; } .lu .one { margin: 0 0 8px; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+.lu dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; margin: 0 0 10px; font-size: 13px; line-height: 1.5; }
+.lu dt { color: var(--muted); } .lu dd { margin: 0; word-break: keep-all; }
+.lu .act { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0; }
+.btn.sm { min-height: 38px; padding: 0 16px; font-size: 15px; border-radius: 20px; color: #fff !important; text-decoration: none; }
+.kinds { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+@media (min-width: 700px) {
+  .cases { grid-template-columns: repeat(3, 1fr); }
+  .lineup { grid-template-columns: repeat(2, 1fr); }
+  .loop { grid-template-columns: repeat(2, 1fr); } .money { grid-template-columns: repeat(2, 1fr); }
+  .shotrow { grid-auto-columns: 22%; }
+}
+.doc a.btn { color: #fff; text-decoration: none; } .doc a.btn.light { color: var(--ink); } .doc a.btn.yel { color: #2b211b; }
+.doc .loop, .doc .money, .doc .grades { padding: 0; margin: 0; } .doc .grades { margin-bottom: 8px; }
+.flag h3 small { color: #d9d3f5; }
+.doc .lu a:not(.btn) { font-size: 13.5px; }
 </style>
 </head>
 <body>
 <div class="gf-wrap hm">
-<nav class="gf-nav" aria-label="기하학 가족"><a class="brand" href="/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>기하학 가족</span></a><a class="tab" href="/#world">세계관</a><a class="tab" href="/#stories">이야기</a><a class="tab" href="/#license">라이선싱</a><a class="tab" href="/#together">함께해요</a><a class="tab ghost" href="/en/">EN</a></nav>
-<main class="doc"><h1>개인정보처리방침</h1><p class="meta">시행일 2026-10-27 · 운영 기하학 가족 (개인 창작자 · 작가 1인 운영)</p><ul class="toc"><li><a href="#scope">적용 대상</a></li><li><a href="#collect">처리하는 개인정보 항목·목적·보유 기간</a></li><li><a href="#kids">어린이와 청소년</a></li><li><a href="#third">제3자 제공·처리 위탁·국외 이전</a></li><li><a href="#perm">앱 권한</a></li><li><a href="#rights">이용자의 권리와 행사 방법</a></li><li><a href="#destroy">파기 절차와 방법</a></li><li><a href="#safety">안전성 확보 조치</a></li><li><a href="#uploader">업로드 도구 「기하학가족 업로더」</a></li><li><a href="#cookie">자동 수집 장치</a></li><li><a href="#contact">개인정보 보호책임자와 문의</a></li><li><a href="#change">방침 변경</a></li></ul>
+<nav class="gf-nav" aria-label="기하학 가족"><a class="brand" href="/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>기하학 가족</span></a><a class="tab" href="/#world">세계관</a><a class="tab" href="/#stories">이야기</a><a class="tab" href="/games/">게임</a><a class="tab" href="/#license">라이선싱</a><a class="tab" href="/#together">함께해요</a><a class="tab ghost" href="/en/">EN</a></nav>
+<main class="doc"><h1>개인정보처리방침</h1><p class="meta">시행일 2026-10-27 · 운영 기하학가족 (대표 서문성수)</p><ul class="toc"><li><a href="#scope">적용 대상</a></li><li><a href="#collect">처리하는 개인정보 항목·목적·보유 기간</a></li><li><a href="#kids">어린이와 청소년</a></li><li><a href="#third">제3자 제공·처리 위탁·국외 이전</a></li><li><a href="#perm">앱 권한</a></li><li><a href="#rights">이용자의 권리와 행사 방법</a></li><li><a href="#destroy">파기 절차와 방법</a></li><li><a href="#safety">안전성 확보 조치</a></li><li><a href="#uploader">업로드 도구 「기하학가족 업로더」</a></li><li><a href="#cookie">자동 수집 장치</a></li><li><a href="#contact">개인정보 보호책임자와 문의</a></li><li><a href="#change">방침 변경</a></li></ul>
 <p class="lead">「기하학 가족」(이하 「운영자」)은 웹툰·영상·게임 앱·웹사이트를 운영하면서 이용자의 개인정보를 「개인정보 보호법」 등 관련 법령에 따라 처리합니다. 이 방침은 아래 <a href="#scope">적용 대상</a> 모두에 적용됩니다.</p>
 
 <div class="sum">
@@ -384,9 +441,9 @@ a.store { border-style: solid; opacity: 1; }
 
 <h2 id="contact">11. 개인정보 보호책임자와 문의</h2>
 <table>
-  <tr><th>운영자</th><td>기하학 가족 (개인 창작자 · 작가 1인 운영)</td></tr>
-  <tr><th>개인정보 보호책임자</th><td>운영자 본인 (작가)</td></tr>
-  <tr><th>사업자 정보</th><td>사업자등록 후 기재 (상호 · 대표자 · 사업자등록번호 · 통신판매업 신고번호)</td></tr>
+  <tr><th>운영자</th><td>기하학가족 (대표 서문성수)</td></tr>
+  <tr><th>개인정보 보호책임자</th><td>서문성수 (대표)</td></tr>
+  <tr><th>사업자 정보</th><td>상호 기하학가족 · 대표 서문성수 · 사업자등록번호 220-32-01943</td></tr>
   <tr><th>문의</th><td><a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a></td></tr>
 </table>
 <p>개인정보 침해에 대한 상담은 아래 기관에도 할 수 있습니다: 개인정보침해신고센터(privacy.kisa.or.kr, 국번 없이 118) · 개인정보분쟁조정위원회(www.kopico.go.kr, 1833-6972) · 대검찰청(www.spo.go.kr, 1301) · 경찰청(ecrm.police.go.kr, 182).</p>
@@ -395,7 +452,7 @@ a.store { border-style: solid; opacity: 1; }
 <p>이 방침은 2026-10-27부터 적용됩니다. 내용이 바뀌면 시행 7일 전(이용자 권리에 중요한 변경은 30일 전)에 이 페이지와 앱 업데이트 안내로 알립니다.</p>
 
 </main>
-<footer class="foot"><nav><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a><a href="/apps/">앱 소개</a><a href="/delete/">계정 삭제</a><a href="/en/">English</a></nav>© 2026 기하학 가족 · 운영 기하학 가족 (개인 창작자 · 작가 1인 운영)<br>사업자 정보: 사업자등록 후 기재 (상호 · 대표자 · 사업자등록번호 · 통신판매업 신고번호)<br>문의 <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a> · 이야기와 인물은 모두 허구입니다.</footer>
+<footer class="foot"><nav><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a><a href="/games/">게임</a><a href="/apps/">앱 소개</a><a href="/contact/">문의</a><a href="/delete/">계정 삭제</a><a href="/en/">English</a></nav>© 2026 기하학 가족<br>상호 기하학가족 · 대표 서문성수 · 사업자등록번호 220-32-01943<br>문의 <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a> · 이야기와 인물은 모두 허구입니다.</footer>
 </div>
 </body>
 </html>

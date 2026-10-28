@@ -246,12 +246,69 @@ a.store { border-style: solid; opacity: 1; }
   .nums { grid-template-columns: repeat(4, 1fr); }
   .doc { max-width: 760px; margin: 0 auto; }
 }
+
+/* 이렇게 쓰이고 있어요 */
+.cases { display: grid; gap: 16px; }
+.case { background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; padding: 14px 14px 16px; box-shadow: 4px 5px 0 var(--ink); }
+.case .kind { display: inline-block; padding: 3px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; }
+.case h3 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 6px 0 8px; line-height: 1.15; }
+.case p { margin: 10px 0 8px; font-size: 14px; line-height: 1.6; word-break: keep-all; }
+.case .lnk { display: inline-block; margin-right: 12px; font-size: 14px; font-weight: 700; color: #3b5bb5; }
+.cm { display: flex; gap: 8px; justify-content: center; align-items: flex-start; }
+.cm.vid .yt { max-width: 170px; }
+.cm.shots img { width: calc(50% - 4px); border: 2px solid var(--ink); border-radius: 12px; }
+.cm.cuts { overflow: hidden; gap: 6px; }
+.cm.cuts img { width: calc(33.3% - 4px); aspect-ratio: 1 / 1; border: 2px solid var(--ink); border-radius: 8px; object-fit: cover; }
+/* /games/ */
+.games h2 small, .games h3 small { font-family: 'Gowun Dodum', sans-serif; font-size: 13px; color: var(--muted); font-weight: 400; }
+.games .kind { display: inline-block; padding: 3px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; }
+.flag { background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; border: 2.5px solid var(--navy); border-radius: 24px; padding: 16px 16px 18px; box-shadow: 4px 6px 0 var(--navy); margin: 18px 0 8px; }
+.flag .kind { background: #fff; color: var(--navy); }
+.flag h2 { border: 0; margin: 0; padding: 0; font-size: 30px; } .flag h3 { color: #fff; font-size: 18px; margin: 20px 0 8px; }
+.flag .meta { color: #e8e2ff; margin: 2px 0 0; font-size: 13.5px; line-height: 1.5; }
+.flag a { color: #fff; } .flag .note { color: #d9d3f5; }
+.flaghead { display: flex; gap: 12px; align-items: center; margin: 10px 0 12px; } .flaghead .fi { border-radius: 16px; border: 2px solid #fff; }
+.flag .appwide { width: 100%; height: auto; border-radius: 14px; border: 2px solid #fff; }
+.spec { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 0; }
+.spec div { background: rgba(255,255,255,.14); border-radius: 12px; padding: 8px 10px; }
+.spec dt { font-size: 12px; color: #d9d3f5; } .spec dd { margin: 2px 0 0; font-size: 14px; font-weight: 700; line-height: 1.4; word-break: keep-all; }
+.loop, .money { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.loop li, .money li { display: flex; flex-direction: column; gap: 2px; background: rgba(255,255,255,.14); border-radius: 12px; padding: 9px 12px; font-size: 14px; line-height: 1.5; word-break: keep-all; }
+.flag .loop li { list-style: none; } .loop b, .money b { font-size: 15px; }
+.grades { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 8px; }
+.grades li { display: flex; flex-direction: column; align-items: center; min-width: 58px; padding: 8px 10px; border-radius: 12px; border: 2px solid #fff; background: rgba(255,255,255,.12); font-size: 12px; }
+.grades b { font-family: Gaegu, sans-serif; font-size: 24px; line-height: 1; }
+.grades .g-s { background: #6C7BD9; } .grades .g-ss { background: #E8870F; } .grades .g-sss { background: linear-gradient(135deg, #FFD84B, #FF8FA8); color: #2b211b; }
+.shotrow { display: grid; grid-auto-flow: column; grid-auto-columns: 46%; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
+.shotrow img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #fff; scroll-snap-align: start; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.actions .btn.light { color: var(--ink); }
+.lineup { display: grid; gap: 14px; margin: 10px 0 18px; }
+.lu { background: #fff; border: 2.5px solid var(--ink); border-radius: 20px; padding: 10px 12px 14px; box-shadow: 3px 4px 0 var(--ink); }
+.lu.kid { background: #fff7d9; }
+.lu img { width: 100%; height: auto; aspect-ratio: 1024 / 500; object-fit: cover; border-radius: 12px; border: 2px solid var(--ink); }
+.lu h3 { font-family: Gaegu, sans-serif; font-size: 24px; margin: 8px 0 2px; } .lu .one { margin: 0 0 8px; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+.lu dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; margin: 0 0 10px; font-size: 13px; line-height: 1.5; }
+.lu dt { color: var(--muted); } .lu dd { margin: 0; word-break: keep-all; }
+.lu .act { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0; }
+.btn.sm { min-height: 38px; padding: 0 16px; font-size: 15px; border-radius: 20px; color: #fff !important; text-decoration: none; }
+.kinds { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+@media (min-width: 700px) {
+  .cases { grid-template-columns: repeat(3, 1fr); }
+  .lineup { grid-template-columns: repeat(2, 1fr); }
+  .loop { grid-template-columns: repeat(2, 1fr); } .money { grid-template-columns: repeat(2, 1fr); }
+  .shotrow { grid-auto-columns: 22%; }
+}
+.doc a.btn { color: #fff; text-decoration: none; } .doc a.btn.light { color: var(--ink); } .doc a.btn.yel { color: #2b211b; }
+.doc .loop, .doc .money, .doc .grades { padding: 0; margin: 0; } .doc .grades { margin-bottom: 8px; }
+.flag h3 small { color: #d9d3f5; }
+.doc .lu a:not(.btn) { font-size: 13.5px; }
 </style>
 </head>
 <body>
 <div class="gf-wrap hm">
 <nav class="gf-nav" aria-label="기하학 가족"><a class="brand" href="/en/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>Geometric Family</span></a><a class="tab" href="/en/#world">World</a><a class="tab" href="/en/#stories">Stories</a><a class="tab" href="/en/#license">Licensing</a><a class="tab" href="/en/#together">Contact</a><a class="tab ghost" href="/">한국어</a></nav>
-<main class="doc"><h1>Privacy Policy</h1><p class="meta">Effective 2026-10-27 · Geometric Family (independent creator)</p><ul class="toc"><li><a href="#scope">Scope</a></li><li><a href="#collect">Information we process</a></li><li><a href="#kids">Children</a></li><li><a href="#third">Service providers and international transfer</a></li><li><a href="#rights">Your rights</a></li><li><a href="#security">Security</a></li><li><a href="#cookies">Cookies</a></li><li><a href="#uploader">Geometric Family Uploader</a></li><li><a href="#contact">Contact</a></li><li><a href="#change">Changes</a></li></ul>
+<main class="doc"><h1>Privacy Policy</h1><p class="meta">Effective 2026-10-27 · Geometric Family (Representative: Seomun Seongsu)</p><ul class="toc"><li><a href="#scope">Scope</a></li><li><a href="#collect">Information we process</a></li><li><a href="#kids">Children</a></li><li><a href="#third">Service providers and international transfer</a></li><li><a href="#rights">Your rights</a></li><li><a href="#security">Security</a></li><li><a href="#cookies">Cookies</a></li><li><a href="#uploader">Geometric Family Uploader</a></li><li><a href="#contact">Contact</a></li><li><a href="#change">Changes</a></li></ul>
 <p class="lead">Geometric Family ("we", "the operator") makes webtoons, videos, mobile games and this website. This policy explains what personal information we process for each of the <a href="#scope">services below</a>. The Korean version at <a href="https://geometricfamily.com/privacy/">https://geometricfamily.com/privacy/</a> prevails if the two differ.</p>
 
 <div class="sum">
@@ -338,8 +395,8 @@ a.store { border-style: solid; opacity: 1; }
 
 <h2 id="contact">9. Contact</h2>
 <table>
-  <tr><th>Operator</th><td>Geometric Family (independent creator)</td></tr>
-  <tr><th>Business registration</th><td>To be added after business registration</td></tr>
+  <tr><th>Operator</th><td>Geometric Family (Representative: Seomun Seongsu)</td></tr>
+  <tr><th>Business registration</th><td>Business name: Geometric Family (기하학가족) · Representative: Seomun Seongsu · Business registration no. 220-32-01943</td></tr>
   <tr><th>Contact</th><td><a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a></td></tr>
 </table>
 
@@ -347,7 +404,7 @@ a.store { border-style: solid; opacity: 1; }
 <p>Effective 2026-10-27. We will announce changes on this page and in app update notes at least 7 days in advance (30 days for material changes).</p>
 
 </main>
-<footer class="foot"><nav><a href="/en/privacy/">Privacy Policy</a><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관 (KO)</a><a href="/">한국어</a></nav>© 2026 Geometric Family (independent creator) · To be added after business registration<br>Contact: <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a><br>All stories and characters are fictional.</footer>
+<footer class="foot"><nav><a href="/en/privacy/">Privacy Policy</a><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관 (KO)</a><a href="/">한국어</a></nav>© 2026 Geometric Family<br>Business name: Geometric Family (기하학가족) · Representative: Seomun Seongsu · Business registration no. 220-32-01943<br>Contact: <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a><br>All stories and characters are fictional.</footer>
 </div>
 </body>
 </html>

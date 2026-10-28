@@ -1,0 +1,55 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>카드 v2 시안</title>
+<link rel="stylesheet" href="../v1/gfcard.css"><link rel="stylesheet" href="gfcard2.css">
+<style>
+@font-face{font-family:Jua;src:url(../../ui/fonts/Jua-Regular.ttf)}
+body{margin:0;background:#F6EBD3;font-family:Jua,sans-serif;color:#4A3426}
+section{padding:24px 28px;display:inline-block;background:#F6EBD3}
+h2{margin:0 0 16px;font-weight:400;font-size:26px}.row{display:flex;gap:26px;align-items:flex-end}
+.cap{text-align:center;font-size:17px;margin-top:8px;line-height:1.3}.cell{display:flex;flex-direction:column;align-items:center}
+.phone{width:390px;height:844px;border-radius:34px;background:#FFF3D6;box-shadow:0 0 0 6px #4A3426;position:relative;overflow:hidden}
+.phone h3{margin:0;padding:46px 0 6px;text-align:center;font-weight:400;font-size:26px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 8px;padding:10px 14px;justify-items:center}
+.bar{position:absolute;left:0;right:0;bottom:0;height:60px;background:#fff8e6;box-shadow:0 -2px 0 #e8d8b8;display:flex;justify-content:space-around;align-items:center;font-size:22px}
+.slots{display:flex;justify-content:space-around;padding:0 10px;margin-top:6px}
+.slot{width:80px;text-align:center;font-size:17px}.slot .ic{width:70px;height:70px;border-radius:22px;margin:0 auto 4px;background:#FFF8E6;box-shadow:inset 0 0 0 3px #6b5443,0 3px 0 #d9c7a3;display:flex;align-items:center;justify-content:center}
+.slot .ic svg{width:80%;height:80%}.slot .ic.on{background:#FCE9A8}
+.xp{width:250px;height:22px;border-radius:11px;background:#EADFC8;box-shadow:inset 0 0 0 3px #6b5443;margin:10px auto 2px;position:relative;overflow:hidden}.xp i{position:absolute;left:3px;top:3px;bottom:3px;width:28%;border-radius:8px;background:linear-gradient(90deg,#8fe39a,#F6C21B)}
+</style>
+<body>
+<script src="../v1/gfcard.js"></script><script src="../v1/gfcard_art.js"></script><script src="gfcard2.js"></script>
+<script>
+const P='../../costumes/',A=GFCardArt,T=GFCard2.TREASURE,H=GFCard2.hero,I=GFCard2.item;
+const E=s=>document.body.insertAdjacentHTML('beforeend',s);
+const HEROES=[
+ {g:'B',el:'grass',name:'네모 아빠',img:P+'nemo_dad/joy.png',power:820},
+ {g:'A',el:'fire',name:'세모 엄마',img:P+'wife/wink.png',power:1640},
+ {g:'S',el:'water',name:'네모 아이',img:P+'nemo_kids/kid1_happy.png',power:3150,scene:'forest'},
+ {g:'SS',el:'grass',name:'네모 엄마',img:P+'nemo_mom/good_wave_a.png',power:6200,scene:'cloud'},
+ {g:'SSS',el:'fire',name:'세모 엄마',img:P+'wife/surprise_jump.png',power:12800,scene:'newhouse'}];
+const GN=['B 보통·나무','A 귀한·구리','S 특별·은','SS 전설·금','SSS 신화·무지개'];
+E(`<section id="heroes"><h2>① 영웅 카드 — 등급이 오를수록 풍성 (B·A 단색 / S 장면 / SS 장면+빛 / SSS 튀어나옴)</h2><div class="row" style="padding-top:34px">${HEROES.map((h,i)=>`<div class="cell">${H({...h,w:200})}<div class="cap">${GN[i]}</div></div>`).join('')}</div></section><br>`);
+// 같은 등급 틀에서 속성 3종
+E(`<section id="elems"><h2>속성은 문양으로 구분 — 같은 A 등급 틀에서 불·물·풀</h2><div class="row">${['fire','water','grass'].map((el,i)=>`<div class="cell">${H({g:'A',el,name:['세모 엄마','네모 아이','네모 아빠'][i],img:[P+'wife/wink.png',P+'nemo_kids/kid1_happy.png',P+'nemo_dad/joy.png'][i],power:1500+i*40,w:180})}<div class="cap">${['불','물','풀'][i]}</div></div>`).join('')}</div></section><br>`);
+// 아이템
+const ci=(o,c)=>`<div class="cell">${I(o)}<div class="cap">${c||''}</div></div>`;
+E(`<section id="items"><h2>③ 아이템 카드 (영웅보다 작고 단순 · 아치 위쪽 · 아이콘 중심) — 떡 B·A·S / 단짝 / 방망이 같은 등급·속성 문양 / 보물 3종</h2>
+<div class="row">${ci({g:'B',art:A.kongtteok,name:'콩떡',w:130},'떡 B')}${ci({g:'A',art:A.kkultteok,name:'꿀떡',w:130},'떡 A')}${ci({g:'S',art:A.mujigae,name:'무지개떡',w:130},'떡 S')}${ci({g:'A',art:A.pair,name:'단짝',w:130},'단짝')}
+${['fire','water','grass'].map((k,i)=>ci({g:'A',el:k,art:A['club_'+k],name:['불 방망이','물 방망이','풀 방망이'][i],w:130},'방망이 (A)')).join('')}</div>
+<div class="row" style="margin-top:26px">${ci({g:'B',art:T.shield,name:'나무 방패',tag:'보물',w:130},'보물 · 방어')}${ci({g:'A',art:T.sandal,name:'날랜 짚신',tag:'보물',w:130},'보물 · 속도')}${ci({g:'S',art:T.pouch,name:'복주머니',tag:'보물',w:130},'보물 · 행운')}</div></section><br>`);
+// 유아
+E(`<section id="kids"><h2>⑤ 유아판 — 별·글자 없음, 더 둥글고 크게 (B·A 만)</h2><div class="row">
+${[['B','grass','nemo_dad/joy.png'],['A','fire','wife/wink.png'],['B','water','nemo_kids/kid1_happy.png']].map(([g,el,f])=>`<div class="cell">${H({g,el,img:P+f,w:230,kids:true})}</div>`).join('')}
+${ci({g:'B',art:A.kkultteok,w:130,kids:true})}${ci({g:'A',art:A.pair,w:130,kids:true})}${ci({g:'B',el:'fire',art:A.club_fire,w:130,kids:true})}</div></section><br>`);
+// 목업
+const gridA=[[0],[1],[2],[3],[4]].map(([i])=>H({...HEROES[i],w:108})).join('')+[I({g:'B',art:A.kongtteok,name:'콩떡',w:96}),I({g:'A',art:A.kkultteok,name:'꿀떡',w:96}),I({g:'S',art:A.mujigae,name:'무지개떡',w:96}),I({g:'A',el:'fire',art:A.club_fire,name:'불 방망이',w:96})].join('');
+E(`<section id="mock"><h2>④ 목업 — 영웅 키우기 / 앨범</h2><div class="row" style="align-items:flex-start">
+<div class="phone"><h3>영웅 키우기</h3><div style="display:flex;justify-content:center;padding-top:38px;position:relative">
+<div style="position:absolute;left:50px;top:300px;transform:rotate(-8deg);z-index:0">${I({g:'A',art:T.sandal,name:'날랜 짚신',tag:'보물',w:96})}</div>
+<div style="position:absolute;right:50px;top:300px;transform:rotate(8deg);z-index:0">${I({g:'S',art:T.pouch,name:'복주머니',tag:'보물',w:96})}</div>
+<div style="position:relative;z-index:1">${H({...HEROES[3],w:260})}</div></div>
+<div class="xp" style="margin-top:34px"><i></i></div><div style="text-align:center;font-size:19px">경험치 28 / 100</div>
+<div class="slots" style="margin-top:20px"><div class="slot"><div class="ic on">${A.kkultteok}</div>먹이기</div><div class="slot"><div class="ic">${A.pair}</div>단짝</div><div class="slot"><div class="ic">${T.shield}</div>보물</div><div class="slot"><div class="ic">${GFCard.html?'<svg viewBox="0 0 100 100"><path d="M50 10 L62 38 L92 40 L68 60 L76 90 L50 74 L24 90 L32 60 L8 40 L38 38Z" fill="#F6C21B" stroke="#6b5443" stroke-width="4" stroke-linejoin="round"/></svg>':''}</div>진화</div></div>
+<div class="bar"><span>🏠</span><span>⚔️</span><span>🎴</span><span>⚙️</span></div></div>
+<div class="phone"><h3>우리 앨범</h3><div class="grid">${gridA}</div><div class="bar"><span>🏠</span><span>📖</span><span>🎴</span><span>⚙️</span></div></div>
+</div></section>`);
+</script></body></html>

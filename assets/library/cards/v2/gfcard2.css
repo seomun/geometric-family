@@ -1,0 +1,64 @@
+/* 카드 v2 — 영웅 카드(.hero) · 아이템 카드(.gfi) · 유아판. v1 gfcard.css 를 먼저 불러온 뒤 이 파일을 불러온다.
+   영웅 카드: 그림이 주인공. B·A 단색 배경 / S 장면 배경 / SS 장면+빛 / SSS 틀 밖으로 튀어나오는 전면 그림+홀로그램.
+   아이템 카드: 영웅보다 작고 단순. 위쪽이 둥근 아치 + 아이콘 중심(4:5). 등급과 속성은 별개(색=속성 문양). */
+.hero .gfc2-in{background:var(--hb,#F7E3C4)}
+.hero .hb{position:absolute;inset:0;background:var(--hbg);background-size:cover;background-position:center}
+.hero .hspot{position:absolute;left:-10%;right:-10%;top:10%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.75),rgba(255,255,255,0) 68%)}
+/* B·A: 속성 색 단색 */
+.hero.g-B{--hb:var(--elb)}.hero.g-A{--hb:var(--ela)}
+.hero.g-A .hb{background:repeating-radial-gradient(circle at 50% 46%,rgba(255,255,255,.0) 0 2.2em,rgba(255,255,255,.22) 2.2em 4.4em)}
+/* S: 장면 배경 + 아래 어둡게 */
+.hero.g-S .hb::after,.hero.g-SS .hb::after,.hero.g-SSS .hb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(40,20,5,.0) 40%,rgba(40,20,5,.35))}
+/* SS: 해돋이 빛줄기(회전) + 반짝이 */
+.hero .rays{position:absolute;left:50%;top:44%;width:240%;aspect-ratio:1;margin:-120% 0 0 -120%;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,244,180,.62) 0 7deg,rgba(255,255,255,0) 7deg 20deg);
+  -webkit-mask:radial-gradient(circle,#000 6%,transparent 52%);mask:radial-gradient(circle,#000 6%,transparent 52%);animation:gfc2spin 40s linear infinite;display:none}
+.hero.g-SS .rays,.hero.g-SSS .rays{display:block}
+.hero.g-SSS .rays{background:repeating-conic-gradient(rgba(255,255,255,.55) 0 5deg,rgba(255,255,255,0) 5deg 15deg)}
+.hero .glow{position:absolute;left:12%;right:12%;top:22%;height:52%;border-radius:50%;background:radial-gradient(circle,rgba(255,236,150,.85),rgba(255,236,150,0) 70%);display:none}
+.hero.g-SS .glow{display:block}
+.hero.g-SSS .glow{display:block;background:radial-gradient(circle,rgba(255,255,255,.8),rgba(255,200,240,.45) 45%,rgba(160,220,255,0) 72%)}
+.hero.g-SSS .hb::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(160deg,rgba(255,107,138,.35),rgba(255,214,90,.25) 30%,rgba(105,224,160,.25) 55%,rgba(91,200,255,.3) 78%,rgba(169,139,255,.38));mix-blend-mode:soft-light}
+/* 캐릭터: 틀 안 70%+ */
+.hero .hch{position:absolute;left:-9%;right:-9%;top:1.2em;bottom:3.9em;display:flex;align-items:flex-end;justify-content:center;z-index:2}
+.hero .hch img{height:100%;width:auto;max-width:none;object-fit:contain;display:block}
+.hero .hshadow{position:absolute;left:22%;right:22%;bottom:3.4em;height:1.2em;border-radius:50%;background:rgba(60,35,15,.28);z-index:1}
+/* SSS: 틀 밖으로 튀어나오는 전면 그림 */
+.hero .hpop{position:absolute;left:-13%;right:-3%;top:-7%;bottom:3.4em;display:flex;align-items:flex-end;justify-content:center;z-index:6;pointer-events:none}
+.hero .hpop img{height:100%;width:auto;max-width:none;display:block;transform:rotate(-3deg) scale(1.02);transform-origin:50% 90%}
+.hero.g-SSS .hch{display:none}
+.hero:not(.g-SSS) .hpop{display:none}
+/* 위 장식: 별 줄·속성 문양·전투력 */
+.hero .hstars{position:absolute;left:0;right:0;top:.55em;display:flex;justify-content:center;gap:.05em;z-index:5}
+.hero .hstars i{width:1.25em;height:1.25em;background:#F6C21B;clip-path:polygon(50% 4%,62% 36%,97% 38%,70% 60%,80% 96%,50% 76%,20% 96%,30% 60%,3% 38%,38% 36%);filter:none}
+.hero .hstars i.off{background:rgba(255,255,255,.5)}
+.hero .elem{position:absolute;right:.45em;top:.45em;width:2.7em;height:2.7em;border-radius:50%;z-index:5;background:var(--elc);box-shadow:0 0 0 .13em #fff,0 0 0 .26em var(--line),0 .1em .3em rgba(60,35,15,.4)}
+.hero .elem svg{position:absolute;inset:.35em;width:calc(100% - .7em);height:calc(100% - .7em)}
+.hero .hplate{position:absolute;left:.55em;right:.55em;bottom:.5em;height:3.3em;border-radius:1.2em;background:var(--plate);z-index:7;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 0 .1em rgba(60,35,15,.45);color:#fff;text-shadow:0 .06em 0 rgba(60,35,15,.55);line-height:1.05}
+.hero .hplate b{font-weight:400;font-size:1.25em}.hero .hplate span{font-size:.92em;color:#FFF1B8}
+.hero.g-SSS .hplate{box-shadow:inset 0 0 0 .1em rgba(60,35,15,.45)}
+.hero .gfc2-rank{z-index:8}.hero .tp{z-index:5}
+/* 아이템 카드 */
+.gfi{--w:110px;position:relative;display:block;width:var(--w);aspect-ratio:4/5;font-size:calc(var(--w) / 11);font-family:'Jua',sans-serif;color:#4A3426;user-select:none}
+.gfi *{box-sizing:border-box}
+.gfi-fr{position:absolute;inset:0;border-radius:50% 50% 1.1em 1.1em / 34% 34% 1.1em 1.1em;background:var(--mat);box-shadow:0 .12em .4em rgba(80,50,20,.26),0 0 0 .1em var(--line)}
+.gfi-in{position:absolute;inset:.55em;border-radius:50% 50% .7em .7em / 33% 33% .7em .7em;background:var(--ib,#FFF6E0);overflow:hidden;box-shadow:inset 0 0 0 .1em rgba(107,84,67,.45)}
+.gfi-art{position:absolute;left:0;right:0;top:12%;bottom:22%;display:flex;align-items:center;justify-content:center}
+.gfi-art svg,.gfi-art img{width:92%;height:100%;object-fit:contain}
+.gfi-nm{position:absolute;left:.4em;right:.4em;bottom:.4em;height:1.8em;border-radius:.9em;background:var(--plate);color:#fff;font-size:.95em;display:flex;align-items:center;justify-content:center;text-shadow:0 .06em 0 rgba(60,35,15,.55);box-shadow:inset 0 0 0 .08em rgba(60,35,15,.4);white-space:nowrap}
+.gfi-gem{position:absolute;left:50%;top:-.35em;transform:translateX(-50%);min-width:1.9em;height:1.5em;padding:0 .4em;border-radius:.8em;background:var(--gem);color:#fff;font-size:.9em;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 0 0 .1em var(--line);text-shadow:0 .06em 0 rgba(60,35,15,.6)}
+.gfi-el{position:absolute;right:.2em;top:35%;width:2em;height:2em;border-radius:50%;background:var(--elc);box-shadow:0 0 0 .12em #fff,0 0 0 .22em var(--line);z-index:2}
+.gfi-el svg{position:absolute;inset:.28em;width:calc(100% - .56em);height:calc(100% - .56em)}
+.gfi.tre .gfi-in{--ib:#FFF1C8}
+.gfi.tre .gfi-rb{position:absolute;left:-.3em;right:-.3em;top:42%;display:none}
+.gfi-tag{position:absolute;left:.3em;top:38%;z-index:2;background:#F2B91E;color:#fff;font-size:.8em;padding:.1em .5em;border-radius:.6em;box-shadow:0 0 0 .1em var(--line);text-shadow:0 .06em 0 rgba(60,35,15,.6)}
+/* 유아판 영웅: 더 둥글고 크게, 별·글자·전투력 없음, 단색 배경 */
+.gfc2.hero.kids .gfc2-frame{border-radius:3em}.gfc2.hero.kids .gfc2-in{inset:1.35em;border-radius:2.2em}
+.hero.kids .hstars,.hero.kids .hplate,.hero.kids .gfc2-rank,.hero.kids .tp{display:none}
+.hero.kids .hch{left:-6%;right:-6%;top:1.4em;bottom:1.1em}
+.hero.kids .hshadow{bottom:1.1em}
+.hero.kids .elem{width:3em;height:3em}
+.hero.kids.g-B,.hero.kids.g-A{--hb:var(--elb)}
+.hero.kids .gfc2-in{box-shadow:inset 0 0 0 .14em rgba(107,84,67,.5)}
+.gfi.kids{aspect-ratio:1/1}.gfi.kids .gfi-fr{border-radius:50%/42% 42% 30% 30%}.gfi.kids .gfi-in{border-radius:50%/41% 41% 28% 28%}.gfi.kids .gfi-nm,.gfi.kids .gfi-gem,.gfi.kids .gfi-tag{display:none}.gfi.kids .gfi-art{top:8%;bottom:8%}

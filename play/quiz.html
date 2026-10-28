@@ -1006,6 +1006,7 @@ html[data-rm="1"] .hk-stage img { animation: none; }
 .hk > .bg svg > circle { display: none; }   /* 공통 홈 틀: 배경의 해(장식 원)가 제목 카드에 걸치지 않게(2차 리뷰) */
 .hk.hk-kid .hk-kpills { left: 14px; right: 14px; top: 562px; justify-content: center; gap: 12px; }
 .hk-kp { position: relative; flex: 1; max-width: 84px; height: 72px; border: 0; border-radius: 22px; background: #fff; box-shadow: var(--uk-sh); display: flex; align-items: center; justify-content: center; cursor: pointer; } .hk-kp:active { transform: translateY(2px); } .hk-kp svg { width: 44px; height: 44px; } .hk-kp .hk-emo { font-size: 36px; }
+.hk-kn { position: absolute; right: 2px; top: -6px; min-width: 26px; height: 26px; padding: 0 6px; box-sizing: border-box; border-radius: 13px; background: #F0506E; color: #fff; font: 900 15px/26px var(--uk-font); font-style: normal; text-align: center; box-shadow: var(--uk-sh); } .hk-kp.hk-card { background: linear-gradient(180deg, #F4B07C, #DB8650) !important; }
 .hk-klbl { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); white-space: nowrap; padding: 4px 10px; border-radius: 10px; background: rgba(46,36,48,.92); color: #fff; font: 800 15px/1.2 var(--uk-font); pointer-events: none; }
 .hk-kck { position: absolute; right: 4px; bottom: 4px; width: 22px; height: 22px; } .hk-kck svg { width: 22px; height: 22px; }
 /* 유아 시즌 이벤트 방울(BM-18-2, 10/23): 무대 오른쪽 위 · 천천히 반짝 · 다 하면 ✔ */
@@ -1433,13 +1434,16 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
     });
   }
   /** GF.sfx(id, {st}) — st: 반음 단위 음높이 이동(연쇄 콤보처럼 오를수록 높아지게). 같은 id 라도 파일은 하나, 재생 속도로만 바꾼다. */
+  /** 합성음 문지기(QA 겹침 p95): 같은 소리 80ms 안 중복은 건너뛰고, 0.5초 안에 시작된 합성음이 6개를 넘으면 더 얹지 않는다 */
+  const synT = []; const synLast = {};
+  const synGate = (id) => { const t = performance.now(); if (synLast[id] != null && t - synLast[id] < 80) return false; while (synT.length && t - synT[0] > 500) synT.shift(); if (synT.length >= 6) return false; synLast[id] = t; synT.push(t); return true; };
   GF.sfx = function (n, opt) {
     ensureAudio(); loadSounds(); n = (snd().alias || {})[n] || n;
     if (n === 'tap' && !(opt && opt.down) && Date.now() - (GF._tapDown || 0) < 600) return;   // UI v2 §1-5: 단추 소리는 누르는 순간(pointerdown) 이미 났다 — onclick 의 tap 은 겹치지 않게 건너뜀
     if (GF.haptic && !(opt && opt.noLayer)) GF.haptic(n, opt);   // 겹친 층은 진동하지 않음   // 성인 앱만, 설정에서 끌 수 있는 짧은 진동(engine/extras.js) — 연쇄 높이(st)에 따라 강해진다
     if (!ac || GF.state.settings.mute) return;
     const b = bufs[n], e = snd().sfx[n], st = opt && opt.st ? opt.st : 0, mul = Math.pow(2, st / 12);
-    if (!b && GF.synth && GF.synth.has(n)) { GF.synth.play(ac, n, mul, GF.state.settings.vol); return; }      // x_ 소리: engine/sfxr.js 가 코드로 합성(⑪ 전투·구슬 줄 맞추기)
+    if (!b && GF.synth && GF.synth.has(n)) { if (!synGate(n)) return; GF.synth.play(ac, n, mul, GF.state.settings.vol); return; }      // x_ 소리: engine/sfxr.js 가 코드로 합성(⑪ 전투·구슬 줄 맞추기)
     if (!b) { if (SFX[n]) { pitch = mul; try { SFX[n](); } finally { pitch = 1; } } return; }                 // 파일이 없거나 아직 못 읽었으면 합성음으로 대신
     const s = ac.createBufferSource(), g = ac.createGain(), j = e && e.jitter != null ? e.jitter : 0.05;
     s.buffer = b; s.playbackRate.value = mul * (1 + (Math.random() - 0.5) * (st ? j * 0.2 : j));     // 같은 소리가 반복돼도 지루하지 않게
@@ -1453,7 +1457,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
   function master() {
     if (mst && mst.ctx === ac) return mst.in;
     const kid = (document.documentElement.getAttribute('data-uk') || 'kid') === 'kid', g = ac.createGain(), c = ac.createDynamicsCompressor();
-    g.gain.value = kid ? 0.75 : 1.6;   /* 10/21: 파일은 도서관 분류별 LUFS(UI −20…보상 −15), 성인 체감은 마스터 1.6 + 리미터(−6dB)로 — 유아는 0.75 상한 */ c.threshold.value = kid ? -12 : -6; c.knee.value = 2; c.ratio.value = 20; c.attack.value = 0.002; c.release.value = 0.12;
+    g.gain.value = kid ? 0.75 : 1.6;   /* 10/21: 파일은 도서관 분류별 LUFS(UI −20…보상 −15), 성인 체감은 마스터 1.6 + 리미터(−6dB)로 — 유아는 0.75 상한 */ c.threshold.value = kid ? -12 : -8; c.knee.value = 2; c.ratio.value = 20; c.attack.value = 0.002; c.release.value = 0.12;
     g.connect(c); c.connect(ac.destination); mst = { ctx: ac, in: g, comp: c, kid }; return g;
   }
   GF.sfxMaster = () => (ac ? (master(), mst) : null);
@@ -1894,7 +1898,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
     };
     const evNow = GF.playEventNow();
     const main = GF.homeKit(r, { kid: true, key: 'toddler', title: GF.t('c17.gf.007'), fam: ['wife.good', 'baby.good', 'dong_dad.good'], first: !GF.state.stages.c1A, play, mainLabel: GF.t('c17.gf.002'), ev: evNow ? { emoji: evNow.icon, label: evNow.title, fn: () => GF.playEvent(evNow), done: GF.playEventDone(evNow) } : null,
-      pills: [['book', '#FFE0E8', () => GF.go('shelf'), GF.t('c17.gf.003')], ['game', '#E1F4FF', () => GF.go('playroom'), GF.t('c17.gf.004')], ['album', '#FFF3C2', () => GF.go('album', { book: 1 }), GF.t('c17.gf.005')]].concat(GF.craft && GF.data.craft_recipes ? [['craft', '#E9DDFB', () => GF.go('craft'), GF.t('craft.title')]] : []).concat([['home', '#FFE3C2', () => GF.go('khouse'), GF.t('c17.gf.006')]]).map((b) => ({ svg: IC[b[0]], bg: b[1], fn: b[2], label: b[3], badge: b[0] === 'craft' && GF.craft.canNew() ? IC.sparkle : undefined })) });
+      pills: [['book', '#FFE0E8', () => GF.go('shelf'), GF.t('c17.gf.003')], ['game', '#E1F4FF', () => GF.go('playroom'), GF.t('c17.gf.004')], ['album', '#FFF3C2', () => GF.go('album', { book: 1 }), GF.t('c17.gf.005')]].concat(GF.craft && GF.data.craft_recipes ? [['craft', '#E9DDFB', () => GF.go('craft'), GF.t('craft.title')]] : []).concat([['home', '#FFE3C2', () => GF.go('khouse'), GF.t('c17.gf.006')]]).map((b) => ({ svg: IC[b[0]], bg: b[1], fn: b[2], label: b[3], card: b[0] === 'home', badge: b[0] === 'craft' && GF.craft.canNew() ? IC.sparkle : undefined })) });
     { const kp = r.querySelector('.hk-kpills'); if (kp && kp.children.length >= 5) kp.classList.add('k5'); }   // 알약 5개(공방 추가)면 한 줄에 맞게 조금 작게
     main.classList.add('homeplay');   /* 옛 시험·도구가 찾는 이름(모양은 .hk-kid 규칙이 이김) */
     // 부모 메뉴: 제목을 3초 길게
@@ -1906,7 +1910,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
     wide: () => false,
     enter(r) {
       GF.bg('indoor', r); r.classList.add('uk');
-      const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; Room.house2(sc, { go: () => GF.go('map') });
+      const sc = el('div', 'abs', r); sc.style.cssText = 'left:0;right:0;top:70px;bottom:0;overflow-y:auto;touch-action:pan-y'; if (window.Album && Album.on()) { sc.style.top = '10px'; Album.open(sc, {}); } else Room.house2(sc, { go: () => GF.go('map') });   /* 카드 앨범 플래그(docs/53) */
     },
   });
 
@@ -2264,6 +2268,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
       if (!ev && GF.craft && GF.data.craft_recipes) GF.craft.roundDrop(pn, row, run.kind === 'story' ? def.mode : run.mode, run.ch, run.i, last && run.kind === 'story');   // 뚝딱 공방(D45): 라운드마다 재료 하나(단계 끝이면 하나 더)
       setTimeout(() => { if (gainEl) { pn.insertBefore(gainEl, row); setTimeout(() => GF.sfx('star'), 500); } }, 0); });   // 스티커는 아래 단계 완료 계산 뒤에 정해진다
     void ov;
+    if (window.Album && Album.on()) { const card = Album.give('playground'); if (card) setTimeout(() => { if (ov && ov.isConnected) Album.reveal(card, r); }, 900); }   /* 카드 앨범(docs/53): 판마다 카드 한 장 */
     if (!last) return;
     if (ev) { const ek = run.id + ':' + new Date().getFullYear(); GF.state.events = GF.state.events || {}; GF.state.events[ek] = Math.max(GF.state.events[ek] || 0, Math.max(1, Math.floor(run.res.reduce((a, b) => a + b, 0) / run.res.length))); Store.save(); return; }   /* 시즌 이벤트 판: 해마다 깬 기록만(스티커·장 보상 없음) — 셋 다면 한정 가구는 extras.ev3 가 화면 바뀔 때 */
     // 스테이지 완료
@@ -2377,7 +2382,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
   // opts: {base:데이터 경로, audioBase:소리 경로, dataNames:[…], storeKey, start:()=>첫 화면}  — 방치형 등 다른 앱이 같은 엔진을 쓴다
   GF.boot = async function (opts) {
     /* 그림 대체 글(10/19 axe image-alt): 게임 조각·장식 그림은 글로 읽을 필요가 없어 alt 가 없으면 장식(alt="")으로 — 새로 붙는 그림도 */
-    if (!GF._altObs && window.MutationObserver) { GF._altObs = new MutationObserver((ms) => { ms.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType !== 1) return; if (n.tagName === 'IMG' && !n.hasAttribute('alt')) n.setAttribute('alt', ''); else if (n.querySelectorAll) n.querySelectorAll('img:not([alt])').forEach((i) => i.setAttribute('alt', '')); })); }); GF._altObs.observe(document.documentElement, { childList: true, subtree: true }); }
+    if (!GF._altObs && window.MutationObserver) { GF._altObs = new MutationObserver((ms) => { ms.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType !== 1) return; if (n.tagName === 'IMG' && window.GF_ASYNC_DECODE && !n.hasAttribute('decoding')) n.decoding = 'async'; /* 기능 플래그(기본 꺼짐): 원정대가 켜면 그림 해독을 화면 스레드 밖에서 */ if (n.tagName === 'IMG' && !n.hasAttribute('alt')) n.setAttribute('alt', ''); else if (n.querySelectorAll) n.querySelectorAll('img:not([alt])').forEach((i) => i.setAttribute('alt', '')); })); }); GF._altObs.observe(document.documentElement, { childList: true, subtree: true }); }
     opts = opts || {};
     if (opts.base != null) GF.base = opts.base; if (opts.audioBase != null) GF.audioBase = opts.audioBase; if (opts.storeKey) KEY = opts.storeKey; GF.opts = opts;
     stage = $('stage'); safeEl = $('safe'); topbar = $('topbar');
@@ -3002,7 +3007,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
     if (g === app || g === 'story' || g === 'event' || g === 'other') { if (opts.home) opts.home(); else if (Room.cfg.home) Room.cfg.home(); return 'same'; }
     if (kid()) return 'kid';            // 유아 앱: 다른 앱을 열지 않는다(KIDS_COMPLIANCE) — 그림으로만 알려 준다
     const pkg = 'com.geometricfamily.' + (g === 'idle' ? 'tables' : g === 'playground' ? 'toddler' : g), n = window.GFOps;
-    try { if (n && n.hasApp && n.hasApp(pkg)) { n.launch(pkg); return 'launch'; } if (n && n.openStore) { n.openStore(pkg); return 'store'; } } catch (e) { /* 네이티브 없음(웹) */ }
+    try { if (n && n.hasApp && n.hasApp(pkg)) { n.launch(pkg); return 'launch'; } if (n && n.openStore && !(GF.ops && GF.ops.storeLinks && !GF.ops.storeLinks())) { n.openStore(pkg); return 'store'; } }   /* 원스토어 빌드(R4)는 Play 로 보내지 않고 아래 안내만 */ catch (e) { /* 네이티브 없음(웹) */ }
     toastH(GF.t('c17.room2.014', { v: APPNAME[g] || g }), opts.parent); return 'web';
   };
   /** 앱 홈 「오늘 할 일」 한 줄(C5, 성인): 오늘의 작은 일 중 아직 안 한 첫 줄 · 다 했으면 선물 안내 · 선물까지 받았으면 칭찬. 누르면 작은 일 목록. 못 해도 괜찮다는 말투 */
@@ -4179,7 +4184,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
   window.GF_adsEvent = (id, ev) => A._event(id, ev);   // 네이티브가 부른다: 'reward' | 'close' | 'fail'
 })();
 
-/* Google Play 게임즈 순위표 브리지 GF.board (games/17_LEADERBOARD.md). 지금은 꺼짐(no-op): 실제 연결(PGS v2·로그인·Data safety·방침)은 작가가 Play Console 계정을 만든 뒤.
+/* 플레이 게임즈(PGS) 순위표 브리지 GF.board (games/17_LEADERBOARD.md). 지금은 꺼짐(no-op): 실제 연결(PGS v2·로그인·Data safety·방침)은 작가가 Play Console 계정을 만든 뒤.
    · 웹/갤럭시 판/유아 앱에서는 항상 no-op. Play 판 flavor 의 래퍼가 window.GFBoard(@JavascriptInterface)를 노출하고 config.enabled=true 일 때만 동작.
    · 쓰는 곳: ⑦ 끝없이 · 오늘의 한 판 점수만(GF.rank.record 가 submit 을 부른다). show 는 구글 순위표 화면. */
 (function () {
@@ -4288,7 +4293,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
   R.record = function (boardId, score) {
     if (!R.ready || score == null) return null; const S = load(), t = R.today(), b = (S.top[boardId] = S.top[boardId] || []), dd = (S.day[boardId] = S.day[boardId] || {});
     b.push({ s: Math.round(score), d: t }); b.sort((x, y) => y.s - x.s || y.d - x.d); S.top[boardId] = b.slice(0, 10); dd[t] = Math.max(dd[t] || 0, Math.round(score)); Object.keys(dd).sort().slice(0, Math.max(0, Object.keys(dd).length - 40)).forEach((k) => delete dd[k]); save(S);
-    if (GF.board) GF.board.submit(boardId, Math.round(score));   // Google Play 게임즈(꺼짐·no-op)
+    if (GF.board) GF.board.submit(boardId, Math.round(score));   // 플레이 게임즈 PGS(꺼짐·no-op)
     const rowsD = R.rows(boardId, 'day'), line = R.beatLine(rowsD, 'day'), out = { line, rank: (rowsD.find((r) => r.me) || {}).rank, reward: null };
     const rowsW = R.rows(boardId, 'week'), me = rowsW.find((r) => r.me), wk = String(R.weekStart(t)) + ':' + boardId, S2 = load();
     if (me && me.rank === 1 && rowsW.filter((r) => r.score != null).length > 1 && !S2.claimed[wk] && GF.extras && GF.extras.cfg && window.Room) { const id = (GF.extras.cfg.rewardItems || []).find((i) => !Room.has(i)); if (id && Room.grant(id)) { S2.claimed[wk] = id; save(S2); out.reward = id; } }
@@ -4858,7 +4863,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
   O.reviewDue = function () { const s = st(); return !O.kid && O.ready && s.clears >= 10 && O._now() - (s.reviewAt || 0) >= 90 * DAY; };
   /** 결과 화면을 닫은 직후(별 3개)에만 부른다. 요청했으면 true(그때는 전면 광고를 건너뛴다) */
   O.maybeReview = function (stars) {
-    if (!O.reviewDue() || (stars || 0) < 3) return false; const n = O.native(); if (!n || !n.review) return false;
+    if (!O.reviewDue() || (stars || 0) < 3 || !O.storeLinks()) return false;   /* 인앱 리뷰는 Play 전용(원스토어 빌드는 묻지 않는다) */ const n = O.native(); if (!n || !n.review) return false;
     const s = st(); s.reviewAt = O._now(); put(s); try { n.review(); } catch (e) {} return true;
   };
 
@@ -4954,7 +4959,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
     if (!I.kid) {
       el('h4', 'xt-h', body, GF.t('ops.pass.more')); const n = O.native();
       apps.filter((a) => a !== O.app).forEach((a) => { const pkg = 'com.geometricfamily.' + (a === 'idle' ? 'tables' : a), r = el('div', 'ops-more', body); el('b', '', r, appLabel(a)); const inst = !!(n && n.hasApp && n.hasApp(pkg));
-        if (n && n.openStore) { const b2 = el('button', 'xt-btn', r, inst ? GF.t('ops.pass.open') : GF.t('ops.pass.store')); b2.onclick = () => { try { inst ? n.launch(pkg) : n.openStore(pkg); } catch (e) {} }; } });
+        if (n && (inst ? n.launch : n.openStore && O.storeLinks())) { const b2 = el('button', 'xt-btn', r, inst ? GF.t('ops.pass.open') : GF.t('ops.pass.store')); b2.onclick = () => { try { inst ? n.launch(pkg) : n.openStore(pkg); } catch (e) {} }; } });
       el('p', 'xt-p', body, GF.t('ops.pass.note'));
     }
   };
@@ -5044,7 +5049,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
   /* ---------------- 구매(H1): 성인 앱 「광고 제거」·「소품 팩」(확정 지급). 상품 ID 가 없으면 숨김, 유아 앱은 없음 ---------------- */
   const iapKey = () => 'gf:' + O.app + ':iap';
   O.iap = {
-    native: () => (window.GFBilling && typeof window.GFBilling.info === 'function' ? window.GFBilling : null),
+    native: () => (!(O.d && O.d.iap === 0) && window.GFBilling && typeof window.GFBilling.info === 'function' ? window.GFBilling : null),   /* 10/27 원스토어 1차: 빌드가 iap:0 을 넣으면 구매 줄·복원 모두 없음(광고만) — games/tools/store_build.py */
     info() { try { return JSON.parse(O.iap.native().info()) || {}; } catch (e) { return {}; } },
     configured(kind) { return !O.kid && !!O.iap.native() && !!(O.iap.info()[kind] || {}).configured; },
     price(kind) { return (O.iap.info()[kind] || {}).price || ''; },
@@ -5127,10 +5132,35 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
     if (GF.polish && GF.polish.ready) GF.polish.rows(body, sc);   // 앱 정보
   };
 
+  /* ---------------- 스토어(R4, 10/27 원스토어): 빌드가 ops.store 를 넣는다(없으면 google = 지금까지와 같음). Play 로 가는 것(스토어에서 보기·인앱 리뷰)은 google 일 때만 ---------------- */
+  O.store = () => (O.d && O.d.store) || 'google';
+  O.storeLinks = () => O.store() === 'google';
+  /* ---------------- 등급 표시(R5): 게임위 연령 등급 + 내용정보 아이콘을 앱을 열 때 3초 넘게 보인다. 누르기를 막지 않아 첫 판까지 5초(D48)는 그대로.
+     값은 빌드가 넣는다: ops.rating = { age: 'ALL'|'12'|'15'|'19', info: ['violence', …] } (games/tools/store_build.py). 없으면(웹판) 안 보인다.
+     ⑪ 원정대도 같은 ops.js 를 쓰니 O.rating(r) 로 그대로 부르면 된다 ---------------- */
+  const AGE = { ALL: ['ALL', '전체이용가', 'All ages', '#2E9E48'], 12: ['12', '12세이용가', 'Ages 12+', '#1E72BD'], 15: ['15', '15세이용가', 'Ages 15+', '#E08E00'], 19: ['19', '청소년이용불가', 'Adults only', '#D3242C'] };
+  const INFO = { sex: ['선정성', 'Sexual'], violence: ['폭력성', 'Violence'], fear: ['공포', 'Fear'], language: ['언어', 'Language'], drug: ['약물', 'Drugs'], crime: ['범죄', 'Crime'], gambling: ['사행성', 'Gambling'] };
+  const RATING_CSS = '.gf-rating{position:fixed;left:10px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:2147483000;pointer-events:none;display:flex;gap:6px;align-items:flex-start;padding:6px 8px;border-radius:12px;background:rgba(255,255,255,.95);box-shadow:0 2px 10px rgba(0,0,0,.18);font-family:inherit;transition:opacity .4s}'
+    + '.gf-rating.out{opacity:0}.gf-rating .ra,.gf-rating .ri{width:50px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;line-height:1.1;color:#222;text-align:center;word-break:keep-all}'
+    + '.gf-rating .ra i{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;font-weight:800;font-size:15px;border:2px solid #fff}'
+    + '.gf-rating .ri i{width:46px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#2B2B2B;color:#fff;font-style:normal;font-weight:800;font-size:12px;line-height:1.1;text-align:center;padding:2px}';
+  O.rating = function (r, ms) {
+    r = r || (O.d && O.d.rating); const a = r && AGE[String(r.age).toUpperCase()]; if (!a || document.querySelector('.gf-rating')) return null;
+    if (!document.getElementById('gf-rating-css')) { const st = el('style', '', document.head); st.id = 'gf-rating-css'; st.textContent = RATING_CSS; }
+    const en = GF.lang === 'en', box = el('div', 'gf-rating', document.body), info = (r.info || []).filter((k) => INFO[k]);
+    box.dataset.age = a[0]; box.dataset.info = info.join(','); box.setAttribute('role', 'img');
+    box.setAttribute('aria-label', [en ? a[2] : a[1]].concat(info.map((k) => INFO[k][en ? 1 : 0])).join(', '));
+    const ag = el('div', 'ra', box), ic = el('i', '', ag, a[0]); ic.style.background = a[3]; ic.style.boxShadow = '0 0 0 2px ' + a[3]; el('span', '', ag, en ? a[2] : a[1]);
+    info.forEach((k) => el('i', '', el('div', 'ri', box), INFO[k][en ? 1 : 0]));   /* 내용정보 = 검은 네모 안에 낱말 하나 */
+    setTimeout(() => { box.classList.add('out'); setTimeout(() => box.remove(), 450); }, Math.max(3000, ms || 3300));
+    return box;
+  };
+
   O.init = function (cfg) {
     if (window.Room && Room.place && !Room._opsW) { const pl = Room.place; Room.place = function () { O.note('house'); return pl.apply(Room, arguments); }; Room._opsW = 1; }   // 집 소품 놓기 → 미션
     O.cfg = cfg; O.app = cfg.app; O.kid = !!cfg.kid; O.d = (GF.data && GF.data.ops) || null; O.ready = !!O.d; O.applyMotion();
     if (!O.ready) return;
+    try { O.rating(); } catch (e) { /* 등급 표시 실패는 놀이를 막지 않는다 */ }
     if (!O.kid && !O._mailW) { O._mailW = 1; const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); try { mailBtn(); } catch (e) { /* 소식 상자 실패는 무시 */ } }; setTimeout(() => { try { mailBtn(); } catch (e) { /* 무시 */ } }, 0); }   // BM-E6
     if (!O._zeroW && GF.refreshBar) { O._zeroW = 1; const rb0 = GF.refreshBar; GF.refreshBar = function () { const x = rb0.apply(this, arguments); try { const sp = document.getElementById('b-stars'); if (sp) { const z = /^\s*0\s*$/.test(sp.textContent); if (O.kid) sp.style.visibility = z ? 'hidden' : 'visible'; else sp.style.display = z ? 'none' : ''; } } catch (e) { /* 무시 */ } return x; }; }   // 판 중에 0 → 1 이 되면 바로 보이게
     if (O.kid && !O._kidTb) { O._kidTb = 1; const tb = () => { const root = (GF.stack || []).length <= 1, hm = document.getElementById('b-home'), sp = document.getElementById('b-stars'); if (hm) hm.style.visibility = root ? 'hidden' : 'visible'; if (sp) sp.style.visibility = /^\s*0\s*$/.test(sp.textContent) ? 'hidden' : 'visible'; }; const prev = GF.onScreen; GF.onScreen = (n) => { if (prev) prev(n); try { tb(); } catch (e) { /* 무시 */ } }; setTimeout(tb, 0); }   // 유아 홈도 같은 원칙: 홈에선 「홈」·「별 0」 숨김(자리는 유지 — 글 없는 배치가 흔들리지 않게)
@@ -5826,7 +5856,7 @@ html[lang="en"] .qz-opt { white-space: normal !important; height: auto !importan
     /* 유아(o.kid): 글자 없는 판 — 초록 ▶ 하나 + 그림 알약(o.pills: [{icon, label, fn, bg, badge}]) 늘 보임, 목표 띠·아이콘 줄 없음(2차 리뷰 N1) */
     const main = UK.btn({ text: o.kid ? null : (o.mainText || (o.first ? GF.t('ui.hk.start') : GF.t('ui.hk.level', { n: o.level }))), icon: 'play', cls: 'green block hk-main', onclick: () => { GF.sfx('pick'); if (GF.polish && GF.polish.beforePlay) GF.polish.beforePlay(o.play); else o.play(); } }, r);
     if (!o.kid) requestAnimationFrame(() => { let f = parseFloat(getComputedStyle(main).fontSize) || 30; while (main.scrollWidth > main.clientWidth + 1 && f > 16) { f -= 1; main.style.fontSize = f + 'px'; } });   /* 긴 주 버튼 글(영어 「Start · Group Chat」)이 단추 밖으로 나가지 않게 줄여 맞춤(휴대폰 점검 10/22) */
-    if (o.kid) { main.setAttribute('aria-label', o.mainLabel || 'play'); const sub = el('div', 'hk-subs hk-kpills', r); (o.pills || []).forEach((x) => { const b = el('button', 'hk-kp', sub, x.svg || IC(x.icon)); b.setAttribute('aria-label', x.label); if (x.bg) b.style.background = x.bg; if (x.badge) el('i', 'hk-kck', b, x.badge); let lt = null, long = false; b.addEventListener('pointerdown', () => { long = false; lt = setTimeout(() => { long = true; const t = el('span', 'hk-klbl', b, x.label); setTimeout(() => t.remove(), 1600); }, 550); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => clearTimeout(lt))); b.onclick = () => { if (long) return; GF.sfx('pick'); x.fn(); }; }); }   /* 보호자: 길게 누르면 이름표(아이는 짧게 눌러 바로 간다) */
+    if (o.kid) { main.setAttribute('aria-label', o.mainLabel || 'play'); const sub = el('div', 'hk-subs hk-kpills', r); (o.pills || []).forEach((x) => { const alb = !!(x.card && window.Album && Album.on()), b = el('button', 'hk-kp' + (alb ? ' hk-card' : ''), sub, alb ? IC('🎴') : x.svg || IC(x.icon)); b.setAttribute('aria-label', x.label); if (x.bg) b.style.background = x.bg; if (alb) el('i', 'hk-kn', b, String(Album.count().have));   /* 카드 앨범(docs/53): 집 알약 = 카드 그림 + 모은 수 */ if (x.badge) el('i', 'hk-kck', b, x.badge); let lt = null, long = false; b.addEventListener('pointerdown', () => { long = false; lt = setTimeout(() => { long = true; const t = el('span', 'hk-klbl', b, x.label); setTimeout(() => t.remove(), 1600); }, 550); }); ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => clearTimeout(lt))); b.onclick = () => { if (long) return; GF.sfx('pick'); x.fn(); }; }); }   /* 보호자: 길게 누르면 이름표(아이는 짧게 눌러 바로 간다) */
     if (o.kid && o.ev) { const b = el('button', 'hk-kev' + (o.ev.done ? ' ok' : ''), r, '<span>' + o.ev.emoji + '</span>'); b.setAttribute('aria-label', o.ev.label || ''); if (o.ev.done) el('i', 'hk-kck', b, '✔'); b.onclick = () => { GF.sfx('pick'); o.ev.fn(); }; }   /* 유아 시즌 이벤트(BM-18-2): 열린 동안 무대 오른쪽 위 반짝이는 그림 방울 하나 · o.ev = {emoji, label, fn, done} */
     if (o.kid) pokeStage(stage);   // 유아 홈: 무대의 가족·소품을 만지면 반응(사고 미니 BM 13 #1)
     const prevCard = !o.kid && o.preview ? homePreview(r, o) : null;   // 성인 퍼즐 홈 미리보기(허브 10/21) — 있으면 지도·우리 집 알약 대신 카드 안에서

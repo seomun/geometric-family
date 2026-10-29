@@ -1,0 +1,1432 @@
+{
+ "u_nemo_dad": {
+  "card": "assets/library/cards/hero/u_nemo_dad.png",
+  "name": "네모 아빠",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_yard_day_saw.png",
+  "pose": "nemo_dad/good_saw_a",
+  "power": 1800
+ },
+ "u_semo_wife": {
+  "card": "assets/library/cards/hero/u_semo_wife.png",
+  "name": "세모 아내",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "pose": "wife/good_wave_a",
+  "power": 1700
+ },
+ "u_dong_dad": {
+  "card": "assets/library/cards/hero/u_dong_dad.png",
+  "name": "동그라미 아빠",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "pose": "@dong_dad/calm",
+  "power": 1650
+ },
+ "u_nemo_mom": {
+  "card": "assets/library/cards/hero/u_nemo_mom.png",
+  "name": "네모 엄마",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pig_home.png",
+  "pose": "nemo_mom/good_wave_b",
+  "power": 1600
+ },
+ "u_baby": {
+  "card": "assets/library/cards/hero/u_baby.png",
+  "name": "막둥이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "pose": "@baby/joy",
+  "power": 1500
+ },
+ "u_kid3": {
+  "card": "assets/library/cards/hero/u_kid3.png",
+  "name": "세찌",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "pose": "nemo_kids/kid3_happy",
+  "power": 3500
+ },
+ "u_kid1": {
+  "card": "assets/library/cards/hero/u_kid1.png",
+  "name": "하나",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_village_pond.png",
+  "pose": "nemo_kids/kid1_walk_a",
+  "power": 3200
+ },
+ "u_kid2": {
+  "card": "assets/library/cards/hero/u_kid2.png",
+  "name": "두리",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "pose": "nemo_kids/kid2_happy",
+  "power": 3350
+ },
+ "u_husband": {
+  "card": "assets/library/cards/hero/u_husband.png",
+  "name": "세모 남편",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_nolbu_yard.png",
+  "pose": "husband/joy",
+  "power": 3400
+ },
+ "u_grandma": {
+  "card": "assets/library/cards/hero/u_grandma.png",
+  "name": "네모 할머니",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "pose": "nemo_grandma/good",
+  "power": 3300
+ },
+ "u_nolbu_husband": {
+  "card": "assets/library/cards/hero/u_nolbu_husband.png",
+  "name": "놀부 세모 남편",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_nolbu_house.png",
+  "pose": "husband/greedy",
+  "power": 6600
+ },
+ "u_heungbu_dad": {
+  "card": "assets/library/cards/hero/u_heungbu_dad.png",
+  "name": "흥부 네모 아빠",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_heungbu_newhouse.png",
+  "pose": "nemo_dad/love",
+  "power": 6500
+ },
+ "u_sun_hana": {
+  "card": "assets/library/cards/hero/u_sun_hana.png",
+  "name": "해님 하나",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "pose": "nemo_kids/kid1_happy",
+  "power": 6550
+ },
+ "u_puss_wife": {
+  "card": "assets/library/cards/hero/u_puss_wife.png",
+  "name": "장화 신은 세모 아내",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "pose": "wife/wink",
+  "power": 6600
+ },
+ "u_woodcutter_dad": {
+  "card": "assets/library/cards/hero/u_woodcutter_dad.png",
+  "name": "나무꾼 네모 아빠",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "pose": "woodcutter/joy",
+  "power": 3500
+ },
+ "u_bear_dong": {
+  "card": "assets/library/cards/hero/u_bear_dong.png",
+  "name": "큰 곰 동그라미 아빠",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_room.png",
+  "pose": "@dong_dad/warm",
+  "power": 3500
+ },
+ "u_ant_mom": {
+  "card": "assets/library/cards/hero/u_ant_mom.png",
+  "name": "개미 네모 엄마",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "pose": "nemo_mom/joy",
+  "power": 3300
+ },
+ "u_sinseon": {
+  "card": "assets/library/cards/hero/u_sinseon.png",
+  "name": "신선",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "legend",
+  "power": 6400
+ },
+ "u_gyeonwoo": {
+  "card": "assets/library/cards/hero/u_gyeonwoo.png",
+  "name": "견우",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "legend",
+  "power": 1800
+ },
+ "u_jiknyeo": {
+  "card": "assets/library/cards/hero/u_jiknyeo.png",
+  "name": "직녀",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "legend",
+  "power": 1500
+ },
+ "u_simcheong": {
+  "card": "assets/library/cards/hero/u_simcheong.png",
+  "name": "심청",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 3300
+ },
+ "u_yongwang": {
+  "card": "assets/library/cards/hero/u_yongwang.png",
+  "name": "용왕",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 3500
+ },
+ "u_tokki": {
+  "card": "assets/library/cards/hero/u_tokki.png",
+  "name": "토끼",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 1700
+ },
+ "u_kongjwi": {
+  "card": "assets/library/cards/hero/u_kongjwi.png",
+  "name": "콩쥐",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 1500
+ },
+ "u_gumiho": {
+  "card": "assets/library/cards/hero/u_gumiho.png",
+  "name": "구미호",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "legend",
+  "power": 3350
+ },
+ "u_samsin": {
+  "card": "assets/library/cards/hero/u_samsin.png",
+  "name": "삼신할머니",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "legend",
+  "power": 3300
+ },
+ "u_bari": {
+  "card": "assets/library/cards/hero/u_bari.png",
+  "name": "바리공주",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "legend",
+  "power": 3300
+ },
+ "u_jangseung": {
+  "card": "assets/library/cards/hero/u_jangseung.png",
+  "name": "장승",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "legend",
+  "power": 1800
+ },
+ "u_arthur": {
+  "card": "assets/library/cards/hero/u_arthur.png",
+  "name": "아서왕",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "legend",
+  "power": 6600
+ },
+ "u_merlin": {
+  "card": "assets/library/cards/hero/u_merlin.png",
+  "name": "멀린",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "legend",
+  "power": 3350
+ },
+ "u_robin": {
+  "card": "assets/library/cards/hero/u_robin.png",
+  "name": "로빈 후드",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "legend",
+  "power": 1700
+ },
+ "u_sindbad": {
+  "card": "assets/library/cards/hero/u_sindbad.png",
+  "name": "신드바드",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 1500
+ },
+ "u_genie": {
+  "card": "assets/library/cards/hero/u_genie.png",
+  "name": "램프의 지니",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "legend",
+  "power": 1650
+ },
+ "u_mermaid": {
+  "card": "assets/library/cards/hero/u_mermaid.png",
+  "name": "인어",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 3300
+ },
+ "u_snowqueen": {
+  "card": "assets/library/cards/hero/u_snowqueen.png",
+  "name": "눈의 여왕",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 6550
+ },
+ "u_wukong": {
+  "card": "assets/library/cards/hero/u_wukong.png",
+  "name": "손오공",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "legend",
+  "power": 6600
+ },
+ "u_heracles": {
+  "card": "assets/library/cards/hero/u_heracles.png",
+  "name": "헤라클레스",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "legend",
+  "power": 3500
+ },
+ "u_pegasus": {
+  "card": "assets/library/cards/hero/u_pegasus.png",
+  "name": "페가수스",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "legend",
+  "power": 1500
+ },
+ "u_thor": {
+  "card": "assets/library/cards/hero/u_thor.png",
+  "name": "토르",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "legend",
+  "power": 3350
+ },
+ "u_monalisa": {
+  "card": "assets/library/cards/hero/u_monalisa.png",
+  "name": "모나리자",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "legend",
+  "power": 6400
+ },
+ "u_pearlgirl": {
+  "card": "assets/library/cards/hero/u_pearlgirl.png",
+  "name": "진주 귀고리 소녀",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "legend",
+  "power": 3300
+ },
+ "u_sunflower": {
+  "card": "assets/library/cards/hero/u_sunflower.png",
+  "name": "해바라기",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "legend",
+  "power": 3350
+ },
+ "u_starrynight": {
+  "card": "assets/library/cards/hero/u_starrynight.png",
+  "name": "별이 빛나는 밤",
+  "frame": "SS",
+  "unitGrade": 5,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "legend",
+  "power": 6400
+ },
+ "u_waterlily": {
+  "card": "assets/library/cards/hero/u_waterlily.png",
+  "name": "수련",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 1600
+ },
+ "u_greatwave": {
+  "card": "assets/library/cards/hero/u_greatwave.png",
+  "name": "큰 파도",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 3400
+ },
+ "u_ssireum": {
+  "card": "assets/library/cards/hero/u_ssireum.png",
+  "name": "씨름",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "legend",
+  "power": 1700
+ },
+ "u_wind": {
+  "card": "assets/library/cards/hero/u_wind.png",
+  "name": "바람 친구",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "recruit",
+  "power": 3400
+ },
+ "u_dokkaebi": {
+  "card": "assets/library/cards/hero/u_dokkaebi.png",
+  "name": "도깨비",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "gacha",
+  "power": 3400
+ },
+ "u_swallow": {
+  "card": "assets/library/cards/hero/u_swallow.png",
+  "name": "제비",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "gacha",
+  "power": 1600
+ },
+ "u_toad": {
+  "card": "assets/library/cards/hero/u_toad.png",
+  "name": "두꺼비",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "gacha",
+  "power": 1800
+ },
+ "u_magpie": {
+  "card": "assets/library/cards/hero/u_magpie.png",
+  "name": "까치",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "gacha",
+  "power": 1500
+ },
+ "u_fairy": {
+  "card": "assets/library/cards/hero/u_fairy.png",
+  "name": "선녀",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "gacha",
+  "power": 1650
+ },
+ "u_tiger": {
+  "card": "assets/library/cards/hero/u_tiger.png",
+  "name": "바람 호랑이",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "recruit",
+  "power": 3500
+ },
+ "u_ajumma": {
+  "card": "assets/library/cards/hero/u_ajumma.png",
+  "name": "깐깐한 아주머니",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "recruit",
+  "power": 3350
+ },
+ "u_phantom": {
+  "card": "assets/library/cards/hero/u_phantom.png",
+  "name": "허깨비 도둑",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "recruit",
+  "power": 3400
+ },
+ "u_giant": {
+  "card": "assets/library/cards/hero/u_giant.png",
+  "name": "구름 거인",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "recruit",
+  "power": 3500
+ },
+ "u_wonnim": {
+  "card": "assets/library/cards/hero/u_wonnim.png",
+  "name": "욕심쟁이 원님",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "recruit",
+  "power": 3350
+ },
+ "u_skyelder": {
+  "card": "assets/library/cards/hero/u_skyelder.png",
+  "name": "하늘 어른",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "recruit",
+  "power": 3350
+ },
+ "u_granny": {
+  "card": "assets/library/cards/hero/u_granny.png",
+  "name": "과자집 할머니",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "recruit",
+  "power": 3300
+ },
+ "u_wizard": {
+  "card": "assets/library/cards/hero/u_wizard.png",
+  "name": "변신 마법사",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "recruit",
+  "power": 3350
+ },
+ "u_deer": {
+  "card": "assets/library/cards/hero/u_deer.png",
+  "name": "사슴",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "recruit",
+  "power": 3300
+ },
+ "u_gatekeeper": {
+  "card": "assets/library/cards/hero/u_gatekeeper.png",
+  "name": "용궁 문지기",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "recruit",
+  "power": 3500
+ },
+ "u_snake": {
+  "card": "assets/library/cards/hero/u_snake.png",
+  "name": "구렁이",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "recruit",
+  "power": 3400
+ },
+ "u_persimmon_tiger": {
+  "card": "assets/library/cards/hero/u_persimmon_tiger.png",
+  "name": "호랑이",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "recruit",
+  "power": 3500
+ },
+ "u_wolf": {
+  "card": "assets/library/cards/hero/u_wolf.png",
+  "name": "늑대",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "recruit",
+  "power": 3400
+ },
+ "u_fox": {
+  "card": "assets/library/cards/hero/u_fox.png",
+  "name": "여우",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "recruit",
+  "power": 3350
+ },
+ "u_snowcrow": {
+  "card": "assets/library/cards/hero/u_snowcrow.png",
+  "name": "눈 까마귀",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "recruit",
+  "power": 3400
+ },
+ "u_cicada": {
+  "card": "assets/library/cards/hero/u_cicada.png",
+  "name": "매미",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "recruit",
+  "power": 3300
+ },
+ "u_crane": {
+  "card": "assets/library/cards/hero/u_crane.png",
+  "name": "두루미",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "recruit",
+  "power": 3500
+ },
+ "u_sparrow": {
+  "card": "assets/library/cards/hero/u_sparrow.png",
+  "name": "참새",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "recruit",
+  "power": 3400
+ },
+ "u_owl": {
+  "card": "assets/library/cards/hero/u_owl.png",
+  "name": "부엉이",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "recruit",
+  "power": 3300
+ },
+ "u_frog": {
+  "card": "assets/library/cards/hero/u_frog.png",
+  "name": "개구리",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "recruit",
+  "power": 3500
+ },
+ "u_squirrel": {
+  "card": "assets/library/cards/hero/u_squirrel.png",
+  "name": "다람쥐",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "recruit",
+  "power": 3200
+ },
+ "u_mouse": {
+  "card": "assets/library/cards/hero/u_mouse.png",
+  "name": "생쥐",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "recruit",
+  "power": 3400
+ },
+ "u_scarecrow": {
+  "card": "assets/library/cards/hero/u_scarecrow.png",
+  "name": "허수아비",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "recruit",
+  "power": 3300
+ },
+ "u_pumpkin": {
+  "card": "assets/library/cards/hero/u_pumpkin.png",
+  "name": "호박 마차",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "recruit",
+  "power": 3500
+ },
+ "u_pot": {
+  "card": "assets/library/cards/hero/u_pot.png",
+  "name": "팥죽 솥",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "recruit",
+  "power": 3300
+ },
+ "u_lion": {
+  "card": "assets/library/cards/hero/u_lion.png",
+  "name": "겁쟁이 사자",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "recruit",
+  "power": 3400
+ },
+ "u_tadpole": {
+  "card": "assets/library/cards/hero/u_tadpole.png",
+  "name": "올챙이",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "recruit",
+  "power": 3350
+ },
+ "u_cheshire": {
+  "card": "assets/library/cards/hero/u_cheshire.png",
+  "name": "체셔 고양이",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "recruit",
+  "power": 3200
+ },
+ "u_gj_cabbage": {
+  "card": "assets/library/cards/hero/u_gj_cabbage.png",
+  "name": "배추 이모",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "guest",
+  "power": 3500
+ },
+ "u_gj_pepper": {
+  "card": "assets/library/cards/hero/u_gj_pepper.png",
+  "name": "고춧가루 삼촌",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "guest",
+  "power": 3400
+ },
+ "u_gj_garlic": {
+  "card": "assets/library/cards/hero/u_gj_garlic.png",
+  "name": "마늘 동생",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "guest",
+  "power": 3300
+ },
+ "u_gs_yeot": {
+  "card": "assets/library/cards/hero/u_gs_yeot.png",
+  "name": "엿 아저씨",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "guest",
+  "power": 3500
+ },
+ "u_gs_rice": {
+  "card": "assets/library/cards/hero/u_gs_rice.png",
+  "name": "찹쌀떡 누나",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "guest",
+  "power": 3300
+ },
+ "u_gs_pencil": {
+  "card": "assets/library/cards/hero/u_gs_pencil.png",
+  "name": "연필 선생",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "guest",
+  "power": 3400
+ },
+ "u_gy_tree": {
+  "card": "assets/library/cards/hero/u_gy_tree.png",
+  "name": "트리 삼촌",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "guest",
+  "power": 3200
+ },
+ "u_gy_soup": {
+  "card": "assets/library/cards/hero/u_gy_soup.png",
+  "name": "떡국 이모",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "guest",
+  "power": 3300
+ },
+ "u_gy_snow": {
+  "card": "assets/library/cards/hero/u_gy_snow.png",
+  "name": "눈사람 동생",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "guest",
+  "power": 3500
+ },
+ "m_dot": {
+  "card": "assets/library/cards/hero/m_dot.png",
+  "name": "동글점",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "monster",
+  "power": 1650
+ },
+ "m_twin": {
+  "card": "assets/library/cards/hero/m_twin.png",
+  "name": "쌍둥이점",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "monster",
+  "power": 1600
+ },
+ "m_ring": {
+  "card": "assets/library/cards/hero/m_ring.png",
+  "name": "굴렁이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "monster",
+  "power": 1800
+ },
+ "m_line": {
+  "card": "assets/library/cards/hero/m_line.png",
+  "name": "뾰족선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "monster",
+  "power": 1700
+ },
+ "m_thorn": {
+  "card": "assets/library/cards/hero/m_thorn.png",
+  "name": "가시선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "monster",
+  "power": 1800
+ },
+ "m_bar": {
+  "card": "assets/library/cards/hero/m_bar.png",
+  "name": "막대선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "monster",
+  "power": 1650
+ },
+ "m_plane": {
+  "card": "assets/library/cards/hero/m_plane.png",
+  "name": "겹겹이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "monster",
+  "power": 1800
+ },
+ "m_wide": {
+  "card": "assets/library/cards/hero/m_wide.png",
+  "name": "넓적이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "monster",
+  "power": 1600
+ },
+ "m_stair": {
+  "card": "assets/library/cards/hero/m_stair.png",
+  "name": "계단이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "monster",
+  "power": 1500
+ },
+ "m_tetra": {
+  "card": "assets/library/cards/hero/m_tetra.png",
+  "name": "삼각뿔 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "monster",
+  "power": 3400
+ },
+ "m_cube": {
+  "card": "assets/library/cards/hero/m_cube.png",
+  "name": "정육면체 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "monster",
+  "power": 3500
+ },
+ "m_octa": {
+  "card": "assets/library/cards/hero/m_octa.png",
+  "name": "팔면체 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "monster",
+  "power": 3350
+ },
+ "m_trio": {
+  "card": "assets/library/cards/hero/m_trio.png",
+  "name": "삼형제점",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "monster",
+  "power": 1800
+ },
+ "m_halo": {
+  "card": "assets/library/cards/hero/m_halo.png",
+  "name": "달무리",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "monster",
+  "power": 1600
+ },
+ "m_drop": {
+  "card": "assets/library/cards/hero/m_drop.png",
+  "name": "물방울이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "monster",
+  "power": 1700
+ },
+ "m_zig": {
+  "card": "assets/library/cards/hero/m_zig.png",
+  "name": "번개선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "monster",
+  "power": 1650
+ },
+ "m_arrow": {
+  "card": "assets/library/cards/hero/m_arrow.png",
+  "name": "화살선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "monster",
+  "power": 1700
+ },
+ "m_saw": {
+  "card": "assets/library/cards/hero/m_saw.png",
+  "name": "톱니선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "monster",
+  "power": 1800
+ },
+ "m_tower": {
+  "card": "assets/library/cards/hero/m_tower.png",
+  "name": "쌓기탑",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "monster",
+  "power": 1800
+ },
+ "m_gate": {
+  "card": "assets/library/cards/hero/m_gate.png",
+  "name": "문짝이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "monster",
+  "power": 1500
+ },
+ "m_tile": {
+  "card": "assets/library/cards/hero/m_tile.png",
+  "name": "타일이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "monster",
+  "power": 1600
+ },
+ "m_dodeca": {
+  "card": "assets/library/cards/hero/m_dodeca.png",
+  "name": "십이면체 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "monster",
+  "power": 3400
+ },
+ "m_cylinder": {
+  "card": "assets/library/cards/hero/m_cylinder.png",
+  "name": "원기둥 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "monster",
+  "power": 3500
+ },
+ "m_cone": {
+  "card": "assets/library/cards/hero/m_cone.png",
+  "name": "원뿔 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "monster",
+  "power": 3350
+ },
+ "m_icosa": {
+  "card": "assets/library/cards/hero/m_icosa.png",
+  "name": "이십면체 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "monster",
+  "power": 3350
+ },
+ "m_prism": {
+  "card": "assets/library/cards/hero/m_prism.png",
+  "name": "삼각기둥 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "monster",
+  "power": 3200
+ },
+ "m_sphere": {
+  "card": "assets/library/cards/hero/m_sphere.png",
+  "name": "구 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "monster",
+  "power": 3500
+ },
+ "m_moebius": {
+  "card": "assets/library/cards/hero/m_moebius.png",
+  "name": "뫼비우스",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "monster",
+  "power": 1650
+ },
+ "m_spiral": {
+  "card": "assets/library/cards/hero/m_spiral.png",
+  "name": "나선이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "monster",
+  "power": 1700
+ },
+ "m_star": {
+  "card": "assets/library/cards/hero/m_star.png",
+  "name": "별다각형",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "monster",
+  "power": 1650
+ },
+ "m_fractal": {
+  "card": "assets/library/cards/hero/m_fractal.png",
+  "name": "겹겹삼각",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "monster",
+  "power": 1500
+ },
+ "m_cross": {
+  "card": "assets/library/cards/hero/m_cross.png",
+  "name": "십자이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "monster",
+  "power": 1700
+ },
+ "m_frame": {
+  "card": "assets/library/cards/hero/m_frame.png",
+  "name": "액자이",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "monster",
+  "power": 1650
+ },
+ "m_pyramid": {
+  "card": "assets/library/cards/hero/m_pyramid.png",
+  "name": "사각뿔 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "monster",
+  "power": 3500
+ },
+ "m_hexprism": {
+  "card": "assets/library/cards/hero/m_hexprism.png",
+  "name": "육각기둥 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "monster",
+  "power": 3400
+ },
+ "m_torus": {
+  "card": "assets/library/cards/hero/m_torus.png",
+  "name": "도넛 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "monster",
+  "power": 3500
+ },
+ "m_cuboid": {
+  "card": "assets/library/cards/hero/m_cuboid.png",
+  "name": "직육면체 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "monster",
+  "power": 3350
+ },
+ "m_hemi": {
+  "card": "assets/library/cards/hero/m_hemi.png",
+  "name": "반구 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "monster",
+  "power": 3300
+ },
+ "m_ellip": {
+  "card": "assets/library/cards/hero/m_ellip.png",
+  "name": "타원체 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "monster",
+  "power": 3400
+ },
+ "m_vertex": {
+  "card": "assets/library/cards/hero/m_vertex.png",
+  "name": "꼭짓점",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "monster",
+  "power": 1700
+ },
+ "m_inter": {
+  "card": "assets/library/cards/hero/m_inter.png",
+  "name": "교점",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "monster",
+  "power": 1650
+ },
+ "m_mid": {
+  "card": "assets/library/cards/hero/m_mid.png",
+  "name": "중점",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "monster",
+  "power": 1600
+ },
+ "m_diag": {
+  "card": "assets/library/cards/hero/m_diag.png",
+  "name": "대각선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "monster",
+  "power": 1700
+ },
+ "m_curve": {
+  "card": "assets/library/cards/hero/m_curve.png",
+  "name": "곡선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "monster",
+  "power": 1650
+ },
+ "m_para": {
+  "card": "assets/library/cards/hero/m_para.png",
+  "name": "평행선",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "monster",
+  "power": 1500
+ },
+ "m_rhomb": {
+  "card": "assets/library/cards/hero/m_rhomb.png",
+  "name": "마름모",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "monster",
+  "power": 1700
+ },
+ "m_trap": {
+  "card": "assets/library/cards/hero/m_trap.png",
+  "name": "사다리꼴",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_pond.png",
+  "route": "monster",
+  "power": 1800
+ },
+ "m_para2": {
+  "card": "assets/library/cards/hero/m_para2.png",
+  "name": "평행사변형",
+  "frame": "A",
+  "unitGrade": 3,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_road.png",
+  "route": "monster",
+  "power": 1600
+ },
+ "m_bipyr": {
+  "card": "assets/library/cards/hero/m_bipyr.png",
+  "name": "쌍뿔 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
+  "route": "monster",
+  "power": 3350
+ },
+ "m_antiprism": {
+  "card": "assets/library/cards/hero/m_antiprism.png",
+  "name": "엇각기둥 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "grass",
+  "scene": "assets/library/oldtale/bg/bg_market.png",
+  "route": "monster",
+  "power": 3500
+ },
+ "m_cuboct": {
+  "card": "assets/library/cards/hero/m_cuboct.png",
+  "name": "육팔면체 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
+  "route": "monster",
+  "power": 3200
+ },
+ "m_stella": {
+  "card": "assets/library/cards/hero/m_stella.png",
+  "name": "별 다면체 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_meadow.png",
+  "route": "monster",
+  "power": 3400
+ },
+ "m_klein": {
+  "card": "assets/library/cards/hero/m_klein.png",
+  "name": "병 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "water",
+  "scene": "assets/library/oldtale/bg/bg_village.png",
+  "route": "monster",
+  "power": 3300
+ },
+ "m_dice": {
+  "card": "assets/library/cards/hero/m_dice.png",
+  "name": "주사위 대장",
+  "frame": "S",
+  "unitGrade": 4,
+  "el": "fire",
+  "scene": "assets/library/oldtale/bg/bg_forest.png",
+  "route": "monster",
+  "power": 3400
+ }
+}

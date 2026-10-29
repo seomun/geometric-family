@@ -1,0 +1,148 @@
+{
+ "sfx/feed_fly": {
+  "sec": 0.96,
+  "mmax": -18.5,
+  "peak": -6.1
+ },
+ "sfx/feed_hit": {
+  "sec": 0.88,
+  "mmax": -15.9,
+  "peak": -5.0
+ },
+ "sfx/feed_levelup": {
+  "sec": 2.09,
+  "mmax": -16.0,
+  "peak": -6.6
+ },
+ "sfx/evolve_club": {
+  "sec": 1.0,
+  "mmax": -16.1,
+  "peak": -5.0
+ },
+ "sfx/evolve_hit": {
+  "sec": 0.86,
+  "mmax": -15.9,
+  "peak": -4.5
+ },
+ "sfx/evolve_flash": {
+  "sec": 1.56,
+  "mmax": -17.0,
+  "peak": -7.5
+ },
+ "sfx/evolve_stamp": {
+  "sec": 1.35,
+  "mmax": -15.5,
+  "peak": -5.4
+ },
+ "sfx/awaken_star": {
+  "sec": 1.02,
+  "mmax": -18.5,
+  "peak": -5.4
+ },
+ "sfx/awaken_open": {
+  "sec": 2.34,
+  "mmax": -16.5,
+  "peak": -6.9
+ },
+ "sfx/awaken_title": {
+  "sec": 1.24,
+  "mmax": -16.5,
+  "peak": -6.3
+ },
+ "sfx/treasure_slide": {
+  "sec": 1.18,
+  "mmax": -18.5,
+  "peak": -6.2
+ },
+ "sfx/treasure_click": {
+  "sec": 1.0,
+  "mmax": -16.5,
+  "peak": -5.0
+ },
+ "sfx/treasure_title": {
+  "sec": 1.37,
+  "mmax": -16.5,
+  "peak": -5.5
+ },
+ "sfx/myth_charge": {
+  "sec": 1.8,
+  "mmax": -17.0,
+  "peak": -5.9
+ },
+ "sfx/myth_flash": {
+  "sec": 2.5,
+  "mmax": -16.0,
+  "peak": -5.0
+ },
+ "sfx/myth_land": {
+  "sec": 2.48,
+  "mmax": -14.5,
+  "peak": -4.2
+ },
+ "sfx/myth_title": {
+  "sec": 2.73,
+  "mmax": -14.5,
+  "peak": -3.0
+ },
+ "sfx/flip_start": {
+  "sec": 0.76,
+  "mmax": -16.7,
+  "peak": -5.0
+ },
+ "sfx/flip_reveal_B": {
+  "sec": 0.93,
+  "mmax": -18.0,
+  "peak": -7.9
+ },
+ "sfx/flip_reveal_A": {
+  "sec": 1.09,
+  "mmax": -17.5,
+  "peak": -5.8
+ },
+ "sfx/flip_reveal_S": {
+  "sec": 1.44,
+  "mmax": -16.5,
+  "peak": -5.4
+ },
+ "sfx/flip_reveal_SS": {
+  "sec": 2.11,
+  "mmax": -15.5,
+  "peak": -5.9
+ },
+ "map": {
+  "feed": {
+   "fly": "feed_fly",
+   "hit": "feed_hit",
+   "levelup": "feed_levelup"
+  },
+  "evolve": {
+   "club": "evolve_club",
+   "hit": "evolve_hit",
+   "flash": "evolve_flash",
+   "stamp": "evolve_stamp"
+  },
+  "awaken": {
+   "star": "awaken_star",
+   "open": "awaken_open",
+   "title": "awaken_title"
+  },
+  "treasure": {
+   "slide": "treasure_slide",
+   "click": "treasure_click",
+   "title": "treasure_title"
+  },
+  "myth": {
+   "charge": "myth_charge",
+   "flash": "myth_flash",
+   "land": "myth_land",
+   "title": "myth_title"
+  },
+  "flip": {
+   "start": "flip_start",
+   "reveal_B": "flip_reveal_B",
+   "reveal_A": "flip_reveal_A",
+   "reveal_S": "flip_reveal_S",
+   "reveal_SS": "flip_reveal_SS"
+  }
+ }
+}

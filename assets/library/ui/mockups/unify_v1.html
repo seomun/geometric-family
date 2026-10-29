@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>원정대 × 10앱 통일 시안 v1</title>
+<!-- gf-asset 2026-10-28 · 메뉴 화면(홈·편성·영웅 키우기·모집)을 10앱 크림 판 위로. 전투 배경·이펙트의 판타지는 그대로.
+     열기: 저장소 루트에서 python -m http.server 8793 후 /assets/library/ui/mockups/unify_v1.html?s=home|party|grow|gacha|tokens -->
+<style>
+@font-face{font-family:Jua;src:url(../fonts/Jua-Regular.ttf)}
+@font-face{font-family:"Gasoek One";src:url(../fonts/GasoekOne-Regular.ttf)}
+:root{--cream:#FFF6E5;--cream2:#FFE9C7;--wood:#DDAE76;--ink:#3A2E39;--ink2:#5B4F60;--line:#6b5443;--green:#4FB26F;--green-d:#2B8353;--gold:#FFC933;--gold-d:#C98F12;--pink:#FF8FA8;--sky:#8FD3F4;--sky-d:#3D8FC0;
+--r-s:14px;--r-m:22px;--r-l:28px;--sh:0 4px 0 rgba(107,84,67,.30);--sh-lg:0 6px 0 rgba(107,84,67,.30);--ring:4px solid var(--line);--font:"Jua","Noto Sans KR","Malgun Gothic",sans-serif;--fire:#E5334A;--water:#3B6FD6;--grass:#3DAE5B}
+*{box-sizing:border-box}body{margin:0;font-family:var(--font);color:var(--ink);background:#EFE3CC}
+.row{display:flex;gap:26px;padding:24px;align-items:flex-start;width:max-content}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px}.col>b{font-size:22px;color:#5b4538}
+.ph{width:390px;height:844px;position:relative;overflow:hidden;border-radius:30px;border:6px solid #3a2e39;background:var(--cream)}
+.cur{width:390px;height:844px;border-radius:30px;border:6px solid #3a2e39;object-fit:cover;display:block}
+/* ── 공용 부품 ── */
+.panel{background:#fff;border:var(--ring);border-radius:var(--r-l);box-shadow:var(--sh-lg)}
+.panel.cream{background:var(--cream)}
+.pill{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px 0 8px;background:#fff;border:var(--ring);border-radius:999px;box-shadow:var(--sh);font-size:19px}
+.pill svg{width:22px;height:22px}
+.btn{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;height:60px;border:0;border-radius:999px;font:inherit;font-size:24px;color:#fff;background:var(--green);box-shadow:0 6px 0 var(--green-d);text-shadow:0 2px 0 rgba(0,0,0,.18)}
+.btn::before{content:"";position:absolute;left:14px;right:14px;top:6px;height:16px;border-radius:999px;background:rgba(255,255,255,.28)}
+.btn small{display:block;font-size:15px;opacity:.95}
+.btn.gold{background:var(--gold);color:var(--ink);box-shadow:0 6px 0 var(--gold-d);text-shadow:none}.btn.sky{background:var(--sky);color:var(--ink);box-shadow:0 6px 0 var(--sky-d);text-shadow:none}
+.btn.white{background:#fff;color:var(--ink);box-shadow:0 5px 0 rgba(107,84,67,.30);border:var(--ring);text-shadow:none}.btn.white::before{display:none}
+.tile{width:76px;height:76px;border-radius:22px;background:#fff;border:var(--ring);box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:15px;position:relative}
+.tile svg{width:34px;height:34px}.tile i{position:absolute;right:-6px;top:-8px;min-width:24px;height:24px;border-radius:12px;background:var(--pink);border:3px solid var(--line);font-style:normal;font-size:14px;display:grid;place-items:center;color:#fff}
+.nav{position:absolute;left:0;right:0;bottom:0;height:84px;background:var(--cream);border-top:var(--ring);display:flex;justify-content:space-around;align-items:flex-end;padding:0 6px 10px;box-shadow:0 -4px 0 rgba(107,84,67,.12)}
+.nav div{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:15px;color:#8b7a6a;width:70px}.nav svg{width:30px;height:30px}
+.nav .on{color:var(--green-d)}.nav .on svg{filter:none}.nav .on::after{content:"";width:34px;height:5px;border-radius:3px;background:var(--green);margin-top:2px}
+.nav .c{position:relative;top:-18px}.nav .c span{width:64px;height:64px;border-radius:50%;background:var(--gold);border:var(--ring);box-shadow:var(--sh);display:grid;place-items:center}.nav .c svg{width:34px;height:34px}.nav .c{color:var(--ink)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 14px 0}
+.top .rb{width:52px;height:52px;border-radius:50%;background:#fff;border:var(--ring);box-shadow:var(--sh);display:grid;place-items:center}.top .rb svg{width:28px;height:28px}
+.h1{font-size:38px;text-align:center;color:var(--ink);letter-spacing:0;-webkit-text-stroke:0;text-shadow:0 3px 0 rgba(255,201,51,.9);margin:6px 0 10px}
+.bar{height:16px;border-radius:9px;background:#EADBC3;border:3px solid var(--line);overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(180deg,#FFA3B5,#FF6F8C)}.bar.g i{background:linear-gradient(180deg,#8FE0A4,#4FB26F)}.bar.x i{background:linear-gradient(180deg,#FFE27A,#F5B50F)}
+.el{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;border:3px solid var(--line)}
+.abs{position:absolute}
+.logo{font-family:"Gasoek One",Jua;font-size:40px;color:var(--gold);-webkit-text-stroke:9px var(--line);paint-order:stroke fill;letter-spacing:1px;text-align:center;line-height:1}
+.sc{background-size:cover;background-position:center}
+</style></head><body><div id="app"></div>
+<script>
+const Q=new URLSearchParams(location.search),which=Q.get('s')||'all';
+const A='../../',H=A+'cards/hero/',C=A+'costumes/';
+const sv=(d,c='currentColor',f='none',w=3.4)=>`<svg viewBox="0 0 32 32" fill="${f}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const I={
+ sword:sv('<path d="M7 25 21 11M21 11V5h6v6h-6"/><path d="M5 27l3-3M9 21l4 4" />','#6b5443'),
+ team:sv('<circle cx="11" cy="11" r="4.5"/><circle cx="22" cy="12" r="3.5"/><path d="M3 26c0-5 4-8 8-8s8 3 8 8M19 20c4-1 9 1 9 6"/>','#6b5443'),
+ gift:sv('<rect x="5" y="13" width="22" height="14" rx="3" fill="#FF8FA8"/><rect x="3" y="9" width="26" height="6" rx="2" fill="#FFC933"/><path d="M16 9v18M16 9c-3-6-9-4-7 0M16 9c3-6 9-4 7 0"/>','#6b5443','none'),
+ bag:sv('<path d="M6 12h20l-1.5 15h-17z" fill="#8FD3F4"/><path d="M11 12V9a5 5 0 0 1 10 0v3"/>','#6b5443'),
+ flag:sv('<path d="M8 28V5"/><path d="M8 6h16l-4 6 4 6H8z" fill="#FF8FA8"/>','#6b5443'),
+ home:sv('<path d="M4 15 16 4l12 11"/><path d="M7 14v13h18V14" fill="#FFE9C7"/><rect x="13" y="19" width="6" height="8" fill="#FF8FA8"/>','#6b5443'),
+ gem:sv('<path d="M16 28 4 12l5-7h14l5 7z" fill="#8FD3F4"/><path d="M4 12h24M12 5l4 23M20 5l-4 23"/>','#6b5443'),
+ coin:sv('<circle cx="16" cy="16" r="12" fill="#FFC933"/><path d="M16 9v14M12 13h6a2.5 2.5 0 0 1 0 5h-6"/>','#6b5443'),
+ key:sv('<circle cx="10" cy="16" r="6" fill="#FFC933"/><path d="M16 16h13M25 16v5M21 16v4"/>','#6b5443'),
+ more:sv('<circle cx="7" cy="16" r="2.4" fill="#6b5443"/><circle cx="16" cy="16" r="2.4" fill="#6b5443"/><circle cx="25" cy="16" r="2.4" fill="#6b5443"/>','#6b5443'),
+ snd:sv('<path d="M5 12h5l7-6v20l-7-6H5z" fill="#8FD3F4"/><path d="M22 11c2 3 2 7 0 10M25 8c4 5 4 11 0 16"/>','#6b5443'),
+ star:sv('<path d="m16 4 3.7 7.6 8.3 1.2-6 5.9 1.4 8.3L16 23l-7.4 4 1.4-8.3-6-5.9 8.3-1.2z" fill="#FFC933"/>','#6b5443'),
+ drop:sv('<path d="M16 4c5 7 8 11 8 15a8 8 0 0 1-16 0c0-4 3-8 8-15z" fill="#fff" stroke="#fff"/>','#fff'),
+ leaf:sv('<path d="M6 26C6 12 14 6 27 6c0 13-6 21-19 21z" fill="#fff" stroke="#fff"/><path d="M6 26 18 14" stroke="#3DAE5B"/>','#fff'),
+ fire:sv('<path d="M16 3c1 6 8 9 8 17a8 8 0 0 1-16 0c0-4 2-6 4-8 0 3 2 4 3 4 0-5-2-8 1-13z" fill="#fff" stroke="#fff"/>','#fff')
+};
+const ELc={fire:'var(--fire)',water:'var(--water)',grass:'var(--grass)'};
+const elb=(e)=>`<span class="el" style="background:${ELc[e]}">${I[{fire:'fire',water:'drop',grass:'leaf'}[e]].replace('<svg','<svg style="width:16px;height:16px"')}</span>`;
+const nav=(on)=>`<div class="nav">${[['sword','원정'],['team','편성']].map(([k,t])=>`<div class="${on===t?'on':''}">${I[k]}<span>${t}</span></div>`).join('')}<div class="c"><span>${I.gift}</span>소환</div>${[['bag','가방'],['flag','미션']].map(([k,t])=>`<div class="${on===t?'on':''}">${I[k]}<span>${t}</span></div>`).join('')}</div>`;
+const topb=(mid)=>`<div class="top"><div class="rb">${I.home}</div>${mid||`<span class="pill">${I.gem}1,500</span>`}<div class="rb">${I.snd}</div></div>`;
+const card=(id,w)=>`<img src="${H}${id}.png" style="width:${w}px;display:block;">`;
+const S={};
+S.home=()=>`<div class="ph">
+ <div class="abs" style="left:12px;right:12px;top:12px;display:flex;gap:8px;align-items:center"><span class="pill" style="padding:0 10px;font-size:16px">⚔ <b style="font-weight:400;color:var(--green-d)">101</b></span><span style="flex:1"></span><span class="pill">${I.gem}1,500</span><span class="pill">${I.coin}0</span><span class="pill">${I.key}3</span></div>
+ <div class="abs panel sc" style="left:14px;right:14px;top:62px;height:270px;overflow:hidden;background-image:url(../../../../games/expedition/ui/art/splash_540.jpg);background-size:150%;background-position:50% 74%">
+  <div class="abs" style="inset:0;background:linear-gradient(180deg,rgba(255,246,229,.0) 40%,rgba(255,246,229,.55))"></div>
+  <div class="logo abs" style="left:0;right:0;top:20px">기하학 원정대</div>
+  <img class="abs" src="${C}nemo_dad/good_saw_a.png" style="left:6px;bottom:2px;width:130px"><img class="abs" src="${C}wife/good_wave_a.png" style="left:118px;bottom:0;width:150px"><img class="abs" src="../../../dong_dad/calm.png" style="right:6px;bottom:2px;width:128px">
+ </div>
+ <div class="abs" style="left:14px;right:14px;top:348px;display:flex;justify-content:space-between"><div class="tile">${I.flag}미션<i>5</i></div><div class="tile">${I.key}던전</div><div class="tile">${I.gift}정찰</div><div class="tile">${I.more}더보기<i>!</i></div></div>
+ <div class="abs panel" style="left:14px;right:14px;top:438px;height:46px;display:flex;align-items:center;justify-content:center;font-size:17px;border-radius:23px;background:var(--cream2);box-shadow:var(--sh)">🎁 오늘 출석 1일차 선물이 기다려요 · <span style="color:var(--gold-d)">&nbsp;🪙1,000</span></div>
+ <div class="abs panel" style="left:14px;right:14px;top:496px;padding:12px 16px;display:flex;gap:14px;align-items:center"><div style="width:72px;height:72px;border-radius:20px;background:var(--cream2);border:3px solid var(--line);display:grid;place-items:center;font-size:42px">🐷</div><div style="flex:1"><div style="font-size:15px;color:var(--ink2)">다음에 무찌를 적</div><div style="font-size:25px;line-height:1.1">넓적이 외 3</div><div class="bar" style="margin:6px 0 4px"><i style="width:100%"></i></div><div style="font-size:17px">내 전투력 <b style="font-weight:400;color:var(--green-d)">101</b> <span style="opacity:.6">vs</span> 적 <b style="font-weight:400;color:var(--fire)">147</b></div></div></div>
+ <div class="abs" style="left:34px;right:34px;top:628px"><div class="btn" style="height:92px;font-size:38px;border-radius:46px;box-shadow:0 8px 0 var(--green-d);flex-direction:column;gap:0;line-height:1.05">싸우러 가기<small style="font-size:16px">15. 별 따는 고갯길</small></div></div>
+ ${nav('원정')}</div>`;
+S.party=()=>`<div class="ph">${topb()}<div class="h1">편성 · 육성</div>
+ <div style="display:flex;gap:10px;padding:0 14px"><div class="btn white" style="flex:1;height:52px;font-size:20px">편성 저장 ▾</div><div class="btn" style="flex:1.25;height:52px;font-size:21px">${I.star.replace('<svg','<svg style="width:26px;height:26px"')}자동 편성</div></div>
+ <div class="panel" style="margin:12px 14px 0;padding:10px 12px"><div style="font-size:16px">다음 원정 <b style="font-weight:400">15. 별 따는 고갯길</b> · 유리한 친구 4/5</div><div style="display:flex;gap:8px;margin-top:6px"><span class="pill" style="height:32px;font-size:15px;box-shadow:none">${elb('water')}적 2 · <span style="color:var(--green-d)">유리</span></span><span class="pill" style="height:32px;font-size:15px;box-shadow:none">${elb('grass')}적 2 · <span style="color:var(--green-d)">유리</span></span></div></div>
+ <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;padding:0 8px">${['u_nemo_dad','u_semo_wife','u_dong_dad','u_nemo_mom','u_baby'].map((id,i)=>`<div style="position:relative;${i===0?'transform:translateY(-6px)':''}">${card(id,64)}${i===0?'<div class="abs" style="left:-6px;right:-6px;top:-6px;bottom:-6px;border:4px solid var(--pink);border-radius:14px"></div>':''}</div>`).join('')}</div>
+ <div class="panel" style="margin:14px 14px 0;border-style:dashed;border-radius:22px;padding:12px;text-align:center;font-size:17px;color:var(--ink2);box-shadow:none;background:var(--cream)">아직 못 만난 친구 138명 ▾</div>
+ <div class="abs panel" style="left:12px;right:12px;bottom:96px;padding:14px 16px"><div style="display:flex;gap:12px;align-items:center"><div style="width:78px">${card('u_nemo_dad',78)}</div><div style="flex:1"><div style="font-size:25px;line-height:1.1">네모 아빠 <span style="color:var(--gold-d);font-size:20px">★★★</span></div><div style="font-size:16px;color:var(--ink2);margin-top:2px">Lv 1 · 방어 1 · ${elb('grass')} 풀 속성</div><div style="font-size:15px;color:var(--ink2);margin-top:4px;line-height:1.3">앞에서 맞아 줘요. 체력·방어 최고, 초록 구슬</div></div></div><div style="display:flex;gap:10px;margin-top:12px"><div class="btn sky" style="flex:1;height:54px;font-size:22px">키우기</div><div class="btn gold" style="flex:1;height:54px;font-size:22px">레벨업 ${I.coin.replace('<svg','<svg style="width:26px;height:26px"')} 25</div></div><div style="text-align:center;font-size:15px;color:var(--ink2);margin-top:12px">원정대 전투력 <b style="font-weight:400;color:var(--green-d)">101</b></div></div>
+ ${nav('편성')}</div>`;
+S.grow=()=>`<div class="ph">${topb('<span class="pill">네모 아빠 Lv 1</span>')}
+ <div class="abs" style="left:0;right:0;top:74px;height:300px;overflow:hidden"><svg viewBox="0 0 390 330" width="390" height="330" style="position:absolute;inset:0"><defs><radialGradient id="rg" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".95"/><stop offset="1" stop-color="#FFF6E5" stop-opacity="0"/></radialGradient></defs><circle cx="195" cy="170" r="190" fill="url(#rg)"/>${Array.from({length:12},(_,i)=>{const a=i/12*6.283;return `<path d="M195 170L${195+Math.cos(a)*220} ${170+Math.sin(a)*220}L${195+Math.cos(a+.12)*220} ${170+Math.sin(a+.12)*220}Z" fill="#FFD866" opacity=".16"/>`}).join('')}</svg>
+  <div class="abs" style="left:50%;top:6px;transform:translateX(-50%)">${card('u_nemo_dad',208)}</div></div>
+ <div class="abs" style="left:14px;right:14px;top:384px"><div style="display:flex;justify-content:space-between;font-size:18px;margin-bottom:4px"><span>경험치</span><span style="color:var(--gold-d)">128 / 200</span></div><div class="bar x" style="height:20px"><i style="width:64%"></i></div></div>
+ <div class="abs" style="left:14px;right:14px;top:444px;display:flex;gap:10px;justify-content:space-between">${[['slot_feed','먹이기'],['slot_pair','단짝'],['slot_treasure','보물'],['slot_evolve','진화']].map(([f,t],i)=>`<div class="panel" style="width:82px;padding:8px 4px 6px;text-align:center;font-size:15px;border-radius:22px;${i===3?'opacity:.55':''}"><img src="../../cards/fx/art/${f}.svg" style="width:54px;height:54px"><div>${t}</div></div>`).join('')}</div>
+ <div class="abs panel cream" style="left:14px;right:14px;top:566px;padding:10px 14px"><div style="font-size:17px;margin-bottom:6px">내 보따리</div><div style="display:flex;gap:12px;align-items:center;font-size:15px"><img src="../../cards/fx/art/egg_s.svg" style="width:40px"><span>콩떡 ×6</span><img src="../../cards/fx/art/egg_m.svg" style="width:44px"><span>꿀떡 ×2</span><img src="../../cards/fx/art/egg_l.svg" style="width:48px"><span>무지개떡 ×0</span></div></div>
+ <div class="abs" style="left:14px;right:14px;top:668px;display:flex;gap:12px"><div class="btn" style="flex:1;height:58px">먹이기</div><div class="btn gold" style="flex:1;height:58px">진화 ★3→★4</div></div>
+ ${nav('편성')}</div>`;
+S.gacha=()=>`<div class="ph">${topb()}<div class="h1" style="margin-top:14px">아기돼지 마을 모집</div>
+ <div style="display:flex;gap:12px;justify-content:center"><div class="btn" style="width:120px;height:50px;font-size:22px">기본</div><div class="btn white" style="width:120px;height:50px;font-size:22px">2탄</div></div>
+ <div class="panel" style="margin:14px 14px 0;padding:14px;position:relative"><span class="abs pill" style="right:12px;top:-16px;height:32px;font-size:14px;background:var(--cream2)">기간 상시 모집</span><div style="display:flex;gap:12px;align-items:center"><div style="width:92px">${card('u_nolbu_husband',92)}</div><div style="flex:1;line-height:1.3"><div style="font-size:23px">픽업 <span style="color:var(--gold-d)">★5</span> 놀부 세모 남편</div><div style="font-size:16px;color:var(--ink2)">불 속성 · 강한 공격</div><div style="font-size:15px;color:var(--ink2)">★5 확률 2.5% 중 절반이 픽업</div></div></div></div>
+ <div class="panel cream" style="margin:12px 14px 0;padding:8px 14px"><div style="display:flex;justify-content:space-between;font-size:16px;margin-bottom:4px"><span>천장 · 77회 안에 ★5 확정</span><b style="font-weight:400">0 / 77</b></div><div class="bar x"><i style="width:2%"></i></div></div>
+ <div style="display:flex;gap:12px;margin:16px 14px 0"><div class="btn sky" style="flex:1;height:70px;font-size:26px">1회 ${I.gem.replace('<svg','<svg style="width:28px;height:28px"')} 150</div><div class="btn gold" style="flex:1.1;height:70px;font-size:26px">10회 ${I.gem.replace('<svg','<svg style="width:28px;height:28px"')} 1,425<small style="position:absolute;bottom:6px;font-size:13px">★4 이상 1명 보장</small></div></div>
+ <div style="display:flex;gap:12px;margin:18px 14px 0"><div class="btn white" style="flex:1;height:50px;font-size:21px">확률 공개</div><div class="btn white" style="flex:1;height:50px;font-size:21px">내 기록</div></div>
+ <div style="margin:12px 18px 0;font-size:13px;line-height:1.5;color:var(--ink2)">확률형 아이템 포함 · 유형: 캡슐형(천장 있음) · 확률은 「확률 공개」에서 등급별·개별로 볼 수 있어요<br>미성년자가 법정대리인의 동의 없이 결제하면 취소할 수 있어요<br>디지털 재화는 사용·소비한 뒤에는 청약철회가 제한될 수 있어요</div>
+ ${nav('소환')}</div>`;
+const NAMES={home:'홈',party:'편성',grow:'영웅 키우기',gacha:'모집'},CUR={home:'home',party:'party',grow:'grow',gacha:'gacha'};
+const T=()=>`<div style="width:1500px;padding:30px 36px;background:var(--cream);font-size:18px;line-height:1.5"><div style="font-size:36px;margin-bottom:8px">공용 토큰 표 — 원정대 메뉴 × 10앱 (통일안 v1)</div><div style="color:var(--ink2);margin-bottom:16px">원칙: 메뉴 화면은 크림 판 위(10앱과 같은 집안) · 전투 배경·이펙트·유물 카드의 판타지는 그대로 · 글꼴·단추·판·카드 틀·아이콘 선·소리 톤은 한 벌</div>
+<table style="border-collapse:collapse;width:100%"><tr style="background:#6b5443;color:#fff"><th style="padding:8px;width:150px">항목</th><th>지금 원정대</th><th>10앱</th><th>통일안 (원정대 메뉴가 따름)</th></tr>
+${[['바탕 색','남색~보라 그라데이션 #0B1030 #2A1763','크림 #FFF6E5 · 바닥 나무색 #DDAE76','<span class="sw" style="background:#FFF6E5"></span>크림 #FFF6E5 · 보조 #FFE9C7 · 바닥 #DDAE76'],
+['글자 색','밝은 흰·금 #F4EEFF #FFE9A6','잉크 #3A2E39 · 보조 #5B4F60','<span class="sw" style="background:#3A2E39"></span>잉크 #3A2E39 · 보조 #5B4F60 (판 위 어두운 글자)'],
+['포인트 색','금 #FFC94A · 보라 #6A2BA8','초록 #6CCB8A · 금 #FFC933 · 분홍 #FF8FA8 · 하늘 #8FD3F4','<span class="sw" style="background:#4FB26F"></span>주 단추 초록 #4FB26F/#2B8353 · <span class="sw" style="background:#FFC933"></span>금 #FFC933 · <span class="sw" style="background:#FF8FA8"></span>분홍 · <span class="sw" style="background:#8FD3F4"></span>하늘'],
+['속성 색','불 #FF4D7A 물 #4D8BFF 풀 #3DAE5B','(카드 앨범) 불 #E5334A 물 #3B6FD6 풀 #3DAE5B','<span class="sw" style="background:#E5334A"></span>불 #E5334A · <span class="sw" style="background:#3B6FD6"></span>물 #3B6FD6 · <span class="sw" style="background:#3DAE5B"></span>풀 #3DAE5B (카드와 동일)'],
+['선(외곽) 색·굵기','금 #B07A12 2px','갈색 #6b5443 4px','갈색 #6b5443 <b>4px</b> (판·원형 단추·칸) · 작은 칩은 3px'],
+['글꼴','제목 Black Han Sans · 본문 Noto Sans KR · 로고 Gasoek One','Jua (둥근 손글씨)','<b>Jua</b> 하나로 제목·본문·숫자 · 로고만 Gasoek One(갈색 외곽 9px + 금색 면) · 법정 고지는 Noto Sans KR'],
+['글자 크기','15~40px 불규칙','본문 20 · 제목 24~30 · 큰 숫자 34','제목 38 · 단추 22~26 · 본문 17~20 · 작은 글 13~15(고지·부가만)'],
+['판(패널)','어두운 유리 + 금 이중 테 + 모서리 장식','흰/크림 판 + 갈색 4px + 아래 그림자 6px','흰 판 #fff · 갈색 4px · 반경 <b>28</b> · 그림자 0 6px 0 rgba(107,84,67,.30) · 장식 없음'],
+['단추','금속 금색 사각 + 광','둥근 알약, 색 면 + 아래 두꺼운 그림자','알약(반경 999) · 색 면 + 윗면 하이라이트 · 아래 슬랩 6px(색의 진한 톤) · 눌림 3px · 높이 50~92'],
+['원형·정사각 단추','남색 + 금테','흰 원/둥근 사각 + 갈색 링 4px','흰 면 · 갈색 링 4px · 그림자 0 4px 0 · 터치 ≥ 64px(보이는 크기는 52~76)'],
+['반경','12px','14 · 22 · 28 · 알약','작게 14 · 중간 22 · 판 28 · 알약 999 (이 4개만)'],
+['아이콘','금 외곽 + 어두운 면, 선 2px 얇음','갈색 두꺼운 선 + 파스텔 면','선 3.4/32 (표시 크기 기준 약 3px) · 둥근 끝 · 갈색 #6b5443 · 면은 파스텔(분홍·금·하늘). 속성 문양만 흰 선'],
+['카드 틀','--gfc 틀(원정대 도감만 사용)','--gfc 앨범 틀','<b>--gfc 한 벌</b>: 3:4 · 반경 14 · 크림 #FFF6E5 · B 나무 / A 구리 / S 은 / SS 금 / SSS 무지개 — 편성·모집·진화 어디서나 이 카드'],
+['하단 메뉴','어두운 판 + 금 선 + 가운데 소환 원','(홈 위주, 하단 메뉴 없음)','크림 바 + 갈색 4px 윗선 · 선택 칸은 초록 밑줄 · 가운데 소환은 금색 원(갈색 링)'],
+['소리(메뉴·단추)','게임 전체 성격(밝은 신스·금속성)','게임 소리 v4: 따뜻·풍성·날카로움 없음','메뉴·단추·보상은 v4 톤(실제 악기, 한 조 다장조). 전투·신화 연출만 오케스트라 팡파르'],
+['판타지로 남기는 것','—','—','전투 배경 · 스킬 이펙트 · 신화 카드 등장 · 로고 금박 · 홈 키아트 창(크림 판 안에 액자처럼)']].map((r)=>`<tr>${r.map((c,i)=>`<td style="padding:7px 10px;border:2px solid #d8c4a2;${i===0?'background:#FFE9C7;white-space:nowrap':''}">${c}</td>`).join('')}</tr>`).join('')}</table>
+<style>.sw{display:inline-block;width:16px;height:16px;border-radius:4px;border:2px solid #6b5443;vertical-align:-2px;margin-right:4px}</style></div>`;
+const app=document.getElementById('app');
+if(which==='tokens')app.innerHTML=T();
+else (which==='all'?Object.keys(NAMES):[which]).forEach((k)=>{const d=document.createElement('div');d.className='row';d.id='r_'+k;d.innerHTML=`<div class="col"><b>지금 · ${NAMES[k]}</b><img class="cur" src="../../../../notes/snapshots/unify_cur_${CUR[k]}.png"></div><div class="col"><b>통일 시안 v1 · ${NAMES[k]}</b>${S[k]()}</div>`;app.appendChild(d);});
+</script></body></html>

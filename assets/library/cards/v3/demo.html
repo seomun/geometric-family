@@ -1,0 +1,25 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>신화 카드 v3 시안</title>
+<link rel="stylesheet" href="../v1/gfcard.css"><link rel="stylesheet" href="../v2/gfcard2.css"><link rel="stylesheet" href="myth.css">
+<style>
+@font-face{font-family:Jua;src:url(../../ui/fonts/Jua-Regular.ttf)}@font-face{font-family:"Gasoek One";src:url(../../ui/fonts/GasoekOne-Regular.ttf)}
+body{margin:0;background:#F6EBD3;font-family:Jua,sans-serif;color:#4A3426}
+section{padding:26px 30px;display:inline-block;background:#F6EBD3}h2{margin:0 0 18px;font-weight:400;font-size:26px}.row{display:flex;gap:30px;align-items:flex-end}
+.cap{text-align:center;font-size:18px;margin-top:10px;line-height:1.3}.cell{display:flex;flex-direction:column;align-items:center}
+.fw{width:240px;height:350px;overflow:hidden;position:relative;border-radius:14px}.fw .stage{position:absolute;left:0;top:0;transform:scale(.667);transform-origin:0 0;width:360px;height:525px}
+.film{display:flex;gap:10px}.big{width:100%}
+</style><body>
+<script src="../v1/gfcard.js"></script><script src="../v1/gfcard_art.js"></script><script src="../v2/gfcard2.js"></script><script src="myth_art.js"></script><script src="myth_art2.js"></script><script src="myth.js"></script>
+<script>
+const E=s=>document.body.insertAdjacentHTML('beforeend',s),P='../../costumes/',H=GFCard2.hero;
+E(`<section id="myth"><h2>SSS 신화 영웅 4명 — 포세이돈 · 청룡 · 손오공(서유기) · 아누비스</h2><div class="row" style="padding-top:44px">${['poseidon','dragon','wukong','anubis'].map(k=>`<div class="cell">${MythCard.card(k,250)}<div class="cap">${MythCard.M[k].name} · ${MythCard.M[k].abil}</div></div>`).join('')}</div></section><br>`);
+E(`<section id="cmp"><h2>비교 — 가족 영웅(v2) 과 신화 영웅(v3)이 나란히</h2><div class="row" style="padding-top:44px">
+<div class="cell">${H({g:'S',el:'water',name:'네모 아이',img:P+'nemo_kids/kid1_happy.png',power:3150,scene:'forest',w:200})}<div class="cap">가족 S</div></div>
+<div class="cell">${H({g:'SS',el:'grass',name:'네모 엄마',img:P+'nemo_mom/good_wave_a.png',power:6200,scene:'cloud',w:200})}<div class="cap">가족 SS</div></div>
+<div class="cell">${H({g:'SSS',el:'fire',name:'세모 엄마',img:P+'wife/surprise_jump.png',power:12800,scene:'newhouse',w:200})}<div class="cap">가족 SSS(v2)</div></div>
+<div class="cell">${MythCard.card('poseidon',200)}<div class="cap">신화 SSS</div></div>
+<div class="cell">${MythCard.card('wukong',200)}<div class="cap">신화 SSS</div></div></div></section><br>`);
+E(`<section id="myth2"><h2>신화 영웅 2차 — 구미호 · 해태 · 삼족오(한국 신화) · 아테나(그리스)</h2><div class="row" style="padding-top:44px">${['gumiho','haetae','samjoko','athena'].map(k=>`<div class="cell">${MythCard.card(k,250)}<div class="cap">${MythCard.M[k].name} · ${MythCard.M[k].abil}</div></div>`).join('')}</div></section><br>`);
+const T=[0,.45,.8,.95,1.3,2.2];
+E(`<section id="gacha"><h2>뽑기에서 SSS 신화 영웅이 나오는 순간 (2.4초 · 탭하면 건너뜀) — 손오공</h2><div class="film">${T.map((t,i)=>`<div class="cell"><div class="fw"><div class="stage" id="g${i}"></div></div><div class="cap">${t.toFixed(2)}s</div></div>`).join('')}</div></section>`);
+window.buildG=()=>T.forEach((t,i)=>MythCard.still(document.getElementById('g'+i),{k:'wukong'},t));
+</script></body></html>

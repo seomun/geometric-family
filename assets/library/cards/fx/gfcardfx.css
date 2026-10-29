@@ -1,0 +1,21 @@
+/* 영웅 키우기 화면 부품 (D68 S2) — 칸·경험치 막대·연출 무대. 변수 --gfc-* 와 같은 갈색 톤. 움직임은 transform/opacity 만. */
+.fx-slots{display:flex;justify-content:space-around;gap:6px;padding:0 10px}
+.fx-slot{--sz:76px;position:relative;width:var(--sz);text-align:center;font-family:'Jua',system-ui,sans-serif;color:#4A3426;font-size:calc(var(--sz) * .22);line-height:1.1;-webkit-tap-highlight-color:transparent}
+.fx-slot .ic{position:relative;width:var(--sz);height:var(--sz);border-radius:calc(var(--sz) * .3);margin:0 auto .3em;background:linear-gradient(180deg,#FFFBEF,#FFF0D0);box-shadow:inset 0 0 0 3px #6b5443,0 4px 0 #d9c7a3;display:flex;align-items:center;justify-content:center;transition:transform .12s}
+.fx-slot:active .ic{transform:translateY(3px);box-shadow:inset 0 0 0 3px #6b5443,0 1px 0 #d9c7a3}
+.fx-slot .ic svg{width:78%;height:78%;display:block}
+.fx-slot.on .ic{background:linear-gradient(180deg,#FFF3B8,#FFD86A)}
+.fx-slot.lock .ic{background:#EFE6D4}.fx-slot.lock .ic svg:first-child{opacity:.28;filter:none}
+.fx-slot .lk{position:absolute;right:-6px;bottom:-6px;width:38%;height:38%;z-index:2}.fx-slot .lk svg{width:100%;height:100%}
+.fx-slot .new{position:absolute;right:-4px;top:-6px;min-width:1.5em;height:1.5em;padding:0 .3em;border-radius:1em;background:#E5334A;color:#fff;font-size:.85em;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #fff;z-index:2;animation:fxpulse 1.4s ease-in-out infinite}
+@keyframes fxpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+/* 경험치 막대 */
+.fx-xp{--w:260px;position:relative;width:var(--w);height:26px;border-radius:13px;background:#EADFC8;box-shadow:inset 0 0 0 3px #6b5443;margin:0 auto;overflow:hidden}
+.fx-xp>i{position:absolute;left:3px;top:3px;bottom:3px;width:calc((100% - 6px) * var(--p,0));border-radius:10px;background:linear-gradient(90deg,#8fe39a,#F6C21B);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.fx-xp>i::after{content:"";position:absolute;right:2px;top:2px;width:10px;height:6px;border-radius:3px;background:rgba(255,255,255,.7)}
+.fx-xp-t{text-align:center;font:400 19px Jua,system-ui,sans-serif;color:#4A3426;margin-top:4px}
+.fx-xp.lv>i{background:linear-gradient(90deg,#FFB347,#FF6B8A,#A98BFF)}
+/* 연출 무대: 탭하면 건너뜀. 폰 비율 무대 하나에 요소를 절대 위치로 올린다 */
+.fx-stage{position:relative;overflow:hidden;touch-action:manipulation;user-select:none}
+.fx-stage .fx-el{position:absolute;will-change:transform,opacity}
+@media (prefers-reduced-motion:reduce){.fx-slot .new{animation:none}}

@@ -1,0 +1,2187 @@
+{
+ "u_nemo_dad": {
+  "name": "네모 아빠",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_nemo_dad_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_nemo_dad_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_nemo_dad_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_nemo_dad_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_nemo_dad_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_nemo_dad_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_semo_wife": {
+  "name": "세모 아내",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_semo_wife_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_semo_wife_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_semo_wife_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_semo_wife_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_semo_wife_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_semo_wife_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_dong_dad": {
+  "name": "동그라미 아빠",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_dong_dad_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_dong_dad_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_dong_dad_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_dong_dad_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_dong_dad_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_dong_dad_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_nemo_mom": {
+  "name": "네모 엄마",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_nemo_mom_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_nemo_mom_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_nemo_mom_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_nemo_mom_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_nemo_mom_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_nemo_mom_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_baby": {
+  "name": "막둥이",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_baby_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_baby_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_baby_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_baby_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_baby_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_baby_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "u_kid3": {
+  "name": "세찌",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_kid3_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid3_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_kid3_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid3_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_kid3_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid3_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_kid1": {
+  "name": "하나",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_kid1_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid1_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_kid1_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid1_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_kid1_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid1_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "u_kid2": {
+  "name": "두리",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_kid2_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid2_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_kid2_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid2_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_kid2_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_kid2_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_husband": {
+  "name": "세모 남편",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_husband_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_husband_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_husband_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_husband_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_husband_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_husband_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_grandma": {
+  "name": "네모 할머니",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_grandma_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_grandma_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_grandma_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_grandma_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_grandma_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_grandma_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_nolbu_husband": {
+  "name": "놀부 세모 남편",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_nolbu_husband_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_nolbu_husband_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_nolbu_husband_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_nolbu_husband_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_nolbu_husband_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_nolbu_husband_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_heungbu_dad": {
+  "name": "흥부 네모 아빠",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_heungbu_dad_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_heungbu_dad_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_heungbu_dad_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_heungbu_dad_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_heungbu_dad_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_heungbu_dad_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_sun_hana": {
+  "name": "해님 하나",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_sun_hana_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_sun_hana_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_sun_hana_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_sun_hana_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_sun_hana_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_sun_hana_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_puss_wife": {
+  "name": "장화 신은 세모 아내",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_puss_wife_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_puss_wife_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_puss_wife_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_puss_wife_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_puss_wife_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_puss_wife_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_woodcutter_dad": {
+  "name": "나무꾼 네모 아빠",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_woodcutter_dad_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_woodcutter_dad_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_woodcutter_dad_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_woodcutter_dad_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_woodcutter_dad_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_woodcutter_dad_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_bear_dong": {
+  "name": "큰 곰 동그라미 아빠",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_bear_dong_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_bear_dong_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_bear_dong_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_bear_dong_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_bear_dong_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_bear_dong_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_ant_mom": {
+  "name": "개미 네모 엄마",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_ant_mom_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_ant_mom_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_ant_mom_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_ant_mom_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_ant_mom_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_ant_mom_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_sinseon": {
+  "name": "신선",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_sinseon_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_sinseon_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_sinseon_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_sinseon_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_sinseon_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_sinseon_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "u_simcheong": {
+  "name": "심청",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_simcheong_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_simcheong_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_simcheong_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_simcheong_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_simcheong_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_simcheong_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_yongwang": {
+  "name": "용왕",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_yongwang_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_yongwang_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_yongwang_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_yongwang_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_yongwang_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_yongwang_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_gumiho": {
+  "name": "구미호",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gumiho_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gumiho_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gumiho_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gumiho_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gumiho_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gumiho_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_samsin": {
+  "name": "삼신할머니",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_samsin_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_samsin_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_samsin_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_samsin_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_samsin_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_samsin_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_bari": {
+  "name": "바리공주",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_bari_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_bari_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_bari_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_bari_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_bari_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_bari_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_arthur": {
+  "name": "아서왕",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_arthur_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_arthur_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_arthur_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_arthur_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_arthur_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_arthur_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_merlin": {
+  "name": "멀린",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_merlin_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_merlin_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_merlin_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_merlin_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_merlin_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_merlin_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_mermaid": {
+  "name": "인어",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_mermaid_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_mermaid_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_mermaid_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_mermaid_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_mermaid_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_mermaid_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_snowqueen": {
+  "name": "눈의 여왕",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_snowqueen_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_snowqueen_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_snowqueen_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_snowqueen_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_snowqueen_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_snowqueen_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_wukong": {
+  "name": "손오공",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_wukong_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_wukong_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_wukong_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_wukong_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_wukong_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_wukong_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_heracles": {
+  "name": "헤라클레스",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_heracles_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_heracles_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_heracles_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_heracles_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_heracles_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_heracles_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_thor": {
+  "name": "토르",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_thor_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_thor_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_thor_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_thor_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_thor_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_thor_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_monalisa": {
+  "name": "모나리자",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_monalisa_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_monalisa_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_monalisa_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_monalisa_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_monalisa_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_monalisa_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "u_pearlgirl": {
+  "name": "진주 귀고리 소녀",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_pearlgirl_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_pearlgirl_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_pearlgirl_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_pearlgirl_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_pearlgirl_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_pearlgirl_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_sunflower": {
+  "name": "해바라기",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_sunflower_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_sunflower_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_sunflower_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_sunflower_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_sunflower_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_sunflower_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_starrynight": {
+  "name": "별이 빛나는 밤",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_starrynight_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_starrynight_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_starrynight_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_starrynight_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_starrynight_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_starrynight_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "u_greatwave": {
+  "name": "큰 파도",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_greatwave_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_greatwave_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_greatwave_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_greatwave_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_greatwave_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_greatwave_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_gj_cabbage": {
+  "name": "배추 이모",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gj_cabbage_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_cabbage_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gj_cabbage_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_cabbage_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gj_cabbage_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_cabbage_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_gj_pepper": {
+  "name": "고춧가루 삼촌",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gj_pepper_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_pepper_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gj_pepper_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_pepper_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gj_pepper_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_pepper_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_gj_garlic": {
+  "name": "마늘 동생",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gj_garlic_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_garlic_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gj_garlic_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_garlic_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gj_garlic_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gj_garlic_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_gs_yeot": {
+  "name": "엿 아저씨",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gs_yeot_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_yeot_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gs_yeot_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_yeot_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gs_yeot_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_yeot_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_gs_rice": {
+  "name": "찹쌀떡 누나",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gs_rice_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_rice_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gs_rice_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_rice_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gs_rice_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_rice_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_gs_pencil": {
+  "name": "연필 선생",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gs_pencil_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_pencil_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gs_pencil_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_pencil_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gs_pencil_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gs_pencil_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_gy_tree": {
+  "name": "트리 삼촌",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gy_tree_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_tree_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gy_tree_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_tree_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gy_tree_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_tree_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "u_gy_soup": {
+  "name": "떡국 이모",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gy_soup_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_soup_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gy_soup_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_soup_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gy_soup_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_soup_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_gy_snow": {
+  "name": "눈사람 동생",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gy_snow_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_snow_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gy_snow_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_snow_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gy_snow_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gy_snow_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_dokkaebi": {
+  "name": "도깨비",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_dokkaebi_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_dokkaebi_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_dokkaebi_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_dokkaebi_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_dokkaebi_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_dokkaebi_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_wind": {
+  "name": "바람 친구",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_wind_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_wind_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_wind_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_wind_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_wind_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_wind_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_tiger": {
+  "name": "바람 호랑이",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_tiger_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_tiger_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_tiger_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_tiger_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_tiger_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_tiger_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_ajumma": {
+  "name": "깐깐한 아주머니",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_ajumma_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_ajumma_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_ajumma_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_ajumma_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_ajumma_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_ajumma_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_phantom": {
+  "name": "허깨비 도둑",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_phantom_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_phantom_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_phantom_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_phantom_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_phantom_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_phantom_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_giant": {
+  "name": "구름 거인",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_giant_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_giant_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_giant_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_giant_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_giant_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_giant_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_wonnim": {
+  "name": "욕심쟁이 원님",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_wonnim_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_wonnim_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_wonnim_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_wonnim_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_wonnim_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_wonnim_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_skyelder": {
+  "name": "하늘 어른",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_skyelder_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_skyelder_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_skyelder_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_skyelder_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_skyelder_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_skyelder_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_granny": {
+  "name": "과자집 할머니",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_granny_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_granny_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_granny_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_granny_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_granny_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_granny_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_wizard": {
+  "name": "변신 마법사",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_wizard_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_wizard_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_wizard_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_wizard_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_wizard_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_wizard_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_deer": {
+  "name": "사슴",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_deer_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_deer_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_deer_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_deer_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_deer_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_deer_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_gatekeeper": {
+  "name": "용궁 문지기",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_gatekeeper_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_gatekeeper_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_gatekeeper_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_gatekeeper_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_gatekeeper_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_gatekeeper_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_snake": {
+  "name": "구렁이",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_snake_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_snake_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_snake_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_snake_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_snake_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_snake_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_persimmon_tiger": {
+  "name": "호랑이",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_persimmon_tiger_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_persimmon_tiger_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_persimmon_tiger_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_persimmon_tiger_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_persimmon_tiger_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_persimmon_tiger_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_wolf": {
+  "name": "늑대",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_wolf_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_wolf_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_wolf_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_wolf_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_wolf_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_wolf_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_fox": {
+  "name": "여우",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_fox_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_fox_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_fox_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_fox_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_fox_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_fox_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_snowcrow": {
+  "name": "눈 까마귀",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_snowcrow_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_snowcrow_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_snowcrow_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_snowcrow_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_snowcrow_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_snowcrow_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_cicada": {
+  "name": "매미",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_cicada_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_cicada_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_cicada_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_cicada_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_cicada_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_cicada_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_crane": {
+  "name": "두루미",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_crane_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_crane_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_crane_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_crane_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_crane_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_crane_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_sparrow": {
+  "name": "참새",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_sparrow_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_sparrow_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_sparrow_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_sparrow_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_sparrow_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_sparrow_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_owl": {
+  "name": "부엉이",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_owl_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_owl_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_owl_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_owl_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_owl_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_owl_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_frog": {
+  "name": "개구리",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_frog_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_frog_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_frog_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_frog_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_frog_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_frog_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_squirrel": {
+  "name": "다람쥐",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_squirrel_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_squirrel_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_squirrel_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_squirrel_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_squirrel_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_squirrel_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "u_mouse": {
+  "name": "생쥐",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_mouse_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_mouse_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_mouse_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_mouse_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_mouse_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_mouse_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_scarecrow": {
+  "name": "허수아비",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_scarecrow_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_scarecrow_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_scarecrow_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_scarecrow_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_scarecrow_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_scarecrow_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_pumpkin": {
+  "name": "호박 마차",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_pumpkin_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_pumpkin_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_pumpkin_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_pumpkin_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_pumpkin_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_pumpkin_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "u_pot": {
+  "name": "팥죽 솥",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_pot_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_pot_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_pot_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_pot_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_pot_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_pot_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "u_lion": {
+  "name": "겁쟁이 사자",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_lion_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_lion_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_lion_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_lion_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_lion_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_lion_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "u_tadpole": {
+  "name": "올챙이",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_tadpole_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_tadpole_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_tadpole_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_tadpole_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_tadpole_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_tadpole_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "u_cheshire": {
+  "name": "체셔 고양이",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/u_cheshire_s3.png",
+    "art": "assets/library/cards/hero_evo/art/u_cheshire_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/u_cheshire_s4.png",
+    "art": "assets/library/cards/hero_evo/art/u_cheshire_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/u_cheshire_s5.png",
+    "art": "assets/library/cards/hero_evo/art/u_cheshire_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "m_tetra": {
+  "name": "삼각뿔 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_tetra_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_tetra_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_tetra_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_tetra_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_tetra_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_tetra_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "m_cube": {
+  "name": "정육면체 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_cube_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_cube_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_cube_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_cube_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_cube_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_cube_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "m_octa": {
+  "name": "팔면체 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_octa_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_octa_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_octa_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_octa_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_octa_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_octa_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "m_dodeca": {
+  "name": "십이면체 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_dodeca_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_dodeca_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_dodeca_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_dodeca_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_dodeca_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_dodeca_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "m_cylinder": {
+  "name": "원기둥 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_cylinder_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_cylinder_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_cylinder_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_cylinder_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_cylinder_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_cylinder_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "m_cone": {
+  "name": "원뿔 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_cone_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_cone_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_cone_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_cone_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_cone_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_cone_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "m_icosa": {
+  "name": "이십면체 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_icosa_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_icosa_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_icosa_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_icosa_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_icosa_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_icosa_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "m_prism": {
+  "name": "삼각기둥 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_prism_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_prism_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_prism_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_prism_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_prism_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_prism_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "m_sphere": {
+  "name": "구 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_sphere_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_sphere_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_sphere_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_sphere_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_sphere_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_sphere_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "m_pyramid": {
+  "name": "사각뿔 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_pyramid_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_pyramid_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_pyramid_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_pyramid_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_pyramid_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_pyramid_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "m_hexprism": {
+  "name": "육각기둥 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_hexprism_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_hexprism_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_hexprism_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_hexprism_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_hexprism_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_hexprism_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "m_torus": {
+  "name": "도넛 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_torus_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_torus_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_torus_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_torus_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_torus_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_torus_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "m_cuboid": {
+  "name": "직육면체 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_cuboid_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_cuboid_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_cuboid_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_cuboid_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_cuboid_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_cuboid_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "m_hemi": {
+  "name": "반구 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_hemi_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_hemi_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_hemi_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_hemi_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_hemi_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_hemi_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "m_ellip": {
+  "name": "타원체 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_ellip_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_ellip_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_ellip_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_ellip_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_ellip_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_ellip_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "m_bipyr": {
+  "name": "쌍뿔 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_bipyr_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_bipyr_s3.png",
+    "frame": "A",
+    "power": 1650
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_bipyr_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_bipyr_s4.png",
+    "frame": "S",
+    "power": 3350
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_bipyr_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_bipyr_s5.png",
+    "frame": "SS",
+    "power": 6550
+   }
+  }
+ },
+ "m_antiprism": {
+  "name": "엇각기둥 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_antiprism_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_antiprism_s3.png",
+    "frame": "A",
+    "power": 1800
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_antiprism_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_antiprism_s4.png",
+    "frame": "S",
+    "power": 3500
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_antiprism_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_antiprism_s5.png",
+    "frame": "SS",
+    "power": 6700
+   }
+  }
+ },
+ "m_cuboct": {
+  "name": "육팔면체 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_cuboct_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_cuboct_s3.png",
+    "frame": "A",
+    "power": 1500
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_cuboct_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_cuboct_s4.png",
+    "frame": "S",
+    "power": 3200
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_cuboct_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_cuboct_s5.png",
+    "frame": "SS",
+    "power": 6400
+   }
+  }
+ },
+ "m_stella": {
+  "name": "별 다면체 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_stella_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_stella_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_stella_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_stella_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_stella_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_stella_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ },
+ "m_klein": {
+  "name": "병 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_klein_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_klein_s3.png",
+    "frame": "A",
+    "power": 1600
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_klein_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_klein_s4.png",
+    "frame": "S",
+    "power": 3300
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_klein_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_klein_s5.png",
+    "frame": "SS",
+    "power": 6500
+   }
+  }
+ },
+ "m_dice": {
+  "name": "주사위 대장",
+  "stages": {
+   "s3": {
+    "card": "assets/library/cards/hero_evo/m_dice_s3.png",
+    "art": "assets/library/cards/hero_evo/art/m_dice_s3.png",
+    "frame": "A",
+    "power": 1700
+   },
+   "s4": {
+    "card": "assets/library/cards/hero_evo/m_dice_s4.png",
+    "art": "assets/library/cards/hero_evo/art/m_dice_s4.png",
+    "frame": "S",
+    "power": 3400
+   },
+   "s5": {
+    "card": "assets/library/cards/hero_evo/m_dice_s5.png",
+    "art": "assets/library/cards/hero_evo/art/m_dice_s5.png",
+    "frame": "SS",
+    "power": 6600
+   }
+  }
+ }
+}

@@ -1,0 +1,35 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>영웅 키우기 부품·연출 v1</title>
+<link rel="stylesheet" href="../v1/gfcard.css"><link rel="stylesheet" href="../v2/gfcard2.css"><link rel="stylesheet" href="../v3/myth.css"><link rel="stylesheet" href="gfcardfx.css">
+<style>@font-face{font-family:Jua;src:url(../../ui/fonts/Jua-Regular.ttf)}@font-face{font-family:"Gasoek One";src:url(../../ui/fonts/GasoekOne-Regular.ttf)}
+body{margin:0;background:#F6EBD3;font-family:Jua,sans-serif;color:#4A3426}section{padding:24px 28px;display:inline-block;background:#F6EBD3}h2{margin:0 0 16px;font-weight:400;font-size:26px}.row{display:flex;gap:22px;align-items:flex-end;flex-wrap:wrap}.cap{text-align:center;font-size:16px;margin-top:6px}.cell{display:flex;flex-direction:column;align-items:center}
+.phone{width:390px;height:844px;border-radius:34px;position:relative;overflow:hidden;box-shadow:0 0 0 6px #4A3426}.phone .bg{position:absolute;inset:0}.phone .bg svg{width:100%;height:100%;display:block}
+.ttl{position:absolute;left:0;right:0;top:46px;text-align:center;font-size:26px}.bar{position:absolute;left:0;right:0;bottom:0;height:60px;background:#fff8e6;box-shadow:0 -2px 0 #e8d8b8;display:flex;justify-content:space-around;align-items:center;font-size:22px}
+.fw{width:240px;height:350px;overflow:hidden;position:relative;border-radius:14px}.fw .st{position:absolute;left:0;top:0;transform:scale(.667);transform-origin:0 0;width:360px;height:525px;background:linear-gradient(180deg,#FFF3D6,#F3DDB0)}.film{display:flex;gap:8px}
+.bgp{width:120px;height:260px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 3px #6b5443}.bgp svg{width:100%;height:100%;display:block}</style>
+<body><script src="../v1/gfcard.js"></script><script src="../v1/gfcard_art.js"></script><script src="../v2/gfcard2.js"></script><script src="../v3/myth_art.js"></script><script src="../v3/myth_art2.js"></script><script src="../v3/myth.js"></script><script src="gffxart.js"></script><script src="gfcardfx.js"></script>
+<script>
+const A=GFFxArt,P='../../costumes/',E=s=>document.body.insertAdjacentHTML('beforeend',s);
+const slot=(k,nm,o={})=>`<div class="fx-slot ${o.on?'on':''} ${o.lock?'lock':''}"><div class="ic">${A['slot_'+k]}${o.lock?`<span class="lk">${A.lock}</span>`:''}${o.n?`<span class="new">${o.n}</span>`:''}</div>${nm}</div>`;
+E(`<section id="kit"><h2>① 칸 아이콘 · 보따리 · 힘 알 · 깨달음 카드 · 경험치 막대</h2><div class="row">
+<div class="cell"><div class="fx-slots" style="padding:0;gap:14px">${slot('feed','먹이기',{on:1,n:3})}${slot('pair','단짝')}${slot('treasure','보물')}${slot('evolve','진화')}</div><div class="cap">칸 4종 (먹이기=선택·새로움 3)</div></div>
+<div class="cell"><div class="fx-slots" style="padding:0;gap:14px">${slot('feed','먹이기')}${slot('pair','단짝',{lock:1})}${slot('treasure','보물',{lock:1})}${slot('evolve','진화',{lock:1})}</div><div class="cap">해금 전(잠김) 상태</div></div></div>
+<div class="row" style="margin-top:20px">
+<div class="cell"><div style="width:96px">${A.bag_tab}</div><div class="cap">보따리 탭</div></div>
+<div class="cell"><div style="width:200px">${A.bag_empty}</div><div class="cap">보따리 빈 상태</div></div>
+<div class="cell"><div style="width:90px">${A.egg_s}</div><div class="cap">힘 알(소)</div></div><div class="cell"><div style="width:100px">${A.egg_m}</div><div class="cap">힘 알(중)</div></div><div class="cell"><div style="width:110px">${A.egg_l}</div><div class="cap">힘 알(대)</div></div>
+<div class="cell">${GFCard2.item({g:'S',art:A.awaken_card,name:'깨달음 카드',w:120})}<div class="cap">깨달음 카드</div></div>
+<div class="cell"><div style="width:260px"><div class="fx-xp" style="--p:.68"><i></i></div><div class="fx-xp-t">경험치</div><div class="fx-xp lv" style="--p:1;margin-top:8px"><i></i></div><div class="fx-xp-t">레벨 업!</div></div><div class="cap">경험치 막대</div></div>
+<div class="cell"><div class="bgp">${A.hero_room_bg}</div><div class="cap">바탕</div></div></div></section><br>`);
+const hero=(g,w=240)=>GFCard2.hero({g,el:'grass',name:'네모 엄마',img:P+'nemo_mom/good_wave_a.png',power:6200,scene:'../../oldtale/bg/bg_cloud_road.png',w});
+E(`<section id="room"><h2>② 영웅 키우기 화면 목업 (390×844)</h2><div class="phone"><div class="bg">${A.hero_room_bg}</div><div class="ttl">영웅 키우기</div>
+<div style="position:absolute;left:0;right:0;top:130px;display:flex;justify-content:center">${hero('SS',250)}</div>
+<div style="position:absolute;left:0;right:0;top:530px"><div class="fx-xp" style="--w:270px;--p:.68"><i></i></div><div class="fx-xp-t">경험치 · 레벨 12</div></div>
+<div style="position:absolute;left:0;right:0;top:620px"><div class="fx-slots">${slot('feed','먹이기',{on:1,n:3})}${slot('pair','단짝',{n:1})}${slot('treasure','보물')}${slot('evolve','진화')}</div></div>
+<div class="bar"><span>🏠</span><span>⚔️</span><span>🎒</span><span>⚙️</span></div></div></section>
+<section id="room2"><h2>보따리 탭 · 빈 상태</h2><div class="phone"><div class="bg">${A.hero_room_bg}</div><div class="ttl">보따리</div><div style="position:absolute;left:0;right:0;top:250px;display:flex;flex-direction:column;align-items:center"><div style="width:240px">${A.bag_empty}</div><div style="font-size:22px;margin-top:10px">카드를 모으면 여기에 담겨요</div></div><div class="bar"><span>🏠</span><span>⚔️</span><span style="width:44px">${A.bag_tab}</span><span>⚙️</span></div></div></section><br>`);
+const OPT={feed:{grade:'SS',levelUp:true,name:'네모 엄마',img:P+'nemo_mom/good_wave_a.png',scene:'../../oldtale/bg/bg_cloud_road.png'},evolve:{grade:'S',toGrade:'SS',name:'네모 엄마',img:P+'nemo_mom/good_wave_a.png',scene:'../../oldtale/bg/bg_cloud_road.png'},awaken:{grade:'SS',slots:5,open:2,name:'네모 엄마',img:P+'nemo_mom/good_wave_a.png',scene:'../../oldtale/bg/bg_cloud_road.png'},treasure:{grade:'S',name:'네모 엄마',img:P+'nemo_mom/good_wave_a.png',scene:'../../oldtale/bg/bg_cloud_road.png'},myth:{key:'poseidon'}};
+const T={feed:[0,.5,.9,1.4,1.9,2.3],evolve:[0,.35,.75,.95,1.4,2.3],awaken:[0,.4,.8,1.1,1.5,2.1],treasure:[0,.3,.6,.9,1.2,1.9],myth:[0,.45,.8,.95,1.3,2.3]};
+const LB={feed:'먹이기 — 카드가 날아가 경험치 (2.3초)',evolve:'진화 「뚝딱!」 (2.4초)',awaken:'깨달음 열림 (2.2초)',treasure:'보물 카드 끼우기 (2.0초)',myth:'SSS 신화 등장 (2.4초)'};
+for(const k in T)E(`<section id="f_${k}"><h2>③ ${LB[k]}</h2><div class="film">${T[k].map((t,i)=>`<div class="cell"><div class="fw"><div class="st" id="s_${k}_${i}"></div></div><div class="cap">${t.toFixed(2)}s</div></div>`).join('')}</div></section><br>`);
+window.build=()=>{for(const k in T)T[k].forEach((t,i)=>GFFx.still(k,document.getElementById(`s_${k}_${i}`),OPT[k],t));};
+</script></body></html>

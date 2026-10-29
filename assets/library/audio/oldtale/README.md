@@ -16,3 +16,6 @@
 - 반주는 가야금 뜯는 소리 + 장구 「덩 — 기덕 쿵 더러러 | 쿵 — 기덕 쿵 더러러」. 멜로디 선(대금)은 목소리를 얹을 때 길잡이로 쓰고, 최종 영상에서는 빼도 된다.
 - `cues.json`: 템포별로 `loop_sec`·`bar_sec`·`cues[]`(t=루프 시작부터 초, note, syl=글자, dur). 가락에 시(B4)가 있는 건 계면조라서이고, 반주에는 쓰지 않았다.
 - 명창 음반·현대 채보·편곡은 쓰지 않았다(전래 어법으로 새로 지음).
+
+## 5화 「브레멘 음악대」 (2026-10-29) — `ep05/`
+`ep05/sfx/` 6종(ogg+wav, 피크 −6.6 이하): donkey_hee 히힝 · dog_woof 멍멍 · cat_meow 야옹 · rooster_crow 꼬끼오 · band_ruckus 악기 우당탕 소란 · robber_run 후다닥 도망. `ep05/bgm/bremen_march.ogg` 36.9초 이음새 없는 루프(−20 LUFS, C 펜타토닉, 104 BPM). 4화와 같은 VSCO 2 CE 오케스트라 샘플러(CC0), 도구 `tools/asset_orch_ep5.py`. 작가 「집에서 편히」 규칙에 맞춰 큰 소리·번쩍임 없음. 들어 보기 `content/promo/ep5_sound_v1.mp3`. 수치만 쟀고 귀로는 아직 듣지 못함.

@@ -1,0 +1,40 @@
+/* 신화 카드(SSS 신화 영웅) v3 — 금박 틀 + 장면 배경 + 홀로그램 + 틀 밖으로 튀어나오는 전면 그림 + 특수 능력 칸.
+   3:4, 너비 --w 하나. 움직임은 transform/opacity/background-position 만(회전 판 없음), blur·filter 없음. */
+.gfm{--w:200px;--mc:#5BC8FF;position:relative;display:block;width:var(--w);aspect-ratio:3/4;font-size:calc(var(--w) / 20);font-family:'Jua',sans-serif;color:#4A3426;user-select:none}
+.gfm *{box-sizing:border-box}
+.gfm-fr{position:absolute;inset:0;border-radius:1.5em;overflow:hidden;
+  background:linear-gradient(135deg,#FFF3B8 0%,#E8A819 20%,#FFE27A 38%,#C98A05 58%,#FFF1B0 78%,#D99A0B 100%);
+  box-shadow:0 .2em .7em rgba(40,20,60,.45),0 0 0 .13em #6b5443}
+.gfm-fr::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;
+  background:linear-gradient(115deg,transparent 36%,rgba(255,120,170,.45) 44%,rgba(255,230,120,.5) 48%,rgba(120,255,200,.45) 52%,rgba(110,190,255,.5) 56%,rgba(190,140,255,.4) 60%,transparent 68%);
+  background-size:300% 100%;background-position:calc(50% + var(--tx,0) * 50%) 0;mix-blend-mode:overlay;animation:gfmsheen 3.4s ease-in-out infinite}
+.gfm.tilt .gfm-fr::after{animation:none}
+@keyframes gfmsheen{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+.gfm-in{position:absolute;inset:.85em;border-radius:1em;overflow:hidden;background:#1a1030;box-shadow:inset 0 0 0 .14em #FFE9A0,0 0 0 .1em #6b5443}
+.gfm-bg{position:absolute;inset:0}.gfm-bg svg{width:100%;height:100%;display:block}
+.gfm-vig{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,0) 52%,rgba(20,8,40,.5));pointer-events:none}
+.gfm-holo{position:absolute;inset:0;mix-blend-mode:soft-light;opacity:.55;pointer-events:none;
+  background:linear-gradient(160deg,rgba(255,107,138,.55),rgba(255,214,90,.4) 28%,rgba(105,224,160,.4) 52%,rgba(91,200,255,.5) 76%,rgba(169,139,255,.6))}
+.gfm-co{position:absolute;width:3em;height:3em;z-index:4}.gfm-co.a{left:.15em;top:.15em}.gfm-co.b{right:.15em;top:.15em;transform:scaleX(-1)}.gfm-co.c{left:.15em;bottom:.15em;transform:scaleY(-1)}.gfm-co.d{right:.15em;bottom:.15em;transform:scale(-1)}
+.gfm-co svg{width:100%;height:100%;display:block}
+.gfm-hero{position:absolute;left:-15%;right:-15%;top:-9%;bottom:6.6em;z-index:6;pointer-events:none}
+.gfm-hero svg{width:100%;height:100%;display:block;overflow:visible}
+.gfm-stars{position:absolute;left:0;right:0;bottom:6.95em;display:flex;justify-content:center;gap:.08em;z-index:7}
+.gfm-stars i{width:1.2em;height:1.2em;filter:none;background:#FFD24A;clip-path:polygon(50% 4%,62% 36%,97% 38%,70% 60%,80% 96%,50% 76%,20% 96%,30% 60%,3% 38%,38% 36%)}
+.gfm-el{position:absolute;right:.5em;top:.5em;width:2.8em;height:2.8em;border-radius:50%;z-index:8;background:var(--elc);box-shadow:0 0 0 .13em #fff,0 0 0 .26em #6b5443,0 .1em .3em rgba(30,10,50,.5)}
+.gfm-el svg{position:absolute;inset:.35em;width:calc(100% - .7em);height:calc(100% - .7em)}
+.gfm-rank{position:absolute;left:.1em;top:.1em;width:3.4em;height:3.4em;border-radius:50%;z-index:8;display:flex;align-items:center;justify-content:center;font-size:1.05em;color:#fff;text-shadow:0 .06em 0 rgba(60,35,15,.6);
+  background:conic-gradient(from 20deg,#ff6b8a,#ffb347,#fff176,#69e0a0,#5bc8ff,#a98bff,#ff6b8a);box-shadow:0 .08em .25em rgba(60,35,15,.4),0 0 0 .1em #6b5443,inset 0 .12em .2em rgba(255,255,255,.55);letter-spacing:-.04em}
+/* 이름 리본 + 능력 칸 */
+.gfm-name{position:absolute;left:1.1em;right:1.1em;bottom:4.15em;height:2.9em;z-index:8;display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:linear-gradient(180deg,#3a2570,#1f1240);border-radius:.6em;clip-path:polygon(0 0,100% 0,97% 50%,100% 100%,0 100%,3% 50%);
+  box-shadow:inset 0 0 0 .14em #F5C04A;color:#FFE9A0;text-shadow:0 .08em 0 rgba(0,0,0,.6);line-height:1.02}
+.gfm-name b{font-family:'Gasoek One','Jua',sans-serif;font-weight:400;font-size:1.5em;letter-spacing:.04em}.gfm-name small{font-size:.78em;color:#fff;opacity:.9}
+.gfm-abil{position:absolute;left:.85em;right:.85em;bottom:.85em;height:3.1em;z-index:8;display:flex;align-items:center;gap:.5em;padding:0 .6em 0 .3em;
+  background:linear-gradient(180deg,#2a1a55,#150b30);border-radius:1.3em;box-shadow:inset 0 0 0 .12em #F5C04A,0 .1em .3em rgba(20,8,40,.5)}
+.gfm-abil i{flex:0 0 2.4em;height:2.4em;border-radius:50%;background:#FFF3C8;box-shadow:0 0 0 .1em #6b5443;display:block;position:relative}.gfm-abil i svg{position:absolute;inset:.2em;width:calc(100% - .4em);height:calc(100% - .4em)}
+.gfm-abil span{display:flex;flex-direction:column;color:#fff;line-height:1.05;min-width:0}.gfm-abil b{font-weight:400;font-size:1em;color:#FFE27A}.gfm-abil em{font-style:normal;font-size:.68em;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gfm-pow{position:absolute;right:1.5em;bottom:6.95em;z-index:9;font-size:.7em;color:#FFF1B8;text-shadow:0 .08em 0 rgba(0,0,0,.7);display:none}
+.gfm .sp{position:absolute;width:1.4em;height:1.4em;z-index:7;background:#fff;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);opacity:0;animation:gfc2tw 2.4s ease-in-out infinite;pointer-events:none}
+.gfm .sp.s1{left:14%;top:30%}.gfm .sp.s2{right:12%;top:46%;animation-delay:.8s;width:1em;height:1em}.gfm .sp.s3{left:46%;top:60%;animation-delay:1.5s;width:.9em;height:.9em}
+@media (prefers-reduced-motion:reduce){.gfm *,.gfm *::before,.gfm *::after{animation:none!important}}

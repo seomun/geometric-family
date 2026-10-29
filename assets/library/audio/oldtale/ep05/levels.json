@@ -1,0 +1,37 @@
+{
+ "sfx/donkey_hee": {
+  "sec": 2.28,
+  "mmax": -18.0,
+  "peak": -8.3
+ },
+ "sfx/dog_woof": {
+  "sec": 1.05,
+  "mmax": -17.5,
+  "peak": -6.6
+ },
+ "sfx/cat_meow": {
+  "sec": 1.47,
+  "mmax": -18.5,
+  "peak": -10.5
+ },
+ "sfx/rooster_crow": {
+  "sec": 1.82,
+  "mmax": -18.0,
+  "peak": -9.6
+ },
+ "sfx/band_ruckus": {
+  "sec": 2.0,
+  "mmax": -19.0,
+  "peak": -9.0
+ },
+ "sfx/robber_run": {
+  "sec": 1.36,
+  "mmax": -16.5,
+  "peak": -7.0
+ },
+ "bgm/bremen_march": {
+  "sec": 36.9,
+  "lufs": -20.0,
+  "peak": -7.4
+ }
+}

@@ -1,0 +1,18 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>가족 영웅 S·SS 장면+포즈</title>
+<link rel="stylesheet" href="../v1/gfcard.css"><link rel="stylesheet" href="gfcard2.css">
+<style>@font-face{font-family:Jua;src:url(../../ui/fonts/Jua-Regular.ttf)}body{margin:0;background:#F6EBD3;font-family:Jua;color:#4A3426}section{padding:26px 30px;display:inline-block}h2{margin:0 0 18px;font-weight:400;font-size:26px}.row{display:flex;gap:26px;flex-wrap:wrap;width:1300px}.cell{display:flex;flex-direction:column;align-items:center}.cap{font-size:16px;margin-top:8px;text-align:center}</style>
+<body><script src="../v1/gfcard.js"></script><script src="../v1/gfcard_art.js"></script><script src="gfcard2.js"></script>
+<script>
+const P='../../costumes/',B=(n)=>'../../oldtale/bg/bg_'+n+'.png',H=GFCard2.hero;
+const L=[
+ ['S','water','네모 아이','nemo_kids/kid1_walk_a','forest',3150,'숲길 걷기'],
+ ['S','fire','세모 엄마','wife/good_wave_a','village',3400,'마을 인사'],
+ ['S','grass','네모 아빠','nemo_dad/good_saw_a','yard_day_saw',3300,'톱질'],
+ ['S','water','네모 엄마','nemo_mom/surprise_jump','market',3200,'장터 깜짝'],
+ ['SS','fire','세모 엄마','wife/surprise_jump','cloud_road',6400,'구름길 점프'],
+ ['SS','grass','네모 아빠','nemo_dad/good_wave_b','meadow_open',6300,'들판 환호'],
+ ['SS','water','네모 아이','nemo_kids/kid2_happy','pond_dusk',6200,'노을 연못'],
+ ['SS','grass','네모 엄마','nemo_mom/good_saw_b','heungbu_yard',6500,'마당 일하기'],
+];
+document.body.insertAdjacentHTML('beforeend',`<section id="s"><h2>가족 영웅 S·SS — 이야기 장면 배경 + 동작 포즈</h2><div class="row" style="padding-top:20px">${L.map(([g,el,n,img,sc,pw,cap])=>`<div class="cell">${H({g,el,name:n,img:P+img+'.png',power:pw,scene:B(sc),w:230})}<div class="cap">${g} · ${cap}</div></div>`).join('')}</div></section>`);
+</script></body></html>

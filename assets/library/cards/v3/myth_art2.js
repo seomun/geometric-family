@@ -1,0 +1,115 @@
+/* 신화 영웅 2차 v3.1 — 구미호 · 해태 · 삼족오(한국 신화) · 아테나(그리스). myth_art.js 뒤에 불러온다. 전부 새로 그린 SVG.
+   구미호=꼬리 9개를 잎 모양 도형으로, 해태=갈기를 동그라미 곡선으로, 삼족오=날개 깃을 삼각형으로, 아테나=그리스 문양(미앤더)을 도형으로. */
+(function (root) {
+  const A = root.MythArt, OL = '#6b5443', GOLD = '#F5C04A', GOLD2 = '#FFE9A0', GD = '#C98A05';
+  const st = (w = 3) => `stroke="${OL}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round"`;
+  const limb = (x1, y1, x2, y2, w, fill) => `<path d="M${x1} ${y1}L${x2} ${y2}" stroke="${OL}" stroke-width="${w + 6}" stroke-linecap="round" fill="none"/><path d="M${x1} ${y1}L${x2} ${y2}" stroke="${fill}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
+  const eye = (x, y, r = 12) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#4a3426" ${st(2.4)}/><circle cx="${x - r * 0.32}" cy="${y - r * 0.34}" r="${r * 0.38}" fill="#fff"/><circle cx="${x + r * 0.34}" cy="${y + r * 0.3}" r="${r * 0.18}" fill="#fff"/>`;
+  const blush = (x, y, r = 10) => `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * 0.72}" fill="#F78FB0" opacity=".85"/>`;
+  const star = (x, y, s, f = '#fff') => `<path d="M${x} ${y - s}L${x + s * 0.28} ${y - s * 0.28}L${x + s} ${y}L${x + s * 0.28} ${y + s * 0.28}L${x} ${y + s}L${x - s * 0.28} ${y + s * 0.28}L${x - s} ${y}L${x - s * 0.28} ${y - s * 0.28}Z" fill="${f}"/>`;
+  const stars = (pts) => pts.map(([x, y, s]) => star(x, y, s)).join('');
+  const flame = (x, y, s, c1 = '#7FD8FF', c2 = '#fff') => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 -26 C8 -14 14 -8 14 2 C14 12 8 18 0 18 C-8 18 -14 12 -14 2 C-14 -4 -9 -8 -7 -14 C-4 -9 -2 -8 0 -9 C-2 -15 -2 -20 0 -26Z" fill="${c1}" ${st(2.4)}/><path d="M0 -6 C4 -1 6 2 6 6 C6 10 3 12 0 12 C-3 12 -6 10 -6 6 C-6 2 -2 -1 0 -6Z" fill="${c2}"/></g>`;
+  const cloud = (x, y, s, f = '#fff', l = GOLD) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-40 14 C-52 14 -52 -8 -34 -6 C-34 -22 -8 -26 0 -12 C10 -26 38 -20 34 -2 C52 -2 52 18 36 16Z" fill="${f}" stroke="${l}" stroke-width="2.4"/></g>`;
+
+  // ── 배경 ──
+  A.BG.gumiho = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 410" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B1650"/><stop offset=".6" stop-color="#4B3A9E"/><stop offset="1" stop-color="#C47AB8"/></linearGradient></defs>
+    <rect width="300" height="410" fill="url(#gbg)"/>${stars([[40, 40, 5], [250, 50, 6], [80, 110, 4], [270, 130, 4], [20, 160, 4]])}
+    <circle cx="150" cy="150" r="92" fill="#FFF3D6"/><circle cx="150" cy="150" r="92" fill="none" stroke="${GOLD}" stroke-width="3"/><circle cx="150" cy="150" r="74" fill="none" stroke="#fff" stroke-width="1.6" opacity=".6"/><path d="M110 120 q14 -20 34 -10 M170 180 q18 4 28 -12" fill="none" stroke="#EAD9B4" stroke-width="5" stroke-linecap="round"/>
+    <path d="M0 330 C40 296 90 330 130 304 C170 280 220 322 260 296 C280 288 292 296 300 292 V410 H0Z" fill="#2B2478" stroke="${GOLD}" stroke-width="2"/>${[[40, 300], [235, 280]].map(([x, y]) => `<g transform="translate(${x} ${y})"><path d="M0 40 V-30 M-22 -6 L0 -34 L22 -6 M-18 14 L0 -14 L18 14" fill="none" stroke="#1B1650" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></g>`).join('')}
+    <path d="M0 370 C60 346 140 380 210 358 C260 344 280 360 300 354 V410 H0Z" fill="#1B1650"/>${[[56, 110, 1], [250, 90, .8], [30, 260, .9], [270, 230, 1.1]].map(([x, y, s]) => flame(x, y, s)).join('')}</svg>`;
+  A.BG.haetae = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 410" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="hbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A4A9C"/><stop offset=".45" stop-color="#F08A7A"/><stop offset="1" stop-color="#FFD98A"/></linearGradient></defs>
+    <rect width="300" height="410" fill="url(#hbg)"/><circle cx="150" cy="190" r="88" fill="#FFE9A8" opacity=".9"/><circle cx="150" cy="190" r="88" fill="none" stroke="${GOLD}" stroke-width="2.4"/>
+    ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => `<path d="M150 190 L${150 + 240 * Math.cos(i * Math.PI / 5)} ${190 + 240 * Math.sin(i * Math.PI / 5)}" stroke="#fff" stroke-opacity=".16" stroke-width="14"/>`).join('')}
+    <g fill="#4A2A5A" stroke="${GOLD}" stroke-width="2"><path d="M-10 300 H310 V330 H-10Z"/><path d="M20 300 Q70 276 110 276 L190 276 Q230 276 280 300Z"/><path d="M-6 276 Q40 276 56 252 L244 252 Q260 276 306 276 V300 H-6Z" opacity=".9"/><path d="M96 252 Q150 214 204 252Z"/></g><path d="M150 214 V196" stroke="${GOLD}" stroke-width="5" stroke-linecap="round"/><g stroke="#C86A5A" stroke-width="3">${[40, 80, 120, 180, 220, 260].map((x) => `<path d="M${x} 300 V330"/>`).join('')}</g>
+    <path d="M0 340 C50 322 100 352 150 336 C200 320 250 350 300 334 V410 H0Z" fill="#2F6FB4" stroke="${GOLD}" stroke-width="2"/>${[0, 1, 2].map((j) => [0, 1, 2, 3, 4].map((i) => `<path d="M${i * 66 - 12 + (j % 2 ? 33 : 0)} ${372 + j * 14} a33 33 0 0 1 66 0" fill="none" stroke="${GOLD}" stroke-width="1.8" opacity=".85"/>`).join('')).join('')}</svg>`;
+  A.BG.samjoko = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 410" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A1F2E"/><stop offset=".55" stop-color="#C8452E"/><stop offset="1" stop-color="#F2A64A"/></linearGradient></defs>
+    <rect width="300" height="410" fill="url(#sbg)"/><circle cx="150" cy="170" r="100" fill="#FFD24A"/><circle cx="150" cy="170" r="100" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/><circle cx="150" cy="170" r="78" fill="none" stroke="${GD}" stroke-width="2.4"/>
+    ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((i) => `<path d="M${150 + 106 * Math.cos(i * Math.PI / 8)} ${170 + 106 * Math.sin(i * Math.PI / 8)} L${150 + 142 * Math.cos(i * Math.PI / 8)} ${170 + 142 * Math.sin(i * Math.PI / 8)}" stroke="#FFD24A" stroke-width="7" stroke-linecap="round"/>`).join('')}
+    ${[[40, 290, 1.2], [250, 270, 1.3], [150, 370, 1.5], [30, 90, .9], [270, 80, .9]].map(([x, y, s]) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M-36 12 C-48 12 -48 -8 -32 -6 C-32 -22 -8 -22 -2 -10 C6 -24 30 -18 28 -4 C46 -4 46 14 30 12Z" fill="#FFE4B0" stroke="${GD}" stroke-width="2.4"/><path d="M-20 2 c0 -8 12 -8 12 0 c0 5 -7 5 -7 1 M8 4 c0 -7 11 -7 11 0" fill="none" stroke="#C8452E" stroke-width="2.4" stroke-linecap="round"/></g>`).join('')}
+    <path d="M0 395 C50 372 110 398 170 380 C230 364 270 388 300 380 V410 H0Z" fill="#5A1420"/></svg>`;
+  A.BG.athena = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 410" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="abg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B5BA8"/><stop offset=".55" stop-color="#9AB8E8"/><stop offset="1" stop-color="#FFE0B8"/></linearGradient></defs>
+    <rect width="300" height="410" fill="url(#abg2)"/><circle cx="220" cy="80" r="36" fill="#FFF6D8"/><circle cx="220" cy="80" r="36" fill="none" stroke="${GOLD}" stroke-width="2.4"/>${stars([[40, 50, 5], [90, 30, 4], [150, 60, 4], [260, 150, 4]])}
+    <path d="M30 150 H270 L150 70Z" fill="#F4EBDD" stroke="${GOLD}" stroke-width="2.4"/><path d="M60 148 L150 90 L240 148Z" fill="#D8E4F8" opacity=".7"/>
+    ${[40, 85, 130, 170, 215, 260].map((x) => `<g><rect x="${x - 12}" y="150" width="24" height="190" fill="#FBF4E8" stroke="${GOLD}" stroke-width="2"/>${[-6, 0, 6].map((d) => `<path d="M${x + d} 156 V336" stroke="#E0D3BC" stroke-width="2"/>`).join('')}<rect x="${x - 16}" y="144" width="32" height="10" fill="#EFE3CC" stroke="${GOLD}" stroke-width="2"/><rect x="${x - 16}" y="336" width="32" height="10" fill="#EFE3CC" stroke="${GOLD}" stroke-width="2"/></g>`).join('')}
+    <rect x="0" y="344" width="300" height="66" fill="#EFE3CC" stroke="${GOLD}" stroke-width="2"/><rect x="0" y="372" width="300" height="38" fill="#E0D3BC"/>
+    <path d="M0 360 H300" stroke="${GOLD}" stroke-width="2"/>${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => `<path d="M${i * 26} 356 v10 h14 v-10 h-8 v6" fill="none" stroke="#3B6FD6" stroke-width="2.4" stroke-linejoin="round"/>`).join('')}
+    <g transform="translate(40 300)"><path d="M0 0 q24 -40 50 -20 q10 30 -20 36 q-10 -20 -30 -16Z" fill="#6DBB5C" stroke="${GD}" stroke-width="2"/></g></svg>`;
+
+  // ── 전면 영웅 ──
+  A.HERO.gumiho = (() => {
+    const tail = (a, len, sc) => `<g transform="translate(180 332) rotate(${a}) scale(${sc})"><path d="M0 0 C-36 -50 -34 -${len * 0.7} 0 -${len} C34 -${len * 0.7} 36 -50 0 0Z" fill="#F29A4A" ${st()}/><path d="M-13 -${len * 0.78} C-20 -${len * 0.9} -8 -${len * 0.98} 0 -${len} C8 -${len * 0.98} 20 -${len * 0.9} 13 -${len * 0.78} C5 -${len * 0.84} -5 -${len * 0.84} -13 -${len * 0.78}Z" fill="#fff" ${st(2.4)}/></g>`;
+    const ang = [-78, 78, -60, 60, -42, 42, -22, 22, 0];
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 440" overflow="visible"><defs><radialGradient id="gorb" cx=".35" cy=".3"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#8FE0FF"/><stop offset="1" stop-color="#3B8FE0"/></radialGradient></defs>
+    <ellipse cx="180" cy="420" rx="120" ry="11" fill="rgba(20,10,60,.4)"/>
+    ${ang.map((a, i) => tail(a, 210 - Math.abs(a) * 0.55 + (i === 8 ? 12 : 0), 1)).join('')}
+    ${[-78, 78, -42, 42, 0].map((a) => `<g transform="translate(180 332) rotate(${a}) translate(0 -${200 - Math.abs(a) * .55 + (a === 0 ? 12 : 0)})">${flame(0, -10, .55)}</g>`).join('')}
+    <path d="M126 300 L234 300 L266 408 L94 408Z" fill="#7A5BC8" ${st()}/><path d="M150 300 L140 408 M180 300 V408 M210 300 L220 408" stroke="#9B80E0" stroke-width="3"/><path d="M126 300 L234 300" stroke="#E5334A" stroke-width="8" stroke-linecap="round"/>
+    <path d="M132 224 Q180 208 228 224 L232 304 H128Z" fill="#FFF6E8" ${st()}/><path d="M164 222 L180 276 L196 222" fill="#7A5BC8" ${st(2.6)}/><path d="M180 276 L170 330 M180 276 L192 326" stroke="#E5334A" stroke-width="7" stroke-linecap="round"/>
+    ${limb(132, 236, 96, 276, 26, '#FFF6E8')}<circle cx="94" cy="280" r="13" fill="#F29A4A" ${st()}/><circle cx="76" cy="256" r="26" fill="url(#gorb)" ${st()}/><ellipse cx="68" cy="246" rx="8" ry="5" fill="#fff" opacity=".85"/>
+    ${limb(228, 236, 266, 284, 26, '#FFF6E8')}<circle cx="268" cy="288" r="13" fill="#F29A4A" ${st()}/>
+    <path d="M122 100 L100 22 L172 70Z" fill="#F29A4A" ${st()}/><path d="M238 100 L260 22 L188 70Z" fill="#F29A4A" ${st()}/><path d="M122 84 L110 40 L156 70Z" fill="#4A2A5A"/><path d="M238 84 L250 40 L204 70Z" fill="#4A2A5A"/>
+    <ellipse cx="180" cy="128" rx="66" ry="56" fill="#F29A4A" ${st()}/><path d="M118 134 L94 150 L124 158 L110 176 L148 172Z" fill="#fff" ${st(2.6)}/><path d="M242 134 L266 150 L236 158 L250 176 L212 172Z" fill="#fff" ${st(2.6)}/>
+    <ellipse cx="180" cy="156" rx="50" ry="32" fill="#fff" ${st(2.6)}/>
+    ${eye(150, 122, 12.5)}${eye(210, 122, 12.5)}<path d="M132 108 Q150 96 168 108 M192 108 Q210 96 228 108" fill="none" stroke="#7A5BC8" stroke-width="6" stroke-linecap="round"/>
+    <path d="M174 146 h12 l-6 8Z" fill="#3a2a2a" ${st(2)}/><path d="M168 160 q12 10 24 0" fill="none" ${st(3)}/>${blush(138, 148, 9)}${blush(222, 148, 9)}
+    <path d="M180 84 q-8 10 0 18 q8 -8 0 -18Z" fill="#E5334A" ${st(2.4)}/>${flame(40, 150, .8)}${flame(320, 120, .7)}${flame(310, 340, .9)}
+    </svg>`;
+  })();
+
+  A.HERO.haetae = (() => {
+    const curls = Array.from({ length: 12 }, (_, i) => { const a = (i / 12) * Math.PI * 2 - Math.PI / 2, x = 180 + 82 * Math.cos(a), y = 130 + 76 * Math.sin(a); return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(a * 180 / Math.PI + 90).toFixed(0)})"><circle r="23" fill="${i % 2 ? '#3E9A92' : '#2F7F8C'}" ${st()}/><path d="M-10 4 a10 10 0 1 1 10 10 a5 5 0 1 1 -5 -5" fill="none" stroke="${GOLD}" stroke-width="3" stroke-linecap="round"/></g>`; }).join('');
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 440" overflow="visible"><defs><clipPath id="hbcl"><ellipse cx="180" cy="334" rx="96" ry="84"/></clipPath></defs>
+    <ellipse cx="180" cy="424" rx="136" ry="12" fill="rgba(30,10,40,.4)"/>
+    <path d="M258 350 C320 350 340 290 304 262 C284 246 300 226 316 234" fill="none" stroke="${OL}" stroke-width="24" stroke-linecap="round"/><path d="M258 350 C320 350 340 290 304 262 C284 246 300 226 316 234" fill="none" stroke="#3E9A92" stroke-width="16" stroke-linecap="round"/>${flame(318, 226, .7, '#FF8A4A', '#FFE27A')}
+    <ellipse cx="180" cy="334" rx="96" ry="84" fill="#4FB3A8" ${st()}/><g clip-path="url(#hbcl)">${[0, 1, 2, 3, 4].map((j) => [0, 1, 2, 3, 4, 5].map((i) => `<path d="M${88 + i * 36 + (j % 2 ? 18 : 0)} ${284 + j * 24} a18 18 0 0 1 36 0" fill="none" stroke="#2F7F8C" stroke-width="3"/>`).join('')).join('')}</g><ellipse cx="180" cy="334" rx="96" ry="84" fill="none" ${st()}/>
+    <rect x="132" y="372" width="34" height="46" rx="14" fill="#4FB3A8" ${st()}/><rect x="194" y="372" width="34" height="46" rx="14" fill="#4FB3A8" ${st()}/><path d="M140 410 v8 M150 410 v8 M160 410 v8 M202 410 v8 M212 410 v8 M222 410 v8" stroke="${OL}" stroke-width="2.6" stroke-linecap="round"/>
+    ${curls}<ellipse cx="180" cy="134" rx="66" ry="60" fill="#F0D9A6" ${st()}/>
+    <path d="M180 18 L166 80 L194 80Z" fill="${GOLD}" ${st()}/><path d="M174 40 h12 M171 58 h18" stroke="${GD}" stroke-width="3" stroke-linecap="round"/>
+    <path d="M128 100 Q148 86 168 102 M192 102 Q212 86 232 100" fill="none" stroke="#2F7F8C" stroke-width="8" stroke-linecap="round"/>
+    ${eye(152, 124, 13)}${eye(208, 124, 13)}<ellipse cx="180" cy="158" rx="34" ry="24" fill="#FFF3D6" ${st(2.6)}/><path d="M166 150 q14 -8 28 0 q-14 10 -28 0Z" fill="#7A4A3A" ${st(2.4)}/>
+    <path d="M150 168 Q180 196 210 168 Q180 180 150 168Z" fill="#7a2a2e" ${st(3)}/><path d="M160 174 l4 8 l4 -7 M192 174 l-4 8 l-4 -7" fill="#fff" ${st(2)}/>${blush(130, 150, 9)}${blush(230, 150, 9)}
+    <circle cx="180" cy="248" r="14" fill="${GOLD}" ${st()}/><path d="M172 252 h16 M180 258 v8" stroke="${OL}" stroke-width="3" stroke-linecap="round"/><path d="M170 238 q10 -8 20 0" fill="none" stroke="#E5334A" stroke-width="6" stroke-linecap="round"/>
+    ${[[60, 330, 1], [310, 380, .9]].map(([x, y, s]) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 22 V-22 M-18 -2 q18 -34 36 0" fill="none" stroke="#7FD8FF" stroke-width="5" stroke-linecap="round"/></g>`).join('')}
+    </svg>`;
+  })();
+
+  A.HERO.samjoko = (() => {
+    const wing = (side) => { const sg = side; let s = ''; for (let i = 0; i < 7; i++) { const a = (-70 + i * 20) * sg, len = 150 - Math.abs(i - 2) * 10; s += `<g transform="translate(${180 + sg * 40} 250) rotate(${a})"><path d="M0 0 L${-sg * 18} -${len} L${sg * 14} -${len - 10}Z" fill="#2A2438" ${st()}/><path d="M${-sg * 12} -${len - 30} L${-sg * 18} -${len} L${sg * 6} -${len - 20}Z" fill="#E5334A"/></g>`; } return s; };
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 440" overflow="visible"><defs><radialGradient id="sdisc"><stop offset="0" stop-color="#FFF3A8"/><stop offset="1" stop-color="#FFD24A"/></radialGradient></defs>
+    <circle cx="180" cy="150" r="112" fill="url(#sdisc)" ${st(3)}/><circle cx="180" cy="150" r="112" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+    ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => `<path d="M${180 + 120 * Math.cos(i * Math.PI / 6)} ${150 + 120 * Math.sin(i * Math.PI / 6)} L${180 + 152 * Math.cos(i * Math.PI / 6)} ${150 + 152 * Math.sin(i * Math.PI / 6)}" stroke="#FFD24A" stroke-width="9" stroke-linecap="round"/>`).join('')}
+    ${wing(-1)}${wing(1)}
+    ${[-24, 0, 24].map((a) => `<g transform="translate(180 340) rotate(${a})"><path d="M-14 0 L0 74 L14 0Z" fill="#2A2438" ${st()}/><path d="M-6 14 L0 62 L6 14Z" fill="#E5334A"/></g>`).join('')}
+    ${[-34, 0, 34].map((x, i) => `<g><path d="M${180 + x * .3} 318 L${180 + x} 400" stroke="${OL}" stroke-width="14" stroke-linecap="round"/><path d="M${180 + x * .3} 318 L${180 + x} 400" stroke="#F5C04A" stroke-width="8" stroke-linecap="round"/><path d="M${180 + x - 14} 414 L${180 + x} 396 L${180 + x + 14} 414 M${180 + x} 396 V416" fill="none" stroke="${OL}" stroke-width="9" stroke-linecap="round"/><path d="M${180 + x - 14} 414 L${180 + x} 396 L${180 + x + 14} 414 M${180 + x} 396 V416" fill="none" stroke="#E5334A" stroke-width="4.4" stroke-linecap="round"/></g>`).join('')}
+    <ellipse cx="180" cy="270" rx="64" ry="72" fill="#2A2438" ${st()}/><path d="M146 262 q34 -26 68 0 M142 290 q38 -24 76 0 M150 316 q30 -18 60 0" fill="none" stroke="#E5334A" stroke-width="5" stroke-linecap="round"/><ellipse cx="180" cy="296" rx="30" ry="34" fill="#5A4E78" opacity=".55"/>
+    <path d="M164 96 L156 60 L180 82 L204 60 L196 96Z" fill="#E5334A" ${st()}/><circle cx="180" cy="150" r="52" fill="#2A2438" ${st()}/>
+    <path d="M168 160 L180 196 L192 160Z" fill="${GOLD}" ${st()}/><path d="M172 166 h16" stroke="${OL}" stroke-width="2.4"/>
+    ${eye(156, 140, 12.5)}${eye(204, 140, 12.5)}<path d="M138 124 Q156 112 172 124 M188 124 Q204 112 222 124" fill="none" stroke="#E5334A" stroke-width="6" stroke-linecap="round"/>${blush(138, 162, 8)}${blush(222, 162, 8)}
+    ${flame(40, 330, .9, '#FFB347', '#FFF3A8')}${flame(320, 300, 1, '#FFB347', '#FFF3A8')}
+    </svg>`;
+  })();
+
+  A.HERO.athena = (() => {
+    const key = (x0, x1, y) => { let s = `M${x0} ${y}`; for (let x = x0; x < x1; x += 20) s += ` v-8 h10 v8 h10`; return s; };
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 440" overflow="visible"><defs><clipPath id="atcl"><path d="M126 206 Q180 192 234 206 L252 404 H108Z"/></clipPath></defs>
+    <ellipse cx="180" cy="418" rx="124" ry="12" fill="rgba(20,30,80,.35)"/>
+    <path d="M122 190 C70 240 62 340 80 404 L280 404 C298 340 290 240 238 190Z" fill="#3B6FD6" ${st()}/>
+    <path d="M126 206 Q180 192 234 206 L252 404 H108Z" fill="#FBF4E8" ${st()}/><g clip-path="url(#atcl)"><path d="M150 206 L140 404 M170 206 V404 M190 206 V404 M210 206 L220 404" stroke="#E0D3BC" stroke-width="3"/><path d="${key(100, 260, 380)}" fill="none" stroke="#3B6FD6" stroke-width="3.4" stroke-linejoin="round"/><path d="M100 392 H262" stroke="${GOLD}" stroke-width="5"/></g><path d="M126 206 Q180 192 234 206 L252 404 H108Z" fill="none" ${st()}/>
+    <path d="M122 214 Q180 196 238 214 L228 286 Q180 306 132 286Z" fill="${GOLD}" ${st()}/>${[0, 1, 2, 3, 4].map((i) => `<path d="M${136 + i * 22} 286 q11 14 22 0" fill="#FFE9A0" ${st(2.4)}/>`).join('')}<circle cx="180" cy="248" r="12" fill="#3B6FD6" ${st(2.6)}/><path d="M122 296 H238" stroke="${GOLD}" stroke-width="8" stroke-linecap="round"/>
+    ${limb(236, 226, 282, 290, 26, '#FBF4E8')}<circle cx="284" cy="294" r="14" fill="#F7D0A5" ${st()}/>
+    <path d="M284 440 V30" stroke="${OL}" stroke-width="13" stroke-linecap="round"/><path d="M284 440 V30" stroke="${GOLD}" stroke-width="7" stroke-linecap="round"/><path d="M284 20 L270 62 L284 54 L298 62Z" fill="${GOLD2}" ${st()}/>
+    ${limb(124, 226, 84, 296, 26, '#FBF4E8')}<circle cx="78" cy="296" r="64" fill="#C98A3A" ${st()}/><circle cx="78" cy="296" r="50" fill="#F5C04A" ${st(2.6)}/><circle cx="78" cy="296" r="36" fill="#3B6FD6" ${st(2.6)}/><g transform="translate(78 296)"><circle cx="-9" cy="-4" r="9" fill="#fff" ${st(2)}/><circle cx="9" cy="-4" r="9" fill="#fff" ${st(2)}/><circle cx="-9" cy="-4" r="4" fill="#E8A41A"/><circle cx="9" cy="-4" r="4" fill="#E8A41A"/><path d="M-4 4 L0 11 L4 4Z" fill="#F5C04A" ${st(1.6)}/><path d="M-16 -14 L-12 -22 L-6 -14 M6 -14 L12 -22 L16 -14" fill="#3B6FD6" ${st(2)}/></g>
+    <g transform="translate(236 196)"><ellipse cx="0" cy="0" rx="22" ry="26" fill="#C98A3A" ${st()}/><path d="M-16 -22 l-4 -12 l12 6 M16 -22 l4 -12 l-12 6" fill="#C98A3A" ${st(2.6)}/><circle cx="-9" cy="-6" r="8" fill="#fff" ${st(2)}/><circle cx="9" cy="-6" r="8" fill="#fff" ${st(2)}/><circle cx="-9" cy="-6" r="4.2" fill="#4a3426"/><circle cx="9" cy="-6" r="4.2" fill="#4a3426"/><path d="M-4 2 L0 10 L4 2Z" fill="${GOLD}" ${st(1.6)}/><path d="M-12 12 q4 6 8 0 M0 12 q4 6 8 0" fill="none" stroke="#E8C48A" stroke-width="2.4"/></g>
+    <path d="M118 120 C92 140 92 200 112 226 L130 150Z" fill="#7A4A2E" ${st()}/><path d="M242 120 C268 140 268 200 248 226 L230 150Z" fill="#7A4A2E" ${st()}/>
+    <ellipse cx="180" cy="128" rx="58" ry="58" fill="#F7D0A5" ${st()}/>${eye(154, 134, 12)}${eye(206, 134, 12)}<path d="M136 120 Q154 110 170 120 M190 120 Q206 110 224 120" fill="none" stroke="#7A4A2E" stroke-width="5.4" stroke-linecap="round"/>${blush(138, 156, 9)}${blush(222, 156, 9)}<path d="M168 162 q12 9 24 0" fill="none" ${st(3)}/>
+    <path d="M118 112 C118 56 150 34 180 34 C210 34 242 56 242 112 L226 112 C226 86 206 70 180 70 C154 70 134 86 134 112Z" fill="${GOLD}" ${st()}/><path d="M118 112 L116 150 L136 138 L134 112Z M242 112 L244 150 L224 138 L226 112Z" fill="${GOLD}" ${st()}/><path d="M180 34 C150 -4 206 -22 236 -2 C216 -2 206 10 202 34Z" fill="#3B6FD6" ${st()}/><path d="M172 30 C146 6 156 -10 180 -6" fill="none" stroke="#E5334A" stroke-width="7" stroke-linecap="round"/><path d="M150 52 Q180 40 210 52" fill="none" stroke="${GOLD2}" stroke-width="3.4"/>
+    </svg>`;
+  })();
+
+  // ── 능력 아이콘 ──
+  const S3 = `stroke="${OL}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"`;
+  A.ICON.gumiho = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">${[-60, -30, 0, 30, 60].map((a) => `<g transform="translate(24 42) rotate(${a})"><path d="M0 0 C-7 -8 -6 -22 0 -32 C6 -22 7 -8 0 0Z" fill="#F29A4A" ${S3}/><path d="M-2.6 -24 C-4 -29 -1 -31 0 -32 C1 -31 4 -29 2.6 -24Z" fill="#fff"/></g>`).join('')}</svg>`;
+  A.ICON.haetae = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24 4 L42 10 V24 C42 34 34 41 24 45 C14 41 6 34 6 24 V10Z" fill="#4FB3A8" ${S3}/><path d="M24 12 C28 18 31 21 31 26 C31 31 28 34 24 34 C20 34 17 31 17 26 C17 22 20 20 21 16 C22 19 23 20 24 19 C23 16 23 14 24 12Z" fill="#E5334A" ${S3}/><path d="M12 34 L36 10" stroke="${OL}" stroke-width="5" stroke-linecap="round"/><path d="M12 34 L36 10" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+  A.ICON.samjoko = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="22" r="14" fill="#FFD24A" ${S3}/>${[0, 1, 2, 3, 4, 5, 6, 7].map((i) => `<path d="M${24 + 17 * Math.cos(i * Math.PI / 4)} ${22 + 17 * Math.sin(i * Math.PI / 4)} L${24 + 22 * Math.cos(i * Math.PI / 4)} ${22 + 22 * Math.sin(i * Math.PI / 4)}" stroke="#FFD24A" stroke-width="3.4" stroke-linecap="round"/>`).join('')}<path d="M14 18 q10 -8 20 0 q-10 14 -20 0Z" fill="#2A2438" ${S3}/><path d="M18 30 L14 44 M24 32 V45 M30 30 L34 44" stroke="#E5334A" stroke-width="3.6" stroke-linecap="round"/></svg>`;
+  A.ICON.athena = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="24" cy="26" r="17" fill="#F5C04A" ${S3}/><circle cx="24" cy="26" r="11" fill="#3B6FD6" ${S3}/><circle cx="19.5" cy="24" r="4.4" fill="#fff"/><circle cx="28.5" cy="24" r="4.4" fill="#fff"/><circle cx="19.5" cy="24" r="2" fill="#4a3426"/><circle cx="28.5" cy="24" r="2" fill="#4a3426"/><path d="M22 29 L24 33 L26 29Z" fill="#F5C04A"/><path d="M24 2 L19 14 H29Z" fill="#FFE9A0" ${S3}/></svg>`;
+})(window);

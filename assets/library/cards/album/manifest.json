@@ -1,0 +1,657 @@
+{
+ "t_pigs_k": {
+  "file": "assets/library/cards/album/t_pigs_k.png",
+  "book": "서양 동화 모음 1",
+  "name": "아기 돼지 삼형제"
+ },
+ "t_bears_k": {
+  "file": "assets/library/cards/album/t_bears_k.png",
+  "book": "서양 동화 모음 1",
+  "name": "곰 세 마리"
+ },
+ "t_jack_k": {
+  "file": "assets/library/cards/album/t_jack_k.png",
+  "book": "서양 동화 모음 1",
+  "name": "잭과 콩나무"
+ },
+ "t_bremen_k": {
+  "file": "assets/library/cards/album/t_bremen_k.png",
+  "book": "서양 동화 모음 1",
+  "name": "브레멘 음악대"
+ },
+ "t_pino_k": {
+  "file": "assets/library/cards/album/t_pino_k.png",
+  "book": "서양 동화 모음 1",
+  "name": "피노키오"
+ },
+ "t_puss_k": {
+  "file": "assets/library/cards/album/t_puss_k.png",
+  "book": "서양 동화 모음 1",
+  "name": "장화 신은 고양이"
+ },
+ "t_heungbu_k": {
+  "file": "assets/library/cards/album/t_heungbu_k.png",
+  "book": "우리 옛이야기 모음 1",
+  "name": "흥부와 놀부"
+ },
+ "t_kongjwi_k": {
+  "file": "assets/library/cards/album/t_kongjwi_k.png",
+  "book": "우리 옛이야기 모음 1",
+  "name": "콩쥐팥쥐"
+ },
+ "t_sun_k": {
+  "file": "assets/library/cards/album/t_sun_k.png",
+  "book": "우리 옛이야기 모음 1",
+  "name": "해와 달이 된 오누이"
+ },
+ "t_gyeonwoo_k": {
+  "file": "assets/library/cards/album/t_gyeonwoo_k.png",
+  "book": "우리 옛이야기 모음 1",
+  "name": "견우와 직녀"
+ },
+ "t_ureng_k": {
+  "file": "assets/library/cards/album/t_ureng_k.png",
+  "book": "우리 옛이야기 모음 1",
+  "name": "우렁각시"
+ },
+ "t_brothers_k": {
+  "file": "assets/library/cards/album/t_brothers_k.png",
+  "book": "우리 옛이야기 모음 1",
+  "name": "의좋은 형제"
+ },
+ "t_redhood_k": {
+  "file": "assets/library/cards/album/t_redhood_k.png",
+  "book": "서양 동화 모음 2",
+  "name": "빨간 모자"
+ },
+ "t_hansel_k": {
+  "file": "assets/library/cards/album/t_hansel_k.png",
+  "book": "서양 동화 모음 2",
+  "name": "헨젤과 그레텔"
+ },
+ "t_snowqueen_k": {
+  "file": "assets/library/cards/album/t_snowqueen_k.png",
+  "book": "서양 동화 모음 2",
+  "name": "눈의 여왕"
+ },
+ "t_shoes_k": {
+  "file": "assets/library/cards/album/t_shoes_k.png",
+  "book": "서양 동화 모음 2",
+  "name": "빨간 구두"
+ },
+ "t_ant_k": {
+  "file": "assets/library/cards/album/t_ant_k.png",
+  "book": "서양 동화 모음 2",
+  "name": "개미와 베짱이"
+ },
+ "t_hare_k": {
+  "file": "assets/library/cards/album/t_hare_k.png",
+  "book": "서양 동화 모음 2",
+  "name": "토끼와 거북이"
+ },
+ "t_hok_k": {
+  "file": "assets/library/cards/album/t_hok_k.png",
+  "book": "우리 옛이야기 모음 2",
+  "name": "혹부리 영감"
+ },
+ "t_fairywood_k": {
+  "file": "assets/library/cards/album/t_fairywood_k.png",
+  "book": "우리 옛이야기 모음 2",
+  "name": "선녀와 나무꾼"
+ },
+ "t_rabbitliver_k": {
+  "file": "assets/library/cards/album/t_rabbitliver_k.png",
+  "book": "우리 옛이야기 모음 2",
+  "name": "토끼의 간"
+ },
+ "t_magpie_k": {
+  "file": "assets/library/cards/album/t_magpie_k.png",
+  "book": "우리 옛이야기 모음 2",
+  "name": "은혜 갚은 까치"
+ },
+ "t_tigerpersimmon_k": {
+  "file": "assets/library/cards/album/t_tigerpersimmon_k.png",
+  "book": "우리 옛이야기 모음 2",
+  "name": "호랑이와 곶감"
+ },
+ "t_axe_k": {
+  "file": "assets/library/cards/album/t_axe_k.png",
+  "book": "우리 옛이야기 모음 2",
+  "name": "금도끼 은도끼"
+ },
+ "k_train": {
+  "file": "assets/library/cards/album/k_train.png",
+  "book": "네모네 기차놀이",
+  "name": "기차 장난감"
+ },
+ "k_party": {
+  "file": "assets/library/cards/album/k_party.png",
+  "book": "네모네 기차놀이",
+  "name": "잔칫집 미니어처"
+ },
+ "k_ch5": {
+  "file": "assets/library/cards/album/k_ch5.png",
+  "book": "네모네 기차놀이",
+  "name": "도형 블록"
+ },
+ "k_ch6": {
+  "file": "assets/library/cards/album/k_ch6.png",
+  "book": "네모네 기차놀이",
+  "name": "기차표"
+ },
+ "k_ch7": {
+  "file": "assets/library/cards/album/k_ch7.png",
+  "book": "네모네 기차놀이",
+  "name": "소리 나팔"
+ },
+ "k_ch9": {
+  "file": "assets/library/cards/album/k_ch9.png",
+  "book": "네모네 기차놀이",
+  "name": "기차 레일"
+ },
+ "k_ch10": {
+  "file": "assets/library/cards/album/k_ch10.png",
+  "book": "세모네 잔치",
+  "name": "생일 케이크"
+ },
+ "k_ch11": {
+  "file": "assets/library/cards/album/k_ch11.png",
+  "book": "세모네 잔치",
+  "name": "카네이션 화분"
+ },
+ "k_ch12": {
+  "file": "assets/library/cards/album/k_ch12.png",
+  "book": "세모네 잔치",
+  "name": "수박 방석"
+ },
+ "k_ch13": {
+  "file": "assets/library/cards/album/k_ch13.png",
+  "book": "세모네 잔치",
+  "name": "낙엽 책갈피"
+ },
+ "k_ch14": {
+  "file": "assets/library/cards/album/k_ch14.png",
+  "book": "세모네 잔치",
+  "name": "눈사람 인형"
+ },
+ "k_ch15": {
+  "file": "assets/library/cards/album/k_ch15.png",
+  "book": "세모네 잔치",
+  "name": "김치 항아리"
+ },
+ "k_ch16": {
+  "file": "assets/library/cards/album/k_ch16.png",
+  "book": "세모네 잔치",
+  "name": "곶감 꾸러미"
+ },
+ "k_ch3": {
+  "file": "assets/library/cards/album/k_ch3.png",
+  "book": "동그라미네 동화 소품",
+  "name": "무 인형"
+ },
+ "k_ch8": {
+  "file": "assets/library/cards/album/k_ch8.png",
+  "book": "동그라미네 동화 소품",
+  "name": "밀짚모자 걸이"
+ },
+ "k_ch17": {
+  "file": "assets/library/cards/album/k_ch17.png",
+  "book": "동그라미네 동화 소품",
+  "name": "빨간 모자 걸이"
+ },
+ "k_ch18": {
+  "file": "assets/library/cards/album/k_ch18.png",
+  "book": "동그라미네 동화 소품",
+  "name": "날개옷 인형"
+ },
+ "k_ch19": {
+  "file": "assets/library/cards/album/k_ch19.png",
+  "book": "동그라미네 동화 소품",
+  "name": "거북 인형"
+ },
+ "k_ch20": {
+  "file": "assets/library/cards/album/k_ch20.png",
+  "book": "동그라미네 동화 소품",
+  "name": "빵 부스러기 병"
+ },
+ "cr_chair": {
+  "file": "assets/library/cards/album/cr_chair.png",
+  "book": "네모네 집 물건",
+  "name": "꼬마 의자"
+ },
+ "cr_table": {
+  "file": "assets/library/cards/album/cr_table.png",
+  "book": "네모네 집 물건",
+  "name": "큰 상"
+ },
+ "cr_bed": {
+  "file": "assets/library/cards/album/cr_bed.png",
+  "book": "네모네 집 물건",
+  "name": "폭신 침대"
+ },
+ "cr_shelf": {
+  "file": "assets/library/cards/album/cr_shelf.png",
+  "book": "네모네 집 물건",
+  "name": "지붕 책장"
+ },
+ "cr_window": {
+  "file": "assets/library/cards/album/cr_window.png",
+  "book": "네모네 집 물건",
+  "name": "동그란 창문"
+ },
+ "cr_doll": {
+  "file": "assets/library/cards/album/cr_doll.png",
+  "book": "네모네 집 물건",
+  "name": "동글 인형"
+ },
+ "cr_cart": {
+  "file": "assets/library/cards/album/cr_cart.png",
+  "book": "네모네 집 물건",
+  "name": "수레"
+ },
+ "cr_pot": {
+  "file": "assets/library/cards/album/cr_pot.png",
+  "book": "세모네 집 물건",
+  "name": "세모 화분"
+ },
+ "cr_fence": {
+  "file": "assets/library/cards/album/cr_fence.png",
+  "book": "세모네 집 물건",
+  "name": "벽돌 담장"
+ },
+ "cr_blanket": {
+  "file": "assets/library/cards/album/cr_blanket.png",
+  "book": "세모네 집 물건",
+  "name": "알록 이불"
+ },
+ "cr_glasses": {
+  "file": "assets/library/cards/album/cr_glasses.png",
+  "book": "세모네 집 물건",
+  "name": "동글 안경"
+ },
+ "cr_toyhouse": {
+  "file": "assets/library/cards/album/cr_toyhouse.png",
+  "book": "세모네 집 물건",
+  "name": "장난감 집"
+ },
+ "cr_gourd": {
+  "file": "assets/library/cards/album/cr_gourd.png",
+  "book": "세모네 집 물건",
+  "name": "흥부의 박"
+ },
+ "cr_rope": {
+  "file": "assets/library/cards/album/cr_rope.png",
+  "book": "세모네 집 물건",
+  "name": "해님달님 동아줄"
+ },
+ "kc_cherry": {
+  "file": "assets/library/cards/album/kc_cherry.png",
+  "book": "봄 소풍",
+  "name": "벚꽃"
+ },
+ "kc_tulip": {
+  "file": "assets/library/cards/album/kc_tulip.png",
+  "book": "봄 소풍",
+  "name": "튤립"
+ },
+ "k3_28_tadpole": {
+  "file": "assets/library/cards/album/k3_28_tadpole.png",
+  "book": "봄 소풍",
+  "name": "올챙이 어항"
+ },
+ "k3_28_puddleboots": {
+  "file": "assets/library/cards/album/k3_28_puddleboots.png",
+  "book": "봄 소풍",
+  "name": "장화"
+ },
+ "k3_28_bubble": {
+  "file": "assets/library/cards/album/k3_28_bubble.png",
+  "book": "봄 소풍",
+  "name": "비눗방울"
+ },
+ "k3_29_bee": {
+  "file": "assets/library/cards/album/k3_29_bee.png",
+  "book": "봄 소풍",
+  "name": "꿀벌 장난감"
+ },
+ "k3_29_ladybug": {
+  "file": "assets/library/cards/album/k3_29_ladybug.png",
+  "book": "봄 소풍",
+  "name": "무당벌레 모자"
+ },
+ "k3_30_chick": {
+  "file": "assets/library/cards/album/k3_30_chick.png",
+  "book": "봄 소풍",
+  "name": "병아리 둥지"
+ },
+ "k3_30_seed": {
+  "file": "assets/library/cards/album/k3_30_seed.png",
+  "book": "봄 소풍",
+  "name": "씨앗 주머니"
+ },
+ "kc_tube": {
+  "file": "assets/library/cards/album/kc_tube.png",
+  "book": "여름 물놀이",
+  "name": "튜브"
+ },
+ "kc_icecream": {
+  "file": "assets/library/cards/album/kc_icecream.png",
+  "book": "여름 물놀이",
+  "name": "아이스크림"
+ },
+ "k3_28_popsicle": {
+  "file": "assets/library/cards/album/k3_28_popsicle.png",
+  "book": "여름 물놀이",
+  "name": "얼음과자"
+ },
+ "k3_29_sandcastle": {
+  "file": "assets/library/cards/album/k3_29_sandcastle.png",
+  "book": "여름 물놀이",
+  "name": "모래성 양동이"
+ },
+ "k3_29_frogumb": {
+  "file": "assets/library/cards/album/k3_29_frogumb.png",
+  "book": "여름 물놀이",
+  "name": "개구리 우산"
+ },
+ "k3_30_watergun": {
+  "file": "assets/library/cards/album/k3_30_watergun.png",
+  "book": "여름 물놀이",
+  "name": "물총"
+ },
+ "k3_30_snorkel": {
+  "file": "assets/library/cards/album/k3_30_snorkel.png",
+  "book": "여름 물놀이",
+  "name": "물안경"
+ },
+ "kc_acorn": {
+  "file": "assets/library/cards/album/kc_acorn.png",
+  "book": "가을 숲",
+  "name": "도토리"
+ },
+ "kc_leaf": {
+  "file": "assets/library/cards/album/kc_leaf.png",
+  "book": "가을 숲",
+  "name": "단풍잎"
+ },
+ "k3_28_leafcrown": {
+  "file": "assets/library/cards/album/k3_28_leafcrown.png",
+  "book": "가을 숲",
+  "name": "낙엽 왕관"
+ },
+ "k3_28_hedgehog": {
+  "file": "assets/library/cards/album/k3_28_hedgehog.png",
+  "book": "가을 숲",
+  "name": "밤송이 고슴도치"
+ },
+ "k3_29_squirrel": {
+  "file": "assets/library/cards/album/k3_29_squirrel.png",
+  "book": "가을 숲",
+  "name": "다람쥐 인형"
+ },
+ "k3_29_wand": {
+  "file": "assets/library/cards/album/k3_29_wand.png",
+  "book": "가을 숲",
+  "name": "도깨비 방망이"
+ },
+ "k3_30_chestnutbag": {
+  "file": "assets/library/cards/album/k3_30_chestnutbag.png",
+  "book": "가을 숲",
+  "name": "밤 주머니"
+ },
+ "kc_snowman": {
+  "file": "assets/library/cards/album/kc_snowman.png",
+  "book": "눈 오는 날",
+  "name": "눈사람"
+ },
+ "kc_mitten": {
+  "file": "assets/library/cards/album/kc_mitten.png",
+  "book": "눈 오는 날",
+  "name": "벙어리장갑"
+ },
+ "k3_28_snowflake": {
+  "file": "assets/library/cards/album/k3_28_snowflake.png",
+  "book": "눈 오는 날",
+  "name": "눈꽃 종이"
+ },
+ "k3_28_hotchoco": {
+  "file": "assets/library/cards/album/k3_28_hotchoco.png",
+  "book": "눈 오는 날",
+  "name": "따뜻한 우유"
+ },
+ "k3_29_penguin": {
+  "file": "assets/library/cards/album/k3_29_penguin.png",
+  "book": "눈 오는 날",
+  "name": "펭귄 썰매"
+ },
+ "k3_29_beanie": {
+  "file": "assets/library/cards/album/k3_29_beanie.png",
+  "book": "눈 오는 날",
+  "name": "털모자"
+ },
+ "k3_30_scarfk": {
+  "file": "assets/library/cards/album/k3_30_scarfk.png",
+  "book": "눈 오는 날",
+  "name": "알록달록 목도리"
+ },
+ "k3_30_snowball": {
+  "file": "assets/library/cards/album/k3_30_snowball.png",
+  "book": "눈 오는 날",
+  "name": "눈뭉치 쌓기"
+ },
+ "k3_30_sock": {
+  "file": "assets/library/cards/album/k3_30_sock.png",
+  "book": "눈 오는 날",
+  "name": "털양말"
+ },
+ "y_cup": {
+  "file": "assets/library/cards/album/y_cup.png",
+  "book": "아침이에요",
+  "name": "칫솔 컵"
+ },
+ "y_paste": {
+  "file": "assets/library/cards/album/y_paste.png",
+  "book": "아침이에요",
+  "name": "치약"
+ },
+ "y_hanger": {
+  "file": "assets/library/cards/album/y_hanger.png",
+  "book": "아침이에요",
+  "name": "옷걸이"
+ },
+ "y_hat": {
+  "file": "assets/library/cards/album/y_hat.png",
+  "book": "아침이에요",
+  "name": "모자걸이"
+ },
+ "y_clock": {
+  "file": "assets/library/cards/album/y_clock.png",
+  "book": "아침이에요",
+  "name": "아침 시계"
+ },
+ "y_bowl": {
+  "file": "assets/library/cards/album/y_bowl.png",
+  "book": "아침이에요",
+  "name": "밥그릇"
+ },
+ "y_spoon": {
+  "file": "assets/library/cards/album/y_spoon.png",
+  "book": "아침이에요",
+  "name": "수저 통"
+ },
+ "y_cup2": {
+  "file": "assets/library/cards/album/y_cup2.png",
+  "book": "아침이에요",
+  "name": "물컵"
+ },
+ "y_toybox": {
+  "file": "assets/library/cards/album/y_toybox.png",
+  "book": "목욕 시간",
+  "name": "장난감 상자"
+ },
+ "y_ball": {
+  "file": "assets/library/cards/album/y_ball.png",
+  "book": "목욕 시간",
+  "name": "공 바구니"
+ },
+ "y_duck": {
+  "file": "assets/library/cards/album/y_duck.png",
+  "book": "목욕 시간",
+  "name": "목욕 오리"
+ },
+ "y_soap": {
+  "file": "assets/library/cards/album/y_soap.png",
+  "book": "목욕 시간",
+  "name": "비누"
+ },
+ "y_boots": {
+  "file": "assets/library/cards/album/y_boots.png",
+  "book": "목욕 시간",
+  "name": "장화"
+ },
+ "y_towel": {
+  "file": "assets/library/cards/album/y_towel.png",
+  "book": "목욕 시간",
+  "name": "수건"
+ },
+ "y_mat": {
+  "file": "assets/library/cards/album/y_mat.png",
+  "book": "목욕 시간",
+  "name": "욕실 발판"
+ },
+ "y_moon": {
+  "file": "assets/library/cards/album/y_moon.png",
+  "book": "잘 자요",
+  "name": "달 전등"
+ },
+ "y_pillow": {
+  "file": "assets/library/cards/album/y_pillow.png",
+  "book": "잘 자요",
+  "name": "베개"
+ },
+ "y_book": {
+  "file": "assets/library/cards/album/y_book.png",
+  "book": "잘 자요",
+  "name": "잠자리 책"
+ },
+ "y_quilt": {
+  "file": "assets/library/cards/album/y_quilt.png",
+  "book": "잘 자요",
+  "name": "이불"
+ },
+ "y_star": {
+  "file": "assets/library/cards/album/y_star.png",
+  "book": "잘 자요",
+  "name": "별 스티커"
+ },
+ "k_ch4": {
+  "file": "assets/library/cards/album/k_ch4.png",
+  "book": "잘 자요",
+  "name": "달 램프"
+ },
+ "kg_star": {
+  "file": "assets/library/cards/album/kg_star.png",
+  "book": "손님 선물 상자",
+  "name": "별 스티커 판"
+ },
+ "kg_cloud": {
+  "file": "assets/library/cards/album/kg_cloud.png",
+  "book": "손님 선물 상자",
+  "name": "구름 모빌"
+ },
+ "kg_bear": {
+  "file": "assets/library/cards/album/kg_bear.png",
+  "book": "손님 선물 상자",
+  "name": "곰 인형"
+ },
+ "kg_ball2": {
+  "file": "assets/library/cards/album/kg_ball2.png",
+  "book": "손님 선물 상자",
+  "name": "풍선 공"
+ },
+ "kg_kite": {
+  "file": "assets/library/cards/album/kg_kite.png",
+  "book": "손님 선물 상자",
+  "name": "작은 연"
+ },
+ "kg_drum": {
+  "file": "assets/library/cards/album/kg_drum.png",
+  "book": "손님 선물 상자",
+  "name": "장난감 북"
+ },
+ "kg_rainbow": {
+  "file": "assets/library/cards/album/kg_rainbow.png",
+  "book": "손님 선물 상자",
+  "name": "무지개 깃발"
+ },
+ "kg_train2": {
+  "file": "assets/library/cards/album/kg_train2.png",
+  "book": "손님 선물 상자",
+  "name": "꼬마 기차"
+ },
+ "ev3_play": {
+  "file": "assets/library/cards/album/ev3_play.png",
+  "book": "특별한 날",
+  "name": "눈사람 인형"
+ },
+ "ev3_color": {
+  "file": "assets/library/cards/album/ev3_color.png",
+  "book": "특별한 날",
+  "name": "반짝 별 모빌"
+ },
+ "ev3_day": {
+  "file": "assets/library/cards/album/ev3_day.png",
+  "book": "특별한 날",
+  "name": "따끈 군고구마 난로"
+ },
+ "kgb_2": {
+  "file": "assets/library/cards/album/kgb_2.png",
+  "book": "특별한 날",
+  "name": "손님 스티커 판"
+ },
+ "kgb_4": {
+  "file": "assets/library/cards/album/kgb_4.png",
+  "book": "특별한 날",
+  "name": "손님 풍선 묶음"
+ },
+ "w_frame": {
+  "file": "assets/library/cards/album/w_frame.png",
+  "book": "내 그림 액자",
+  "name": "내 그림 액자"
+ },
+ "w_frame_gold": {
+  "file": "assets/library/cards/album/w_frame_gold.png",
+  "book": "내 그림 액자",
+  "name": "황금 액자"
+ },
+ "w_frame_pink": {
+  "file": "assets/library/cards/album/w_frame_pink.png",
+  "book": "내 그림 액자",
+  "name": "분홍 액자"
+ },
+ "w_garland": {
+  "file": "assets/library/cards/album/w_garland.png",
+  "book": "내 그림 액자",
+  "name": "깃발 줄"
+ },
+ "w_balloons": {
+  "file": "assets/library/cards/album/w_balloons.png",
+  "book": "내 그림 액자",
+  "name": "풍선"
+ },
+ "w_stars": {
+  "file": "assets/library/cards/album/w_stars.png",
+  "book": "내 그림 액자",
+  "name": "별 모빌"
+ },
+ "w_rainbow": {
+  "file": "assets/library/cards/album/w_rainbow.png",
+  "book": "내 그림 액자",
+  "name": "무지개"
+ },
+ "w_crown": {
+  "file": "assets/library/cards/album/w_crown.png",
+  "book": "내 그림 액자",
+  "name": "왕관 걸이"
+ }
+}

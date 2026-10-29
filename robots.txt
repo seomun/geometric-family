@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /play/res/
+Disallow: /expedition-staging/
 
 Sitemap: https://geometricfamily.com/sitemap.xml

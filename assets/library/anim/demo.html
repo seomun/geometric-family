@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>영웅 움직임 프리셋 시험</title>
+<link rel="stylesheet" href="hero_anim.css">
+<style>body{background:#141a2e;color:#eee;font:14px sans-serif;padding:16px}.row{display:flex;gap:28px;align-items:flex-end;margin:20px 0}.gfh{width:96px;height:128px}button{margin:2px}</style>
+<p>도형 영웅 스프라이트(spr_m_*)로 4상태 확인. 버튼 = 다시 재생.</p>
+<div class="row" id="r"></div>
+<script src="hero_anim.js"></script>
+<script>
+const r=document.getElementById('r'), base='../keyart/hero_v4/spr/';
+[['m_dice','fire','공격','atk'],['m_drop','water','피격','hit'],['m_hexprism','grass','스킬','skill'],['m_arrow','fire','쓰러짐','down'],['m_cone','water','대기','idle']].forEach(([id,el,t,p])=>{const w=document.createElement('div');r.appendChild(w);const n=GFHeroAnim.mount(w,{id,el,base});const b=document.createElement('button');b.textContent=t;b.onclick=()=>{p==='idle'?0:p==='down'?(n.classList.contains('is-down')?GFHeroAnim.up(n):GFHeroAnim.down(n)):GFHeroAnim.play(n,p)};w.appendChild(b)});
+</script>

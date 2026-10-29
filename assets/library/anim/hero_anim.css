@@ -1,0 +1,47 @@
+/* 기하학 원정대 — 영웅 2D 움직임 프리셋 (gf-asset, 2026-10-29). 「한 장 그림 + 부위 변형」 방식, CSS transform·filter 만(캔버스 없음).
+   구조:  <div class="gfh gfh--fire is-idle"><i class="gfh-halo"></i><img class="gfh-body" src="spr_<id>_idle.webp"><i class="gfh-fx"></i></div>
+   상태 클래스(하나만): is-idle 대기 · is-atk 공격(0.5초, 끝나면 is-idle 로) · is-hit 피격(0.2초) · is-skill 스킬(0.9초) · is-down 쓰러짐
+   속성: gfh--fire(불 빨강) · gfh--grass(풀 초록) · gfh--water(물 파랑) → --gfh-el 색.
+   그림 교체: 공격·피격·스킬 포즈 그림이 있으면 JS 가 .gfh-body src 를 spr_<id>_{atk,hit,skill}.webp 로 바꾸고, 없으면 대기 그림 그대로 이 변형만 쓴다.
+   저사양·움직임 줄이기: .gfh--lite 또는 prefers-reduced-motion → 대기 숨쉬기·후광 회전 끔, 상태 변형만 짧게.
+   「집에서 편히」: 섬광은 낮은 불투명도(최대 .45)·짧게, 화면 전체 번쩍임 없음. */
+.gfh { --gfh-el: #e0483c; position: relative; display: inline-block; width: 96px; height: 128px; transform-origin: 50% 100%; }
+.gfh--fire { --gfh-el: #e0483c; } .gfh--grass { --gfh-el: #3fb45a; } .gfh--water { --gfh-el: #3f7fe0; }
+.gfh-body { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform-origin: 50% 100%; will-change: transform, filter; }
+.gfh-halo { position: absolute; left: 50%; top: 4%; width: 78%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, transparent 52%, color-mix(in srgb, var(--gfh-el) 55%, #ffd77a) 54%, transparent 58%, transparent 66%, rgba(255, 215, 122, .35) 68%, transparent 71%); opacity: .55; }
+.gfh-fx { position: absolute; inset: 0; pointer-events: none; opacity: 0; border-radius: 40%; background: radial-gradient(circle at 60% 55%, var(--gfh-el), transparent 62%); mix-blend-mode: screen; }
+
+/* 대기: 숨쉬기(세로 2.5%, 1.6초) · 후광 천천히 회전 · 눈 빛 깜빡임(밝기 살짝) */
+.gfh.is-idle .gfh-body { animation: gfh-breathe 1.6s ease-in-out infinite, gfh-blink 4.8s steps(1) infinite; }
+.gfh.is-idle .gfh-halo { animation: gfh-spin 18s linear infinite; }
+@keyframes gfh-breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.01, 1.025); } }
+@keyframes gfh-blink { 0%, 92%, 100% { filter: none; } 94% { filter: brightness(1.18) saturate(1.1); } }
+@keyframes gfh-spin { to { transform: translateX(-50%) rotate(360deg); } }
+
+/* 공격: 앞으로 돌진+기울기 → 복귀(0.5초) · 무기 쪽 잔상(drop-shadow 꼬리) · 속성색 섬광 */
+.gfh.is-atk .gfh-body { animation: gfh-lunge .5s cubic-bezier(.3, .7, .3, 1) both; }
+.gfh.is-atk .gfh-fx { animation: gfh-flash .5s ease-out both; }
+@keyframes gfh-lunge { 0% { transform: none; } 18% { transform: translateX(-6%) rotate(4deg); } 45% { transform: translateX(42%) rotate(-12deg) scale(1.06); filter: drop-shadow(-14px 0 0 color-mix(in srgb, var(--gfh-el) 45%, transparent)) drop-shadow(-26px 0 0 color-mix(in srgb, var(--gfh-el) 20%, transparent)); } 70% { transform: translateX(30%) rotate(-6deg); } 100% { transform: none; filter: none; } }
+@keyframes gfh-flash { 0%, 30% { opacity: 0; } 45% { opacity: .45; transform: translateX(55%) scale(1.1); } 100% { opacity: 0; transform: translateX(40%) scale(1.3); } }
+
+/* 피격: 뒤로 밀림 + 붉은 번쩍 + 흔들림 0.2초 */
+.gfh.is-hit .gfh-body { animation: gfh-hit .2s linear both; }
+@keyframes gfh-hit { 0% { transform: none; filter: none; } 20% { transform: translateX(-12%) rotate(6deg); filter: brightness(1.4) sepia(1) saturate(4) hue-rotate(-30deg); } 40% { transform: translateX(-8%) rotate(-3deg); } 60% { transform: translateX(-11%) rotate(3deg); filter: brightness(1.15) sepia(.5) saturate(2) hue-rotate(-30deg); } 80% { transform: translateX(-5%) rotate(-1deg); } 100% { transform: none; filter: none; } }
+
+/* 스킬: 후광 커짐 + 몸 빛남 + 속성 파티클(fx 층의 점 무늬가 위로) — 신화 컷인은 게임 쪽 연출 */
+.gfh.is-skill .gfh-halo { animation: gfh-halo-up .9s ease-out both; }
+.gfh.is-skill .gfh-body { animation: gfh-glow .9s ease-in-out both; }
+.gfh.is-skill .gfh-fx { background: radial-gradient(circle at 30% 70%, var(--gfh-el) 0 3px, transparent 4px), radial-gradient(circle at 70% 60%, var(--gfh-el) 0 2px, transparent 3px), radial-gradient(circle at 50% 80%, #ffe08a 0 2px, transparent 3px), radial-gradient(circle at 20% 40%, var(--gfh-el) 0 2px, transparent 3px); background-size: 50% 50%; animation: gfh-sparks .9s ease-out both; }
+@keyframes gfh-halo-up { 0% { transform: translateX(-50%) scale(1); opacity: .55; } 40% { transform: translateX(-50%) scale(1.45) rotate(60deg); opacity: .9; } 100% { transform: translateX(-50%) scale(1.15) rotate(120deg); opacity: .55; } }
+@keyframes gfh-glow { 0%, 100% { filter: none; transform: none; } 40% { filter: brightness(1.3) drop-shadow(0 0 8px var(--gfh-el)); transform: scale(1.04); } }
+@keyframes gfh-sparks { 0% { opacity: 0; transform: translateY(10%); } 30% { opacity: .9; } 100% { opacity: 0; transform: translateY(-40%); } }
+
+/* 쓰러짐: 피격판(없으면 대기판)을 눕히고 흐리게 */
+.gfh.is-down .gfh-body { transform: translateY(18%) rotate(-88deg); filter: grayscale(.7) brightness(.6); transition: transform .35s ease-in, filter .35s; }
+.gfh.is-down .gfh-halo { opacity: 0; }
+.gfh.is-down.gfh-downimg .gfh-body { transform: none; filter: none; transition: none; left: -16.7%; width: 133.3%; height: 50%; }   /* 눕힌 그림이 따로 있을 때 */
+
+/* 저사양·움직임 줄이기 */
+.gfh--lite.is-idle .gfh-body, .gfh--lite.is-idle .gfh-halo { animation: none; }
+@media (prefers-reduced-motion: reduce) { .gfh.is-idle .gfh-body, .gfh.is-idle .gfh-halo { animation: none; } .gfh.is-atk .gfh-body, .gfh.is-hit .gfh-body, .gfh.is-skill .gfh-body { animation-duration: .2s; } }

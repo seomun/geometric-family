@@ -134,10 +134,17 @@
     "s1": {
      "src": "art_src/boss/b_fire_giant/s1/full.png",
      "make": {
-      "tool": "tools/asset_boss_firegiant.py",
-      "init": "svg:giant()",
+      "tool": "tools/asset_boss_firegiant.py v2",
+      "init": "svg:giant(pose)",
       "dn": 0.58,
-      "seed": 903
+      "seed": 903,
+      "poses": [
+       "idle",
+       "attack",
+       "hit",
+       "skill",
+       "win"
+      ]
      },
      "uses": [
       "card",
@@ -149,25 +156,25 @@
       "spr_skill",
       "spr_win"
      ],
-     "hash": "cc4a8777",
-     "approved": "2026-10-30 허브(903 승인, v2 보완 예정: 다리 밝기·포즈 차이)",
+     "hash": "854e507c",
+     "approved": "2026-10-30 허브(v2 승인: 다리 밝기·포즈 5개 따로 칠함)",
      "files_kb": {
-      "card@1x": 23.5,
-      "card@2x": 48.0,
+      "card@1x": 23.9,
+      "card@2x": 48.3,
       "portrait@1x": 5.7,
       "portrait@2x": 13.5,
-      "full@1x": 51.2,
-      "full@2x": 93.0,
-      "spr_idle@1x": 13.2,
-      "spr_idle@2x": 34.6,
-      "spr_attack@1x": 12.4,
-      "spr_attack@2x": 33.7,
+      "full@1x": 52.6,
+      "full@2x": 94.9,
+      "spr_idle@1x": 13.1,
+      "spr_idle@2x": 35.2,
+      "spr_attack@1x": 12.5,
+      "spr_attack@2x": 34.0,
       "spr_hit@1x": 12.2,
-      "spr_hit@2x": 32.8,
+      "spr_hit@2x": 33.4,
       "spr_skill@1x": 14.5,
-      "spr_skill@2x": 39.9,
+      "spr_skill@2x": 40.3,
       "spr_win@1x": 11.8,
-      "spr_win@2x": 31.8
+      "spr_win@2x": 32.3
      },
      "exported": "2026-10-30"
     }

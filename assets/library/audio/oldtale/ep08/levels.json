@@ -1,0 +1,27 @@
+{
+ "sfx/bull_moo": {
+  "sec": 1.88,
+  "mmax": -19.5,
+  "peak": -8.8
+ },
+ "sfx/snort": {
+  "sec": 1.21,
+  "mmax": -19.5,
+  "peak": -6.5
+ },
+ "sfx/yarn_roll": {
+  "sec": 1.64,
+  "mmax": -19.0,
+  "peak": -8.9
+ },
+ "sfx/horn_stuck": {
+  "sec": 1.12,
+  "mmax": -17.5,
+  "peak": -6.5
+ },
+ "bgm/ep8_labyrinth": {
+  "sec": 45.7,
+  "lufs": -20.0,
+  "peak": -6.7
+ }
+}

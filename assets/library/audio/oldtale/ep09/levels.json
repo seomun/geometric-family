@@ -1,0 +1,37 @@
+{
+ "sfx/big_wing": {
+  "sec": 1.58,
+  "mmax": -18.2,
+  "peak": -6.5
+ },
+ "sfx/wax_drop": {
+  "sec": 1.14,
+  "mmax": -20.0,
+  "peak": -7.9
+ },
+ "sfx/splash": {
+  "sec": 0.97,
+  "mmax": -19.5,
+  "peak": -7.9
+ },
+ "sfx/ant": {
+  "sec": 1.05,
+  "mmax": -21.0,
+  "peak": -10.3
+ },
+ "sfx/gull": {
+  "sec": 1.18,
+  "mmax": -20.0,
+  "peak": -9.6
+ },
+ "bgm/ep9_feather_up": {
+  "sec": 36.9,
+  "lufs": -20.0,
+  "peak": -9.6
+ },
+ "bgm/ep9_feather_fall": {
+  "sec": 56.5,
+  "lufs": -20.0,
+  "peak": -7.9
+ }
+}

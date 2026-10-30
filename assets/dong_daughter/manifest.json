@@ -1,0 +1,38 @@
+{
+  "good": {
+    "file": "good.png",
+    "w": 415,
+    "h": 540,
+    "ground": 570
+  },
+  "joy": {
+    "file": "joy.png",
+    "w": 412,
+    "h": 540,
+    "ground": 570
+  },
+  "calm": {
+    "file": "calm.png",
+    "w": 409,
+    "h": 540,
+    "ground": 570
+  },
+  "warm": {
+    "file": "warm.png",
+    "w": 423,
+    "h": 540,
+    "ground": 570
+  },
+  "surprise": {
+    "file": "surprise.png",
+    "w": 416,
+    "h": 540,
+    "ground": 570
+  },
+  "trouble": {
+    "file": "trouble.png",
+    "w": 412,
+    "h": 540,
+    "ground": 570
+  }
+}

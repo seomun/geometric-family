@@ -179,6 +179,52 @@
      "exported": "2026-10-30"
     }
    }
+  },
+  "myth/u_myth_athena": {
+   "name": "아테나",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/myth/u_myth_athena/s1/full.png",
+     "make": {
+      "tool": "tools/asset_myth_athena.py",
+      "init": "svg:athena(stand)",
+      "how": "강칠 .60 + 약칠 .30 섞음(얼굴·손·발)",
+      "seed": 1501
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "027d904e",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 26.2,
+      "card@2x": 53.0,
+      "portrait@1x": 7.1,
+      "portrait@2x": 17.9,
+      "full@1x": 57.5,
+      "full@2x": 100.7,
+      "spr_idle@1x": 11.7,
+      "spr_idle@2x": 30.5,
+      "spr_attack@1x": 12.1,
+      "spr_attack@2x": 31.9,
+      "spr_hit@1x": 11.8,
+      "spr_hit@2x": 31.2,
+      "spr_skill@1x": 11.7,
+      "spr_skill@2x": 31.8,
+      "spr_win@1x": 11.2,
+      "spr_win@2x": 28.6
+     },
+     "exported": "2026-10-30"
+    }
+   }
   }
  }
 }

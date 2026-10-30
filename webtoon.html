@@ -721,6 +721,8 @@ const EPS = [
     thumb: () => nemoDad({ x: 12, y: 6, w: 62, h: 55, emo: 'sad', suit: true }) },
   { n: '4화', t: '다음 모임', d: '50대가 되면 10대처럼, 그냥 건강하면 된다.', href: 'ep04.html',
     thumb: () => semoHusband({ x: 12, y: 4, size: 62, emo: 'joy' }) },
+  { n: '5화', t: '희망퇴직', d: '월요일 아침, 1971~1976년생 희망퇴직 공지가 떴다.', href: 'ep05.html',
+    thumb: () => nemoDad({ x: 12, y: 6, w: 62, h: 55, emo: 'worry' }) },
 ];
 $('eps').innerHTML = EPS.map(e => {
   const inner = `<svg viewBox="0 0 86 86">${e.thumb()}</svg><div><span class="k">${e.n}${e.href ? '' : ' · 준비 중'}</span><span class="t">${e.t}</span><span class="d">${e.d}</span></div>`;
@@ -753,7 +755,7 @@ $('fam').innerHTML = FAM.map(([b, s, f]) => `<div class="gf-card"><svg viewBox="
   };
 })();
 </script>
-<script>(function(){var T={"ep02.html": "1화 「단톡방」", "ep01.html": "2화 「부고」", "ep03.html": "3화 「상갓집」", "ep04.html": "4화 「다음 모임」"};function add(){document.querySelectorAll('#eps a.ep').forEach(function(a){var p=a.getAttribute('href');if(!T[p]||a.nextElementSibling&&a.nextElementSibling.classList.contains('gfs-chip'))return;var b=document.createElement('button');b.type='button';b.className='gfs-chip';b.textContent='💬 '+T[p].split(' ')[0]+' 가족 단톡방에 보내기';b.onclick=function(){gfShare(p,T[p]);};a.insertAdjacentElement('afterend',b);});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',add);else add();setTimeout(add,300);})();</script>
+<script>(function(){var T={"ep02.html": "1화 「단톡방」", "ep01.html": "2화 「부고」", "ep03.html": "3화 「상갓집」", "ep04.html": "4화 「다음 모임」", "ep05.html": "5화 「희망퇴직」"};function add(){document.querySelectorAll('#eps a.ep').forEach(function(a){var p=a.getAttribute('href');if(!T[p]||a.nextElementSibling&&a.nextElementSibling.classList.contains('gfs-chip'))return;var b=document.createElement('button');b.type='button';b.className='gfs-chip';b.textContent='💬 '+T[p].split(' ')[0]+' 가족 단톡방에 보내기';b.onclick=function(){gfShare(p,T[p]);};a.insertAdjacentElement('afterend',b);});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',add);else add();setTimeout(add,300);})();</script>
 <!-- /gf-share -->
 </body>
 </html>

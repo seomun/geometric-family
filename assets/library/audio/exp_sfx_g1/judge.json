@@ -1,0 +1,745 @@
+{
+ "atk_combo_orchestra": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 3.0,
+   "peak": -3.4,
+   "lufs": -20.5,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 39.5,
+   "clip": 0,
+   "floor": -40.2,
+   "centroid": 441
+  },
+  "out": {
+   "sec": 2.08,
+   "peak": -6.0,
+   "lufs": -21.9,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 36.9,
+   "clip": 0,
+   "floor": -42.2,
+   "centroid": 451
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_blob_orch"
+ },
+ "atk_earth": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 2.0,
+   "peak": -3.5,
+   "lufs": -22.5,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 99.3,
+   "clip": 0,
+   "floor": -36.2,
+   "centroid": 68
+  },
+  "out": {
+   "sec": 1.5,
+   "peak": -6.0,
+   "lufs": -23.4,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 98.7,
+   "clip": 0,
+   "floor": -38.7,
+   "centroid": 79
+  },
+  "verdict": "다듬어 씀",
+  "why": [
+   "저음만(200Hz↓ 99.3%, 폰 스피커에서 거의 안 들림)"
+  ],
+  "ours": "x5_burst_earth"
+ },
+ "atk_fire": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 2.0,
+   "peak": -3.2,
+   "lufs": -17.5,
+   "hi4": 0.2,
+   "hi8": 0.17,
+   "lo2": 91.9,
+   "clip": 0,
+   "floor": -28.7,
+   "centroid": 142
+  },
+  "out": {
+   "sec": 1.24,
+   "peak": -6.0,
+   "lufs": -19.5,
+   "hi4": 0.1,
+   "hi8": 0.04,
+   "lo2": 89.0,
+   "clip": 0,
+   "floor": -35.1,
+   "centroid": 143
+  },
+  "verdict": "안 씀",
+  "why": [
+   "잡음 바닥 -28.7dB",
+   "저음만(200Hz↓ 91.9%, 폰 스피커에서 거의 안 들림)"
+  ],
+  "ours": "x5_burst_fire"
+ },
+ "atk_light": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 0.91,
+   "peak": -7.9,
+   "lufs": -24.4,
+   "hi4": 10.4,
+   "hi8": 1.25,
+   "lo2": 0.1,
+   "clip": 0,
+   "floor": -40.3,
+   "centroid": 2571
+  },
+  "out": {
+   "sec": 1.06,
+   "peak": -6.0,
+   "lufs": -23.5,
+   "hi4": 9.4,
+   "hi8": 0.42,
+   "lo2": 0.1,
+   "clip": 0,
+   "floor": -39.4,
+   "centroid": 2501
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_burst_metal"
+ },
+ "atk_water": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.57,
+   "peak": -3.6,
+   "lufs": -18.4,
+   "hi4": 5.0,
+   "hi8": 0.56,
+   "lo2": 17.4,
+   "clip": 0,
+   "floor": -38.3,
+   "centroid": 1143
+  },
+  "out": {
+   "sec": 1.64,
+   "peak": -6.0,
+   "lufs": -21.3,
+   "hi4": 4.1,
+   "hi8": 0.18,
+   "lo2": 17.5,
+   "clip": 0,
+   "floor": -41.6,
+   "centroid": 1034
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_burst_water"
+ },
+ "atk_wind": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.79,
+   "peak": -5.2,
+   "lufs": -18.6,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 19.0,
+   "clip": 0,
+   "floor": -32.7,
+   "centroid": 882
+  },
+  "out": {
+   "sec": 1.87,
+   "peak": -6.0,
+   "lufs": -19.2,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 5.9,
+   "clip": 0,
+   "floor": -33.7,
+   "centroid": 1012
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_burst_wood"
+ },
+ "battle_in": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -4.8,
+   "lufs": -22.8,
+   "hi4": 0.8,
+   "hi8": 0.24,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -36.3,
+   "centroid": 1000
+  },
+  "out": {
+   "sec": 0.87,
+   "peak": -6.0,
+   "lufs": -23.9,
+   "hi4": 0.5,
+   "hi8": 0.08,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -37.2,
+   "centroid": 967
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": null
+ },
+ "battle_out": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -3.6,
+   "lufs": -23.1,
+   "hi4": 92.3,
+   "hi8": 48.71,
+   "lo2": 0.2,
+   "clip": 0,
+   "floor": -42.1,
+   "centroid": 7592
+  },
+  "out": {
+   "sec": 0.71,
+   "peak": -6.0,
+   "lufs": -24.6,
+   "hi4": 87.2,
+   "hi8": 31.66,
+   "lo2": 0.3,
+   "clip": 0,
+   "floor": -42.9,
+   "centroid": 6679
+  },
+  "verdict": "안 씀",
+  "why": [
+   "날카로움(8k↑ 48.71%)"
+  ],
+  "ours": null
+ },
+ "card_absorb": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 2.0,
+   "peak": -3.7,
+   "lufs": -18.9,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.1,
+   "clip": 0,
+   "floor": -38.5,
+   "centroid": 764
+  },
+  "out": {
+   "sec": 1.58,
+   "peak": -6.0,
+   "lufs": -21.6,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.1,
+   "clip": 0,
+   "floor": -41.6,
+   "centroid": 731
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_evolve"
+ },
+ "card_get": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -3.8,
+   "lufs": -23.9,
+   "hi4": 49.8,
+   "hi8": 9.06,
+   "lo2": 10.3,
+   "clip": 0,
+   "floor": -40.0,
+   "centroid": 4378
+  },
+  "out": {
+   "sec": 0.65,
+   "peak": -6.0,
+   "lufs": -27.2,
+   "hi4": 43.7,
+   "hi8": 2.29,
+   "lo2": 11.3,
+   "clip": 0,
+   "floor": -42.8,
+   "centroid": 3731
+  },
+  "verdict": "다듬어 씀",
+  "why": [
+   "날카로움(8k↑ 9.06%)"
+  ],
+  "ours": "x5_card_good"
+ },
+ "defeat": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 3.0,
+   "peak": -3.9,
+   "lufs": -14.5,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -37.2,
+   "centroid": 353
+  },
+  "out": {
+   "sec": 2.23,
+   "peak": -6.0,
+   "lufs": -17.0,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -39.9,
+   "centroid": 342
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_hurt"
+ },
+ "enemy_down": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 2.0,
+   "peak": -4.6,
+   "lufs": -22.4,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.1,
+   "clip": 0,
+   "floor": -37.6,
+   "centroid": 356
+  },
+  "out": {
+   "sec": 1.34,
+   "peak": -6.0,
+   "lufs": -23.5,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.1,
+   "clip": 0,
+   "floor": -39.4,
+   "centroid": 353
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_impact"
+ },
+ "evolve": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 4.0,
+   "peak": -4.6,
+   "lufs": -17.0,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.1,
+   "clip": 0,
+   "floor": -40.8,
+   "centroid": 593
+  },
+  "out": {
+   "sec": 3.27,
+   "peak": -6.0,
+   "lufs": -18.1,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -41.9,
+   "centroid": 561
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_evolve"
+ },
+ "hit_big": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -4.0,
+   "lufs": -22.7,
+   "hi4": 7.9,
+   "hi8": 0.54,
+   "lo2": 18.1,
+   "clip": 0,
+   "floor": -36.9,
+   "centroid": 1574
+  },
+  "out": {
+   "sec": 0.61,
+   "peak": -6.0,
+   "lufs": -24.7,
+   "hi4": 7.7,
+   "hi8": 0.2,
+   "lo2": 14.6,
+   "clip": 0,
+   "floor": -41.5,
+   "centroid": 1577
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_hit_punch"
+ },
+ "hit_small": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -3.6,
+   "lufs": -26.1,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 99.8,
+   "clip": 0,
+   "floor": -35.5,
+   "centroid": 44
+  },
+  "out": {
+   "sec": 0.8,
+   "peak": -6.0,
+   "lufs": -26.6,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 99.4,
+   "clip": 0,
+   "floor": -37.2,
+   "centroid": 59
+  },
+  "verdict": "다듬어 씀",
+  "why": [
+   "저음만(200Hz↓ 99.8%, 폰 스피커에서 거의 안 들림)"
+  ],
+  "ours": "x5_hit_slash"
+ },
+ "orb_big_cluster": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 3.0,
+   "peak": -4.3,
+   "lufs": -24.8,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 54.4,
+   "clip": 0,
+   "floor": -32.4,
+   "centroid": 150
+  },
+  "out": {
+   "sec": 1.99,
+   "peak": -6.0,
+   "lufs": -20.5,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 15.3,
+   "clip": 0,
+   "floor": -38.2,
+   "centroid": 266
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_blob_orch"
+ },
+ "orb_link_1": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -3.0,
+   "lufs": -18.0,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -32.4,
+   "centroid": 1048
+  },
+  "out": {
+   "sec": 1.0,
+   "peak": -6.0,
+   "lufs": -22.0,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -36.2,
+   "centroid": 1048
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_rise_1"
+ },
+ "orb_link_2": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 0.99,
+   "peak": -3.0,
+   "lufs": -17.8,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -32.4,
+   "centroid": 1176
+  },
+  "out": {
+   "sec": 0.96,
+   "peak": -6.0,
+   "lufs": -20.4,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -35.5,
+   "centroid": 1176
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_rise_2"
+ },
+ "orb_link_3": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 0.99,
+   "peak": -3.1,
+   "lufs": -17.3,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -32.5,
+   "centroid": 1320
+  },
+  "out": {
+   "sec": 0.99,
+   "peak": -6.0,
+   "lufs": -21.5,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -35.1,
+   "centroid": 1320
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_rise_3"
+ },
+ "orb_link_4": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 0.97,
+   "peak": -3.0,
+   "lufs": -16.7,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -32.6,
+   "centroid": 1570
+  },
+  "out": {
+   "sec": 0.97,
+   "peak": -6.0,
+   "lufs": -20.1,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -36.4,
+   "centroid": 1570
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_rise_4"
+ },
+ "orb_link_5": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 0.99,
+   "peak": -3.1,
+   "lufs": -17.5,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -33.1,
+   "centroid": 1763
+  },
+  "out": {
+   "sec": 1.0,
+   "peak": -6.0,
+   "lufs": -21.3,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -36.1,
+   "centroid": 1763
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_rise_5"
+ },
+ "orb_link_6": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 0.97,
+   "peak": -3.1,
+   "lufs": -16.1,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -33.0,
+   "centroid": 2096
+  },
+  "out": {
+   "sec": 0.98,
+   "peak": -6.0,
+   "lufs": -19.3,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -36.9,
+   "centroid": 2096
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_rise_6"
+ },
+ "orb_pick": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -3.7,
+   "lufs": -25.0,
+   "hi4": 31.4,
+   "hi8": 10.61,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -41.2,
+   "centroid": 3249
+  },
+  "out": {
+   "sec": 0.6,
+   "peak": -6.0,
+   "lufs": -28.2,
+   "hi4": 25.1,
+   "hi8": 3.96,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -45.8,
+   "centroid": 2698
+  },
+  "verdict": "다듬어 씀",
+  "why": [
+   "날카로움(8k↑ 10.61%)"
+  ],
+  "ours": "x5_chip"
+ },
+ "reward_pop": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -4.3,
+   "lufs": -22.2,
+   "hi4": 0.1,
+   "hi8": 0.06,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -36.7,
+   "centroid": 1902
+  },
+  "out": {
+   "sec": 0.87,
+   "peak": -6.0,
+   "lufs": -24.1,
+   "hi4": 0.1,
+   "hi8": 0.03,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -39.0,
+   "centroid": 1908
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_pop_l"
+ },
+ "ui_tap": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 1.0,
+   "peak": -3.2,
+   "lufs": -19.6,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -25.7,
+   "centroid": 522
+  },
+  "out": {
+   "sec": 0.39,
+   "peak": -6.0,
+   "lufs": -22.4,
+   "hi4": 0.0,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -35.7,
+   "centroid": 522
+  },
+  "verdict": "다듬어 씀",
+  "why": [
+   "잡음 바닥 -25.7dB"
+  ],
+  "ours": "x5_chip"
+ },
+ "victory": {
+  "src_sr": 44100,
+  "raw": {
+   "sec": 3.0,
+   "peak": -4.7,
+   "lufs": -18.1,
+   "hi4": 0.5,
+   "hi8": 0.01,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -39.2,
+   "centroid": 993
+  },
+  "out": {
+   "sec": 1.93,
+   "peak": -6.0,
+   "lufs": -19.1,
+   "hi4": 0.5,
+   "hi8": 0.0,
+   "lo2": 0.0,
+   "clip": 0,
+   "floor": -41.5,
+   "centroid": 1018
+  },
+  "verdict": "씀",
+  "why": [],
+  "ours": "x5_cards"
+ }
+}

@@ -5,6 +5,9 @@
     fire: { c: '#E5334A', b: '#FCE3DA', a: '#F7B7A3', n: '불', ic: '<path d="M20 4 C25 11 30 15 30 22 C30 29 26 34 20 34 C14 34 10 29 10 22 C10 18 13 16 14 12 C16 15 18 16 19 15 C18 11 18 8 20 4Z" fill="#fff"/>' },
     water: { c: '#3B6FD6', b: '#DDEAFB', a: '#ABC9F3', n: '물', ic: '<path d="M20 4 C27 14 31 19 31 24 C31 30 26 35 20 35 C14 35 9 30 9 24 C9 19 13 14 20 4Z" fill="#fff"/>' },
     grass: { c: '#3DAE5B', b: '#DEF2DB', a: '#AEDDAA', n: '풀', ic: '<path d="M9 33 C5 18 14 6 31 5 C33 22 25 32 9 33Z" fill="#fff"/><path d="M10 32 C17 24 23 17 29 9" fill="none" stroke="#3DAE5B" stroke-width="2"/>' },
+    /* 오행 금·토 (docs/60, el5 배지와 같은 실루엣: 금 = 둥근 보석 + 팔각 면, 토 = 육각 돌) */
+    metal: { c: '#D9A92E', b: '#FBF1CF', a: '#F0D98A', n: '금', ic: '<circle cx="20" cy="20" r="14" fill="#fff"/><path d="M20 11 L26 13.5 L28.5 20 L26 26.5 L20 29 L14 26.5 L11.5 20 L14 13.5Z" fill="none" stroke="#D9A92E" stroke-width="2.2" stroke-linejoin="round"/>' },
+    earth: { c: '#B97A3A', b: '#F3E3CC', a: '#DDB98A', n: '토', ic: '<path d="M20 5 L33 12.5 L33 27.5 L20 35 L7 27.5 L7 12.5Z" fill="#fff"/><path d="M20 12 L26 15.5 L26 24.5 L20 28 L14 24.5 L14 15.5Z" fill="none" stroke="#B97A3A" stroke-width="2.2" stroke-linejoin="round"/>' },
   };
   const SCENE = { forest: '../../oldtale/bg/bg_forest.png', cloud: '../../oldtale/bg/bg_cloud_road.png', newhouse: '../../oldtale/bg/bg_heungbu_newhouse.png' };
   const ORDER = ['B', 'A', 'S', 'SS', 'SSS'];

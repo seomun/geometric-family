@@ -173,32 +173,52 @@ a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
 @media (min-width: 1000px) { .lineup { grid-template-columns: repeat(3, 1fr); } }
 .doc .loop, .doc .money, .doc .grades, .doc .spec { padding: 0; margin-left: 0; margin-right: 0; }
 </style>
+<link rel="preload" as="image" href="/home/img/q_p3_big.webp">
 </head>
 <body>
 <div class="pt">
 <nav class="top"><a class="brand" href="/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>기하학 가족</span></a><div class="links"><a href="/#games">게임</a><a href="/#videos">영상</a><a href="/#webtoon">웹툰</a><a href="/#partner">제휴</a><a href="/en/">EN</a></div><a class="pill" href="/quest/">지금 플레이</a></nav><style>
-.qp { max-width: 1120px; margin: 0 auto; padding: 64px 12px 40px; display: grid; gap: 18px; }
-.qbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 4px 2px; }
-.qbar b { font: 400 20px/1 Jua, sans-serif; color: var(--gold); }
-.qfs { min-height: 36px; padding: 0 16px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,.5); background: rgba(255,255,255,.08); color: #fff; font: 700 14px 'Noto Sans KR', sans-serif; cursor: pointer; }
-.qgame { position: relative; background: #0d0e22; border: 2px solid #3a3d63; border-radius: 18px; overflow: hidden; height: calc(100svh - 64px - 44px - 8px); min-height: 480px; width: 100%; }
-.qgame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #0d0e22; }
-.qgame:fullscreen { border: 0; border-radius: 0; height: 100%; }
-.qhelp h2 { margin: 0 0 8px; font: 400 22px/1.2 Jua, sans-serif; color: var(--gold); }
-.qhelp ol, .qhelp ul { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 8px; }
-.qhelp li { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 14px; background: var(--panel, #14163a); border: 1px solid rgba(255,255,255,.12); font-size: 15px; line-height: 1.45; word-break: keep-all; }
-.qhelp li i { font-style: normal; font-size: 24px; text-align: center; }
-.qhelp li b { color: #fff; }
-.qhelp li span { color: var(--mute, #aab); font-size: 13.5px; display: block; }
-.qfine { margin: 0; font-size: 12.5px; color: var(--mute, #aab); }
+@font-face { font-family: 'GF Title'; src: url('/home/gasoek_title.woff2') format('woff2'); font-display: swap; }
+.top .pill { display: none; }
+.qp { max-width: 1040px; margin: 0 auto; padding: 56px 0 8px; }
+.qgame { position: relative; background: #0a1a2e; overflow: hidden; height: calc(100svh - 56px); min-height: 520px; width: 100%; isolation: isolate; }
+.qgame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #0a1a2e; z-index: 3; }
+.qgame:fullscreen { height: 100%; }
+.qpost { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 7% 16px 9%; text-align: center; }
+.qpost::before { content: ''; position: absolute; inset: 0; z-index: -2; background: var(--q3) center 12%/cover no-repeat; }
+.qpost::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgba(6,14,32,.62), rgba(6,14,32,0) 30%, rgba(6,14,32,0) 58%, rgba(6,14,32,.82)); }
+.qt { margin: 0; font: 400 clamp(46px, 13vw, 68px)/1.04 'GF Title', Jua, sans-serif; letter-spacing: .02em; background: linear-gradient(#FFF3B8 8%, #FFD04A 48%, #D98A12 92%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 3px 0 #5a2b00) drop-shadow(0 6px 14px rgba(0,0,0,.55)); }
+.qs { margin: 8px 0 0; font-size: 15px; color: #e9f4ff; text-shadow: 0 2px 8px rgba(0,0,0,.8); }
+.qgo { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-width: min(78vw, 300px); min-height: 60px; padding: 0 30px; border: 0; border-radius: 34px; cursor: pointer; background: linear-gradient(#FFE27A, #F2A81D); color: #4a2400; font: 400 26px/1 'GF Title', Jua, sans-serif; box-shadow: 0 5px 0 #9a5a05, 0 12px 26px rgba(0,0,0,.5); }
+.qgo:active { transform: translateY(3px); box-shadow: 0 2px 0 #9a5a05; }
+.qgo::before { content: ''; border-left: 15px solid #4a2400; border-top: 10px solid transparent; border-bottom: 10px solid transparent; }
+.qfs { position: absolute; top: 10px; right: 10px; z-index: 4; min-height: 34px; padding: 0 14px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,.45); background: rgba(8,12,30,.7); color: #fff; font: 700 13px 'Noto Sans KR', sans-serif; cursor: pointer; display: none; }
+.qgame.on .qfs { display: block; }
+.qmore { max-width: 640px; margin: 0 auto; padding: 36px 20px 20px; text-align: center; }
+.qevo { display: flex; justify-content: center; align-items: flex-end; gap: 10px; }
+.qevo figure { margin: 0; flex: 1; max-width: 190px; }
+.qevo img { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid rgba(255,255,255,.18); }
+.qevo figure:nth-child(3) img { border-color: #FFD04A; box-shadow: 0 0 22px rgba(255,208,74,.35); }
+.qevo figcaption { margin-top: 6px; font-size: 12.5px; color: var(--mute); }
+.qhow { margin: 22px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 15px; color: var(--txt); word-break: keep-all; }
+.qfine { margin: 16px 0 0; font-size: 12.5px; color: var(--mute); }
+.qline { display: none; }
 @media (min-width: 900px) {
-  .qp { grid-template-columns: auto 1fr; align-items: start; gap: 32px; padding-top: 68px; }
-  .qmain { display: grid; gap: 8px; }
-  .qgame { height: min(calc(100svh - 68px - 44px - 16px), 860px); width: auto; aspect-ratio: 9 / 16; }
-  .qhelp { padding-top: 44px; max-width: 460px; }
+  .qp { max-width: none; padding-top: 56px; position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 100svh; overflow: hidden; }
+  .qp::before { content: ''; position: absolute; inset: -40px; z-index: 0; background: var(--q3) center/cover no-repeat; filter: blur(26px) brightness(.42) saturate(1.1); }
+  .qp > * { position: relative; z-index: 1; }
+  .qmore { grid-column: 3; max-width: 340px; margin: 0 auto 0 36px; padding: 0; text-align: left; }
+  .qline { display: block; margin: 0 0 16px; font: 400 26px/1.35 Jua, sans-serif; color: #FFE9A6; word-break: keep-all; text-shadow: 0 2px 10px rgba(0,0,0,.7); }
+  .qevo { justify-content: flex-start; gap: 8px; }
+  .qevo figure { max-width: 96px; }
+  .qhow { text-align: left; font-size: 14px; }
+  .qgame { grid-column: 2; }
+  .qgame { height: min(calc(100svh - 56px), 880px); width: calc(min(100svh - 56px, 880px) * 9 / 16); margin: 0 auto; border-radius: 0 0 18px 18px; }
+  .qgame { max-height: calc(100svh - 56px); }
 }
-</style><main class="qp"><div class="qmain"><div class="qbar"><b>기하학 원정대</b><button class="qfs" id="qfs" type="button" data-src="/expedition/play.html">전체 화면</button></div><div class="qgame" id="qgame"><iframe src="/expedition/play.html" title="기하학 원정대" allow="fullscreen; autoplay" allowfullscreen loading="eager"></iframe></div></div><aside class="qhelp"><h2>조작법</h2><ol><li><i>👆</i><div>구슬을 끌어 같은 색 3개를 잇는다</div></li><li><i>💥</i><div>붙은 덩어리가 클수록 세다</div></li><li><i>🃏</i><div>영웅 카드를 흡수해 키운다</div></li></ol><h2>특징</h2><ul><li><i>🧩</i><div><b>퍼즐 전투</b><span>끌어서 부수는 구슬 퍼즐</span></div></li><li><i>⚔️</i><div><b>영웅 수집</b><span>카드를 모아 가족을 키운다</span></div></li><li><i>🌟</i><div><b>신화 영웅</b><span>가장 높은 등급까지 성장</span></div></li></ul><p class="qfine">설치 없이 · 무료 · 만 14세 이상 · <a href="mailto:hello@geometricfamily.com?subject=[기하학%20가족]%20제휴%20문의">제휴 문의</a></p></aside></main><footer class="pfoot"><nav><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a><a href="/games/">게임</a><a href="/apps/">앱 소개</a><a href="/contact/">문의</a><a href="/delete/">계정 삭제</a><a href="/en/">English</a></nav>© 2026 기하학 가족<br>상호 기하학가족 · 대표 서문성수 · 사업자등록번호 220-32-01943<br>문의 <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a></footer>
-<script>(function(){var b=document.getElementById('qfs'),g=document.getElementById('qgame');if(!b)return;
-b.addEventListener('click',function(){var f=g.requestFullscreen||g.webkitRequestFullscreen;if(f){try{var r=f.call(g);if(r&&r.catch)r.catch(function(){location.href=b.dataset.src});return}catch(e){}}location.href=b.dataset.src})})()</script></div>
+</style><main class="qp" style="--q3:url(/home/img/q_p3_big.webp)"><div class="qgame" id="qgame"><button class="qfs" id="qfs" type="button">전체 화면</button><div class="qpost"><div><h1 class="qt">폭주하는<br>포세이돈</h1><p class="qs">기하학 원정대</p></div><button class="qgo" id="qgo" type="button" data-src="/expedition/play.html">지금 플레이</button></div></div><section class="qmore"><p class="qline">카드를 모아 흡수하고,<br>진화시켜라</p><div class="qevo"><figure><img src="/home/img/q_p1.webp" width="300" height="439" loading="lazy" alt="포세이돈 1단계"><figcaption>1단계</figcaption></figure><figure><img src="/home/img/q_p2.webp" width="300" height="439" loading="lazy" alt="포세이돈 2단계"><figcaption>2단계</figcaption></figure><figure><img src="/home/img/q_p3.webp" width="300" height="439" loading="lazy" alt="포세이돈 3단계"><figcaption>신화</figcaption></figure></div><ul class="qhow"><li>구슬을 끌어 같은 색을 잇는다</li><li>덩어리가 클수록 세다</li><li>영웅 카드를 흡수해 키운다</li></ul><p class="qfine">설치 없이 · 무료 · 만 14세 이상 · <a href="mailto:hello@geometricfamily.com?subject=[기하학%20가족]%20제휴%20문의">제휴 문의</a></p></section></main><footer class="pfoot"><nav><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a><a href="/games/">게임</a><a href="/apps/">앱 소개</a><a href="/contact/">문의</a><a href="/delete/">계정 삭제</a><a href="/en/">English</a></nav>© 2026 기하학 가족<br>상호 기하학가족 · 대표 서문성수 · 사업자등록번호 220-32-01943<br>문의 <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a></footer>
+<script>(function(){var g=document.getElementById('qgame'),go=document.getElementById('qgo'),b=document.getElementById('qfs');if(!go)return;
+go.addEventListener('click',function(){var f=document.createElement('iframe');f.src=go.dataset.src;f.title='play';f.allow='fullscreen; autoplay';f.setAttribute('allowfullscreen','');g.appendChild(f);g.classList.add('on')});
+b.addEventListener('click',function(){var f=g.requestFullscreen||g.webkitRequestFullscreen;if(f){try{var r=f.call(g);if(r&&r.catch)r.catch(function(){location.href=go.dataset.src});return}catch(e){}}location.href=go.dataset.src})})()</script></div>
 </body>
 </html>

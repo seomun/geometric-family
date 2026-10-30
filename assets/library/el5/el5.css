@@ -1,0 +1,9 @@
+/* 오행 5속성 색 변수 (gf-asset, docs/60 §1-1·§6) — 구슬·카드 테두리·배지·전장 링·적 카드 링이 모두 여기서 파생. */
+:root {
+  --el-fire: #E5334A; --el-fire-hi: #FF8A7A; --el-fire-lo: #9A1428; --el-fire-ink: #5A0A16;   /* 화 火 · 코드 flash */
+  --el-water: #3B6FD6; --el-water-hi: #8EC2FF; --el-water-lo: #1C3F8E; --el-water-ink: #0E2350;   /* 수 水 · 코드 care */
+  --el-wood: #3DAE5B; --el-wood-hi: #9AE6A0; --el-wood-lo: #1E6E36; --el-wood-ink: #0E3C1C;   /* 목 木 · 코드 support */
+  --el-metal: #E8C34E; --el-metal-hi: #FFF2B8; --el-metal-lo: #A87A18; --el-metal-ink: #5A3E08;   /* 금 金 · 코드 metal */
+  --el-earth: #B97A3A; --el-earth-hi: #E8B880; --el-earth-lo: #73461C; --el-earth-ink: #3E240C;   /* 토 土 · 코드 earth */
+  --el-heart: #EE5E9A; --el-heart-hi: #FFB0CE; --el-heart-lo: #A8285E; --el-heart-ink: #5A0E30;   /* 하트 ♥ */
+}

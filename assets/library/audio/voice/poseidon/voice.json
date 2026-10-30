@@ -1,0 +1,63 @@
+{
+ "voice": "ko-KR-InJoonNeural",
+ "rate": -10,
+ "pitch": -22,
+ "lines": {
+  "summon_1": {
+   "text": "바다여, 일어나라!",
+   "situation": "summon",
+   "sec_voice": 1.43,
+   "sec_file": 2.13,
+   "ogg_kb": 19.3
+  },
+  "summon_2": {
+   "text": "파도가 나를 부른다.",
+   "situation": "summon",
+   "sec_voice": 1.41,
+   "sec_file": 2.11,
+   "ogg_kb": 18.3
+  },
+  "skill_1": {
+   "text": "삼지창이여!",
+   "situation": "skill",
+   "sec_voice": 0.83,
+   "sec_file": 1.53,
+   "ogg_kb": 14.6
+  },
+  "skill_2": {
+   "text": "바다의 분노다!",
+   "situation": "skill",
+   "sec_voice": 1.07,
+   "sec_file": 1.77,
+   "ogg_kb": 16.1
+  },
+  "evolve_1": {
+   "text": "더 깊은 바다로!",
+   "situation": "evolve",
+   "sec_voice": 1.16,
+   "sec_file": 1.86,
+   "ogg_kb": 16.6
+  },
+  "evolve_2": {
+   "text": "바다의 왕이 깨어난다.",
+   "situation": "evolve",
+   "sec_voice": 1.44,
+   "sec_file": 2.14,
+   "ogg_kb": 18.4
+  },
+  "win_1": {
+   "text": "바다는 잠들지 않는다.",
+   "situation": "win",
+   "sec_voice": 1.44,
+   "sec_file": 2.14,
+   "ogg_kb": 18.6
+  },
+  "win_2": {
+   "text": "잔잔해져라.",
+   "situation": "win",
+   "sec_voice": 0.82,
+   "sec_file": 1.52,
+   "ogg_kb": 14.4
+  }
+ }
+}

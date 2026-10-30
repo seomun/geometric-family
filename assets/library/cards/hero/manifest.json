@@ -174,7 +174,7 @@
   "name": "신선",
   "frame": "SS",
   "unitGrade": 5,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
   "route": "legend",
   "power": 6400
@@ -254,7 +254,7 @@
   "name": "삼신할머니",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_village.png",
   "route": "legend",
   "power": 3300
@@ -274,7 +274,7 @@
   "name": "장승",
   "frame": "A",
   "unitGrade": 3,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_village.png",
   "route": "legend",
   "power": 1800
@@ -284,7 +284,7 @@
   "name": "아서왕",
   "frame": "SS",
   "unitGrade": 5,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "legend",
   "power": 6600
@@ -294,7 +294,7 @@
   "name": "멀린",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_forest.png",
   "route": "legend",
   "power": 3350
@@ -304,7 +304,7 @@
   "name": "로빈 후드",
   "frame": "A",
   "unitGrade": 3,
-  "el": "grass",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_forest.png",
   "route": "legend",
   "power": 1700
@@ -314,7 +314,7 @@
   "name": "신드바드",
   "frame": "A",
   "unitGrade": 3,
-  "el": "grass",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "legend",
   "power": 1500
@@ -324,7 +324,7 @@
   "name": "램프의 지니",
   "frame": "A",
   "unitGrade": 3,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_road.png",
   "route": "legend",
   "power": 1650
@@ -354,7 +354,7 @@
   "name": "손오공",
   "frame": "SS",
   "unitGrade": 5,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_road.png",
   "route": "legend",
   "power": 6600
@@ -364,7 +364,7 @@
   "name": "헤라클레스",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "legend",
   "power": 3500
@@ -384,7 +384,7 @@
   "name": "토르",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_market.png",
   "route": "legend",
   "power": 3350
@@ -394,7 +394,7 @@
   "name": "모나리자",
   "frame": "SS",
   "unitGrade": 5,
-  "el": "water",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
   "route": "legend",
   "power": 6400
@@ -404,7 +404,7 @@
   "name": "진주 귀고리 소녀",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_meadow.png",
   "route": "legend",
   "power": 3300
@@ -424,7 +424,7 @@
   "name": "별이 빛나는 밤",
   "frame": "SS",
   "unitGrade": 5,
-  "el": "grass",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_forest.png",
   "route": "legend",
   "power": 6400
@@ -454,7 +454,7 @@
   "name": "씨름",
   "frame": "A",
   "unitGrade": 3,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "legend",
   "power": 1700
@@ -474,7 +474,7 @@
   "name": "도깨비",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "gacha",
   "power": 3400
@@ -494,7 +494,7 @@
   "name": "두꺼비",
   "frame": "A",
   "unitGrade": 3,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "gacha",
   "power": 1800
@@ -554,7 +554,7 @@
   "name": "구름 거인",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
   "route": "recruit",
   "power": 3500
@@ -574,7 +574,7 @@
   "name": "하늘 어른",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
   "route": "recruit",
   "power": 3350
@@ -584,7 +584,7 @@
   "name": "과자집 할머니",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_village.png",
   "route": "recruit",
   "power": 3300
@@ -614,7 +614,7 @@
   "name": "용궁 문지기",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "recruit",
   "power": 3500
@@ -634,7 +634,7 @@
   "name": "호랑이",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "recruit",
   "power": 3500
@@ -734,7 +734,7 @@
   "name": "생쥐",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "recruit",
   "power": 3400
@@ -754,7 +754,7 @@
   "name": "호박 마차",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_road.png",
   "route": "recruit",
   "power": 3500
@@ -764,7 +764,7 @@
   "name": "팥죽 솥",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "recruit",
   "power": 3300
@@ -824,7 +824,7 @@
   "name": "마늘 동생",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_market.png",
   "route": "guest",
   "power": 3300
@@ -834,7 +834,7 @@
   "name": "엿 아저씨",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_market.png",
   "route": "guest",
   "power": 3500
@@ -844,7 +844,7 @@
   "name": "찹쌀떡 누나",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "guest",
   "power": 3300
@@ -854,7 +854,7 @@
   "name": "연필 선생",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_market.png",
   "route": "guest",
   "power": 3400
@@ -894,7 +894,7 @@
   "name": "동글점",
   "frame": "A",
   "unitGrade": 3,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_meadow.png",
   "route": "monster",
   "power": 1650
@@ -924,7 +924,7 @@
   "name": "뾰족선",
   "frame": "A",
   "unitGrade": 3,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "monster",
   "power": 1700
@@ -934,7 +934,7 @@
   "name": "가시선",
   "frame": "A",
   "unitGrade": 3,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_road.png",
   "route": "monster",
   "power": 1800
@@ -984,7 +984,7 @@
   "name": "삼각뿔 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_meadow.png",
   "route": "monster",
   "power": 3400
@@ -994,7 +994,7 @@
   "name": "정육면체 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_village.png",
   "route": "monster",
   "power": 3500
@@ -1004,7 +1004,7 @@
   "name": "팔면체 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_forest.png",
   "route": "monster",
   "power": 3350
@@ -1014,7 +1014,7 @@
   "name": "삼형제점",
   "frame": "A",
   "unitGrade": 3,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "monster",
   "power": 1800
@@ -1044,7 +1044,7 @@
   "name": "번개선",
   "frame": "A",
   "unitGrade": 3,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "monster",
   "power": 1650
@@ -1054,7 +1054,7 @@
   "name": "화살선",
   "frame": "A",
   "unitGrade": 3,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_market.png",
   "route": "monster",
   "power": 1700
@@ -1064,7 +1064,7 @@
   "name": "톱니선",
   "frame": "A",
   "unitGrade": 3,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
   "route": "monster",
   "power": 1800
@@ -1074,7 +1074,7 @@
   "name": "쌓기탑",
   "frame": "A",
   "unitGrade": 3,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_meadow.png",
   "route": "monster",
   "power": 1800
@@ -1104,7 +1104,7 @@
   "name": "십이면체 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "monster",
   "power": 3400
@@ -1114,7 +1114,7 @@
   "name": "원기둥 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_road.png",
   "route": "monster",
   "power": 3500
@@ -1124,7 +1124,7 @@
   "name": "원뿔 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "monster",
   "power": 3350
@@ -1134,7 +1134,7 @@
   "name": "이십면체 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_market.png",
   "route": "monster",
   "power": 3350
@@ -1144,7 +1144,7 @@
   "name": "삼각기둥 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
   "route": "monster",
   "power": 3200
@@ -1184,7 +1184,7 @@
   "name": "별다각형",
   "frame": "A",
   "unitGrade": 3,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "monster",
   "power": 1650
@@ -1224,7 +1224,7 @@
   "name": "사각뿔 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
   "route": "monster",
   "power": 3500
@@ -1234,7 +1234,7 @@
   "name": "육각기둥 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_meadow.png",
   "route": "monster",
   "power": 3400
@@ -1254,7 +1254,7 @@
   "name": "직육면체 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_forest.png",
   "route": "monster",
   "power": 3350
@@ -1264,7 +1264,7 @@
   "name": "반구 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "monster",
   "power": 3300
@@ -1284,7 +1284,7 @@
   "name": "꼭짓점",
   "frame": "A",
   "unitGrade": 3,
-  "el": "water",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "monster",
   "power": 1700
@@ -1294,7 +1294,7 @@
   "name": "교점",
   "frame": "A",
   "unitGrade": 3,
-  "el": "water",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_market.png",
   "route": "monster",
   "power": 1650
@@ -1354,7 +1354,7 @@
   "name": "사다리꼴",
   "frame": "A",
   "unitGrade": 3,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_pond.png",
   "route": "monster",
   "power": 1800
@@ -1364,7 +1364,7 @@
   "name": "평행사변형",
   "frame": "A",
   "unitGrade": 3,
-  "el": "grass",
+  "el": "earth",
   "scene": "assets/library/oldtale/bg/bg_road.png",
   "route": "monster",
   "power": 1600
@@ -1374,7 +1374,7 @@
   "name": "쌍뿔 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "water",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_mountain_path.png",
   "route": "monster",
   "power": 3350
@@ -1394,7 +1394,7 @@
   "name": "육팔면체 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_cloud_road.png",
   "route": "monster",
   "power": 3200
@@ -1404,7 +1404,7 @@
   "name": "별 다면체 대장",
   "frame": "S",
   "unitGrade": 4,
-  "el": "fire",
+  "el": "metal",
   "scene": "assets/library/oldtale/bg/bg_meadow.png",
   "route": "monster",
   "power": 3400

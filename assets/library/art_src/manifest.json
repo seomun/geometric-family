@@ -1,0 +1,177 @@
+{
+ "version": 1,
+ "items": {
+  "myth/u_myth_poseidon": {
+   "name": "포세이돈",
+   "el": "water",
+   "stages": {
+    "s1": {
+     "src": "art_src/myth/u_myth_poseidon/s1/full.png",
+     "make": {
+      "tool": "tools/asset_myth_fam.py stages",
+      "how": "강칠 .60 + 약칠 .30 섞음(얼굴·손·발)",
+      "seed": 601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "be179e2b",
+     "approved": "2026-10-30 허브(작가 확정 방향)",
+     "files_kb": {
+      "card@1x": 27.3,
+      "card@2x": 55.6,
+      "portrait@1x": 7.6,
+      "portrait@2x": 18.5,
+      "full@1x": 59.5,
+      "full@2x": 104.2,
+      "spr_idle@1x": 15.6,
+      "spr_idle@2x": 41.8,
+      "spr_attack@1x": 15.1,
+      "spr_attack@2x": 41.6,
+      "spr_hit@1x": 14.7,
+      "spr_hit@2x": 40.9,
+      "spr_skill@1x": 15.9,
+      "spr_skill@2x": 43.8,
+      "spr_win@1x": 13.9,
+      "spr_win@2x": 38.5
+     },
+     "exported": "2026-10-30"
+    },
+    "s2": {
+     "src": "art_src/myth/u_myth_poseidon/s2/full.png",
+     "make": {
+      "tool": "tools/asset_myth_fam.py stages",
+      "init": "stage:s1",
+      "add": "svg:stage_svg(2)",
+      "dn": 0.4,
+      "seed": 621
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "e46b3858",
+     "approved": "2026-10-30 허브(작가 확정 방향)",
+     "files_kb": {
+      "card@1x": 30.4,
+      "card@2x": 51.2,
+      "portrait@1x": 7.7,
+      "portrait@2x": 18.4,
+      "full@1x": 67.9,
+      "full@2x": 118.6,
+      "spr_idle@1x": 17.4,
+      "spr_idle@2x": 48.4,
+      "spr_attack@1x": 16.6,
+      "spr_attack@2x": 46.5,
+      "spr_hit@1x": 16.3,
+      "spr_hit@2x": 45.2,
+      "spr_skill@1x": 17.9,
+      "spr_skill@2x": 50.2,
+      "spr_win@1x": 15.4,
+      "spr_win@2x": 43.4
+     },
+     "exported": "2026-10-30"
+    },
+    "s3": {
+     "src": "art_src/myth/u_myth_poseidon/s3/full.png",
+     "make": {
+      "tool": "tools/asset_myth_s3.py",
+      "init": "svg:poseidon_s3(a)",
+      "how": "새로 그림 · 강칠 .60 + 약칠 .30 섞음",
+      "seed": 802
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "bc463349",
+     "approved": "2026-10-30 허브(작가 확정 방향)",
+     "files_kb": {
+      "card@1x": 35.0,
+      "card@2x": 59.1,
+      "portrait@1x": 8.0,
+      "portrait@2x": 19.5,
+      "full@1x": 74.5,
+      "full@2x": 111.5,
+      "spr_idle@1x": 16.2,
+      "spr_idle@2x": 43.5,
+      "spr_attack@1x": 15.5,
+      "spr_attack@2x": 42.0,
+      "spr_hit@1x": 15.4,
+      "spr_hit@2x": 41.7,
+      "spr_skill@1x": 17.3,
+      "spr_skill@2x": 47.8,
+      "spr_win@1x": 14.6,
+      "spr_win@2x": 39.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "boss/b_fire_giant": {
+   "name": "불의 거인",
+   "el": "fire",
+   "stages": {
+    "s1": {
+     "src": "art_src/boss/b_fire_giant/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_firegiant.py",
+      "init": "svg:giant()",
+      "dn": 0.58,
+      "seed": 903
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "cc4a8777",
+     "approved": "2026-10-30 허브(903 승인, v2 보완 예정: 다리 밝기·포즈 차이)",
+     "files_kb": {
+      "card@1x": 23.5,
+      "card@2x": 48.0,
+      "portrait@1x": 5.7,
+      "portrait@2x": 13.5,
+      "full@1x": 51.2,
+      "full@2x": 93.0,
+      "spr_idle@1x": 13.2,
+      "spr_idle@2x": 34.6,
+      "spr_attack@1x": 12.4,
+      "spr_attack@2x": 33.7,
+      "spr_hit@1x": 12.2,
+      "spr_hit@2x": 32.8,
+      "spr_skill@1x": 14.5,
+      "spr_skill@2x": 39.9,
+      "spr_win@1x": 11.8,
+      "spr_win@2x": 31.8
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  }
+ }
+}

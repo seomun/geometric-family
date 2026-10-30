@@ -88,7 +88,7 @@
    "flavor": "우렁 각시가 밤에 몰래 밥 지을 때 등불을 대신해 준다.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "임시",
+   "art": "승인",
    "edited": true
   },
   {
@@ -415,7 +415,7 @@
    "flavor": "구름 위에도 비는 온다. 그래서 여기 산다.",
    "myth": "u_myth_gumiho",
    "unit": null,
-   "art": "임시",
+   "art": "승인",
    "edited": true
   },
   {
@@ -772,7 +772,7 @@
    "flavor": "총각이 혼잣말하면 대답하는 것 같다. 바람 탓이다.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "임시",
+   "art": "승인",
    "edited": true
   },
   {
@@ -1114,7 +1114,7 @@
    "flavor": "각시가 지은 밥은 늘 여기서 나왔다. 솥은 다 봤다.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "임시",
+   "art": "승인",
    "edited": true
   },
   {
@@ -1426,7 +1426,7 @@
    "flavor": "당나귀 발굽에 하도 밟혀 반들반들해진 문턱 돌.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "임시",
+   "art": "승인",
    "edited": true
   },
   {
@@ -1441,7 +1441,7 @@
    "flavor": "잭이 소 판 값. 아직 싹을 안 틔운 마지막 콩.",
    "myth": "u_myth_gumiho",
    "unit": null,
-   "art": "임시",
+   "art": "승인",
    "edited": true
   },
   {
@@ -1456,7 +1456,7 @@
    "flavor": "해태 흉내를 내며 참새를 쫓지만, 참새는 하나도 안 무서워한다.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "임시",
+   "art": "승인",
    "edited": true
   },
   {

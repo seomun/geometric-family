@@ -1,2 +1,2 @@
-commit c2cb188a
-built 2026-10-30T11:28:07
+commit 52f518ac
+built 2026-10-30T13:10:33

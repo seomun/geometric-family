@@ -103,7 +103,7 @@
    "flavor": "견우와 직녀가 늦을까 봐 다리 끝에서 밤새 깜빡인다.",
    "myth": "u_myth_samjoko",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -118,7 +118,7 @@
    "flavor": "마녀 오븐에 불 붙이기 싫어서 늘 젖은 척한다.",
    "myth": "u_myth_athena",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -133,7 +133,7 @@
    "flavor": "고양이 수염을 그을린 적이 있어 늘 미안해한다.",
    "myth": "u_myth_poseidon",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -148,7 +148,7 @@
    "flavor": "불 붙일 때마다 선녀 생각에 손이 떨린다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -451,7 +451,7 @@
    "flavor": "은하수에서 튄 물방울. 땅에 떨어지면 칠석 비가 된다.",
    "myth": "u_myth_samjoko",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -466,7 +466,7 @@
    "flavor": "마시면 달고, 빠지면 끈적하다.",
    "myth": "u_myth_athena",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -481,7 +481,7 @@
    "flavor": "포세이돈 파도에 밀려 성 해자까지 와 버렸다.",
    "myth": "u_myth_poseidon",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -496,7 +496,7 @@
    "flavor": "선녀가 목욕할 때만 피어오른다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -799,7 +799,7 @@
    "flavor": "직녀가 일 년 치 그리움을 한 올씩 감아 둔 실타래.",
    "myth": "u_myth_samjoko",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -814,7 +814,7 @@
    "flavor": "헨젤이 뿌린 빵 조각. 새들이 먹기 전 마지막 하나.",
    "myth": "u_myth_athena",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -829,7 +829,7 @@
    "flavor": "고양이가 「후작님 땅」이라고 우긴 밀밭의 이삭 하나.",
    "myth": "u_myth_poseidon",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -844,7 +844,7 @@
    "flavor": "그날 이후로 아무 옷도 걸어 두지 않는다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1147,7 +1147,7 @@
    "flavor": "견우 소가 고개를 흔들 때마다 하늘까지 딸랑 울린다.",
    "myth": "u_myth_samjoko",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -1162,7 +1162,7 @@
    "flavor": "돌리면 박하 향이 난다. 마녀는 장갑을 끼고 돌린다.",
    "myth": "u_myth_athena",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -1177,7 +1177,7 @@
    "flavor": "또각또각. 거짓말할 때마다 더 크게 운다.",
    "myth": "u_myth_poseidon",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1192,7 +1192,7 @@
    "flavor": "사슴을 숨겨 준 날, 처음으로 나무를 안 벴다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1495,7 +1495,7 @@
    "flavor": "까치가 모자라는 자리를 대신 메우는 작은 돌.",
    "myth": "u_myth_samjoko",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1510,7 +1510,7 @@
    "flavor": "과자집 벽에서 빠져나와 혼자 숲을 걷는다.",
    "myth": "u_myth_athena",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -1525,7 +1525,7 @@
    "flavor": "고양이가 지나가면 몰래 눈을 감아 준다.",
    "myth": "u_myth_poseidon",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -1540,7 +1540,7 @@
    "flavor": "선녀들의 발자국이 아직도 젖어 있다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3508,7 +3508,7 @@
    "flavor": "동아줄 타고 올라가 해가 됐는데, 너무 뜨거워서 얼굴이 계속 빨갛다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3523,7 +3523,7 @@
    "flavor": "콩쥐가 일을 다 끝냈다는 말에 부지깽이부터 든다.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3538,7 +3538,7 @@
    "flavor": "닭 울음에 놀라 도망친 그날 밤을 아직도 분해한다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3553,7 +3553,7 @@
    "flavor": "구미호가 잃어버린 꼬리 하나. 거인 난롯가에서 혼자 불이 붙었다.",
    "myth": "u_myth_gumiho",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3568,7 +3568,7 @@
    "flavor": "각시를 데려가려다 내기에 지고 불같이 화를 내는 원님.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3856,7 +3856,7 @@
    "flavor": "청룡이 고개를 지나다 떨군 비구름. 호랑이 꼬리만 골라 적신다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3871,7 +3871,7 @@
    "flavor": "물을 부을수록 더 크게 운다. 두꺼비가 막아 주기 전까지는.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3886,7 +3886,7 @@
    "flavor": "비 맞은 고양이가 지른 비명이 음악대 최고음이 됐다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3901,7 +3901,7 @@
    "flavor": "거인이 세수한 물. 아래 마을에는 갑자기 소나기가 쏟아진다.",
    "myth": "u_myth_gumiho",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -3916,7 +3916,7 @@
    "flavor": "원님 말이 논에 빠진 날, 논물이 들고일어났다.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -4234,7 +4234,7 @@
    "flavor": "음악대 노래를 따라 하다가 진짜로 노래를 배워 버렸다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4249,7 +4249,7 @@
    "flavor": "하룻밤 새 하늘까지 자랐다. 아직도 키가 크는 중이다.",
    "myth": "u_myth_gumiho",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4264,7 +4264,7 @@
    "flavor": "항아리에서 나와 처음으로 총각과 눈이 마주친 순간.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4597,7 +4597,7 @@
    "flavor": "「주인님!」 하고 외쳤던 그 하프. 이제는 혼자 노래한다.",
    "myth": "u_myth_gumiho",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4612,7 +4612,7 @@
    "flavor": "옳고 그름을 가리는 해태 뿔 한 조각. 원님 앞에서만 번쩍인다.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4900,7 +4900,7 @@
    "flavor": "호랑이가 매달리자마자 뚝. 지금은 흙바닥에서 반성 중이다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4915,7 +4915,7 @@
    "flavor": "하늘 어른이 보낸 소. 한 고랑 갈 때마다 마을 땅이 흔들린다.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4930,7 +4930,7 @@
    "flavor": "당나귀 위 개 위 고양이 위 닭. 한 번 흔들리면 다 무너진다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4945,7 +4945,7 @@
    "flavor": "「피 파 포 펌」 한 걸음마다 구름 바닥이 꺼진다.",
    "myth": "u_myth_gumiho",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {
@@ -4960,7 +4960,7 @@
    "flavor": "내기 날 총각이 쌓은 볏단. 해태가 지켜보는 동안만 서 있다.",
    "myth": "u_myth_haetae",
    "unit": null,
-   "art": "없음",
+   "art": "승인",
    "edited": true
   },
   {

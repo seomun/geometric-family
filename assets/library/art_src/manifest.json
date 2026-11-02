@@ -189,7 +189,7 @@
      "make": {
       "tool": "tools/asset_myth_athena.py",
       "init": "svg:athena(stand)",
-      "how": "강칠 .60 + 약칠 .30 섞음(얼굴·손·발)",
+      "how": "밑그림 디테일 패스(모자이크 결·치마 갑주·어깨 판·팔목·정강이 받이·리벳·저녁빛 배경) + 강칠 .60 + 약칠 .30 섞음(얼굴·손·발)",
       "seed": 1501
      },
      "uses": [
@@ -202,27 +202,4386 @@
       "spr_skill",
       "spr_win"
      ],
-     "hash": "027d904e",
+     "hash": "02a63998",
+     "approved": "2026-10-30 허브(디테일 패스 후: 모자이크·마디 갑주·3단 음영)",
+     "files_kb": {
+      "card@1x": 31.3,
+      "card@2x": 51.9,
+      "portrait@1x": 7.5,
+      "portrait@2x": 20.0,
+      "full@1x": 68.8,
+      "full@2x": 96.6,
+      "spr_idle@1x": 12.2,
+      "spr_idle@2x": 34.1,
+      "spr_attack@1x": 12.4,
+      "spr_attack@2x": 34.5,
+      "spr_hit@1x": 12.2,
+      "spr_hit@2x": 33.9,
+      "spr_skill@1x": 12.5,
+      "spr_skill@2x": 35.5,
+      "spr_win@1x": 11.5,
+      "spr_win@2x": 31.4
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/node_cleared": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/node_cleared/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py icons"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "6d8a35ff",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "icon@1x": 2.2,
+      "icon@2x": 4.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/node_current": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/node_current/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py icons"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "de53bff6",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "icon@1x": 2.3,
+      "icon@2x": 5.2
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/node_locked": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/node_locked/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py icons"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "14cdb866",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "icon@1x": 2.0,
+      "icon@2x": 4.1
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/node_boss": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/node_boss/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py icons"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "8aeeea3c",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "icon@1x": 2.3,
+      "icon@2x": 5.2
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/star_full": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/star_full/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py icons"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "fc3eb83d",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "icon@1x": 1.2,
+      "icon@2x": 1.3
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/star_empty": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/star_empty/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py icons"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "a7301c7e",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "icon@1x": 1.1,
+      "icon@2x": 0.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/road_h": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/road_h/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py parts",
+      "how": "256 칸 타일, 끝은 칸 가장자리 가운데"
+     },
+     "uses": [
+      "tile"
+     ],
+     "hash": "5786ff61",
      "approved": "",
      "files_kb": {
-      "card@1x": 26.2,
-      "card@2x": 53.0,
-      "portrait@1x": 7.1,
-      "portrait@2x": 17.9,
-      "full@1x": 57.5,
-      "full@2x": 100.7,
-      "spr_idle@1x": 11.7,
-      "spr_idle@2x": 30.5,
-      "spr_attack@1x": 12.1,
-      "spr_attack@2x": 31.9,
-      "spr_hit@1x": 11.8,
-      "spr_hit@2x": 31.2,
-      "spr_skill@1x": 11.7,
-      "spr_skill@2x": 31.8,
-      "spr_win@1x": 11.2,
+      "tile@1x": 0.5,
+      "tile@2x": 0.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/road_h_gold": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/road_h_gold/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py parts",
+      "how": "256 칸 타일, 끝은 칸 가장자리 가운데"
+     },
+     "uses": [
+      "tile"
+     ],
+     "hash": "16e93709",
+     "approved": "",
+     "files_kb": {
+      "tile@1x": 0.6,
+      "tile@2x": 0.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/road_curve": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/road_curve/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py parts",
+      "how": "256 칸 타일, 끝은 칸 가장자리 가운데"
+     },
+     "uses": [
+      "tile"
+     ],
+     "hash": "2fd269d0",
+     "approved": "",
+     "files_kb": {
+      "tile@1x": 2.5,
+      "tile@2x": 2.6
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/road_curve_gold": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/road_curve_gold/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py parts",
+      "how": "256 칸 타일, 끝은 칸 가장자리 가운데"
+     },
+     "uses": [
+      "tile"
+     ],
+     "hash": "c9a9f052",
+     "approved": "",
+     "files_kb": {
+      "tile@1x": 3.2,
+      "tile@2x": 6.3
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/stage_frame": {
+   "stages": {
+    "s1": {
+     "src": "art_src/map/stage_frame/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py parts",
+      "how": "9-slice: @1x 96 판, 모서리 32px(@2x 64px)"
+     },
+     "uses": [
+      "frame9"
+     ],
+     "hash": "0ac35294",
+     "approved": "",
+     "files_kb": {
+      "frame9@1x": 1.5,
+      "frame9@2x": 2.7
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "card/unknown_slot": {
+   "stages": {
+    "s1": {
+     "src": "art_src/card/unknown_slot/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py parts"
+     },
+     "uses": [
+      "card"
+     ],
+     "hash": "f089654a",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 5.2,
+      "card@2x": 10.6
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_1_pigs": {
+   "name": "지역 1 pigs",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_1_pigs/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 761
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "55d9f830",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 32.5,
+      "bg@2x": 75.4
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_2_moon": {
+   "name": "지역 2 moon",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_2_moon/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 762
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "daf79d85",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 27.5,
+      "bg@2x": 66.4
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "fx/absorb": {
+   "stages": {
+    "s1": {
+     "src": "art_src/fx/absorb/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py fx",
+      "how": "가산 합성(lighter), 프레임당 ~90ms"
+     },
+     "uses": [
+      "f1",
+      "f2",
+      "f3"
+     ],
+     "hash": "308145ea",
+     "approved": "",
+     "files_kb": {
+      "f1@1x": 9.0,
+      "f1@2x": 19.7,
+      "f2@1x": 9.9,
+      "f2@2x": 23.0,
+      "f3@1x": 7.1,
+      "f3@2x": 17.3
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "fx/levelup": {
+   "stages": {
+    "s1": {
+     "src": "art_src/fx/levelup/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_ui.py fx",
+      "how": "가산 합성(lighter), 프레임당 ~90ms"
+     },
+     "uses": [
+      "f1",
+      "f2",
+      "f3"
+     ],
+     "hash": "33799e46",
+     "approved": "",
+     "files_kb": {
+      "f1@1x": 5.2,
+      "f1@2x": 12.6,
+      "f2@1x": 10.6,
+      "f2@2x": 26.9,
+      "f3@1x": 11.6,
+      "f3@2x": 28.8
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_3_jars": {
+   "name": "지역 3 jars",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_3_jars/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 763
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "f5c7a9ab",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 29.7,
+      "bg@2x": 68.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_4_forest": {
+   "name": "지역 4 forest",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_4_forest/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 764
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "5cd8f68a",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 24.0,
+      "bg@2x": 55.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_5_beans": {
+   "name": "지역 5 beans",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_5_beans/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 765
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "00fd0519",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 31.2,
+      "bg@2x": 73.2
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_6_pond": {
+   "name": "지역 6 pond",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_6_pond/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 766
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "9a7e78f1",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 25.3,
+      "bg@2x": 59.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r01": {
+   "name": "삼각뿔 대장",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r01/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "5d078302",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.1,
+      "icon@2x": 8.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r02": {
+   "name": "바람 호랑이",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r02/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "5c1ff47f",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 6.1,
+      "icon@2x": 10.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r03": {
+   "name": "깐깐한 아주머니",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r03/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "174cafde",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.7,
+      "icon@2x": 9.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r04": {
+   "name": "허깨비 도둑",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r04/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "1cb15d53",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.6,
+      "icon@2x": 9.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r05": {
+   "name": "구름 거인",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r05/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "51811c72",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.5,
+      "icon@2x": 9.4
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r06": {
+   "name": "욕심쟁이 원님",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r06/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "7e6d3f11",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 6.1,
+      "icon@2x": 10.7
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r07": {
+   "name": "하늘 어른",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r07/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "23f4e451",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.7,
+      "icon@2x": 10.1
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r08": {
+   "name": "과자집 할머니",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r08/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "13573264",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.8,
+      "icon@2x": 10.3
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r09": {
+   "name": "변신 마법사",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r09/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "554febd1",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.4,
+      "icon@2x": 9.8
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r10": {
+   "name": "사슴",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r10/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "cf293ae2",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 6.0,
+      "icon@2x": 10.8
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r11": {
+   "name": "용궁 문지기",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r11/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "6ed3b532",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.8,
+      "icon@2x": 10.1
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r12": {
+   "name": "구렁이",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r12/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "5c889a90",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.6,
+      "icon@2x": 9.7
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r13": {
+   "name": "호랑이",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r13/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "1b6d780f",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.5,
+      "icon@2x": 10.0
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r14": {
+   "name": "늑대",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r14/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "8a230055",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.8,
+      "icon@2x": 10.3
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r15": {
+   "name": "여우",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r15/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "cecd34fd",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.9,
+      "icon@2x": 10.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r16": {
+   "name": "눈 까마귀",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r16/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "64dab632",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 6.0,
+      "icon@2x": 10.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r17": {
+   "name": "매미",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r17/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "4516c455",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.7,
+      "icon@2x": 10.1
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r18": {
+   "name": "두루미",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r18/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "72b45d88",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.6,
+      "icon@2x": 9.7
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r19": {
+   "name": "참새",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r19/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "62fed473",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.4,
+      "icon@2x": 9.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r20": {
+   "name": "부엉이",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r20/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "c7188868",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 6.0,
+      "icon@2x": 10.7
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r21": {
+   "name": "개구리",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r21/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "72e63804",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.5,
+      "icon@2x": 9.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r22": {
+   "name": "다람쥐",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r22/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "cfd9c40b",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.6,
+      "icon@2x": 9.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r23": {
+   "name": "생쥐",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r23/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "57f73685",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 5.8,
+      "icon@2x": 10.4
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/boss_r24": {
+   "name": "뒤틀왕",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/boss_r24/s1/full.png",
+     "make": {
+      "tool": "tools/asset_boss_icons.js",
+      "how": "게임 대장 그림(GeoMon/ExpArt.creature) + 속성 보석 원판, 왕관 없음"
+     },
+     "uses": [
+      "icon"
+     ],
+     "hash": "64f3d53e",
+     "approved": "",
+     "files_kb": {
+      "icon@1x": 6.8,
+      "icon@2x": 13.7
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r04_me_A": {
+   "name": "저울 위의 깃털",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r04_me_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "4ce1d44d",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 21.7,
+      "card@2x": 55.2,
+      "portrait@1x": 6.7,
+      "portrait@2x": 18.0,
+      "full@1x": 47.6,
+      "full@2x": 112.2,
+      "spr_idle@1x": 11.5,
+      "spr_idle@2x": 27.9,
+      "spr_attack@1x": 10.8,
+      "spr_attack@2x": 27.6,
+      "spr_hit@1x": 10.8,
+      "spr_hit@2x": 27.6,
+      "spr_skill@1x": 11.9,
+      "spr_skill@2x": 30.2,
+      "spr_win@1x": 10.2,
+      "spr_win@2x": 25.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r04_ea_A": {
+   "name": "오두막 문턱 돌",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r04_ea_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "f248f8a5",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 19.8,
+      "card@2x": 49.5,
+      "portrait@1x": 5.3,
+      "portrait@2x": 13.7,
+      "full@1x": 42.0,
+      "full@2x": 93.8,
+      "spr_idle@1x": 9.4,
+      "spr_idle@2x": 21.8,
+      "spr_attack@1x": 9.6,
+      "spr_attack@2x": 21.5,
+      "spr_hit@1x": 10.3,
+      "spr_hit@2x": 22.4,
+      "spr_skill@1x": 10.5,
+      "spr_skill@2x": 24.7,
+      "spr_win@1x": 10.8,
+      "spr_win@2x": 24.3
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r05_wa_A": {
+   "name": "구름 웅덩이 개구리",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r05_wa_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "063d12ce",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 25.1,
+      "card@2x": 48.6,
+      "portrait@1x": 7.0,
+      "portrait@2x": 18.5,
+      "full@1x": 53.9,
+      "full@2x": 94.8,
+      "spr_idle@1x": 13.0,
+      "spr_idle@2x": 30.8,
+      "spr_attack@1x": 11.8,
+      "spr_attack@2x": 28.6,
+      "spr_hit@1x": 12.4,
+      "spr_hit@2x": 30.3,
+      "spr_skill@1x": 14.3,
+      "spr_skill@2x": 35.6,
+      "spr_win@1x": 11.9,
       "spr_win@2x": 28.6
      },
      "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r05_me_A": {
+   "name": "거인 식탁의 은포크",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r05_me_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "5f062f2f",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 22.4,
+      "card@2x": 55.6,
+      "portrait@1x": 6.5,
+      "portrait@2x": 15.8,
+      "full@1x": 46.7,
+      "full@2x": 108.4,
+      "spr_idle@1x": 9.6,
+      "spr_idle@2x": 21.4,
+      "spr_attack@1x": 11.9,
+      "spr_attack@2x": 27.5,
+      "spr_hit@1x": 11.3,
+      "spr_hit@2x": 26.3,
+      "spr_skill@1x": 9.5,
+      "spr_skill@2x": 23.1,
+      "spr_win@1x": 10.0,
+      "spr_win@2x": 23.0
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r05_ea_A": {
+   "name": "구름 위의 콩 한 알",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r05_ea_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "6aa4b06a",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 23.6,
+      "card@2x": 46.1,
+      "portrait@1x": 6.2,
+      "portrait@2x": 16.5,
+      "full@1x": 51.0,
+      "full@2x": 92.5,
+      "spr_idle@1x": 10.4,
+      "spr_idle@2x": 24.8,
+      "spr_attack@1x": 9.5,
+      "spr_attack@2x": 22.7,
+      "spr_hit@1x": 10.1,
+      "spr_hit@2x": 24.4,
+      "spr_skill@1x": 10.9,
+      "spr_skill@2x": 27.9,
+      "spr_win@1x": 10.6,
+      "spr_win@2x": 25.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r06_fi_A": {
+   "name": "논두렁 반딧불",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_fi_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "fdede226",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 24.8,
+      "card@2x": 43.9,
+      "portrait@1x": 6.2,
+      "portrait@2x": 15.3,
+      "full@1x": 51.6,
+      "full@2x": 116.4,
+      "spr_idle@1x": 12.6,
+      "spr_idle@2x": 30.5,
+      "spr_attack@1x": 10.5,
+      "spr_attack@2x": 26.5,
+      "spr_hit@1x": 11.6,
+      "spr_hit@2x": 29.2,
+      "spr_skill@1x": 13.0,
+      "spr_skill@2x": 33.0,
+      "spr_win@1x": 12.5,
+      "spr_win@2x": 30.8
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r06_wa_A": {
+   "name": "물꼬의 우렁이",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_wa_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "bace30c4",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 22.7,
+      "card@2x": 57.7,
+      "portrait@1x": 5.8,
+      "portrait@2x": 14.0,
+      "full@1x": 48.1,
+      "full@2x": 108.7,
+      "spr_idle@1x": 11.2,
+      "spr_idle@2x": 27.7,
+      "spr_attack@1x": 10.8,
+      "spr_attack@2x": 26.6,
+      "spr_hit@1x": 11.9,
+      "spr_hit@2x": 29.0,
+      "spr_skill@1x": 11.8,
+      "spr_skill@2x": 30.5,
+      "spr_win@1x": 11.7,
+      "spr_win@2x": 28.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r06_wo_A": {
+   "name": "논의 볏모",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_wo_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "a177bb8b",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 19.6,
+      "card@2x": 51.3,
+      "portrait@1x": 4.5,
+      "portrait@2x": 11.6,
+      "full@1x": 42.1,
+      "full@2x": 97.6,
+      "spr_idle@1x": 11.2,
+      "spr_idle@2x": 28.0,
+      "spr_attack@1x": 10.9,
+      "spr_attack@2x": 26.7,
+      "spr_hit@1x": 11.7,
+      "spr_hit@2x": 29.1,
+      "spr_skill@1x": 11.8,
+      "spr_skill@2x": 30.5,
+      "spr_win@1x": 11.5,
+      "spr_win@2x": 28.6
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r06_me_A": {
+   "name": "부엌의 놋쇠 솥",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_me_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "168af951",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 24.2,
+      "card@2x": 44.0,
+      "portrait@1x": 7.1,
+      "portrait@2x": 18.3,
+      "full@1x": 50.2,
+      "full@2x": 116.1,
+      "spr_idle@1x": 13.0,
+      "spr_idle@2x": 29.3,
+      "spr_attack@1x": 12.5,
+      "spr_attack@2x": 30.8,
+      "spr_hit@1x": 12.5,
+      "spr_hit@2x": 30.6,
+      "spr_skill@1x": 13.6,
+      "spr_skill@2x": 33.8,
+      "spr_win@1x": 11.9,
+      "spr_win@2x": 29.5
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "hero/c_r06_ea_A": {
+   "name": "논두렁 허수아비",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_ea_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "fdebf6ef",
+     "approved": "2026-10-30 허브",
+     "files_kb": {
+      "card@1x": 25.0,
+      "card@2x": 47.4,
+      "portrait@1x": 7.2,
+      "portrait@2x": 19.3,
+      "full@1x": 53.0,
+      "full@2x": 88.9,
+      "spr_idle@1x": 14.0,
+      "spr_idle@2x": 33.4,
+      "spr_attack@1x": 12.5,
+      "spr_attack@2x": 32.4,
+      "spr_hit@1x": 12.7,
+      "spr_hit@2x": 33.2,
+      "spr_skill@1x": 15.2,
+      "spr_skill@2x": 38.7,
+      "spr_win@1x": 12.6,
+      "spr_win@2x": 31.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_7_milkyway": {
+   "name": "지역 7 milkyway",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_7_milkyway/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 767
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "46bfb721",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 33.4,
+      "bg@2x": 75.9
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_8_candy": {
+   "name": "지역 8 candy",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_8_candy/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 768
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "665acdad",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 30.8,
+      "bg@2x": 74.2
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_9_castle": {
+   "name": "지역 9 castle",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_9_castle/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 769
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "aecf7989",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 21.9,
+      "bg@2x": 54.0
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_10_nymph": {
+   "name": "지역 10 nymph",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_10_nymph/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 770
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "7994b233",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 24.6,
+      "bg@2x": 60.4
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_11_dragonsea": {
+   "name": "지역 11 dragonsea",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_11_dragonsea/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 771
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "3aa12b84",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 26.7,
+      "bg@2x": 63.7
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "map/region_12_magpieforest": {
+   "name": "지역 12 magpieforest",
+   "stages": {
+    "s1": {
+     "src": "art_src/map/region_12_magpieforest/s1/full.png",
+     "make": {
+      "tool": "tools/asset_map_bg.py bg2",
+      "how": "v2: 길 없는 판 · 3층 · 상징물 크게 · 칠 .42 + 밑그림 22% · 채도 .88",
+      "seed": 772
+     },
+     "uses": [
+      "bg"
+     ],
+     "hash": "f553e3a8",
+     "approved": "2026-10-30 허브(임시 — v3 예정)",
+     "files_kb": {
+      "bg@1x": 27.1,
+      "bg@2x": 61.6
+     },
+     "exported": "2026-10-30"
+    }
+   }
+  },
+  "myth/u_myth_dragon": {
+   "name": "청룡",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/myth/u_myth_dragon/s1/full.png",
+     "make": {
+      "tool": "tools/asset_myth_dw.py",
+      "how": "캐리커처 s1 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1701
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "d62f0d67",
+     "approved": "2026-10-31 허브(캐리커처 s1 세트)",
+     "files_kb": {
+      "card@1x": 27.7,
+      "card@2x": 55.5,
+      "portrait@1x": 8.0,
+      "portrait@2x": 16.0,
+      "full@1x": 61.1,
+      "full@2x": 103.4,
+      "spr_idle@1x": 16.1,
+      "spr_idle@2x": 42.2,
+      "spr_attack@1x": 15.0,
+      "spr_attack@2x": 40.1,
+      "spr_hit@1x": 14.7,
+      "spr_hit@2x": 39.3,
+      "spr_skill@1x": 17.4,
+      "spr_skill@2x": 46.4,
+      "spr_win@1x": 14.2,
+      "spr_win@2x": 38.1
+     },
+     "exported": "2026-10-30"
+    },
+    "s2": {
+     "src": "art_src/myth/u_myth_dragon/s2/full.png",
+     "make": {
+      "tool": "tools/asset_myth_stage.py",
+      "init": "stage:s1",
+      "add": "svg:LAYERS",
+      "dn": 0.44,
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "84856211",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 30.1,
+      "card@2x": 48.9,
+      "portrait@1x": 7.4,
+      "portrait@2x": 19.0,
+      "full@1x": 65.8,
+      "full@2x": 114.5,
+      "spr_idle@1x": 19.6,
+      "spr_idle@2x": 52.4,
+      "spr_attack@1x": 18.2,
+      "spr_attack@2x": 49.4,
+      "spr_hit@1x": 17.9,
+      "spr_hit@2x": 48.6,
+      "spr_skill@1x": 20.3,
+      "spr_skill@2x": 55.3,
+      "spr_win@1x": 17.3,
+      "spr_win@2x": 46.7
+     },
+     "exported": "2026-10-31"
+    },
+    "s3": {
+     "src": "art_src/myth/u_myth_dragon/s3/full.png",
+     "make": {
+      "tool": "tools/asset_myth_s3b.py",
+      "how": "s3 새로 그림 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "d49f04a9",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 35.9,
+      "card@2x": 53.5,
+      "portrait@1x": 9.3,
+      "portrait@2x": 19.3,
+      "full@1x": 76.8,
+      "full@2x": 113.1,
+      "spr_idle@1x": 20.1,
+      "spr_idle@2x": 54.9,
+      "spr_attack@1x": 18.4,
+      "spr_attack@2x": 51.2,
+      "spr_hit@1x": 18.0,
+      "spr_hit@2x": 50.3,
+      "spr_skill@1x": 21.9,
+      "spr_skill@2x": 59.9,
+      "spr_win@1x": 17.5,
+      "spr_win@2x": 48.9
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "myth/u_myth_wukong": {
+   "name": "손오공",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/myth/u_myth_wukong/s1/full.png",
+     "make": {
+      "tool": "tools/asset_myth_dw.py",
+      "how": "캐리커처 s1 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1701
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "f493ea2b",
+     "approved": "2026-10-31 허브(캐리커처 s1 세트)",
+     "files_kb": {
+      "card@1x": 26.5,
+      "card@2x": 51.4,
+      "portrait@1x": 7.4,
+      "portrait@2x": 18.9,
+      "full@1x": 56.2,
+      "full@2x": 97.0,
+      "spr_idle@1x": 14.4,
+      "spr_idle@2x": 37.0,
+      "spr_attack@1x": 13.8,
+      "spr_attack@2x": 35.9,
+      "spr_hit@1x": 13.8,
+      "spr_hit@2x": 36.0,
+      "spr_skill@1x": 14.8,
+      "spr_skill@2x": 39.6,
+      "spr_win@1x": 13.0,
+      "spr_win@2x": 34.0
+     },
+     "exported": "2026-10-30"
+    },
+    "s2": {
+     "src": "art_src/myth/u_myth_wukong/s2/full.png",
+     "make": {
+      "tool": "tools/asset_myth_stage.py",
+      "init": "stage:s1",
+      "add": "svg:LAYERS",
+      "dn": 0.44,
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "a4f95149",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 29.3,
+      "card@2x": 57.5,
+      "portrait@1x": 6.1,
+      "portrait@2x": 15.1,
+      "full@1x": 63.0,
+      "full@2x": 109.0,
+      "spr_idle@1x": 19.2,
+      "spr_idle@2x": 49.7,
+      "spr_attack@1x": 17.8,
+      "spr_attack@2x": 45.9,
+      "spr_hit@1x": 17.7,
+      "spr_hit@2x": 46.6,
+      "spr_skill@1x": 19.8,
+      "spr_skill@2x": 52.8,
+      "spr_win@1x": 16.9,
+      "spr_win@2x": 44.1
+     },
+     "exported": "2026-10-31"
+    },
+    "s3": {
+     "src": "art_src/myth/u_myth_wukong/s3/full.png",
+     "make": {
+      "tool": "tools/asset_myth_s3b.py",
+      "how": "s3 새로 그림 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "7cd04a9c",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 30.8,
+      "card@2x": 50.7,
+      "portrait@1x": 6.9,
+      "portrait@2x": 17.8,
+      "full@1x": 66.3,
+      "full@2x": 116.9,
+      "spr_idle@1x": 15.8,
+      "spr_idle@2x": 42.9,
+      "spr_attack@1x": 16.3,
+      "spr_attack@2x": 43.1,
+      "spr_hit@1x": 15.7,
+      "spr_hit@2x": 42.1,
+      "spr_skill@1x": 16.6,
+      "spr_skill@2x": 46.1,
+      "spr_win@1x": 14.9,
+      "spr_win@2x": 39.6
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "myth/u_myth_anubis": {
+   "name": "아누비스",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/myth/u_myth_anubis/s1/full.png",
+     "make": {
+      "tool": "tools/asset_myth_dw.py",
+      "how": "캐리커처 s1 · v2 디테일 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1701
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "dd85bd32",
+     "approved": "2026-10-31 허브(디테일 v2)",
+     "files_kb": {
+      "card@1x": 23.6,
+      "card@2x": 59.2,
+      "portrait@1x": 6.0,
+      "portrait@2x": 15.0,
+      "full@1x": 49.1,
+      "full@2x": 113.6,
+      "spr_idle@1x": 12.0,
+      "spr_idle@2x": 29.3,
+      "spr_attack@1x": 12.2,
+      "spr_attack@2x": 31.4,
+      "spr_hit@1x": 11.7,
+      "spr_hit@2x": 30.2,
+      "spr_skill@1x": 12.3,
+      "spr_skill@2x": 32.7,
+      "spr_win@1x": 11.3,
+      "spr_win@2x": 28.5
+     },
+     "exported": "2026-10-31"
+    },
+    "s2": {
+     "src": "art_src/myth/u_myth_anubis/s2/full.png",
+     "make": {
+      "tool": "tools/asset_myth_stage.py",
+      "init": "stage:s1",
+      "add": "svg:LAYERS",
+      "dn": 0.44,
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "f5ed7e76",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 24.9,
+      "card@2x": 47.0,
+      "portrait@1x": 5.0,
+      "portrait@2x": 12.4,
+      "full@1x": 51.8,
+      "full@2x": 116.5,
+      "spr_idle@1x": 15.6,
+      "spr_idle@2x": 39.1,
+      "spr_attack@1x": 15.1,
+      "spr_attack@2x": 39.5,
+      "spr_hit@1x": 14.8,
+      "spr_hit@2x": 38.6,
+      "spr_skill@1x": 16.2,
+      "spr_skill@2x": 41.9,
+      "spr_win@1x": 14.2,
+      "spr_win@2x": 36.8
+     },
+     "exported": "2026-10-31"
+    },
+    "s3": {
+     "src": "art_src/myth/u_myth_anubis/s3/full.png",
+     "make": {
+      "tool": "tools/asset_myth_s3b.py",
+      "how": "s3 새로 그림 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "cfa827da",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 32.6,
+      "card@2x": 53.7,
+      "portrait@1x": 6.0,
+      "portrait@2x": 15.4,
+      "full@1x": 71.0,
+      "full@2x": 100.4,
+      "spr_idle@1x": 18.3,
+      "spr_idle@2x": 46.8,
+      "spr_attack@1x": 18.1,
+      "spr_attack@2x": 47.4,
+      "spr_hit@1x": 17.7,
+      "spr_hit@2x": 46.4,
+      "spr_skill@1x": 19.4,
+      "spr_skill@2x": 51.8,
+      "spr_win@1x": 16.8,
+      "spr_win@2x": 44.0
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "myth/u_myth_gumiho": {
+   "name": "구미호",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/myth/u_myth_gumiho/s1/full.png",
+     "make": {
+      "tool": "tools/asset_myth_dw.py",
+      "how": "캐리커처 s1 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1701
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "b03c0fff",
+     "approved": "2026-10-31 허브(캐리커처 s1 세트)",
+     "files_kb": {
+      "card@1x": 23.2,
+      "card@2x": 57.2,
+      "portrait@1x": 7.5,
+      "portrait@2x": 19.7,
+      "full@1x": 47.8,
+      "full@2x": 108.4,
+      "spr_idle@1x": 14.6,
+      "spr_idle@2x": 36.2,
+      "spr_attack@1x": 12.2,
+      "spr_attack@2x": 30.7,
+      "spr_hit@1x": 13.0,
+      "spr_hit@2x": 33.1,
+      "spr_skill@1x": 15.7,
+      "spr_skill@2x": 41.0,
+      "spr_win@1x": 12.9,
+      "spr_win@2x": 33.1
+     },
+     "exported": "2026-10-30"
+    },
+    "s2": {
+     "src": "art_src/myth/u_myth_gumiho/s2/full.png",
+     "make": {
+      "tool": "tools/asset_myth_stage.py",
+      "init": "stage:s1",
+      "add": "svg:LAYERS",
+      "dn": 0.44,
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "fab33de3",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 25.6,
+      "card@2x": 48.3,
+      "portrait@1x": 7.0,
+      "portrait@2x": 18.1,
+      "full@1x": 53.5,
+      "full@2x": 89.1,
+      "spr_idle@1x": 20.2,
+      "spr_idle@2x": 50.6,
+      "spr_attack@1x": 16.5,
+      "spr_attack@2x": 44.0,
+      "spr_hit@1x": 17.9,
+      "spr_hit@2x": 47.2,
+      "spr_skill@1x": 20.4,
+      "spr_skill@2x": 51.7,
+      "spr_win@1x": 17.2,
+      "spr_win@2x": 46.0
+     },
+     "exported": "2026-10-31"
+    },
+    "s3": {
+     "src": "art_src/myth/u_myth_gumiho/s3/full.png",
+     "make": {
+      "tool": "tools/asset_myth_s3b.py",
+      "how": "s3 새로 그림 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "7a95e48d",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 32.7,
+      "card@2x": 50.9,
+      "portrait@1x": 7.6,
+      "portrait@2x": 19.7,
+      "full@1x": 68.9,
+      "full@2x": 116.7,
+      "spr_idle@1x": 16.6,
+      "spr_idle@2x": 43.2,
+      "spr_attack@1x": 14.7,
+      "spr_attack@2x": 39.3,
+      "spr_hit@1x": 15.0,
+      "spr_hit@2x": 40.0,
+      "spr_skill@1x": 17.6,
+      "spr_skill@2x": 47.9,
+      "spr_win@1x": 14.7,
+      "spr_win@2x": 39.2
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "myth/u_myth_haetae": {
+   "name": "해태",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/myth/u_myth_haetae/s1/full.png",
+     "make": {
+      "tool": "tools/asset_myth_dw.py",
+      "how": "캐리커처 s1 · v2 디테일 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1701
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "f79dad00",
+     "approved": "2026-10-31 허브(v3)",
+     "files_kb": {
+      "card@1x": 27.3,
+      "card@2x": 52.5,
+      "portrait@1x": 8.3,
+      "portrait@2x": 16.0,
+      "full@1x": 57.3,
+      "full@2x": 97.5,
+      "spr_idle@1x": 17.9,
+      "spr_idle@2x": 46.3,
+      "spr_attack@1x": 15.8,
+      "spr_attack@2x": 41.9,
+      "spr_hit@1x": 16.0,
+      "spr_hit@2x": 42.2,
+      "spr_skill@1x": 20.1,
+      "spr_skill@2x": 52.6,
+      "spr_win@1x": 15.6,
+      "spr_win@2x": 41.4
+     },
+     "exported": "2026-10-31"
+    },
+    "s2": {
+     "src": "art_src/myth/u_myth_haetae/s2/full.png",
+     "make": {
+      "tool": "tools/asset_myth_stage.py",
+      "init": "stage:s1",
+      "add": "svg:LAYERS",
+      "dn": 0.44,
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "e8106fbc",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 30.7,
+      "card@2x": 59.8,
+      "portrait@1x": 7.7,
+      "portrait@2x": 18.5,
+      "full@1x": 64.4,
+      "full@2x": 110.3,
+      "spr_idle@1x": 22.6,
+      "spr_idle@2x": 60.6,
+      "spr_attack@1x": 20.3,
+      "spr_attack@2x": 55.8,
+      "spr_hit@1x": 20.0,
+      "spr_hit@2x": 55.7,
+      "spr_skill@1x": 23.8,
+      "spr_skill@2x": 63.4,
+      "spr_win@1x": 19.3,
+      "spr_win@2x": 53.9
+     },
+     "exported": "2026-10-31"
+    },
+    "s3": {
+     "src": "art_src/myth/u_myth_haetae/s3/full.png",
+     "make": {
+      "tool": "tools/asset_myth_s3b.py",
+      "how": "s3 새로 그림 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "8c6e1b3a",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 32.5,
+      "card@2x": 53.3,
+      "portrait@1x": 8.6,
+      "portrait@2x": 17.2,
+      "full@1x": 71.2,
+      "full@2x": 99.0,
+      "spr_idle@1x": 22.1,
+      "spr_idle@2x": 58.9,
+      "spr_attack@1x": 19.7,
+      "spr_attack@2x": 54.5,
+      "spr_hit@1x": 19.4,
+      "spr_hit@2x": 53.9,
+      "spr_skill@1x": 23.7,
+      "spr_skill@2x": 63.3,
+      "spr_win@1x": 18.6,
+      "spr_win@2x": 51.8
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "myth/u_myth_samjoko": {
+   "name": "삼족오",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/myth/u_myth_samjoko/s1/full.png",
+     "make": {
+      "tool": "tools/asset_myth_dw.py",
+      "how": "캐리커처 s1 · v2 디테일 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1701
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "f7f7cf5d",
+     "approved": "2026-10-31 허브(디테일 v2)",
+     "files_kb": {
+      "card@1x": 23.6,
+      "card@2x": 59.6,
+      "portrait@1x": 6.0,
+      "portrait@2x": 15.2,
+      "full@1x": 49.2,
+      "full@2x": 113.8,
+      "spr_idle@1x": 18.5,
+      "spr_idle@2x": 46.8,
+      "spr_attack@1x": 14.8,
+      "spr_attack@2x": 38.7,
+      "spr_hit@1x": 16.7,
+      "spr_hit@2x": 42.8,
+      "spr_skill@1x": 19.7,
+      "spr_skill@2x": 51.1,
+      "spr_win@1x": 16.1,
+      "spr_win@2x": 41.7
+     },
+     "exported": "2026-10-31"
+    },
+    "s2": {
+     "src": "art_src/myth/u_myth_samjoko/s2/full.png",
+     "make": {
+      "tool": "tools/asset_myth_stage.py",
+      "init": "stage:s1",
+      "add": "svg:LAYERS",
+      "dn": 0.44,
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "eb6aa0a5",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 25.2,
+      "card@2x": 50.1,
+      "portrait@1x": 5.8,
+      "portrait@2x": 14.0,
+      "full@1x": 54.8,
+      "full@2x": 95.9,
+      "spr_idle@1x": 17.3,
+      "spr_idle@2x": 45.1,
+      "spr_attack@1x": 16.2,
+      "spr_attack@2x": 43.7,
+      "spr_hit@1x": 16.4,
+      "spr_hit@2x": 43.0,
+      "spr_skill@1x": 18.3,
+      "spr_skill@2x": 49.5,
+      "spr_win@1x": 15.7,
+      "spr_win@2x": 41.4
+     },
+     "exported": "2026-10-31"
+    },
+    "s3": {
+     "src": "art_src/myth/u_myth_samjoko/s3/full.png",
+     "make": {
+      "tool": "tools/asset_myth_s3b.py",
+      "how": "s3 새로 그림 · 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1801
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "481e03d1",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 24.8,
+      "card@2x": 47.6,
+      "portrait@1x": 5.6,
+      "portrait@2x": 14.4,
+      "full@1x": 52.0,
+      "full@2x": 90.5,
+      "spr_idle@1x": 12.9,
+      "spr_idle@2x": 32.2,
+      "spr_attack@1x": 12.8,
+      "spr_attack@2x": 32.8,
+      "spr_hit@1x": 12.6,
+      "spr_hit@2x": 32.3,
+      "spr_skill@1x": 13.4,
+      "spr_skill@2x": 35.4,
+      "spr_win@1x": 12.0,
+      "spr_win@2x": 30.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r05_me_SS": {
+   "name": "소리치는 황금 하프",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r05_me_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "9a6d9af3",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 27.6,
+      "card@2x": 57.3,
+      "portrait@1x": 6.8,
+      "portrait@2x": 17.6,
+      "full@1x": 60.6,
+      "full@2x": 111.9,
+      "spr_idle@1x": 14.6,
+      "spr_idle@2x": 37.1,
+      "spr_attack@1x": 14.6,
+      "spr_attack@2x": 38.1,
+      "spr_hit@1x": 14.0,
+      "spr_hit@2x": 36.9,
+      "spr_skill@1x": 14.6,
+      "spr_skill@2x": 39.2,
+      "spr_win@1x": 13.2,
+      "spr_win@2x": 34.5
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r06_me_SS": {
+   "name": "빛나는 해태 뿔 조각",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_me_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "742abbea",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 27.2,
+      "card@2x": 51.5,
+      "portrait@1x": 7.4,
+      "portrait@2x": 15.6,
+      "full@1x": 56.4,
+      "full@2x": 98.1,
+      "spr_idle@1x": 17.9,
+      "spr_idle@2x": 43.9,
+      "spr_attack@1x": 15.2,
+      "spr_attack@2x": 39.1,
+      "spr_hit@1x": 16.0,
+      "spr_hit@2x": 41.6,
+      "spr_skill@1x": 19.0,
+      "spr_skill@2x": 49.1,
+      "spr_win@1x": 15.7,
+      "spr_win@2x": 40.0
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r02_ea_SS": {
+   "name": "흔들리는 썩은 동아줄",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r02_ea_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "11a8c3a0",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 27.0,
+      "card@2x": 51.7,
+      "portrait@1x": 7.4,
+      "portrait@2x": 19.3,
+      "full@1x": 58.7,
+      "full@2x": 99.5,
+      "spr_idle@1x": 10.4,
+      "spr_idle@2x": 25.6,
+      "spr_attack@1x": 10.3,
+      "spr_attack@2x": 25.4,
+      "spr_hit@1x": 10.0,
+      "spr_hit@2x": 24.7,
+      "spr_skill@1x": 11.3,
+      "spr_skill@2x": 29.5,
+      "spr_win@1x": 9.5,
+      "spr_win@2x": 23.7
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r03_ea_SS": {
+   "name": "땅을 울리는 검은 소",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r03_ea_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "9d18f070",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 21.5,
+      "card@2x": 53.4,
+      "portrait@1x": 3.0,
+      "portrait@2x": 6.9,
+      "full@1x": 43.7,
+      "full@2x": 100.6,
+      "spr_idle@1x": 11.2,
+      "spr_idle@2x": 25.7,
+      "spr_attack@1x": 10.4,
+      "spr_attack@2x": 24.2,
+      "spr_hit@1x": 10.4,
+      "spr_hit@2x": 24.1,
+      "spr_skill@1x": 12.3,
+      "spr_skill@2x": 28.7,
+      "spr_win@1x": 10.0,
+      "spr_win@2x": 23.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r04_ea_SS": {
+   "name": "흔들리는 탑 쌓기 음악대",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r04_ea_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "9dea3c86",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.7,
+      "card@2x": 58.1,
+      "portrait@1x": 6.1,
+      "portrait@2x": 14.9,
+      "full@1x": 48.4,
+      "full@2x": 108.2,
+      "spr_idle@1x": 14.4,
+      "spr_idle@2x": 33.0,
+      "spr_attack@1x": 14.5,
+      "spr_attack@2x": 37.1,
+      "spr_hit@1x": 14.2,
+      "spr_hit@2x": 36.6,
+      "spr_skill@1x": 15.1,
+      "spr_skill@2x": 38.9,
+      "spr_win@1x": 13.4,
+      "spr_win@2x": 33.7
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r05_ea_SS": {
+   "name": "땅을 울리는 거인 발",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r05_ea_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "733249ee",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.3,
+      "card@2x": 45.4,
+      "portrait@1x": 6.3,
+      "portrait@2x": 16.4,
+      "full@1x": 49.9,
+      "full@2x": 117.9,
+      "spr_idle@1x": 8.2,
+      "spr_idle@2x": 20.3,
+      "spr_attack@1x": 9.1,
+      "spr_attack@2x": 21.6,
+      "spr_hit@1x": 8.8,
+      "spr_hit@2x": 20.9,
+      "spr_skill@1x": 8.5,
+      "spr_skill@2x": 21.6,
+      "spr_win@1x": 8.3,
+      "spr_win@2x": 19.8
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r06_ea_SS": {
+   "name": "흔들리는 볏단 탑",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_ea_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "8d6c8607",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 26.4,
+      "card@2x": 51.5,
+      "portrait@1x": 6.5,
+      "portrait@2x": 16.7,
+      "full@1x": 56.8,
+      "full@2x": 98.3,
+      "spr_idle@1x": 16.1,
+      "spr_idle@2x": 38.8,
+      "spr_attack@1x": 16.5,
+      "spr_attack@2x": 43.7,
+      "spr_hit@1x": 16.4,
+      "spr_hit@2x": 44.4,
+      "spr_skill@1x": 16.0,
+      "spr_skill@2x": 42.3,
+      "spr_win@1x": 15.5,
+      "spr_win@2x": 40.7
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r03_wa_SS": {
+   "name": "성난 깨진 독",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r03_wa_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "33518905",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.0,
+      "card@2x": 56.2,
+      "portrait@1x": 5.4,
+      "portrait@2x": 12.8,
+      "full@1x": 46.9,
+      "full@2x": 107.1,
+      "spr_idle@1x": 13.2,
+      "spr_idle@2x": 28.2,
+      "spr_attack@1x": 10.9,
+      "spr_attack@2x": 26.4,
+      "spr_hit@1x": 12.3,
+      "spr_hit@2x": 28.7,
+      "spr_skill@1x": 14.0,
+      "spr_skill@2x": 33.7,
+      "spr_win@1x": 12.2,
+      "spr_win@2x": 28.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r04_wa_SS": {
+   "name": "성난 비 맞은 고양이",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r04_wa_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "d8fcb811",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 29.6,
+      "card@2x": 54.1,
+      "portrait@1x": 7.3,
+      "portrait@2x": 18.1,
+      "full@1x": 61.2,
+      "full@2x": 100.8,
+      "spr_idle@1x": 17.5,
+      "spr_idle@2x": 44.6,
+      "spr_attack@1x": 16.4,
+      "spr_attack@2x": 41.8,
+      "spr_hit@1x": 15.9,
+      "spr_hit@2x": 40.6,
+      "spr_skill@1x": 19.6,
+      "spr_skill@2x": 53.7,
+      "spr_win@1x": 15.6,
+      "spr_win@2x": 39.8
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r02_fi_SS": {
+   "name": "타오르는 해님 오빠",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r02_fi_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "6b7814f4",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 27.6,
+      "card@2x": 52.0,
+      "portrait@1x": 7.6,
+      "portrait@2x": 19.4,
+      "full@1x": 57.8,
+      "full@2x": 97.9,
+      "spr_idle@1x": 12.7,
+      "spr_idle@2x": 32.5,
+      "spr_attack@1x": 12.3,
+      "spr_attack@2x": 31.5,
+      "spr_hit@1x": 11.9,
+      "spr_hit@2x": 31.3,
+      "spr_skill@1x": 13.3,
+      "spr_skill@2x": 35.5,
+      "spr_win@1x": 11.7,
+      "spr_win@2x": 30.1
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r06_wa_SS": {
+   "name": "성난 논물",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_wa_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "0001a957",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 29.3,
+      "card@2x": 59.2,
+      "portrait@1x": 8.0,
+      "portrait@2x": 16.4,
+      "full@1x": 65.0,
+      "full@2x": 110.9,
+      "spr_idle@1x": 12.6,
+      "spr_idle@2x": 34.2,
+      "spr_attack@1x": 13.5,
+      "spr_attack@2x": 35.5,
+      "spr_hit@1x": 13.0,
+      "spr_hit@2x": 34.9,
+      "spr_skill@1x": 13.5,
+      "spr_skill@2x": 37.7,
+      "spr_win@1x": 12.2,
+      "spr_win@2x": 32.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r03_fi_SS": {
+   "name": "분노한 팥쥐 엄마",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r03_fi_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "f7ef3f1b",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.4,
+      "card@2x": 57.8,
+      "portrait@1x": 5.8,
+      "portrait@2x": 14.1,
+      "full@1x": 48.2,
+      "full@2x": 108.5,
+      "spr_idle@1x": 10.1,
+      "spr_idle@2x": 24.7,
+      "spr_attack@1x": 9.7,
+      "spr_attack@2x": 24.6,
+      "spr_hit@1x": 9.6,
+      "spr_hit@2x": 24.2,
+      "spr_skill@1x": 10.4,
+      "spr_skill@2x": 26.6,
+      "spr_win@1x": 9.3,
+      "spr_win@2x": 23.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r04_fi_SS": {
+   "name": "분노한 도둑 두목",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r04_fi_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "b52ab617",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 22.1,
+      "card@2x": 56.1,
+      "portrait@1x": 5.9,
+      "portrait@2x": 14.7,
+      "full@1x": 46.1,
+      "full@2x": 105.2,
+      "spr_idle@1x": 14.2,
+      "spr_idle@2x": 32.8,
+      "spr_attack@1x": 11.1,
+      "spr_attack@2x": 27.6,
+      "spr_hit@1x": 12.7,
+      "spr_hit@2x": 30.9,
+      "spr_skill@1x": 15.6,
+      "spr_skill@2x": 38.6,
+      "spr_win@1x": 13.3,
+      "spr_win@2x": 32.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r05_fi_SS": {
+   "name": "타오르는 아홉째 꼬리",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r05_fi_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "46f17ce2",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 25.1,
+      "card@2x": 50.9,
+      "portrait@1x": 6.7,
+      "portrait@2x": 17.6,
+      "full@1x": 54.7,
+      "full@2x": 100.4,
+      "spr_idle@1x": 10.8,
+      "spr_idle@2x": 27.4,
+      "spr_attack@1x": 12.0,
+      "spr_attack@2x": 30.6,
+      "spr_hit@1x": 11.6,
+      "spr_hit@2x": 29.5,
+      "spr_skill@1x": 11.5,
+      "spr_skill@2x": 30.0,
+      "spr_win@1x": 10.6,
+      "spr_win@2x": 26.9
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r06_fi_SS": {
+   "name": "분노한 원님 행차",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_fi_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "74c66c74",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 24.2,
+      "card@2x": 44.5,
+      "portrait@1x": 6.6,
+      "portrait@2x": 17.0,
+      "full@1x": 50.0,
+      "full@2x": 116.0,
+      "spr_idle@1x": 11.0,
+      "spr_idle@2x": 28.3,
+      "spr_attack@1x": 10.9,
+      "spr_attack@2x": 29.1,
+      "spr_hit@1x": 10.6,
+      "spr_hit@2x": 28.0,
+      "spr_skill@1x": 11.5,
+      "spr_skill@2x": 30.3,
+      "spr_win@1x": 10.2,
+      "spr_win@2x": 26.9
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r02_wa_SS": {
+   "name": "성난 청룡 비구름",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r02_wa_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "dea897d4",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 27.1,
+      "card@2x": 51.6,
+      "portrait@1x": 6.3,
+      "portrait@2x": 15.9,
+      "full@1x": 56.0,
+      "full@2x": 98.3,
+      "spr_idle@1x": 14.3,
+      "spr_idle@2x": 33.9,
+      "spr_attack@1x": 13.6,
+      "spr_attack@2x": 33.5,
+      "spr_hit@1x": 13.2,
+      "spr_hit@2x": 32.2,
+      "spr_skill@1x": 16.2,
+      "spr_skill@2x": 42.4,
+      "spr_win@1x": 13.1,
+      "spr_win@2x": 31.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r05_wa_SS": {
+   "name": "성난 구름 폭포",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r05_wa_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "f432ce0e",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 25.8,
+      "card@2x": 51.0,
+      "portrait@1x": 7.5,
+      "portrait@2x": 19.5,
+      "full@1x": 54.6,
+      "full@2x": 101.6,
+      "spr_idle@1x": 10.6,
+      "spr_idle@2x": 26.4,
+      "spr_attack@1x": 10.7,
+      "spr_attack@2x": 27.0,
+      "spr_hit@1x": 10.3,
+      "spr_hit@2x": 26.2,
+      "spr_skill@1x": 10.9,
+      "spr_skill@2x": 29.3,
+      "spr_win@1x": 9.7,
+      "spr_win@2x": 24.5
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r04_wo_SS": {
+   "name": "깨어난 숲 메아리",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r04_wo_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "abc3d049",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 31.2,
+      "card@2x": 48.7,
+      "portrait@1x": 7.6,
+      "portrait@2x": 15.7,
+      "full@1x": 67.4,
+      "full@2x": 112.3,
+      "spr_idle@1x": 26.4,
+      "spr_idle@2x": 71.3,
+      "spr_attack@1x": 23.6,
+      "spr_attack@2x": 66.2,
+      "spr_hit@1x": 23.5,
+      "spr_hit@2x": 65.8,
+      "spr_skill@1x": 27.9,
+      "spr_skill@2x": 77.0,
+      "spr_win@1x": 22.5,
+      "spr_win@2x": 63.5
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r05_wo_SS": {
+   "name": "깨어난 콩줄기",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r05_wo_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "920b595a",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 28.0,
+      "card@2x": 56.6,
+      "portrait@1x": 7.5,
+      "portrait@2x": 15.7,
+      "full@1x": 60.9,
+      "full@2x": 114.8,
+      "spr_idle@1x": 14.8,
+      "spr_idle@2x": 35.7,
+      "spr_attack@1x": 13.6,
+      "spr_attack@2x": 33.8,
+      "spr_hit@1x": 13.7,
+      "spr_hit@2x": 34.7,
+      "spr_skill@1x": 15.6,
+      "spr_skill@2x": 40.6,
+      "spr_win@1x": 13.3,
+      "spr_win@2x": 32.9
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r06_wo_SS": {
+   "name": "깨어난 우렁 각시",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r06_wo_SS/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "a3b65b9a",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 24.4,
+      "card@2x": 44.2,
+      "portrait@1x": 4.0,
+      "portrait@2x": 9.0,
+      "full@1x": 51.2,
+      "full@2x": 116.2,
+      "spr_idle@1x": 9.6,
+      "spr_idle@2x": 23.0,
+      "spr_attack@1x": 9.5,
+      "spr_attack@2x": 23.5,
+      "spr_hit@1x": 9.3,
+      "spr_hit@2x": 23.0,
+      "spr_skill@1x": 10.2,
+      "spr_skill@2x": 25.4,
+      "spr_win@1x": 8.9,
+      "spr_win@2x": 22.3
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r07_fi_A": {
+   "name": "오작교 끝 반딧별",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r07_fi_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "92f1a781",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.3,
+      "card@2x": 58.1,
+      "portrait@1x": 7.2,
+      "portrait@2x": 19.4,
+      "full@1x": 48.4,
+      "full@2x": 116.5,
+      "spr_idle@1x": 12.4,
+      "spr_idle@2x": 28.7,
+      "spr_attack@1x": 10.1,
+      "spr_attack@2x": 24.7,
+      "spr_hit@1x": 11.1,
+      "spr_hit@2x": 26.9,
+      "spr_skill@1x": 13.9,
+      "spr_skill@2x": 34.8,
+      "spr_win@1x": 11.5,
+      "spr_win@2x": 28.0
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r07_wa_A": {
+   "name": "은하수 물방울",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r07_wa_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "dce7725e",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 25.5,
+      "card@2x": 48.3,
+      "portrait@1x": 7.8,
+      "portrait@2x": 16.4,
+      "full@1x": 53.4,
+      "full@2x": 88.5,
+      "spr_idle@1x": 11.7,
+      "spr_idle@2x": 28.4,
+      "spr_attack@1x": 9.8,
+      "spr_attack@2x": 24.1,
+      "spr_hit@1x": 10.4,
+      "spr_hit@2x": 25.6,
+      "spr_skill@1x": 13.2,
+      "spr_skill@2x": 35.2,
+      "spr_win@1x": 10.3,
+      "spr_win@2x": 25.5
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r07_wo_A": {
+   "name": "베틀 옆 실타래",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r07_wo_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "a6785f41",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 24.1,
+      "card@2x": 43.5,
+      "portrait@1x": 7.9,
+      "portrait@2x": 19.9,
+      "full@1x": 51.3,
+      "full@2x": 116.6,
+      "spr_idle@1x": 12.9,
+      "spr_idle@2x": 30.5,
+      "spr_attack@1x": 10.6,
+      "spr_attack@2x": 26.1,
+      "spr_hit@1x": 11.9,
+      "spr_hit@2x": 28.6,
+      "spr_skill@1x": 13.9,
+      "spr_skill@2x": 35.6,
+      "spr_win@1x": 12.8,
+      "spr_win@2x": 31.2
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r07_me_A": {
+   "name": "소 목의 놋방울",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r07_me_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "0bac2360",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 24.3,
+      "card@2x": 44.4,
+      "portrait@1x": 7.3,
+      "portrait@2x": 18.9,
+      "full@1x": 50.9,
+      "full@2x": 119.1,
+      "spr_idle@1x": 11.6,
+      "spr_idle@2x": 26.5,
+      "spr_attack@1x": 9.4,
+      "spr_attack@2x": 22.7,
+      "spr_hit@1x": 10.1,
+      "spr_hit@2x": 24.6,
+      "spr_skill@1x": 13.0,
+      "spr_skill@2x": 32.9,
+      "spr_win@1x": 10.1,
+      "spr_win@2x": 24.8
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r07_ea_A": {
+   "name": "오작교 디딤돌",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r07_ea_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "8ac5208a",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 23.5,
+      "card@2x": 45.0,
+      "portrait@1x": 6.1,
+      "portrait@2x": 15.5,
+      "full@1x": 51.5,
+      "full@2x": 87.4,
+      "spr_idle@1x": 11.6,
+      "spr_idle@2x": 30.5,
+      "spr_attack@1x": 11.7,
+      "spr_attack@2x": 30.2,
+      "spr_hit@1x": 12.6,
+      "spr_hit@2x": 33.0,
+      "spr_skill@1x": 12.6,
+      "spr_skill@2x": 34.4,
+      "spr_win@1x": 13.4,
+      "spr_win@2x": 33.9
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r08_fi_A": {
+   "name": "오븐 옆 성냥개비",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r08_fi_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "5935a880",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 22.4,
+      "card@2x": 43.0,
+      "portrait@1x": 6.3,
+      "portrait@2x": 16.0,
+      "full@1x": 50.2,
+      "full@2x": 85.9,
+      "spr_idle@1x": 9.5,
+      "spr_idle@2x": 23.2,
+      "spr_attack@1x": 10.8,
+      "spr_attack@2x": 26.9,
+      "spr_hit@1x": 10.3,
+      "spr_hit@2x": 25.8,
+      "spr_skill@1x": 9.5,
+      "spr_skill@2x": 24.6,
+      "spr_win@1x": 9.7,
+      "spr_win@2x": 23.7
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r08_wa_A": {
+   "name": "초콜릿 시냇물 거품",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r08_wa_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "0424ade1",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 19.5,
+      "card@2x": 52.1,
+      "portrait@1x": 7.2,
+      "portrait@2x": 18.7,
+      "full@1x": 42.4,
+      "full@2x": 104.6,
+      "spr_idle@1x": 11.0,
+      "spr_idle@2x": 26.5,
+      "spr_attack@1x": 11.4,
+      "spr_attack@2x": 28.1,
+      "spr_hit@1x": 12.0,
+      "spr_hit@2x": 30.0,
+      "spr_skill@1x": 11.0,
+      "spr_skill@2x": 28.5,
+      "spr_win@1x": 12.3,
+      "spr_win@2x": 30.1
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r08_wo_A": {
+   "name": "숲길의 빵 부스러기",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r08_wo_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "0c006a24",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.3,
+      "card@2x": 59.5,
+      "portrait@1x": 7.4,
+      "portrait@2x": 18.8,
+      "full@1x": 50.0,
+      "full@2x": 119.6,
+      "spr_idle@1x": 9.5,
+      "spr_idle@2x": 23.2,
+      "spr_attack@1x": 8.1,
+      "spr_attack@2x": 20.6,
+      "spr_hit@1x": 8.8,
+      "spr_hit@2x": 22.4,
+      "spr_skill@1x": 9.8,
+      "spr_skill@2x": 25.4,
+      "spr_win@1x": 9.6,
+      "spr_win@2x": 23.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r08_me_A": {
+   "name": "과자집 문고리 사탕",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r08_me_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "592c3080",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 17.9,
+      "card@2x": 45.7,
+      "portrait@1x": 4.8,
+      "portrait@2x": 11.3,
+      "full@1x": 37.8,
+      "full@2x": 89.6,
+      "spr_idle@1x": 6.9,
+      "spr_idle@2x": 16.6,
+      "spr_attack@1x": 10.2,
+      "spr_attack@2x": 24.5,
+      "spr_hit@1x": 9.7,
+      "spr_hit@2x": 22.8,
+      "spr_skill@1x": 6.9,
+      "spr_skill@2x": 17.0,
+      "spr_win@1x": 8.7,
+      "spr_win@2x": 20.8
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r08_ea_A": {
+   "name": "걸어 나온 진저브레드 벽돌",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r08_ea_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "07958074",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 25.2,
+      "card@2x": 47.6,
+      "portrait@1x": 7.4,
+      "portrait@2x": 19.2,
+      "full@1x": 52.8,
+      "full@2x": 89.2,
+      "spr_idle@1x": 13.0,
+      "spr_idle@2x": 32.3,
+      "spr_attack@1x": 12.1,
+      "spr_attack@2x": 32.1,
+      "spr_hit@1x": 13.6,
+      "spr_hit@2x": 34.9,
+      "spr_skill@1x": 13.4,
+      "spr_skill@2x": 35.0,
+      "spr_win@1x": 14.2,
+      "spr_win@2x": 35.6
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "arcana/ar_shield": {
+   "name": "방패 비법",
+   "stages": {
+    "s1": {
+     "src": "art_src/arcana/ar_shield/s1/full.png",
+     "make": {
+      "tool": "tools/asset_arcana.py",
+      "how": "부적 바탕 + 물건 · 칠 .45 → 먹선 · 보라·금 테두리 벡터(단계 ◇◆★)",
+      "seed": 1901
+     },
+     "uses": [
+      "card",
+      "card_t2",
+      "card_t3",
+      "icon"
+     ],
+     "hash": "b55a375a",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.5,
+      "card@2x": 46.2,
+      "card_t2@1x": 23.1,
+      "card_t2@2x": 58.8,
+      "card_t3@1x": 22.4,
+      "card_t3@2x": 57.6,
+      "icon@1x": 6.2,
+      "icon@2x": 13.7
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "arcana/ar_gauge": {
+   "name": "기합 비법",
+   "stages": {
+    "s1": {
+     "src": "art_src/arcana/ar_gauge/s1/full.png",
+     "make": {
+      "tool": "tools/asset_arcana.py",
+      "how": "부적 바탕 + 물건 · 칠 .45 → 먹선 · 보라·금 테두리 벡터(단계 ◇◆★)",
+      "seed": 1901
+     },
+     "uses": [
+      "card",
+      "card_t2",
+      "card_t3",
+      "icon"
+     ],
+     "hash": "20eb4043",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.4,
+      "card@2x": 59.2,
+      "card_t2@1x": 22.8,
+      "card_t2@2x": 57.1,
+      "card_t3@1x": 22.4,
+      "card_t3@2x": 57.2,
+      "icon@1x": 5.8,
+      "icon@2x": 12.6
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "arcana/ar_heal": {
+   "name": "약손 비법",
+   "stages": {
+    "s1": {
+     "src": "art_src/arcana/ar_heal/s1/full.png",
+     "make": {
+      "tool": "tools/asset_arcana.py",
+      "how": "부적 바탕 + 물건 · 칠 .45 → 먹선 · 보라·금 테두리 벡터(단계 ◇◆★)",
+      "seed": 1901
+     },
+     "uses": [
+      "card",
+      "card_t2",
+      "card_t3",
+      "icon"
+     ],
+     "hash": "1ee6c53a",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 21.9,
+      "card@2x": 55.8,
+      "card_t2@1x": 21.3,
+      "card_t2@2x": 54.5,
+      "card_t3@1x": 20.6,
+      "card_t3@2x": 54.1,
+      "icon@1x": 5.7,
+      "icon@2x": 12.0
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "arcana/ar_el": {
+   "name": "속성 비법",
+   "stages": {
+    "s1": {
+     "src": "art_src/arcana/ar_el/s1/full.png",
+     "make": {
+      "tool": "tools/asset_arcana.py",
+      "how": "부적 바탕 + 물건 · 칠 .45 → 먹선 · 보라·금 테두리 벡터(단계 ◇◆★)",
+      "seed": 1901
+     },
+     "uses": [
+      "card",
+      "card_t2",
+      "card_t3",
+      "icon"
+     ],
+     "hash": "b7de9eaf",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 21.4,
+      "card@2x": 54.4,
+      "card_t2@1x": 20.6,
+      "card_t2@2x": 53.1,
+      "card_t3@1x": 20.4,
+      "card_t3@2x": 53.0,
+      "icon@1x": 5.7,
+      "icon@2x": 12.2
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "arcana/ar_big": {
+   "name": "덩어리 비법",
+   "stages": {
+    "s1": {
+     "src": "art_src/arcana/ar_big/s1/full.png",
+     "make": {
+      "tool": "tools/asset_arcana.py",
+      "how": "부적 바탕 + 물건 · 칠 .45 → 먹선 · 보라·금 테두리 벡터(단계 ◇◆★)",
+      "seed": 1901
+     },
+     "uses": [
+      "card",
+      "card_t2",
+      "card_t3",
+      "icon"
+     ],
+     "hash": "2308c8b1",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 22.7,
+      "card@2x": 56.9,
+      "card_t2@1x": 22.3,
+      "card_t2@2x": 55.4,
+      "card_t3@1x": 21.7,
+      "card_t3@2x": 55.4,
+      "icon@1x": 5.8,
+      "icon@2x": 11.8
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "arcana/ar_chain": {
+   "name": "연쇄 비법",
+   "stages": {
+    "s1": {
+     "src": "art_src/arcana/ar_chain/s1/full.png",
+     "make": {
+      "tool": "tools/asset_arcana.py",
+      "how": "부적 바탕 + 물건 · 칠 .45 → 먹선 · 보라·금 테두리 벡터(단계 ◇◆★)",
+      "seed": 1901
+     },
+     "uses": [
+      "card",
+      "card_t2",
+      "card_t3",
+      "icon"
+     ],
+     "hash": "ce515774",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.7,
+      "card@2x": 59.1,
+      "card_t2@1x": 23.0,
+      "card_t2@2x": 57.0,
+      "card_t3@1x": 22.8,
+      "card_t3@2x": 56.5,
+      "icon@1x": 6.0,
+      "icon@2x": 13.0
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "arcana/ar_crit": {
+   "name": "한 방 비법",
+   "stages": {
+    "s1": {
+     "src": "art_src/arcana/ar_crit/s1/full.png",
+     "make": {
+      "tool": "tools/asset_arcana.py",
+      "how": "부적 바탕 + 물건 · 칠 .45 → 먹선 · 보라·금 테두리 벡터(단계 ◇◆★)",
+      "seed": 1901
+     },
+     "uses": [
+      "card",
+      "card_t2",
+      "card_t3",
+      "icon"
+     ],
+     "hash": "43836f3d",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 22.1,
+      "card@2x": 55.4,
+      "card_t2@1x": 21.4,
+      "card_t2@2x": 53.8,
+      "card_t3@1x": 20.8,
+      "card_t3@2x": 54.1,
+      "icon@1x": 6.0,
+      "icon@2x": 12.6
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "arcana/ar_luck": {
+   "name": "행운 비법",
+   "stages": {
+    "s1": {
+     "src": "art_src/arcana/ar_luck/s1/full.png",
+     "make": {
+      "tool": "tools/asset_arcana.py",
+      "how": "부적 바탕 + 물건 · 칠 .45 → 먹선 · 보라·금 테두리 벡터(단계 ◇◆★)",
+      "seed": 1901
+     },
+     "uses": [
+      "card",
+      "card_t2",
+      "card_t3",
+      "icon"
+     ],
+     "hash": "e08e3639",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 22.8,
+      "card@2x": 58.5,
+      "card_t2@1x": 22.2,
+      "card_t2@2x": 57.1,
+      "card_t3@1x": 21.7,
+      "card_t3@2x": 56.6,
+      "icon@1x": 5.7,
+      "icon@2x": 12.2
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r09_fi_A": {
+   "name": "성 부엌 촛대",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r09_fi_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "62305277",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 23.1,
+      "card@2x": 56.7,
+      "portrait@1x": 5.9,
+      "portrait@2x": 14.4,
+      "full@1x": 47.8,
+      "full@2x": 109.7,
+      "spr_idle@1x": 7.1,
+      "spr_idle@2x": 16.2,
+      "spr_attack@1x": 8.1,
+      "spr_attack@2x": 20.1,
+      "spr_hit@1x": 7.7,
+      "spr_hit@2x": 19.2,
+      "spr_skill@1x": 6.8,
+      "spr_skill@2x": 17.1,
+      "spr_win@1x": 7.0,
+      "spr_win@2x": 17.2
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r09_wa_A": {
+   "name": "해자의 잉어",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r09_wa_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "0eb242b7",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 20.4,
+      "card@2x": 53.6,
+      "portrait@1x": 7.5,
+      "portrait@2x": 19.7,
+      "full@1x": 44.2,
+      "full@2x": 105.9,
+      "spr_idle@1x": 9.2,
+      "spr_idle@2x": 24.9,
+      "spr_attack@1x": 10.0,
+      "spr_attack@2x": 25.5,
+      "spr_hit@1x": 10.8,
+      "spr_hit@2x": 27.8,
+      "spr_skill@1x": 9.6,
+      "spr_skill@2x": 26.5,
+      "spr_win@1x": 11.0,
+      "spr_win@2x": 28.2
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r09_wo_A": {
+   "name": "밀밭의 이삭",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r09_wo_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "2af3b973",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 23.7,
+      "card@2x": 44.8,
+      "portrait@1x": 6.9,
+      "portrait@2x": 18.3,
+      "full@1x": 50.7,
+      "full@2x": 84.7,
+      "spr_idle@1x": 7.6,
+      "spr_idle@2x": 19.1,
+      "spr_attack@1x": 8.0,
+      "spr_attack@2x": 20.7,
+      "spr_hit@1x": 7.6,
+      "spr_hit@2x": 19.9,
+      "spr_skill@1x": 7.5,
+      "spr_skill@2x": 19.9,
+      "spr_win@1x": 7.2,
+      "spr_win@2x": 18.6
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r09_me_A": {
+   "name": "장화 바닥 쇠징",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r09_me_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "7f6b34ef",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 23.9,
+      "card@2x": 43.8,
+      "portrait@1x": 7.0,
+      "portrait@2x": 18.8,
+      "full@1x": 50.2,
+      "full@2x": 119.6,
+      "spr_idle@1x": 11.4,
+      "spr_idle@2x": 26.7,
+      "spr_attack@1x": 10.1,
+      "spr_attack@2x": 25.7,
+      "spr_hit@1x": 11.0,
+      "spr_hit@2x": 26.9,
+      "spr_skill@1x": 11.6,
+      "spr_skill@2x": 29.8,
+      "spr_win@1x": 11.7,
+      "spr_win@2x": 28.6
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r09_ea_A": {
+   "name": "성문 앞 돌사자",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r09_ea_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "0a235611",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 22.4,
+      "card@2x": 58.2,
+      "portrait@1x": 7.7,
+      "portrait@2x": 15.6,
+      "full@1x": 48.3,
+      "full@2x": 111.9,
+      "spr_idle@1x": 13.3,
+      "spr_idle@2x": 32.6,
+      "spr_attack@1x": 14.0,
+      "spr_attack@2x": 36.1,
+      "spr_hit@1x": 15.5,
+      "spr_hit@2x": 38.4,
+      "spr_skill@1x": 13.4,
+      "spr_skill@2x": 33.6,
+      "spr_win@1x": 15.6,
+      "spr_win@2x": 38.7
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r10_fi_A": {
+   "name": "나무꾼 부싯돌",
+   "el": "flash",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r10_fi_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "f65d92a0",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 22.5,
+      "card@2x": 54.6,
+      "portrait@1x": 6.9,
+      "portrait@2x": 16.8,
+      "full@1x": 45.7,
+      "full@2x": 103.0,
+      "spr_idle@1x": 11.5,
+      "spr_idle@2x": 25.3,
+      "spr_attack@1x": 9.7,
+      "spr_attack@2x": 22.6,
+      "spr_hit@1x": 10.6,
+      "spr_hit@2x": 24.9,
+      "spr_skill@1x": 13.1,
+      "spr_skill@2x": 32.8,
+      "spr_win@1x": 11.4,
+      "spr_win@2x": 26.4
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r10_wa_A": {
+   "name": "선녀탕 물안개",
+   "el": "care",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r10_wa_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "43e94732",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 19.8,
+      "card@2x": 49.9,
+      "portrait@1x": 6.4,
+      "portrait@2x": 16.9,
+      "full@1x": 41.2,
+      "full@2x": 98.4,
+      "spr_idle@1x": 9.1,
+      "spr_idle@2x": 22.6,
+      "spr_attack@1x": 9.8,
+      "spr_attack@2x": 24.3,
+      "spr_hit@1x": 10.3,
+      "spr_hit@2x": 26.0,
+      "spr_skill@1x": 8.7,
+      "spr_skill@2x": 22.9,
+      "spr_win@1x": 10.6,
+      "spr_win@2x": 25.5
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r10_wo_A": {
+   "name": "날개옷 걸렸던 소나무 가지",
+   "el": "support",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r10_wo_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "95d9d2dd",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 24.6,
+      "card@2x": 58.2,
+      "portrait@1x": 6.6,
+      "portrait@2x": 16.2,
+      "full@1x": 48.7,
+      "full@2x": 115.5,
+      "spr_idle@1x": 9.3,
+      "spr_idle@2x": 22.0,
+      "spr_attack@1x": 8.2,
+      "spr_attack@2x": 20.3,
+      "spr_hit@1x": 8.9,
+      "spr_hit@2x": 22.1,
+      "spr_skill@1x": 10.0,
+      "spr_skill@2x": 24.8,
+      "spr_win@1x": 9.5,
+      "spr_win@2x": 22.9
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r10_me_A": {
+   "name": "나무꾼 도끼날",
+   "el": "metal",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r10_me_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "bf2f26eb",
+     "approved": "",
+     "files_kb": {
+      "card@1x": 22.6,
+      "card@2x": 55.5,
+      "portrait@1x": 7.0,
+      "portrait@2x": 18.8,
+      "full@1x": 46.7,
+      "full@2x": 111.3,
+      "spr_idle@1x": 9.2,
+      "spr_idle@2x": 21.8,
+      "spr_attack@1x": 10.0,
+      "spr_attack@2x": 24.8,
+      "spr_hit@1x": 9.6,
+      "spr_hit@2x": 23.5,
+      "spr_skill@1x": 9.5,
+      "spr_skill@2x": 23.9,
+      "spr_win@1x": 9.1,
+      "spr_win@2x": 22.2
+     },
+     "exported": "2026-10-31"
+    }
+   }
+  },
+  "hero/c_r10_ea_A": {
+   "name": "연못가 디딤돌",
+   "el": "earth",
+   "stages": {
+    "s1": {
+     "src": "art_src/hero/c_r10_ea_A/s1/full.png",
+     "make": {
+      "tool": "tools/asset_card_a.py",
+      "how": "지역 공통 틀 + 인물 SVG + 강칠 .58 + 약칠 .30 섞음(얼굴)",
+      "seed": 1601
+     },
+     "uses": [
+      "card",
+      "portrait",
+      "full",
+      "spr_idle",
+      "spr_attack",
+      "spr_hit",
+      "spr_skill",
+      "spr_win"
+     ],
+     "hash": "4adc1124",
+     "approved": "2026-10-31 허브",
+     "files_kb": {
+      "card@1x": 18.4,
+      "card@2x": 45.9,
+      "portrait@1x": 5.2,
+      "portrait@2x": 12.7,
+      "full@1x": 38.3,
+      "full@2x": 86.9,
+      "spr_idle@1x": 6.0,
+      "spr_idle@2x": 14.7,
+      "spr_attack@1x": 7.6,
+      "spr_attack@2x": 18.3,
+      "spr_hit@1x": 8.0,
+      "spr_hit@2x": 18.8,
+      "spr_skill@1x": 6.3,
+      "spr_skill@2x": 16.3,
+      "spr_win@1x": 7.9,
+      "spr_win@2x": 18.4
+     },
+     "exported": "2026-10-31"
     }
    }
   }

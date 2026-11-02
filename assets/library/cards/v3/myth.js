@@ -31,7 +31,7 @@ ${['a', 'b', 'c', 'd'].map((c) => `<span class="gfm-co ${c}">${corner}</span>`).
     const orb = el(stage, `left:50%;top:47%;width:90px;height:90px;margin:-45px;border-radius:50%;background:radial-gradient(circle,#fff,${m.glow} 55%,rgba(255,255,255,0) 72%);opacity:0`);
     const wrap = el(stage, `left:50%;top:47%;width:${W}px;height:${W * 4 / 3}px;margin:${-W * 2 / 3}px 0 0 ${-W / 2}px;opacity:0`, card(k, W));
     const fx = Array.from({ length: 14 }, (_, i) => el(stage, `left:50%;top:47%;width:16px;height:16px;margin:-8px;opacity:0;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);background:${['#fff', '#FFE27A', '#FFB3DE', '#9fd8ff', m.glow][i % 5]}`));
-    const tt = el(stage, 'left:0;right:0;top:5%;text-align:center;font:400 40px "Gasoek One",Jua,sans-serif;color:#FFE27A;-webkit-text-stroke:2px #3a2570;paint-order:stroke fill;text-shadow:0 5px 0 #3a2570;opacity:0', '신화 등장!');
+    const tt = el(stage, 'left:0;right:0;bottom:4%;text-align:center;font:400 36px "Gasoek One",Jua,sans-serif;color:#FFE27A;-webkit-text-stroke:2px #3a2570;paint-order:stroke fill;text-shadow:0 5px 0 #3a2570;opacity:0', '신화 등장!');
     const flash = el(stage, 'inset:0;background:#fff;opacity:0;pointer-events:none');
     return (t) => {
       const ch = seg(t, 0, .8);

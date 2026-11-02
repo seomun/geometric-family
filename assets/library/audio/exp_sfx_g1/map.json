@@ -1,0 +1,515 @@
+{
+ "_doc": "원정대 효과음 매핑(gf-asset 10/30, 작가 판정 「외부 g1 이 기본」). 게임 이벤트(뜻) → 파일. 경로는 assets/library/audio/ 기준. src: g1 = 작가 외부(젠스파크) 다듬은 판 · v6 = 자체 제작(g1 에 없는 자리·안 씀 자리 메움). 작가 외부 2차분이 오면 같은 키를 교체한다. docs/63 §3 · g2: 젠스파크 2차(ElevenLabs) — 빈자리 v6 를 g2 로 교체, 새 이벤트 추가(10/30)",
+ "orb_pick": {
+  "file": "exp_sfx_g1/sfx/x5_g1_orb_pick.mp3",
+  "src": "g1",
+  "note": "구슬 집기(고역 깎음)"
+ },
+ "orb_link_1": {
+  "file": "exp_sfx_g1/sfx/x5_g1_orb_link_1.mp3",
+  "src": "g1",
+  "note": "이어 붙이기·콤보 1단(음이 오름)"
+ },
+ "orb_link_2": {
+  "file": "exp_sfx_g1/sfx/x5_g1_orb_link_2.mp3",
+  "src": "g1"
+ },
+ "orb_link_3": {
+  "file": "exp_sfx_g1/sfx/x5_g1_orb_link_3.mp3",
+  "src": "g1"
+ },
+ "orb_link_4": {
+  "file": "exp_sfx_g1/sfx/x5_g1_orb_link_4.mp3",
+  "src": "g1"
+ },
+ "orb_link_5": {
+  "file": "exp_sfx_g1/sfx/x5_g1_orb_link_5.mp3",
+  "src": "g1"
+ },
+ "orb_link_6": {
+  "file": "exp_sfx_g1/sfx/x5_g1_orb_link_6.mp3",
+  "src": "g1"
+ },
+ "orb_link_7": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_combo_7.mp3",
+  "src": "g2",
+  "note": "젠스파크 2차 core_combo_7_v2(점수 -367.4)"
+ },
+ "orb_link_8": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_combo_8.mp3",
+  "src": "g2",
+  "note": "젠스파크 2차 core_combo_8_v2(점수 -57.8)"
+ },
+ "big_cluster": {
+  "file": "exp_sfx_g1/sfx/x5_g1_orb_big_cluster.mp3",
+  "src": "g1",
+  "note": "큰 덩어리 터짐"
+ },
+ "combo_attack": {
+  "file": "exp_sfx_g1/sfx/x5_g1_atk_combo_orchestra.mp3",
+  "src": "g1",
+  "note": "콤보 엄청난 공격(오케스트라)"
+ },
+ "burst_fire": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_burst_fire.mp3",
+  "src": "g2",
+  "note": "젠스파크 2차 core_burst_fire_v2(점수 -112.8)"
+ },
+ "burst_water": {
+  "file": "exp_sfx_g1/sfx/x5_g1_atk_water.mp3",
+  "src": "g1"
+ },
+ "burst_wood": {
+  "file": "exp_sfx_g1/sfx/x5_g1_atk_wind.mp3",
+  "src": "g1",
+  "note": "바람(목) 자리"
+ },
+ "burst_metal": {
+  "file": "exp_sfx_g1/sfx/x5_g1_atk_light.mp3",
+  "src": "g1",
+  "note": "빛(금) 자리"
+ },
+ "burst_earth": {
+  "file": "exp_sfx_g1/sfx/x5_g1_atk_earth.mp3",
+  "src": "g1",
+  "note": "저음만 → 배음 보강(폰 스피커)"
+ },
+ "burst_heart": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_burst_heart.mp3",
+  "src": "g2",
+  "note": "젠스파크 2차 core_burst_heart_v1(점수 11.6)"
+ },
+ "hit_small": {
+  "file": "exp_sfx_g1/sfx/x5_g1_hit_small.mp3",
+  "src": "g1",
+  "note": "저음만 → 배음 보강"
+ },
+ "hit_big": {
+  "file": "exp_sfx_g1/sfx/x5_g1_hit_big.mp3",
+  "src": "g1"
+ },
+ "enemy_down": {
+  "file": "exp_sfx_g1/sfx/x5_g1_enemy_down.mp3",
+  "src": "g1"
+ },
+ "hurt": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_party_hurt.mp3",
+  "src": "g2",
+  "note": "젠스파크 2차 core_party_hurt(점수 28.6)"
+ },
+ "card_get": {
+  "file": "exp_sfx_g1/sfx/x5_g1_card_get.mp3",
+  "src": "g1",
+  "note": "카드 한 장(고역 깎음)"
+ },
+ "card_rain": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_card_rain.mp3",
+  "src": "g2",
+  "note": "젠스파크 2차 core_card_rain_v2(점수 -16.1)"
+ },
+ "card_good": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_card_good.mp3",
+  "src": "g2",
+  "note": "젠스파크 2차 core_card_good_v1(점수 -123.4)"
+ },
+ "card_best": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_card_best.mp3",
+  "src": "g2",
+  "note": "젠스파크 2차 core_card_best_v3(점수 -75.1)"
+ },
+ "card_absorb": {
+  "file": "exp_sfx_g1/sfx/x5_g1_card_absorb.mp3",
+  "src": "g1",
+  "note": "흡수(성장)"
+ },
+ "evolve": {
+  "file": "exp_sfx_g1/sfx/x5_g1_evolve.mp3",
+  "src": "g1"
+ },
+ "reward_pop": {
+  "file": "exp_sfx_g1/sfx/x5_g1_reward_pop.mp3",
+  "src": "g1"
+ },
+ "victory": {
+  "file": "exp_sfx_g1/sfx/x5_g1_victory.mp3",
+  "src": "g1"
+ },
+ "defeat": {
+  "file": "exp_sfx_g1/sfx/x5_g1_defeat.mp3",
+  "src": "g1"
+ },
+ "battle_in": {
+  "file": "exp_sfx_g1/sfx/x5_g1_battle_in.mp3",
+  "src": "g1"
+ },
+ "battle_out": {
+  "file": "exp_sfx_g1/sfx/x5_g1_battle_out.mp3",
+  "src": "g1",
+  "note": "아주 날카로움 → 세게 다듬어 살림(8k↑ 48.7%→2.2%)"
+ },
+ "ui_tap": {
+  "file": "exp_sfx_g1/sfx/x5_g1_ui_tap.mp3",
+  "src": "g1",
+  "note": "잡음 바닥 눌러 씀"
+ },
+ "battle_end": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_battle_end.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_battle_end"
+ },
+ "boss_appear": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_boss_appear.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_boss_appear"
+ },
+ "fire_burst": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_fire_burst.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_fire_burst"
+ },
+ "firegiant_roar": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_firegiant_roar.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_firegiant_roar"
+ },
+ "heal": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_heal.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_heal"
+ },
+ "hero_down": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_hero_down.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_hero_down"
+ },
+ "poseidon_ult": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_poseidon_ult.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_poseidon_ult"
+ },
+ "shield_break": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_shield_break.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_shield_break"
+ },
+ "shield_crack": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_shield_crack.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_shield_crack"
+ },
+ "shield_up": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_shield_up.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_shield_up"
+ },
+ "skill_burst": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_skill_burst.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_skill_burst"
+ },
+ "skill_charge": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_skill_charge.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_skill_charge"
+ },
+ "surge_hit": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_surge_hit.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_surge_hit"
+ },
+ "surge_warn": {
+  "file": "exp_sfx_g2/sfx/x5_g2_bt_surge_warn.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · bt_surge_warn"
+ },
+ "attendance_day": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_attendance_day.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_attendance_day"
+ },
+ "card_slide": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_card_slide.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_card_slide"
+ },
+ "chain_whoosh": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_chain_whoosh.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_chain_whoosh"
+ },
+ "combo_break": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_combo_break.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_combo_break"
+ },
+ "combo_stinger": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_combo_stinger.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_combo_stinger_v3"
+ },
+ "damage_slam": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_damage_slam.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_damage_slam_v2"
+ },
+ "enemy_attack": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_enemy_attack.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_enemy_attack"
+ },
+ "enemy_spawn": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_enemy_spawn.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_enemy_spawn"
+ },
+ "hero_attack_magic": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_hero_attack_magic.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_hero_attack_magic"
+ },
+ "hero_attack_punch": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_hero_attack_punch.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_hero_attack_punch"
+ },
+ "hero_attack_slash": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_hero_attack_slash.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_hero_attack_slash"
+ },
+ "line_blast": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_line_blast.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_line_blast"
+ },
+ "number_rise": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_number_rise.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_number_rise"
+ },
+ "rarity_up": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_rarity_up.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_rarity_up"
+ },
+ "skill_ready": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_skill_ready.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_skill_ready"
+ },
+ "tally_tick": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_tally_tick.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_tally_tick_v1"
+ },
+ "title_reveal": {
+  "file": "exp_sfx_g2/sfx/x5_g2_core_title_reveal.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · core_title_reveal"
+ },
+ "ui_buy_big": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_buy_big.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_buy_big"
+ },
+ "ui_cancel": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_cancel.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_cancel"
+ },
+ "ui_card_place": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_card_place.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_card_place"
+ },
+ "ui_card_shuffle": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_card_shuffle.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_card_shuffle"
+ },
+ "ui_chest_open": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_chest_open.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_chest_open"
+ },
+ "ui_coins": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_coins.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_coins"
+ },
+ "ui_daily_fanfare": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_daily_fanfare.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_daily_fanfare"
+ },
+ "ui_error": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_error.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_error"
+ },
+ "ui_evolve_charge": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_evolve_charge.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_evolve_charge"
+ },
+ "ui_first_purchase": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_first_purchase.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_first_purchase"
+ },
+ "ui_gacha_charge": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_gacha_charge.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_gacha_charge"
+ },
+ "ui_gauge_fill": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_gauge_fill.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_gauge_fill"
+ },
+ "ui_gem": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_gem.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_gem"
+ },
+ "ui_hover": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_hover.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_hover"
+ },
+ "ui_levelup": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_levelup.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_levelup"
+ },
+ "ui_low_hp": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_low_hp.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_low_hp"
+ },
+ "ui_mail": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_mail.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_mail"
+ },
+ "ui_menu_close": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_menu_close.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_menu_close"
+ },
+ "ui_menu_open": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_menu_open.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_menu_open"
+ },
+ "ui_mission_clear": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_mission_clear.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_mission_clear"
+ },
+ "ui_name_input": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_name_input.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_name_input"
+ },
+ "ui_notice_popup": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_notice_popup.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_notice_popup"
+ },
+ "ui_notify": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_notify.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_notify"
+ },
+ "ui_popup_close": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_popup_close.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_popup_close"
+ },
+ "ui_popup_open": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_popup_open.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_popup_open"
+ },
+ "ui_purchase": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_purchase.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_purchase"
+ },
+ "ui_rank_up": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_rank_up.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_rank_up"
+ },
+ "ui_reveal_common": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_reveal_common.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_reveal_common"
+ },
+ "ui_reveal_legend": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_reveal_legend.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_reveal_legend"
+ },
+ "ui_reveal_rare": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_reveal_rare.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_reveal_rare"
+ },
+ "ui_scroll_soft": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_scroll_soft.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_scroll_soft"
+ },
+ "ui_shop_open": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_shop_open.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_shop_open"
+ },
+ "ui_slider_tick": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_slider_tick.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_slider_tick"
+ },
+ "ui_stamp": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_stamp.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_stamp"
+ },
+ "ui_star_1": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_star_1.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_star_1"
+ },
+ "ui_star_3": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_star_3.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_star_3"
+ },
+ "ui_ticket": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_ticket.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_ticket"
+ },
+ "ui_timer_tick": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_timer_tick.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_timer_tick"
+ },
+ "ui_toggle": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_toggle.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_toggle"
+ },
+ "ui_unlock": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_unlock.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_unlock"
+ },
+ "ui_window_slide": {
+  "file": "exp_sfx_g2/sfx/x5_g2_ui_window_slide.mp3",
+  "src": "g2",
+  "note": "새 이벤트 · ui_window_slide"
+ }
+}

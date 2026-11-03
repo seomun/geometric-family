@@ -173,12 +173,46 @@ a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
 @media (min-width: 700px) { .lineup { grid-template-columns: repeat(2, 1fr); } .loop, .money { grid-template-columns: repeat(2, 1fr); } .shotrow { grid-auto-columns: 22%; } .apps { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1000px) { .lineup { grid-template-columns: repeat(3, 1fr); } }
 .doc .loop, .doc .money, .doc .grades, .doc .spec { padding: 0; margin-left: 0; margin-right: 0; }
+
+/* ───── 세계관 /lore/ — 찢어진 이야기책: 열린 쪽은 카드, 아직 안 만난 쪽은 찢긴 종이 실루엣 ───── */
+.lore { max-width: 1080px; margin: 0 auto; padding: 88px 20px 40px; }
+.lore .tag { margin: 0; font: 700 12px/1 'Noto Sans KR', sans-serif; letter-spacing: .18em; color: var(--gold); }
+.lore h1 { margin: 8px 0 18px; font: 400 clamp(36px, 7vw, 56px)/1.1 Jua, sans-serif; }
+.lore .sum { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 10px; max-width: 720px; }
+.lore .sum li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; font-size: 17px; line-height: 1.55; word-break: keep-all; }
+.lore .sum li span { width: 28px; height: 28px; border-radius: 50%; background: var(--panel2); border: 1px solid var(--line); display: grid; place-items: center; font: 700 13px 'Noto Sans KR', sans-serif; color: var(--gold); }
+.lore .rules { margin: 0 0 10px; padding: 14px 18px 14px 38px; max-width: 720px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); display: grid; gap: 4px; font-size: 15px; color: #dcdaf2; word-break: keep-all; }
+.lore .rules li::marker { color: var(--gold); font-weight: 700; }
+.lore .ask { margin: 8px 0 24px; font: 400 20px/1.4 Jua, sans-serif; color: #FFE9A6; }
+.lore .prog { display: flex; align-items: center; gap: 14px; margin: 0 0 22px; font-size: 14px; color: var(--mute); flex-wrap: wrap; }
+.lore .prog .bar { flex: 1; min-width: 160px; height: 8px; border-radius: 6px; background: var(--panel2); overflow: hidden; max-width: 420px; }
+.lore .prog .bar i { display: block; height: 100%; background: linear-gradient(90deg, #E8870F, #FFD84B); border-radius: 6px; }
+.lore .prog b { color: #fff; }
+.lore .tier { margin: 0 0 24px; }
+.lore .tier h3 { margin: 0 0 12px; font: 400 22px/1.2 Jua, sans-serif; color: #fff; }
+.lore .tier h3 small { color: var(--mute); font: 500 13px 'Noto Sans KR', sans-serif; margin-left: 8px; }
+.lore .pgs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.lore .pg { display: grid; grid-template-columns: 40px 1fr; gap: 10px; padding: 11px 12px; border-radius: 12px; border: 1px solid rgba(255,216,75,.35); background: linear-gradient(120deg, rgba(255,216,75,.10), var(--panel2) 62%); }
+.lore .pg .no { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,216,75,.16); color: #FFE9A6; display: grid; place-items: center; font: 400 17px/1 Jua, sans-serif; }
+.lore .pg b { display: block; font: 400 18px/1.2 Jua, sans-serif; }
+.lore .pg em { display: block; font-style: normal; font-size: 12px; color: var(--mute); margin-top: 1px; }
+.lore .pg p { margin: 5px 0 0; font-size: 13px; line-height: 1.5; color: #cfcde8; word-break: keep-all; }
+.lore .sils { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sil { width: 54px; height: 70px; display: grid; place-items: center; color: #5b6094; font: 700 15px 'Noto Sans KR', sans-serif;
+  background: linear-gradient(160deg, #1f2245, #15172f); clip-path: polygon(0 4%, 12% 0, 26% 5%, 41% 1%, 57% 6%, 72% 0, 88% 5%, 100% 2%, 97% 22%, 100% 41%, 96% 60%, 100% 79%, 95% 100%, 78% 95%, 62% 100%, 45% 95%, 28% 100%, 12% 96%, 0 100%, 4% 78%, 0 58%, 5% 38%, 0 20%); }
+.sil.big { width: 84px; height: 108px; font-size: 34px; flex: none; }
+.lore .final { display: flex; align-items: center; gap: 16px; margin: 6px 0 0; padding: 14px 16px; border-radius: 14px; border: 1px dashed rgba(255,216,75,.35); background: var(--panel); max-width: 560px; }
+.lore .final small { color: var(--gold); font: 700 12px 'Noto Sans KR', sans-serif; letter-spacing: .1em; }
+.lore .final b { display: block; font: 400 26px/1.2 Jua, sans-serif; color: #FFE9A6; }
+.lore .final p { margin: 2px 0 0; font-size: 13.5px; color: var(--mute); }
+.lore .go { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 30px 0 0; }
+@media (max-width: 640px) { .lore { padding-top: 76px; } .lore .sum li { font-size: 16px; } .sil { width: 46px; height: 60px; } }
 </style>
 <link rel="preload" as="image" href="/home/img/q_p3_big.webp">
 </head>
 <body>
 <div class="pt">
-<nav class="top"><a class="brand" href="/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>기하학 가족</span></a><div class="links"><a href="/#games">게임</a><a href="/#videos">영상</a><a href="/#webtoon">웹툰</a><a href="/#partner">제휴</a><a href="/en/">EN</a></div><a class="pill" href="/quest/">지금 플레이</a></nav><style>
+<nav class="top"><a class="brand" href="/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>기하학 가족</span></a><div class="links"><a href="/#games">게임</a><a href="/#videos">영상</a><a href="/#webtoon">웹툰</a><a href="/lore/">세계관</a><a href="/#partner">제휴</a><a href="/en/">EN</a></div><a class="pill" href="/quest/">지금 플레이</a></nav><style>
 @font-face { font-family: 'GF Title'; src: url('/home/gasoek_title.woff2') format('woff2'); font-display: swap; }
 .top .pill { display: none; }
 .qp { max-width: 1040px; margin: 0 auto; padding: 56px 0 8px; }

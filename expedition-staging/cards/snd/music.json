@@ -1,0 +1,69 @@
+{
+ "places": {
+  "battle": "combat",
+  "home": "calm",
+  "map": "endless",
+  "shop": "preparing",
+  "boss": "troll",
+  "boss2": "noreturn",
+  "warp": "running",
+  "win": "happy",
+  "lose": "regroup"
+ },
+ "tracks": {
+  "combat": {
+   "pak": "m_combat.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 1094
+  },
+  "calm": {
+   "pak": "m_calm.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 1094
+  },
+  "endless": {
+   "pak": "m_endless.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 1094
+  },
+  "preparing": {
+   "pak": "m_preparing.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 957
+  },
+  "troll": {
+   "pak": "m_troll.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 957
+  },
+  "noreturn": {
+   "pak": "m_noreturn.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 957
+  },
+  "running": {
+   "pak": "m_running.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 820
+  },
+  "happy": {
+   "pak": "m_happy.pak",
+   "loop": false,
+   "lufs": -20,
+   "kb": 273
+  },
+  "regroup": {
+   "pak": "m_regroup.pak",
+   "loop": false,
+   "lufs": -20,
+   "kb": 219
+  }
+ }
+}

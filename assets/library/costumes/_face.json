@@ -770,5 +770,124 @@
    "cy": 308,
    "w": 53
   }
+ },
+ "dong_daughter/calm": {
+  "eyes": [
+   {
+    "cx": 202,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   },
+   {
+    "cx": 387,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   }
+  ],
+  "body": "#c9b9c0",
+  "mouth": {
+   "cx": 300,
+   "cy": 290,
+   "w": 30
+  }
+ },
+ "dong_daughter/good": {
+  "eyes": [
+   {
+    "cx": 202,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   },
+   {
+    "cx": 387,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   }
+  ],
+  "body": "#c9b9c0",
+  "mouth": {
+   "cx": 300,
+   "cy": 290,
+   "w": 30
+  }
+ },
+ "dong_daughter/joy": {
+  "eyes": [
+   {
+    "cx": 202,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   },
+   {
+    "cx": 387,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   }
+  ],
+  "body": "#c9b9c0",
+  "mouth": {
+   "cx": 300,
+   "cy": 290,
+   "w": 30
+  }
+ },
+ "dong_daughter/surprise": {
+  "eyes": [
+   {
+    "cx": 202,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   },
+   {
+    "cx": 387,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   }
+  ],
+  "body": "#c9b9c0",
+  "mouth": {
+   "cx": 300,
+   "cy": 290,
+   "w": 30
+  }
+ },
+ "dong_daughter/trouble": {
+  "eyes": [
+   {
+    "cx": 202,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   },
+   {
+    "cx": 387,
+    "cy": 250,
+    "rx": 30,
+    "ry": 36
+   }
+  ],
+  "body": "#c9b9c0",
+  "mouth": {
+   "cx": 300,
+   "cy": 290,
+   "w": 30
+  }
+ },
+ "dong_daughter/warm": {
+  "eyes": [],
+  "body": "#c9b9c0",
+  "mouth": {
+   "cx": 300,
+   "cy": 290,
+   "w": 30
+  }
  }
 }

@@ -64,7 +64,7 @@
   {
    "id": "c_r05_fi_A",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "flash",
    "elName": "화",
    "grade": "A",
@@ -79,7 +79,7 @@
   {
    "id": "c_r06_fi_A",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "flash",
    "elName": "화",
    "grade": "A",
@@ -163,7 +163,7 @@
    "flavor": "용궁 가는 길을 밝히다가 토끼를 먹을 뻔했다.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -178,7 +178,7 @@
    "flavor": "까치가 종을 울린 밤, 혼자 깨어 다 봤다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -310,7 +310,7 @@
   {
    "id": "c_r22_fi_A",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "flash",
    "elName": "화",
    "grade": "A",
@@ -412,7 +412,7 @@
   {
    "id": "c_r05_wa_A",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "care",
    "elName": "수",
    "grade": "A",
@@ -427,12 +427,12 @@
   {
    "id": "c_r06_wa_A",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "care",
    "elName": "수",
    "grade": "A",
    "xp": 150,
-   "title": "물꼬의 우렁이",
+   "title": "논물을 지키는 우렁",
    "flavor": "각시가 되지 못한 평범한 우렁이. 그래도 논물은 제일 잘 안다.",
    "myth": "u_myth_haetae",
    "unit": null,
@@ -447,7 +447,7 @@
    "elName": "수",
    "grade": "A",
    "xp": 150,
-   "title": "은하수 물방울",
+   "title": "은하수 한 방울",
    "flavor": "은하수에서 튄 물방울. 땅에 떨어지면 칠석 비가 된다.",
    "myth": "u_myth_samjoko",
    "unit": null,
@@ -511,7 +511,7 @@
    "flavor": "자라 등을 타고 가는 토끼에게 손을 흔든다.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -526,7 +526,7 @@
    "flavor": "선비 갓끈에 맺혀 과거길을 함께 갔다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -658,7 +658,7 @@
   {
    "id": "c_r22_wa_A",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "care",
    "elName": "수",
    "grade": "A",
@@ -735,7 +735,7 @@
    "elName": "목",
    "grade": "A",
    "xp": 150,
-   "title": "콩밭의 막둥이",
+   "title": "콩밭의 막내",
    "flavor": "콩 한 알을 쥐면 절대 놓지 않는다. 팥은 뱉는다.",
    "myth": "u_myth_wukong",
    "unit": "u_baby",
@@ -760,7 +760,7 @@
   {
    "id": "c_r05_wo_A",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "support",
    "elName": "목",
    "grade": "A",
@@ -775,7 +775,7 @@
   {
    "id": "c_r06_wo_A",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "support",
    "elName": "목",
    "grade": "A",
@@ -859,7 +859,7 @@
    "flavor": "토끼가 「간을 숨겨 뒀다」고 우긴 바로 그 숲.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -874,7 +874,7 @@
    "flavor": "구렁이가 넘보던 까치 둥지를 끝까지 받쳤다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1006,7 +1006,7 @@
   {
    "id": "c_r22_wo_A",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "support",
    "elName": "목",
    "grade": "A",
@@ -1108,7 +1108,7 @@
   {
    "id": "c_r05_me_A",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "metal",
    "elName": "금",
    "grade": "A",
@@ -1123,7 +1123,7 @@
   {
    "id": "c_r06_me_A",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "metal",
    "elName": "금",
    "grade": "A",
@@ -1143,7 +1143,7 @@
    "elName": "금",
    "grade": "A",
    "xp": 150,
-   "title": "소 목의 놋방울",
+   "title": "소 목의 놋종",
    "flavor": "견우 소가 고개를 흔들 때마다 하늘까지 딸랑 울린다.",
    "myth": "u_myth_samjoko",
    "unit": null,
@@ -1207,7 +1207,7 @@
    "flavor": "두드리면 파도 소리가 난다.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1222,7 +1222,7 @@
    "flavor": "까치가 머리로 들이받은 자리가 아직 움푹하다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1354,7 +1354,7 @@
   {
    "id": "c_r22_me_A",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "metal",
    "elName": "금",
    "grade": "A",
@@ -1456,7 +1456,7 @@
   {
    "id": "c_r05_ea_A",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "earth",
    "elName": "토",
    "grade": "A",
@@ -1471,7 +1471,7 @@
   {
    "id": "c_r06_ea_A",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "earth",
    "elName": "토",
    "grade": "A",
@@ -1555,7 +1555,7 @@
    "flavor": "토끼를 태우고 가다 떨어진 한 조각.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1570,7 +1570,7 @@
    "flavor": "선비가 지나갈 때마다 돌 하나씩 얹어 준다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -1702,7 +1702,7 @@
   {
    "id": "c_r22_ea_A",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "earth",
    "elName": "토",
    "grade": "A",
@@ -1764,7 +1764,7 @@
    "elName": "화",
    "grade": "S",
    "xp": 600,
-   "title": "불씨 배달꾼 바람 친구",
+   "title": "불씨 배달꾼 문틈의 바람꾼",
    "flavor": "오누이 집 아궁이까지 불씨를 실어 나르는 고갯바람.",
    "myth": "u_myth_dragon",
    "unit": "u_wind",
@@ -1804,7 +1804,7 @@
   {
    "id": "c_r05_fi_S",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "flash",
    "elName": "화",
    "grade": "S",
@@ -1819,7 +1819,7 @@
   {
    "id": "c_r06_fi_S",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "flash",
    "elName": "화",
    "grade": "S",
@@ -1914,7 +1914,7 @@
    "elName": "화",
    "grade": "S",
    "xp": 600,
-   "title": "공양간 고춧가루 삼촌",
+   "title": "공양간 고춧가루 장수",
    "flavor": "산사 공양간 국에 고춧가루를 몰래 더 넣는다.",
    "myth": "u_myth_anubis",
    "unit": "u_gj_pepper",
@@ -2050,7 +2050,7 @@
   {
    "id": "c_r22_fi_S",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "flash",
    "elName": "화",
    "grade": "S",
@@ -2112,7 +2112,7 @@
    "elName": "수",
    "grade": "S",
    "xp": 600,
-   "title": "떡 검사관 바람 호랑이",
+   "title": "떡 검사관 바람 탄 호랑이",
    "flavor": "「떡 하나 주면 안 잡아먹지」를 직업으로 삼았다. 오늘도 검사 중.",
    "myth": "u_myth_dragon",
    "unit": "u_tiger",
@@ -2152,7 +2152,7 @@
   {
    "id": "c_r05_wa_S",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "care",
    "elName": "수",
    "grade": "S",
@@ -2167,7 +2167,7 @@
   {
    "id": "c_r06_wa_S",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "care",
    "elName": "수",
    "grade": "S",
@@ -2217,7 +2217,7 @@
    "elName": "수",
    "grade": "S",
    "xp": 600,
-   "title": "연회장 국자 담당 떡국 이모",
+   "title": "연회장 국자 담당 떡국 어멈",
    "flavor": "후작님 환영 연회 국을 혼자 백 그릇 떴다.",
    "myth": "u_myth_poseidon",
    "unit": "u_gy_soup",
@@ -2398,7 +2398,7 @@
   {
    "id": "c_r22_wa_S",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "care",
    "elName": "수",
    "grade": "S",
@@ -2500,7 +2500,7 @@
   {
    "id": "c_r05_wo_S",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "support",
    "elName": "목",
    "grade": "S",
@@ -2515,7 +2515,7 @@
   {
    "id": "c_r06_wo_S",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "support",
    "elName": "목",
    "grade": "S",
@@ -2595,7 +2595,7 @@
    "elName": "목",
    "grade": "S",
    "xp": 600,
-   "title": "용궁 수라간 배추 이모",
+   "title": "용궁 수라간 절임 배추 어멈",
    "flavor": "용왕 약죽에 넣을 배추를 백 포기 절인다.",
    "myth": "u_myth_wukong",
    "unit": "u_gj_cabbage",
@@ -2610,7 +2610,7 @@
    "elName": "목",
    "grade": "S",
    "xp": 600,
-   "title": "겨울 숲 문지기 눈사람 동생",
+   "title": "겨울 숲 문지기 눈사람 파수꾼",
    "flavor": "겨울 동안 까치 둥지 아래를 지킨다.",
    "myth": "u_myth_anubis",
    "unit": "u_gy_snow",
@@ -2746,7 +2746,7 @@
   {
    "id": "c_r22_wo_S",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "support",
    "elName": "목",
    "grade": "S",
@@ -2848,7 +2848,7 @@
   {
    "id": "c_r05_me_S",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "metal",
    "elName": "금",
    "grade": "S",
@@ -2863,7 +2863,7 @@
   {
    "id": "c_r06_me_S",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "metal",
    "elName": "금",
    "grade": "S",
@@ -2883,11 +2883,11 @@
    "elName": "금",
    "grade": "S",
    "xp": 600,
-   "title": "해 배달꾼 꼬마 세발까마귀",
+   "title": "해 배달꾼 세발까마귀",
    "flavor": "아빠 삼족오 대신 아침 해를 나르다 은하수에 빠질 뻔했다.",
    "myth": "u_myth_samjoko",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -2902,7 +2902,7 @@
    "flavor": "지혜를 배우러 왔다가 과자만 먹고 있다.",
    "myth": "u_myth_athena",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -2917,7 +2917,7 @@
    "flavor": "고양이 덕에 하루아침에 왕의 마부가 됐다.",
    "myth": "u_myth_poseidon",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -2932,7 +2932,7 @@
    "flavor": "청룡이 떨군 비늘로 연못 열쇠를 깎는다.",
    "myth": "u_myth_dragon",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -2947,7 +2947,7 @@
    "flavor": "손오공이 여의봉을 빼 간 뒤로 창고를 두 번 잠근다.",
    "myth": "u_myth_wukong",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -2962,7 +2962,7 @@
    "flavor": "아누비스 저울을 빌려 은혜와 원수를 달아 본다.",
    "myth": "u_myth_anubis",
    "unit": null,
-   "art": "없음",
+   "art": "임시",
    "edited": true
   },
   {
@@ -3094,7 +3094,7 @@
   {
    "id": "c_r22_me_S",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "metal",
    "elName": "금",
    "grade": "S",
@@ -3196,7 +3196,7 @@
   {
    "id": "c_r05_ea_S",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "earth",
    "elName": "토",
    "grade": "S",
@@ -3211,7 +3211,7 @@
   {
    "id": "c_r06_ea_S",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "earth",
    "elName": "토",
    "grade": "S",
@@ -3246,7 +3246,7 @@
    "elName": "토",
    "grade": "S",
    "xp": 600,
-   "title": "과자집 경비 마늘 동생",
+   "title": "과자집 경비 깐 마늘 소년",
    "flavor": "마녀가 제일 싫어하는 냄새로 아이들 방을 지킨다.",
    "myth": "u_myth_athena",
    "unit": "u_gj_garlic",
@@ -3261,7 +3261,7 @@
    "elName": "토",
    "grade": "S",
    "xp": 600,
-   "title": "성 시장 엿장수 엿 아저씨",
+   "title": "성 시장 엿장수",
    "flavor": "고양이 장화 밑창이 엿에 붙어 한참 실랑이했다.",
    "myth": "u_myth_poseidon",
    "unit": "u_gs_yeot",
@@ -3276,7 +3276,7 @@
    "elName": "토",
    "grade": "S",
    "xp": 600,
-   "title": "두레박 장수 찹쌀떡 누나",
+   "title": "우물가 찹쌀떡 장수",
    "flavor": "하늘로 올라가는 두레박을 판다. 한 번 타면 환불 없음.",
    "myth": "u_myth_dragon",
    "unit": "u_gs_rice",
@@ -3442,7 +3442,7 @@
   {
    "id": "c_r22_ea_S",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "earth",
    "elName": "토",
    "grade": "S",
@@ -3504,7 +3504,7 @@
    "elName": "화",
    "grade": "SS",
    "xp": 2400,
-   "title": "타오르는 해님 오빠",
+   "title": "타오르는 해",
    "flavor": "동아줄 타고 올라가 해가 됐는데, 너무 뜨거워서 얼굴이 계속 빨갛다.",
    "myth": "u_myth_dragon",
    "unit": null,
@@ -3544,7 +3544,7 @@
   {
    "id": "c_r05_fi_SS",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "flash",
    "elName": "화",
    "grade": "SS",
@@ -3559,7 +3559,7 @@
   {
    "id": "c_r06_fi_SS",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "flash",
    "elName": "화",
    "grade": "SS",
@@ -3790,7 +3790,7 @@
   {
    "id": "c_r22_fi_SS",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "flash",
    "elName": "화",
    "grade": "SS",
@@ -3892,7 +3892,7 @@
   {
    "id": "c_r05_wa_SS",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "care",
    "elName": "수",
    "grade": "SS",
@@ -3907,7 +3907,7 @@
   {
    "id": "c_r06_wa_SS",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "care",
    "elName": "수",
    "grade": "SS",
@@ -4138,7 +4138,7 @@
   {
    "id": "c_r22_wa_SS",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "care",
    "elName": "수",
    "grade": "SS",
@@ -4240,7 +4240,7 @@
   {
    "id": "c_r05_wo_SS",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "support",
    "elName": "목",
    "grade": "SS",
@@ -4255,7 +4255,7 @@
   {
    "id": "c_r06_wo_SS",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "support",
    "elName": "목",
    "grade": "SS",
@@ -4486,7 +4486,7 @@
   {
    "id": "c_r22_wo_SS",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "support",
    "elName": "목",
    "grade": "SS",
@@ -4588,7 +4588,7 @@
   {
    "id": "c_r05_me_SS",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "metal",
    "elName": "금",
    "grade": "SS",
@@ -4603,7 +4603,7 @@
   {
    "id": "c_r06_me_SS",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "metal",
    "elName": "금",
    "grade": "SS",
@@ -4834,7 +4834,7 @@
   {
    "id": "c_r22_me_SS",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "metal",
    "elName": "금",
    "grade": "SS",
@@ -4936,7 +4936,7 @@
   {
    "id": "c_r05_ea_SS",
    "region": 5,
-   "regionName": "구름 위 거인 마을",
+   "regionName": "구름 위 거인의 식탁",
    "el": "earth",
    "elName": "토",
    "grade": "SS",
@@ -4951,7 +4951,7 @@
   {
    "id": "c_r06_ea_SS",
    "region": 6,
-   "regionName": "우렁 각시 논",
+   "regionName": "우렁 각시의 논",
    "el": "earth",
    "elName": "토",
    "grade": "SS",
@@ -5182,7 +5182,7 @@
   {
    "id": "c_r22_ea_SS",
    "region": 22,
-   "regionName": "세 마리 곰 오두막 숲",
+   "regionName": "곰 세 마리의 오두막",
    "el": "earth",
    "elName": "토",
    "grade": "SS",
@@ -5220,6 +5220,220 @@
    "myth": "u_myth_athena",
    "unit": null,
    "art": "없음"
+  },
+  {
+   "id": "c_r01_m1_A",
+   "region": 1,
+   "regionName": "포세이돈의 창고",
+   "el": "metal",
+   "elName": "금",
+   "grade": "A",
+   "xp": 150,
+   "artAs": "hero/c_r04_me_A",
+   "title": "삼지창의 부러진 날",
+   "flavor": "포세이돈의 삼지창에서 떨어져 나온 날. 구슬이 사라진 뒤에도 파도를 가른다.",
+   "myth": "u_myth_poseidon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r01_m2_A",
+   "region": 1,
+   "regionName": "포세이돈의 창고",
+   "el": "wood",
+   "elName": "목",
+   "grade": "A",
+   "xp": 150,
+   "artAs": "hero/c_r07_wo_A",
+   "title": "산호 열쇠",
+   "flavor": "창고 문을 여는 열쇠. 스킬라가 훔쳐 가다 흘린 한 개다.",
+   "myth": "u_myth_poseidon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r01_m3_A",
+   "region": 1,
+   "regionName": "포세이돈의 창고",
+   "el": "water",
+   "elName": "수",
+   "grade": "A",
+   "xp": 150,
+   "artAs": "hero/c_r07_wa_A",
+   "title": "해마 고삐",
+   "flavor": "포세이돈의 해마를 몰던 고삐. 해마는 도망쳤고 고삐만 문 앞에 남았다.",
+   "myth": "u_myth_poseidon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r01_m4_S",
+   "region": 1,
+   "regionName": "포세이돈의 창고",
+   "el": "water",
+   "elName": "수",
+   "grade": "S",
+   "xp": 600,
+   "artAs": "hero/u_sindbad",
+   "title": "소라 나팔의 트리톤",
+   "flavor": "포세이돈의 아들. 소라 나팔 한 번이면 물결이 줄을 선다.",
+   "myth": "u_myth_poseidon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r01_m5_SS",
+   "region": 1,
+   "regionName": "포세이돈의 창고",
+   "el": "water",
+   "elName": "수",
+   "grade": "SS",
+   "xp": 2400,
+   "title": "소용돌이를 부리는 스킬라",
+   "flavor": "창고를 털고도 허기진 채 소용돌이 밑을 맴돈다. 구슬은 아직 입에 물고 있다.",
+   "myth": "u_myth_poseidon",
+   "unit": null,
+   "art": "임시"
+  },
+  {
+   "id": "c_r02_m1_A",
+   "region": 2,
+   "regionName": "해님 달님 고개",
+   "el": "wood",
+   "elName": "목",
+   "grade": "A",
+   "xp": 150,
+   "title": "소쿠리의 마지막 떡",
+   "flavor": "고개를 다 넘고도 남은 마지막 떡. 스스로도 놀라는 중이다.",
+   "myth": "u_myth_dragon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r02_m2_A",
+   "region": 2,
+   "regionName": "해님 달님 고개",
+   "el": "metal",
+   "elName": "금",
+   "grade": "A",
+   "xp": 150,
+   "title": "튼튼한 새 동아줄 매듭",
+   "flavor": "하늘에서 내려온 줄 가운데 이것만 끊어지지 않았다.",
+   "myth": "u_myth_dragon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r02_m3_A",
+   "region": 2,
+   "regionName": "해님 달님 고개",
+   "el": "earth",
+   "elName": "토",
+   "grade": "A",
+   "xp": 150,
+   "title": "고갯마루 돌탑",
+   "flavor": "지나는 사람마다 돌 하나씩. 호랑이는 한 번도 안 올렸다.",
+   "myth": "u_myth_dragon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r02_m4_S",
+   "region": 2,
+   "regionName": "해님 달님 고개",
+   "el": "fire",
+   "elName": "화",
+   "grade": "S",
+   "xp": 600,
+   "title": "오누이 집 등잔불",
+   "flavor": "엄마가 돌아올 때까지 꺼지지 않겠다고 약속했다.",
+   "myth": "u_myth_dragon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r03_m1_A",
+   "region": 3,
+   "regionName": "콩쥐팥쥐 마을",
+   "el": "wood",
+   "elName": "목",
+   "grade": "A",
+   "xp": 150,
+   "title": "콩 한 말 자루",
+   "flavor": "팥이랑 섞이면 잠을 못 잔다. 오늘도 뜬눈이다.",
+   "myth": "u_myth_wukong",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r03_m2_A",
+   "region": 3,
+   "regionName": "콩쥐팥쥐 마을",
+   "el": "metal",
+   "elName": "금",
+   "grade": "A",
+   "xp": 150,
+   "title": "콩쥐의 쇠 호미",
+   "flavor": "나무 호미가 부러진 날 하늘에서 내려왔다. 자갈밭도 문제없다.",
+   "myth": "u_myth_wukong",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r03_m3_A",
+   "region": 3,
+   "regionName": "콩쥐팥쥐 마을",
+   "el": "water",
+   "elName": "수",
+   "grade": "A",
+   "xp": 150,
+   "title": "두꺼비 물바가지",
+   "flavor": "아무리 퍼도 독은 안 찬다. 그래도 멈추지 않는다.",
+   "myth": "u_myth_wukong",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r03_m4_S",
+   "region": 3,
+   "regionName": "콩쥐팥쥐 마을",
+   "el": "fire",
+   "elName": "화",
+   "grade": "S",
+   "xp": 600,
+   "title": "냇가의 꽃신 한 짝",
+   "flavor": "주인을 찾아 달라고 냇물에 스스로 뛰어들었다.",
+   "myth": "u_myth_wukong",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r02_m5_SS",
+   "region": 2,
+   "regionName": "해님 달님 고개",
+   "el": "metal",
+   "elName": "금",
+   "grade": "SS",
+   "xp": 2400,
+   "title": "고개의 살쾡이 두목",
+   "flavor": "호랑이 대신 떡을 걷으러 다닌다. 꿰미에 꿴 떡만 세면서 웃는다.",
+   "myth": "u_myth_dragon",
+   "unit": null,
+   "art": "승인"
+  },
+  {
+   "id": "c_r03_m5_SS",
+   "region": 3,
+   "regionName": "콩쥐팥쥐 마을",
+   "el": "earth",
+   "elName": "토",
+   "grade": "SS",
+   "xp": 2400,
+   "title": "자갈밭 멧돼지 두목",
+   "flavor": "팥쥐 엄마가 밭에 풀어 둔 놈. 호미보다 엄니가 빠르다.",
+   "myth": "u_myth_wukong",
+   "unit": null,
+   "art": "승인"
   }
  ],
  "myth": [

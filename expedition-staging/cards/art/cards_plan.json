@@ -5229,7 +5229,6 @@
    "elName": "금",
    "grade": "A",
    "xp": 150,
-   "artAs": "hero/c_r04_me_A",
    "title": "삼지창의 부러진 날",
    "flavor": "포세이돈의 삼지창에서 떨어져 나온 날. 구슬이 사라진 뒤에도 파도를 가른다.",
    "myth": "u_myth_poseidon",
@@ -5244,7 +5243,6 @@
    "elName": "목",
    "grade": "A",
    "xp": 150,
-   "artAs": "hero/c_r07_wo_A",
    "title": "산호 열쇠",
    "flavor": "창고 문을 여는 열쇠. 스킬라가 훔쳐 가다 흘린 한 개다.",
    "myth": "u_myth_poseidon",
@@ -5259,7 +5257,6 @@
    "elName": "수",
    "grade": "A",
    "xp": 150,
-   "artAs": "hero/c_r07_wa_A",
    "title": "해마 고삐",
    "flavor": "포세이돈의 해마를 몰던 고삐. 해마는 도망쳤고 고삐만 문 앞에 남았다.",
    "myth": "u_myth_poseidon",
@@ -5274,7 +5271,6 @@
    "elName": "수",
    "grade": "S",
    "xp": 600,
-   "artAs": "hero/u_sindbad",
    "title": "소라 나팔의 트리톤",
    "flavor": "포세이돈의 아들. 소라 나팔 한 번이면 물결이 줄을 선다.",
    "myth": "u_myth_poseidon",
@@ -5293,7 +5289,7 @@
    "flavor": "창고를 털고도 허기진 채 소용돌이 밑을 맴돈다. 구슬은 아직 입에 물고 있다.",
    "myth": "u_myth_poseidon",
    "unit": null,
-   "art": "임시"
+   "art": "승인"
   },
   {
    "id": "c_r02_m1_A",

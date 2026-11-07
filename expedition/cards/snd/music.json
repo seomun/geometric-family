@@ -1,6 +1,7 @@
 {
  "places": {
-  "battle": "hero",
+  "battle": "tropical",
+  "battle2": "rpg_long",
   "home": "town",
   "map": "grass",
   "shop": "minstrel",
@@ -11,14 +12,6 @@
   "lose": "snow"
  },
  "tracks": {
-  "hero": {
-   "pak": "m_hero.pak",
-   "loop": true,
-   "lufs": -20,
-   "kb": 793,
-   "loopStart": 0.08,
-   "loopEnd": 57.911315
-  },
   "town": {
    "pak": "m_town.pak",
    "loop": true,
@@ -78,6 +71,22 @@
    "loop": false,
    "lufs": -20,
    "kb": 273
+  },
+  "tropical": {
+   "pak": "m_tropical.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 731,
+   "loopStart": 0.08,
+   "loopEnd": 53.413356
+  },
+  "rpg_long": {
+   "pak": "m_rpg_long.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 862,
+   "loopStart": 0.08,
+   "loopEnd": 62.952018
   }
  }
 }

@@ -151,7 +151,7 @@ html[lang=en] .hero h1 { font-size: clamp(40px, 8.4vw, 104px); line-height: 1.02
     return g + face(st, 100, tidy ? 94 : 92, 1.15);
   }
 
-  /* ───────── 4. 입체 보스 — 「정육면체 대장」: 면이 한 장씩 떨어진다(top·left·right) ───────── */
+  /* ───────── 4. 입체 보스 — 「정육면체 보스」: 면이 한 장씩 떨어진다(top·left·right) ───────── */
   const CUBE = { T: [[100, 28], [160, 63], [100, 98], [40, 63]], Lf: [[40, 63], [100, 98], [100, 168], [40, 133]], Rt: [[100, 98], [160, 63], [160, 133], [100, 168]] };
   function cubeFaceSvg(fc, st, tidy) {
     const c = COL.boss, col = { T: shade(c, .32), Lf: c, Rt: shade(c, -.2) }[fc];
@@ -429,7 +429,7 @@ html[lang=en] .hero h1 { font-size: clamp(40px, 8.4vw, 104px); line-height: 1.02
   }
 
 
-  /* ───────── D50 M2 새 몬스터 14종: 점 3(꼭짓점·교점·중점) · 선 3(대각선·곡선·평행선) · 면 3(마름모·사다리꼴·평행사변형) · 입체 대장 5(쌍뿔·엇각기둥·육팔면체·별 다면체·클라인 병) ───────── */
+  /* ───────── D50 M2 새 몬스터 14종: 점 3(꼭짓점·교점·중점) · 선 3(대각선·곡선·평행선) · 면 3(마름모·사다리꼴·평행사변형) · 입체 보스 5(쌍뿔·엇각기둥·육팔면체·별 다면체·클라인 병) ───────── */
   function vertex(st) {    // 점 계열: 꼭짓점 — 모서리 셋이 만나는 점(둥근 몸에서 뿔 셋이 뻗음)
     const c = COL.care, tidy = st === 2; let g = shadow(100, 176, 64); const arms = tidy ? [[-34, -70], [34, -70], [0, 66]] : [[-74, -52], [78, -38], [-6, 84]];
     arms.forEach(([dx, dy], i) => { const x = 100 + dx, y = 104 + dy; g += `<path d="M100 104 L${x} ${y}" stroke="${OL}" stroke-width="13" stroke-linecap="round"/><path d="M100 104 L${x} ${y}" stroke="${shade(c, .28)}" stroke-width="7" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="${9 - i}" fill="${shade(c, .45)}" stroke="${OL}" stroke-width="3.5"/>`; });
@@ -483,33 +483,33 @@ html[lang=en] .hero h1 { font-size: clamp(40px, 8.4vw, 104px); line-height: 1.02
     g += poly([[14 + sh, 58], [186, 58], [186 - sh, 154], [14, 154]], c, 4.5) + `<rect x="${44 + sh / 2}" y="64" width="62" height="8" rx="4" fill="#fff" opacity=".3"/>`;
     return g + face(st, 100 + sh / 2 - 12, 110, 1.05);
   }
-  function bipyr(st, o) {  // 입체 대장: 쌍뿔 — 위아래 뿔 두 쪽(시계 바늘 모양)
+  function bipyr(st, o) {  // 입체 보스: 쌍뿔 — 위아래 뿔 두 쪽(시계 바늘 모양)
     o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 186, 64);
     if (!hide.includes('bot')) g += poly([[100, 188], [30, 104], [170, 104]], shade(c, -.28), 4.5) + poly([[100, 188], [100, 104], [170, 104]], shade(c, -.12), 4.5);
     if (!hide.includes('top')) g += poly([[100, 14], [30, 104], [170, 104]], c, 4.5) + poly([[100, 14], [100, 104], [30, 104]], shade(c, .22), 4.5) + face(st, 100, 86, 0.8);
     return g;
   }
-  function antiprism(st, o) {  // 입체 대장: 엇각기둥 — 윗면과 아랫면이 엇갈린 기둥(솥 뚜껑 모양)
+  function antiprism(st, o) {  // 입체 보스: 엇각기둥 — 윗면과 아랫면이 엇갈린 기둥(솥 뚜껑 모양)
     o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
     if (!hide.includes('side')) g += poly([[26, 76], [63, 90], [100, 76], [137, 90], [174, 76], [174, 148], [137, 162], [100, 148], [63, 162], [26, 148]], c, 4.5) + `<path d="M63 90 L63 162 M137 90 L137 162" stroke="${OL}" stroke-width="2.6" opacity=".35"/>` + face(st, 100, 120, 0.95);
     if (!hide.includes('top')) g += poly([[26, 76], [63, 56], [137, 56], [174, 76], [137, 90], [63, 90]], shade(c, .3), 4.5);
     return g;
   }
-  function dice(st, o) {  // 이벤트 대장: 주사위 — 눈금이 찍힌 정육면체(위 면 5 · 앞 면 6 · 옆 면 3, 비스듬히 본 모습)
+  function dice(st, o) {  // 이벤트 보스: 주사위 — 눈금이 찍힌 정육면체(위 면 5 · 앞 면 6 · 옆 면 3, 비스듬히 본 모습)
     o = o || {}; const hide = o.hide || [], c = o.c || COL.boss, pip = (x, y) => `<circle cx="${x}" cy="${y}" r="5" fill="#fff" stroke="${OL}" stroke-width="1.6"/>`; let g = shadow(100, 190, 70);
     if (!hide.includes('side')) g += poly([[100, 188], [172, 150], [172, 76], [100, 114]], shade(c, -.25), 4.5) + pip(120, 136) + pip(136, 126) + pip(152, 116) + pip(120, 160) + pip(136, 150) + pip(152, 140);
     if (!hide.includes('top')) g += poly([[100, 114], [172, 76], [100, 40], [28, 76]], shade(c, .25), 4.5) + pip(100, 77) + pip(80, 76) + pip(120, 76) + pip(100, 60) + pip(100, 94);
     if (!hide.includes('front')) g += poly([[28, 76], [100, 114], [100, 188], [28, 150]], c, 4.5) + pip(48, 98) + pip(78, 114) + face(st, 64, 128, 0.62);
     return g;
   }
-  function cuboct(st, o) {  // 입체 대장: 육팔면체 — 정사각 6 + 정삼각 8(모서리를 깎은 상자)
+  function cuboct(st, o) {  // 입체 보스: 육팔면체 — 정사각 6 + 정삼각 8(모서리를 깎은 상자)
     o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
     g += poly([[56, 40], [144, 40], [182, 78], [182, 150], [144, 184], [56, 184], [18, 150], [18, 78]], shade(c, -.3), 4.5);
     if (!hide.includes('tri')) [[[56, 40], [18, 78], [56, 78]], [[144, 40], [182, 78], [144, 78]], [[18, 150], [56, 184], [56, 150]], [[182, 150], [144, 184], [144, 150]]].forEach((t) => { g += poly(t, shade(c, .3), 3.6); });
     if (!hide.includes('sq')) g += poly([[56, 78], [144, 78], [144, 150], [56, 150]], c, 4.5) + face(st, 100, 116, 0.95);
     return g;
   }
-  function stella(st, o) {  // 입체 대장: 별 다면체 — 뾰족한 가시가 돋은 몸(빗방울 가시)
+  function stella(st, o) {  // 입체 보스: 별 다면체 — 뾰족한 가시가 돋은 몸(빗방울 가시)
     o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70), pts = [];
     if (!hide.includes('spikes')) { for (let i = 0; i < 16; i++) { const a = -Math.PI / 2 + i * Math.PI / 8, r = i % 2 ? 54 : 92; pts.push([100 + Math.cos(a) * r, 106 + Math.sin(a) * r]); } g += poly(pts, shade(c, .12), 4.5); }
     if (!hide.includes('core')) g += poly([[100, 56], [150, 106], [100, 156], [50, 106]], c, 4.5) + `<ellipse cx="82" cy="84" rx="14" ry="7" fill="#fff" opacity=".3" transform="rotate(-30 82 84)"/>` + face(st, 100, 108, 0.85);
@@ -538,54 +538,54 @@ html[lang=en] .hero h1 { font-size: clamp(40px, 8.4vw, 104px); line-height: 1.02
     }
     return g;
   }
-  function klein(st, o) {  // 입체 대장: 클라인 병 — 목이 몸 안으로 되돌아가는 병(찻주전자 닮음)
+  function klein(st, o) {  // 입체 보스: 클라인 병 — 목이 몸 안으로 되돌아가는 병(찻주전자 닮음)
     o = o || {}; const hide = o.hide || [], c = COL.boss; let g = shadow(100, 188, 70);
     if (!hide.includes('neck')) g += `<path d="M118 76 C 156 40 188 60 170 92 C 156 118 128 120 112 128" stroke="${OL}" stroke-width="30" fill="none" stroke-linecap="round"/><path d="M118 76 C 156 40 188 60 170 92 C 156 118 128 120 112 128" stroke="${shade(c, .22)}" stroke-width="21" fill="none" stroke-linecap="round"/>`;
     if (!hide.includes('body')) g += `<ellipse cx="86" cy="130" rx="64" ry="52" fill="${c}" stroke="${OL}" stroke-width="4.5"/><ellipse cx="62" cy="104" rx="16" ry="8" fill="#fff" opacity=".3" transform="rotate(-28 62 104)"/>` + face(st, 82, 134, 0.95);
     return g;
   }
   const MON = {
-    dot: { fn: dot, name: '동글점', tier: '점', el: 'care', shape: '원', line: '점 하나가 둥글게 뭉치면? 동그라미!', facts: '꼭짓점 0 · 면 1(곡면)' },
-    line: { fn: line, name: '뾰족선', tier: '선', el: 'flash', shape: '삼각', line: '삼각형이 일렬로 서면 지그재그 선', facts: '삼각형 5 · 꼭짓점 15' },
-    plane: { fn: plane, name: '겹겹이', tier: '면', el: 'support', shape: '사각', line: '사각이 계단처럼 겹치면 두툼한 면', facts: '사각형 4 · 꼭짓점 16' },
-    cube: { fn: cube, name: '정육면체 대장', tier: '입체(보스)', el: 'boss', shape: '정육면체', line: '맞을수록 면이 한 장씩 떨어져요', facts: '면 6 · 모서리 12 · 꼭짓점 8', faces: ['T', 'Rt', 'Lf'] },
-    twin: { fn: twin, name: '쌍둥이점', tier: '점', el: 'care', shape: '원', line: '점 둘이 겹치면 쌍둥이', facts: '원 2' },
-    ring: { fn: ring, name: '굴렁이', tier: '점', el: 'care', shape: '원', line: '구멍 뚫린 둥근 바퀴', facts: '원 2 · 구멍 1' },
-    thorn: { fn: thorn, name: '가시선', tier: '선', el: 'flash', shape: '삼각', line: '삼각을 세워 가시로', facts: '삼각형 3 · 꼭짓점 9' },
-    bar: { fn: bar, name: '막대선', tier: '선', el: 'flash', shape: '삼각', line: '삼각을 길게 늘인 막대', facts: '꼭짓점 6' },
-    wide: { fn: wide, name: '넓적이', tier: '면', el: 'support', shape: '사각', line: '사각을 넓게 눌러 펴면', facts: '사각형 3 · 꼭짓점 12' },
-    stair: { fn: stair, name: '계단이', tier: '면', el: 'support', shape: '사각', line: '사각 셋을 계단처럼', facts: '사각형 3 · 꼭짓점 12' },
-    tetra: { fn: tetra, name: '삼각뿔 대장', tier: '입체(보스)', el: 'boss', shape: '정사면체', line: '맞을수록 면이 떨어져요', facts: '면 4 · 모서리 6 · 꼭짓점 4', faces: ['R', 'L'] },
-    octa: { fn: octa, name: '팔면체 대장', tier: '입체(보스)', el: 'boss', shape: '정팔면체', line: '여덟 면이 한 장씩 떨어져요', facts: '면 8 · 모서리 12 · 꼭짓점 6', faces: ['UR', 'UL', 'LR', 'LL'] },
-    trio: { fn: trio, name: '삼형제점', tier: '점', el: 'care', shape: '원', line: '큰 점에 작은 점 둘이 졸졸', facts: '원 3' },
+    dot: { fn: dot, name: '구슬 부스러기', tier: '점', el: 'care', shape: '원', line: '점 하나가 둥글게 뭉치면? 동그라미!', facts: '꼭짓점 0 · 면 1(곡면)' },
+    line: { fn: line, name: '날선 창끝', tier: '선', el: 'flash', shape: '삼각', line: '삼각형이 일렬로 서면 지그재그 선', facts: '삼각형 5 · 꼭짓점 15' },
+    plane: { fn: plane, name: '겹벽', tier: '면', el: 'support', shape: '사각', line: '사각이 계단처럼 겹치면 두툼한 면', facts: '사각형 4 · 꼭짓점 16' },
+    cube: { fn: cube, name: '정육면체 수문장', tier: '입체(보스)', el: 'boss', shape: '정육면체', line: '맞을수록 면이 한 장씩 떨어져요', facts: '면 6 · 모서리 12 · 꼭짓점 8', faces: ['T', 'Rt', 'Lf'] },
+    twin: { fn: twin, name: '쌍둥이 파편', tier: '점', el: 'care', shape: '원', line: '점 둘이 겹치면 쌍둥이', facts: '원 2' },
+    ring: { fn: ring, name: '굴렁쇠', tier: '점', el: 'care', shape: '원', line: '구멍 뚫린 둥근 바퀴', facts: '원 2 · 구멍 1' },
+    thorn: { fn: thorn, name: '가시 철책', tier: '선', el: 'flash', shape: '삼각', line: '삼각을 세워 가시로', facts: '삼각형 3 · 꼭짓점 9' },
+    bar: { fn: bar, name: '쇠막대', tier: '선', el: 'flash', shape: '삼각', line: '삼각을 길게 늘인 막대', facts: '꼭짓점 6' },
+    wide: { fn: wide, name: '넓은 방패', tier: '면', el: 'support', shape: '사각', line: '사각을 넓게 눌러 펴면', facts: '사각형 3 · 꼭짓점 12' },
+    stair: { fn: stair, name: '돌계단', tier: '면', el: 'support', shape: '사각', line: '사각 셋을 계단처럼', facts: '사각형 3 · 꼭짓점 12' },
+    tetra: { fn: tetra, name: '삼각뿔 수문장', tier: '입체(보스)', el: 'boss', shape: '정사면체', line: '맞을수록 면이 떨어져요', facts: '면 4 · 모서리 6 · 꼭짓점 4', faces: ['R', 'L'] },
+    octa: { fn: octa, name: '팔면체 수문장', tier: '입체(보스)', el: 'boss', shape: '정팔면체', line: '여덟 면이 한 장씩 떨어져요', facts: '면 8 · 모서리 12 · 꼭짓점 6', faces: ['UR', 'UL', 'LR', 'LL'] },
+    trio: { fn: trio, name: '세 파편', tier: '점', el: 'care', shape: '원', line: '큰 점에 작은 점 둘이 졸졸', facts: '원 3' },
     halo: { fn: halo, name: '달무리', tier: '점', el: 'care', shape: '원', line: '점 둘레에 둥근 테', facts: '원 2' },
-    drop: { fn: drop, name: '물방울이', tier: '점', el: 'care', shape: '원', line: '점이 길게 늘어나면 방울', facts: '곡선 1' },
-    zig: { fn: zig, name: '번개선', tier: '선', el: 'flash', shape: '삼각', line: '꺾이고 꺾인 번개 모양 선', facts: '꺾임 5' },
-    arrow: { fn: arrow, name: '화살선', tier: '선', el: 'flash', shape: '삼각', line: '삼각이 앞장선 화살', facts: '삼각형 3 · 사각형 1' },
-    saw: { fn: saw, name: '톱니선', tier: '선', el: 'flash', shape: '삼각', line: '삼각이 줄지은 톱니', facts: '삼각형 5' },
+    drop: { fn: drop, name: '물방울', tier: '점', el: 'care', shape: '원', line: '점이 길게 늘어나면 방울', facts: '곡선 1' },
+    zig: { fn: zig, name: '번개', tier: '선', el: 'flash', shape: '삼각', line: '꺾이고 꺾인 번개 모양 선', facts: '꺾임 5' },
+    arrow: { fn: arrow, name: '화살', tier: '선', el: 'flash', shape: '삼각', line: '삼각이 앞장선 화살', facts: '삼각형 3 · 사각형 1' },
+    saw: { fn: saw, name: '톱니', tier: '선', el: 'flash', shape: '삼각', line: '삼각이 줄지은 톱니', facts: '삼각형 5' },
     tower: { fn: tower, name: '쌓기탑', tier: '면', el: 'support', shape: '사각', line: '사각을 높이 쌓아 탑', facts: '사각형 3' },
-    gate: { fn: gate, name: '문짝이', tier: '면', el: 'support', shape: '사각', line: '가운데가 뚫린 사각 문', facts: '사각형 1 · 구멍 1' },
-    tile: { fn: tile, name: '타일이', tier: '면', el: 'support', shape: '사각', line: '사각 넷을 이어 붙인 타일', facts: '사각형 4' },
-    dodeca: { fn: dodeca, name: '십이면체 대장', tier: '입체(보스)', el: 'boss', shape: '정십이면체', line: '오각형 열두 면이 하나씩 떨어져요', facts: '면 12 · 모서리 30 · 꼭짓점 20', faces: ['S0', 'S1', 'S2', 'S3', 'S4', 'F'] },
-    cylinder: { fn: cylinder, name: '원기둥 대장', tier: '입체(보스)', el: 'boss', shape: '원기둥', line: '뚜껑과 몸통이 따로 떨어져요', facts: '면 3(곡면 1)', faces: ['top', 'body'] },
-    cone: { fn: cone, name: '원뿔 대장', tier: '입체(보스)', el: 'boss', shape: '원뿔', line: '뾰족한 몸이 떨어지면 바닥이 남아요', facts: '면 2(곡면 1) · 꼭짓점 1', faces: ['body', 'base'] },
-    icosa: { fn: icosa, name: '이십면체 대장', tier: '입체(보스)', el: 'boss', shape: '정이십면체', line: '삼각형 스무 면이 떨어져요', facts: '면 20 · 모서리 30 · 꼭짓점 12', faces: ['E0', 'E1', 'E2', 'L0', 'L1', 'L2', 'R0', 'R1', 'R2', 'C'] },
-    prism: { fn: prism, name: '삼각기둥 대장', tier: '입체(보스)', el: 'boss', shape: '삼각기둥', line: '세 면이 하나씩 떨어져요', facts: '면 5 · 모서리 9 · 꼭짓점 6', faces: ['side', 'top', 'front'] },
-    sphere: { fn: sphere, name: '구 대장', tier: '입체(보스)', el: 'boss', shape: '구', line: '꼭짓점도 모서리도 없는 둥근 대장', facts: '면 1(곡면)' },
+    gate: { fn: gate, name: '문짝', tier: '면', el: 'support', shape: '사각', line: '가운데가 뚫린 사각 문', facts: '사각형 1 · 구멍 1' },
+    tile: { fn: tile, name: '타일', tier: '면', el: 'support', shape: '사각', line: '사각 넷을 이어 붙인 타일', facts: '사각형 4' },
+    dodeca: { fn: dodeca, name: '십이면체 수문장', tier: '입체(보스)', el: 'boss', shape: '정십이면체', line: '오각형 열두 면이 하나씩 떨어져요', facts: '면 12 · 모서리 30 · 꼭짓점 20', faces: ['S0', 'S1', 'S2', 'S3', 'S4', 'F'] },
+    cylinder: { fn: cylinder, name: '원기둥 수문장', tier: '입체(보스)', el: 'boss', shape: '원기둥', line: '뚜껑과 몸통이 따로 떨어져요', facts: '면 3(곡면 1)', faces: ['top', 'body'] },
+    cone: { fn: cone, name: '원뿔 수문장', tier: '입체(보스)', el: 'boss', shape: '원뿔', line: '뾰족한 몸이 떨어지면 바닥이 남아요', facts: '면 2(곡면 1) · 꼭짓점 1', faces: ['body', 'base'] },
+    icosa: { fn: icosa, name: '이십면체 수문장', tier: '입체(보스)', el: 'boss', shape: '정이십면체', line: '삼각형 스무 면이 떨어져요', facts: '면 20 · 모서리 30 · 꼭짓점 12', faces: ['E0', 'E1', 'E2', 'L0', 'L1', 'L2', 'R0', 'R1', 'R2', 'C'] },
+    prism: { fn: prism, name: '삼각기둥 수문장', tier: '입체(보스)', el: 'boss', shape: '삼각기둥', line: '세 면이 하나씩 떨어져요', facts: '면 5 · 모서리 9 · 꼭짓점 6', faces: ['side', 'top', 'front'] },
+    sphere: { fn: sphere, name: '구 수문장', tier: '입체(보스)', el: 'boss', shape: '구', line: '꼭짓점도 모서리도 없는 둥근 보스', facts: '면 1(곡면)' },
     moebius: { fn: moebius, name: '뫼비우스', tier: '점(특별종)', el: 'care', shape: '뫼비우스 띠', line: '한 번 꼬인 고리, 안팎이 하나예요', facts: '면 1 · 모서리 1' },
-    spiral: { fn: spiral, name: '나선이', tier: '점(특별종)', el: 'care', shape: '나선', line: '돌고 돌아 가운데로', facts: '곡선 1' },
+    spiral: { fn: spiral, name: '나선', tier: '점(특별종)', el: 'care', shape: '나선', line: '돌고 돌아 가운데로', facts: '곡선 1' },
     star: { fn: star, name: '별다각형', tier: '선(특별종)', el: 'flash', shape: '오각별', line: '한 붓으로 그린 별', facts: '꼭짓점 5 · 선 5' },
-    cross: { fn: cross, name: '십자이', tier: '면(특별종)', el: 'support', shape: '십자', line: '사각 다섯이 십자로', facts: '사각형 5' },
-    frame: { fn: frame, name: '액자이', tier: '면(특별종)', el: 'support', shape: '액자', line: '속이 빈 사각 테두리', facts: '사각형 2(안과 밖)' },
+    cross: { fn: cross, name: '십자표', tier: '면(특별종)', el: 'support', shape: '십자', line: '사각 다섯이 십자로', facts: '사각형 5' },
+    frame: { fn: frame, name: '빈 액자', tier: '면(특별종)', el: 'support', shape: '액자', line: '속이 빈 사각 테두리', facts: '사각형 2(안과 밖)' },
     pencil: { fn: pencil, name: '연필 각기둥', tier: '이벤트 한정', el: 'flash', shape: '육각기둥', line: '수능 응원 주간에만 나타나요', facts: '면 8 · 꼭짓점 12', faces: ['cap', 'body', 'tip'] },
     napa: { fn: napa, name: '배추 원뿔', tier: '이벤트 한정', el: 'support', shape: '원뿔', line: '김장하는 날에만 나타나요', facts: '면 2(곡면 1)', faces: ['leaf', 'base'] },
     tree: { fn: tree, name: '트리 원뿔', tier: '이벤트 한정', el: 'care', shape: '원뿔(삼각 세 단)', line: '연말에만 나타나요', facts: '삼각형 3 · 별 1', faces: ['top', 'mid', 'low'] },
-    pyramid: { fn: pyramid, name: '사각뿔 대장', tier: '입체(보스)', el: 'boss', shape: '사각뿔', line: '삼각 면이 떨어져요', facts: '면 5 · 모서리 8 · 꼭짓점 5', faces: ['R', 'L'] },
-    hexprism: { fn: hexprism, name: '육각기둥 대장', tier: '입체(보스)', el: 'boss', shape: '육각기둥', line: '옆면이 하나씩 떨어져요', facts: '면 8 · 모서리 18 · 꼭짓점 12', faces: ['Rt', 'Lf', 'top', 'Ct'] },
-    torus: { fn: torus, name: '도넛 대장', tier: '입체(보스)', el: 'boss', shape: '원환', line: '가운데가 뻥 뚫린 둥근 대장', facts: '구멍 1' },
-    cuboid: { fn: cuboid, name: '직육면체 대장', tier: '입체(보스)', el: 'boss', shape: '직육면체', line: '긴 상자 모양 대장', facts: '면 6 · 모서리 12 · 꼭짓점 8', faces: ['side', 'top', 'front'] },
-    hemi: { fn: hemi, name: '반구 대장', tier: '입체(보스)', el: 'boss', shape: '반구', line: '둥근 지붕이 먼저 떨어져요', facts: '면 2(곡면 1)', faces: ['dome', 'base'] },
-    ellip: { fn: ellip, name: '타원체 대장', tier: '입체(보스)', el: 'boss', shape: '타원체', line: '럭비공처럼 길쭉해요', facts: '곡면 1' },
+    pyramid: { fn: pyramid, name: '사각뿔 수문장', tier: '입체(보스)', el: 'boss', shape: '사각뿔', line: '삼각 면이 떨어져요', facts: '면 5 · 모서리 8 · 꼭짓점 5', faces: ['R', 'L'] },
+    hexprism: { fn: hexprism, name: '육각기둥 수문장', tier: '입체(보스)', el: 'boss', shape: '육각기둥', line: '옆면이 하나씩 떨어져요', facts: '면 8 · 모서리 18 · 꼭짓점 12', faces: ['Rt', 'Lf', 'top', 'Ct'] },
+    torus: { fn: torus, name: '도넛 수문장', tier: '입체(보스)', el: 'boss', shape: '원환', line: '가운데가 뻥 뚫린 둥근 보스', facts: '구멍 1' },
+    cuboid: { fn: cuboid, name: '직육면체 수문장', tier: '입체(보스)', el: 'boss', shape: '직육면체', line: '긴 상자 모양 보스', facts: '면 6 · 모서리 12 · 꼭짓점 8', faces: ['side', 'top', 'front'] },
+    hemi: { fn: hemi, name: '반구 수문장', tier: '입체(보스)', el: 'boss', shape: '반구', line: '둥근 지붕이 먼저 떨어져요', facts: '면 2(곡면 1)', faces: ['dome', 'base'] },
+    ellip: { fn: ellip, name: '타원체 수문장', tier: '입체(보스)', el: 'boss', shape: '타원체', line: '럭비공처럼 길쭉해요', facts: '곡면 1' },
     vertex: { fn: vertex, name: '꼭짓점', tier: '점', el: 'care', shape: '원', line: '모서리 셋이 만나는 점', facts: '모서리 3 · 만나는 점 1' },
     inter: { fn: inter, name: '교점', tier: '점', el: 'care', shape: '원', line: '두 선이 만나는 한 점', facts: '선 2 · 만나는 점 1' },
     mid: { fn: mid, name: '중점', tier: '점', el: 'care', shape: '원', line: '양끝에서 같은 거리, 한가운데 점', facts: '끝점 2 · 가운데 1' },
@@ -595,13 +595,13 @@ html[lang=en] .hero h1 { font-size: clamp(40px, 8.4vw, 104px); line-height: 1.02
     rhomb: { fn: rhomb, name: '마름모', tier: '면', el: 'support', shape: '사각', line: '네 변의 길이가 같아요', facts: '변 4 · 꼭짓점 4' },
     trap: { fn: trap, name: '사다리꼴', tier: '면', el: 'support', shape: '사각', line: '마주 보는 한 쌍이 나란해요', facts: '변 4 · 나란한 변 1쌍' },
     para2: { fn: para2, name: '평행사변형', tier: '면', el: 'support', shape: '사각', line: '마주 보는 변이 모두 나란해요', facts: '변 4 · 나란한 변 2쌍' },
-    bipyr: { fn: bipyr, name: '쌍뿔 대장', tier: '입체(보스)', el: 'boss', shape: '쌍뿔', line: '뿔 두 쪽이 맞붙었어요', facts: '면 6 · 꼭짓점 5', faces: ['top', 'bot'] },
-    dice: { fn: dice, name: '주사위 대장', tier: '입체(보스)', el: 'boss', shape: '주사위', line: '눈이 여섯, 어느 면이 나올까요', facts: '면 6 · 눈금 21', faces: ['top', 'front'] },
+    bipyr: { fn: bipyr, name: '쌍뿔 수문장', tier: '입체(보스)', el: 'boss', shape: '쌍뿔', line: '뿔 두 쪽이 맞붙었어요', facts: '면 6 · 꼭짓점 5', faces: ['top', 'bot'] },
+    dice: { fn: dice, name: '주사위 보스', tier: '입체(보스)', el: 'boss', shape: '주사위', line: '눈이 여섯, 어느 면이 나올까요', facts: '면 6 · 눈금 21', faces: ['top', 'front'] },
     twistking: { fn: twistking, name: '뒤틀왕', tier: '입체(보스)', el: 'boss', shape: '뒤틀린 별 다면체', line: '반듯한 건 다 비틀어 주마', facts: '가시 12 · 모서리가 어긋났어요', faces: ['spikes', 'core'] },
-    antiprism: { fn: antiprism, name: '엇각기둥 대장', tier: '입체(보스)', el: 'boss', shape: '엇각기둥', line: '윗면과 아랫면이 엇갈린 기둥', facts: '면 8 · 삼각 6 + 삼각 2', faces: ['top', 'side'] },
-    cuboct: { fn: cuboct, name: '육팔면체 대장', tier: '입체(보스)', el: 'boss', shape: '육팔면체', line: '정사각 6 · 정삼각 8', facts: '면 14 · 모서리 24', faces: ['tri', 'sq'] },
-    stella: { fn: stella, name: '별 다면체 대장', tier: '입체(보스)', el: 'boss', shape: '별 다면체', line: '가시가 돋은 별 모양', facts: '꼭짓점 12 · 가시 12', faces: ['spikes', 'core'] },
-    klein: { fn: klein, name: '병 대장', tier: '입체(보스)', el: 'boss', shape: '클라인 병', line: '안팎이 없는 병(찻주전자 닮음)', facts: '곡면 1 · 안팎이 하나', faces: ['neck', 'body'] },
+    antiprism: { fn: antiprism, name: '엇각기둥 수문장', tier: '입체(보스)', el: 'boss', shape: '엇각기둥', line: '윗면과 아랫면이 엇갈린 기둥', facts: '면 8 · 삼각 6 + 삼각 2', faces: ['top', 'side'] },
+    cuboct: { fn: cuboct, name: '육팔면체 수문장', tier: '입체(보스)', el: 'boss', shape: '육팔면체', line: '정사각 6 · 정삼각 8', facts: '면 14 · 모서리 24', faces: ['tri', 'sq'] },
+    stella: { fn: stella, name: '별 다면체 수문장', tier: '입체(보스)', el: 'boss', shape: '별 다면체', line: '가시가 돋은 별 모양', facts: '꼭짓점 12 · 가시 12', faces: ['spikes', 'core'] },
+    klein: { fn: klein, name: '안팎 없는 병', tier: '입체(보스)', el: 'boss', shape: '클라인 병', line: '안팎이 없는 병(찻주전자 닮음)', facts: '곡면 1 · 안팎이 하나', faces: ['neck', 'body'] },
     fractal: { fn: fractal, name: '겹겹삼각', tier: '특별(프랙탈)', el: 'special', shape: '프랙탈', line: '삼각 안에 삼각 안에 삼각…', facts: '삼각형 27(3단) · 구멍 13' },
   };
   const api = {
@@ -612,7 +612,7 @@ html[lang=en] .hero h1 { font-size: clamp(40px, 8.4vw, 104px); line-height: 1.02
     texture: texture,
     inner: (id, st, o) => MON[id].fn(st == null ? 0 : st, o),
     cubeFace: (fc, st, o) => wrap(cubeFaceSvg(fc, st == null ? 0 : st), Object.assign({ label: '정육면체 ' + fc }, o)),
-    /** 정돈된 동료 모습: 정육면체 대장이 정돈되어 리본과 발이 생김 */
+    /** 정돈된 동료 모습: 정육면체 보스이 정돈되어 리본과 발이 생김 */
     companion: (o) => wrap(cube(2, { companion: true }), Object.assign({ label: '정돈된 큐브 동료' }, o)),
     CUBE,
     /** 체력 비율 r(1→0)에 맞는 숨길 면 목록: 입체 보스는 체력이 줄수록 한 장씩 떨어져 나간다 */
@@ -624,12 +624,15 @@ html[lang=en] .hero h1 { font-size: clamp(40px, 8.4vw, 104px); line-height: 1.02
       o = o || {}; const rn = rng(o.seed || 9), cols = 6, rows = 4, pts = [], html = box.innerHTML, host = o.host || box.parentNode;
       for (let r = 0; r <= rows; r++) { pts[r] = []; for (let c = 0; c <= cols; c++) pts[r][c] = [c / cols * 100 + (c && c < cols ? (rn() - .5) * 9 : 0), r / rows * 100 + (r && r < rows ? (rn() - .5) * 11 : 0)]; }
       const tris = []; for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) { const a = pts[r][c], b = pts[r][c + 1], d = pts[r + 1][c], e = pts[r + 1][c + 1]; tris.push([a, b, d], [b, e, d]); }
-      const bx = box.getBoundingClientRect(), hx = host.getBoundingClientRect(), sp = o.speed || 1; box.style.visibility = 'hidden';
-      tris.forEach((t) => {
-        const e = document.createElement('div'); e.style.cssText = `position:absolute;left:${bx.left - hx.left}px;top:${bx.top - hx.top}px;width:${bx.width}px;height:${bx.height}px;pointer-events:none;z-index:50;clip-path:polygon(${t.map((p) => p[0] + '% ' + p[1] + '%').join(',')})`; e.innerHTML = html; host.appendChild(e);
+      /* 11/6 끊김: ①읽기(getBoundingClientRect)는 쓰기 전에 한 번만 ②그림은 한 번만 파싱해 복제(48번 innerHTML 파싱 X) ③조각은 4번에 나눠 붙여(프레임당 12개) 한 작업이 길어지지 않게. 조각 수·움직임·길이는 그대로 */
+      const bx = o.rect || box.getBoundingClientRect(), hx = o.hostRect || host.getBoundingClientRect(), sp = o.speed || 1, proto = document.createElement('div'); proto.innerHTML = html; box.style.visibility = 'hidden';
+      const mk = (t) => {
+        const e = document.createElement('div'); e.style.cssText = `position:absolute;left:${bx.left - hx.left}px;top:${bx.top - hx.top}px;width:${bx.width}px;height:${bx.height}px;pointer-events:none;z-index:50;contain:layout style;clip-path:polygon(${t.map((p) => p[0] + '% ' + p[1] + '%').join(',')})`; Array.prototype.forEach.call(proto.childNodes, (nd) => e.appendChild(nd.cloneNode(true)));
         const gx = (t[0][0] + t[1][0] + t[2][0]) / 3 - 50, gy = (t[0][1] + t[1][1] + t[2][1]) / 3 - 50, ang = Math.atan2(gy, gx) + (rn() - .5) * .6, dist = (60 + rn() * 120) * (bx.width / 160), dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist * .6 - 40, rot = (rn() - .5) * 540;
-        const a = e.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: `translate(${dx * .6}px,${dy}px) rotate(${rot * .5}deg)`, opacity: 1, offset: .38 }, { transform: `translate(${dx}px,${dy + bx.height * 1.2}px) rotate(${rot}deg)`, opacity: 0 }], { duration: (850 + rn() * 300) / sp, easing: 'cubic-bezier(.3,.2,.6,1)', fill: 'forwards' }); a.onfinish = () => e.remove();
-      });
+        const a = e.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: `translate(${dx * .6}px,${dy}px) rotate(${rot * .5}deg)`, opacity: 1, offset: .38 }, { transform: `translate(${dx}px,${dy + bx.height * 1.2}px) rotate(${rot}deg)`, opacity: 0 }], { duration: (850 + rn() * 300) / sp, easing: 'cubic-bezier(.3,.2,.6,1)', fill: 'forwards' }); a.onfinish = () => e.remove(); a.pause(); return [e, a];
+      };
+      const CH = 12, step = (k) => { const frag = document.createDocumentFragment(), an = []; tris.slice(k, k + CH).forEach((t) => { const x = mk(t); frag.appendChild(x[0]); an.push(x[1]); }); host.appendChild(frag); an.forEach((a) => a.play()); if (k + CH < tris.length) (window.requestAnimationFrame || setTimeout)(() => step(k + CH)); };
+      step(0);
     },
   };
   return api;

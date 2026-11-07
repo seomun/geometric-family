@@ -1,83 +1,83 @@
 {
  "places": {
-  "battle": "combat",
-  "home": "calm",
-  "map": "endless",
-  "shop": "preparing",
-  "boss": "troll",
-  "boss2": "noreturn",
-  "warp": "running",
-  "win": "happy",
-  "lose": "regroup"
+  "battle": "hero",
+  "home": "town",
+  "map": "grass",
+  "shop": "minstrel",
+  "boss": "epic",
+  "boss2": "mission",
+  "warp": "rpg",
+  "win": "dreams",
+  "lose": "snow"
  },
  "tracks": {
-  "combat": {
-   "pak": "m_combat.pak",
+  "hero": {
+   "pak": "m_hero.pak",
    "loop": true,
    "lufs": -20,
-   "kb": 998,
+   "kb": 793,
    "loopStart": 0.08,
-   "loopEnd": 72.907143
+   "loopEnd": 57.911315
   },
-  "calm": {
-   "pak": "m_calm.pak",
+  "town": {
+   "pak": "m_town.pak",
    "loop": true,
    "lufs": -20,
-   "kb": 1005,
+   "kb": 827,
    "loopStart": 0.08,
-   "loopEnd": 73.401655
+   "loopEnd": 60.419433
   },
-  "endless": {
-   "pak": "m_endless.pak",
+  "grass": {
+   "pak": "m_grass.pak",
    "loop": true,
    "lufs": -20,
-   "kb": 1051,
+   "kb": 840,
    "loopStart": 0.08,
-   "loopEnd": 76.775193
+   "loopEnd": 61.35746
   },
-  "preparing": {
-   "pak": "m_preparing.pak",
+  "minstrel": {
+   "pak": "m_minstrel.pak",
    "loop": true,
    "lufs": -20,
-   "kb": 877,
+   "kb": 646,
    "loopStart": 0.08,
-   "loopEnd": 64.080045
+   "loopEnd": 47.157098
   },
-  "troll": {
-   "pak": "m_troll.pak",
+  "epic": {
+   "pak": "m_epic.pak",
    "loop": true,
    "lufs": -20,
-   "kb": 882,
+   "kb": 869,
    "loopStart": 0.08,
-   "loopEnd": 64.469161
+   "loopEnd": 63.483878
   },
-  "noreturn": {
-   "pak": "m_noreturn.pak",
+  "mission": {
+   "pak": "m_mission.pak",
    "loop": true,
    "lufs": -20,
-   "kb": 914,
+   "kb": 833,
    "loopStart": 0.08,
-   "loopEnd": 66.769728
+   "loopEnd": 60.839456
   },
-  "running": {
-   "pak": "m_running.pak",
+  "rpg": {
+   "pak": "m_rpg.pak",
    "loop": true,
    "lufs": -20,
-   "kb": 693,
+   "kb": 783,
    "loopStart": 0.08,
-   "loopEnd": 50.606281
+   "loopEnd": 57.223084
   },
-  "happy": {
-   "pak": "m_happy.pak",
+  "dreams": {
+   "pak": "m_dreams.pak",
    "loop": false,
    "lufs": -20,
    "kb": 273
   },
-  "regroup": {
-   "pak": "m_regroup.pak",
+  "snow": {
+   "pak": "m_snow.pak",
    "loop": false,
    "lufs": -20,
-   "kb": 219
+   "kb": 273
   }
  }
 }

@@ -1,0 +1,264 @@
+{
+ "v": 1,
+ "units": {
+  "u_nemo_dad": {
+   "pak": "v_nemo_dad.pak",
+   "pakAac": "v_nemo_dad.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1"
+   ],
+   "win": [
+    "win_1"
+   ],
+   "skill": [
+    "skill_1"
+   ]
+  },
+  "u_nemo_mom": {
+   "pak": "v_nemo_mom.pak",
+   "pakAac": "v_nemo_mom.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1"
+   ],
+   "win": [
+    "win_1"
+   ],
+   "skill": [
+    "skill_1"
+   ]
+  },
+  "u_husband": {
+   "pak": "v_husband.pak",
+   "pakAac": "v_husband.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1"
+   ],
+   "win": [
+    "win_1"
+   ],
+   "skill": [
+    "skill_1"
+   ]
+  },
+  "u_semo_wife": {
+   "pak": "v_wife.pak",
+   "pakAac": "v_wife.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1"
+   ],
+   "win": [
+    "win_1"
+   ],
+   "skill": [
+    "skill_1"
+   ]
+  },
+  "u_dong_dad": {
+   "pak": "v_dong_dad.pak",
+   "pakAac": "v_dong_dad.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1"
+   ],
+   "win": [
+    "win_1"
+   ],
+   "skill": [
+    "skill_1"
+   ]
+  },
+  "u_myth_poseidon": {
+   "pak": "v_poseidon.pak",
+   "pakAac": "v_poseidon.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1",
+    "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_myth_athena": {
+   "pak": "v_athena.pak",
+   "pakAac": "v_athena.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_start_athena": {
+   "pak": "v_athena.pak",
+   "pakAac": "v_athena.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_myth_wukong": {
+   "pak": "v_wukong.pak",
+   "pakAac": "v_wukong.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1",
+    "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_wukong": {
+   "pak": "v_wukong.pak",
+   "pakAac": "v_wukong.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1",
+    "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_myth_gumiho": {
+   "pak": "v_gumiho.pak",
+   "pakAac": "v_gumiho.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_2"
+   ],
+   "win": [
+    "win_1",
+    "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_gumiho": {
+   "pak": "v_gumiho.pak",
+   "pakAac": "v_gumiho.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_2"
+   ],
+   "win": [
+    "win_1",
+    "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_myth_anubis": {
+   "pak": "v_anubis.pak",
+   "pakAac": "v_anubis.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1"
+   ],
+   "skill": [
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_myth_samjoko": {
+   "pak": "v_samjoko.pak",
+   "pakAac": "v_samjoko.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1",
+    "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  },
+  "u_myth_haetae": {
+   "pak": "v_haetae.pak",
+   "pakAac": "v_haetae.aac.pak",
+   "ext": ".ogg",
+   "extAac": ".m4a",
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1",
+    "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
+   ]
+  }
+ }
+}

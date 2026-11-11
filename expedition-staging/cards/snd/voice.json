@@ -113,8 +113,12 @@
     "win_2": "바다는 잊지 않는다.",
     "skill_1": "삼지창을 받아라.",
     "skill_2": "바다의 분노다.",
-    "skill_3": "모두 삼켜라."
+    "skill_3": "모두 삼켜라.",
+    "get_1": "구슬을 되찾아 줘서 고맙다. 바다가 너희 편이다."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -140,8 +144,12 @@
     "win_1": "계산대로다.",
     "skill_1": "방패를 세워라.",
     "skill_2": "약점은 저기다.",
-    "skill_3": "창끝은 빗나가지 않는다."
+    "skill_3": "창끝은 빗나가지 않는다.",
+    "get_1": "지혜가 필요하면 나를 불러라. 함께 간다."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -166,8 +174,12 @@
     "win_1": "계산대로다.",
     "skill_1": "방패를 세워라.",
     "skill_2": "약점은 저기다.",
-    "skill_3": "창끝은 빗나가지 않는다."
+    "skill_3": "창끝은 빗나가지 않는다.",
+    "get_1": "지혜가 필요하면 나를 불러라. 함께 간다."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -193,8 +205,12 @@
     "win_2": "몸도 안 풀렸는데.",
     "skill_1": "여의봉, 늘어나라.",
     "skill_2": "분신 나간다.",
-    "skill_3": "이 몸이 제천대성이다."
+    "skill_3": "이 몸이 제천대성이다.",
+    "get_1": "구름 한 조각이면 어디든 간다. 나도 끼워 줘."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -221,8 +237,12 @@
     "win_2": "몸도 안 풀렸는데.",
     "skill_1": "여의봉, 늘어나라.",
     "skill_2": "분신 나간다.",
-    "skill_3": "이 몸이 제천대성이다."
+    "skill_3": "이 몸이 제천대성이다.",
+    "get_1": "구름 한 조각이면 어디든 간다. 나도 끼워 줘."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -248,8 +268,12 @@
     "win_2": "달이 참 곱구나.",
     "skill_1": "여우불을 받아라.",
     "skill_2": "눈을 떼지 마.",
-    "skill_3": "꼬리가 널 감는다."
+    "skill_3": "꼬리가 널 감는다.",
+    "get_1": "꼬리 아홉 개, 이제 너희를 위해 쓰지."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -274,8 +298,12 @@
     "win_2": "달이 참 곱구나.",
     "skill_1": "여우불을 받아라.",
     "skill_2": "눈을 떼지 마.",
-    "skill_3": "꼬리가 널 감는다."
+    "skill_3": "꼬리가 널 감는다.",
+    "get_1": "꼬리 아홉 개, 이제 너희를 위해 쓰지."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -299,8 +327,12 @@
     "start_2": "심장을 올려라.",
     "win_1": "판결은 끝났다.",
     "skill_2": "저승문이 열린다.",
-    "skill_3": "네 죄를 달아 보마."
+    "skill_3": "네 죄를 달아 보마.",
+    "get_1": "저울은 거짓을 놓치지 않는다. 길을 지켜 주마."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_2",
     "skill_3"
@@ -325,8 +357,12 @@
     "win_2": "해는 지지 않는다.",
     "skill_1": "태양의 불꽃.",
     "skill_2": "빛으로 태운다.",
-    "skill_3": "날개 아래 엎드려라."
+    "skill_3": "날개 아래 엎드려라.",
+    "get_1": "해가 뜨는 곳까지 내가 앞장선다."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -353,8 +389,12 @@
     "win_2": "문은 닫혔다.",
     "skill_1": "뿔로 가른다.",
     "skill_2": "불길을 삼킨다.",
-    "skill_3": "거짓은 통하지 않는다."
+    "skill_3": "거짓은 통하지 않는다.",
+    "get_1": "옳고 그름은 내가 가린다. 함께 가자."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2",
@@ -398,8 +438,12 @@
     "start_1": "동쪽 하늘이 열린다.",
     "win_2": "용은 두 번 말하지 않는다.",
     "skill_1": "여의주여, 빛나라.",
-    "skill_2": "천둥을 내린다."
+    "skill_2": "천둥을 내린다.",
+    "get_1": "용궁의 물결이 너희를 따른다."
    },
+   "get": [
+    "get_1"
+   ],
    "skill": [
     "skill_1",
     "skill_2"
@@ -673,6 +717,30 @@
     "album12_arrive": "독니 바다뱀이 종소리를 막았다.",
     "album12_restore": "종이 다시 크게 울렸다.",
     "album12_join": "종소리가 돌아왔다. 은혜는 꼭 갚을게.",
+    "album13_arrive": "망치 귀상어가 곶감을 노렸다.",
+    "album13_restore": "곶감이 시렁에 돌아왔다.",
+    "album14_arrive": "늑대고기가 할머니로 둔갑했다.",
+    "album14_restore": "빨간 모자가 무사히 돌아왔다.",
+    "album15_arrive": "여우상어가 거짓말을 퍼뜨렸다.",
+    "album15_restore": "줄이 풀려 인형이 웃었다.",
+    "album16_arrive": "표범물범이 바다를 얼려 버렸다.",
+    "album16_restore": "얼음 거울이 녹아내렸다.",
+    "album17_arrive": "대왕조개가 곳간을 삼켰다.",
+    "album17_restore": "곳간에 곡식이 돌아왔다.",
+    "album18_arrive": "범고래가 결승선을 옮겼다.",
+    "album18_restore": "결승선이 제자리로 돌아왔다.",
+    "album19_arrive": "쏠배감펭이 박 속을 독침으로 채웠다.",
+    "album19_restore": "박 속에서 금이 쏟아졌다.",
+    "album20_arrive": "세이렌이 노래를 훔쳐 갔다.",
+    "album20_restore": "영감의 노래가 돌아왔다.",
+    "album21_arrive": "곰치 군주가 연못을 속였다.",
+    "album21_restore": "연못이 맑게 개었다.",
+    "album22_arrive": "바다코끼리가 오두막을 뒤졌다.",
+    "album22_restore": "오두막에 식구가 모였다.",
+    "album23_arrive": "칠성장어가 가죽을 빨아 갔다.",
+    "album23_restore": "작업대에 새 구두가 놓였다.",
+    "album24_arrive": "갯가재가 볏단을 뒤섞었다.",
+    "album24_restore": "볏단이 제자리로 돌아갔다.",
     "boss1_in": "구슬은 내 것이다. 돌아가라.",
     "boss1_out": "소용돌이가 멈추다니, 말도 안 돼.",
     "boss2_in": "해도 달도 이제 내 뱃속이다.",
@@ -697,9 +765,54 @@
     "boss11_out": "이빨이 빠졌다.",
     "boss12_in": "종은 다시 울리지 않는다.",
     "boss12_out": "독니가 부러졌다.",
+    "boss13_in": "곶감은 내가 먼저 찜했다.",
+    "boss13_out": "망치가 깨졌다.",
+    "boss14_in": "할머니는 없다. 이제 내가 할머니다.",
+    "boss14_out": "변장이 벗겨졌다.",
+    "boss15_in": "내 말이 곧 진실이다.",
+    "boss15_out": "거짓말이 들통났다.",
+    "boss16_in": "이 바다는 영원히 얼어 있을 거다.",
+    "boss16_out": "얼음이 갈라진다.",
+    "boss17_in": "곳간은 이미 내 껍데기 안이다.",
+    "boss17_out": "껍데기가 벌어진다.",
+    "boss18_in": "결승선은 내가 정한다.",
+    "boss18_out": "물살이 나를 버렸다.",
+    "boss19_in": "박마다 독침을 심어 두었다.",
+    "boss19_out": "독침이 다 빠졌다.",
+    "boss20_in": "이 골짜기의 노래는 전부 내 것이다.",
+    "boss20_out": "목소리가 흩어진다.",
+    "boss21_in": "연못의 주인은 나다. 엎드려라.",
+    "boss21_out": "왕관이 가라앉는다.",
+    "boss22_in": "이 오두막은 내가 차지한다.",
+    "boss22_out": "엄니가 꺾였다.",
+    "boss23_in": "가죽 한 장도 남기지 않겠다.",
+    "boss23_out": "빨판이 떨어졌다.",
+    "boss24_in": "볏단은 모조리 흩어 놓겠다.",
+    "boss24_out": "앞발이 풀린다.",
     "alch_found_1": "새 조합을 찾았어. 노트에 적어 두자.",
     "alch_found_2": "이런 조합이 있었네. 하나 더 알았다.",
     "alch_found_3": "노트에 한 줄이 늘었어.",
+    "mq1_cut1": "구슬을 되찾아 줘서 고맙구나.",
+    "mq1_cut2": "내 힘을 맡기마. 바다의 신 포세이돈이다.",
+    "mq1_cut3": "다음 신화는 저울에 깃털을 올린 자다.",
+    "mq2_cut1": "저울 위의 깃털이 흔들렸다.",
+    "mq2_cut2": "죽은 자를 심판하는 아누비스가 나타났다.",
+    "mq2_cut3": "저울이 가리킨 곳은 구름 위다.",
+    "mq3_cut1": "구름 한 조각이 발밑에 내려앉았다.",
+    "mq3_cut2": "근두운을 탄 손오공이 웃으며 합류했다.",
+    "mq3_cut3": "구름이 걷히면 해를 나르는 새가 온다.",
+    "mq4_cut1": "오작교 위로 붉은 해가 지나갔다.",
+    "mq4_cut2": "해를 나르는 삼족오가 날개를 접었다.",
+    "mq4_cut3": "해 지는 바다 밑에서 용이 깨어난다.",
+    "mq5_cut1": "용궁 바닥이 천천히 울렸다.",
+    "mq5_cut2": "깊은 물에서 청룡이 몸을 일으켰다.",
+    "mq5_cut3": "용이 잠든 산 너머 꼬리 아홉이 있다.",
+    "mq6_cut1": "곶감 향 속에서 꼬리 하나가 스쳤다.",
+    "mq6_cut2": "아홉 꼬리의 구미호가 앞에 섰다.",
+    "mq6_cut3": "거짓을 가려내는 연못에 뿔이 있다.",
+    "mq7_cut1": "맑은 연못 위로 뿔이 솟았다.",
+    "mq7_cut2": "정의를 가리는 해태가 고개를 숙였다.",
+    "mq7_cut3": "신화 일곱 장이 모두 모였다!",
     "tut_blob": "같은 색 구슬을 크게 모아 한 번에 터뜨려 보세요.",
     "tut_combo": "덩어리가 클수록, 함께 터질수록 피해가 커집니다.",
     "tut_replay": "깬 판을 다시 하면 카드를 더 모을 수 있어요.",
@@ -733,6 +846,48 @@
    "album12_restore": [
     "album12_restore"
    ],
+   "album13_arrive": [
+    "album13_arrive"
+   ],
+   "album13_restore": [
+    "album13_restore"
+   ],
+   "album14_arrive": [
+    "album14_arrive"
+   ],
+   "album14_restore": [
+    "album14_restore"
+   ],
+   "album15_arrive": [
+    "album15_arrive"
+   ],
+   "album15_restore": [
+    "album15_restore"
+   ],
+   "album16_arrive": [
+    "album16_arrive"
+   ],
+   "album16_restore": [
+    "album16_restore"
+   ],
+   "album17_arrive": [
+    "album17_arrive"
+   ],
+   "album17_restore": [
+    "album17_restore"
+   ],
+   "album18_arrive": [
+    "album18_arrive"
+   ],
+   "album18_restore": [
+    "album18_restore"
+   ],
+   "album19_arrive": [
+    "album19_arrive"
+   ],
+   "album19_restore": [
+    "album19_restore"
+   ],
    "album1_arrive": [
     "album1_arrive"
    ],
@@ -741,6 +896,36 @@
    ],
    "album1_restore": [
     "album1_restore"
+   ],
+   "album20_arrive": [
+    "album20_arrive"
+   ],
+   "album20_restore": [
+    "album20_restore"
+   ],
+   "album21_arrive": [
+    "album21_arrive"
+   ],
+   "album21_restore": [
+    "album21_restore"
+   ],
+   "album22_arrive": [
+    "album22_arrive"
+   ],
+   "album22_restore": [
+    "album22_restore"
+   ],
+   "album23_arrive": [
+    "album23_arrive"
+   ],
+   "album23_restore": [
+    "album23_restore"
+   ],
+   "album24_arrive": [
+    "album24_arrive"
+   ],
+   "album24_restore": [
+    "album24_restore"
    ],
    "album2_arrive": [
     "album2_arrive"
@@ -837,11 +1022,83 @@
    "boss12_out": [
     "boss12_out"
    ],
+   "boss13_in": [
+    "boss13_in"
+   ],
+   "boss13_out": [
+    "boss13_out"
+   ],
+   "boss14_in": [
+    "boss14_in"
+   ],
+   "boss14_out": [
+    "boss14_out"
+   ],
+   "boss15_in": [
+    "boss15_in"
+   ],
+   "boss15_out": [
+    "boss15_out"
+   ],
+   "boss16_in": [
+    "boss16_in"
+   ],
+   "boss16_out": [
+    "boss16_out"
+   ],
+   "boss17_in": [
+    "boss17_in"
+   ],
+   "boss17_out": [
+    "boss17_out"
+   ],
+   "boss18_in": [
+    "boss18_in"
+   ],
+   "boss18_out": [
+    "boss18_out"
+   ],
+   "boss19_in": [
+    "boss19_in"
+   ],
+   "boss19_out": [
+    "boss19_out"
+   ],
    "boss1_in": [
     "boss1_in"
    ],
    "boss1_out": [
     "boss1_out"
+   ],
+   "boss20_in": [
+    "boss20_in"
+   ],
+   "boss20_out": [
+    "boss20_out"
+   ],
+   "boss21_in": [
+    "boss21_in"
+   ],
+   "boss21_out": [
+    "boss21_out"
+   ],
+   "boss22_in": [
+    "boss22_in"
+   ],
+   "boss22_out": [
+    "boss22_out"
+   ],
+   "boss23_in": [
+    "boss23_in"
+   ],
+   "boss23_out": [
+    "boss23_out"
+   ],
+   "boss24_in": [
+    "boss24_in"
+   ],
+   "boss24_out": [
+    "boss24_out"
    ],
    "boss2_in": [
     "boss2_in"
@@ -890,6 +1147,69 @@
    ],
    "boss9_out": [
     "boss9_out"
+   ],
+   "mq1_cut1": [
+    "mq1_cut1"
+   ],
+   "mq1_cut2": [
+    "mq1_cut2"
+   ],
+   "mq1_cut3": [
+    "mq1_cut3"
+   ],
+   "mq2_cut1": [
+    "mq2_cut1"
+   ],
+   "mq2_cut2": [
+    "mq2_cut2"
+   ],
+   "mq2_cut3": [
+    "mq2_cut3"
+   ],
+   "mq3_cut1": [
+    "mq3_cut1"
+   ],
+   "mq3_cut2": [
+    "mq3_cut2"
+   ],
+   "mq3_cut3": [
+    "mq3_cut3"
+   ],
+   "mq4_cut1": [
+    "mq4_cut1"
+   ],
+   "mq4_cut2": [
+    "mq4_cut2"
+   ],
+   "mq4_cut3": [
+    "mq4_cut3"
+   ],
+   "mq5_cut1": [
+    "mq5_cut1"
+   ],
+   "mq5_cut2": [
+    "mq5_cut2"
+   ],
+   "mq5_cut3": [
+    "mq5_cut3"
+   ],
+   "mq6_cut1": [
+    "mq6_cut1"
+   ],
+   "mq6_cut2": [
+    "mq6_cut2"
+   ],
+   "mq6_cut3": [
+    "mq6_cut3"
+   ],
+   "mq7_cut1": [
+    "mq7_cut1"
+   ],
+   "mq7_cut2": [
+    "mq7_cut2"
+   ],
+   "mq7_cut3": [
+    "mq7_cut3"
    ],
    "tut_absorb": [
     "tut_absorb"

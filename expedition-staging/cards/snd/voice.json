@@ -6,19 +6,14 @@
    "pakAac": "v_nemo_dad.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "오늘도 내가 앞에 설게.",
-    "win_1": "다들 다친 데 없지?",
-    "skill_1": "방패 뒤로 모여."
-   },
-   "skill": [
-    "skill_1"
-   ],
    "start": [
     "start_1"
    ],
    "win": [
     "win_1"
+   ],
+   "skill": [
+    "skill_1"
    ]
   },
   "u_nemo_mom": {
@@ -26,19 +21,14 @@
    "pakAac": "v_nemo_mom.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "든든히 먹고 출발하자.",
-    "win_1": "수고했어, 다들.",
-    "skill_1": "조금만 버텨, 금방 낫게 해 줄게."
-   },
-   "skill": [
-    "skill_1"
-   ],
    "start": [
     "start_1"
    ],
    "win": [
     "win_1"
+   ],
+   "skill": [
+    "skill_1"
    ]
   },
   "u_husband": {
@@ -46,19 +36,14 @@
    "pakAac": "v_husband.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "오늘은 내가 지켜 줄게.",
-    "win_1": "당신 덕분이야.",
-    "skill_1": "내 차례다, 물러서."
-   },
-   "skill": [
-    "skill_1"
-   ],
    "start": [
     "start_1"
    ],
    "win": [
     "win_1"
+   ],
+   "skill": [
+    "skill_1"
    ]
   },
   "u_semo_wife": {
@@ -66,19 +51,14 @@
    "pakAac": "v_wife.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "준비됐지? 따라와.",
-    "win_1": "역시 내가 최고지.",
-    "skill_1": "한 번에 끝낼게."
-   },
-   "skill": [
-    "skill_1"
-   ],
    "start": [
     "start_1"
    ],
    "win": [
     "win_1"
+   ],
+   "skill": [
+    "skill_1"
    ]
   },
   "u_dong_dad": {
@@ -86,19 +66,14 @@
    "pakAac": "v_dong_dad.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "계획은 다 세워 뒀어.",
-    "win_1": "예상한 그대로군.",
-    "skill_1": "구름아, 길을 열어라."
-   },
-   "skill": [
-    "skill_1"
-   ],
    "start": [
     "start_1"
    ],
    "win": [
     "win_1"
+   ],
+   "skill": [
+    "skill_1"
    ]
   },
   "u_myth_poseidon": {
@@ -106,24 +81,6 @@
    "pakAac": "v_poseidon.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "바다가 길을 연다.",
-    "start_2": "내 구슬을 찾으러 간다.",
-    "win_1": "파도는 다시 잔잔하다.",
-    "win_2": "바다는 잊지 않는다.",
-    "skill_1": "삼지창을 받아라.",
-    "skill_2": "바다의 분노다.",
-    "skill_3": "모두 삼켜라.",
-    "get_1": "구슬을 되찾아 줘서 고맙다. 바다가 너희 편이다."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_1",
     "start_2"
@@ -131,6 +88,11 @@
    "win": [
     "win_1",
     "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_myth_athena": {
@@ -138,29 +100,17 @@
    "pakAac": "v_athena.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "전장은 이미 읽었다.",
-    "start_2": "서두르지 마라, 이길 판이다.",
-    "win_1": "계산대로다.",
-    "skill_1": "방패를 세워라.",
-    "skill_2": "약점은 저기다.",
-    "skill_3": "창끝은 빗나가지 않는다.",
-    "get_1": "지혜가 필요하면 나를 불러라. 함께 간다."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_1",
     "start_2"
    ],
    "win": [
     "win_1"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_start_athena": {
@@ -168,29 +118,17 @@
    "pakAac": "v_athena.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "전장은 이미 읽었다.",
-    "start_2": "서두르지 마라, 이길 판이다.",
-    "win_1": "계산대로다.",
-    "skill_1": "방패를 세워라.",
-    "skill_2": "약점은 저기다.",
-    "skill_3": "창끝은 빗나가지 않는다.",
-    "get_1": "지혜가 필요하면 나를 불러라. 함께 간다."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_1",
     "start_2"
    ],
    "win": [
     "win_1"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_myth_wukong": {
@@ -198,24 +136,6 @@
    "pakAac": "v_wukong.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "한판 놀아 볼까.",
-    "start_2": "구름 타고 먼저 간다.",
-    "win_1": "벌써 끝이야?",
-    "win_2": "몸도 안 풀렸는데.",
-    "skill_1": "여의봉, 늘어나라.",
-    "skill_2": "분신 나간다.",
-    "skill_3": "이 몸이 제천대성이다.",
-    "get_1": "구름 한 조각이면 어디든 간다. 나도 끼워 줘."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_1",
     "start_2"
@@ -223,6 +143,11 @@
    "win": [
     "win_1",
     "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_wukong": {
@@ -230,24 +155,6 @@
    "pakAac": "v_wukong.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "한판 놀아 볼까.",
-    "start_2": "구름 타고 먼저 간다.",
-    "win_1": "벌써 끝이야?",
-    "win_2": "몸도 안 풀렸는데.",
-    "skill_1": "여의봉, 늘어나라.",
-    "skill_2": "분신 나간다.",
-    "skill_3": "이 몸이 제천대성이다.",
-    "get_1": "구름 한 조각이면 어디든 간다. 나도 끼워 줘."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_1",
     "start_2"
@@ -255,6 +162,11 @@
    "win": [
     "win_1",
     "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_myth_gumiho": {
@@ -262,29 +174,17 @@
    "pakAac": "v_gumiho.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_2": "오늘은 누구를 홀릴까.",
-    "win_1": "간은 남겨 두지.",
-    "win_2": "달이 참 곱구나.",
-    "skill_1": "여우불을 받아라.",
-    "skill_2": "눈을 떼지 마.",
-    "skill_3": "꼬리가 널 감는다.",
-    "get_1": "꼬리 아홉 개, 이제 너희를 위해 쓰지."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_2"
    ],
    "win": [
     "win_1",
     "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_gumiho": {
@@ -292,29 +192,17 @@
    "pakAac": "v_gumiho.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_2": "오늘은 누구를 홀릴까.",
-    "win_1": "간은 남겨 두지.",
-    "win_2": "달이 참 곱구나.",
-    "skill_1": "여우불을 받아라.",
-    "skill_2": "눈을 떼지 마.",
-    "skill_3": "꼬리가 널 감는다.",
-    "get_1": "꼬리 아홉 개, 이제 너희를 위해 쓰지."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_2"
    ],
    "win": [
     "win_1",
     "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_myth_anubis": {
@@ -322,27 +210,16 @@
    "pakAac": "v_anubis.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "저울은 준비됐다.",
-    "start_2": "심장을 올려라.",
-    "win_1": "판결은 끝났다.",
-    "skill_2": "저승문이 열린다.",
-    "skill_3": "네 죄를 달아 보마.",
-    "get_1": "저울은 거짓을 놓치지 않는다. 길을 지켜 주마."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_1",
     "start_2"
    ],
    "win": [
     "win_1"
+   ],
+   "skill": [
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_myth_samjoko": {
@@ -350,24 +227,6 @@
    "pakAac": "v_samjoko.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "해가 뜬다.",
-    "start_2": "세 발로 하늘을 딛는다.",
-    "win_1": "어둠은 물러갔다.",
-    "win_2": "해는 지지 않는다.",
-    "skill_1": "태양의 불꽃.",
-    "skill_2": "빛으로 태운다.",
-    "skill_3": "날개 아래 엎드려라.",
-    "get_1": "해가 뜨는 곳까지 내가 앞장선다."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2",
-    "skill_3"
-   ],
    "start": [
     "start_1",
     "start_2"
@@ -375,6 +234,11 @@
    "win": [
     "win_1",
     "win_2"
+   ],
+   "skill": [
+    "skill_1",
+    "skill_2",
+    "skill_3"
    ]
   },
   "u_myth_haetae": {
@@ -382,953 +246,18 @@
    "pakAac": "v_haetae.aac.pak",
    "ext": ".ogg",
    "extAac": ".m4a",
-   "text": {
-    "start_1": "옳고 그름을 가린다.",
-    "start_2": "이 문은 내가 지킨다.",
-    "win_1": "불의는 끝났다.",
-    "win_2": "문은 닫혔다.",
-    "skill_1": "뿔로 가른다.",
-    "skill_2": "불길을 삼킨다.",
-    "skill_3": "거짓은 통하지 않는다.",
-    "get_1": "옳고 그름은 내가 가린다. 함께 가자."
-   },
-   "get": [
-    "get_1"
+   "start": [
+    "start_1",
+    "start_2"
+   ],
+   "win": [
+    "win_1",
+    "win_2"
    ],
    "skill": [
     "skill_1",
     "skill_2",
     "skill_3"
-   ],
-   "start": [
-    "start_1",
-    "start_2"
-   ],
-   "win": [
-    "win_1",
-    "win_2"
-   ]
-  },
-  "u_dong_mom": {
-   "pak": "v_dong_mom.pak",
-   "pakAac": "v_dong_mom.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "start_1": "차분하게, 하나씩 하자.",
-    "win_1": "깔끔하게 끝났네.",
-    "skill_1": "빛이여, 모두를 감싸라."
-   },
-   "skill": [
-    "skill_1"
-   ],
-   "start": [
-    "start_1"
-   ],
-   "win": [
-    "win_1"
-   ]
-  },
-  "u_myth_dragon": {
-   "pak": "v_cheongryong.pak",
-   "pakAac": "v_cheongryong.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "start_1": "동쪽 하늘이 열린다.",
-    "win_2": "용은 두 번 말하지 않는다.",
-    "skill_1": "여의주여, 빛나라.",
-    "skill_2": "천둥을 내린다.",
-    "get_1": "용궁의 물결이 너희를 따른다."
-   },
-   "get": [
-    "get_1"
-   ],
-   "skill": [
-    "skill_1",
-    "skill_2"
-   ],
-   "start": [
-    "start_1"
-   ],
-   "win": [
-    "win_2"
-   ]
-  },
-  "v2:u_nemo_dad": {
-   "pak": "v_v2_nemo_dad.pak",
-   "pakAac": "v_v2_nemo_dad.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "start_1": "오늘도 내가 앞에 설게.",
-    "start_2": "길은 내가 먼저 열게.",
-    "win_1": "다들 다친 데 없지?",
-    "win_2": "다들 다친 데 없지?"
-   },
-   "start": [
-    "start_1",
-    "start_2"
-   ],
-   "win": [
-    "win_1",
-    "win_2"
-   ]
-  },
-  "v2:u_nemo_mom": {
-   "pak": "v_v2_nemo_mom.pak",
-   "pakAac": "v_v2_nemo_mom.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "start_1": "든든히 먹고 출발하자.",
-    "start_2": "오늘도 무사히 다녀오자.",
-    "win_1": "수고했어, 다들.",
-    "win_2": "잘했어, 다들 고생했어."
-   },
-   "start": [
-    "start_1",
-    "start_2"
-   ],
-   "win": [
-    "win_1",
-    "win_2"
-   ]
-  },
-  "v2:u_husband": {
-   "pak": "v_v2_husband.pak",
-   "pakAac": "v_v2_husband.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "start_1": "오늘은 내가 지켜 줄게.",
-    "start_2": "한 번에 끝내 보자.",
-    "win_1": "당신 덕분이야.",
-    "win_2": "봤지? 이게 우리 팀이야."
-   },
-   "start": [
-    "start_1",
-    "start_2"
-   ],
-   "win": [
-    "win_1",
-    "win_2"
-   ]
-  },
-  "v2:u_semo_wife": {
-   "pak": "v_v2_wife.pak",
-   "pakAac": "v_v2_wife.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "start_1": "준비됐지? 따라와.",
-    "start_2": "예쁘게 이기고 오자.",
-    "win_1": "역시 내가 최고지.",
-    "win_2": "역시 우리답네."
-   },
-   "start": [
-    "start_1",
-    "start_2"
-   ],
-   "win": [
-    "win_1",
-    "win_2"
-   ]
-  },
-  "v2:u_dong_dad": {
-   "pak": "v_v2_dong_dad.pak",
-   "pakAac": "v_v2_dong_dad.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "start_1": "계획은 다 세워 뒀어.",
-    "start_2": "순서대로 가면 돼.",
-    "win_1": "예상한 그대로군.",
-    "win_2": "계산한 대로야."
-   },
-   "start": [
-    "start_1",
-    "start_2"
-   ],
-   "win": [
-    "win_1",
-    "win_2"
-   ]
-  },
-  "v2:u_myth_poseidon": {
-   "pak": "v_v2_poseidon.pak",
-   "pakAac": "v_v2_poseidon.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "구슬을 되찾아 줘서 고맙다. 바다가 너희 편이다."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_myth_athena": {
-   "pak": "v_v2_athena.pak",
-   "pakAac": "v_v2_athena.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "지혜가 필요하면 나를 불러라. 함께 간다."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_start_athena": {
-   "pak": "v_v2_athena.pak",
-   "pakAac": "v_v2_athena.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "지혜가 필요하면 나를 불러라. 함께 간다."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_myth_wukong": {
-   "pak": "v_v2_wukong.pak",
-   "pakAac": "v_v2_wukong.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "구름 한 조각이면 어디든 간다. 나도 끼워 줘."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_wukong": {
-   "pak": "v_v2_wukong.pak",
-   "pakAac": "v_v2_wukong.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "구름 한 조각이면 어디든 간다. 나도 끼워 줘."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_myth_gumiho": {
-   "pak": "v_v2_gumiho.pak",
-   "pakAac": "v_v2_gumiho.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "꼬리 아홉 개, 이제 너희를 위해 쓰지."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_gumiho": {
-   "pak": "v_v2_gumiho.pak",
-   "pakAac": "v_v2_gumiho.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "꼬리 아홉 개, 이제 너희를 위해 쓰지."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_myth_anubis": {
-   "pak": "v_v2_anubis.pak",
-   "pakAac": "v_v2_anubis.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "저울은 거짓을 놓치지 않는다. 길을 지켜 주마."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_myth_samjoko": {
-   "pak": "v_v2_samjoko.pak",
-   "pakAac": "v_v2_samjoko.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "해가 뜨는 곳까지 내가 앞장선다."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "v2:u_myth_haetae": {
-   "pak": "v_v2_haetae.pak",
-   "pakAac": "v_v2_haetae.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "옳고 그름은 내가 가린다. 함께 가자."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "narrator": {
-   "pak": "v_v2_narrator.pak",
-   "pakAac": "v_v2_narrator.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "album1_arrive": "스킬라가 구슬을 물고 소용돌이로 숨었다.",
-    "album1_restore": "구슬을 되찾자 바다가 잔잔해졌다.",
-    "album1_join": "소라 나팔은 이제 원정대를 위해 분다.",
-    "album2_arrive": "아귀가 구슬로 해와 달을 삼켰다.",
-    "album2_restore": "해와 달이 하늘로 돌아왔다.",
-    "album2_join": "해와 달을 되찾았으니, 이 고개는 내가 지킨다.",
-    "album3_arrive": "가면 문어가 구슬로 콩쥐 일을 가로챘다.",
-    "album3_restore": "독이 이어지고 잔치가 열렸다.",
-    "album3_join": "잔치는 끝났다. 이제 너희를 따르지.",
-    "album4_arrive": "독해파리 떼가 음악대를 쫓아냈다.",
-    "album4_restore": "음악대의 합주가 돌아왔다.",
-    "album4_join": "비가 그쳤다. 음악을 다시 들려줄게.",
-    "album5_arrive": "대왕오징어가 거인의 식탁을 차지했다.",
-    "album5_restore": "식탁에 다시 불이 켜졌다.",
-    "album5_join": "거인의 식탁까지 길을 내 줄게.",
-    "album6_arrive": "복어왕이 논물을 독으로 채웠다.",
-    "album6_restore": "논물이 맑게 돌아왔다.",
-    "album6_join": "맑아진 물로 너희를 돕겠다.",
-    "album7_arrive": "전기가오리가 오작교를 끊었다.",
-    "album7_restore": "다리가 이어져 두 사람이 만났다.",
-    "album7_join": "다리를 이어 줘서 고마워요. 함께 갈게요.",
-    "album8_arrive": "말미잘이 과자 숲을 독 촉수로 감쌌다.",
-    "album8_restore": "과자 숲에 단내가 돌아왔다.",
-    "album8_join": "달콤한 숲이 돌아왔어요. 저도 함께할게요.",
-    "album9_arrive": "껍데기 후작이 성을 빼앗았다.",
-    "album9_restore": "성에 고양이 후작이 돌아왔다.",
-    "album9_join": "성은 되찾았다. 이 장화로 앞장서지.",
-    "album10_arrive": "집게발 포획자가 날개옷을 숨겼다.",
-    "album10_restore": "날개옷이 선녀에게 돌아갔다.",
-    "album10_join": "날개옷을 찾아 줘서 고마워요. 하늘길도 함께해요.",
-    "album11_arrive": "백상아리 의원이 용궁을 어지럽혔다.",
-    "album11_restore": "용궁이 평온을 되찾았다.",
-    "album11_join": "용궁이 조용해졌어. 이제 내 꾀를 빌려줄게.",
-    "album12_arrive": "독니 바다뱀이 종소리를 막았다.",
-    "album12_restore": "종이 다시 크게 울렸다.",
-    "album12_join": "종소리가 돌아왔다. 은혜는 꼭 갚을게.",
-    "album13_arrive": "망치 귀상어가 곶감을 노렸다.",
-    "album13_restore": "곶감이 시렁에 돌아왔다.",
-    "album14_arrive": "늑대고기가 할머니로 둔갑했다.",
-    "album14_restore": "빨간 모자가 무사히 돌아왔다.",
-    "album15_arrive": "여우상어가 거짓말을 퍼뜨렸다.",
-    "album15_restore": "줄이 풀려 인형이 웃었다.",
-    "album16_arrive": "표범물범이 바다를 얼려 버렸다.",
-    "album16_restore": "얼음 거울이 녹아내렸다.",
-    "album17_arrive": "대왕조개가 곳간을 삼켰다.",
-    "album17_restore": "곳간에 곡식이 돌아왔다.",
-    "album18_arrive": "범고래가 결승선을 옮겼다.",
-    "album18_restore": "결승선이 제자리로 돌아왔다.",
-    "album19_arrive": "쏠배감펭이 박 속을 독침으로 채웠다.",
-    "album19_restore": "박 속에서 금이 쏟아졌다.",
-    "album20_arrive": "세이렌이 노래를 훔쳐 갔다.",
-    "album20_restore": "영감의 노래가 돌아왔다.",
-    "album21_arrive": "곰치 군주가 연못을 속였다.",
-    "album21_restore": "연못이 맑게 개었다.",
-    "album22_arrive": "바다코끼리가 오두막을 뒤졌다.",
-    "album22_restore": "오두막에 식구가 모였다.",
-    "album23_arrive": "칠성장어가 가죽을 빨아 갔다.",
-    "album23_restore": "작업대에 새 구두가 놓였다.",
-    "album24_arrive": "갯가재가 볏단을 뒤섞었다.",
-    "album24_restore": "볏단이 제자리로 돌아갔다.",
-    "boss1_in": "구슬은 내 것이다. 돌아가라.",
-    "boss1_out": "소용돌이가 멈추다니, 말도 안 돼.",
-    "boss2_in": "해도 달도 이제 내 뱃속이다.",
-    "boss2_out": "뱃속의 빛이 새어 나간다.",
-    "boss3_in": "콩쥐 일은 이제 전부 내 일이다.",
-    "boss3_out": "가면이 벗겨진다.",
-    "boss4_in": "이 숲에 음악은 필요 없다.",
-    "boss4_out": "독 장막이 흩어진다.",
-    "boss5_in": "거인의 식탁은 내가 차지했다.",
-    "boss5_out": "다리가 풀린다.",
-    "boss6_in": "논물은 전부 독으로 채워 주마.",
-    "boss6_out": "가시가 꺾였다.",
-    "boss7_in": "다리는 끊겼다. 아무도 못 건넌다.",
-    "boss7_out": "번개가 사그라든다.",
-    "boss8_in": "달콤한 숲은 내 촉수 안에 있다.",
-    "boss8_out": "촉수가 녹아내린다.",
-    "boss9_in": "이 성의 주인은 이제 나다.",
-    "boss9_out": "껍데기가 깨졌다.",
-    "boss10_in": "날개옷은 절대 못 돌려준다.",
-    "boss10_out": "집게가 풀린다.",
-    "boss11_in": "용궁은 내 진료실이다. 모두 나가.",
-    "boss11_out": "이빨이 빠졌다.",
-    "boss12_in": "종은 다시 울리지 않는다.",
-    "boss12_out": "독니가 부러졌다.",
-    "boss13_in": "곶감은 내가 먼저 찜했다.",
-    "boss13_out": "망치가 깨졌다.",
-    "boss14_in": "할머니는 없다. 이제 내가 할머니다.",
-    "boss14_out": "변장이 벗겨졌다.",
-    "boss15_in": "내 말이 곧 진실이다.",
-    "boss15_out": "거짓말이 들통났다.",
-    "boss16_in": "이 바다는 영원히 얼어 있을 거다.",
-    "boss16_out": "얼음이 갈라진다.",
-    "boss17_in": "곳간은 이미 내 껍데기 안이다.",
-    "boss17_out": "껍데기가 벌어진다.",
-    "boss18_in": "결승선은 내가 정한다.",
-    "boss18_out": "물살이 나를 버렸다.",
-    "boss19_in": "박마다 독침을 심어 두었다.",
-    "boss19_out": "독침이 다 빠졌다.",
-    "boss20_in": "이 골짜기의 노래는 전부 내 것이다.",
-    "boss20_out": "목소리가 흩어진다.",
-    "boss21_in": "연못의 주인은 나다. 엎드려라.",
-    "boss21_out": "왕관이 가라앉는다.",
-    "boss22_in": "이 오두막은 내가 차지한다.",
-    "boss22_out": "엄니가 꺾였다.",
-    "boss23_in": "가죽 한 장도 남기지 않겠다.",
-    "boss23_out": "빨판이 떨어졌다.",
-    "boss24_in": "볏단은 모조리 흩어 놓겠다.",
-    "boss24_out": "앞발이 풀린다.",
-    "alch_found_1": "새 조합을 찾았어. 노트에 적어 두자.",
-    "alch_found_2": "이런 조합이 있었네. 하나 더 알았다.",
-    "alch_found_3": "노트에 한 줄이 늘었어.",
-    "mq1_cut1": "구슬을 되찾아 줘서 고맙구나.",
-    "mq1_cut2": "내 힘을 맡기마. 바다의 신 포세이돈이다.",
-    "mq1_cut3": "다음 신화는 저울에 깃털을 올린 자다.",
-    "mq2_cut1": "저울 위의 깃털이 흔들렸다.",
-    "mq2_cut2": "죽은 자를 심판하는 아누비스가 나타났다.",
-    "mq2_cut3": "저울이 가리킨 곳은 구름 위다.",
-    "mq3_cut1": "구름 한 조각이 발밑에 내려앉았다.",
-    "mq3_cut2": "근두운을 탄 손오공이 웃으며 합류했다.",
-    "mq3_cut3": "구름이 걷히면 해를 나르는 새가 온다.",
-    "mq4_cut1": "오작교 위로 붉은 해가 지나갔다.",
-    "mq4_cut2": "해를 나르는 삼족오가 날개를 접었다.",
-    "mq4_cut3": "해 지는 바다 밑에서 용이 깨어난다.",
-    "mq5_cut1": "용궁 바닥이 천천히 울렸다.",
-    "mq5_cut2": "깊은 물에서 청룡이 몸을 일으켰다.",
-    "mq5_cut3": "용이 잠든 산 너머 꼬리 아홉이 있다.",
-    "mq6_cut1": "곶감 향 속에서 꼬리 하나가 스쳤다.",
-    "mq6_cut2": "아홉 꼬리의 구미호가 앞에 섰다.",
-    "mq6_cut3": "거짓을 가려내는 연못에 뿔이 있다.",
-    "mq7_cut1": "맑은 연못 위로 뿔이 솟았다.",
-    "mq7_cut2": "정의를 가리는 해태가 고개를 숙였다.",
-    "mq7_cut3": "신화 일곱 장이 모두 모였다!",
-    "tut_blob": "같은 색 구슬을 크게 모아 한 번에 터뜨려 보세요.",
-    "tut_combo": "덩어리가 클수록, 함께 터질수록 피해가 커집니다.",
-    "tut_replay": "깬 판을 다시 하면 카드를 더 모을 수 있어요.",
-    "tut_summon": "모집에서 새 동료를 만날 수 있어요.",
-    "tut_absorb": "남는 카드는 흡수해서 동료를 키워 보세요."
-   },
-   "album10_arrive": [
-    "album10_arrive"
-   ],
-   "album10_join": [
-    "album10_join"
-   ],
-   "album10_restore": [
-    "album10_restore"
-   ],
-   "album11_arrive": [
-    "album11_arrive"
-   ],
-   "album11_join": [
-    "album11_join"
-   ],
-   "album11_restore": [
-    "album11_restore"
-   ],
-   "album12_arrive": [
-    "album12_arrive"
-   ],
-   "album12_join": [
-    "album12_join"
-   ],
-   "album12_restore": [
-    "album12_restore"
-   ],
-   "album13_arrive": [
-    "album13_arrive"
-   ],
-   "album13_restore": [
-    "album13_restore"
-   ],
-   "album14_arrive": [
-    "album14_arrive"
-   ],
-   "album14_restore": [
-    "album14_restore"
-   ],
-   "album15_arrive": [
-    "album15_arrive"
-   ],
-   "album15_restore": [
-    "album15_restore"
-   ],
-   "album16_arrive": [
-    "album16_arrive"
-   ],
-   "album16_restore": [
-    "album16_restore"
-   ],
-   "album17_arrive": [
-    "album17_arrive"
-   ],
-   "album17_restore": [
-    "album17_restore"
-   ],
-   "album18_arrive": [
-    "album18_arrive"
-   ],
-   "album18_restore": [
-    "album18_restore"
-   ],
-   "album19_arrive": [
-    "album19_arrive"
-   ],
-   "album19_restore": [
-    "album19_restore"
-   ],
-   "album1_arrive": [
-    "album1_arrive"
-   ],
-   "album1_join": [
-    "album1_join"
-   ],
-   "album1_restore": [
-    "album1_restore"
-   ],
-   "album20_arrive": [
-    "album20_arrive"
-   ],
-   "album20_restore": [
-    "album20_restore"
-   ],
-   "album21_arrive": [
-    "album21_arrive"
-   ],
-   "album21_restore": [
-    "album21_restore"
-   ],
-   "album22_arrive": [
-    "album22_arrive"
-   ],
-   "album22_restore": [
-    "album22_restore"
-   ],
-   "album23_arrive": [
-    "album23_arrive"
-   ],
-   "album23_restore": [
-    "album23_restore"
-   ],
-   "album24_arrive": [
-    "album24_arrive"
-   ],
-   "album24_restore": [
-    "album24_restore"
-   ],
-   "album2_arrive": [
-    "album2_arrive"
-   ],
-   "album2_join": [
-    "album2_join"
-   ],
-   "album2_restore": [
-    "album2_restore"
-   ],
-   "album3_arrive": [
-    "album3_arrive"
-   ],
-   "album3_join": [
-    "album3_join"
-   ],
-   "album3_restore": [
-    "album3_restore"
-   ],
-   "album4_arrive": [
-    "album4_arrive"
-   ],
-   "album4_join": [
-    "album4_join"
-   ],
-   "album4_restore": [
-    "album4_restore"
-   ],
-   "album5_arrive": [
-    "album5_arrive"
-   ],
-   "album5_join": [
-    "album5_join"
-   ],
-   "album5_restore": [
-    "album5_restore"
-   ],
-   "album6_arrive": [
-    "album6_arrive"
-   ],
-   "album6_join": [
-    "album6_join"
-   ],
-   "album6_restore": [
-    "album6_restore"
-   ],
-   "album7_arrive": [
-    "album7_arrive"
-   ],
-   "album7_join": [
-    "album7_join"
-   ],
-   "album7_restore": [
-    "album7_restore"
-   ],
-   "album8_arrive": [
-    "album8_arrive"
-   ],
-   "album8_join": [
-    "album8_join"
-   ],
-   "album8_restore": [
-    "album8_restore"
-   ],
-   "album9_arrive": [
-    "album9_arrive"
-   ],
-   "album9_join": [
-    "album9_join"
-   ],
-   "album9_restore": [
-    "album9_restore"
-   ],
-   "alch_found": [
-    "alch_found_1",
-    "alch_found_2",
-    "alch_found_3"
-   ],
-   "boss10_in": [
-    "boss10_in"
-   ],
-   "boss10_out": [
-    "boss10_out"
-   ],
-   "boss11_in": [
-    "boss11_in"
-   ],
-   "boss11_out": [
-    "boss11_out"
-   ],
-   "boss12_in": [
-    "boss12_in"
-   ],
-   "boss12_out": [
-    "boss12_out"
-   ],
-   "boss13_in": [
-    "boss13_in"
-   ],
-   "boss13_out": [
-    "boss13_out"
-   ],
-   "boss14_in": [
-    "boss14_in"
-   ],
-   "boss14_out": [
-    "boss14_out"
-   ],
-   "boss15_in": [
-    "boss15_in"
-   ],
-   "boss15_out": [
-    "boss15_out"
-   ],
-   "boss16_in": [
-    "boss16_in"
-   ],
-   "boss16_out": [
-    "boss16_out"
-   ],
-   "boss17_in": [
-    "boss17_in"
-   ],
-   "boss17_out": [
-    "boss17_out"
-   ],
-   "boss18_in": [
-    "boss18_in"
-   ],
-   "boss18_out": [
-    "boss18_out"
-   ],
-   "boss19_in": [
-    "boss19_in"
-   ],
-   "boss19_out": [
-    "boss19_out"
-   ],
-   "boss1_in": [
-    "boss1_in"
-   ],
-   "boss1_out": [
-    "boss1_out"
-   ],
-   "boss20_in": [
-    "boss20_in"
-   ],
-   "boss20_out": [
-    "boss20_out"
-   ],
-   "boss21_in": [
-    "boss21_in"
-   ],
-   "boss21_out": [
-    "boss21_out"
-   ],
-   "boss22_in": [
-    "boss22_in"
-   ],
-   "boss22_out": [
-    "boss22_out"
-   ],
-   "boss23_in": [
-    "boss23_in"
-   ],
-   "boss23_out": [
-    "boss23_out"
-   ],
-   "boss24_in": [
-    "boss24_in"
-   ],
-   "boss24_out": [
-    "boss24_out"
-   ],
-   "boss2_in": [
-    "boss2_in"
-   ],
-   "boss2_out": [
-    "boss2_out"
-   ],
-   "boss3_in": [
-    "boss3_in"
-   ],
-   "boss3_out": [
-    "boss3_out"
-   ],
-   "boss4_in": [
-    "boss4_in"
-   ],
-   "boss4_out": [
-    "boss4_out"
-   ],
-   "boss5_in": [
-    "boss5_in"
-   ],
-   "boss5_out": [
-    "boss5_out"
-   ],
-   "boss6_in": [
-    "boss6_in"
-   ],
-   "boss6_out": [
-    "boss6_out"
-   ],
-   "boss7_in": [
-    "boss7_in"
-   ],
-   "boss7_out": [
-    "boss7_out"
-   ],
-   "boss8_in": [
-    "boss8_in"
-   ],
-   "boss8_out": [
-    "boss8_out"
-   ],
-   "boss9_in": [
-    "boss9_in"
-   ],
-   "boss9_out": [
-    "boss9_out"
-   ],
-   "mq1_cut1": [
-    "mq1_cut1"
-   ],
-   "mq1_cut2": [
-    "mq1_cut2"
-   ],
-   "mq1_cut3": [
-    "mq1_cut3"
-   ],
-   "mq2_cut1": [
-    "mq2_cut1"
-   ],
-   "mq2_cut2": [
-    "mq2_cut2"
-   ],
-   "mq2_cut3": [
-    "mq2_cut3"
-   ],
-   "mq3_cut1": [
-    "mq3_cut1"
-   ],
-   "mq3_cut2": [
-    "mq3_cut2"
-   ],
-   "mq3_cut3": [
-    "mq3_cut3"
-   ],
-   "mq4_cut1": [
-    "mq4_cut1"
-   ],
-   "mq4_cut2": [
-    "mq4_cut2"
-   ],
-   "mq4_cut3": [
-    "mq4_cut3"
-   ],
-   "mq5_cut1": [
-    "mq5_cut1"
-   ],
-   "mq5_cut2": [
-    "mq5_cut2"
-   ],
-   "mq5_cut3": [
-    "mq5_cut3"
-   ],
-   "mq6_cut1": [
-    "mq6_cut1"
-   ],
-   "mq6_cut2": [
-    "mq6_cut2"
-   ],
-   "mq6_cut3": [
-    "mq6_cut3"
-   ],
-   "mq7_cut1": [
-    "mq7_cut1"
-   ],
-   "mq7_cut2": [
-    "mq7_cut2"
-   ],
-   "mq7_cut3": [
-    "mq7_cut3"
-   ],
-   "tut_absorb": [
-    "tut_absorb"
-   ],
-   "tut_blob": [
-    "tut_blob"
-   ],
-   "tut_combo": [
-    "tut_combo"
-   ],
-   "tut_replay": [
-    "tut_replay"
-   ],
-   "tut_summon": [
-    "tut_summon"
-   ]
-  },
-  "v2:u_dong_mom": {
-   "pak": "v_v2_dong_mom.pak",
-   "pakAac": "v_v2_dong_mom.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "start_1": "차분하게, 하나씩 하자.",
-    "start_2": "서두르지 말고 천천히.",
-    "win_1": "깔끔하게 끝났네.",
-    "win_2": "잘 해냈어요, 모두."
-   },
-   "start": [
-    "start_1",
-    "start_2"
-   ],
-   "win": [
-    "win_1",
-    "win_2"
-   ]
-  },
-  "v2:u_myth_dragon": {
-   "pak": "v_v2_cheongryong.pak",
-   "pakAac": "v_v2_cheongryong.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "용궁의 물결이 너희를 따른다."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "u_m_c_r01_m4_S": {
-   "pak": "v_v2_u_m_c_r01_m4_S.pak",
-   "pakAac": "v_v2_u_m_c_r01_m4_S.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "소라 나팔은 이제 원정대를 위해 분다."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "u_m_c_r02_m5_SS": {
-   "pak": "v_v2_u_m_c_r02_m5_SS.pak",
-   "pakAac": "v_v2_u_m_c_r02_m5_SS.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "해와 달을 되찾았으니, 이 고개는 내가 지킨다."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "u_m_c_r03_m5_SS": {
-   "pak": "v_v2_u_m_c_r03_m5_SS.pak",
-   "pakAac": "v_v2_u_m_c_r03_m5_SS.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "잔치는 끝났다. 이제 너희를 따르지."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "u_m_c_r04_wa_SS": {
-   "pak": "v_v2_u_m_c_r04_wa_SS.pak",
-   "pakAac": "v_v2_u_m_c_r04_wa_SS.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "비가 그쳤다. 음악을 다시 들려줄게."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "u_m_c_r05_wo_SS": {
-   "pak": "v_v2_u_m_c_r05_wo_SS.pak",
-   "pakAac": "v_v2_u_m_c_r05_wo_SS.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "거인의 식탁까지 길을 내 줄게."
-   },
-   "get": [
-    "get_1"
-   ]
-  },
-  "u_m_c_r06_wa_SS": {
-   "pak": "v_v2_u_m_c_r06_wa_SS.pak",
-   "pakAac": "v_v2_u_m_c_r06_wa_SS.aac.pak",
-   "ext": ".ogg",
-   "extAac": ".m4a",
-   "text": {
-    "get_1": "맑아진 물로 너희를 돕겠다."
-   },
-   "get": [
-    "get_1"
    ]
   }
  }

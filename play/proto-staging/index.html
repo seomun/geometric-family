@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>기하학 가족 게임</title>
+<style>
+:root{--bg:#0f1a2e;--panel:#18263f;--line:#2a3b5c;--gold:#f2c14e;--ink:#eef2fb;--mute:#93a6c9;--ok:#6cc58a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif}
+#app{max-width:560px;margin:0 auto;padding:max(16px,env(safe-area-inset-top)) 18px max(28px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:13px;letter-spacing:.04em}
+.brand svg{width:26px;height:26px}
+.hero{display:flex;flex-direction:column;gap:14px;padding:6px 0 4px}
+.hero h1{font-size:28px;line-height:1.25;margin:0;font-weight:800}.hero p{margin:0;color:var(--mute);font-size:15px}
+.play{border:0;border-radius:16px;background:var(--gold);color:#3a2a00;font:inherit;font-size:22px;font-weight:800;padding:18px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.35);display:block;text-align:center;text-decoration:none}
+.play small{display:block;font-size:13px;font-weight:600;opacity:.8;margin-top:2px}
+h2{font-size:14px;color:var(--mute);margin:0 0 10px;font-weight:700;letter-spacing:.05em}
+.list{display:flex;flex-direction:column;gap:8px}
+.g{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px;color:var(--ink);text-decoration:none}
+.g .ic{width:40px;height:40px;border-radius:10px;background:#22365a;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.g .tx{flex:1;min-width:0}.g b{font-size:16px;display:block}.g span{color:var(--mute);font-size:13px}
+.g .st{font-size:13px;color:var(--gold);text-align:right;flex:none;font-weight:700}.g .st.done{color:var(--ok)}
+.cards{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.cards .row{display:flex;justify-content:space-between;font-size:15px}.cards .row b{font-size:18px}
+.cards small{color:var(--mute);font-size:12.5px}
+.caps{display:flex;flex-direction:column;gap:9px}
+.cap{display:flex;flex-direction:column;gap:4px;font-size:13px}.cap .t{display:flex;justify-content:space-between;color:var(--mute)}.cap .bar{height:6px;border-radius:3px;background:#22365a;overflow:hidden}.cap .bar i{display:block;height:100%;background:var(--gold)}
+.guest{background:var(--panel);border:1px dashed var(--line);border-radius:14px;padding:14px;color:var(--mute);font-size:14px;text-align:center}
+.go{display:block;border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;color:var(--ink);text-decoration:none;font-weight:700;background:transparent}
+.foot{color:var(--mute);font-size:12px;text-align:center;line-height:1.6}
+</style></head><body>
+<div id="app">
+  <div class="brand"><svg viewBox="0 0 26 26" aria-hidden="true"><rect x="2" y="12" width="10" height="10" rx="2" fill="#6f9bf0"/><path d="M13 22 L19 8 L25 22 Z" fill="#f4a261"/><circle cx="8" cy="7" r="5" fill="#55c9a2"/></svg><span>GEOMETRIC FAMILY · GAMES</span></div>
+  <div class="hero">
+    <h1><span data-s="pt.001">하루 몇 분, 퍼즐로 카드를 모읍니다</span></h1>
+    <p><span data-s="pt.002">한 판은 3분 안쪽. 오늘의 판을 풀면 카드가 쌓이고, 원정대 게임에서 편성·강화에 쓸 수 있습니다.</span></p>
+    <a class="play" id="play" href="#"><span data-s="pt.003">지금 플레이</span><small id="playSub"></small></a>
+  </div>
+  <section><h2><span data-s="pt.004">오늘의 판</span></h2><div class="list" id="list"></div></section>
+  <section><h2><span data-s="pt.006">내 카드</span></h2><div id="cardsBox"></div></section>
+  <section><h2><span data-s="pt.007">오늘 받은 것</span></h2><div id="capsBox"></div><div class="foot" style="text-align:left;margin-top:8px"><span data-s="pt.008">카드와 재료는 원정대 게임에서 편성·강화에 씁니다. 하루 받을 수 있는 양에는 한도가 있습니다.</span></div></section>
+  <a class="go" id="exp" href="../expedition/"><span data-s="pt.009">원정대에서 카드 쓰기 →</span></a>
+  <div class="foot"><span data-s="pt.010">보상은 서버가 정하고 화면에는 표시만 합니다 · 유료 재화는 이 화면에서 쓰이지 않습니다</span></div>
+</div>
+<script>/* 자동 생성(tools/strings_extract.py) — 문구 표. 고치려면 strings.ko.json / strings.ja.json 을 고치고 다시 생성 */
+window.GFSTR = {"ko": {"cl.001": "조각을 고르고 빈 칸을 눌러 놓으세요", "cl.002": "같은 속성 칸이 여섯 칸 이상 이어지면 사라지고, 많이 이을수록 크게 점수가 오릅니다", "cl.003": "조각 묶음 ", "cl.004": "크게 이은 한 판입니다", "cl.005": "무리를 잘 이었습니다", "cl.006": "속성 군락, 오늘은 ", "cl.007": " 마쳤습니다. 같은 판으로 겨뤄 보세요.", "cl.008": "오늘 보상은 받았습니다 · 새 판까지 ", "co.001": "가로·세로로 세 장이 같은 수이거나 이어지는 수(1-2-3)면 사라지고, 위 카드가 내려오며 이어서 터지면 점수가 커집니다", "co.002": "</span><span class=\"lab\">다음</span><span class=\"nx\">", "co.003": "떨어뜨린 카드 ", "co.004": "연쇄", "co.005": " · 같은 무늬", "co.006": "연쇄를 잘 이은 한 판입니다", "co.007": "패를 잘 쌓았습니다", "co.008": "패 떨어뜨리기, 오늘은 ", "co.009": " 마쳤습니다. 같은 카드 순서로 겨뤄 보세요.", "dq.001": "오늘의 5문제", "dq.002": "상식", "dq.003": "옛이야기", "dq.004": "도형 감각", "dq.005": "정답입니다.", "dq.006": "아쉽습니다.", "dq.007": "전부 맞혔습니다", "dq.008": "문제 맞혔습니다", "dq.009": "오늘의 다섯 문제, 전부 맞혔습니다. 같이 풀어 보세요.", "dq.010": "오늘의 다섯 문제 중 ", "dq.011": "오늘의 다섯 문제, 아쉽게 하나도 못 맞혔습니다. 같이 풀어 보세요.", "dq.012": " · 연속 일수가 쌓입니다", "dq.013": "오늘 보상은 받았습니다 · 내일 새 문제가 열립니다", "du.001": "카드 한 장만 남기세요", "du.002": "한 수 취소", "du.003": "처음부터", "du.004": "카드를 눌러 고르고 이길 수 있는 카드(노란 테두리)를 누르면 그 카드가 사라집니다 · 이기는 쪽은 수가 줄어듭니다", "du.005": "<b>막혔습니다</b> · 한 수 취소나 처음부터를 누르세요", "du.006": "남은 카드 <b>", "du.007": "</b>장", "du.008": " · 카드 한 장만 남기세요", "du.009": "세 판 정리", "du.010": "처음부터 ", "du.011": "번 · ", "du.012": "깔끔한 정리입니다", "du.013": "정리를 끝냈습니다", "du.014": "한 번에 모두 정리했습니다", "du.015": "대결 정리, 오늘의 세 판을 ", "du.016": " 번 다시 해서 정리했습니다. 같이 풀어 보세요.", "du.017": "대결 정리, 오늘의 세 판을 한 번에 정리했습니다. 같이 풀어 보세요.", "du.018": "오늘 보상은 받았습니다 · 새 문제까지 ", "pf.001": "원정대 계정(시험)", "pf.002": "금화", "pf.003": "무상 반짝석", "pf.004": "겹침 재료", "pf.005": "SS 선택권", "pf.006": "신화 조각", "pf.007": "카드", "pf.008": " (새 카드)", "pf.009": "영", "pf.010": "일", "pf.011": "이", "pf.012": "삼", "pf.013": "사", "pf.014": "오", "pf.015": "육", "pf.016": "칠", "pf.017": "팔", "pf.018": "구", "pf.019": "백", "pf.020": "십", "pf.021": "한", "pf.022": "두", "pf.023": "세", "pf.024": "네", "pf.025": "다섯", "pf.026": "여섯", "pf.027": "일곱", "pf.028": "여덟", "pf.029": "아홉", "pf.030": "열", "pf.031": "결과 한 줄 복사", "pf.032": "공유했습니다", "pf.033": "복사했습니다", "pf.034": "한 판 더 (연습)", "pf.035": "약 ", "pf.036": "시간 뒤", "pf.037": "보상 확인 중…", "pf.038": "받은 것: ", "pf.039": "오늘은 다 받았습니다", "ph.001": "패 놓기", "ph.002": "카드를 한 장씩 놓으세요 · 같은 줄에 같은 수나 같은 무늬가 모이면 점수", "ph.003": "점수", "ph.004": "장 남음", "ph.005": "월 ", "ph.006": "가로·세로 줄이 패가 되면 점수 — 짝 2 · 두 짝 5 · 셋 10 · 계단 12 · 한 모양 15 · 한 집안 25 · 넷 50", "ph.007": "<span class=\"lab\">지금</span><span class=\"cur\">", "ph.008": "<span class=\"lab\">다음</span>", "ph.009": "점", "ph.010": "훌륭한 배치입니다", "ph.011": "좋은 배치였습니다", "ph.012": "패 놓기, 오늘은 ", "ph.013": " 점에 ", "ph.014": "별 ", "ph.015": "하나", "ph.016": "둘", "ph.017": "셋", "ph.018": "별 없이", "ph.019": " 마쳤습니다. 같은 카드로 겨뤄 보세요.", "ph.020": "새 판까지 ", "ph.021": "별 두 개부터 카드를 받습니다 · 새 판까지 ", "ph.022": "오늘 보상은 받았습니다 · 내일 새 판이 열립니다", "pt.001": "하루 몇 분, 퍼즐로 카드를 모읍니다", "pt.002": "한 판은 3분 안쪽. 오늘의 판을 풀면 카드가 쌓이고, 원정대 게임에서 편성·강화에 쓸 수 있습니다.", "pt.003": "지금 플레이", "pt.004": "오늘의 판", "pt.005": "계속 즐기기", "pt.006": "내 카드", "pt.007": "오늘 받은 것", "pt.008": "카드와 재료는 원정대 게임에서 편성·강화에 씁니다. 하루 받을 수 있는 양에는 한도가 있습니다.", "pt.009": "원정대에서 카드 쓰기 →", "pt.010": "보상은 서버가 정하고 화면에는 표시만 합니다 · 유료 재화는 이 화면에서 쓰이지 않습니다", "pt.011": "카드 여섯 장에서 한 장을 빼 가장 높은 패를", "pt.012": "약 1분", "pt.013": "5×5 판에 카드를 놓아 줄 점수를", "pt.014": "2~3분", "pt.015": "상식·옛이야기·도형 감각 다섯 문제", "pt.016": "1~2분", "pt.017": "도형 블록", "pt.018": "조각 셋으로 줄을 채워 지우는 콤보", "pt.019": "3~8분", "pt.020": "도형 떨어뜨리기", "pt.021": "같은 도형을 떨어뜨려 합치기", "pt.022": "2~4분", "pt.023": "도형 타일 매치", "pt.024": "타일 셋을 맞춰 칸을 비우기", "pt.025": "오늘의 ", "pt.026": "오늘 완료", "pt.027": "오늘의 판", "pt.028": "A 카드", "pt.029": "S 카드", "pt.030": "<div class=\"guest\">로그인하면 보상을 받고 카드를 모읍니다</div>", "pt.031": "<div class=\"cards\"><div class=\"row\"><span>보유 카드</span><b>", "pt.032": "장</b></div><div class=\"row\"><span>오늘 새로 얻음</span><b>", "pt.033": "장</b></div><div class=\"row\"><span>겹침 재료로 쓸 수 있는 여분 카드</span><b>", "pt.034": "장</b></div><small>카드는 원정대에서 편성하고 강화합니다</small></div>", "pt.035": "속성 군락", "pt.036": "같은 속성 조각을 여섯 칸 이상 이어 무리로", "pt.037": "패 떨어뜨리기", "pt.038": "같은 수·이어지는 수 세 장을 맞춰 터뜨리기", "pt.039": "대결 정리", "pt.040": "상성으로 카드를 이겨 한 장만 남기기", "tm.001": "오늘의 한 수", "tm.002": "한 장을 빼서 가장 높은 패를 만드세요", "tm.003": "$2월 $3일", "tm.004": "한 장을 빼서 가장 높은 패를 만드세요 (", "tm.005": "쉬움", "tm.006": "보통", "tm.007": "어려움", "tm.008": "패 없음", "tm.009": " · 최선", "tm.010": "<small>최선은 초록 카드를 빼서 「", "tm.011": "다음", "tm.012": "결과", "tm.013": "오늘의 한 수를 모두 맞혔습니다", "tm.014": "내일 새 문제가 도착합니다", "tm.015": "내일 다시 도전하세요", "tm.016": " · 오늘은 이미 하셨습니다(기록은 첫 번째 것)", "tm.017": "일 연속", "tm.018": "오늘의 한 수, 세 문제 중 ", "tm.019": " 문제를 맞혔습니다. 같이 풀어 보세요.", "tm.020": "오늘의 한 수, 세 문제 중 한 문제도 못 맞혔습니다. 같이 풀어 보세요.", "tm.021": "연습 판입니다 · 기록과 보상은 없습니다", "tm.022": "새 문제까지 ", "tm.023": " · 7일 연속이면 주간 보너스", "tm.024": "오늘 보상은 받았습니다 · 내일 새 3문제가 열립니다", "pf.040": "새 ", "pf.041": "포털로", "ph.023": "카드를 한 장씩 놓으세요 · 칸의 +숫자는 놓았을 때 얻는 점수", "ph.024": "이웃한 카드끼리 같은 수 +4 · 이어지는 수 +2 · 같은 무늬 +1 · 상성(불→풀→물→불, 금⇄토) +2", "ph.025": "불", "ph.026": "물", "ph.027": "풀", "ph.028": "금", "ph.029": "토", "ph.030": "이웃을 잘 맞춘 배치입니다", "ph.031": "무난한 배치였습니다", "ph.032": "이웃이 잘 맞지 않았습니다. 내일 다시 도전하세요", "cl.009": "조금 더 크게 이어 보세요", "co.010": "터뜨릴 자리를 더 찾아 보세요", "du.019": "상성 · 불→풀→물→불 · 금⇄토 (화살표 앞이 이긴다)", "du.020": "힌트"}, "ja": {}};
+/* 포털 공통 틀 (gf-play, 2026-11-16) — 옛 앱(퀴즈·구슬·타일 …)이 셸 게임과 같은 포털 약속으로 동작하게 하는 한 파일.
+ * 약속(docs/F10_AUDIT_1115 §2, 셸 mini_shell.js 와 같은 모양):
+ *   window.GFPortal = { account(), claim(o, cb), items:{count(kind), use(kind, ok, no)} }  ← 포털·gf-game 이 주입. 없으면 이 틀이 아무 일도 안 한다.
+ *   ?fakeportal=1  → 서버가 나오기 전 가짜 응답(로컬 시험용, 보상량은 가짜·저장 안 함)
+ * 클라이언트는 보상량을 정하지 않고 표시만 한다. 광고는 직접 누를 때만(GF.ads.run). 소리는 GF.sfx 한 벌. */
+(function () {
+  'use strict';
+  var FAKE = /[?&]fakeportal=1/.test(location.search);
+  /* 문구 표(games/shared/strings.ko.json·strings.ja.json → strings.js 의 window.GFSTR). 키가 표에 없으면 키를 그대로 보여 준다(빠진 번역 눈에 띄게). ?lang=ja 로 확인 */
+  var STR = window.GFSTR || {}, LANG = (/[?&]lang=(ja|en|ko)/.exec(location.search) || [])[1] || 'ko';
+  function S(k, v) { var t = (STR[LANG] && STR[LANG][k]) || (STR.ko && STR.ko[k]) || k; if (v) Object.keys(v).forEach(function (n) { t = t.split('{' + n + '}').join(v[n]); }); return t; }
+  window.GFS = S; window.GFLANG = LANG;
+  function applyDom() { if (LANG === 'ko') return; [].forEach.call(document.querySelectorAll('[data-s]'), function (el) { el.textContent = S(el.getAttribute('data-s')); }); try { document.documentElement.lang = LANG; } catch (e) {} }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyDom); else applyDom();
+  var F = window.GFFrame = {};
+  function portal() { return window.GFPortal || (FAKE ? fake : null); }
+  /* 서버 계약 = gf-game docs/PORTAL_API.md §2-2(요청 request_id·game·run·kinds·day / 응답 ok·granted[{item,n|id,grade,why,is_new}]·capped·caps·wallet). 서버가 나오기 전 가짜 응답도 같은 모양 */
+  var fake = {
+    account: function () { return { id: 'demo', name: S('pf.001'), guest: false }; },
+    claim: function (o, cb) { setTimeout(function () { cb({ ok: true, granted: o.win ? [{ item: 'gold', n: 40 }, { item: 'free_gems', n: 5 }, { item: 'card', id: 'u_demo', grade: 'A', why: 'daily', is_new: true }] : [], capped: [], caps: { day: { free_gems: [5, 20] } }, wallet: { gold: 12890, free_gems: 345 } }); }, 150); },
+    items: { count: function (k) { return k === 'continue' ? 1 : 0; }, use: function (k, ok) { ok && ok(); } },
+  };
+  /** GET /wallet (PORTAL_API §2-1) — 포털 홈이 열 때. 포털이 없으면 ?fakeportal=1 일 때만 가짜(같은 모양), 아니면 null(= 비로그인·표시 숨김) */
+  fake.wallet = function (cb) { setTimeout(function () { cb({ gold: 12850, free_gems: 340, paid_gems: 0, cards: { total: 87, new_today: 2, spare: { u_robin: 3, u_toad: 1 } }, caps: { day: { gold: [120, 300], free_gems: [8, 20], a_card: [1, 2], s_card: [0, 1], fuse_mat: [1, 3] }, week: { free_gems: [40, 100], s_card: [1, 3], fuse_mat: [6, 15], ss_ticket: [0, 1] }, month: { free_gems: [90, 300], myth_shard: [0, 5] } }, day_key: '2026-11-16' }); }, 120); };
+  F.wallet = function (cb) { try { var p = portal(); if (p && typeof p.wallet === 'function') p.wallet(cb); else cb(null); } catch (e) { cb(null); } };
+  /** 한 판 결과 → 서버 요청 모양(PORTAL_API §2-2). 포털이 GFPortal.claim 안에서 이걸 POST 한다 */
+  F.toRequest = function (o) {
+    var d = new Date(Date.now() + 9 * 3600 * 1000), day = d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + d.getUTCDate()).slice(-2);
+    var id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'r' + Date.now() + Math.random().toString(16).slice(2);
+    return { request_id: id, game: o.game, run: { seed: o.seed || 0, inputs: o.inputs || '', score: o.score | 0, win: !!o.win, duration_ms: o.durationMs | 0 }, kinds: o.win ? ['play'].concat(o.daily ? ['daily'] : []) : ['play'], day: day };
+  };
+  var ITEM_KO = { gold: S('pf.002'), free_gems: S('pf.003'), fuse_mat: S('pf.004'), ss_ticket: S('pf.005'), myth_shard: S('pf.006'), card: S('pf.007') };
+  /** 서버 응답(새 모양)과 옛 모양({label,n}) 모두 「받은 것」 항목 {label,n,card}으로 */
+  function lines(res) { return ((res && res.granted) || []).map(function (x) { if (x.label) return { label: x.label, n: x.n, card: /카드/.test(x.label) }; if (x.item === 'card') return { label: (x.is_new ? S('pf.040') : '') + (x.grade ? x.grade + ' ' : '') + S('pf.007'), n: 1, card: true, raw: x }; return { label: ITEM_KO[x.item] || x.item, n: x.n }; }); }
+  /** 로그인 이어받기: 원정대 계정이 있으면 {id,name}, 없으면 {guest:true}. 앱은 이 값을 표시만 하고 비밀번호·토큰을 다루지 않는다 */
+  F.account = function () { try { var p = portal(); var a = p && p.account && p.account(); return a || { guest: true }; } catch (e) { return { guest: true }; } };
+  F.items = {
+    count: function (k) { try { var p = portal(); return (p && p.items && p.items.count(k)) | 0; } catch (e) { return 0; } },
+    use: function (k, ok, no) { try { var p = portal(); if (p && p.items && p.items.count(k) > 0) { p.items.use(k, function () { ok && ok(); }, function () { no && no(); }); return; } } catch (e) {} no && no(); },
+  };
+  /** 앱이 frame 을 안 넘겨도 결과 창에서 짐작: 게임 이름 = 파일 이름, 점수 = 큰 글자의 숫자, 이김 = 별 1개 이상 */
+  F.auto = function (o) { try { var g = (location.pathname.match(/([a-z0-9_]+)\.html/i) || [])[1] || 'app'; return { game: g, score: parseInt(String(o.big || '').replace(/[^0-9]/g, ''), 10) || 0, win: (o.stars | 0) > 0, durationMs: 0 }; } catch (e) { return null; } };
+  /** 숫자·이모지 없는 공유 한 줄을 위한 한글 수: sino(43) = 사십삼 · native(2) = 두 */
+  F.sino = function (n) { n = Math.max(0, n | 0); if (!n) return S('pf.009'); var d = ['', S('pf.010'), S('pf.011'), S('pf.012'), S('pf.013'), S('pf.014'), S('pf.015'), S('pf.016'), S('pf.017'), S('pf.018')], h = Math.floor(n / 100) % 10, t = Math.floor(n / 10) % 10, o = n % 10; return (h ? (h > 1 ? d[h] : '') + S('pf.019') : '') + (t ? (t > 1 ? d[t] : '') + S('pf.020') : '') + d[o]; };
+  F.native = function (n) { return ['', S('pf.021'), S('pf.022'), S('pf.023'), S('pf.024'), S('pf.025'), S('pf.026'), S('pf.027'), S('pf.028'), S('pf.029'), S('pf.030')][Math.max(0, Math.min(10, n | 0))] || ''; };
+  /** 결과 공유 한 줄: 문장에 숫자·이모지 없이(호출하는 쪽이 한글 수로 써서 넘김). 공유창이 있으면 공유, 없으면 복사 */
+  F.share = function (line, host) {
+    try {
+      if (!host || !line) return; var b = document.createElement('button'); b.type = 'button'; b.textContent = S('pf.031'); b.className = 'gf-share';
+      b.style.cssText = 'border:0;border-radius:12px;padding:10px 18px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;background:#2c4070;color:#eef2fb;margin-top:6px';
+      b.onclick = function () { var done = function (t) { b.textContent = t; setTimeout(function () { b.textContent = S('pf.031'); }, 1800); };
+        if (navigator.share && !/[?&]noshare=1/.test(location.search)) { navigator.share({ text: line }).then(function () { done(S('pf.032')); }, function () {}); return; }
+        try { navigator.clipboard.writeText(line).then(function () { done(S('pf.033')); }, function () { done(line); }); } catch (e) { done(line); } };
+      host.appendChild(b); F.lastShare = line;
+    } catch (e) {}
+  };
+  /** 연습 판(기록·보상 없음): ?practice=1 이면 날짜를 임의 날로 바꿔 다른 판을 준다. 결과 창의 「한 판 더(연습)」 단추가 이 주소로 보낸다 */
+  F.practice = /[?&]practice=1/.test(location.search);
+  F.practiceDay = function () { var y = 2027 + Math.floor(Math.random() * 4), m = 1 + Math.floor(Math.random() * 12), d = 1 + Math.floor(Math.random() * 28); return y * 10000 + m * 100 + d; };
+  F.again = function (host) {
+    try { if (!host) return; var b = document.createElement('button'); b.type = 'button'; b.textContent = S('pf.034'); b.className = 'gf-again';
+      b.style.cssText = 'border:0;border-radius:12px;padding:10px 18px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;background:#f2c14e;color:#3a2a00;margin-top:6px;margin-left:8px';
+      b.onclick = function () { var q = location.search.replace(/[?&](practice|day)=[^&]*/g, '').replace(/^&/, '?'); location.href = location.pathname + (q && q !== '?' ? q + '&' : '?') + 'practice=1'; }; host.appendChild(b); F.homeLink(host); } catch (e) {}
+  };
+  /** 포털 첫 화면 주소(개발: games/proto → ../portal/portal.html, 묶음 폴더: index.html), 가짜 포털 표시는 그대로 이어 간다 */
+  F.homeUrl = function () { return (/[\/]games[\/]proto[\/]/.test(location.pathname) ? '../portal/portal.html' : 'index.html') + (FAKE ? '?fakeportal=1' : ''); };
+  F.homeLink = function (host) { try { var a = document.createElement('a'); a.href = F.homeUrl(); a.className = 'gf-home'; a.textContent = S(S('pf.041')); a.style.cssText = 'display:inline-block;border-radius:12px;padding:10px 18px;font:inherit;font-weight:700;font-size:15px;background:#2c4070;color:#eef2fb;text-decoration:none;margin-top:6px;margin-left:8px'; host.appendChild(a); } catch (e) {} };
+  /** 게임 화면 맨 위 「← 오늘의 판」 */
+  F.backLink = function () { try { var app = document.getElementById('app'); if (!app) return; var a = document.createElement('a'); a.href = F.homeUrl(); a.textContent = '← ' + S(S('pt.027')); a.style.cssText = 'color:#93a6c9;font-size:13px;text-decoration:none;align-self:flex-start'; app.insertBefore(a, app.firstChild); } catch (e) {} };
+  /** 「새 문제까지 약 N시간」 — 다음 날 0시까지 */
+  F.untilTomorrow = function () { var n = new Date(), t = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1); return S('pf.035') + Math.max(1, Math.ceil((t - n) / 3600000)) + S('pf.036'); };
+  /** 카드 그림 자리(원정대 카드 자리): window.GF_CARD_ART(item) 이 그림 주소를 돌려주면 그림, 없으면 빈 카드 틀. 새 화풍이 끝나면 이 훅만 채운다 */
+  F.cardArt = function (item) { try { return typeof window.GF_CARD_ART === 'function' ? window.GF_CARD_ART(item) : null; } catch (e) { return null; } };
+  function artEl(item) { var a = document.createElement('span'), src = F.cardArt(item); a.className = 'gf-art'; a.setAttribute('aria-hidden', 'true');
+    if (!src) return null;   /* 그림이 없으면 빈 틀을 보이지 않는다 */
+    a.style.cssText = 'display:inline-block;width:22px;height:30px;border-radius:4px;vertical-align:middle;margin-right:6px;border:1px solid rgba(128,128,128,.5);background:rgba(255,255,255,.12) center/cover no-repeat'; a.style.backgroundImage = 'url("' + src + '")'; return a; }
+  /** 판 결과 → 「받은 것」 줄 + 내일 다시 올 이유 한 줄. o = {game, score, win, durationMs, reason?}. host = 결과 창 안쪽 요소 */
+  F.onResult = function (o, host) {
+    try {
+      if (!o || !host) return; var p = portal(), can = p && typeof p.claim === 'function' && o.win;
+      if (!can && !o.reason) return;
+      var slot = document.createElement('div'); slot.className = 'gf-got'; slot.setAttribute('aria-live', 'polite');
+      slot.style.cssText = 'margin:8px 0;padding:8px 10px;border-radius:12px;background:rgba(128,128,128,.14);font-size:14px;line-height:1.5;text-align:center;min-height:1.5em';
+      var got = document.createElement('div'), why = document.createElement('div'); why.style.cssText = 'font-size:13px;opacity:.8'; why.textContent = o.reason || ''; slot.appendChild(got); if (o.reason) slot.appendChild(why);
+      if (can) got.textContent = S('pf.037'); host.insertBefore(slot, host.children[1] || null);
+      var done = false, fin = function () { if (!got.textContent && !why.textContent && slot.isConnected) slot.remove(); };
+      if (!can) { fin(); return; }
+      p.claim(o, function (res) {
+        if (done) return; done = true; var g = lines(res); got.textContent = '';
+        if (g.length) { got.appendChild(document.createTextNode(S('pf.038'))); g.forEach(function (x, i) { if (i) got.appendChild(document.createTextNode(' · ')); if (x.card) { var ae = artEl(x.raw || x); if (ae) got.appendChild(ae); } got.appendChild(document.createTextNode(String(x.label || '') + (x.n > 1 ? ' ×' + x.n : ''))); }); try { window.GF && GF.sfx && GF.sfx('get'); } catch (e) {} try { window.GFPlay && window.__SFX && window.__SFX.star && GFPlay('star'); } catch (e) {} }
+        else got.textContent = (res && ((res.capped && res.capped.length) || res.capLeft === false)) ? S('pf.039') : '';
+        fin();
+      });
+      setTimeout(function () { if (!done) { got.textContent = ''; fin(); } }, 6000);   /* 응답이 늦으면 조용히 거둔다 */
+    } catch (e) {}
+  };
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+  var S = window.GFS;
+  var $ = function (id) { return document.getElementById(id); };
+  function today() { var d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
+  function done(key) { try { return (JSON.parse(localStorage.getItem(key) || '{}').day | 0) === today(); } catch (e) { return false; } }
+  var dev = /portal\.html$/.test(location.pathname);   /* 개발: games/portal/portal.html → ../proto/… · 스테이징 묶음: 같은 폴더의 move.html 등 */
+  var BASE = dev ? '../proto/' : '';
+  var G = [
+    { id: 'move', f: dev ? 'today_move.html' : 'move.html', ic: '♠', n: S('tm.001'), d: S('pt.011'), t: S('pt.012'), key: 'gf:onemove:v1', daily: 1 },
+    { id: 'place', f: dev ? 'place_hand.html' : 'place.html', ic: '▦', n: S('ph.001'), d: S('pt.013'), t: S('pt.014'), key: 'gf:placehand:v1', daily: 1 },
+    { id: 'quiz', f: dev ? 'daily_quiz.html' : 'quiz.html', ic: '？', n: S('dq.001'), d: S('pt.015'), t: S('pt.016'), key: 'gf:dailyquiz:v1', daily: 1 },
+    { id: 'cluster', f: dev ? 'cluster.html' : 'cluster.html', ic: '◼', n: S('pt.035'), d: S('pt.036'), t: S('pt.014'), key: 'gf:cluster:v1', daily: 1 },
+    { id: 'columns', f: dev ? 'column_drop.html' : 'columns.html', ic: '▮', n: S('pt.037'), d: S('pt.038'), t: S('pt.014'), key: 'gf:columndrop:v1', daily: 1 },
+    { id: 'duel', f: dev ? 'duel_clear.html' : 'duel.html', ic: '⚔', n: S('pt.039'), d: S('pt.040'), t: S('pt.014'), key: 'gf:duelclear:v1', daily: 1 },
+  ];
+
+  G.forEach(function (g) { g.url = BASE + g.f; g.isDone = g.daily ? done(g.key) : false; });
+  var next = G.filter(function (g) { return g.daily && !g.isDone; })[0] || G[0];
+  $('play').href = next.url + (/[?&]fakeportal=1/.test(location.search) ? '?fakeportal=1' : ''); $('playSub').textContent = next.daily ? S('pt.025') + next.n.replace(S('pt.025'), '') + ' · ' + next.t : next.n + ' · ' + next.t;
+  var row = function (g) { return '<a class="g" href="' + g.url + (/[?&]fakeportal=1/.test(location.search) ? '?fakeportal=1' : '') + '"><span class="ic">' + g.ic + '</span><span class="tx"><b>' + g.n + '</b><span>' + g.d + ' · ' + g.t + '</span></span><span class="st' + (g.isDone ? ' done' : '') + '">' + (g.daily ? (g.isDone ? S('pt.026') : S('pt.027')) : '') + '</span></a>'; };
+  $('list').innerHTML = G.filter(function (g) { return g.daily; }).map(row).join('');
+  var KO = { gold: S('pf.002'), a_card: S('pt.028'), s_card: S('pt.029'), fuse_mat: S('pf.004') };
+  if (window.GFFrame) GFFrame.wallet(function (w) {
+    if (!w) { var g = S('pt.030'); $('cardsBox').innerHTML = g; $('capsBox').innerHTML = g; return; }
+    var sp = w.cards.spare || {}, sparN = Object.keys(sp).reduce(function (a, k) { return a + sp[k]; }, 0);
+    $('cardsBox').innerHTML = S('pt.031') + w.cards.total + S('pt.032') + w.cards.new_today + S('pt.033') + sparN + S('pt.034');
+    var d = w.caps.day; $('capsBox').innerHTML = '<div class="caps">' + Object.keys(KO).filter(function (k) { return d[k]; }).map(function (k) { var c = d[k], pct = Math.min(100, Math.round(100 * c[0] / Math.max(1, c[1]))); return '<div class="cap"><div class="t"><span>' + KO[k] + '</span><span>' + c[0] + ' / ' + c[1] + '</span></div><div class="bar"><i style="width:' + pct + '%"></i></div></div>'; }).join('') + '</div>';
+  });
+  window.__portal = { G: G, next: next };
+})();
+</script></body></html>

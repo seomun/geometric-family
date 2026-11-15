@@ -1,1 +1,1 @@
-{"size":[624,912],"chest_y":410,"pivot":[336,912],"amp":0.006,"blink":false,"selfcheck_mae":0.95,"no_blink":"얼굴 등록부 없음"}
+{"size":[624,912],"chest_y":612,"pivot":[280,912],"amp":0.006,"blink":true,"selfcheck_mae":0.95,"eyes":[[220,416],[340,416]],"eye_box":[192,377,371,453]}

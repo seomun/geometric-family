@@ -68,7 +68,7 @@ window.GFSTR = {"ko": {"cl.001": "조각을 고르고 빈 칸을 눌러 놓으�
   /** 실제 서버 연결(PORTAL_API): GFFrame.connect({ base: 'https://…', token: function () { return 접근 토큰 또는 null } }) — 스테이징 전용으로 쓴다.
    * ?portalbase=<주소> 로도 켠다(운영 배포에서는 이 매개변수를 무시하도록 호스트 확인은 서버 쪽 CORS 가 맡는다). 실패는 화면에 한 줄로: 로그인 안 됨·오프라인·잠시 뒤·한도 */
   /* 서버 검증기가 붙은 게임(gf-game 이 붙일 때마다 여기에 추가: 순서 move → quiz → duel → cluster → columns → place). 아직 없는 게임은 서버에 청구하지 않고 「보상 준비 중」으로 보인다(가짜 지급 없음, ?fakeportal=1 만 예외) */
-  var VERIFIED = ['today_move', 'place_hand', 'daily_quiz', 'cluster', 'column_drop', 'duel_clear'];
+  var VERIFIED = ['move', 'place', 'quiz', 'cluster', 'columns', 'duel'];
   F.verified = function (g) { return FAKE || VERIFIED.indexOf(g) >= 0 || (window.GF_VERIFIED_GAMES || []).indexOf(g) >= 0; };   /* GF_VERIFIED_GAMES = 시험·스테이징에서 목록을 임시로 넓히는 자리 */
   F.connect = function (cfg) {
     var tok = function () { try { return cfg.token ? cfg.token() : null; } catch (e) { return null; } }, items = {};

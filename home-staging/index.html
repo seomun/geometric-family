@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기하학 가족 — 퍼즐 RPG 기하학 원정대</title>
+<meta name="description" content="기하학 가족은 네모·세모·동그라미 세 가족이 사는 하나의 세계관입니다. 댓글과 선택으로 함께 만들어 가는 웹툰과 게임, 부담 없는 캐릭터 라이선싱.">
+<link rel="canonical" href="https://geometricfamily.com/"><link rel="alternate" hreflang="ko" href="https://geometricfamily.com/"><link rel="alternate" hreflang="en" href="https://geometricfamily.com/en/">
+<meta name="theme-color" content="#0A0B1E">
+<link rel="icon" href="/home-staging/favicon.svg" type="image/svg+xml"><link rel="icon" href="/home-staging/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/home-staging/apple-touch-icon.png">
+<meta property="og:type" content="website"><meta property="og:site_name" content="기하학 가족"><meta property="og:title" content="기하학 가족 — 퍼즐 RPG 기하학 원정대"><meta property="og:description" content="기하학 가족은 네모·세모·동그라미 세 가족이 사는 하나의 세계관입니다. 댓글과 선택으로 함께 만들어 가는 웹툰과 게임, 부담 없는 캐릭터 라이선싱."><meta property="og:url" content="https://geometricfamily.com/"><meta property="og:image" content="https://geometricfamily.com/og/home.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="ko_KR"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 포털(게임 스튜디오) 어두운 톤 — 일반 게이머용. 브랜드 색(주황·분홍·파랑)은 포인트로만. */
+:root { --bg: #0A0B1E; --panel: #14162E; --panel2: #1B1E3D; --line: rgba(255,255,255,.13); --txt: #F2F0FF; --mute: #A9A6C9; --gold: #FFD84B; --org: #E8870F; --pink: #FF8FA8; --blue: #6C7BD9; }
+* { box-sizing: border-box; } html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--txt); font-family: 'Noto Sans KR', 'Gowun Dodum', system-ui, sans-serif; -webkit-text-size-adjust: 100%; line-height: 1.6; }
+a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
+.pt { overflow-x: hidden; }
+.jua { font-family: Jua, 'Noto Sans KR', sans-serif; font-weight: 400; }
+/* 상단 바 */
+.hero { position: relative; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; padding: 76px 20px 5vh; background: radial-gradient(ellipse 80% 50% at 50% 24%, rgba(255,200,80,.16), transparent 70%), var(--bg); overflow: hidden; }
+.hero .phones { display: flex; justify-content: center; align-items: flex-end; width: 100%; max-width: 560px; margin: 0 auto; }
+.ph { position: relative; flex: none; padding: 5px; border-radius: 26px; background: #0d0e22; border: 2px solid #3a3d63; box-shadow: 0 18px 44px rgba(0,0,0,.6), 0 0 50px rgba(255,200,80,.14); }
+.ph img { display: block; width: 100%; height: auto; border-radius: 21px; }
+.ph.c { width: min(50vw, 230px); z-index: 2; }
+.ph.l, .ph.r { width: min(36vw, 170px); margin-bottom: 14px; }
+.ph.l { margin-right: -18px; transform: rotate(-5deg); }
+.ph.r { margin-left: -18px; transform: rotate(5deg); }
+.hero .tag { margin: 0; font-size: 14px; letter-spacing: .22em; color: #FFE9A8; }
+.hero h1 { margin: 6px 0 0; font: 400 clamp(52px, 15vw, 120px)/1.02 Jua, sans-serif; color: var(--gold); text-shadow: 0 4px 0 #B5650A, 0 8px 24px rgba(0,0,0,.6); }
+.hero .one { margin: 10px auto 0; max-width: 21em; font-size: 17px; line-height: 1.55; word-break: keep-all; text-shadow: 0 2px 10px rgba(0,0,0,.8); }
+.hero .cta { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.hero .fine { margin: 0; font-size: 13px; color: #cfc8ee; }
+@media (min-width: 900px) {
+  .hero { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; align-items: center; column-gap: 40px; text-align: left; padding: 96px max(32px, calc(50% - 560px)) 56px; min-height: 100svh; }
+  .hero .phones { grid-column: 2; grid-row: 1 / 3; max-width: 640px; }
+  .hero > div:not(.phones):not(.cta) { grid-column: 1; grid-row: 1; align-self: end; }
+  .hero .cta { grid-column: 1; grid-row: 2; align-items: flex-start; flex-direction: row; flex-wrap: wrap; align-self: start; }
+  .hero .fine { flex-basis: 100%; }
+  .hero h1 { font-size: clamp(60px, 6.4vw, 96px); }
+  .hero .one { margin-left: 0; }
+  .ph.c { width: min(24vw, 290px); }
+  .ph.l, .ph.r { width: min(17vw, 210px); }
+}
+.stores:empty { display: none; }
+.top { position: fixed; z-index: 30; top: 0; left: 0; right: 0; height: 56px; display: flex; align-items: center; gap: 22px; padding: 0 18px; background: rgba(10,11,30,.72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; font: 400 20px/1 Jua, sans-serif; color: #fff; margin-right: auto; }
+.top .brand svg { width: 34px; height: 20px; }
+.top .links { display: none; gap: 22px; font-size: 14px; } .top .links a { text-decoration: none; color: var(--mute); } .top .links a:hover { color: #fff; }
+.pill { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 2.5px solid #fff; border-radius: 40px; background: linear-gradient(#58C46B, #2E8B4A); color: #fff; text-decoration: none; font: 400 16px/1 Jua, sans-serif; padding: 0 20px; min-height: 38px; box-shadow: 0 3px 0 #1E6434; }
+.pill.big { min-height: 66px; padding: 0 36px; font-size: 28px; min-width: min(84vw, 340px); box-shadow: 0 6px 0 #1E6434, 0 12px 26px rgba(0,0,0,.45); }
+.pill.big::before { content: ''; border-left: 17px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+.pill:active { transform: translateY(3px); box-shadow: none; }
+.ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 22px; border: 2px solid rgba(255,255,255,.55); border-radius: 30px; color: #fff; text-decoration: none; font-size: 15px; font-weight: 700; background: rgba(0,0,0,.25); }
+/* 히어로 */
+/* 섹션 */
+.sec { max-width: 1120px; margin: 0 auto; padding: 64px 20px 0; }
+.sec > h2 { display: flex; align-items: baseline; gap: 12px; margin: 0 0 6px; font: 400 36px/1.1 Jua, sans-serif; }
+.sec > h2 small { font: 700 12px/1 'Noto Sans KR', sans-serif; letter-spacing: .2em; color: var(--org); }
+.sec > .sub { margin: 0 0 22px; color: var(--mute); font-size: 15px; word-break: keep-all; }
+/* 게임 카드 줄 */
+.gcards { display: grid; gap: 16px; }
+.gcard { position: relative; display: block; border-radius: 22px; overflow: hidden; background: var(--panel); border: 1px solid var(--line); text-decoration: none; }
+.gcard img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform .4s; }
+.gcard:hover img { transform: scale(1.04); }
+.gcard .gb { padding: 16px 18px 20px; }
+.gcard .gk { display: inline-block; font-size: 11px; letter-spacing: .16em; color: var(--org); font-weight: 700; }
+.gcard h3 { margin: 4px 0 4px; font: 400 28px/1.15 Jua, sans-serif; }
+.gcard p { margin: 0 0 14px; color: var(--mute); font-size: 14px; word-break: keep-all; }
+.gcard .row { display: flex; gap: 10px; flex-wrap: wrap; }
+.gcard.main { border-color: rgba(255,216,75,.5); box-shadow: 0 0 0 1px rgba(255,216,75,.15), 0 18px 50px rgba(232,135,15,.18); }
+.stores { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.store { display: inline-flex; flex-direction: column; padding: 7px 14px; border: 1px solid var(--line); border-radius: 12px; font-size: 13px; background: var(--panel); } .store small { color: var(--mute); font-size: 11px; }
+/* 영상 */
+.vrow { display: grid; grid-auto-flow: column; grid-auto-columns: 46%; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: none; }
+.vrow::-webkit-scrollbar { display: none; }
+.yt { position: relative; display: block; width: 100%; aspect-ratio: 9 / 16; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: #000; scroll-snap-align: start; padding: 0; cursor: pointer; color: #fff; }
+.yt img { width: 100%; height: 100%; object-fit: cover; } .yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt .p { position: absolute; left: 50%; top: 42%; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%; background: rgba(0,0,0,.6); border: 2px solid #fff; }
+.yt .p::after { content: ''; position: absolute; left: 21px; top: 15px; border-left: 16px solid #fff; border-top: 10px solid transparent; border-bottom: 10px solid transparent; }
+.yt .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 10px 10px; background: linear-gradient(transparent, rgba(0,0,0,.85)); font-size: 13px; line-height: 1.35; text-align: left; word-break: keep-all; }
+.vnote { margin: 10px 0 0; color: var(--mute); font-size: 13px; }
+/* 웹툰 */
+.toon { background: linear-gradient(135deg, #1C1B3A, #2A1F3F); border: 1px solid var(--line); border-radius: 24px; padding: 20px 18px; }
+.toon h3 { margin: 0 0 4px; font: 400 28px/1.15 Jua, sans-serif; } .toon p { margin: 0 0 14px; color: var(--mute); font-size: 14px; word-break: keep-all; }
+.eps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 0 0 16px; }
+.eps a { display: block; text-decoration: none; font-size: 12px; text-align: center; color: var(--mute); } .eps img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); margin-bottom: 6px; }
+/* 회사·제휴 */
+.merchp { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+.merchp figure { margin: 0; text-align: center; font-size: 12px; color: var(--mute); } .merchp img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); margin-bottom: 6px; }
+.stepsp { display: grid; gap: 10px; margin: 0 0 20px; padding: 0; list-style: none; counter-reset: s; }
+.stepsp li { counter-increment: s; display: flex; gap: 12px; align-items: baseline; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); font-size: 14px; }
+.stepsp li::before { content: counter(s); flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--gold); color: #1b1630; font-weight: 700; display: grid; place-items: center; font-size: 13px; }
+.stepsp b { white-space: nowrap; } .stepsp span { color: var(--mute); word-break: keep-all; }
+.partner { margin-top: 18px; padding: 26px 20px; text-align: center; border-radius: 24px; border: 1px solid rgba(255,216,75,.4); background: radial-gradient(circle at 50% 0, rgba(255,216,75,.14), transparent 70%), var(--panel); }
+.partner h3 { margin: 0 0 6px; font: 400 28px/1.2 Jua, sans-serif; color: var(--gold); } .partner p { margin: 0 0 16px; color: var(--txt); font-size: 15px; word-break: keep-all; } .partner .mail { margin: 12px 0 0; color: var(--mute); font-size: 13px; }
+.btn-y { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 28px; border-radius: 30px; background: var(--gold); color: #1b1630; font-weight: 700; text-decoration: none; }
+/* 바닥 */
+.pfoot { max-width: 1120px; margin: 0 auto; padding: 48px 20px 60px; color: var(--mute); font-size: 12.5px; line-height: 1.9; text-align: center; }
+.pfoot nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px; margin-bottom: 8px; } .pfoot a { color: var(--mute); }
+@media (min-width: 800px) {
+  .top .links { display: flex; }
+  .gcards { grid-template-columns: 1.4fr 1fr; }
+  .vrow { grid-auto-columns: 19%; }
+  .merchp { gap: 16px; } .stepsp { grid-template-columns: repeat(3, 1fr); }
+}
+
+.vfeat { position: relative; display: block; margin: 0 0 14px; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); text-decoration: none; color: #fff; }
+.vfeat img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.vfeat .vb { position: absolute; top: 12px; left: 12px; padding: 5px 12px; border-radius: 14px; background: var(--gold); color: #1b1630; font-size: 12px; font-weight: 700; }
+.vfeat .vt { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 14px 12px; background: linear-gradient(transparent, rgba(0,0,0,.85)); font-size: 14px; }
+@media (min-width: 800px) { .vfeat { max-width: 640px; } }
+
+/* ---- 문서·게임·앱·문의 쪽(어두운 톤) ---- */
+.doc { max-width: 820px; margin: 0 auto; padding: 84px 20px 20px; }
+.doc.games { max-width: 1040px; }
+.doc h1 { margin: 6px 0 6px; font: 400 40px/1.15 Jua, sans-serif; }
+.doc .meta { margin: 0 0 18px; color: var(--mute); font-size: 13.5px; line-height: 1.6; }
+.doc h2 { margin: 38px 0 10px; padding-bottom: 8px; font: 400 26px/1.25 Jua, sans-serif; border-bottom: 1px solid var(--line); scroll-margin-top: 72px; }
+.doc h3 { margin: 22px 0 8px; font-size: 16px; }
+.doc p, .doc li { font-size: 15px; line-height: 1.75; word-break: keep-all; color: #DDD9F5; }
+.doc ul, .doc ol { padding-left: 20px; margin: 8px 0; }
+.doc a { color: #9DB8FF; } .doc code { font-size: 13px; padding: 1px 6px; border-radius: 6px; background: var(--panel2); border: 1px solid var(--line); color: #fff; }
+.doc .lead { font-size: 16.5px; color: #fff; } .doc .note { font-size: 13.5px; color: var(--mute); }
+.doc .sum { margin: 16px 0; padding: 14px 18px 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+.doc .sum > b { font: 400 22px/1.3 Jua, sans-serif; color: var(--gold); }
+.doc table { display: block; overflow-x: auto; width: 100%; border-collapse: collapse; margin: 10px 0 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; font-size: 13.5px; line-height: 1.6; }
+.doc th, .doc td { padding: 9px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); word-break: keep-all; color: #DDD9F5; }
+.doc th { background: var(--panel2); white-space: nowrap; color: #fff; }
+.doc .toc { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; }
+.doc .toc a { display: inline-block; padding: 4px 11px; border: 1px solid var(--line); border-radius: 14px; font-size: 13px; color: var(--mute); text-decoration: none; background: var(--panel); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: 30px; border: 2px solid rgba(255,255,255,.55); background: rgba(255,255,255,.08); color: #fff; font-weight: 700; font-size: 16px; text-decoration: none; }
+.doc a.btn { color: #fff; text-decoration: none; }
+.btn.yel, .doc a.btn.yel { background: var(--gold); border-color: var(--gold); color: #1b1630; }
+.btn.light, .doc a.btn.light { background: transparent; color: #fff; }
+.btn.sm { min-height: 38px; padding: 0 16px; font-size: 14px; background: linear-gradient(#58C46B, #2E8B4A); border-color: #fff; }
+.btn.wide { width: 100%; }
+.doc > p > .btn:first-child { background: linear-gradient(#58C46B, #2E8B4A); border-color: #fff; }
+.apps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 14px; }
+.apps .app { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); text-decoration: none; color: #fff; font-weight: 700; font-size: 14px; }
+.apps .app img { width: 56px; height: 56px; border-radius: 14px; flex: none; }
+.apphead { display: flex; gap: 16px; align-items: center; margin: 8px 0 14px; } .apphead img { width: 96px; height: 96px; border-radius: 22px; border: 1px solid var(--line); flex: none; } .apphead h1 { margin: 0; }
+.appwide { width: 100%; border: 1px solid var(--line); border-radius: 18px; margin: 4px 0 14px; }
+.doc .stores { margin: 14px 0 6px; }
+.cta-box { margin: 34px 0 0; padding: 26px 20px 22px; text-align: center; border-radius: 24px; border: 1px solid rgba(255,216,75,.4); background: radial-gradient(circle at 50% 0, rgba(255,216,75,.14), transparent 70%), var(--panel); }
+.cta-box h2 { margin: 0 0 6px; padding: 0; border: 0; color: var(--gold); font: 400 30px/1.2 Jua, sans-serif; } .cta-box p { margin: 0 0 14px; } .cta-box .mail { color: var(--mute); font-size: 13px; margin: 12px 0 0; }
+.kinds { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+/* /games/ */
+.games h2 small, .games h3 small { font: 400 13px/1 'Noto Sans KR', sans-serif; color: var(--mute); }
+.games .kind { display: inline-block; padding: 3px 12px; border-radius: 12px; background: var(--gold); color: #1b1630; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+.flag { margin: 20px 0 8px; padding: 18px 18px 22px; border-radius: 24px; border: 1px solid rgba(255,216,75,.4); background: linear-gradient(135deg, #1D2148, #2B1F4A); box-shadow: 0 18px 50px rgba(232,135,15,.14); }
+.flag h2 { margin: 0; padding: 0; border: 0; font-size: 30px; } .flag h3 { color: #fff; font-size: 17px; margin: 22px 0 8px; }
+.flag .meta { margin: 2px 0 0; } .flag a { color: #fff; } .flag .note { color: var(--mute); }
+.flaghead { display: flex; gap: 12px; align-items: center; margin: 10px 0 12px; } .flaghead .fi { border-radius: 16px; border: 1px solid var(--line); }
+.flag .appwide { border-radius: 14px; }
+.spec { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 0; } .spec div { background: rgba(255,255,255,.07); border-radius: 12px; padding: 8px 12px; }
+.spec dt { font-size: 12px; color: var(--mute); } .spec dd { margin: 2px 0 0; font-size: 14px; font-weight: 700; line-height: 1.4; word-break: keep-all; }
+.loop, .money { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.loop li, .money li { display: flex; flex-direction: column; gap: 2px; background: rgba(255,255,255,.07); border-radius: 12px; padding: 10px 14px; font-size: 14px; line-height: 1.5; word-break: keep-all; }
+.loop b, .money b { font-size: 15px; color: #fff; }
+.grades { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 8px; }
+.grades li { display: flex; flex-direction: column; align-items: center; min-width: 58px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.07); font-size: 12px; }
+.grades b { font: 400 24px/1 Jua, sans-serif; } .grades .g-s { background: var(--blue); } .grades .g-ss { background: var(--org); } .grades .g-sss { background: linear-gradient(135deg, #FFD84B, #FF8FA8); color: #1b1630; }
+.shotrow { display: grid; grid-auto-flow: column; grid-auto-columns: 46%; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; } .shotrow img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); scroll-snap-align: start; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.lineup { display: grid; gap: 14px; margin: 12px 0 18px; }
+.lu { padding: 10px 12px 14px; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); }
+.lu img { width: 100%; height: auto; aspect-ratio: 1024 / 500; object-fit: cover; border-radius: 12px; }
+.lu h3 { margin: 10px 0 2px; font: 400 24px/1.2 Jua, sans-serif; } .lu .one { margin: 0 0 8px; font-size: 13.5px; line-height: 1.55; color: var(--mute); }
+.lu dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; margin: 0 0 10px; font-size: 13px; line-height: 1.5; } .lu dt { color: var(--mute); } .lu dd { margin: 0; word-break: keep-all; }
+.lu .act { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0; } .doc .lu a:not(.btn) { font-size: 13.5px; }
+@media (min-width: 700px) { .lineup { grid-template-columns: repeat(2, 1fr); } .loop, .money { grid-template-columns: repeat(2, 1fr); } .shotrow { grid-auto-columns: 22%; } .apps { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1000px) { .lineup { grid-template-columns: repeat(3, 1fr); } }
+.doc .loop, .doc .money, .doc .grades, .doc .spec { padding: 0; margin-left: 0; margin-right: 0; }
+
+/* ───── 세계관 /lore/ — 찢어진 이야기책: 열린 쪽은 카드, 아직 안 만난 쪽은 찢긴 종이 실루엣 ───── */
+.lore { max-width: 1080px; margin: 0 auto; padding: 88px 20px 40px; }
+.lore .tag { margin: 0; font: 700 12px/1 'Noto Sans KR', sans-serif; letter-spacing: .18em; color: var(--gold); }
+.lore h1 { margin: 8px 0 18px; font: 400 clamp(36px, 7vw, 56px)/1.1 Jua, sans-serif; }
+.lore .sum { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 10px; max-width: 720px; }
+.lore .sum li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; font-size: 17px; line-height: 1.55; word-break: keep-all; }
+.lore .sum li span { width: 28px; height: 28px; border-radius: 50%; background: var(--panel2); border: 1px solid var(--line); display: grid; place-items: center; font: 700 13px 'Noto Sans KR', sans-serif; color: var(--gold); }
+.lore .rules { margin: 0 0 10px; padding: 14px 18px 14px 38px; max-width: 720px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); display: grid; gap: 4px; font-size: 15px; color: #dcdaf2; word-break: keep-all; }
+.lore .rules li::marker { color: var(--gold); font-weight: 700; }
+.lore .ask { margin: 8px 0 24px; font: 400 20px/1.4 Jua, sans-serif; color: #FFE9A6; }
+.lore .prog { display: flex; align-items: center; gap: 14px; margin: 0 0 22px; font-size: 14px; color: var(--mute); flex-wrap: wrap; }
+.lore .prog .bar { flex: 1; min-width: 160px; height: 8px; border-radius: 6px; background: var(--panel2); overflow: hidden; max-width: 420px; }
+.lore .prog .bar i { display: block; height: 100%; background: linear-gradient(90deg, #E8870F, #FFD84B); border-radius: 6px; }
+.lore .prog b { color: #fff; }
+.lore .tier { margin: 0 0 24px; }
+.lore .tier h3 { margin: 0 0 12px; font: 400 22px/1.2 Jua, sans-serif; color: #fff; }
+.lore .tier h3 small { color: var(--mute); font: 500 13px 'Noto Sans KR', sans-serif; margin-left: 8px; }
+.lore .pgs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.lore .pg { display: grid; grid-template-columns: 40px 1fr; gap: 10px; padding: 11px 12px; border-radius: 12px; border: 1px solid rgba(255,216,75,.35); background: linear-gradient(120deg, rgba(255,216,75,.10), var(--panel2) 62%); }
+.lore .pg .no { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,216,75,.16); color: #FFE9A6; display: grid; place-items: center; font: 400 17px/1 Jua, sans-serif; }
+.lore .pg b { display: block; font: 400 18px/1.2 Jua, sans-serif; }
+.lore .pg em { display: block; font-style: normal; font-size: 12px; color: var(--mute); margin-top: 1px; }
+.lore .pg p { margin: 5px 0 0; font-size: 13px; line-height: 1.5; color: #cfcde8; word-break: keep-all; }
+.lore .sils { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sil { width: 54px; height: 70px; display: grid; place-items: center; color: #5b6094; font: 700 15px 'Noto Sans KR', sans-serif;
+  background: linear-gradient(160deg, #1f2245, #15172f); clip-path: polygon(0 4%, 12% 0, 26% 5%, 41% 1%, 57% 6%, 72% 0, 88% 5%, 100% 2%, 97% 22%, 100% 41%, 96% 60%, 100% 79%, 95% 100%, 78% 95%, 62% 100%, 45% 95%, 28% 100%, 12% 96%, 0 100%, 4% 78%, 0 58%, 5% 38%, 0 20%); }
+.sil.big { width: 84px; height: 108px; font-size: 34px; flex: none; }
+.lore .final { display: flex; align-items: center; gap: 16px; margin: 6px 0 0; padding: 14px 16px; border-radius: 14px; border: 1px dashed rgba(255,216,75,.35); background: var(--panel); max-width: 560px; }
+.lore .final small { color: var(--gold); font: 700 12px 'Noto Sans KR', sans-serif; letter-spacing: .1em; }
+.lore .final b { display: block; font: 400 26px/1.2 Jua, sans-serif; color: #FFE9A6; }
+.lore .final p { margin: 2px 0 0; font-size: 13.5px; color: var(--mute); }
+.lore .go { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 30px 0 0; }
+@media (max-width: 640px) { .lore { padding-top: 76px; } .lore .sum li { font-size: 16px; } .sil { width: 46px; height: 60px; } }
+</style>
+</head>
+<body>
+<div class="pt">
+<nav class="top"><a class="brand" href="/home-staging/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>기하학 가족</span></a><div class="links"><a href="/home-staging/#games">게임</a><a href="/home-staging/#videos">영상</a><a href="/home-staging/#webtoon">웹툰</a><a href="/home-staging/lore/">세계관</a><a href="/home-staging/#partner">제휴</a><a href="/home-staging/en/">EN</a></div><a class="pill" href="/home-staging/quest/">지금 플레이</a></nav><header class="hero"><div class="phones"><div class="ph l"><img src="/home-staging/home/img/ph_home.webp" width="390" height="772" alt="홈 화면"></div><div class="ph c"><img src="/home-staging/home/img/ph_battle.webp" width="390" height="772" alt="전투 화면"></div><div class="ph r"><img src="/home-staging/home/img/ph_dex.webp" width="390" height="772" alt="카드 도감"></div></div><div><p class="tag">PUZZLE RPG</p><h1>기하학 원정대</h1><p class="one">구슬을 끌어 몬스터를 부수고, 영웅을 모아 신화로 키워라</p></div><div class="cta"><a class="pill big" href="/home-staging/expedition/play.html">지금 플레이</a><a class="ghost" href="/home-staging/quest/">원정대 소개</a><p class="fine">설치 없이 · 무료 · 만 15세 이상 이용가</p></div></header><section class="sec" id="games"><h2>게임 <small>GAMES</small></h2><p class="sub">대표작 기하학 원정대와 캐주얼 미니게임 라인업. 모두 웹에서 바로 해 볼 수 있어요.</p><div class="gcards"><div class="gcard main"><a href="/home-staging/quest/"><img src="/home-staging/home/img/p_thumb_exp.webp" width="800" height="500" loading="lazy" alt="Geometry Expedition"></a><div class="gb"><span class="gk">PUZZLE RPG · 대표작</span><h3>기하학 원정대</h3><p>29나라 · 348단계 · 동료 105명. 끌어서 부수고, 모아서 키우는 퍼즐 전투.</p><div class="row"><a class="pill" href="/home-staging/expedition/play.html">지금 플레이</a><a class="ghost" href="/home-staging/quest/">소개</a></div></div></div><div class="gcard"><a href="/home-staging/games/#lineup"><img src="/home-staging/home/img/p_thumb_apps.webp" width="800" height="500" loading="lazy" alt="casual mini games"></a><div class="gb"><span class="gk">CASUAL</span><h3>캐주얼 미니게임 11종</h3><p>머지·블록·타일·구슬·틀린 그림 찾기까지, 짧게 즐기는 퍼즐 라인업.</p><div class="row"><a class="ghost" href="/home-staging/games/#lineup">라인업 보기</a></div></div></div></div><div class="stores"></div></section><section class="sec" id="videos"><h2>영상 <small>VIDEOS</small></h2><p class="sub">롱폼 「그리스로마 신화」 시리즈와, 오늘의 이슈를 숫자로 풀어 주는 쇼츠.</p><a class="vfeat" href="https://www.youtube.com/watch?v=JZfsYpgPYNE" rel="noopener"><img src="https://i.ytimg.com/vi/JZfsYpgPYNE/hqdefault.jpg" width="480" height="360" loading="lazy" alt=""><span class="vb">보러 가기</span><span class="vt">그리스로마 신화 7화 · 페르세우스와 메두사</span></a><div class="vrow"><button class="yt" type="button" data-id="xGB6qPXU8v4" aria-label="계란 껍데기 숫자 1, 1등급 아니었다? 특란보다 큰 계란"><img src="https://i.ytimg.com/vi/xGB6qPXU8v4/hqdefault.jpg" loading="lazy" decoding="async" alt=""><span class="p"></span><span class="cap">계란 껍데기 숫자 1, 1등급 아니었다? 특란보다 큰 계란</span></button><button class="yt" type="button" data-id="oLE8kPDJj38" aria-label="치킨 두 마리 포장 할인, 2천 원인가 4천 원인가?"><img src="https://i.ytimg.com/vi/oLE8kPDJj38/hqdefault.jpg" loading="lazy" decoding="async" alt=""><span class="p"></span><span class="cap">치킨 두 마리 포장 할인, 2천 원인가 4천 원인가?</span></button><button class="yt" type="button" data-id="PzA__dmkP1g" aria-label="연봉 8억 vs 4천만 원, 20배 차이… 집안일은 반반?"><img src="https://i.ytimg.com/vi/PzA__dmkP1g/hqdefault.jpg" loading="lazy" decoding="async" alt=""><span class="p"></span><span class="cap">연봉 8억 vs 4천만 원, 20배 차이… 집안일은 반반?</span></button><button class="yt" type="button" data-id="JXgOt_3saYU" aria-label="배우자 떠나면 누구는 30%, 누구는 100%? 유족연금의 비밀"><img src="https://i.ytimg.com/vi/JXgOt_3saYU/hqdefault.jpg" loading="lazy" decoding="async" alt=""><span class="p"></span><span class="cap">배우자 떠나면 누구는 30%, 누구는 100%? 유족연금의 비밀</span></button><button class="yt" type="button" data-id="bHDRpoQM8m8" aria-label="비행 내내 앞좌석에 발 올린 승객, 내 자리니까? 민폐인가"><img src="https://i.ytimg.com/vi/bHDRpoQM8m8/hqdefault.jpg" loading="lazy" decoding="async" alt=""><span class="p"></span><span class="cap">비행 내내 앞좌석에 발 올린 승객, 내 자리니까? 민폐인가</span></button><button class="yt" type="button" data-id="-v_9dNfTtlc" aria-label="병장 150만 원, 하사 213만 원… 누가 하사 하나요?"><img src="https://i.ytimg.com/vi/-v_9dNfTtlc/hqdefault.jpg" loading="lazy" decoding="async" alt=""><span class="p"></span><span class="cap">병장 150만 원, 하사 213만 원… 누가 하사 하나요?</span></button></div><p class="vnote"><a href="/home-staging/videos.html">쇼츠 더 보기 →</a></p></section><section class="sec" id="webtoon"><h2>웹툰 <small>WEBTOON</small></h2><div class="toon"><h3>세 가족, 같은 사건 다른 하루</h3><p>같은 일을 세 도형이 전혀 다르게 겪는 컷 웹툰. 현재 7화 공개.</p><div class="eps"><a href="/home-staging/ep02.html"><img src="/home-staging/home/img/ep_ep02.webp" width="168" height="168" loading="lazy" alt="">1화 단톡방</a><a href="/home-staging/ep01.html"><img src="/home-staging/home/img/ep_ep01.webp" width="168" height="168" loading="lazy" alt="">2화 부고</a><a href="/home-staging/ep03.html"><img src="/home-staging/home/img/ep_ep03.webp" width="168" height="168" loading="lazy" alt="">3화 상갓집</a><a href="/home-staging/ep04.html"><img src="/home-staging/home/img/ep_ep04.webp" width="168" height="168" loading="lazy" alt="">4화 다음 모임</a><a href="/home-staging/ep05.html"><img src="/home-staging/home/img/ep_ep05.webp" width="168" height="168" loading="lazy" alt="">5화 희망퇴직</a><a href="/home-staging/ep06.html"><img src="/home-staging/home/img/ep_ep06.webp" width="168" height="168" loading="lazy" alt="">6화 오토매장</a><a href="/home-staging/ep07.html"><img src="/home-staging/home/img/ep_ep07.webp" width="168" height="168" loading="lazy" alt="">7화 우편함</a></div><a class="btn-y" href="/home-staging/ep02.html">1화부터 보기 →</a></div></section><section class="sec" id="partner"><h2>회사·제휴 <small>PARTNER</small></h2><p class="sub">기하학 가족은 세 도형 가족이 사는 하나의 세계관 IP이고, 웹툰·영상·게임으로 확장하고 있어요. 캐릭터는 팬시·문구·생활용품 등 어디든 부담 없는 조건으로 활용할 수 있습니다.</p><div class="merchp"><figure><img src="/home-staging/home/img/merch_sticker.webp" width="480" height="480" loading="lazy" alt="스티커">스티커</figure><figure><img src="/home-staging/home/img/merch_note.webp" width="480" height="480" loading="lazy" alt="노트">노트</figure><figure><img src="/home-staging/home/img/merch_mug.webp" width="480" height="480" loading="lazy" alt="머그">머그</figure><figure><img src="/home-staging/home/img/merch_keyring.webp" width="480" height="480" loading="lazy" alt="키링">키링</figure></div><ol class="stepsp"><li><b>문의</b><span>쓰고 싶은 상품과 캐릭터를 알려 주세요</span></li><li><b>조건 협의</b><span>수량·기간·지역에 맞춰 부담 없이</span></li><li><b>시안</b><span>정본 캐릭터로 시안을 함께 다듬어요</span></li></ol><div class="partner"><h3>제휴를 원하시면</h3><p>공동 개발, IP 활용, 게임 출시·운영 협의 — 편하게 연락 주세요.</p><a class="btn-y" href="mailto:hello@geometricfamily.com?subject=[기하학%20가족]%20제휴%20문의">제휴 문의하기</a><p class="mail">hello@geometricfamily.com</p></div></section><footer class="pfoot"><nav><a href="/home-staging/privacy/">개인정보처리방침</a><a href="/home-staging/terms/">이용약관</a><a href="/home-staging/games/">게임</a><a href="/home-staging/apps/">앱 소개</a><a href="/home-staging/contact/">문의</a><a href="/home-staging/delete/">계정 삭제</a><a href="/home-staging/en/">English</a></nav>© 2026 기하학 가족<br>상호 기하학가족 · 대표 서문성수 · 사업자등록번호 <span style="white-space:nowrap">220-32-01943</span><br>통신판매업 신고번호 신고 중 · 주소 경기도 안양시 동안구 시민대로327번길 11-41, 안양창업지원센터 동안 청년오피스 3층 4089호(관양동)<br>문의 <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a></footer>
+<script>document.addEventListener("click",function(e){var b=e.target.closest("button.yt");if(!b||b.querySelector("iframe"))return;var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.id+(b.dataset.list?"?list="+b.dataset.list+"&":"?")+"autoplay=1&playsinline=1&rel=0";f.allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";f.title=b.getAttribute("aria-label")||"YouTube";b.appendChild(f);});</script>
+</div>
+</body>
+</html>

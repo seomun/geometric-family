@@ -1,0 +1,92 @@
+{
+ "places": {
+  "battle": "tropical",
+  "battle2": "rpg_long",
+  "home": "town",
+  "map": "grass",
+  "shop": "minstrel",
+  "boss": "epic",
+  "boss2": "mission",
+  "warp": "rpg",
+  "win": "dreams",
+  "lose": "snow"
+ },
+ "tracks": {
+  "town": {
+   "pak": "m_town.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 827,
+   "loopStart": 0.08,
+   "loopEnd": 60.419433
+  },
+  "grass": {
+   "pak": "m_grass.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 840,
+   "loopStart": 0.08,
+   "loopEnd": 61.35746
+  },
+  "minstrel": {
+   "pak": "m_minstrel.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 646,
+   "loopStart": 0.08,
+   "loopEnd": 47.157098
+  },
+  "epic": {
+   "pak": "m_epic.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 869,
+   "loopStart": 0.08,
+   "loopEnd": 63.483878
+  },
+  "mission": {
+   "pak": "m_mission.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 833,
+   "loopStart": 0.08,
+   "loopEnd": 60.839456
+  },
+  "rpg": {
+   "pak": "m_rpg.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 783,
+   "loopStart": 0.08,
+   "loopEnd": 57.223084
+  },
+  "dreams": {
+   "pak": "m_dreams.pak",
+   "loop": false,
+   "lufs": -20,
+   "kb": 273
+  },
+  "snow": {
+   "pak": "m_snow.pak",
+   "loop": false,
+   "lufs": -20,
+   "kb": 273
+  },
+  "tropical": {
+   "pak": "m_tropical.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 731,
+   "loopStart": 0.08,
+   "loopEnd": 53.413356
+  },
+  "rpg_long": {
+   "pak": "m_rpg_long.pak",
+   "loop": true,
+   "lufs": -20,
+   "kb": 862,
+   "loopStart": 0.08,
+   "loopEnd": 62.952018
+  }
+ }
+}

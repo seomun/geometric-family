@@ -207,6 +207,16 @@ a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
 .lore .final p { margin: 2px 0 0; font-size: 13.5px; color: var(--mute); }
 .lore .go { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 30px 0 0; }
 @media (max-width: 640px) { .lore { padding-top: 76px; } .lore .sum li { font-size: 16px; } .sil { width: 46px; height: 60px; } }
+/* 공식 커뮤니티 칸(pfoot·jfoot 위) + 첫 화면 한 줄 */
+.comm { max-width: 720px; margin: 36px auto 0; padding: 22px 18px; text-align: center; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); }
+.comm h2 { margin: 0 0 6px; font: 400 24px/1.3 Jua, 'Noto Sans KR', sans-serif; }
+.comm p { margin: 0 0 14px; color: var(--mute); font-size: 14px; word-break: keep-all; }
+.commrow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.cbtn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 99px; background: var(--panel2); border: 1px solid var(--gold); color: var(--txt); font-weight: 700; font-size: 15px; text-decoration: none; }
+.cbtn:hover { background: var(--gold); color: #2b2100; }
+.commline { margin: 2px 0 0; font-size: 13px; color: var(--mute); } .commline a { display: inline-block; padding: 12px 6px; margin: -12px 0; color: var(--gold); }
+html[lang="ja"] .comm h2 { font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif; font-weight: 800; }
+@media (max-width: 380px) { .cbtn { width: 100%; } }
 </style>
 </head>
 <body>
@@ -217,8 +227,8 @@ a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
 <div class="sum">
   <b>In short</b>
   <ul>
-    <li><b>11 casual game apps</b> (Playground, Coloring Book, Little One's Day, Three Family Table, Shape Merge and others): no accounts, and we do not collect names, contacts, photos or location. Progress stays on your device. Ads are served by Google AdMob in some apps (Geometry Expedition shows optional rewarded ads from Google AdMob that you choose to watch).</li>
-    <li><b>Geometry Expedition</b>: an anonymous account (no name or email) stored on our server, with progress, purchase records and invite codes (we do not ask for your birthday or age). You can <a href="/en/delete/">delete your account</a> in the app or request it on the web.</li>
+    <li><b>11 casual game apps</b> (Playground, Coloring Book, Little One's Day, Three Family Table, Shape Merge and others): no accounts, and we do not collect names, contacts, photos or location. Progress stays on your device. Ads are served by Google AdMob in some apps (Geometry Expedition currently has no ads).</li>
+    <li><b>Geometry Expedition</b>: an anonymous account (no name or email) stored on our server, with progress and purchase records (we do not ask for your birthday or age). You can <a href="/en/delete/">delete your account</a> in the app or request it on the web.</li>
     <li><b>Kids apps</b> (Playground, Coloring Book, Little One's Day) use child-directed, non-personalized ads only, and the advertising ID permission is removed.</li>
     <li>We never sell personal information or share it with third parties for advertising.</li>
   </ul>
@@ -254,7 +264,6 @@ a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
   <tr><td>Recruit (random-item) records: time, banner, result, odds-table version</td><td>Allow odds and pity rules to be verified afterwards</td><td>Until account deletion</td></tr>
   <tr><td>Purchase records: order ID, item, amount, payment status, refund status</td><td>Verify payments, refunds, monthly spending limit</td><td><b>5 years</b> as required by Korean e-commerce law, even after deletion</td></tr>
   <tr><td>Monthly payment total and the spending limit set by the user</td><td>Apply the monthly spending limit</td><td>Until account deletion</td></tr>
-  <tr><td>Invite code (random string made by the app) and invite relationship — inviting and invited accounts (account numbers only), invite-step reward records. If you installed from an invite link, only the invite code is read from the Google Play install information</td><td>Settle friend-invite rewards; prevent duplicate or fraudulent invites</td><td>While the account exists</td></tr>
   <tr><td>Request processing log</td><td>Prevent the same request being processed twice</td><td>30 days</td></tr>
   <tr><td>Abuse signals</td><td>Prevent cheating</td><td>180 days</td></tr>
   <tr><td>IP address</td><td>Blocking excessive requests in a short time (used only for counting)</td><td>Deleted automatically within a day</td></tr>
@@ -281,12 +290,12 @@ a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
 <p>We do not sell or provide your personal information to third parties. The companies below process information to provide the service.</p>
 <table>
   <tr><th>Recipient (country)</th><th>Data</th><th>Purpose</th><th>Retention</th></tr>
-  <tr><td>Google LLC — AdMob, UMP (USA)</td><td>IP address (approximate location), device info, device / app set ID, ad impressions and clicks, crash logs and diagnostics, advertising ID (general apps, where permitted — not used by Geometry Expedition)</td><td>Ad requests and display, invalid-click prevention, consent management</td><td>Per Google's policies</td></tr>
+  <tr><td>Google LLC — AdMob, UMP (USA)</td><td>IP address, device info, advertising ID (general apps, where permitted), ad interactions</td><td>Ad requests and display, invalid-click prevention, consent management</td><td>Per Google's policies</td></tr>
   <tr><td>Cloudflare, Inc. — Workers, D1 (USA and other regions)</td><td>Geometry Expedition server data (§2-2)</td><td>Running and storing the Expedition server (processor)</td><td>As in §2-2</td></tr>
   <tr><td>The app store you installed from — ONE store (Korea), Google Play (USA)</td><td>Payment details (handled by the store)</td><td>Paid-item payments and refunds</td><td>Per each store's policy and law</td></tr>
 </table>
-<p><b>Ads</b>: general apps show banners at the bottom of the home and map screens, interstitial ads after a round (with a frequency cap) and rewarded ads that you choose to watch. Where required, a consent form (Google UMP) appears at first launch, and personalized ads are used only within your choice. <b>Geometry Expedition</b> shows optional <b>rewarded ads from Google AdMob</b> (only when you tap "Watch an ad for a reward"; no banner or interstitial ads). In Expedition, AdMob processes app interactions (ad impressions and clicks), crash logs and diagnostics, approximate location based on IP address, and device / app set ID. Expedition <b>does not use the advertising ID and does not show personalized ads</b>. You can play without watching ads. Processing follows the Google Privacy Policy and Google's use of data from partner sites (<a href="https://policies.google.com/technologies/partner-sites" rel="noopener">details</a>).</p>
-<p><b>Payments</b>: we use the billing of the store you installed the app from (Google Play Billing, ONE store, etc.). We and the Expedition server do not receive card information; we receive and verify only the order ID, item, amount and status. Kids apps have no payments.</p>
+<p><b>Ads</b>: general apps show banners at the bottom of the home and map screens, interstitial ads after a round (with a frequency cap) and rewarded ads that you choose to watch. Where required, a consent form (Google UMP) appears at first launch, and personalized ads are used only within your choice. Geometry Expedition currently has no ads; if we introduce ads, we will update this policy first. Processing follows the Google Privacy Policy and Google's use of data from partner sites (<a href="https://policies.google.com/technologies/partner-sites" rel="noopener">details</a>).</p>
+<p><b>Payments</b>: we use the billing of the store you installed the app from. We and the Expedition server do not receive card information; we receive and verify only the order ID, item, amount and status. Kids apps have no payments.</p>
 <p><b>International transfer</b>: the information in the table is transmitted over the network when you use the service. If you do not want an international transfer, you can stop using the app or delete your Expedition account, though this limits use of the service.</p>
 
 <h2 id="perm">5. App permissions</h2>
@@ -345,7 +354,7 @@ a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
 <p>Effective 2026-10-27. We will announce changes on this page and in app update notes 7 days before they take effect (30 days for changes materially affecting users' rights).</p>
 
 </main>
-<footer class="pfoot"><nav><a href="/en/privacy/">Privacy Policy</a><a href="/en/terms/">Terms</a><a href="/en/delete/">Delete account</a><a href="/">한국어</a></nav>© 2026 Geometric Family<br>Business name: Geometric Family (기하학가족) · Representative: Seomun Seongsu · Business registration no. 220-32-01943<br>Contact: <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a></footer>
+<footer class="pfoot"><nav><a href="/en/privacy/">Privacy Policy</a><a href="/en/terms/">Terms</a><a href="/en/delete/">Delete account</a><a href="/">한국어</a></nav>© 2026 Geometric Family<br>Business name: Geometric Family (기하학가족) · Representative: Seomun Seongsu · Business registration no. <span style="white-space:nowrap">220-32-01943</span><br>Mail-order business report no.: <span style="white-space:nowrap">No. 2026-Anyangdongan-1516</span> · Address: Room 4089, 3F, Dongan Youth Office, Anyang Startup Support Center, 11-41 Simin-daero 327beon-gil, Dongan-gu, Anyang-si, Gyeonggi-do, Republic of Korea<br>Contact: <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a></footer>
 </div>
 </body>
 </html>

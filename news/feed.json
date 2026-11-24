@@ -4,10 +4,45 @@
  "items": [
   {
    "date": "2026-11-24",
+   "type": "novel",
+   "lang": "ko",
+   "title": "연재소설 프롤로그 — 꺼져 가는 등불",
+   "url": "https://cafe.naver.com/f-e/cafes/31820413/menus/5"
+  },
+  {
+   "date": "2026-11-24",
+   "type": "novel",
+   "lang": "ko",
+   "title": "연재소설 1화 — 포세이돈 보물창고에 도둑이 들었대!",
+   "url": "https://cafe.naver.com/f-e/cafes/31820413/menus/5"
+  },
+  {
+   "date": "2026-11-24",
    "type": "blog",
    "lang": "ko",
    "title": "다이소 5천 원 텀블러 vs 브랜드 6만 9천 원, 가성비인가 브랜드값인가",
    "url": "https://geometricfamily.com/blog/daiso-vs-brand/"
+  },
+  {
+   "date": "2026-11-24",
+   "type": "blog",
+   "lang": "ko",
+   "title": "기하학 원정대 연재소설을 시작합니다",
+   "url": "https://geometricfamily.com/blog/expedition-serial/"
+  },
+  {
+   "date": "2026-11-24",
+   "type": "blog",
+   "lang": "ko",
+   "title": "원정대 연재 프롤로그 — 꺼져 가는 등불",
+   "url": "https://geometricfamily.com/blog/novel-00/"
+  },
+  {
+   "date": "2026-11-24",
+   "type": "blog",
+   "lang": "ko",
+   "title": "원정대 연재 1화 — 포세이돈 보물창고에 도둑이 들었대!",
+   "url": "https://geometricfamily.com/blog/novel-01/"
   },
   {
    "date": "2026-11-17",

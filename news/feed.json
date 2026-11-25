@@ -1,7 +1,35 @@
 {
  "site": "https://geometricfamily.com",
- "updated": "2026-11-24",
+ "updated": "2026-11-25",
  "items": [
+  {
+   "date": "2026-11-25",
+   "type": "novel",
+   "lang": "ko",
+   "title": "연재소설 2화 — 저희는 세이렌 바위까지만 나른다고요!",
+   "url": "https://cafe.naver.com/f-e/cafes/31820413/menus/5"
+  },
+  {
+   "date": "2026-11-25",
+   "type": "blog",
+   "lang": "ko",
+   "title": "기하학 원정대 첫 3일 가이드 — 처음엔 뭐부터 하죠?",
+   "url": "https://geometricfamily.com/blog/expedition-first-3days/"
+  },
+  {
+   "date": "2026-11-25",
+   "type": "blog",
+   "lang": "ko",
+   "title": "원정대 연재 2화 — 저희는 세이렌 바위까지만 나른다고요!",
+   "url": "https://geometricfamily.com/blog/novel-02/"
+  },
+  {
+   "date": "2026-11-25",
+   "type": "blog",
+   "lang": "ko",
+   "title": "월 1억 부업 강의, 피해 신청이 1년 새 약 4배 — 숫자로 보는 부업 강의 피해",
+   "url": "https://geometricfamily.com/blog/side-job-course-damage/"
+  },
   {
    "date": "2026-11-24",
    "type": "novel",

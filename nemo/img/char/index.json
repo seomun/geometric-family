@@ -1,0 +1,53 @@
+{
+ "네모 아빠": {
+  "good": "https://geometricfamily.com/nemo/img/char/nemo_dad_good.png",
+  "기본": "https://geometricfamily.com/nemo/img/char/nemo_dad.png",
+  "joy": "https://geometricfamily.com/nemo/img/char/nemo_dad_joy.png",
+  "love": "https://geometricfamily.com/nemo/img/char/nemo_dad_love.png",
+  "surprise": "https://geometricfamily.com/nemo/img/char/nemo_dad_surprise.png",
+  "wink": "https://geometricfamily.com/nemo/img/char/nemo_dad_wink.png",
+  "worry": "https://geometricfamily.com/nemo/img/char/nemo_dad_worry.png"
+ },
+ "세모 아내": {
+  "angry": "https://geometricfamily.com/nemo/img/char/wife_angry.png",
+  "bad": "https://geometricfamily.com/nemo/img/char/wife_bad.png",
+  "calm": "https://geometricfamily.com/nemo/img/char/wife_calm.png",
+  "cry": "https://geometricfamily.com/nemo/img/char/wife_cry.png",
+  "good": "https://geometricfamily.com/nemo/img/char/wife_good.png",
+  "기본": "https://geometricfamily.com/nemo/img/char/wife.png",
+  "joy": "https://geometricfamily.com/nemo/img/char/wife_joy.png",
+  "love": "https://geometricfamily.com/nemo/img/char/wife_love.png",
+  "smug": "https://geometricfamily.com/nemo/img/char/wife_smug.png",
+  "surprise": "https://geometricfamily.com/nemo/img/char/wife_surprise.png",
+  "tired": "https://geometricfamily.com/nemo/img/char/wife_tired.png",
+  "wink": "https://geometricfamily.com/nemo/img/char/wife_wink.png",
+  "worry": "https://geometricfamily.com/nemo/img/char/wife_worry.png"
+ },
+ "세모 남편": {
+  "good": "https://geometricfamily.com/nemo/img/char/husband_good.png",
+  "기본": "https://geometricfamily.com/nemo/img/char/husband.png",
+  "joy": "https://geometricfamily.com/nemo/img/char/husband_joy.png",
+  "love": "https://geometricfamily.com/nemo/img/char/husband_love.png",
+  "surprise": "https://geometricfamily.com/nemo/img/char/husband_surprise.png",
+  "wink": "https://geometricfamily.com/nemo/img/char/husband_wink.png",
+  "worry": "https://geometricfamily.com/nemo/img/char/husband_worry.png"
+ },
+ "막둥이": {
+  "cry": "https://geometricfamily.com/nemo/img/char/baby_cry.png",
+  "good": "https://geometricfamily.com/nemo/img/char/baby_good.png",
+  "기본": "https://geometricfamily.com/nemo/img/char/baby.png",
+  "joy": "https://geometricfamily.com/nemo/img/char/baby_joy.png",
+  "love": "https://geometricfamily.com/nemo/img/char/baby_love.png",
+  "surprise": "https://geometricfamily.com/nemo/img/char/baby_surprise.png",
+  "tired": "https://geometricfamily.com/nemo/img/char/baby_tired.png"
+ },
+ "동그라미 아빠": {
+  "calm": "https://geometricfamily.com/nemo/img/char/dong_dad_calm.png",
+  "good": "https://geometricfamily.com/nemo/img/char/dong_dad_good.png",
+  "기본": "https://geometricfamily.com/nemo/img/char/dong_dad.png",
+  "joy": "https://geometricfamily.com/nemo/img/char/dong_dad_joy.png",
+  "surprise": "https://geometricfamily.com/nemo/img/char/dong_dad_surprise.png",
+  "trouble": "https://geometricfamily.com/nemo/img/char/dong_dad_trouble.png",
+  "warm": "https://geometricfamily.com/nemo/img/char/dong_dad_warm.png"
+ }
+}

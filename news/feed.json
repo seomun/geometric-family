@@ -1,7 +1,28 @@
 {
  "site": "https://geometricfamily.com",
- "updated": "2026-11-25",
+ "updated": "2026-11-26",
  "items": [
+  {
+   "date": "2026-11-26",
+   "type": "novel",
+   "lang": "ko",
+   "title": "연재소설 3화 — 난 노래만 불렀다니까",
+   "url": "https://cafe.naver.com/f-e/cafes/31820413/menus/5"
+  },
+  {
+   "date": "2026-11-26",
+   "type": "blog",
+   "lang": "ko",
+   "title": "소비 양극화(K자 소비) — 같은 물건이 몇 배 값인데 우리는 왜 한쪽에선 아끼고 한쪽에선 쓸까",
+   "url": "https://geometricfamily.com/blog/consumption-polarization/"
+  },
+  {
+   "date": "2026-11-26",
+   "type": "blog",
+   "lang": "ko",
+   "title": "원정대 연재 3화 — 난 노래만 불렀다니까",
+   "url": "https://geometricfamily.com/blog/novel-03/"
+  },
   {
    "date": "2026-11-25",
    "type": "novel",

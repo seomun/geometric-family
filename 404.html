@@ -217,6 +217,11 @@ a { color: inherit; } img { display: block; max-width: 100%; height: auto; }
 .commline { margin: 2px 0 0; font-size: 13px; color: var(--mute); } .commline a { display: inline-block; padding: 12px 6px; margin: -12px 0; color: var(--gold); }
 html[lang="ja"] .comm h2 { font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif; font-weight: 800; }
 @media (max-width: 380px) { .cbtn { width: 100%; } }
+.gget { margin: 22px 0 0; } .gget h3 { margin: 0 0 10px; font-size: 16px; }
+.gget ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.gget li { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+.gget li b { font-size: 15px; } .gget li span { display: flex; gap: 8px; flex-wrap: wrap; }
+@media (min-width: 720px) { .gget ul { grid-template-columns: repeat(2, 1fr); } }
 </style>
 <script>(function(){var p=location.pathname,k=['quest','games','expedition','play','apps','contact','privacy','terms','delete','en','info','news','blog'];var m=p.match(/^\/([^\/]+)\//);if(m&&k.indexOf(m[1])>-1&&p.length>m[0].length)location.replace('/'+m[1]+'/')})()</script>
 </head>

@@ -1,7 +1,21 @@
 {
  "site": "https://geometricfamily.com",
- "updated": "2026-11-26",
+ "updated": "2026-11-27",
  "items": [
+  {
+   "date": "2026-11-27",
+   "type": "novel",
+   "lang": "ko",
+   "title": "연재소설 4화 — 저 양, 다리가 너무 길지 않아?",
+   "url": "https://cafe.naver.com/f-e/cafes/31820413/menus/5"
+  },
+  {
+   "date": "2026-11-27",
+   "type": "blog",
+   "lang": "ko",
+   "title": "원정대 연재 4화 — 저 양, 다리가 너무 길지 않아?",
+   "url": "https://geometricfamily.com/blog/novel-04/"
+  },
   {
    "date": "2026-11-26",
    "type": "novel",

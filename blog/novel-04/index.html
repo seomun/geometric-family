@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>원정대 연재 4화 — 저 양, 다리가 너무 길지 않아? — 기하학 가족 블로그</title>
+<meta name="description" content="기하학 원정대 연재소설 4화 — 게임 속 이야기를 소설로 읽어요.">
+<link rel="canonical" href="https://geometricfamily.com/blog/novel-04/">
+<meta name="theme-color" content="#FFD84B">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website"><meta property="og:site_name" content="기하학 가족"><meta property="og:title" content="원정대 연재 4화 — 저 양, 다리가 너무 길지 않아? — 기하학 가족 블로그"><meta property="og:description" content="기하학 원정대 연재소설 4화 — 게임 속 이야기를 소설로 읽어요."><meta property="og:url" content="https://geometricfamily.com/blog/novel-04/"><meta property="og:image" content="https://geometricfamily.com/og/home.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="ko_KR"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+/* 기하학 가족 웹 공통 디자인(2026-10-20 작가 「웹페이지 정돈이 필요하다」): 웹툰 목차·쇼츠·게임 목록·링크 허브 4쪽이 같은 머리·카드·색·간격.
+   정본 = tools/site_style.css → python tools/site_style.py 가 각 쪽 <!-- gf-site --> 사이에 끼운다(쪽마다 단일 HTML 유지). ⑪ 랜딩(/expedition/)은 따로. */
+:root { --ink: #6b5443; --paper: #f4ecdd; --bg: #e9dfcc; --card: #fff; --hot: #FFE9A8; --kid: #FFE3EA; --adult: #E3F0FF; --r: 18px; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Gowun Dodum', sans-serif; }
+.gf-wrap { max-width: 720px; margin: 0 auto; min-height: 100vh; background: var(--paper); padding: 0 16px 40px; box-shadow: 0 0 40px rgba(0,0,0,.12); }
+.gf-nav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 6px; margin: 0 -16px; padding: 10px 16px; background: rgba(244,236,221,.95); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border-bottom: 2px solid var(--ink); overflow-x: auto; scrollbar-width: none; }
+.gf-nav::-webkit-scrollbar { display: none; }
+.gf-nav .brand { display: flex; align-items: center; gap: 6px; margin-right: auto; padding-right: 6px; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 22px; white-space: nowrap; color: inherit; text-decoration: none; }
+.gf-nav .brand svg { width: 34px; height: 20px; flex: none; }
+.gf-nav a.tab { flex: none; min-height: 34px; display: inline-flex; align-items: center; padding: 0 12px; border: 2px solid var(--ink); border-radius: 17px; font-size: 14px; font-weight: 700; text-decoration: none; color: inherit; background: #fff; }
+.gf-nav a.tab.on { background: var(--ink); color: #fff; }
+.gf-hero { text-align: center; padding: 22px 0 4px; }
+.gf-hero h1 { font-family: Gaegu, sans-serif; font-size: 40px; margin: 0; letter-spacing: 1px; line-height: 1.1; }
+.gf-hero p { margin: 8px 0 0; font-size: 15px; line-height: 1.6; opacity: .85; word-break: keep-all; }
+.gf-hero svg, .gf-hero .art { display: block; width: 100%; height: auto; margin: 8px 0 0; }
+.gf-h2 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 28px 2px 12px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+.gf-h2 small { font-family: 'Gowun Dodum', sans-serif; font-size: 13px; opacity: .7; margin-left: 6px; }
+.gf-card { display: flex; align-items: center; gap: 14px; min-height: 64px; background: var(--card); border: 2.5px solid var(--ink); border-radius: var(--r); padding: 12px 16px; margin: 0 0 12px; color: inherit; text-decoration: none; box-shadow: 4px 5px 0 var(--ink); }
+a.gf-card:active, button.gf-card:active { transform: translate(2px, 3px); box-shadow: 1px 2px 0 var(--ink); }
+.gf-card .ic { font-size: 30px; width: 40px; text-align: center; flex: none; }
+.gf-card img.ic, .gf-card svg.ic { width: 64px; height: 64px; border-radius: 16px; font-size: 0; }
+.gf-card .t { display: block; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 23px; line-height: 1.15; word-break: keep-all; }
+.gf-card .k { display: block; font-size: 13px; opacity: .7; }
+.gf-card .d { display: block; font-size: 13.5px; opacity: .8; margin-top: 2px; line-height: 1.45; word-break: keep-all; }
+.gf-card.hot { background: var(--hot); } .gf-card.off { opacity: .5; pointer-events: none; border-style: dashed; box-shadow: none; }
+.gf-card.game { min-height: 104px; background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; border-color: #2c2450; box-shadow: 4px 6px 0 #2c2450; }
+.gf-card.game img.ic { width: 72px; height: 72px; background: #fff; } .gf-card.game .t { font-size: 27px; } .gf-card .go { margin-left: auto; font-size: 24px; flex: none; }
+.gf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.gf-grid .gf-card { flex-direction: column; justify-content: flex-start; text-align: center; margin: 0; padding: 14px 10px 12px; gap: 8px; }
+.gf-grid .gf-card .t { font-size: 20px; }
+.gf-grid.kid .gf-card { background: var(--kid); } .gf-grid.adult .gf-card { background: var(--adult); }
+.gf-note { margin: 22px 0 0; font-size: 13px; opacity: .7; line-height: 1.6; text-align: center; word-break: keep-all; }
+.gf-foot { text-align: center; font-size: 12px; opacity: .6; padding: 28px 0 0; line-height: 1.8; }
+.gf-foot a { color: inherit; }
+@media (min-width: 600px) { .gf-hero h1 { font-size: 46px; } .gf-wrap { padding: 0 24px 48px; } .gf-nav { margin: 0 -24px; padding: 10px 24px; } }
+@media (max-width: 440px) { .gf-nav .brand span { display: none; } .gf-nav a.tab { padding: 0 11px; } }   /* 좁은 폰: 브랜드는 도형 표시만, 메뉴 넷이 한 줄에 */
+/* 홈페이지(geometricfamily.com) 전용 — tools/site_style.css(웹 공통: 색·카드·머리 메뉴) 위에 얹는다. tools/build_home.py 가 쪽마다 인라인한다.
+   통일성: 색은 공통 토큰(--ink 갈색 선, --paper 종이, 노랑 #FFD84B = 인물 사전·소개 컷 바탕), 글꼴은 Gaegu(제목)·Gowun Dodum(본문), 카드는 굵은 갈색 테두리 + 아래 그림자. */
+:root { --yel: #FFD84B; --sky: #DCE8F7; --navy: #2c2450; --muted: rgba(107, 84, 67, .72); }
+.gf-wrap.hm { max-width: 1040px; }
+.gf-nav a.tab.ghost { background: transparent; border-color: transparent; font-weight: 400; }
+.hm section { scroll-margin-top: 64px; padding: 6px 0 10px; }
+.hm img { display: block; max-width: 100%; height: auto; }
+
+/* 첫 화면: 노란 판 + 세 가족 + 한 줄 + 할 일 하나(1화 보기) */
+.hero { margin: 16px 0 6px; background: var(--yel); border: 2.5px solid var(--ink); border-radius: 26px; box-shadow: 4px 5px 0 var(--ink); text-align: center; overflow: hidden; }
+.hero h1 { font-family: Gaegu, sans-serif; font-size: 48px; line-height: 1; margin: 26px 0 0; color: #2b211b; letter-spacing: 1px; }
+.hero .tag { margin: 10px 16px 0; font-size: 17px; line-height: 1.55; color: #3d2f25; word-break: keep-all; }
+.hero .art { width: 100%; max-width: 620px; aspect-ratio: 1000 / 420; margin: 6px auto 0; }
+.hero .cta { margin: 0 0 24px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 26px; border: 2.5px solid var(--ink); border-radius: 28px; background: var(--ink); color: #fff; font: 700 18px/1.2 'Gowun Dodum', sans-serif; text-decoration: none; box-shadow: 3px 4px 0 rgba(0,0,0,.18); cursor: pointer; }
+.btn:active { transform: translate(2px, 3px); box-shadow: none; }
+.btn.light { background: #fff; color: var(--ink); }
+.btn.yel { background: var(--yel); color: #2b211b; }
+.btn.wide { width: 100%; }
+
+.sec-h { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: Gaegu, sans-serif; font-size: 30px; margin: 34px 2px 14px; padding-bottom: 6px; border-bottom: 2px solid var(--ink); }
+.sec-h small { font-family: 'Gowun Dodum', sans-serif; font-size: 14px; color: var(--muted); }
+.lede { margin: -4px 2px 14px; font-size: 15px; line-height: 1.65; color: var(--muted); word-break: keep-all; }
+
+/* 캐릭터: 폰은 옆으로 넘기기, 넓으면 3칸 */
+.fams { display: grid; grid-auto-flow: column; grid-auto-columns: 78%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 4px 14px; margin: 0 -4px; scrollbar-width: none; }
+.fams::-webkit-scrollbar { display: none; }
+.fam { scroll-snap-align: start; background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; box-shadow: 4px 5px 0 var(--ink); overflow: hidden; }
+.fam img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: var(--paper); }
+.fam div { padding: 12px 16px 16px; border-top: 2.5px solid var(--ink); }
+.fam b { font-family: Gaegu, sans-serif; font-size: 25px; } .fam i { font-style: normal; font-size: 13px; color: var(--muted); margin-left: 6px; }
+.fam p { margin: 4px 0 0; font-size: 14px; line-height: 1.55; word-break: keep-all; }
+.swipe { text-align: center; font-size: 12.5px; color: var(--muted); margin: -4px 0 0; }
+
+/* 웹툰 */
+.eps { display: grid; gap: 12px; }
+.ep { display: flex; align-items: center; gap: 14px; background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; padding: 10px 14px 10px 10px; color: inherit; text-decoration: none; box-shadow: 4px 5px 0 var(--ink); }
+.ep:active { transform: translate(2px, 3px); box-shadow: 1px 2px 0 var(--ink); }
+.ep img { width: 84px; height: 84px; border-radius: 12px; object-fit: cover; flex: none; border: 2px solid var(--ink); }
+.ep .k { display: block; font-size: 13px; color: var(--muted); } .ep .t { display: block; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 25px; line-height: 1.1; }
+.ep .d { display: block; font-size: 13.5px; line-height: 1.45; margin-top: 2px; word-break: keep-all; }
+.ep .go { margin-left: auto; font-size: 22px; flex: none; }
+.ep.first { background: var(--yel); }
+.more { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 16px 0 0; font-size: 14px; }
+.more a { color: inherit; }
+
+/* 게임 */
+.exp { position: relative; display: block; border: 2.5px solid var(--navy); border-radius: 22px; overflow: hidden; background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; text-decoration: none; box-shadow: 4px 6px 0 var(--navy); }
+.exp img { width: 100%; aspect-ratio: 1024 / 500; object-fit: cover; }
+.exp .body { padding: 14px 16px 18px; }
+.exp .line { margin: 0 0 10px; font-size: 15px; line-height: 1.55; word-break: keep-all; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; padding: 0; list-style: none; }
+.chips li { padding: 4px 11px; border-radius: 14px; background: rgba(255,255,255,.16); font-size: 13px; }
+.stores { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.store { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border: 2px dashed currentColor; border-radius: 12px; font-size: 13.5px; opacity: .85; color: inherit; text-decoration: none; }
+.store b { font-weight: 700; } .store small { font-size: 12px; opacity: .8; }
+a.store { border-style: solid; opacity: 1; }
+.apps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+.app { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px 10px; background: var(--adult); border: 2px solid var(--ink); border-radius: 18px; color: inherit; text-decoration: none; text-align: center; }
+.app.kid { background: var(--kid); }
+.app img { width: 64px; height: 64px; border-radius: 16px; background: #fff; }
+.app b { font-family: Gaegu, sans-serif; font-size: 17px; line-height: 1.1; word-break: keep-all; }
+.legend { display: flex; gap: 12px; justify-content: center; font-size: 12.5px; color: var(--muted); margin: 10px 0 0; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--ink); vertical-align: -1px; margin-right: 4px; }
+
+/* 영상: 쇼츠는 그림만 먼저(가볍게), 누르면 유튜브가 열린다 */
+.shorts { display: grid; grid-auto-flow: column; grid-auto-columns: 42%; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 2px 12px; scrollbar-width: none; }
+.shorts::-webkit-scrollbar { display: none; }
+.yt { position: relative; display: block; width: 100%; aspect-ratio: 9 / 16; border: 2.5px solid var(--ink); border-radius: 16px; overflow: hidden; background: #2b211b; scroll-snap-align: start; padding: 0; cursor: pointer; color: #fff; text-align: left; font: inherit; }
+.yt img { width: 100%; height: 100%; object-fit: cover; opacity: .92; }
+.yt .p { position: absolute; left: 50%; top: 42%; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%; background: rgba(0,0,0,.55); }
+.yt .p::after { content: ''; position: absolute; left: 21px; top: 16px; border-left: 17px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+.yt .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 10px 10px; background: linear-gradient(transparent, rgba(0,0,0,.75)); font-size: 13.5px; line-height: 1.35; word-break: keep-all; }
+.yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt.wide { aspect-ratio: 16 / 9; }
+.tale { margin-top: 22px; background: var(--sky); border: 2.5px solid var(--ink); border-radius: 22px; padding: 16px; box-shadow: 4px 5px 0 var(--ink); }
+.tale b { display: block; font-family: Gaegu, sans-serif; font-size: 25px; }
+.tale p { margin: 4px 0 12px; font-size: 14px; line-height: 1.6; word-break: keep-all; }
+.soon { display: flex; align-items: center; justify-content: center; min-height: 120px; border: 2px dashed var(--ink); border-radius: 16px; font-size: 15px; color: var(--muted); background: rgba(255,255,255,.5); text-align: center; padding: 12px; }
+
+/* IP·협업 */
+.ip { background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; padding: 18px 16px; box-shadow: 4px 5px 0 var(--ink); }
+.ip .one { margin: 0 0 14px; font-size: 16px; line-height: 1.65; word-break: keep-all; }
+.nums { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 0 0 16px; }
+.nums div { background: var(--paper); border-radius: 14px; padding: 10px 12px; }
+.nums b { display: block; font-family: Gaegu, sans-serif; font-size: 26px; line-height: 1.1; } .nums span { font-size: 13px; color: var(--muted); }
+.chan { margin: 0 0 16px; padding: 0; list-style: none; font-size: 14px; line-height: 2; }
+.chan a { color: inherit; }
+.ip .offer { margin: 0 0 14px; font-size: 14.5px; line-height: 1.6; word-break: keep-all; }
+
+/* 문의·바닥 */
+.contact { text-align: center; padding: 8px 0 0; }
+.contact p { font-size: 14.5px; line-height: 1.65; margin: 0 0 14px; word-break: keep-all; }
+.foot { margin-top: 40px; padding: 18px 0 0; border-top: 2px solid var(--ink); font-size: 12.5px; line-height: 1.9; color: var(--muted); text-align: center; word-break: keep-all; }
+.foot nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; margin-bottom: 8px; font-size: 14px; }
+.foot nav a { color: var(--ink); font-weight: 700; }
+.foot a { color: inherit; }
+
+/* 2차(10/27 작가 방향): 세계관 → 지금 만날 이야기 → 라이선싱 → 함께해요 */
+.hero .tag b { font-family: Gaegu, sans-serif; font-size: 1.35em; color: #2b211b; }
+.together { margin: 22px 0 0; background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; padding: 16px 16px 6px; box-shadow: 4px 5px 0 var(--ink); }
+.together h3 { margin: 0 0 10px; font-family: Gaegu, sans-serif; font-size: 25px; line-height: 1.2; word-break: keep-all; }
+.together ul { margin: 0; padding: 0; list-style: none; }
+.together li { display: flex; gap: 12px; padding: 12px 0; border-top: 1.5px dashed rgba(107,84,67,.35); }
+.together li:first-child { border-top: 0; }
+.together .ic { flex: none; width: 52px; height: 52px; border-radius: 16px; background: var(--yel); border: 2px solid var(--ink); display: flex; align-items: center; justify-content: center; font: 700 15px/1 'Gowun Dodum', sans-serif; letter-spacing: -1px; }
+.together li > span:last-child { display: flex; flex-direction: column; gap: 3px; font-size: 14px; line-height: 1.55; word-break: keep-all; }
+.together b { font-size: 16px; } .together a { color: #3b5bb5; font-size: 13.5px; }
+.bigs { display: grid; gap: 18px; }
+.big { position: relative; border: 2.5px solid var(--ink); border-radius: 24px; padding: 18px 16px 16px; box-shadow: 4px 6px 0 var(--ink); overflow: hidden; }
+.big.toon { background: var(--yel); }
+.big.game { background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; border-color: var(--navy); box-shadow: 4px 6px 0 var(--navy); }
+.big .kind { display: inline-block; padding: 3px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; }
+.big.game .kind { background: #fff; color: var(--navy); }
+.big h3 { font-family: Gaegu, sans-serif; font-size: 32px; margin: 8px 0 4px; line-height: 1.1; }
+.big p { margin: 0 0 12px; font-size: 14.5px; line-height: 1.6; word-break: keep-all; }
+.big .more { margin: 10px 0 0; } .big.game .more a { color: #fff; }
+.epstrip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0 0 14px; }
+.epstrip a { color: inherit; text-decoration: none; font-size: 12.5px; text-align: center; font-weight: 700; }
+.epstrip img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; border: 2px solid var(--ink); margin-bottom: 4px; background: #fff; }
+.expimg img { width: 100%; border-radius: 14px; margin: 10px 0 6px; aspect-ratio: 1024 / 500; object-fit: cover; }
+.big.game .stores { color: #fff; }
+.mini-h { margin: 16px 0 8px !important; font-size: 13px !important; opacity: .85; }
+.appstrip { display: flex; flex-wrap: wrap; gap: 8px; }
+.appstrip img { width: 44px; height: 44px; border-radius: 12px; background: #fff; border: 1.5px solid rgba(255,255,255,.6); }
+.smalls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 18px 0 0; }
+.small { display: flex; flex-direction: column; gap: 3px; padding: 10px 10px; background: #fff; border: 2px solid var(--ink); border-radius: 14px; color: inherit; text-decoration: none; font-size: 12px; line-height: 1.4; word-break: keep-all; }
+.small b { font-size: 13.5px; }
+.shorts.mini { grid-auto-columns: 30%; margin-top: 10px; }
+.shorts.mini .cap { font-size: 11.5px; padding: 18px 7px 7px; } .shorts.mini .p { width: 40px; height: 40px; margin: -20px 0 0 -20px; } .shorts.mini .p::after { left: 15px; top: 11px; border-left-width: 13px; border-top-width: 9px; border-bottom-width: 9px; }
+.road { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 16px 0 0; font-size: 13.5px; }
+.road b { margin-right: 4px; }
+.road span { padding: 4px 11px; border: 1.5px dashed var(--ink); border-radius: 14px; background: rgba(255,255,255,.55); }
+.merch { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 0 0 18px; }
+.merch figure { margin: 0; background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; overflow: hidden; box-shadow: 3px 4px 0 var(--ink); }
+.merch img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.merch figcaption { padding: 7px 10px; font-family: Gaegu, sans-serif; font-weight: 700; font-size: 19px; text-align: center; border-top: 2px solid var(--ink); }
+.steps { counter-reset: s; display: grid; gap: 10px; margin: 0 0 18px; padding: 0; list-style: none; }
+.steps li { counter-increment: s; display: flex; align-items: center; gap: 12px; background: var(--paper); border: 2px solid var(--ink); border-radius: 16px; padding: 10px 14px; font-size: 14px; line-height: 1.45; word-break: keep-all; }
+.steps li::before { content: counter(s); flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.steps b { font-family: Gaegu, sans-serif; font-size: 21px; margin-right: 6px; white-space: nowrap; }
+.center { text-align: center; }
+.cta-box { margin: 30px 0 0; background: var(--yel); border: 2.5px solid var(--ink); border-radius: 26px; padding: 26px 18px 22px; text-align: center; box-shadow: 4px 5px 0 var(--ink); }
+.cta-box h2 { font-family: Gaegu, sans-serif; font-size: 40px; margin: 0 0 6px; line-height: 1.1; }
+.cta-box p { margin: 0 0 16px; font-size: 15.5px; line-height: 1.6; word-break: keep-all; }
+.cta-box .mail { margin: 12px 0 0; font-size: 13px; color: #5a4535; }
+@media (min-width: 700px) {
+  .bigs { grid-template-columns: 1fr 1fr; align-items: start; }
+  .merch { grid-template-columns: repeat(4, 1fr); }
+  .steps { grid-template-columns: repeat(3, 1fr); }
+  .steps li { flex-direction: column; align-items: flex-start; }
+  .shorts.mini { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); max-width: 560px; }
+  .together ul { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 18px; }
+  .together li { border-top: 0; flex-direction: column; }
+}
+
+/* 문서 쪽(방침·약관·앱 소개) */
+.doc { padding: 10px 0 0; }
+.doc h1 { font-family: Gaegu, sans-serif; font-size: 38px; margin: 22px 0 4px; line-height: 1.15; }
+.doc .meta { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+.doc h2 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 30px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--ink); scroll-margin-top: 64px; }
+.doc h3 { font-size: 16px; margin: 18px 0 6px; }
+.doc p, .doc li { font-size: 15px; line-height: 1.75; word-break: keep-all; }
+.doc ul, .doc ol { padding-left: 20px; margin: 6px 0; }
+.doc a { color: #3b5bb5; }
+.doc code { font-size: 13px; background: #fff; padding: 1px 5px; border-radius: 5px; border: 1px solid rgba(107,84,67,.25); }
+.doc .lead { font-size: 16px; }
+.doc .note { font-size: 13.5px; color: var(--muted); }
+.doc .sum { background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; padding: 14px 16px 10px; box-shadow: 4px 5px 0 var(--ink); margin: 16px 0; }
+.doc .sum > b { font-family: Gaegu, sans-serif; font-size: 22px; }
+.doc table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; background: #fff; font-size: 13.5px; line-height: 1.55; border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; display: block; overflow-x: auto; }
+.doc th, .doc td { border-bottom: 1px solid rgba(107,84,67,.22); padding: 8px 10px; text-align: left; vertical-align: top; word-break: keep-all; }
+.doc th { background: var(--paper); white-space: nowrap; }
+.doc .toc { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; padding: 0; list-style: none; }
+.doc .toc a { display: inline-block; padding: 4px 10px; border: 1.5px solid var(--ink); border-radius: 14px; font-size: 13px; color: var(--ink); text-decoration: none; background: #fff; }
+
+/* 앱 소개 쪽 */
+.apphead { display: flex; gap: 16px; align-items: center; margin: 22px 0 12px; }
+.apphead img { width: 96px; height: 96px; border-radius: 22px; border: 2.5px solid var(--ink); flex: none; background: #fff; }
+.apphead h1 { margin: 0; }
+.apphead .meta { margin: 4px 0 0; }
+.appwide { width: 100%; border: 2.5px solid var(--ink); border-radius: 18px; margin: 4px 0 14px; }
+
+@media (min-width: 700px) {
+  .hero { display: grid; grid-template-columns: 1fr 1.25fr; align-items: center; text-align: left; padding: 0 0 0 36px; }
+  .hero h1 { font-size: 64px; margin-top: 0; } .hero .tag { margin: 12px 0 22px; font-size: 19px; } .hero .cta { margin: 0; }
+  .hero .art { grid-column: 2; grid-row: 1 / span 3; margin: 26px 0 18px; }
+  .fams { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; }
+  .swipe { display: none; }
+  .eps { grid-template-columns: 1fr 1fr; }
+  .games2 { display: grid; grid-template-columns: 1.1fr 1fr; gap: 22px; align-items: start; }
+  .apps { grid-template-columns: repeat(4, 1fr); margin-top: 0; }
+  .shorts { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); overflow: visible; }
+  .vid2 { display: grid; grid-template-columns: 1fr; }
+  .nums { grid-template-columns: repeat(4, 1fr); }
+  .doc { max-width: 760px; margin: 0 auto; }
+}
+
+/* 이렇게 쓰이고 있어요 */
+.cases { display: grid; gap: 16px; }
+.case { background: #fff; border: 2.5px solid var(--ink); border-radius: 22px; padding: 14px 14px 16px; box-shadow: 4px 5px 0 var(--ink); }
+.case .kind { display: inline-block; padding: 3px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; }
+.case h3 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 6px 0 8px; line-height: 1.15; }
+.case p { margin: 10px 0 8px; font-size: 14px; line-height: 1.6; word-break: keep-all; }
+.case .lnk { display: inline-block; margin-right: 12px; font-size: 14px; font-weight: 700; color: #3b5bb5; }
+.cm { display: flex; gap: 8px; justify-content: center; align-items: flex-start; }
+.cm.vid .yt { max-width: 170px; }
+.cm.shots img { width: calc(50% - 4px); border: 2px solid var(--ink); border-radius: 12px; }
+.cm.cuts { overflow: hidden; gap: 6px; }
+.cm.cuts img { width: calc(33.3% - 4px); aspect-ratio: 1 / 1; border: 2px solid var(--ink); border-radius: 8px; object-fit: cover; }
+/* /games/ */
+.games h2 small, .games h3 small { font-family: 'Gowun Dodum', sans-serif; font-size: 13px; color: var(--muted); font-weight: 400; }
+.games .kind { display: inline-block; padding: 3px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 700; }
+.flag { background: linear-gradient(135deg, #3B4A7A, #5B4A9A); color: #fff; border: 2.5px solid var(--navy); border-radius: 24px; padding: 16px 16px 18px; box-shadow: 4px 6px 0 var(--navy); margin: 18px 0 8px; }
+.flag .kind { background: #fff; color: var(--navy); }
+.flag h2 { border: 0; margin: 0; padding: 0; font-size: 30px; } .flag h3 { color: #fff; font-size: 18px; margin: 20px 0 8px; }
+.flag .meta { color: #e8e2ff; margin: 2px 0 0; font-size: 13.5px; line-height: 1.5; }
+.flag a { color: #fff; } .flag .note { color: #d9d3f5; }
+.flaghead { display: flex; gap: 12px; align-items: center; margin: 10px 0 12px; } .flaghead .fi { border-radius: 16px; border: 2px solid #fff; }
+.flag .appwide { width: 100%; height: auto; border-radius: 14px; border: 2px solid #fff; }
+.spec { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 0; }
+.spec div { background: rgba(255,255,255,.14); border-radius: 12px; padding: 8px 10px; }
+.spec dt { font-size: 12px; color: #d9d3f5; } .spec dd { margin: 2px 0 0; font-size: 14px; font-weight: 700; line-height: 1.4; word-break: keep-all; }
+.loop, .money { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.loop li, .money li { display: flex; flex-direction: column; gap: 2px; background: rgba(255,255,255,.14); border-radius: 12px; padding: 9px 12px; font-size: 14px; line-height: 1.5; word-break: keep-all; }
+.flag .loop li { list-style: none; } .loop b, .money b { font-size: 15px; }
+.grades { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 8px; }
+.grades li { display: flex; flex-direction: column; align-items: center; min-width: 58px; padding: 8px 10px; border-radius: 12px; border: 2px solid #fff; background: rgba(255,255,255,.12); font-size: 12px; }
+.grades b { font-family: Gaegu, sans-serif; font-size: 24px; line-height: 1; }
+.grades .g-s { background: #6C7BD9; } .grades .g-ss { background: #E8870F; } .grades .g-sss { background: linear-gradient(135deg, #FFD84B, #FF8FA8); color: #2b211b; }
+.shotrow { display: grid; grid-auto-flow: column; grid-auto-columns: 46%; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
+.shotrow img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #fff; scroll-snap-align: start; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.actions .btn.light { color: var(--ink); }
+.lineup { display: grid; gap: 14px; margin: 10px 0 18px; }
+.lu { background: #fff; border: 2.5px solid var(--ink); border-radius: 20px; padding: 10px 12px 14px; box-shadow: 3px 4px 0 var(--ink); }
+.lu.kid { background: #fff7d9; }
+.lu img { width: 100%; height: auto; aspect-ratio: 1024 / 500; object-fit: cover; border-radius: 12px; border: 2px solid var(--ink); }
+.lu h3 { font-family: Gaegu, sans-serif; font-size: 24px; margin: 8px 0 2px; } .lu .one { margin: 0 0 8px; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+.lu dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; margin: 0 0 10px; font-size: 13px; line-height: 1.5; }
+.lu dt { color: var(--muted); } .lu dd { margin: 0; word-break: keep-all; }
+.lu .act { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0; }
+.btn.sm { min-height: 38px; padding: 0 16px; font-size: 15px; border-radius: 20px; color: #fff !important; text-decoration: none; }
+.kinds { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px; }
+@media (min-width: 700px) {
+  .cases { grid-template-columns: repeat(3, 1fr); }
+  .lineup { grid-template-columns: repeat(2, 1fr); }
+  .loop { grid-template-columns: repeat(2, 1fr); } .money { grid-template-columns: repeat(2, 1fr); }
+  .shotrow { grid-auto-columns: 22%; }
+}
+.doc a.btn { color: #fff; text-decoration: none; } .doc a.btn.light { color: var(--ink); } .doc a.btn.yel { color: #2b211b; }
+.doc .loop, .doc .money, .doc .grades { padding: 0; margin: 0; } .doc .grades { margin-bottom: 8px; }
+.flag h3 small { color: #d9d3f5; }
+.doc .lu a:not(.btn) { font-size: 13.5px; }
+</style>
+<style>
+/* 루트 허브·소식·블로그 전용(gf-web) — home.css(노란 판·갈색 테두리·Gaegu) 위에 얹는다. */
+.hm .lore { margin: 0 2px 16px; padding: 14px 16px; background: #fffbe6; border: 2px dashed var(--ink); border-radius: 18px; font-size: 15px; line-height: 1.7; word-break: keep-all; }
+.center { text-align: center; margin: 14px 0 0; }
+.newsl { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.newsl li.nw a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; padding: 10px 12px; background: #fff; border: 2px solid var(--ink); border-radius: 16px; color: inherit; text-decoration: none; box-shadow: 2px 3px 0 var(--ink); }
+.newsl li.nw a:active { transform: translate(1px, 2px); box-shadow: none; }
+.newsl .nwt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.newsl .nwt i { font-style: normal; font-size: 11.5px; font-weight: 700; color: #fff; background: var(--ink); border-radius: 9px; padding: 1px 8px; align-self: flex-start; }
+.newsl .nwt b { font-size: 14.5px; line-height: 1.4; word-break: keep-all; overflow-wrap: anywhere; }
+.newsl .nwt em { font-style: normal; font-size: 12.5px; color: var(--muted); }
+.newsl time { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.newsl li.nw img { width: 72px; height: 54px; object-fit: cover; border-radius: 8px; grid-column: 1; }
+.newsl.big li.nw a { grid-template-columns: auto 1fr auto; }
+.nw-novel .nwt i { background: #6C7BD9; } .nw-webtoon .nwt i { background: #E8870F; } .nw-game .nwt i { background: #3B4A7A; }
+.nw-short .nwt i { background: #d9534f; } .nw-long .nwt i { background: #8a4fd9; } .nw-blog .nwt i { background: #2f9e6e; } .nw-notice .nwt i { background: #444; }
+.newsl li.mon { margin: 14px 2px 2px; font: 700 16px/1.2 Gaegu, sans-serif; color: var(--muted); }
+.nchips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.chip { min-height: 40px; padding: 0 14px; border: 2px solid var(--ink); border-radius: 20px; background: #fff; color: var(--ink); font: 700 14px/1 'Gowun Dodum', sans-serif; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.tiles2 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.tiles2 .tl { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; box-shadow: 3px 4px 0 var(--ink); color: inherit; text-decoration: none; min-height: 64px; }
+.tiles2 .tl i { font-style: normal; font-size: 26px; }
+.tiles2 .tl > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.tiles2 .tl b { font-size: 16px; } .tiles2 .tl > span > span { font-size: 13px; color: var(--muted); word-break: keep-all; }
+@media (min-width: 640px) { .tiles2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .tiles2 { grid-template-columns: repeat(3, 1fr); } }
+.doc.news { max-width: 760px; margin: 0 auto; padding-bottom: 20px; }
+.post { max-width: 700px; margin: 18px auto 0; font-size: 16px; line-height: 1.8; word-break: keep-all; }
+.post h1 { font-family: Gaegu, sans-serif; font-size: 34px; line-height: 1.2; margin: 8px 0 14px; }
+.post h2 { font-family: Gaegu, sans-serif; font-size: 26px; margin: 26px 0 6px; }
+.post .crumbp { font-size: 13px; color: var(--muted); margin: 0; }
+.note, .empty { font-size: 13px; color: var(--muted); text-align: center; margin: 16px 0; }
+
+.hero .idline { margin: 8px 16px 0; font: 700 28px/1.25 Gaegu, 'M PLUS Rounded 1c', sans-serif; color: #2b211b; word-break: keep-all; }
+.idline.sm { margin: 0 2px 6px; font: 700 22px/1.3 Gaegu, sans-serif; color: var(--muted); }
+
+.hero .tag.idlong { font-size: 15px; line-height: 1.6; font-weight: 400; margin: 8px 18px 0; }
+#play .pmain { display: flex; flex-direction: column; gap: 6px; padding: 16px; background: #fffbe6; border: 2.5px solid var(--ink); border-radius: 20px; box-shadow: 3px 4px 0 var(--ink); }
+#play .pmain b { font-size: 20px; } #play .pmain > span { font-size: 14.5px; color: var(--muted); word-break: keep-all; } #play .pmain .cta { margin: 6px 0 0; }
+#play .plist { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 8px; }
+#play .plist li { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 14px; background: #fff; border: 2px solid var(--ink); border-radius: 16px; }
+#play .plist li > span:first-child { display: flex; flex-direction: column; min-width: 0; flex: 1 1 180px; } #play .plist b { font-size: 15.5px; } #play .plist i { font-style: normal; font-size: 12.5px; color: var(--muted); word-break: keep-all; }
+#play .pb { display: flex; gap: 6px; flex-wrap: wrap; }
+@media (min-width: 720px) { #play .plist { grid-template-columns: repeat(2, 1fr); } }
+.pbanner { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; padding: 10px 14px; background: var(--ink); color: #fff; border-radius: 16px; font-size: 14.5px; text-decoration: none; text-align: center; }
+.pbanner b { color: #ffd54a; } .pbanner i { font-style: normal; font-weight: 700; text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="gf-wrap hm">
+<nav class="gf-nav" aria-label="기하학 가족"><a class="brand" href="/"><svg viewBox="0 0 34 20" aria-hidden="true"><rect x="1" y="4" width="11" height="11" rx="2" fill="#E8870F"/><path d="M17 2L24 15H10z" fill="#FF8FA8"/><circle cx="28" cy="10" r="5.5" fill="#6C7BD9"/></svg><span>기하학 가족</span></a><a class="tab" href="/news/">소식</a><a class="tab" href="/#world">세계관</a><a class="tab" href="/#stories">이야기</a><a class="tab" href="/games/">게임</a><a class="tab" href="/blog/">블로그</a><a class="tab" href="/info/">정보방</a><a class="tab ghost" href="/en/">EN</a></nav>
+<main class="doc"><article class="post"><p class="crumbp"><a href="/blog/">← 블로그</a> · <time datetime="2026-11-27">2026-11-27</time></p><h1>원정대 연재 4화 — 저 양, 다리가 너무 길지 않아?</h1><p>그날 밤은 모래톱에서 잤다.</p>
+<p>네모 엄마가 담요를 나눠 주었다. 세찌는 상자 안이 편하다며 끝내 나오지 않았고, 막내는 그 상자 위에 앉아 별을 세고 있었다.</p>
+<p>"아빠, 별은 왜 끝까지 못 세?"</p>
+<p>"…알아둬라. 세다가 졸려서다."</p>
+<p>"그건 양 세는 거잖아."</p>
+<p>아침이 되자 바위에서 깨어난 선원들이 얼굴을 붉히며 다가왔다.</p>
+<p>바위에서 깨어난 선원들은 얼굴을 붉히며 사과했다.</p>
+<p>"저희가 상자를 훔친 줄도 모르고…"</p>
+<p>"괜찮아요. 노래 때문이었잖아요."</p>
+<p>네모 엄마가 선원 한 사람 한 사람에게 물 한 잔씩을 건네자 그들은 어쩔 줄 몰라 했다. 보답이라며 가장 나이 많은 선원이 해마 그림이 그려진 카드 한 장을 건넸다. 그리고 선뜻 말했다.</p>
+<p>"외눈박이 섬에 가신다면 저희 배를 쓰세요. 대신 섬에 닿으면 저희는 먼저 돌아갈게요. 그 섬은… 저희한테도 무서운 곳이라서."</p>
+<p>그렇게 우리는 작은 돛단배에 올랐다.</p>
+<p>배 위의 아침은 의외로 평화로웠다. 막내는 뱃머리에 매달려 물고기를 세고, 세찌는 이미 멀미를 하고, 세모 아내는 햇볕에 얼굴을 찌푸리고, 동그라미 아빠는 지도를 보고 있었다. 나는 선원이 타 준 믹스커피 비슷한 걸 홀짝이며 생각했다. 이 정도면 소풍 아닌가.</p>
+<p>"…아빠, 저기 봐."</p>
+<p>막내가 가리킨 곳에 섬이 있었다.</p>
+<hr>
+<p>섬 전체가 하얗게 보였다.</p>
+<p>눈이 내린 줄 알았다. 가까이 갈수록 그게 눈이 아니라는 걸 알았다. 양이었다. 해안선을 따라, 언덕 위까지, 셀 수 없이 많은 양이 우글우글 모여 있었다.</p>
+<p>"…저게 다 양이야?"</p>
+<p>"대략 천 마리."</p>
+<p>"어떻게 세?"</p>
+<p>"교수니까."</p>
+<p>동그라미 아빠가 지도를 접으며 말했다. 나는 더 묻지 않았다.</p>
+<p>배를 모래톱에 대자 양들이 일제히 고개를 돌렸다. 천 마리의 눈동자가 한꺼번에 우리를 향했다. 그리고 천 마리가 동시에 말했다.</p>
+<p>"메에에에에에!"</p>
+<p>세찌가 내 소매 뒤로 숨었다.</p>
+<p>"아빠, 얘들 되게 많아."</p>
+<p>"…알아둬라. 이럴 땐 천천히 걷는 거다."</p>
+<p>우리는 양 사이를 천천히 걸었다. 그런데 길이 막혀 있었다. 양 떼가 해안 길 한가운데에 빽빽이 모여 서서 한 걸음도 비켜 주지 않았다. 그 앞에는 지팡이를 짚은 두 사내가 서 있었다.</p>
+<p>양치기였다. 키가 크고 눈이 반쯤 감겨 있었다. 졸린 얼굴이었다.</p>
+<p>"…여긴 지나갈 수 없습니다…"</p>
+<p>"왜요?"</p>
+<p>"주인님이 지키라고 하셨어요… 그래서 지킵니다… 양 하나, 양 둘…"</p>
+<p>"자는 거야?"</p>
+<p>"아니요… 세는 중입니다… 양 셋, 양 넷…"</p>
+<p>세찌가 하품을 했다.</p>
+<p>"아빠, 나도 졸려."</p>
+<p>"…알아둬라. 저건 반칙이다."</p>
+<p>그때 양치기 한 명이 퍼뜩 눈을 떴다.</p>
+<p>"앗! 저 뒤에 있는 건 상자입니다! 주인님이 오시기 전에 확실히 지켜야 해요!"</p>
+<p>그의 발치에 상자 두 개가 놓여 있었다. 하나에는 큼직한 눈 하나가 그려져 있었다.</p>
+<p>"저게 외눈박이의 상자야."</p>
+<p>"비켜 주세요."</p>
+<p>"안 됩니다! 주인님은 동굴에서 기다려요!"</p>
+<hr>
+<p>그때였다.</p>
+<p>양 떼 한가운데에서 이상한 게 눈에 들어왔다. 다른 양들이 둥글둥글 앉아 있는데, 한 마리가 이상하게 높았다. 다리가 너무 길었다. 털도 이상했다. 몸 위에 얹은 양털이 어딘가 얇고 헐렁했다.</p>
+<p>"…저 양, 다리가 너무 길지 않아?"</p>
+<p>막내가 먼저 말했다.</p>
+<p>"그치? 나도 그렇게 생각했어."</p>
+<p>"저 털도 어깨에서 흘러내리는데."</p>
+<p>우리가 수군거리는 순간, 그 양이 갑자기 고개를 돌렸다.</p>
+<p>양의 얼굴이 아니었다.</p>
+<p>길쭉한 주둥이. 번뜩이는 노란 눈동자. 날카롭게 솟은 귀. 목에서 어깨까지 단단하게 뭉친 근육. 털은 회색빛이 도는 짙은 갈색이었고, 숨소리는 낮고 무거웠다.</p>
+<p>늑대였다. 진짜 늑대였다. 양 가죽을 뒤집어쓴 늑대.</p>
+<p>"…!"</p>
+<p>우리는 숨을 삼켰다. 늑대는 우리와 눈이 마주치자 어깨를 움찔했다. 그리고 가죽을 어깨에 걸친 채 천천히 뒷걸음쳐 양 떼 속으로 사라졌다.</p>
+<p>"저, 저게 뭐야!"</p>
+<p>"양치기가 모르는 것 같은데?"</p>
+<p>졸린 양치기들은 여전히 양을 세고 있었다. 늑대는 그들 눈앞에서 아무렇지도 않게 지나갔다. 그러자 양 떼 한쪽이 쩍 하고 갈라졌고, 늑대는 그 틈으로 언덕 쪽을 향해 빠르게 달려갔다.</p>
+<p>"쫓아?"</p>
+<p>"먼저 이 사람들부터 치우자."</p>
+<p>동그라미 아빠가 조용히 말했다.</p>
+<p>"저 늑대는, 동굴로 갈 거야."</p>
+<p>"어떻게 알아?"</p>
+<p>"발자국이 같은 방향이야."</p>
+<hr>
+<p>"자, 양치기 선생님들. 길 좀 비켜 주세요!"</p>
+<p>네모 엄마가 부드럽게 말했지만 양치기들은 고개를 저었다.</p>
+<p>"안 비킵니다."</p>
+<p>"그럼 어쩔 수 없네."</p>
+<p>구슬이 떠올랐다. 이번에는 소라게 두 마리와 망둥어 한 마리가 양치기 옆에서 같이 튀어나왔다. 소라게가 소리쳤다.</p>
+<p>"저희도 있어요!"</p>
+<p>"넌 또 왜 나와!"</p>
+<p>"저희는 여기까지 나르는 중이었다고요!"</p>
+<p>이제 이 광경이 낯설지 않았다. 나는 손을 펼쳤다.</p>
+<p>파란 구슬을 한 줄로. 초록 구슬을 한 줄로. 두 줄이 만나는 지점에 붉은 구슬이 하나 있었다. 나는 그 구슬을 눌렀다.</p>
+<p>한 번, 두 번, 세 번.</p>
+<p>"어! 방금 아빠 구슬이 같이 터졌어!"</p>
+<p>"세 줄이 한꺼번에?"</p>
+<p>"그럼 몇 콤보야?"</p>
+<p>"…세 번 넘게 연달아!"</p>
+<p>막내가 눈을 반짝였다.</p>
+<p>"방금 세 번 넘게 이어서 터뜨린 거야? 이건 아무나 못 하는데!"</p>
+<p>허공에 글자가 떴다. 콤보가 길어질수록 피해가 더 커진다는 알림이었다. 이번에는 천천히 보였다. 파란 줄이 터지면서 초록 줄을 흔들고, 흔들린 초록 줄이 붉은 구슬을 깨우고, 세 가지 빛이 바다 위에서 나선처럼 감겼다. 그 빛이 양치기들의 지팡이 끝을 한 번 스치고 지나갔다. 소라게와 망둥어가 풀썩 쓰러지는 소리가 한참 뒤에야 들렸다.</p>
+<p>"…끝났나?"</p>
+<p>"끝났어!"</p>
+<p>양치기들은 눈을 비비며 일어났다.</p>
+<p>"어… 졌네요… 하지만 양 천 마리는 못 이기실 겁니다…"</p>
+<p>"그건 이 사람이 알아서 하겠지."</p>
+<p>"주인님은 동굴에서 기다려요!"</p>
+<p>양치기는 같은 말을 한 번 더 하고는 털썩 쓰러져 잠들었다. 이번에는 정말로 잠들었다.</p>
+<hr>
+<p>양 떼가 서서히 길을 열었다.</p>
+<p>우리는 해안을 따라 걸어갔다. 양들은 눈치를 보면서도 비켜 주었다. 세찌는 졸린 눈을 비비며 말했다.</p>
+<p>"아빠, 우리 아까 늑대 봤지?"</p>
+<p>"봤다."</p>
+<p>"무서운 늑대였어?"</p>
+<p>"…."</p>
+<p>나는 대답하지 못했다. 늑대의 눈동자가 이상하게 슬퍼 보였다는 말은 하지 않았다. 아니, 할 수 없었다. 그건 쓸데없는 감상일 테니까.</p>
+<p>"저기, 소환 한 번 더 해 볼까?"</p>
+<p>막내가 주머니를 흔들었다.</p>
+<p>"한 번만! 이번엔 큰 친구가 올지도 몰라!"</p>
+<p>"…알았다. 한 번만이다."</p>
+<p>막내가 돌을 쥐고 외쳤다.</p>
+<p>"소환!"</p>
+<p>빛이 쏟아졌다. 모래밭에 바다 냄새가 났다. 그리고 빛 속에서 작은 그림자가 나왔다. 말 머리에 물고기 꼬리를 가진 작고 귀여운 바다 친구, 해마였다.</p>
+<p>"어? 이 아이, 선원 아저씨들이 선물로 준 거랑 똑같은데?"</p>
+<p>"여기 있어."</p>
+<p>네모 엄마가 가방에서 그때 받은 해마 카드를 꺼냈다. 똑같은 얼굴의 해마 두 마리가 나란히 서서 서로를 쳐다보았다. 신기하게도 한 마리가 다른 한 마리 옆에 붙자 둘의 몸이 은은하게 빛났다.</p>
+<p style="text-align:center"><img src="/blog/img/n04_card_hippocampus.jpg" alt="" style="max-width:100%;height:auto;border-radius:12px"></p>
+<p>"같은 친구가 또 왔어."</p>
+<p>동그라미 아빠가 말했다.</p>
+<p>"이럴 땐 단짝으로 묶으면 돼."</p>
+<p>"단짝?"</p>
+<p>"같은 카드가 또 나오면, 둘이 짝이 돼서 더 강해져. 스킬도 올라가고."</p>
+<p>"우와, 그럼 소환을 많이 하면 좋은 거네!"</p>
+<p>"…알아둬라. 너무 많이 하진 마라."</p>
+<p>"아빠 또 알아두래!"</p>
+<p>해마 두 마리가 서로의 코를 맞대자 작은 빛 하나가 터졌다. 모두가 웃었다. 그 순간만큼은 외눈박이 섬이 무섭지 않았다.</p>
+<hr>
+<p>해가 기울기 시작했다.</p>
+<p>섬 한가운데 언덕이 거대한 검은 그림자처럼 솟아 있었다. 그 아래 커다란 동굴 입구가 입을 벌리고 있었다. 입구 앞 땅바닥에는 이상한 흔적이 있었다.</p>
+<p>발자국이었다. 그냥 발자국이 아니었다. 사람 발자국의 열 배는 되는, 움푹 파인 크고 깊은 발자국.</p>
+<p>"…이게 외눈박이의 발자국이야?"</p>
+<p>"그런 것 같아."</p>
+<p>"크다."</p>
+<p>"아주."</p>
+<p>우리는 그 앞에서 한동안 말이 없었다. 언덕 위에서 연기 한 줄기가 올라오고 있었다. 하늘이 조금 붉어졌다. 쿵, 쿵, 쿵. 땅이 아주 작게 울렸다.</p>
+<p>"…저 연기, 불이야?"</p>
+<p>"대장간 같은데."</p>
+<p>"대장간?"</p>
+<p>"저 언덕 너머에서 망치 소리가 나."</p>
+<p>세모 아내가 낮게 중얼거렸다.</p>
+<p>"흥. 이상하네. 거인이 대장간도 해?"</p>
+<p>"…가 보자."</p>
+<p>🏮 다음은 누구? — 언덕 너머 연기 나는 대장간. 포세이돈의 삼지창 조각이 그곳에서 녹고 있다는데?</p>
+<h2>이야기 속 게임 이야기</h2>
+<ul>
+<li>같은 카드가 또 나오면 「단짝」이 되어 더 강해지고 스킬도 올라가요.</li>
+<li>콤보가 길게 이어질수록 피해가 더 커져요.</li>
+</ul>
+<p>여러분은 양 가죽을 쓴 늑대를 봤다면 어떻게 했을까요? 댓글로 알려 주세요.</p>
+<p>이 이야기를 게임으로: 원정대 4판 - 웹 https://geometricfamily.com/quest/ / 구글 플레이 https://play.google.com/store/apps/details?id=com.geometricfamily.expedition</p><p class="center"><a class="btn light" href="/news/">소식 보기</a> <a class="btn yel" href="/games/">게임 하러 가기</a></p></article></main>
+<footer class="foot"><nav><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a><a href="/games/">게임</a><a href="/news/">소식</a><a href="/blog/">블로그</a><a href="/apps/">앱 소개</a><a href="/contact/">문의</a><a href="/delete/">계정 삭제</a><a href="/en/">English</a></nav>© 2026 기하학 가족<br>상호 기하학가족 · 대표 서문성수 · 사업자등록번호 <span style="white-space:nowrap">220-32-01943</span><br>통신판매업 신고번호 <span style="white-space:nowrap">제 2026-안양동안-1516 호</span> · 주소 경기도 안양시 동안구 시민대로327번길 11-41, 안양창업지원센터 동안 청년오피스 3층 4089호(관양동)<br>문의 <a href="mailto:hello@geometricfamily.com">hello@geometricfamily.com</a> · 이야기와 인물은 모두 허구입니다.</footer>
+</div>
+</body>
+</html>

@@ -1,7 +1,21 @@
 {
  "site": "https://geometricfamily.com",
- "updated": "2026-11-27",
+ "updated": "2026-11-28",
  "items": [
+  {
+   "date": "2026-11-28",
+   "type": "novel",
+   "lang": "ko",
+   "title": "연재소설 5화 — 이거 원래 우리 아버지가 만든 건데요",
+   "url": "https://cafe.naver.com/f-e/cafes/31820413/menus/5"
+  },
+  {
+   "date": "2026-11-28",
+   "type": "blog",
+   "lang": "ko",
+   "title": "원정대 연재 5화 — 이거 원래 우리 아버지가 만든 건데요",
+   "url": "https://geometricfamily.com/blog/novel-05/"
+  },
   {
    "date": "2026-11-27",
    "type": "novel",
